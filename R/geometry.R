@@ -1,15 +1,22 @@
-#' Convert a bbox instance into a multipoint geometry
+#' Create a bounds instance from a simple features object, column or geometry
 #'
-#' @title get_bounds
+#' @title bounds
 #' @param obj `{sf | sfc | sfg}`
-#' @return `{MULTIPOINT}`
-get_bounds <- function(obj) {
+#'  A simple features object, column or geometry to compute bounds from
+#'
+#' @return `{bounds}`
+#'
+#' @export
+bounds <- function(obj) {
+  stopifnot(inherits(obj, c("sf", "sfc", "sfg")))
+
   bbox <- sf::st_bbox(obj)
-  sf::st_multipoint(
+  structure(
     c(
       sf::st_point(bbox[1:2]),
       sf::st_point(bbox[3:4])
-    )
+    ),
+    class = "bounds"
   )
 }
 
@@ -19,10 +26,6 @@ get_bounds <- function(obj) {
 #' @param obj `{sf | sfc | sfg | data.frame}`
 #' @return `{XY|XYZ}`
 get_position_format <- function(obj) UseMethod("get_position_format")
-
-get_position_format.data.frame <- function(data) {
-  try(get_position_format(sf::st_as_sf(data)), silent = TRUE)
-}
 
 get_position_format.sf <- function(obj) {
   get_position_format(sf::st_geometry(obj))
