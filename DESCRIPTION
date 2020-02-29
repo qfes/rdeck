@@ -1,0 +1,23 @@
+Type: Package
+Package: rdeck
+Title: Deck.gl Widget
+Version: 0.1.0
+Authors@R:
+    person(given = "Anthony", family = "North", role = c("aut", "cre"), email = "anthony.jl.north@gmail.com")
+Description: Deck.gl widget for R.
+License: MIT + file LICENSE
+URL: https://github.com/anthonynorth/rdeck
+BugReports: https://github.com/anthonynorth/rdeck/issues
+Depends:
+    R (>= 3.3.0)
+Imports:
+    geojsonsf (>= 1.3.2),
+    htmltools (>= 0.4.0),
+    htmlwidgets (>= 1.5.1),
+    magrittr,
+    sf (>= 0.8.1),
+    snakecase (>= 0.11.0)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.0.2

@@ -1,0 +1,51 @@
+{
+  "name": "rdeck",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "npm run build:js",
+    "start": "webpack --watch --env.dev",
+    "build:js": "webpack -p --mode production",
+    "gen:layers": "node ./scripts/generate-layers.js",
+    "styler": "R -e \"styler::style_dir('./R')\"",
+    "generate-layers": "npm run gen:layers && npm run styler"
+  },
+  "dependencies": {
+    "@danmarshall/deckgl-typings": "^3.4.4",
+    "@deck.gl/aggregation-layers": "^8.0.16",
+    "@deck.gl/core": "^8.0.16",
+    "@deck.gl/extensions": "^8.0.16",
+    "@deck.gl/geo-layers": "^8.0.16",
+    "@deck.gl/layers": "^8.0.16",
+    "@deck.gl/mapbox": "^8.0.16",
+    "@deck.gl/mesh-layers": "^8.0.16",
+    "@types/mapbox-gl": "^1.7.0",
+    "@types/node": "^13.7.4",
+    "core-js": "^3.6.4",
+    "mapbox-gl": "^1.8.0",
+    "s2-geometry": "^1.2.10"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-version-inline": "^1.0.0",
+    "browserslist-config-google": "^1.5.0",
+    "param-case": "^3.0.3",
+    "snake-case": "^3.0.3",
+    "ts-dedent": "^1.1.1",
+    "typescript": "^3.8.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  },
+  "browserslist": [
+    "extends browserslist-config-google/modern"
+  ],
+  "prettier": {
+    "printWidth": 100
+  }
+}

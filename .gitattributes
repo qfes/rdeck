@@ -1,0 +1,3 @@
+* text=auto
+inst/htmlwidgets/** -diff
+package-lock.json -diff

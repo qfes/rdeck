@@ -1,0 +1,12 @@
+# dot-files
+^\..*$
+
+# js
+^js$
+^scripts$
+^node_modules$
+^package\.json$
+^package-lock\.json$
+^babel\.config\.json$
+^tsconfig\.json$
+^webpack\.config\.js$
