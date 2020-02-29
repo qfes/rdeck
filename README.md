@@ -38,8 +38,7 @@ heatmap_data <- read_csv(
   st_as_sf(coords = c("lng", "lat"), crs = 4326)
 
 rdeck(
-  controller = TRUE,
-  initial_bounds = rdeck:::get_bounds(heatmap_data)
+  initial_bounds = bounds(heatmap_data)
 ) %>%
   add_hexagon_layer(
     data = heatmap_data,
@@ -67,8 +66,7 @@ contour_data <- read_json(
   st_as_sf(coords = names(.), crs = 4326)
 
 rdeck(
-  controller = TRUE,
-  initial_bounds = rdeck:::get_bounds(contour_data)
+  initial_bounds = bounds(contour_data)
 ) %>%
   add_contour_layer(
     data = contour_data,
@@ -115,12 +113,9 @@ arc_data <- read_json(
   select(inbound, outbound, src_position, target_position)
 
 rdeck(
-  controller = TRUE,
-  initial_view_state = list(
-    longitude = -122.4,
-    latitude = 37.74,
+  initial_view_state = view_state(
+    center = c(-122.4, 37.74),
     zoom = 11,
-    maxZoom = 20,
     pitch = 30,
     bearing = 0
   )
@@ -156,7 +151,6 @@ h3_hexagon_data <- read_json(
   )
 
 rdeck(
-  controller = TRUE,
   initial_view_state = list(
     longitude = -122.4,
     latitude = 37.74,
