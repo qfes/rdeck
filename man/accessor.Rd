@@ -4,17 +4,21 @@
 \alias{accessor}
 \title{Create accessors for deck.gl layers.}
 \usage{
-accessor(data, expr)
+accessor(expr, data = NULL, columnar = TRUE)
 }
 \arguments{
+\item{expr}{\code{{name | call | atomic}}
+an expression typically created with \code{\link[base:substitute]{base::substitute()}}}
+
 \item{data}{\code{{data.frame}}
 used as expr environment}
 
-\item{expr}{\code{{name | call | atomic}}
-an expression typically created with \code{\link[base:substitute]{base::substitute()}}}
+\item{columnar}{\code{{logical}}
+Is the data passed to layers a columnar table, or an array of objects?}
 }
 \value{
 \code{{JS | expr}}
+Either a \link[htmlwidgets:JS]{htmlwidgets::JS} or \code{eval(expr)}
 }
 \description{
 Create accessors for deck.gl layers.
