@@ -1,3 +1,6 @@
+#' Supported deck.gl layer types
+#'
+#' @name layer_types
 layer_types <- c(
   "ArcLayer",
   "BitmapLayer",

@@ -2,10 +2,11 @@
 % Please edit documentation in R/layer.R
 \name{layer}
 \alias{layer}
-\title{Create layer}
+\title{Create a deck.gl layer}
 \usage{
 layer(
   type = NULL,
+  id = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
@@ -18,31 +19,47 @@ layer(
 )
 }
 \arguments{
-\item{type}{\code{{character}} deck.gl layer type}
+\item{type}{\code{{character}}
+deck.gl layer type, one of \link{layer_types}}
 
-\item{data}{\code{{data.frame | sf}}}
+\item{id}{\code{{character}}
+The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
+to properly distiguish between them.}
 
-\item{visible}{\code{{logical}}}
+\item{data}{\code{{data.frame | sf}}
+Deck.gl layer data, either a \link[base:data.frame]{base::data.frame} or \link[sf:sf]{sf::sf}.}
 
-\item{pickable}{\code{{logical}}}
+\item{visible}{\code{{logical}}
+Whether the layer is visible.}
 
-\item{opacity}{\code{{numeric}}}
+\item{pickable}{\code{{logical}}
+Whether the layer responds to mouse pointer picking events.}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}}
+\item{opacity}{\code{{numeric}}
+The opacity of the layer.}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}}
+\item{position_format}{\code{{"XY" | "XYZ"}}
+Determines whether each coordinate has two (XY) or three (XYZ) numbers.}
 
-\item{auto_highlight}{\code{{logical}}}
+\item{color_format}{\code{{"RGB" | "RGBA"}}
+RGB will make the layer ignore the alpha channel of colours returned by
+accessors. Opacity controlled by \code{opacity} is still applied.}
 
-\item{highlight_color}{\code{{integer}}}
+\item{auto_highlight}{\code{{logical}}
+When \code{TRUE}, current object pointed by mouse pointer (when hovered over) is
+highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 
-\item{...}{additional layer parameters}
+\item{highlight_color}{\code{{RGB | RGBA}}
+RGBA color to be used to render highlighted object. When 3 component (RGB)
+array is specified, a default value of 255 is used for alpha.}
+
+\item{...}{additional deck.gl layer parameters}
 }
 \value{
-\\verb{\{rdeck\}\\}
+\\verb{\{layer\}\\}
 }
 \description{
-Create layer
+Create a deck.gl layer
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}

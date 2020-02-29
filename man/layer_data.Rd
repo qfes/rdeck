@@ -4,7 +4,7 @@
 \alias{layer_data}
 \title{Get layer data}
 \usage{
-layer_data(data)
+layer_data(data, layer_type)
 }
 \arguments{
 \item{data}{\code{{sf | data.frame}}}

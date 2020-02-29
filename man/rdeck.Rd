@@ -8,6 +8,12 @@
 rdeck(
   mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
   map_style = "mapbox://styles/mapbox/dark-v10",
+  initial_bounds = NULL,
+  initial_view_state = NULL,
+  layers = NULL,
+  controller = TRUE,
+  picking_radius = 0,
+  use_device_pixels = TRUE,
   width = NULL,
   height = NULL,
   elementId = NULL,
@@ -15,17 +21,40 @@ rdeck(
 )
 }
 \arguments{
-\item{mapbox_api_access_token}{\code{{character}}}
+\item{mapbox_api_access_token}{\code{{character}}
+The api access token to use mapbox tiles.}
 
-\item{map_style}{\code{{character}}}
+\item{map_style}{\code{{character}}
+A mapbox style url. @seealso \url{https://docs.mapbox.com/api/maps/#mapbox-styles}}
 
-\item{width}{\code{{numeric}}}
+\item{initial_bounds}{\code{{bounds}}
+The initial bounds of the map; overwrites \code{initial_view_state}.}
 
-\item{height}{\code{{numeric}}}
+\item{initial_view_state}{\code{{view_state}}
+The inital view state of the map. See \link[rdeck:view_state]{rdeck::view_state} for details.}
 
-\item{elementId}{\code{{character}}}
+\item{layers}{\code{{list}}
+The list of deck.gl layers.}
 
-\item{...}{additional parameters to pass to deck}
+\item{controller}{\code{{logical}}
+If \code{NULL} or \code{FALSE}, the map is not interactive.}
+
+\item{picking_radius}{\code{{numeric}}
+Extra pixels around the pointer to include while picking.}
+
+\item{use_device_pixels}{\code{{logical | numeric}}
+Controls the resolution of drawing buffer used for rendering.}
+
+\item{width}{\code{{numeric}}
+Width of the map}
+
+\item{height}{\code{{numeric}}
+Height of the map}
+
+\item{elementId}{\code{{character}}
+element id for the map.}
+
+\item{...}{additional parameters to pass to the Deck class}
 }
 \value{
 \code{{rdeck}}
@@ -34,4 +63,7 @@ rdeck(
 rdeck: A deck.gl widget
 
 Create rdeck widget
+}
+\seealso{
+\url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md}
 }
