@@ -55,11 +55,11 @@ add_trips_layer <- function(rdeck,
   stopifnot(inherits(rdeck, "rdeck"))
 
   if (inherits(data, "sf")) {
-    get_path <- accessor(data, as.name(attr(data, "sf_column")))
+    get_path <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
   }
-  get_color <- accessor(data, substitute(get_color))
-  get_width <- accessor(data, substitute(get_width))
-  get_timestamps <- accessor(data, substitute(get_timestamps))
+  get_color <- accessor(substitute(get_color), data, columnar = TRUE)
+  get_width <- accessor(substitute(get_width), data, columnar = TRUE)
+  get_timestamps <- accessor(substitute(get_timestamps), data, columnar = TRUE)
 
   params <- c(
     list(

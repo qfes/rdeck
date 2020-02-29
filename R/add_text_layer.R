@@ -70,16 +70,16 @@ add_text_layer <- function(rdeck,
                            ...) {
   stopifnot(inherits(rdeck, "rdeck"))
 
-  get_text <- accessor(data, substitute(get_text))
+  get_text <- accessor(substitute(get_text), data, columnar = TRUE)
   if (inherits(data, "sf")) {
-    get_position <- accessor(data, as.name(attr(data, "sf_column")))
+    get_position <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
   }
-  get_color <- accessor(data, substitute(get_color))
-  get_size <- accessor(data, substitute(get_size))
-  get_angle <- accessor(data, substitute(get_angle))
-  get_text_anchor <- accessor(data, substitute(get_text_anchor))
-  get_alignment_baseline <- accessor(data, substitute(get_alignment_baseline))
-  get_pixel_offset <- accessor(data, substitute(get_pixel_offset))
+  get_color <- accessor(substitute(get_color), data, columnar = TRUE)
+  get_size <- accessor(substitute(get_size), data, columnar = TRUE)
+  get_angle <- accessor(substitute(get_angle), data, columnar = TRUE)
+  get_text_anchor <- accessor(substitute(get_text_anchor), data, columnar = TRUE)
+  get_alignment_baseline <- accessor(substitute(get_alignment_baseline), data, columnar = TRUE)
+  get_pixel_offset <- accessor(substitute(get_pixel_offset), data, columnar = TRUE)
 
   params <- c(
     list(

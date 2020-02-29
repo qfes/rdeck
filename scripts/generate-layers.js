@@ -77,6 +77,8 @@ function generateLayer(layer) {
     #' @export
   `;
 
+  const columnar = String(layer.layerName != "GeoJsonLayer").toUpperCase();
+
   const code = dedent`
     ${functionName} <- function(rdeck,
       ${parameters.map(p => p.signature).join(",\n  ")},
@@ -88,9 +90,9 @@ function generateLayer(layer) {
         .map(p =>
           geometryAccessors.includes(p.name)
             ? `if (inherits(data, "sf")) {
-                ${p.name} <- accessor(data, as.name(attr(data, "sf_column")))
+                ${p.name} <- accessor(as.name(attr(data, "sf_column")), data, columnar = ${columnar})
               }`
-            : `${p.name} <- accessor(data, substitute(${p.name}))`
+            : `${p.name} <- accessor(substitute(${p.name}), data, columnar = ${columnar})`
         )
         .join("\n  ")}
 

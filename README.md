@@ -24,6 +24,40 @@ remotes::install_github("anthonynorth/rdeck@*release")
 
 ## Usage
 
+### Scatterplot Layer
+
+```r
+library(tidyverse)
+library(sf)
+library(jsonlite)
+library(rdeck)
+
+scatterplot_data <- read_json(
+  "https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/scatterplot/manhattan.json"
+) %>%
+  lapply(unlist) %>%
+  do.call(rbind, .) %>%
+  as_tibble() %>%
+  set_names("lon", "lat", "gender") %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+
+rdeck(
+  controller = TRUE,
+  initial_view_state = view_state(
+    center = c(-74, 40.76),
+    zoom = 11
+  )
+) %>%
+  add_scatterplot_layer(
+    data = scatterplot_data,
+    radius_scale = 10,
+    radius_min_pixels = 0.5,
+    # some basic transpilation from R expressions
+    # (object, {index, data}) => data.frame[gender][index] ? [0, 128, 255] : [255, 0, 128]
+    get_fill_color = ~ gender == 1 ? c(0, 128, 255) : c(255, 0, 128)
+  )
+```
+
 ### Hexagon Layer
 
 ```r

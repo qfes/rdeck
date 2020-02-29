@@ -41,10 +41,10 @@ add_point_cloud_layer <- function(rdeck,
   stopifnot(inherits(rdeck, "rdeck"))
 
   if (inherits(data, "sf")) {
-    get_position <- accessor(data, as.name(attr(data, "sf_column")))
+    get_position <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
   }
-  get_normal <- accessor(data, substitute(get_normal))
-  get_color <- accessor(data, substitute(get_color))
+  get_normal <- accessor(substitute(get_normal), data, columnar = TRUE)
+  get_color <- accessor(substitute(get_color), data, columnar = TRUE)
 
   params <- c(
     list(

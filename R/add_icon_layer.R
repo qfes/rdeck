@@ -55,12 +55,12 @@ add_icon_layer <- function(rdeck,
   stopifnot(inherits(rdeck, "rdeck"))
 
   if (inherits(data, "sf")) {
-    get_position <- accessor(data, as.name(attr(data, "sf_column")))
+    get_position <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
   }
-  get_icon <- accessor(data, substitute(get_icon))
-  get_color <- accessor(data, substitute(get_color))
-  get_size <- accessor(data, substitute(get_size))
-  get_angle <- accessor(data, substitute(get_angle))
+  get_icon <- accessor(substitute(get_icon), data, columnar = TRUE)
+  get_color <- accessor(substitute(get_color), data, columnar = TRUE)
+  get_size <- accessor(substitute(get_size), data, columnar = TRUE)
+  get_angle <- accessor(substitute(get_angle), data, columnar = TRUE)
 
   params <- c(
     list(

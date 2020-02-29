@@ -44,10 +44,10 @@ add_line_layer <- function(rdeck,
                            ...) {
   stopifnot(inherits(rdeck, "rdeck"))
 
-  get_source_position <- accessor(data, substitute(get_source_position))
-  get_target_position <- accessor(data, substitute(get_target_position))
-  get_color <- accessor(data, substitute(get_color))
-  get_width <- accessor(data, substitute(get_width))
+  get_source_position <- accessor(substitute(get_source_position), data, columnar = TRUE)
+  get_target_position <- accessor(substitute(get_target_position), data, columnar = TRUE)
+  get_color <- accessor(substitute(get_color), data, columnar = TRUE)
+  get_width <- accessor(substitute(get_width), data, columnar = TRUE)
 
   params <- c(
     list(

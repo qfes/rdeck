@@ -53,13 +53,13 @@ add_scenegraph_layer <- function(rdeck,
   stopifnot(inherits(rdeck, "rdeck"))
 
   if (inherits(data, "sf")) {
-    get_position <- accessor(data, as.name(attr(data, "sf_column")))
+    get_position <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
   }
-  get_color <- accessor(data, substitute(get_color))
-  get_orientation <- accessor(data, substitute(get_orientation))
-  get_scale <- accessor(data, substitute(get_scale))
-  get_translation <- accessor(data, substitute(get_translation))
-  get_transform_matrix <- accessor(data, substitute(get_transform_matrix))
+  get_color <- accessor(substitute(get_color), data, columnar = TRUE)
+  get_orientation <- accessor(substitute(get_orientation), data, columnar = TRUE)
+  get_scale <- accessor(substitute(get_scale), data, columnar = TRUE)
+  get_translation <- accessor(substitute(get_translation), data, columnar = TRUE)
+  get_transform_matrix <- accessor(substitute(get_transform_matrix), data, columnar = TRUE)
 
   params <- c(
     list(

@@ -68,11 +68,11 @@ add_geojson_layer <- function(rdeck,
                               ...) {
   stopifnot(inherits(rdeck, "rdeck"))
 
-  get_line_color <- accessor(data, substitute(get_line_color))
-  get_fill_color <- accessor(data, substitute(get_fill_color))
-  get_radius <- accessor(data, substitute(get_radius))
-  get_line_width <- accessor(data, substitute(get_line_width))
-  get_elevation <- accessor(data, substitute(get_elevation))
+  get_line_color <- accessor(substitute(get_line_color), data, columnar = FALSE)
+  get_fill_color <- accessor(substitute(get_fill_color), data, columnar = FALSE)
+  get_radius <- accessor(substitute(get_radius), data, columnar = FALSE)
+  get_line_width <- accessor(substitute(get_line_width), data, columnar = FALSE)
+  get_elevation <- accessor(substitute(get_elevation), data, columnar = FALSE)
 
   params <- c(
     list(

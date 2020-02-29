@@ -50,13 +50,13 @@ add_arc_layer <- function(rdeck,
                           ...) {
   stopifnot(inherits(rdeck, "rdeck"))
 
-  get_source_position <- accessor(data, substitute(get_source_position))
-  get_target_position <- accessor(data, substitute(get_target_position))
-  get_source_color <- accessor(data, substitute(get_source_color))
-  get_target_color <- accessor(data, substitute(get_target_color))
-  get_width <- accessor(data, substitute(get_width))
-  get_height <- accessor(data, substitute(get_height))
-  get_tilt <- accessor(data, substitute(get_tilt))
+  get_source_position <- accessor(substitute(get_source_position), data, columnar = TRUE)
+  get_target_position <- accessor(substitute(get_target_position), data, columnar = TRUE)
+  get_source_color <- accessor(substitute(get_source_color), data, columnar = TRUE)
+  get_target_color <- accessor(substitute(get_target_color), data, columnar = TRUE)
+  get_width <- accessor(substitute(get_width), data, columnar = TRUE)
+  get_height <- accessor(substitute(get_height), data, columnar = TRUE)
+  get_tilt <- accessor(substitute(get_tilt), data, columnar = TRUE)
 
   params <- c(
     list(

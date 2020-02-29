@@ -1,84 +1,132 @@
 #' Create accessors for deck.gl layers.
 #'
 #' @name accessor
-#' @param data `{data.frame}`
-#'  used as expr environment
 #' @param expr `{name | call | atomic}`
 #'  an expression typically created with [base::substitute()]
-#'
+#' @param data `{data.frame}`
+#'  used as expr environment
+#' @param columnar `{logical}`
+#'  Is the data passed to layers a columnar table, or an array of objects?
 #' @return `{JS | expr}`
-accessor <- function(data, expr) {
-  # no data, or expr is constant
-  if (is.null(data) || !inherits(expr, c("name", "call"))) {
+#'  Either a [htmlwidgets::JS] or `eval(expr)`
+accessor <- function(expr, data = NULL, columnar = TRUE) {
+  UseMethod("accessor")
+}
+
+accessor.default <- function(expr, ...) {
+  eval(expr)
+}
+
+accessor.name <- function(expr, data = NULL, columnar = TRUE) {
+  names <- names(data)
+  if (!(deparse(expr, backtick = FALSE) %in% names)) {
     return(eval(expr))
   }
 
-  columns <- names(data)
+  lambda <- ifelse(
+    columnar,
+    "(object, {index, data}) => ",
+    "data => "
+  )
 
-  # expr is name, but not a column
-  if (is.name(expr) && !(deparse(expr) %in% columns)) {
+  name <- visit(expr, names, columnar)
+  htmlwidgets::JS(paste0(lambda, deparse(name, backtick = FALSE)))
+}
+
+accessor.call <- function(expr, data = NULL, columnar = TRUE) {
+  names <- names(data)
+
+  if (!(deparse(expr[[1]]) %in% c("~", "?"))) {
     return(eval(expr))
   }
 
-  # expr is call, but not formula
-  if (is.call(expr) && expr[[1]] != "~") {
-    return(eval(expr))
+  lambda <- ifelse(
+    columnar,
+    "(object, {index, data}) => ",
+    "data => "
+  )
+
+  call <- visit(expr, names, columnar)
+  htmlwidgets::JS(paste0(lambda, deparse(call, backtick = FALSE)))
+}
+
+#' Simple expression visitor for translating R into accessors
+#'
+#' @name visit
+#' @param expr `{name | call | value}`
+#'  The expression to visit
+#' @param names `{character}`
+#'  Vector of names to expand into either `data.frame[expr][index]`
+#'  or `data[expr]`, depending on the value of `columnar` parameter
+#' @param columnar `{logical}`
+#'  Is the data passed to layers a columnar table, or an array of objects?
+#' @return `{JS | name | call | value}`
+#'  Either a [htmlwidgets::JS] or the original expression
+visit <- function(expr, names, columnar = TRUE) {
+  if (is.call(expr) && !inherits(expr, "call")) {
+    return(visit.call(expr, names, columnar))
   }
 
-  # visit name
-  visit_name <- function(expr) {
-    if (deparse(expr) %in% columns) {
-      name <- paste0(
-        "data.frame[\"", deparse(expr, backtick = FALSE), "\"][index]"
-      ) %>%
-        as.name()
-      return(name)
-    }
+  UseMethod("visit")
+}
 
+visit.default <- function(expr, ...) {
+  expr
+}
+
+visit.name <- function(expr, names, columnar) {
+  name <- deparse(expr, backtick = FALSE)
+  if (name %in% names) {
+    ifelse(
+      columnar,
+      paste0(
+        "data.frame[\"", name, "\"][index]"
+      ),
+      paste0("data.", name)
+    ) %>%
+      as.name()
+  } else {
     expr
   }
+}
 
-  # visit call
-  visit_call <- function(expr) {
-    call_name <- expr[[1]]
-    call_args <- as.list(expr)[-1] %>%
-      lapply(function(x) {
-        if (is.call(x)) {
-          visit_call(x)
-        } else if (is.name(x)) {
-          visit_name(x)
-        } else {
-          x
-        }
-      })
-
-    new_call <- as.call(c(call_name, call_args))
-
-    if (new_call[1] == "c()") {
-      name <- deparse(new_call, backtick = FALSE) %>%
-        substr(3, nchar(.) - 1) %>%
-        paste0("[", ., "]") %>%
-        as.name()
-
-      return(name)
-    }
-
-    new_call
+visit.call <- function(expr, names, columnar) {
+  if (expr[[1]] == "~") {
+    # rhs of formula
+    expr <- expr[[length(expr)]]
   }
 
-  lambda <- paste0("(object, {index, data}) => ")
-
-  if (is.name(expr)) {
-    return(
-      htmlwidgets::JS(
-        paste0(lambda, deparse(visit_name(expr), backtick = FALSE))
-      )
-    )
+  # may no longer be a call
+  if (!is.call(expr)) {
+    return(visit(expr, names, columnar))
   }
 
-  # get rhs of formula
-  formula <- expr[[length(expr)]]
-  htmlwidgets::JS(
-    paste0(lambda, deparse(visit_call(formula), backtick = FALSE))
-  )
+  call_name <- expr[[1]]
+  call_args <- as.list(expr)[-1] %>%
+    lapply(visit, names, columnar)
+
+  new_call <- as.call(c(call_name, call_args))
+
+  # transpile c() into []
+  if (new_call[[1]] == "c") {
+    name <- deparse(new_call, backtick = FALSE) %>%
+      substr(3, nchar(.) - 1) %>%
+      paste0("[", ., "]") %>%
+      as.name()
+
+    return(name)
+  }
+
+  # transpile ternary
+  if (new_call[[1]] == "?") {
+    # hack into an infix operator
+    new_call[1] <- call("%?%")
+    name <- deparse(new_call, backtick = FALSE) %>%
+      sub("%\\?%", "?", x = .) %>%
+      as.name()
+
+    return(name)
+  }
+
+  new_call
 }

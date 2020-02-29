@@ -43,9 +43,9 @@ add_contour_layer <- function(rdeck,
   stopifnot(inherits(rdeck, "rdeck"))
 
   if (inherits(data, "sf")) {
-    get_position <- accessor(data, as.name(attr(data, "sf_column")))
+    get_position <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
   }
-  get_weight <- accessor(data, substitute(get_weight))
+  get_weight <- accessor(substitute(get_weight), data, columnar = TRUE)
 
   params <- c(
     list(

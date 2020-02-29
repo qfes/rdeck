@@ -15,7 +15,6 @@ class Parameter {
     this.default = Parameter.getDefault({ name, type, defaultValue });
   }
 
-  static geometryAccesors = ["getPath", "getPolygon", "getPosition"];
   get documentation() {
     const str = `@param ${this.name}`;
     if (!this.type) {
@@ -28,24 +27,6 @@ class Parameter {
 
   get signature() {
     return `${this.name} = ${this.default}`;
-  }
-
-  get forward() {
-    if (this.propType.type != "accessor") {
-      return `${this.name} = ${this.name}`;
-    }
-
-    if (!Parameter.geometryAccesors.includes(this.propType.name)) {
-      return `${this.name} = accessor(data, substitute(${this.name}))`;
-    }
-
-    return `${this.name} = if(inherits(data, "sf") {
-        name <- attr(data, "sf_column") %>%
-          as.name()
-        accessor(data, name)
-      } else {
-        accessor(data, substitute(${this.name}))
-      }`;
   }
 
   static getType({ name, type, defaultValue }) {

@@ -57,12 +57,12 @@ add_scatterplot_layer <- function(rdeck,
   stopifnot(inherits(rdeck, "rdeck"))
 
   if (inherits(data, "sf")) {
-    get_position <- accessor(data, as.name(attr(data, "sf_column")))
+    get_position <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
   }
-  get_radius <- accessor(data, substitute(get_radius))
-  get_fill_color <- accessor(data, substitute(get_fill_color))
-  get_line_color <- accessor(data, substitute(get_line_color))
-  get_line_width <- accessor(data, substitute(get_line_width))
+  get_radius <- accessor(substitute(get_radius), data, columnar = TRUE)
+  get_fill_color <- accessor(substitute(get_fill_color), data, columnar = TRUE)
+  get_line_color <- accessor(substitute(get_line_color), data, columnar = TRUE)
+  get_line_width <- accessor(substitute(get_line_width), data, columnar = TRUE)
 
   params <- c(
     list(

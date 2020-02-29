@@ -69,13 +69,13 @@ add_h3_hexagon_layer <- function(rdeck,
   stopifnot(inherits(rdeck, "rdeck"))
 
   if (inherits(data, "sf")) {
-    get_polygon <- accessor(data, as.name(attr(data, "sf_column")))
+    get_polygon <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
   }
-  get_fill_color <- accessor(data, substitute(get_fill_color))
-  get_line_color <- accessor(data, substitute(get_line_color))
-  get_line_width <- accessor(data, substitute(get_line_width))
-  get_elevation <- accessor(data, substitute(get_elevation))
-  get_hexagon <- accessor(data, substitute(get_hexagon))
+  get_fill_color <- accessor(substitute(get_fill_color), data, columnar = TRUE)
+  get_line_color <- accessor(substitute(get_line_color), data, columnar = TRUE)
+  get_line_width <- accessor(substitute(get_line_width), data, columnar = TRUE)
+  get_elevation <- accessor(substitute(get_elevation), data, columnar = TRUE)
+  get_hexagon <- accessor(substitute(get_hexagon), data, columnar = TRUE)
 
   params <- c(
     list(

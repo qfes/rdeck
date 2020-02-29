@@ -63,10 +63,10 @@ add_gpu_grid_layer <- function(rdeck,
                                ...) {
   stopifnot(inherits(rdeck, "rdeck"))
 
-  get_color_weight <- accessor(data, substitute(get_color_weight))
-  get_elevation_weight <- accessor(data, substitute(get_elevation_weight))
+  get_color_weight <- accessor(substitute(get_color_weight), data, columnar = TRUE)
+  get_elevation_weight <- accessor(substitute(get_elevation_weight), data, columnar = TRUE)
   if (inherits(data, "sf")) {
-    get_position <- accessor(data, as.name(attr(data, "sf_column")))
+    get_position <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
   }
 
   params <- c(
