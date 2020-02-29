@@ -103,7 +103,7 @@ visit.call <- function(expr, names, columnar) {
 
   call_name <- expr[[1]]
   call_args <- as.list(expr)[-1] %>%
-    lapply(visit, names, columnar)
+    lapply(function(expr) visit(expr, names, columnar))
 
   new_call <- as.call(c(call_name, call_args))
 
