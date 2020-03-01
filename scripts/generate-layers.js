@@ -1,26 +1,6 @@
 const fs = require("fs");
 const { dedent } = require("ts-dedent");
-const { Parameter } = require("./parameter");
 const { Layer, AddLayer } = require("./layer");
-
-// keep the function signatures brief
-const exclude = [
-  "coordinateOrigin",
-  "coordinateSystem",
-  "dataComparator",
-  "dataTransform",
-  "extensions",
-  "fetch",
-  "getPolygonOffset",
-  "highlightedObjectIndex",
-  "modelMatrix",
-  "parameters",
-  "uniforms",
-  "updateTriggers",
-  "wrapLongitude",
-
-  "renderSubLayers"
-];
 
 /**
  * Get all layer classes from a module
@@ -40,26 +20,10 @@ function getLayers(module) {
  * @param {any} deckglLayer
  */
 function generateLayer(deckglLayer) {
-  // initialise propTypes
-  new deckglLayer({});
+  const layer = new Layer(deckglLayer);
+  const addLayer = new AddLayer(deckglLayer);
 
-  const parameters = Object.values(deckglLayer._propTypes)
-    .filter(propType => !exclude.includes(propType.name))
-    .filter(propType => !/^(_|on)/.test(propType.name))
-    .map(propType => new Parameter(propType));
-
-  const definition = layer => dedent`
-      ${layer.documentation}
-      ${layer.signature} {
-        ${layer.body}
-      }
-    `;
-
-  const layer = new Layer(deckglLayer.layerName, parameters);
-  const addLayer = new AddLayer(deckglLayer.layerName, parameters);
-
-  fs.writeFileSync(`./R/${layer.name}.R`, definition(layer));
-  fs.writeFileSync(`./R/${addLayer.name}.R`, definition(addLayer));
+  fs.writeFileSync(`./R/${layer.name}.R`, [layer, addLayer].map(x => x.declaration).join("\n\n"));
 }
 
 const layers = [

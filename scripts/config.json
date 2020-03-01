@@ -1,0 +1,19 @@
+{
+  "exclude": [
+    "coordinateOrigin",
+    "coordinateSystem",
+    "dataComparator",
+    "dataTransform",
+    "extensions",
+    "fetch",
+    "getPolygonOffset",
+    "highlightedObjectIndex",
+    "modelMatrix",
+    "parameters",
+    "uniforms",
+    "updateTriggers",
+    "wrapLongitude",
+
+    "renderSubLayers"
+  ]
+}

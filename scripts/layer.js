@@ -3,6 +3,10 @@ const { dedent } = require("ts-dedent");
 const { paramCase: kebabCase } = require("param-case");
 const { snakeCase } = require("snake-case");
 
+const { Parameter } = require("./parameter");
+// @ts-ignore
+const { exclude } = require("./config.json");
+
 // FIXME: find a cleaner solution
 // @ts-ignore
 const LAYERS_URL = `https://github.com/uber/deck.gl/blob/v${Deck.VERSION}/docs/layers`;
@@ -13,16 +17,24 @@ class Layer {
   parameters;
   url;
 
-  constructor(type, parameters) {
+  constructor(layer) {
+    // initialise _propTypes
+    new layer();
+
+    const parameters = Object.values(layer._propTypes)
+      .filter(propType => !exclude.includes(propType.name))
+      .filter(propType => !/^(_|on)/.test(propType.name))
+      .map(propType => new Parameter(propType));
+
     /**
      * HACK
      * GeoJsonLayer -> geojson_layer
      * Tile3DLayer -> tile3d_layer
      */
-    const name = type.replace("GeoJson", "Geojson").replace("3D", "3d");
+    const name = layer.layerName.replace("GeoJson", "Geojson").replace("3D", "3d");
     const page = kebabCase(name.replace("3d", "_3d"));
 
-    this.type = type;
+    this.type = layer.layerName;
     this.name = snakeCase(name);
     this.url = `${LAYERS_URL}/${page}.md`;
     this.parameters = parameters;
@@ -98,11 +110,20 @@ class Layer {
       do.call(layer, params)
     `);
   }
+
+  get declaration() {
+    return dedent`
+      ${this.documentation}
+      ${this.signature} {
+        ${this.body}
+      }
+  `;
+  }
 }
 
 class AddLayer extends Layer {
-  constructor(type, params) {
-    super(type, params);
+  constructor(layer) {
+    super(layer);
 
     this.layer = this.name;
     this.name = `add_${this.name}`;
