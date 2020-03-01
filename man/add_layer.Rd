@@ -7,12 +7,17 @@
 add_layer(rdeck, layer)
 }
 \arguments{
-\item{rdeck}{\code{{rdeck}}}
+\item{rdeck}{\code{\link{rdeck}}
+An \link{rdeck} map.}
 
-\item{layer}{\code{{layer}}}
+\item{layer}{\code{\link{layer}}}
+}
+\value{
+\code{\link{rdeck}}
+The \link{rdeck} map.
 }
 \description{
-Add layer to deck
+Add a deck.gl \href{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}{layer} to an rdeck map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}

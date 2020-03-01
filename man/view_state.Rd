@@ -7,16 +7,16 @@
 view_state(center = NULL, zoom = NULL, pitch = NULL, bearing = NULL)
 }
 \arguments{
-\item{center}{\code{{numeric | st_point}}
+\item{center}{\code{\link{numeric}} | \code{\link[sf:st_point]{sf::st_point}}
 Center of the viewport on map}
 
-\item{zoom}{\code{{numeric}}
+\item{zoom}{\code{\link{numeric}}
 Scale = \code{Math.pow(2, zoom)} on map}
 
-\item{pitch}{\code{{numeric}}
+\item{pitch}{\code{\link{numeric}}
 Camera angle in degrees (0 is straight down)}
 
-\item{bearing}{\code{{numeric}}
+\item{bearing}{\code{\link{numeric}}
 Map rotation in degrees (0 means north is up)}
 }
 \description{

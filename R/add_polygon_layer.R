@@ -1,39 +1,21 @@
-#' Add PolygonLayer to an rdeck map.
+#' Add a [PolygonLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/polygon-layer.md) deck.gl layer to an [rdeck] map.
 #'
 #' @name add_polygon_layer
-#' @param rdeck \`{rdeck}\` an rdeck widget instance
-#' @param data `{data.frame | sf}`
-#' @param visible `{logical}`
-#' @param pickable `{logical}`
-#' @param opacity `{numeric}`
-#' @param position_format `{"XY" | "XYZ"}`
-#' @param color_format `{"RGB" | "RGBA"}`
-#' @param auto_highlight `{logical}`
-#' @param highlight_color `{integer}`
-#' @param stroked `{logical}`
-#' @param filled `{logical}`
-#' @param extruded `{logical}`
-#' @param elevation_scale `{numeric}`
-#' @param wireframe `{logical}`
-#' @param line_width_units `{"pixels" | "meters"}`
-#' @param line_width_scale `{numeric}`
-#' @param line_width_min_pixels `{numeric}`
-#' @param line_width_max_pixels `{numeric}`
-#' @param line_joint_rounded `{logical}`
-#' @param line_miter_limit `{numeric}`
-#' @param get_polygon `{accessor | JS}`
-#' @param get_fill_color `{accessor}`
-#' @param get_line_color `{accessor}`
-#' @param get_line_width `{accessor | numeric}`
-#' @param get_elevation `{accessor | numeric}`
-#' @param material `{logical}`
-#' @param ... additional layer parameters to pass to deck.gl
-#' @returns \`{rdeck}\`
+#'
+#' @param rdeck [`rdeck`]
+#'  An [rdeck] map.
+#'
+#' @inheritParams polygon_layer
+#' @inheritDotParams polygon_layer
+#'
+#' @returns [`rdeck`]
+#'  The [rdeck] map.
 #'
 #' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/polygon-layer.md}
 #'
 #' @export
 add_polygon_layer <- function(rdeck,
+                              id = NULL,
                               data = NULL,
                               visible = TRUE,
                               pickable = FALSE,
@@ -60,48 +42,8 @@ add_polygon_layer <- function(rdeck,
                               get_elevation = NULL,
                               material = TRUE,
                               ...) {
-  stopifnot(inherits(rdeck, "rdeck"))
+  params <- as.list(match.call())[-(1:2)]
+  layer <- do.call(polygon_layer, params)
 
-  if (inherits(data, "sf")) {
-    get_polygon <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
-  }
-  get_fill_color <- accessor(substitute(get_fill_color), data, columnar = TRUE)
-  get_line_color <- accessor(substitute(get_line_color), data, columnar = TRUE)
-  get_line_width <- accessor(substitute(get_line_width), data, columnar = TRUE)
-  get_elevation <- accessor(substitute(get_elevation), data, columnar = TRUE)
-
-  params <- c(
-    list(
-      type = "PolygonLayer",
-      data = data,
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color,
-      stroked = stroked,
-      filled = filled,
-      extruded = extruded,
-      elevation_scale = elevation_scale,
-      wireframe = wireframe,
-      line_width_units = line_width_units,
-      line_width_scale = line_width_scale,
-      line_width_min_pixels = line_width_min_pixels,
-      line_width_max_pixels = line_width_max_pixels,
-      line_joint_rounded = line_joint_rounded,
-      line_miter_limit = line_miter_limit,
-      get_polygon = get_polygon,
-      get_fill_color = get_fill_color,
-      get_line_color = get_line_color,
-      get_line_width = get_line_width,
-      get_elevation = get_elevation,
-      material = material
-    ),
-    list(...)
-  )
-
-  do.call(layer, params) %>%
-    add_layer(rdeck, .)
+  add_layer(rdeck, layer)
 }

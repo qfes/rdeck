@@ -2,10 +2,11 @@
 % Please edit documentation in R/add_h3_hexagon_layer.R
 \name{add_h3_hexagon_layer}
 \alias{add_h3_hexagon_layer}
-\title{Add H3HexagonLayer to an rdeck map.}
+\title{Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/h3-hexagon-layer.md}{H3HexagonLayer} deck.gl layer to an \link{rdeck} map.}
 \usage{
 add_h3_hexagon_layer(
   rdeck,
+  id = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
@@ -38,71 +39,81 @@ add_h3_hexagon_layer(
 )
 }
 \arguments{
-\item{rdeck}{\\verb{\{rdeck\}\\} an rdeck widget instance}
+\item{rdeck}{\code{\link{rdeck}}
+An \link{rdeck} map.}
 
-\item{data}{\code{{data.frame | sf}}}
+\item{id}{\code{\link{character}}
+The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
+to properly distinguish between them.}
 
-\item{visible}{\code{{logical}}}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
 
-\item{pickable}{\code{{logical}}}
+\item{visible}{\code{\link{logical}}}
 
-\item{opacity}{\code{{numeric}}}
+\item{pickable}{\code{\link{logical}}}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}}
+\item{opacity}{\code{\link{numeric}}}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}}
+\item{position_format}{\code{XY} | \code{XYZ}}
 
-\item{auto_highlight}{\code{{logical}}}
+\item{color_format}{\code{RGB} | \code{RGBA}}
 
-\item{highlight_color}{\code{{integer}}}
+\item{auto_highlight}{\code{\link{logical}}}
 
-\item{stroked}{\code{{logical}}}
+\item{highlight_color}{\code{\link{integer}}}
 
-\item{filled}{\code{{logical}}}
+\item{stroked}{\code{\link{logical}}}
 
-\item{extruded}{\code{{logical}}}
+\item{filled}{\code{\link{logical}}}
 
-\item{elevation_scale}{\code{{numeric}}}
+\item{extruded}{\code{\link{logical}}}
 
-\item{wireframe}{\code{{logical}}}
+\item{elevation_scale}{\code{\link{numeric}}}
 
-\item{line_width_units}{\code{{"pixels" | "meters"}}}
+\item{wireframe}{\code{\link{logical}}}
 
-\item{line_width_scale}{\code{{numeric}}}
+\item{line_width_units}{\code{pixels} | \code{meters}}
 
-\item{line_width_min_pixels}{\code{{numeric}}}
+\item{line_width_scale}{\code{\link{numeric}}}
 
-\item{line_width_max_pixels}{\code{{numeric}}}
+\item{line_width_min_pixels}{\code{\link{numeric}}}
 
-\item{line_joint_rounded}{\code{{logical}}}
+\item{line_width_max_pixels}{\code{\link{numeric}}}
 
-\item{line_miter_limit}{\code{{numeric}}}
+\item{line_joint_rounded}{\code{\link{logical}}}
 
-\item{get_polygon}{\code{{accessor | JS}}}
+\item{line_miter_limit}{\code{\link{numeric}}}
 
-\item{get_fill_color}{\code{{accessor}}}
+\item{get_polygon}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_line_color}{\code{{accessor}}}
+\item{get_fill_color}{accessor}
 
-\item{get_line_width}{\code{{accessor | numeric}}}
+\item{get_line_color}{accessor}
 
-\item{get_elevation}{\code{{accessor | numeric}}}
+\item{get_line_width}{accessor | \code{\link{numeric}}}
 
-\item{material}{\code{{logical}}}
+\item{get_elevation}{accessor | \code{\link{numeric}}}
 
-\item{high_precision}{\code{{logical}}}
+\item{material}{\code{\link{logical}}}
 
-\item{coverage}{\code{{numeric}}}
+\item{high_precision}{\code{\link{logical}}}
 
-\item{get_hexagon}{\code{{accessor | JS}}}
+\item{coverage}{\code{\link{numeric}}}
 
-\item{...}{additional layer parameters to pass to deck.gl}
+\item{get_hexagon}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
+
+\item{...}{
+  Arguments passed on to \code{\link[=h3_hexagon_layer]{h3_hexagon_layer}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
-\\verb{\{rdeck\}\\}
+\code{\link{rdeck}}
+The \link{rdeck} map.
 }
 \description{
-Add H3HexagonLayer to an rdeck map.
+Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/h3-hexagon-layer.md}{H3HexagonLayer} deck.gl layer to an \link{rdeck} map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/h3-hexagon-layer.md}

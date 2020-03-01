@@ -1,33 +1,21 @@
-#' Add ArcLayer to an rdeck map.
+#' Add a [ArcLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/arc-layer.md) deck.gl layer to an [rdeck] map.
 #'
 #' @name add_arc_layer
-#' @param rdeck \`{rdeck}\` an rdeck widget instance
-#' @param data `{data.frame | sf}`
-#' @param visible `{logical}`
-#' @param pickable `{logical}`
-#' @param opacity `{numeric}`
-#' @param position_format `{"XY" | "XYZ"}`
-#' @param color_format `{"RGB" | "RGBA"}`
-#' @param auto_highlight `{logical}`
-#' @param highlight_color `{integer}`
-#' @param get_source_position `{accessor | JS}`
-#' @param get_target_position `{accessor | JS}`
-#' @param get_source_color `{accessor}`
-#' @param get_target_color `{accessor}`
-#' @param get_width `{accessor | numeric}`
-#' @param get_height `{accessor | numeric}`
-#' @param get_tilt `{accessor | numeric}`
-#' @param width_units `{"pixels" | "meters"}`
-#' @param width_scale `{numeric}`
-#' @param width_min_pixels `{numeric}`
-#' @param width_max_pixels `{numeric}`
-#' @param ... additional layer parameters to pass to deck.gl
-#' @returns \`{rdeck}\`
+#'
+#' @param rdeck [`rdeck`]
+#'  An [rdeck] map.
+#'
+#' @inheritParams arc_layer
+#' @inheritDotParams arc_layer
+#'
+#' @returns [`rdeck`]
+#'  The [rdeck] map.
 #'
 #' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/arc-layer.md}
 #'
 #' @export
 add_arc_layer <- function(rdeck,
+                          id = NULL,
                           data = NULL,
                           visible = TRUE,
                           pickable = FALSE,
@@ -48,42 +36,8 @@ add_arc_layer <- function(rdeck,
                           width_min_pixels = 0,
                           width_max_pixels = 9007199254740991,
                           ...) {
-  stopifnot(inherits(rdeck, "rdeck"))
+  params <- as.list(match.call())[-(1:2)]
+  layer <- do.call(arc_layer, params)
 
-  get_source_position <- accessor(substitute(get_source_position), data, columnar = TRUE)
-  get_target_position <- accessor(substitute(get_target_position), data, columnar = TRUE)
-  get_source_color <- accessor(substitute(get_source_color), data, columnar = TRUE)
-  get_target_color <- accessor(substitute(get_target_color), data, columnar = TRUE)
-  get_width <- accessor(substitute(get_width), data, columnar = TRUE)
-  get_height <- accessor(substitute(get_height), data, columnar = TRUE)
-  get_tilt <- accessor(substitute(get_tilt), data, columnar = TRUE)
-
-  params <- c(
-    list(
-      type = "ArcLayer",
-      data = data,
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color,
-      get_source_position = get_source_position,
-      get_target_position = get_target_position,
-      get_source_color = get_source_color,
-      get_target_color = get_target_color,
-      get_width = get_width,
-      get_height = get_height,
-      get_tilt = get_tilt,
-      width_units = width_units,
-      width_scale = width_scale,
-      width_min_pixels = width_min_pixels,
-      width_max_pixels = width_max_pixels
-    ),
-    list(...)
-  )
-
-  do.call(layer, params) %>%
-    add_layer(rdeck, .)
+  add_layer(rdeck, layer)
 }

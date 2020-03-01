@@ -1,14 +1,7 @@
 const fs = require("fs");
 const { dedent } = require("ts-dedent");
-const { Deck } = require("@deck.gl/core");
-const { snakeCase } = require("snake-case");
-const { paramCase } = require("param-case");
-
 const { Parameter } = require("./parameter");
-
-// FIXME: find a cleaner solution
-// @ts-ignore
-const docUrl = `https://github.com/uber/deck.gl/blob/v${Deck.VERSION}/docs/layers`;
+const { Layer, AddLayer } = require("./layer");
 
 // keep the function signatures brief
 const exclude = [
@@ -44,72 +37,29 @@ function getLayers(module) {
 /**
  * Generate R function for layer
  *
- * @param {any} layer
+ * @param {any} deckglLayer
  */
-function generateLayer(layer) {
+function generateLayer(deckglLayer) {
   // initialise propTypes
-  new layer({});
+  new deckglLayer({});
 
-  // HACK: GeoJsonLayer -> geojson_layer, Tile3DLayer -> tile3d_layer
-  const name = layer.layerName.replace("GeoJson", "Geojson").replace("3D", "3d");
-  const functionName = "add_" + snakeCase(name);
-  const documentationName = paramCase(name.replace("3d", "_3d"));
-
-  const propsTypes = Object.values(layer._propTypes)
+  const parameters = Object.values(deckglLayer._propTypes)
     .filter(propType => !exclude.includes(propType.name))
-    .filter(propType => !/^(_|on)/.test(propType.name));
+    .filter(propType => !/^(_|on)/.test(propType.name))
+    .map(propType => new Parameter(propType));
 
-  const parameters = propsTypes.map(propType => new Parameter(propType));
+  const definition = layer => dedent`
+      ${layer.documentation}
+      ${layer.signature} {
+        ${layer.body}
+      }
+    `;
 
-  const geometryAccessors = ["get_path", "get_polygon", "get_position"];
+  const layer = new Layer(deckglLayer.layerName, parameters);
+  const addLayer = new AddLayer(deckglLayer.layerName, parameters);
 
-  const doc = dedent`
-    #' Add ${layer.layerName} to an rdeck map.
-    #'
-    #' @name ${functionName}
-    #' @param rdeck \`{rdeck}\` an rdeck widget instance
-    ${parameters.map(p => "#' " + p.documentation).join("\n")}
-    #' @param ... additional layer parameters to pass to deck.gl
-    #' @returns \`{rdeck}\`
-    #'
-    #' @seealso \url{${docUrl}/${documentationName}.md}
-    #'
-    #' @export
-  `;
-
-  const columnar = String(layer.layerName != "GeoJsonLayer").toUpperCase();
-
-  const code = dedent`
-    ${functionName} <- function(rdeck,
-      ${parameters.map(p => p.signature).join(",\n  ")},
-      ...) {
-      stopifnot(inherits(rdeck, "rdeck"))
-
-      ${parameters
-        .filter(p => p.propType.type === "accessor")
-        .map(p =>
-          geometryAccessors.includes(p.name)
-            ? `if (inherits(data, "sf")) {
-                ${p.name} <- accessor(as.name(attr(data, "sf_column")), data, columnar = ${columnar})
-              }`
-            : `${p.name} <- accessor(substitute(${p.name}), data, columnar = ${columnar})`
-        )
-        .join("\n  ")}
-
-      params <- c(
-        list(
-          type = "${layer.layerName}",
-          ${parameters.map(p => `${p.name} = ${p.name}`).join(",\n    ")}
-        ),
-        list(...)
-      )
-
-      do.call(layer, params) %>%
-         add_layer(rdeck, .)
-    }
-  `;
-
-  fs.writeFileSync(`./R/${functionName}.R`, doc + "\n" + code);
+  fs.writeFileSync(`./R/${layer.name}.R`, definition(layer));
+  fs.writeFileSync(`./R/${addLayer.name}.R`, definition(addLayer));
 }
 
 const layers = [
@@ -121,12 +71,20 @@ const layers = [
 
 layers.forEach(generateLayer);
 
+// write layer_types
 fs.writeFileSync(
   "./R/layer_types.R",
-  `layer_types <- c(
-    ${layers
-      .map(layer => layer.layerName)
-      .map(x => `"${x}"`)
-      .join(",\n")}
-  )`
+  dedent(`
+    #' Supported deck.gl layer types.
+    #'
+    #' @name layer_types
+    #'
+    #' @details
+    ${layers.map(layer => `#'   * ${layer.layerName}`).join("\n")}
+    layer_types <- c(
+      ${layers
+        .map(layer => layer.layerName)
+        .map(x => `"${x}"`)
+        .join(",\n")}
+    )`)
 );

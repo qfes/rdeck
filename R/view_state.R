@@ -1,16 +1,16 @@
 #' Create a view_state
 #'
 #' @name view_state
-#' @param center `{numeric | st_point}`
+#' @param center [`numeric`] | [`sf::st_point`]
 #'  Center of the viewport on map
 #'
-#' @param zoom `{numeric}`
+#' @param zoom [`numeric`]
 #'  Scale = `Math.pow(2, zoom)` on map
 #'
-#' @param pitch `{numeric}`
+#' @param pitch [`numeric`]
 #'  Camera angle in degrees (0 is straight down)
 #'
-#' @param bearing `{numeric}`
+#' @param bearing [`numeric`]
 #'  Map rotation in degrees (0 means north is up)
 #'
 #' @seealso \url{https://github.com/uber-archive/viewport-mercator-project/blob/master/docs/api-reference/web-mercator-viewport.md}

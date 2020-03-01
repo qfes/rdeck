@@ -7,20 +7,21 @@
 visit(expr, names, columnar = TRUE)
 }
 \arguments{
-\item{expr}{\code{{name | call | value}}
-The expression to visit}
+\item{expr}{\code{\link{name}} | \code{\link{call}} | value
+The expression to visit.}
 
-\item{names}{\code{{character}}
+\item{names}{\code{\link{character}}
 Vector of names to expand into either \code{data.frame[expr][index]}
 or \code{data[expr]}, depending on the value of \code{columnar} parameter}
 
-\item{columnar}{\code{{logical}}
+\item{columnar}{\code{\link{logical}}
 Is the data passed to layers a columnar table, or an array of objects?}
 }
 \value{
-\code{{JS | name | call | value}}
-Either a \link[htmlwidgets:JS]{htmlwidgets::JS} or the original expression
+\code{\link[htmlwidgets:JS]{htmlwidgets::JS}} | \code{\link{name}} | \code{\link{call}} | value
+Either a \link[htmlwidgets:JS]{htmlwidgets::JS} instance or the original expression.
 }
 \description{
 Simple expression visitor for translating R into accessors
 }
+\keyword{internal}

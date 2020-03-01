@@ -7,10 +7,10 @@
 layer_data(data, layer_type)
 }
 \arguments{
-\item{data}{\code{{sf | data.frame}}}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
 }
 \value{
-\code{{list | json}}
+\code{\link{list}} | \code{json}
 }
 \description{
 Get layer data

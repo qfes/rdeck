@@ -7,11 +7,12 @@
 bounds(obj)
 }
 \arguments{
-\item{obj}{\code{{sf | sfc | sfg}}
+\item{obj}{\code{\link[sf:sf]{sf::sf}} | \code{\link[sf:sfc]{sf::sfc}} | sf::sfg`
 A simple features object, column or geometry to compute bounds from}
 }
 \value{
-\code{{bounds}}
+\code{bounds}
+A vector of \link[sf:st_point]{sf::st_point}
 }
 \description{
 Create a bounds instance from a simple features object, column or geometry

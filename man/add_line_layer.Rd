@@ -2,10 +2,11 @@
 % Please edit documentation in R/add_line_layer.R
 \name{add_line_layer}
 \alias{add_line_layer}
-\title{Add LineLayer to an rdeck map.}
+\title{Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/line-layer.md}{LineLayer} deck.gl layer to an \link{rdeck} map.}
 \usage{
 add_line_layer(
   rdeck,
+  id = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
@@ -26,47 +27,57 @@ add_line_layer(
 )
 }
 \arguments{
-\item{rdeck}{\\verb{\{rdeck\}\\} an rdeck widget instance}
+\item{rdeck}{\code{\link{rdeck}}
+An \link{rdeck} map.}
 
-\item{data}{\code{{data.frame | sf}}}
+\item{id}{\code{\link{character}}
+The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
+to properly distinguish between them.}
 
-\item{visible}{\code{{logical}}}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
 
-\item{pickable}{\code{{logical}}}
+\item{visible}{\code{\link{logical}}}
 
-\item{opacity}{\code{{numeric}}}
+\item{pickable}{\code{\link{logical}}}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}}
+\item{opacity}{\code{\link{numeric}}}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}}
+\item{position_format}{\code{XY} | \code{XYZ}}
 
-\item{auto_highlight}{\code{{logical}}}
+\item{color_format}{\code{RGB} | \code{RGBA}}
 
-\item{highlight_color}{\code{{integer}}}
+\item{auto_highlight}{\code{\link{logical}}}
 
-\item{get_source_position}{\code{{accessor | JS}}}
+\item{highlight_color}{\code{\link{integer}}}
 
-\item{get_target_position}{\code{{accessor | JS}}}
+\item{get_source_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_color}{\code{{accessor}}}
+\item{get_target_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_width}{\code{{accessor | numeric}}}
+\item{get_color}{accessor}
 
-\item{width_units}{\code{{"pixels" | "meters"}}}
+\item{get_width}{accessor | \code{\link{numeric}}}
 
-\item{width_scale}{\code{{numeric}}}
+\item{width_units}{\code{pixels} | \code{meters}}
 
-\item{width_min_pixels}{\code{{numeric}}}
+\item{width_scale}{\code{\link{numeric}}}
 
-\item{width_max_pixels}{\code{{numeric}}}
+\item{width_min_pixels}{\code{\link{numeric}}}
 
-\item{...}{additional layer parameters to pass to deck.gl}
+\item{width_max_pixels}{\code{\link{numeric}}}
+
+\item{...}{
+  Arguments passed on to \code{\link[=line_layer]{line_layer}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
-\\verb{\{rdeck\}\\}
+\code{\link{rdeck}}
+The \link{rdeck} map.
 }
 \description{
-Add LineLayer to an rdeck map.
+Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/line-layer.md}{LineLayer} deck.gl layer to an \link{rdeck} map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/line-layer.md}

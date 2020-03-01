@@ -1,40 +1,43 @@
 #' Create rdeck widget
 #'
 #' @name rdeck
-#' @param mapbox_api_access_token `{character}`
+#' @param mapbox_api_access_token [`character`]
 #'  The api access token to use mapbox tiles.
 #'
-#' @param map_style `{character}`
-#'  A mapbox style url. @seealso \url{https://docs.mapbox.com/api/maps/#mapbox-styles}
+#' @param map_style [`character`]
+#'  A mapbox style url. \url{https://docs.mapbox.com/api/maps/#mapbox-styles}
 #'
-#' @param initial_bounds `{bounds}`
+#' @param initial_bounds [`bounds`]
 #'  The initial bounds of the map; overwrites `initial_view_state`.
 #'
-#' @param initial_view_state `{view_state}`
-#'  The inital view state of the map. See [rdeck::view_state] for details.
+#' @param initial_view_state [`view_state`]
+#'  The initial view state of the map. See [view_state] for details.
 #'
-#' @param layers `{list}`
+#' @param layers [`list`]
 #'  The list of deck.gl layers.
 #'
-#' @param controller `{logical}`
+#' @param controller [`logical`]
 #'  If `NULL` or `FALSE`, the map is not interactive.
 #'
-#' @param picking_radius `{numeric}`
+#' @param picking_radius [`numeric`]
 #'  Extra pixels around the pointer to include while picking.
 #'
-#' @param use_device_pixels `{logical | numeric}`
+#' @param use_device_pixels [`logical`] | [`numeric`]
 #'  Controls the resolution of drawing buffer used for rendering.
 #'
-#' @param width `{numeric}`
+#' @param width [`numeric`]
 #'  Width of the map
 #'
-#' @param height `{numeric}`
+#' @param height [`numeric`]
 #'  Height of the map
 #'
-#' @param elementId `{character}`
+#' @param elementId [`character`]
 #'  element id for the map.
-#' @param ... additional parameters to pass to the Deck class
-#' @return `{rdeck}`
+#'
+#' @param ... additional parameters to pass to the [Deck](https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md).
+#'
+#' @return [`rdeck`]
+#'  An rdeck widget for a deck.gl map
 #'
 #' @seealso \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md}
 #'
@@ -95,11 +98,13 @@ rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
 #' Manually create the container to have control of dependency order
 #'
 #' @name rdeck_html
-#' @param id `{character}`
-#' @param style `{character}`
-#' @param class `{character}`
+#' @param id [`character`]
+#' @param style [`character`]
+#' @param class [`character`]
 #' @param ... required by htmlwidgets
-#' @return `{rdeck}`
+#' @return [`rdeck`]
+#'
+#' @keywords internal
 rdeck_html <- function(id, style, class, ...) {
   container <- htmltools::tags$div(
     id = id,

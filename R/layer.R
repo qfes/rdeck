@@ -1,42 +1,43 @@
-#' Create a deck.gl layer
+#' Create a deck.gl [layer](https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md)
 #'
 #' @name layer
-#' @param type `{character}`
+#' @param type [`character`]
 #'  deck.gl layer type, one of [layer_types]
 #'
-#' @param id `{character}`
+#' @param id [`character`]
 #'  The id of the layer. Layer ids must be unique per layer `type` for deck.gl
-#'  to properly distiguish between them.
+#'  to properly distinguish between them.
 #'
-#' @param data `{data.frame | sf}`
-#'  Deck.gl layer data, either a [base::data.frame] or [sf::sf].
+#' @param data [`data.frame`] | [`sf::sf`]
+#'  Deck.gl layer data, either a [data.frame] or [sf::sf].
 #'
-#' @param visible `{logical}`
+#' @param visible [`logical`]
 #'  Whether the layer is visible.
 #'
-#' @param pickable `{logical}`
+#' @param pickable [`logical`]
 #'  Whether the layer responds to mouse pointer picking events.
 #'
-#' @param opacity `{numeric}`
+#' @param opacity [`numeric`]
 #'  The opacity of the layer.
 #'
-#' @param position_format `{"XY" | "XYZ"}`
+#' @param position_format `XY` | `XYZ`
 #'  Determines whether each coordinate has two (XY) or three (XYZ) numbers.
 #'
-#' @param color_format `{"RGB" | "RGBA"}`
+#' @param color_format `RGB` | `RGBA`
 #'  RGB will make the layer ignore the alpha channel of colours returned by
 #'  accessors. Opacity controlled by `opacity` is still applied.
 #'
-#' @param auto_highlight `{logical}`
+#' @param auto_highlight [`logical`]
 #'  When `TRUE`, current object pointed by mouse pointer (when hovered over) is
 #'  highlighted with highlight_color. Requires `pickable` to be `TRUE`.
 #'
-#' @param highlight_color `{RGB | RGBA}`
+#' @param highlight_color `RGB` | `RGBA`
 #'  RGBA color to be used to render highlighted object. When 3 component (RGB)
 #'  array is specified, a default value of 255 is used for alpha.
 #'
 #' @param ... additional deck.gl layer parameters
-#' @returns \`{layer}\`
+#' @returns [`layer`]
+#'  A deck.gl layer of `type`
 #'
 #' @seealso \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}
 #'
@@ -87,8 +88,8 @@ layer <- function(type = NULL,
 #' Get layer data
 #'
 #' @name layer_data
-#' @param data `{sf | data.frame}`
-#' @return `{list | json}`
+#' @param data [`data.frame`] | [`sf::sf`]
+#' @return [`list`] | `json`
 #'
 #' @keywords internal
 layer_data <- function(data, layer_type) {

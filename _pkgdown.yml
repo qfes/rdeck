@@ -1,0 +1,19 @@
+destination: docs
+reference:
+  - title: RDeck
+    desc: Create deck.gl map
+    contents:
+      - rdeck
+      - bounds
+      - view_state
+  - title: Layers
+    desc: Create deck.gl layers
+    contents:
+      - layer
+      - ends_with("layer")
+      - -starts_with("add")
+  - title: Add Layers
+    desc: Wrapper functions for creating deck.gl layers and adding them to a rdeck map.
+    contents:
+      - add_layer
+      - matches("^add_.*layer$")

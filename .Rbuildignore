@@ -10,3 +10,11 @@
 ^babel\.config\.json$
 ^tsconfig\.json$
 ^webpack\.config\.js$
+
+# pkgdown
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+
+# discovery
+^discovery$

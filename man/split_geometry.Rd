@@ -7,11 +7,12 @@
 split_geometry(obj)
 }
 \arguments{
-\item{obj}{\code{{sf}} sf object}
+\item{obj}{\code{\link[sf:sf]{sf::sf}}
+An \link[sf:sf]{sf::sf} object}
 }
 \value{
-\code{{sf}}
+\code{\link[sf:sf]{sf::sf}}
 }
 \description{
-Split multi-geometries for deck.gl compatibility
+Split multi-geometries for deck.gl compatibility.
 }

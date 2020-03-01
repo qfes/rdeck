@@ -1,42 +1,21 @@
-#' Add GeoJsonLayer to an rdeck map.
+#' Add a [GeoJsonLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/geojson-layer.md) deck.gl layer to an [rdeck] map.
 #'
 #' @name add_geojson_layer
-#' @param rdeck \`{rdeck}\` an rdeck widget instance
-#' @param data `{data.frame | sf}`
-#' @param visible `{logical}`
-#' @param pickable `{logical}`
-#' @param opacity `{numeric}`
-#' @param position_format `{"XY" | "XYZ"}`
-#' @param color_format `{"RGB" | "RGBA"}`
-#' @param auto_highlight `{logical}`
-#' @param highlight_color `{integer}`
-#' @param stroked `{logical}`
-#' @param filled `{logical}`
-#' @param extruded `{logical}`
-#' @param wireframe `{logical}`
-#' @param line_width_units `{"pixels" | "meters"}`
-#' @param line_width_scale `{numeric}`
-#' @param line_width_min_pixels `{numeric}`
-#' @param line_width_max_pixels `{numeric}`
-#' @param line_joint_rounded `{logical}`
-#' @param line_miter_limit `{numeric}`
-#' @param elevation_scale `{numeric}`
-#' @param point_radius_scale `{numeric}`
-#' @param point_radius_min_pixels `{numeric}`
-#' @param point_radius_max_pixels `{numeric}`
-#' @param get_line_color `{accessor}`
-#' @param get_fill_color `{accessor}`
-#' @param get_radius `{accessor | numeric}`
-#' @param get_line_width `{accessor | numeric}`
-#' @param get_elevation `{accessor | numeric}`
-#' @param material `{logical}`
-#' @param ... additional layer parameters to pass to deck.gl
-#' @returns \`{rdeck}\`
+#'
+#' @param rdeck [`rdeck`]
+#'  An [rdeck] map.
+#'
+#' @inheritParams geojson_layer
+#' @inheritDotParams geojson_layer
+#'
+#' @returns [`rdeck`]
+#'  The [rdeck] map.
 #'
 #' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/geojson-layer.md}
 #'
 #' @export
 add_geojson_layer <- function(rdeck,
+                              id = NULL,
                               data = NULL,
                               visible = TRUE,
                               pickable = FALSE,
@@ -66,49 +45,8 @@ add_geojson_layer <- function(rdeck,
                               get_elevation = NULL,
                               material = TRUE,
                               ...) {
-  stopifnot(inherits(rdeck, "rdeck"))
+  params <- as.list(match.call())[-(1:2)]
+  layer <- do.call(geojson_layer, params)
 
-  get_line_color <- accessor(substitute(get_line_color), data, columnar = FALSE)
-  get_fill_color <- accessor(substitute(get_fill_color), data, columnar = FALSE)
-  get_radius <- accessor(substitute(get_radius), data, columnar = FALSE)
-  get_line_width <- accessor(substitute(get_line_width), data, columnar = FALSE)
-  get_elevation <- accessor(substitute(get_elevation), data, columnar = FALSE)
-
-  params <- c(
-    list(
-      type = "GeoJsonLayer",
-      data = data,
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color,
-      stroked = stroked,
-      filled = filled,
-      extruded = extruded,
-      wireframe = wireframe,
-      line_width_units = line_width_units,
-      line_width_scale = line_width_scale,
-      line_width_min_pixels = line_width_min_pixels,
-      line_width_max_pixels = line_width_max_pixels,
-      line_joint_rounded = line_joint_rounded,
-      line_miter_limit = line_miter_limit,
-      elevation_scale = elevation_scale,
-      point_radius_scale = point_radius_scale,
-      point_radius_min_pixels = point_radius_min_pixels,
-      point_radius_max_pixels = point_radius_max_pixels,
-      get_line_color = get_line_color,
-      get_fill_color = get_fill_color,
-      get_radius = get_radius,
-      get_line_width = get_line_width,
-      get_elevation = get_elevation,
-      material = material
-    ),
-    list(...)
-  )
-
-  do.call(layer, params) %>%
-    add_layer(rdeck, .)
+  add_layer(rdeck, layer)
 }

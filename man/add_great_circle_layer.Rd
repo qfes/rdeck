@@ -2,10 +2,11 @@
 % Please edit documentation in R/add_great_circle_layer.R
 \name{add_great_circle_layer}
 \alias{add_great_circle_layer}
-\title{Add GreatCircleLayer to an rdeck map.}
+\title{Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/great-circle-layer.md}{GreatCircleLayer} deck.gl layer to an \link{rdeck} map.}
 \usage{
 add_great_circle_layer(
   rdeck,
+  id = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
@@ -29,53 +30,63 @@ add_great_circle_layer(
 )
 }
 \arguments{
-\item{rdeck}{\\verb{\{rdeck\}\\} an rdeck widget instance}
+\item{rdeck}{\code{\link{rdeck}}
+An \link{rdeck} map.}
 
-\item{data}{\code{{data.frame | sf}}}
+\item{id}{\code{\link{character}}
+The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
+to properly distinguish between them.}
 
-\item{visible}{\code{{logical}}}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
 
-\item{pickable}{\code{{logical}}}
+\item{visible}{\code{\link{logical}}}
 
-\item{opacity}{\code{{numeric}}}
+\item{pickable}{\code{\link{logical}}}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}}
+\item{opacity}{\code{\link{numeric}}}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}}
+\item{position_format}{\code{XY} | \code{XYZ}}
 
-\item{auto_highlight}{\code{{logical}}}
+\item{color_format}{\code{RGB} | \code{RGBA}}
 
-\item{highlight_color}{\code{{integer}}}
+\item{auto_highlight}{\code{\link{logical}}}
 
-\item{get_source_position}{\code{{accessor | JS}}}
+\item{highlight_color}{\code{\link{integer}}}
 
-\item{get_target_position}{\code{{accessor | JS}}}
+\item{get_source_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_source_color}{\code{{accessor}}}
+\item{get_target_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_target_color}{\code{{accessor}}}
+\item{get_source_color}{accessor}
 
-\item{get_width}{\code{{accessor | numeric}}}
+\item{get_target_color}{accessor}
 
-\item{get_height}{\code{{accessor | numeric}}}
+\item{get_width}{accessor | \code{\link{numeric}}}
 
-\item{get_tilt}{\code{{accessor | numeric}}}
+\item{get_height}{accessor | \code{\link{numeric}}}
 
-\item{width_units}{\code{{"pixels" | "meters"}}}
+\item{get_tilt}{accessor | \code{\link{numeric}}}
 
-\item{width_scale}{\code{{numeric}}}
+\item{width_units}{\code{pixels} | \code{meters}}
 
-\item{width_min_pixels}{\code{{numeric}}}
+\item{width_scale}{\code{\link{numeric}}}
 
-\item{width_max_pixels}{\code{{numeric}}}
+\item{width_min_pixels}{\code{\link{numeric}}}
 
-\item{...}{additional layer parameters to pass to deck.gl}
+\item{width_max_pixels}{\code{\link{numeric}}}
+
+\item{...}{
+  Arguments passed on to \code{\link[=great_circle_layer]{great_circle_layer}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
-\\verb{\{rdeck\}\\}
+\code{\link{rdeck}}
+The \link{rdeck} map.
 }
 \description{
-Add GreatCircleLayer to an rdeck map.
+Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/great-circle-layer.md}{GreatCircleLayer} deck.gl layer to an \link{rdeck} map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/great-circle-layer.md}

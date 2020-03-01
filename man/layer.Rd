@@ -2,7 +2,7 @@
 % Please edit documentation in R/layer.R
 \name{layer}
 \alias{layer}
-\title{Create a deck.gl layer}
+\title{Create a deck.gl \href{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}{layer}}
 \usage{
 layer(
   type = NULL,
@@ -19,47 +19,48 @@ layer(
 )
 }
 \arguments{
-\item{type}{\code{{character}}
+\item{type}{\code{\link{character}}
 deck.gl layer type, one of \link{layer_types}}
 
-\item{id}{\code{{character}}
+\item{id}{\code{\link{character}}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
-to properly distiguish between them.}
+to properly distinguish between them.}
 
-\item{data}{\code{{data.frame | sf}}
-Deck.gl layer data, either a \link[base:data.frame]{base::data.frame} or \link[sf:sf]{sf::sf}.}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}
+Deck.gl layer data, either a \link{data.frame} or \link[sf:sf]{sf::sf}.}
 
-\item{visible}{\code{{logical}}
+\item{visible}{\code{\link{logical}}
 Whether the layer is visible.}
 
-\item{pickable}{\code{{logical}}
+\item{pickable}{\code{\link{logical}}
 Whether the layer responds to mouse pointer picking events.}
 
-\item{opacity}{\code{{numeric}}
+\item{opacity}{\code{\link{numeric}}
 The opacity of the layer.}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}
+\item{position_format}{\code{XY} | \code{XYZ}
 Determines whether each coordinate has two (XY) or three (XYZ) numbers.}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}
+\item{color_format}{\code{RGB} | \code{RGBA}
 RGB will make the layer ignore the alpha channel of colours returned by
 accessors. Opacity controlled by \code{opacity} is still applied.}
 
-\item{auto_highlight}{\code{{logical}}
+\item{auto_highlight}{\code{\link{logical}}
 When \code{TRUE}, current object pointed by mouse pointer (when hovered over) is
 highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 
-\item{highlight_color}{\code{{RGB | RGBA}}
+\item{highlight_color}{\code{RGB} | \code{RGBA}
 RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
 }
 \value{
-\\verb{\{layer\}\\}
+\code{\link{layer}}
+A deck.gl layer of \code{type}
 }
 \description{
-Create a deck.gl layer
+Create a deck.gl \href{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}{layer}
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}

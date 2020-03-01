@@ -1,10 +1,11 @@
 #' Create a bounds instance from a simple features object, column or geometry
 #'
 #' @title bounds
-#' @param obj `{sf | sfc | sfg}`
+#' @param obj [`sf::sf`] | [`sf::sfc`] | sf::sfg`
 #'  A simple features object, column or geometry to compute bounds from
 #'
-#' @return `{bounds}`
+#' @return `bounds`
+#'  A vector of [sf::st_point]
 #'
 #' @export
 bounds <- function(obj) {
@@ -23,8 +24,10 @@ bounds <- function(obj) {
 #' Get position format of geometry
 #'
 #' @title get_position_format
-#' @param obj `{sf | sfc | sfg | data.frame}`
-#' @return `{XY|XYZ}`
+#' @param obj [`sf::sf`] | [`sf::sfc`] | `sf::sfg` | [`data.frame`]
+#' @return `XY` | `XYZ`
+#'
+#' @keywords internal
 get_position_format <- function(obj) UseMethod("get_position_format")
 
 get_position_format.sf <- function(obj) {
@@ -39,11 +42,14 @@ get_position_format.sfg <- function(geom) {
   class(geom)[1]
 }
 
-#' Split multi-geometries for deck.gl compatibility
+#' Split multi-geometries for deck.gl compatibility.
 #'
 #' @title split_geometry
-#' @param obj `{sf}` sf object
-#' @return `{sf}`
+#' @param obj [`sf::sf`]
+#'  An [sf::sf] object
+#'
+#' @return [`sf::sf`]
+#'
 split_geometry <- function(obj) {
   stopifnot(inherits(obj, "sf"))
   cast <- function(type) sf::st_cast(obj, type, warn = FALSE, do_split = TRUE)

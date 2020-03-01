@@ -1,6 +1,6 @@
 {
   "name": "rdeck",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "scripts": {
     "build": "npm run build:js",
     "start": "webpack --watch --env.dev",

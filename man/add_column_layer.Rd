@@ -2,10 +2,11 @@
 % Please edit documentation in R/add_column_layer.R
 \name{add_column_layer}
 \alias{add_column_layer}
-\title{Add ColumnLayer to an rdeck map.}
+\title{Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/column-layer.md}{ColumnLayer} deck.gl layer to an \link{rdeck} map.}
 \usage{
 add_column_layer(
   rdeck,
+  id = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
@@ -39,73 +40,83 @@ add_column_layer(
 )
 }
 \arguments{
-\item{rdeck}{\\verb{\{rdeck\}\\} an rdeck widget instance}
+\item{rdeck}{\code{\link{rdeck}}
+An \link{rdeck} map.}
 
-\item{data}{\code{{data.frame | sf}}}
+\item{id}{\code{\link{character}}
+The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
+to properly distinguish between them.}
 
-\item{visible}{\code{{logical}}}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
 
-\item{pickable}{\code{{logical}}}
+\item{visible}{\code{\link{logical}}}
 
-\item{opacity}{\code{{numeric}}}
+\item{pickable}{\code{\link{logical}}}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}}
+\item{opacity}{\code{\link{numeric}}}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}}
+\item{position_format}{\code{XY} | \code{XYZ}}
 
-\item{auto_highlight}{\code{{logical}}}
+\item{color_format}{\code{RGB} | \code{RGBA}}
 
-\item{highlight_color}{\code{{integer}}}
+\item{auto_highlight}{\code{\link{logical}}}
 
-\item{disk_resolution}{\code{{numeric}}}
+\item{highlight_color}{\code{\link{integer}}}
 
-\item{vertices}{\code{{list}}}
+\item{disk_resolution}{\code{\link{numeric}}}
 
-\item{radius}{\code{{numeric}}}
+\item{vertices}{\code{\link{list}}}
 
-\item{angle}{\code{{numeric}}}
+\item{radius}{\code{\link{numeric}}}
 
-\item{offset}{\code{{numeric}}}
+\item{angle}{\code{\link{numeric}}}
 
-\item{coverage}{\code{{numeric}}}
+\item{offset}{\code{\link{numeric}}}
 
-\item{elevation_scale}{\code{{numeric}}}
+\item{coverage}{\code{\link{numeric}}}
 
-\item{line_width_units}{\code{{"pixels" | "meters"}}}
+\item{elevation_scale}{\code{\link{numeric}}}
 
-\item{line_width_scale}{\code{{numeric}}}
+\item{line_width_units}{\code{pixels} | \code{meters}}
 
-\item{line_width_min_pixels}{\code{{numeric}}}
+\item{line_width_scale}{\code{\link{numeric}}}
 
-\item{line_width_max_pixels}{\code{{numeric}}}
+\item{line_width_min_pixels}{\code{\link{numeric}}}
 
-\item{extruded}{\code{{logical}}}
+\item{line_width_max_pixels}{\code{\link{numeric}}}
 
-\item{wireframe}{\code{{logical}}}
+\item{extruded}{\code{\link{logical}}}
 
-\item{filled}{\code{{logical}}}
+\item{wireframe}{\code{\link{logical}}}
 
-\item{stroked}{\code{{logical}}}
+\item{filled}{\code{\link{logical}}}
 
-\item{get_position}{\code{{accessor | JS}}}
+\item{stroked}{\code{\link{logical}}}
 
-\item{get_fill_color}{\code{{accessor}}}
+\item{get_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_line_color}{\code{{accessor}}}
+\item{get_fill_color}{accessor}
 
-\item{get_line_width}{\code{{accessor | numeric}}}
+\item{get_line_color}{accessor}
 
-\item{get_elevation}{\code{{accessor | numeric}}}
+\item{get_line_width}{accessor | \code{\link{numeric}}}
 
-\item{material}{\code{{logical}}}
+\item{get_elevation}{accessor | \code{\link{numeric}}}
 
-\item{...}{additional layer parameters to pass to deck.gl}
+\item{material}{\code{\link{logical}}}
+
+\item{...}{
+  Arguments passed on to \code{\link[=column_layer]{column_layer}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
-\\verb{\{rdeck\}\\}
+\code{\link{rdeck}}
+The \link{rdeck} map.
 }
 \description{
-Add ColumnLayer to an rdeck map.
+Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/column-layer.md}{ColumnLayer} deck.gl layer to an \link{rdeck} map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/column-layer.md}

@@ -1,27 +1,21 @@
-#' Add BitmapLayer to an rdeck map.
+#' Add a [BitmapLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/bitmap-layer.md) deck.gl layer to an [rdeck] map.
 #'
 #' @name add_bitmap_layer
-#' @param rdeck \`{rdeck}\` an rdeck widget instance
-#' @param data `{data.frame | sf}`
-#' @param visible `{logical}`
-#' @param pickable `{logical}`
-#' @param opacity `{numeric}`
-#' @param position_format `{"XY" | "XYZ"}`
-#' @param color_format `{"RGB" | "RGBA"}`
-#' @param auto_highlight `{logical}`
-#' @param highlight_color `{integer}`
-#' @param image `{"image" | "character"}`
-#' @param bounds `{numeric}`
-#' @param desaturate `{numeric}`
-#' @param transparent_color `{integer}`
-#' @param tint_color `{integer}`
-#' @param ... additional layer parameters to pass to deck.gl
-#' @returns \`{rdeck}\`
+#'
+#' @param rdeck [`rdeck`]
+#'  An [rdeck] map.
+#'
+#' @inheritParams bitmap_layer
+#' @inheritDotParams bitmap_layer
+#'
+#' @returns [`rdeck`]
+#'  The [rdeck] map.
 #'
 #' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/bitmap-layer.md}
 #'
 #' @export
 add_bitmap_layer <- function(rdeck,
+                             id = NULL,
                              data = NULL,
                              visible = TRUE,
                              pickable = FALSE,
@@ -36,30 +30,8 @@ add_bitmap_layer <- function(rdeck,
                              transparent_color = c(0, 0, 0, 0),
                              tint_color = c(255, 255, 255),
                              ...) {
-  stopifnot(inherits(rdeck, "rdeck"))
+  params <- as.list(match.call())[-(1:2)]
+  layer <- do.call(bitmap_layer, params)
 
-
-
-  params <- c(
-    list(
-      type = "BitmapLayer",
-      data = data,
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color,
-      image = image,
-      bounds = bounds,
-      desaturate = desaturate,
-      transparent_color = transparent_color,
-      tint_color = tint_color
-    ),
-    list(...)
-  )
-
-  do.call(layer, params) %>%
-    add_layer(rdeck, .)
+  add_layer(rdeck, layer)
 }

@@ -1,14 +1,23 @@
 #' Create accessors for deck.gl layers.
 #'
 #' @name accessor
-#' @param expr `{name | call | atomic}`
-#'  an expression typically created with [base::substitute()]
-#' @param data `{data.frame}`
-#'  used as expr environment
-#' @param columnar `{logical}`
-#'  Is the data passed to layers a columnar table, or an array of objects?
-#' @return `{JS | expr}`
-#'  Either a [htmlwidgets::JS] or `eval(expr)`
+#' @param expr [`name`] | [`call`] | value
+#'  An expression or a value.
+#'
+#' @param data [`data.frame`]
+#'  Each [name] in `expr` that appears in `names(data)` will be converted into
+#'  one of the following:
+#'    * `data.frame["name"][index]` for `columnar` == [TRUE]
+#'    * `data["name"]` else
+#'
+#' @param columnar [`logical`]
+#'  Will the layer data in javascript be a columnar table (an object with array
+#'  properties), or an array of objects?
+#'
+#' @return [`htmlwidgets::JS]` | `eval(expr)`
+#'  Either a [htmlwidgets::JS] or evaluated `expr`
+#'
+#' @keywords internal
 accessor <- function(expr, data = NULL, columnar = TRUE) {
   UseMethod("accessor")
 }
@@ -53,15 +62,20 @@ accessor.call <- function(expr, data = NULL, columnar = TRUE) {
 #' Simple expression visitor for translating R into accessors
 #'
 #' @name visit
-#' @param expr `{name | call | value}`
-#'  The expression to visit
-#' @param names `{character}`
+#' @param expr [`name`] | [`call`] | value
+#'  The expression to visit.
+#'
+#' @param names [`character`]
 #'  Vector of names to expand into either `data.frame[expr][index]`
 #'  or `data[expr]`, depending on the value of `columnar` parameter
-#' @param columnar `{logical}`
+#'
+#' @param columnar [`logical`]
 #'  Is the data passed to layers a columnar table, or an array of objects?
-#' @return `{JS | name | call | value}`
-#'  Either a [htmlwidgets::JS] or the original expression
+#'
+#' @return [`htmlwidgets::JS`] | [`name`] | [`call`] | value
+#'  Either a [htmlwidgets::JS] instance or the original expression.
+#'
+#' @keywords internal
 visit <- function(expr, names, columnar = TRUE) {
   if (is.call(expr) && !inherits(expr, "call")) {
     return(visit.call(expr, names, columnar))

@@ -3,12 +3,45 @@
 \docType{data}
 \name{layer_types}
 \alias{layer_types}
-\title{Supported deck.gl layer types}
+\title{Supported deck.gl layer types.}
 \format{An object of class \code{character} of length 29.}
 \usage{
 layer_types
 }
 \description{
-Supported deck.gl layer types
+Supported deck.gl layer types.
+}
+\details{
+\itemize{
+\item ArcLayer
+\item BitmapLayer
+\item IconLayer
+\item LineLayer
+\item PointCloudLayer
+\item ScatterplotLayer
+\item ColumnLayer
+\item GridCellLayer
+\item PathLayer
+\item PolygonLayer
+\item GeoJsonLayer
+\item TextLayer
+\item SolidPolygonLayer
+\item ScreenGridLayer
+\item CPUGridLayer
+\item HexagonLayer
+\item ContourLayer
+\item GridLayer
+\item GPUGridLayer
+\item HeatmapLayer
+\item GreatCircleLayer
+\item S2Layer
+\item TileLayer
+\item TripsLayer
+\item H3ClusterLayer
+\item H3HexagonLayer
+\item Tile3DLayer
+\item SimpleMeshLayer
+\item ScenegraphLayer
+}
 }
 \keyword{datasets}

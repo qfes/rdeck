@@ -2,10 +2,11 @@
 % Please edit documentation in R/add_icon_layer.R
 \name{add_icon_layer}
 \alias{add_icon_layer}
-\title{Add IconLayer to an rdeck map.}
+\title{Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/icon-layer.md}{IconLayer} deck.gl layer to an \link{rdeck} map.}
 \usage{
 add_icon_layer(
   rdeck,
+  id = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
@@ -31,57 +32,67 @@ add_icon_layer(
 )
 }
 \arguments{
-\item{rdeck}{\\verb{\{rdeck\}\\} an rdeck widget instance}
+\item{rdeck}{\code{\link{rdeck}}
+An \link{rdeck} map.}
 
-\item{data}{\code{{data.frame | sf}}}
+\item{id}{\code{\link{character}}
+The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
+to properly distinguish between them.}
 
-\item{visible}{\code{{logical}}}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
 
-\item{pickable}{\code{{logical}}}
+\item{visible}{\code{\link{logical}}}
 
-\item{opacity}{\code{{numeric}}}
+\item{pickable}{\code{\link{logical}}}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}}
+\item{opacity}{\code{\link{numeric}}}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}}
+\item{position_format}{\code{XY} | \code{XYZ}}
 
-\item{auto_highlight}{\code{{logical}}}
+\item{color_format}{\code{RGB} | \code{RGBA}}
 
-\item{highlight_color}{\code{{integer}}}
+\item{auto_highlight}{\code{\link{logical}}}
 
-\item{icon_atlas}{\code{{list}}}
+\item{highlight_color}{\code{\link{integer}}}
 
-\item{icon_mapping}{\code{{list}}}
+\item{icon_atlas}{\code{\link{list}}}
 
-\item{size_scale}{\code{{numeric}}}
+\item{icon_mapping}{\code{\link{list}}}
 
-\item{billboard}{\code{{logical}}}
+\item{size_scale}{\code{\link{numeric}}}
 
-\item{size_units}{\code{{"pixels" | "meters"}}}
+\item{billboard}{\code{\link{logical}}}
 
-\item{size_min_pixels}{\code{{numeric}}}
+\item{size_units}{\code{pixels} | \code{meters}}
 
-\item{size_max_pixels}{\code{{numeric}}}
+\item{size_min_pixels}{\code{\link{numeric}}}
 
-\item{alpha_cutoff}{\code{{numeric}}}
+\item{size_max_pixels}{\code{\link{numeric}}}
 
-\item{get_position}{\code{{accessor | JS}}}
+\item{alpha_cutoff}{\code{\link{numeric}}}
 
-\item{get_icon}{\code{{accessor | JS}}}
+\item{get_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_color}{\code{{accessor}}}
+\item{get_icon}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_size}{\code{{accessor | numeric}}}
+\item{get_color}{accessor}
 
-\item{get_angle}{\code{{accessor | numeric}}}
+\item{get_size}{accessor | \code{\link{numeric}}}
 
-\item{...}{additional layer parameters to pass to deck.gl}
+\item{get_angle}{accessor | \code{\link{numeric}}}
+
+\item{...}{
+  Arguments passed on to \code{\link[=icon_layer]{icon_layer}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
-\\verb{\{rdeck\}\\}
+\code{\link{rdeck}}
+The \link{rdeck} map.
 }
 \description{
-Add IconLayer to an rdeck map.
+Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/icon-layer.md}{IconLayer} deck.gl layer to an \link{rdeck} map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/icon-layer.md}

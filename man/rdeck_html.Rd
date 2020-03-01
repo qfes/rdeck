@@ -7,17 +7,18 @@
 rdeck_html(id, style, class, ...)
 }
 \arguments{
-\item{id}{\code{{character}}}
+\item{id}{\code{\link{character}}}
 
-\item{style}{\code{{character}}}
+\item{style}{\code{\link{character}}}
 
-\item{class}{\code{{character}}}
+\item{class}{\code{\link{character}}}
 
 \item{...}{required by htmlwidgets}
 }
 \value{
-\code{{rdeck}}
+\code{\link{rdeck}}
 }
 \description{
 Manually create the container to have control of dependency order
 }
+\keyword{internal}

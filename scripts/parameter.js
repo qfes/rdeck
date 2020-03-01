@@ -4,82 +4,73 @@ class Parameter {
   name;
   type;
   default = "NULL";
-  propType;
 
-  constructor(propType) {
-    const { name, type, value: defaultValue } = propType;
-
-    this.propType = propType;
+  constructor({ name, type, value: defaultValue }) {
     this.name = snakeCase(name);
     this.type = Parameter.getType({ name, type, defaultValue });
     this.default = Parameter.getDefault({ name, type, defaultValue });
   }
 
-  get documentation() {
-    const str = `@param ${this.name}`;
-    if (!this.type) {
-      return str;
-    }
-
-    const type = Array.isArray(this.type) ? this.type.join(" | ") : this.type;
-    return `${str} \`{${type}}\``;
+  get isAccessor() {
+    return this.type === "accessor" || (Array.isArray(this.type) && this.type.includes("accessor"));
   }
 
-  get signature() {
-    return `${this.name} = ${this.default}`;
+  get documentation() {
+    const name = `#' @param ${this.name}`;
+    const type = Array.isArray(this.type) ? this.type.join(" | ") : this.type;
+    return `${name} ${type}`;
   }
 
   static getType({ name, type, defaultValue }) {
     switch (name) {
       case "data":
-        return ["data.frame", "sf"];
+        return ["[`data.frame`]", "[`sf::sf`]"];
       case "positionFormat":
-        return [`"XY"`, `"XYZ"`];
+        return ["`XY`", "`XYZ`"];
       case "colorFormat":
-        return [`"RGB"`, `"RGBA"`];
+        return ["`RGB`", "`RGBA`"];
       case "image":
-        return [`"image"`, `"character"`];
-
+        return ["[`image`]", "[`character`]"];
       case "fontFamily":
       case "fontWeight":
-        return "character";
+        return "[`character`]";
       case "wordBreak":
-        return [`"break-all"`, `"break-word"`];
+        return ["`break-all`", "`break-word`"];
       // case "vertices": array of points
 
       case "minZoom":
       case "maxZoom":
       case "maxCacheSize":
-        return "numeric";
+        return "[`numeric`]";
 
       case "widthUnits":
       case "sizeUnits":
       case "lineWidthUnits":
-        return [`"pixels"`, `"meters"`];
+        return ["`pixels`", "`meters`"];
 
       case "aggregation":
       case "colorAggregation":
       case "elevationAggregation":
-        return [`"SUM"`, `"MEAN"`, `"MIN"`, `"MAX"`];
+        return ["`SUM`", "`MEAN`", "`MIN`", "`MAX`"];
 
       case "colorDomain":
       case "elevationDomain":
-        return "numeric";
+        return "[`numeric`]";
 
       case "colorScaleType":
       case "elevationScaleType":
-        return [`"quantize"`, `"linear"`, `"quantile"`, `"ordinal"`];
+        return ["`quantize`", "`linear`", "`quantile`", "`ordinal`"];
     }
 
     switch (type) {
       case "unknown":
         return typeToR(typeof defaultValue);
       case "color":
-        return "integer";
+        return "[`integer`]";
       case "array":
         if (Array.isArray(defaultValue)) {
           const item = defaultValue[0];
-          return Array.isArray(item) ? "list" : typeToR(typeof item);
+          return Array.isArray(item) ? "[`list`]" : typeToR(typeof item);
         }
         break;
       case "accessor": {
@@ -141,15 +132,15 @@ function valueToR(value) {
 function typeToR(type) {
   switch (type) {
     case "boolean":
-      return "logical";
+      return "[`logical`]";
     case "number":
-      return "numeric";
+      return "[`numeric`]";
     case "string":
-      return "character";
+      return "`[character]`";
     case "function":
-      return "JS";
+      return "[`htmlwidgets::JS`]";
     default:
-      return "list";
+      return "[`list`]";
   }
 }
 

@@ -7,11 +7,12 @@
 get_position_format(obj)
 }
 \arguments{
-\item{obj}{\code{{sf | sfc | sfg | data.frame}}}
+\item{obj}{\code{\link[sf:sf]{sf::sf}} | \code{\link[sf:sfc]{sf::sfc}} | \code{sf::sfg} | \code{\link{data.frame}}}
 }
 \value{
-\code{{XY|XYZ}}
+\code{XY} | \code{XYZ}
 }
 \description{
 Get position format of geometry
 }
+\keyword{internal}

@@ -1,29 +1,21 @@
-#' Add HeatmapLayer to an rdeck map.
+#' Add a [HeatmapLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/heatmap-layer.md) deck.gl layer to an [rdeck] map.
 #'
 #' @name add_heatmap_layer
-#' @param rdeck \`{rdeck}\` an rdeck widget instance
-#' @param data `{data.frame | sf}`
-#' @param visible `{logical}`
-#' @param pickable `{logical}`
-#' @param opacity `{numeric}`
-#' @param position_format `{"XY" | "XYZ"}`
-#' @param color_format `{"RGB" | "RGBA"}`
-#' @param auto_highlight `{logical}`
-#' @param highlight_color `{integer}`
-#' @param get_position `{accessor | JS}`
-#' @param get_weight `{accessor | numeric}`
-#' @param intensity `{numeric}`
-#' @param radius_pixels `{numeric}`
-#' @param color_range `{list}`
-#' @param threshold `{numeric}`
-#' @param color_domain `{numeric}`
-#' @param ... additional layer parameters to pass to deck.gl
-#' @returns \`{rdeck}\`
+#'
+#' @param rdeck [`rdeck`]
+#'  An [rdeck] map.
+#'
+#' @inheritParams heatmap_layer
+#' @inheritDotParams heatmap_layer
+#'
+#' @returns [`rdeck`]
+#'  The [rdeck] map.
 #'
 #' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/heatmap-layer.md}
 #'
 #' @export
 add_heatmap_layer <- function(rdeck,
+                              id = NULL,
                               data = NULL,
                               visible = TRUE,
                               pickable = FALSE,
@@ -47,35 +39,8 @@ add_heatmap_layer <- function(rdeck,
                               threshold = 0.05,
                               color_domain = NULL,
                               ...) {
-  stopifnot(inherits(rdeck, "rdeck"))
+  params <- as.list(match.call())[-(1:2)]
+  layer <- do.call(heatmap_layer, params)
 
-  if (inherits(data, "sf")) {
-    get_position <- accessor(as.name(attr(data, "sf_column")), data, columnar = TRUE)
-  }
-  get_weight <- accessor(substitute(get_weight), data, columnar = TRUE)
-
-  params <- c(
-    list(
-      type = "HeatmapLayer",
-      data = data,
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color,
-      get_position = get_position,
-      get_weight = get_weight,
-      intensity = intensity,
-      radius_pixels = radius_pixels,
-      color_range = color_range,
-      threshold = threshold,
-      color_domain = color_domain
-    ),
-    list(...)
-  )
-
-  do.call(layer, params) %>%
-    add_layer(rdeck, .)
+  add_layer(rdeck, layer)
 }

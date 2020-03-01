@@ -2,10 +2,11 @@
 % Please edit documentation in R/add_simple_mesh_layer.R
 \name{add_simple_mesh_layer}
 \alias{add_simple_mesh_layer}
-\title{Add SimpleMeshLayer to an rdeck map.}
+\title{Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/simple-mesh-layer.md}{SimpleMeshLayer} deck.gl layer to an \link{rdeck} map.}
 \usage{
 add_simple_mesh_layer(
   rdeck,
+  id = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
@@ -29,53 +30,63 @@ add_simple_mesh_layer(
 )
 }
 \arguments{
-\item{rdeck}{\\verb{\{rdeck\}\\} an rdeck widget instance}
+\item{rdeck}{\code{\link{rdeck}}
+An \link{rdeck} map.}
 
-\item{data}{\code{{data.frame | sf}}}
+\item{id}{\code{\link{character}}
+The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
+to properly distinguish between them.}
 
-\item{visible}{\code{{logical}}}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
 
-\item{pickable}{\code{{logical}}}
+\item{visible}{\code{\link{logical}}}
 
-\item{opacity}{\code{{numeric}}}
+\item{pickable}{\code{\link{logical}}}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}}
+\item{opacity}{\code{\link{numeric}}}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}}
+\item{position_format}{\code{XY} | \code{XYZ}}
 
-\item{auto_highlight}{\code{{logical}}}
+\item{color_format}{\code{RGB} | \code{RGBA}}
 
-\item{highlight_color}{\code{{integer}}}
+\item{auto_highlight}{\code{\link{logical}}}
 
-\item{mesh}{\code{{list}}}
+\item{highlight_color}{\code{\link{integer}}}
 
-\item{texture}{\code{{list}}}
+\item{mesh}{\code{\link{list}}}
 
-\item{size_scale}{\code{{numeric}}}
+\item{texture}{\code{\link{list}}}
 
-\item{wireframe}{\code{{logical}}}
+\item{size_scale}{\code{\link{numeric}}}
 
-\item{material}{\code{{logical}}}
+\item{wireframe}{\code{\link{logical}}}
 
-\item{get_position}{\code{{accessor | JS}}}
+\item{material}{\code{\link{logical}}}
 
-\item{get_color}{\code{{accessor}}}
+\item{get_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_orientation}{\code{{accessor}}}
+\item{get_color}{accessor}
 
-\item{get_scale}{\code{{accessor}}}
+\item{get_orientation}{accessor}
 
-\item{get_translation}{\code{{accessor}}}
+\item{get_scale}{accessor}
 
-\item{get_transform_matrix}{\code{{accessor}}}
+\item{get_translation}{accessor}
 
-\item{...}{additional layer parameters to pass to deck.gl}
+\item{get_transform_matrix}{accessor}
+
+\item{...}{
+  Arguments passed on to \code{\link[=simple_mesh_layer]{simple_mesh_layer}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
-\\verb{\{rdeck\}\\}
+\code{\link{rdeck}}
+The \link{rdeck} map.
 }
 \description{
-Add SimpleMeshLayer to an rdeck map.
+Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/simple-mesh-layer.md}{SimpleMeshLayer} deck.gl layer to an \link{rdeck} map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/simple-mesh-layer.md}

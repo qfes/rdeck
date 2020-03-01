@@ -2,10 +2,11 @@
 % Please edit documentation in R/add_text_layer.R
 \name{add_text_layer}
 \alias{add_text_layer}
-\title{Add TextLayer to an rdeck map.}
+\title{Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/text-layer.md}{TextLayer} deck.gl layer to an \link{rdeck} map.}
 \usage{
 add_text_layer(
   rdeck,
+  id = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
@@ -39,73 +40,83 @@ add_text_layer(
 )
 }
 \arguments{
-\item{rdeck}{\\verb{\{rdeck\}\\} an rdeck widget instance}
+\item{rdeck}{\code{\link{rdeck}}
+An \link{rdeck} map.}
 
-\item{data}{\code{{data.frame | sf}}}
+\item{id}{\code{\link{character}}
+The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
+to properly distinguish between them.}
 
-\item{visible}{\code{{logical}}}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
 
-\item{pickable}{\code{{logical}}}
+\item{visible}{\code{\link{logical}}}
 
-\item{opacity}{\code{{numeric}}}
+\item{pickable}{\code{\link{logical}}}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}}
+\item{opacity}{\code{\link{numeric}}}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}}
+\item{position_format}{\code{XY} | \code{XYZ}}
 
-\item{auto_highlight}{\code{{logical}}}
+\item{color_format}{\code{RGB} | \code{RGBA}}
 
-\item{highlight_color}{\code{{integer}}}
+\item{auto_highlight}{\code{\link{logical}}}
 
-\item{billboard}{\code{{logical}}}
+\item{highlight_color}{\code{\link{integer}}}
 
-\item{size_scale}{\code{{numeric}}}
+\item{billboard}{\code{\link{logical}}}
 
-\item{size_units}{\code{{"pixels" | "meters"}}}
+\item{size_scale}{\code{\link{numeric}}}
 
-\item{size_min_pixels}{\code{{numeric}}}
+\item{size_units}{\code{pixels} | \code{meters}}
 
-\item{size_max_pixels}{\code{{numeric}}}
+\item{size_min_pixels}{\code{\link{numeric}}}
 
-\item{background_color}{\code{{integer}}}
+\item{size_max_pixels}{\code{\link{numeric}}}
 
-\item{character_set}{\code{{character}}}
+\item{background_color}{\code{\link{integer}}}
 
-\item{font_family}{\code{{character}}}
+\item{character_set}{\verb{[character]}}
 
-\item{font_weight}{\code{{character}}}
+\item{font_family}{\code{\link{character}}}
 
-\item{line_height}{\code{{numeric}}}
+\item{font_weight}{\code{\link{character}}}
 
-\item{font_settings}{\code{{list}}}
+\item{line_height}{\code{\link{numeric}}}
 
-\item{word_break}{\code{{"break-all" | "break-word"}}}
+\item{font_settings}{\code{\link{list}}}
 
-\item{max_width}{\code{{numeric}}}
+\item{word_break}{\code{break-all} | \code{break-word}}
 
-\item{get_text}{\code{{accessor | JS}}}
+\item{max_width}{\code{\link{numeric}}}
 
-\item{get_position}{\code{{accessor | JS}}}
+\item{get_text}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_color}{\code{{accessor}}}
+\item{get_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{get_size}{\code{{accessor | numeric}}}
+\item{get_color}{accessor}
 
-\item{get_angle}{\code{{accessor | numeric}}}
+\item{get_size}{accessor | \code{\link{numeric}}}
 
-\item{get_text_anchor}{\code{{accessor | character}}}
+\item{get_angle}{accessor | \code{\link{numeric}}}
 
-\item{get_alignment_baseline}{\code{{accessor | character}}}
+\item{get_text_anchor}{accessor | \verb{[character]}}
 
-\item{get_pixel_offset}{\code{{accessor}}}
+\item{get_alignment_baseline}{accessor | \verb{[character]}}
 
-\item{...}{additional layer parameters to pass to deck.gl}
+\item{get_pixel_offset}{accessor}
+
+\item{...}{
+  Arguments passed on to \code{\link[=text_layer]{text_layer}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
-\\verb{\{rdeck\}\\}
+\code{\link{rdeck}}
+The \link{rdeck} map.
 }
 \description{
-Add TextLayer to an rdeck map.
+Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/text-layer.md}{TextLayer} deck.gl layer to an \link{rdeck} map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/text-layer.md}

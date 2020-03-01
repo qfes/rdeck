@@ -2,10 +2,11 @@
 % Please edit documentation in R/add_gpu_grid_layer.R
 \name{add_gpu_grid_layer}
 \alias{add_gpu_grid_layer}
-\title{Add GPUGridLayer to an rdeck map.}
+\title{Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/gpu-grid-layer.md}{GPUGridLayer} deck.gl layer to an \link{rdeck} map.}
 \usage{
 add_gpu_grid_layer(
   rdeck,
+  id = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
@@ -33,59 +34,69 @@ add_gpu_grid_layer(
 )
 }
 \arguments{
-\item{rdeck}{\\verb{\{rdeck\}\\} an rdeck widget instance}
+\item{rdeck}{\code{\link{rdeck}}
+An \link{rdeck} map.}
 
-\item{data}{\code{{data.frame | sf}}}
+\item{id}{\code{\link{character}}
+The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
+to properly distinguish between them.}
 
-\item{visible}{\code{{logical}}}
+\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
 
-\item{pickable}{\code{{logical}}}
+\item{visible}{\code{\link{logical}}}
 
-\item{opacity}{\code{{numeric}}}
+\item{pickable}{\code{\link{logical}}}
 
-\item{position_format}{\code{{"XY" | "XYZ"}}}
+\item{opacity}{\code{\link{numeric}}}
 
-\item{color_format}{\code{{"RGB" | "RGBA"}}}
+\item{position_format}{\code{XY} | \code{XYZ}}
 
-\item{auto_highlight}{\code{{logical}}}
+\item{color_format}{\code{RGB} | \code{RGBA}}
 
-\item{highlight_color}{\code{{integer}}}
+\item{auto_highlight}{\code{\link{logical}}}
 
-\item{color_domain}{\code{{numeric}}}
+\item{highlight_color}{\code{\link{integer}}}
 
-\item{color_range}{\code{{list}}}
+\item{color_domain}{\code{\link{numeric}}}
 
-\item{get_color_weight}{\code{{accessor | JS}}}
+\item{color_range}{\code{\link{list}}}
 
-\item{color_aggregation}{\code{{"SUM" | "MEAN" | "MIN" | "MAX"}}}
+\item{get_color_weight}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{elevation_domain}{\code{{numeric}}}
+\item{color_aggregation}{\code{SUM} | \code{MEAN} | \code{MIN} | \code{MAX}}
 
-\item{elevation_range}{\code{{numeric}}}
+\item{elevation_domain}{\code{\link{numeric}}}
 
-\item{get_elevation_weight}{\code{{accessor | JS}}}
+\item{elevation_range}{\code{\link{numeric}}}
 
-\item{elevation_aggregation}{\code{{"SUM" | "MEAN" | "MIN" | "MAX"}}}
+\item{get_elevation_weight}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{elevation_scale}{\code{{numeric}}}
+\item{elevation_aggregation}{\code{SUM} | \code{MEAN} | \code{MIN} | \code{MAX}}
 
-\item{cell_size}{\code{{numeric}}}
+\item{elevation_scale}{\code{\link{numeric}}}
 
-\item{coverage}{\code{{numeric}}}
+\item{cell_size}{\code{\link{numeric}}}
 
-\item{get_position}{\code{{accessor | JS}}}
+\item{coverage}{\code{\link{numeric}}}
 
-\item{extruded}{\code{{logical}}}
+\item{get_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
 
-\item{material}{\code{{logical}}}
+\item{extruded}{\code{\link{logical}}}
 
-\item{...}{additional layer parameters to pass to deck.gl}
+\item{material}{\code{\link{logical}}}
+
+\item{...}{
+  Arguments passed on to \code{\link[=gpu_grid_layer]{gpu_grid_layer}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
-\\verb{\{rdeck\}\\}
+\code{\link{rdeck}}
+The \link{rdeck} map.
 }
 \description{
-Add GPUGridLayer to an rdeck map.
+Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/gpu-grid-layer.md}{GPUGridLayer} deck.gl layer to an \link{rdeck} map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/gpu-grid-layer.md}
