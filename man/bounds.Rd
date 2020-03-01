@@ -7,7 +7,7 @@
 bounds(obj)
 }
 \arguments{
-\item{obj}{\code{\link[sf:sf]{sf::sf}} | \code{\link[sf:sfc]{sf::sfc}} | sf::sfg`
+\item{obj}{\code{\link[sf:sf]{sf::sf}} | \code{\link[sf:sfc]{sf::sfc}} | \code{sf::sfg}
 A simple features object, column or geometry to compute bounds from}
 }
 \value{

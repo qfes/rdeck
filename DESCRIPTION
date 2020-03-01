@@ -1,12 +1,12 @@
 Type: Package
 Package: rdeck
 Title: Deck.gl Widget
-Version: 0.2.1.9000
+Version: 0.2.2
 Authors@R:
     person(given = "Anthony", family = "North", role = c("aut", "cre"), email = "anthony.jl.north@gmail.com")
 Description: Deck.gl widget for R.
 License: MIT + file LICENSE
-URL: https://github.com/anthonynorth/rdeck
+URL: https://anthonynorth.github.io/rdeck, https://github.com/anthonynorth/rdeck
 BugReports: https://github.com/anthonynorth/rdeck/issues
 Depends:
     R (>= 3.3.0)

@@ -1,7 +1,7 @@
 #' Create a bounds instance from a simple features object, column or geometry
 #'
 #' @name bounds
-#' @param obj [`sf::sf`] | [`sf::sfc`] | sf::sfg`
+#' @param obj [`sf::sf`] | [`sf::sfc`] | `sf::sfg`
 #'  A simple features object, column or geometry to compute bounds from
 #'
 #' @return `bounds`
