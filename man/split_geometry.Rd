@@ -2,7 +2,7 @@
 % Please edit documentation in R/geometry.R
 \name{split_geometry}
 \alias{split_geometry}
-\title{split_geometry}
+\title{Split multi-geometries for deck.gl compatibility.}
 \usage{
 split_geometry(obj)
 }

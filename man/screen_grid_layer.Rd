@@ -64,7 +64,7 @@ to properly distinguish between them.}
 \item{aggregation}{\code{SUM} | \code{MEAN} | \code{MIN} | \code{MAX}}
 
 \item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{snakeCase}.}
+\code{snake_case} parameters will be converted to \code{camelCase}.}
 }
 \value{
 \code{ScreenGridLayer} & \code{\link{layer}}

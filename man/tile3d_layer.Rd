@@ -48,7 +48,7 @@ to properly distinguish between them.}
 \item{load_options}{\code{\link{list}}}
 
 \item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{snakeCase}.}
+\code{snake_case} parameters will be converted to \code{camelCase}.}
 }
 \value{
 \code{Tile3DLayer} & \code{\link{layer}}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/geometry.R
 \name{get_position_format}
 \alias{get_position_format}
-\title{get_position_format}
+\title{Get position format of geometry}
 \usage{
 get_position_format(obj)
 }

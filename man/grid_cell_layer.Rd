@@ -105,7 +105,7 @@ to properly distinguish between them.}
 \item{cell_size}{\code{\link{numeric}}}
 
 \item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{snakeCase}.}
+\code{snake_case} parameters will be converted to \code{camelCase}.}
 }
 \value{
 \code{GridCellLayer} & \code{\link{layer}}

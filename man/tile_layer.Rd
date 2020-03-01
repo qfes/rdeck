@@ -51,7 +51,7 @@ to properly distinguish between them.}
 \item{max_cache_size}{\code{\link{numeric}}}
 
 \item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{snakeCase}.}
+\code{snake_case} parameters will be converted to \code{camelCase}.}
 }
 \value{
 \code{TileLayer} & \code{\link{layer}}

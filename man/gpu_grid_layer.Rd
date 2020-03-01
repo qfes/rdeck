@@ -82,7 +82,7 @@ to properly distinguish between them.}
 \item{material}{\code{\link{logical}}}
 
 \item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{snakeCase}.}
+\code{snake_case} parameters will be converted to \code{camelCase}.}
 }
 \value{
 \code{GPUGridLayer} & \code{\link{layer}}

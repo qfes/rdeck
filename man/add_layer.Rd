@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_layer.R
 \name{add_layer}
 \alias{add_layer}
-\title{add_layer}
+\title{Add a deck.gl \href{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}{layer} to an rdeck map.}
 \usage{
 add_layer(rdeck, layer)
 }

@@ -1,6 +1,6 @@
 #' Create a bounds instance from a simple features object, column or geometry
 #'
-#' @title bounds
+#' @name bounds
 #' @param obj [`sf::sf`] | [`sf::sfc`] | sf::sfg`
 #'  A simple features object, column or geometry to compute bounds from
 #'
@@ -23,7 +23,7 @@ bounds <- function(obj) {
 
 #' Get position format of geometry
 #'
-#' @title get_position_format
+#' @name get_position_format
 #' @param obj [`sf::sf`] | [`sf::sfc`] | `sf::sfg` | [`data.frame`]
 #' @return `XY` | `XYZ`
 #'
@@ -44,7 +44,7 @@ get_position_format.sfg <- function(geom) {
 
 #' Split multi-geometries for deck.gl compatibility.
 #'
-#' @title split_geometry
+#' @name split_geometry
 #' @param obj [`sf::sf`]
 #'  An [sf::sf] object
 #'

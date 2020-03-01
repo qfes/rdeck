@@ -65,7 +65,7 @@
 #' @param get_pixel_offset accessor
 #'
 #' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `snakeCase`.
+#'  `snake_case` parameters will be converted to `camelCase`.
 #'
 #' @returns `TextLayer` & [`layer`]
 #'  A [TextLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/text-layer.md) layer.

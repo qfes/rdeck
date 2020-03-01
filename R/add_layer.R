@@ -1,6 +1,6 @@
 #' Add a deck.gl [layer](https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md) to an rdeck map.
 #'
-#' @title add_layer
+#' @name add_layer
 #'
 #' @param rdeck [`rdeck`]
 #'  An [rdeck] map.

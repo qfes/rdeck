@@ -51,7 +51,7 @@
 #' @param get_line_width accessor | [`numeric`]
 #'
 #' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `snakeCase`.
+#'  `snake_case` parameters will be converted to `camelCase`.
 #'
 #' @returns `ScatterplotLayer` & [`layer`]
 #'  A [ScatterplotLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/scatterplot-layer.md) layer.

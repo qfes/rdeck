@@ -63,7 +63,7 @@
 #' @param get_hexagon accessor | [`htmlwidgets::JS`]
 #'
 #' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `snakeCase`.
+#'  `snake_case` parameters will be converted to `camelCase`.
 #'
 #' @returns `H3HexagonLayer` & [`layer`]
 #'  A [H3HexagonLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/h3-hexagon-layer.md) layer.

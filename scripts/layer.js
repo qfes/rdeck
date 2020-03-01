@@ -41,7 +41,7 @@ class Layer {
     ${this.parameters.map(param => param.documentation).join("\n#'\n")}
     #'
     #' @param ... additional layer parameters to pass to deck.gl.
-    #'  \`snake_case\` parameters will be converted to \`snakeCase\`.
+    #'  \`snake_case\` parameters will be converted to \`camelCase\`.
     #'
     #' @returns \`${this.type}\` & [\`layer\`]
     #'  A [${this.type}](${this.url}) layer.

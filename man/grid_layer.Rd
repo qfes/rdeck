@@ -112,7 +112,7 @@ to properly distinguish between them.}
 \item{gpu_aggregation}{\code{\link{logical}}}
 
 \item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{snakeCase}.}
+\code{snake_case} parameters will be converted to \code{camelCase}.}
 }
 \value{
 \code{GridLayer} & \code{\link{layer}}

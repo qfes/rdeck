@@ -41,7 +41,7 @@
 #' @param material [`logical`]
 #'
 #' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `snakeCase`.
+#'  `snake_case` parameters will be converted to `camelCase`.
 #'
 #' @returns `SolidPolygonLayer` & [`layer`]
 #'  A [SolidPolygonLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/solid-polygon-layer.md) layer.

@@ -78,7 +78,7 @@ to properly distinguish between them.}
 \item{get_timestamps}{accessor}
 
 \item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{snakeCase}.}
+\code{snake_case} parameters will be converted to \code{camelCase}.}
 }
 \value{
 \code{TripsLayer} & \code{\link{layer}}

@@ -81,7 +81,7 @@ to properly distinguish between them.}
 \item{get_line_width}{accessor | \code{\link{numeric}}}
 
 \item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{snakeCase}.}
+\code{snake_case} parameters will be converted to \code{camelCase}.}
 }
 \value{
 \code{ScatterplotLayer} & \code{\link{layer}}

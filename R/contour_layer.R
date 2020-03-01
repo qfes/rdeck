@@ -37,7 +37,7 @@
 #' @param z_offset [`numeric`]
 #'
 #' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `snakeCase`.
+#'  `snake_case` parameters will be converted to `camelCase`.
 #'
 #' @returns `ContourLayer` & [`layer`]
 #'  A [ContourLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/contour-layer.md) layer.

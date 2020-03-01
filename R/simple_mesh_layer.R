@@ -45,7 +45,7 @@
 #' @param get_transform_matrix accessor
 #'
 #' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `snakeCase`.
+#'  `snake_case` parameters will be converted to `camelCase`.
 #'
 #' @returns `SimpleMeshLayer` & [`layer`]
 #'  A [SimpleMeshLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/simple-mesh-layer.md) layer.

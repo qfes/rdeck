@@ -2,7 +2,7 @@
 % Please edit documentation in R/geometry.R
 \name{bounds}
 \alias{bounds}
-\title{bounds}
+\title{Create a bounds instance from a simple features object, column or geometry}
 \usage{
 bounds(obj)
 }

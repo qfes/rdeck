@@ -51,7 +51,7 @@
 #' @param material [`logical`]
 #'
 #' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `snakeCase`.
+#'  `snake_case` parameters will be converted to `camelCase`.
 #'
 #' @returns `GPUGridLayer` & [`layer`]
 #'  A [GPUGridLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/gpu-grid-layer.md) layer.

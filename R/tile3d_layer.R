@@ -29,7 +29,7 @@
 #' @param load_options [`list`]
 #'
 #' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `snakeCase`.
+#'  `snake_case` parameters will be converted to `camelCase`.
 #'
 #' @returns `Tile3DLayer` & [`layer`]
 #'  A [Tile3DLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/tile-3d-layer.md) layer.

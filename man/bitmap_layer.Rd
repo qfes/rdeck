@@ -54,7 +54,7 @@ to properly distinguish between them.}
 \item{tint_color}{\code{\link{integer}}}
 
 \item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{snakeCase}.}
+\code{snake_case} parameters will be converted to \code{camelCase}.}
 }
 \value{
 \code{BitmapLayer} & \code{\link{layer}}
