@@ -1,5 +1,6 @@
 const { resolve } = require("path");
 const webpack = require("webpack");
+const postcssPresetEnv = require("postcss-preset-env");
 
 const config = {
   mode: "production",
@@ -17,7 +18,25 @@ const config = {
     rules: [
       {
         test: /\.(ts|js)x?$/,
+        exclude: /node_modules/,
         loader: "babel-loader"
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: { importLoaders: 1, sourceMap: true }
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              ident: "postcss",
+              plugins: () => [postcssPresetEnv()]
+            }
+          }
+        ]
       }
     ]
   },
