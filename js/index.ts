@@ -1,6 +1,4 @@
 declare const __VERSION__: string;
 
-module.exports = {
-  VERSION: __VERSION__,
-  binding: require("./widget").default
-};
+export const VERSION = __VERSION__;
+export { default as binding } from "./widget";
