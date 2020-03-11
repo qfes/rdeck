@@ -21,6 +21,7 @@
     "@types/mapbox-gl": "^1.8.0",
     "@types/node": "^13.9.0",
     "core-js": "^3.6.4",
+    "h3-js": "^3.6.3",
     "mapbox-gl": "^1.8.1",
     "s2-geometry": "^1.2.10"
   },
