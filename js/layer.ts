@@ -18,15 +18,18 @@ export default class DeckLayer {
     // not picked or no tooltip config
     if (!(info.picked && tooltip)) return;
     // no data
-    if (!(info.object || data.frame)) return;
+    if (!(info.object || data?.frame)) return;
 
-    const getEntry = info.object
-      ? (key: string) => [key, info.object[key]]
-      : (key: string) => [key, data.frame[key][info.index]];
+    const names: string[] = [tooltip].flat();
+    const object: Record<string, any> = info.object;
+
+    const entries = object
+      ? names.map(key => [key, object[key]])
+      : names.map(key => [key, data.frame[key][info.index]]);
 
     return {
       name: name ?? id,
-      entries: [tooltip].flat().map(getEntry)
+      entries
     };
   }
 }
