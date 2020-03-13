@@ -5,12 +5,12 @@
     "build": "npm run build:js",
     "start": "webpack --watch --env.dev",
     "build:js": "webpack -p --mode production",
-    "gen:layers": "node ./scripts/generate-layers.js",
+    "gen:interface": "node ./scripts/generate.js",
     "styler": "R -e \"styler::style_dir('./R')\"",
-    "generate-layers": "npm run gen:layers && npm run styler"
+    "generate-interface": "npm run gen:interface && npm run styler"
   },
   "dependencies": {
-    "@danmarshall/deckgl-typings": "^3.4.5",
+    "@danmarshall/deckgl-typings": "^3.4.7",
     "@deck.gl/aggregation-layers": "^8.0.17",
     "@deck.gl/core": "^8.0.17",
     "@deck.gl/extensions": "^8.0.17",
@@ -38,6 +38,8 @@
     "babel-plugin-version-inline": "^1.0.0",
     "browserslist-config-google": "^2.0.0",
     "css-loader": "^3.4.2",
+    "marked": "^0.8.0",
+    "node-fetch": "^2.6.0",
     "param-case": "^3.0.3",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
@@ -50,5 +52,8 @@
   },
   "browserslist": [
     "extends browserslist-config-google/modern"
-  ]
+  ],
+  "prettier": {
+    "printWidth": 100
+  }
 }

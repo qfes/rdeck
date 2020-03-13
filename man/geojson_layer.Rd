@@ -2,11 +2,11 @@
 % Please edit documentation in R/geojson_layer.R
 \name{geojson_layer}
 \alias{geojson_layer}
-\title{\href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/geojson-layer.md}{GeoJsonLayer} deck.gl layer.}
+\title{GeoJsonLayer}
 \usage{
 geojson_layer(
-  id = NULL,
-  data = NULL,
+  id = "GeoJsonLayer",
+  data = data.frame(),
   visible = TRUE,
   pickable = FALSE,
   opacity = 1,
@@ -28,87 +28,84 @@ geojson_layer(
   point_radius_scale = 1,
   point_radius_min_pixels = 0,
   point_radius_max_pixels = 9007199254740991,
-  get_line_color = NULL,
-  get_fill_color = NULL,
-  get_radius = NULL,
-  get_line_width = NULL,
-  get_elevation = NULL,
+  get_line_color = c(0, 0, 0, 255),
+  get_fill_color = c(0, 0, 0, 255),
+  get_radius = 1,
+  get_line_width = 1,
+  get_elevation = 1000,
   material = TRUE,
   ...
 )
 }
 \arguments{
-\item{id}{\code{\link{character}}
+\item{id}{\code{character}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
 to properly distinguish between them.}
 
-\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
+\item{data}{\code{data.frame} | \code{sf::sf}
+Deck.gl layer data, either a \link{data.frame} or \link[sf:sf]{sf::sf}.}
 
-\item{visible}{\code{\link{logical}}}
+\item{visible}{\code{logical}
+Whether the layer is visible.}
 
-\item{pickable}{\code{\link{logical}}}
+\item{pickable}{\code{logical}
+Whether the layer responds to mouse pointer picking events.}
 
-\item{opacity}{\code{\link{numeric}}}
+\item{opacity}{\code{numeric}
+The opacity of the layer.}
 
-\item{position_format}{\code{XY} | \code{XYZ}}
+\item{position_format}{\code{"XY"} | \code{"XYZ"}
+Determines whether each coordinate has two (XY) or three (XYZ) numbers.}
 
-\item{color_format}{\code{RGB} | \code{RGBA}}
+\item{color_format}{\code{"RGB"} | \code{"RGBA"}
+RGB will make the layer ignore the alpha channel of colours returned by
+accessors. Opacity controlled by \code{opacity} is still applied.}
 
-\item{auto_highlight}{\code{\link{logical}}}
+\item{auto_highlight}{\code{logical}
+When \code{TRUE}, current object pointed by mouse pointer (when hovered over) is
+highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 
-\item{highlight_color}{\code{\link{integer}}}
+\item{highlight_color}{\code{integer} vector of (R,G,B) or (R,G,B,A)
+RGBA color to be used to render highlighted object. When 3 component (RGB)
+array is specified, a default value of 255 is used for alpha.}
 
-\item{stroked}{\code{\link{logical}}}
-
-\item{filled}{\code{\link{logical}}}
-
-\item{extruded}{\code{\link{logical}}}
-
-\item{wireframe}{\code{\link{logical}}}
-
-\item{line_width_units}{\code{pixels} | \code{meters}}
-
-\item{line_width_scale}{\code{\link{numeric}}}
-
-\item{line_width_min_pixels}{\code{\link{numeric}}}
-
-\item{line_width_max_pixels}{\code{\link{numeric}}}
-
-\item{line_joint_rounded}{\code{\link{logical}}}
-
-\item{line_miter_limit}{\code{\link{numeric}}}
-
-\item{elevation_scale}{\code{\link{numeric}}}
-
-\item{point_radius_scale}{\code{\link{numeric}}}
-
-\item{point_radius_min_pixels}{\code{\link{numeric}}}
-
-\item{point_radius_max_pixels}{\code{\link{numeric}}}
-
-\item{get_line_color}{accessor}
-
-\item{get_fill_color}{accessor}
-
-\item{get_radius}{accessor | \code{\link{numeric}}}
-
-\item{get_line_width}{accessor | \code{\link{numeric}}}
-
-\item{get_elevation}{accessor | \code{\link{numeric}}}
-
-\item{material}{\code{\link{logical}}}
-
-\item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{camelCase}.}
-}
-\value{
-\code{GeoJsonLayer} & \code{\link{layer}}
-A \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/geojson-layer.md}{GeoJsonLayer} layer.
-Add to an \link{rdeck} map via \code{\link{add_layer}} or \code{\link{rdeck}}.
+\item{...}{additional deck.gl layer parameters}
 }
 \description{
-\href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/geojson-layer.md}{GeoJsonLayer} deck.gl layer.
+GeoJsonLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/geojson-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/geojson-layer.md}
+
+Other layers: 
+\code{\link{arc_layer}()},
+\code{\link{bitmap_layer}()},
+\code{\link{column_layer}()},
+\code{\link{contour_layer}()},
+\code{\link{cpu_grid_layer}()},
+\code{\link{gpu_grid_layer}()},
+\code{\link{great_circle_layer}()},
+\code{\link{grid_cell_layer}()},
+\code{\link{grid_layer}()},
+\code{\link{h3_cluster_layer}()},
+\code{\link{h3_hexagon_layer}()},
+\code{\link{heatmap_layer}()},
+\code{\link{hexagon_layer}()},
+\code{\link{icon_layer}()},
+\code{\link{layer}()},
+\code{\link{line_layer}()},
+\code{\link{path_layer}()},
+\code{\link{point_cloud_layer}()},
+\code{\link{polygon_layer}()},
+\code{\link{s2_layer}()},
+\code{\link{scatterplot_layer}()},
+\code{\link{scenegraph_layer}()},
+\code{\link{screen_grid_layer}()},
+\code{\link{simple_mesh_layer}()},
+\code{\link{solid_polygon_layer}()},
+\code{\link{text_layer}()},
+\code{\link{tile3d_layer}()},
+\code{\link{tile_layer}()},
+\code{\link{trips_layer}()}
 }
+\concept{layers}

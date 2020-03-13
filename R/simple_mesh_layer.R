@@ -1,61 +1,9 @@
-#' [SimpleMeshLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/simple-mesh-layer.md) deck.gl layer.
-#'
 #' @name simple_mesh_layer
-#'
-#' @param id [`character`]
-#'  The id of the layer. Layer ids must be unique per layer `type` for deck.gl
-#'  to properly distinguish between them.
-#'
-#' @param data [`data.frame`] | [`sf::sf`]
-#'
-#' @param visible [`logical`]
-#'
-#' @param pickable [`logical`]
-#'
-#' @param opacity [`numeric`]
-#'
-#' @param position_format `XY` | `XYZ`
-#'
-#' @param color_format `RGB` | `RGBA`
-#'
-#' @param auto_highlight [`logical`]
-#'
-#' @param highlight_color [`integer`]
-#'
-#' @param mesh [`list`]
-#'
-#' @param texture [`list`]
-#'
-#' @param size_scale [`numeric`]
-#'
-#' @param wireframe [`logical`]
-#'
-#' @param material [`logical`]
-#'
-#' @param get_position accessor | [`htmlwidgets::JS`]
-#'
-#' @param get_color accessor
-#'
-#' @param get_orientation accessor
-#'
-#' @param get_scale accessor
-#'
-#' @param get_translation accessor
-#'
-#' @param get_transform_matrix accessor
-#'
-#' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `camelCase`.
-#'
-#' @returns `SimpleMeshLayer` & [`layer`]
-#'  A [SimpleMeshLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/simple-mesh-layer.md) layer.
-#'  Add to an [rdeck] map via [`add_layer`] or [`rdeck`].
-#'
-#' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/simple-mesh-layer.md}
-#'
+#' @template simple_mesh_layer
+#' @family layers
 #' @export
-simple_mesh_layer <- function(id = NULL,
-                              data = NULL,
+simple_mesh_layer <- function(id = "SimpleMeshLayer",
+                              data = data.frame(),
                               visible = TRUE,
                               pickable = FALSE,
                               opacity = 1,
@@ -68,83 +16,34 @@ simple_mesh_layer <- function(id = NULL,
                               size_scale = 1,
                               wireframe = FALSE,
                               material = TRUE,
-                              get_position = NULL,
-                              get_color = NULL,
-                              get_orientation = NULL,
-                              get_scale = NULL,
-                              get_translation = NULL,
+                              get_position = position,
+                              get_color = c(0, 0, 0, 255),
+                              get_orientation = c(0, 0, 0),
+                              get_scale = c(1, 1, 1),
+                              get_translation = c(0, 0, 0),
                               get_transform_matrix = NULL,
                               ...) {
-  # auto-resolve geometry column
+  arguments <- get_arguments()
+  parameters <- c(
+    list(type = "SimpleMeshLayer"),
+    get_arguments()
+  )
+  # auto-resolve geometry
   if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column")) %>%
-      accessor(data = data, columnar = TRUE)
+    parameters$get_position <- as.name(attr(data, "sf_column"))
   }
 
-  get_color <- substitute(get_color) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_orientation <- substitute(get_orientation) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_scale <- substitute(get_scale) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_translation <- substitute(get_translation) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_transform_matrix <- substitute(get_transform_matrix) %>%
-    accessor(data = data, columnar = TRUE)
-
-  params <- c(
-    list(
-      type = "SimpleMeshLayer",
-      id = id,
-      data = data,
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color,
-      mesh = mesh,
-      texture = texture,
-      size_scale = size_scale,
-      wireframe = wireframe,
-      material = material,
-      get_position = get_position,
-      get_color = get_color,
-      get_orientation = get_orientation,
-      get_scale = get_scale,
-      get_translation = get_translation,
-      get_transform_matrix = get_transform_matrix
-    ),
-    list(...)
-  )
-
-  do.call(layer, params)
+  do.call(layer, parameters)
 }
 
-#' Add a [SimpleMeshLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/simple-mesh-layer.md) deck.gl layer to an [rdeck] map.
-#'
 #' @name add_simple_mesh_layer
-#'
-#' @param rdeck [`rdeck`]
-#'  An [rdeck] map.
-#'
-#' @inheritParams simple_mesh_layer
-#' @inheritDotParams simple_mesh_layer
-#'
-#' @returns [`rdeck`]
-#'  The [rdeck] map.
-#'
-#' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/simple-mesh-layer.md}
-#'
+#' @template simple_mesh_layer
+#' @param rdeck `rdeck`
+#' @family add_layers
 #' @export
 add_simple_mesh_layer <- function(rdeck,
-                                  id = NULL,
-                                  data = NULL,
+                                  id = "SimpleMeshLayer",
+                                  data = data.frame(),
                                   visible = TRUE,
                                   pickable = FALSE,
                                   opacity = 1,
@@ -157,15 +56,15 @@ add_simple_mesh_layer <- function(rdeck,
                                   size_scale = 1,
                                   wireframe = FALSE,
                                   material = TRUE,
-                                  get_position = NULL,
-                                  get_color = NULL,
-                                  get_orientation = NULL,
-                                  get_scale = NULL,
-                                  get_translation = NULL,
+                                  get_position = position,
+                                  get_color = c(0, 0, 0, 255),
+                                  get_orientation = c(0, 0, 0),
+                                  get_scale = c(1, 1, 1),
+                                  get_translation = c(0, 0, 0),
                                   get_transform_matrix = NULL,
                                   ...) {
-  params <- as.list(match.call())[-(1:2)]
-  layer <- do.call(simple_mesh_layer, params)
+  parameters <- get_arguments()[-1]
+  layer <- do.call(simple_mesh_layer, parameters)
 
   add_layer(rdeck, layer)
 }

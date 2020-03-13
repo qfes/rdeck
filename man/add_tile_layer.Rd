@@ -2,12 +2,12 @@
 % Please edit documentation in R/tile_layer.R
 \name{add_tile_layer}
 \alias{add_tile_layer}
-\title{Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/tile-layer.md}{TileLayer} deck.gl layer to an \link{rdeck} map.}
+\title{TileLayer}
 \usage{
 add_tile_layer(
   rdeck,
-  id = NULL,
-  data = NULL,
+  id = "TileLayer",
+  data = data.frame(),
   visible = TRUE,
   pickable = FALSE,
   opacity = 1,
@@ -23,50 +23,75 @@ add_tile_layer(
 )
 }
 \arguments{
-\item{rdeck}{\code{\link{rdeck}}
-An \link{rdeck} map.}
+\item{rdeck}{\code{rdeck}}
 
-\item{id}{\code{\link{character}}
+\item{id}{\code{character}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
 to properly distinguish between them.}
 
-\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
+\item{data}{\code{data.frame} | \code{sf::sf}
+Deck.gl layer data, either a \link{data.frame} or \link[sf:sf]{sf::sf}.}
 
-\item{visible}{\code{\link{logical}}}
+\item{visible}{\code{logical}
+Whether the layer is visible.}
 
-\item{pickable}{\code{\link{logical}}}
+\item{pickable}{\code{logical}
+Whether the layer responds to mouse pointer picking events.}
 
-\item{opacity}{\code{\link{numeric}}}
+\item{opacity}{\code{numeric}
+The opacity of the layer.}
 
-\item{position_format}{\code{XY} | \code{XYZ}}
+\item{position_format}{\code{"XY"} | \code{"XYZ"}
+Determines whether each coordinate has two (XY) or three (XYZ) numbers.}
 
-\item{color_format}{\code{RGB} | \code{RGBA}}
+\item{color_format}{\code{"RGB"} | \code{"RGBA"}
+RGB will make the layer ignore the alpha channel of colours returned by
+accessors. Opacity controlled by \code{opacity} is still applied.}
 
-\item{auto_highlight}{\code{\link{logical}}}
+\item{auto_highlight}{\code{logical}
+When \code{TRUE}, current object pointed by mouse pointer (when hovered over) is
+highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 
-\item{highlight_color}{\code{\link{integer}}}
+\item{highlight_color}{\code{integer} vector of (R,G,B) or (R,G,B,A)
+RGBA color to be used to render highlighted object. When 3 component (RGB)
+array is specified, a default value of 255 is used for alpha.}
 
-\item{get_tile_data}{\code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
-
-\item{max_zoom}{\code{\link{numeric}}}
-
-\item{min_zoom}{\code{\link{numeric}}}
-
-\item{max_cache_size}{\code{\link{numeric}}}
-
-\item{...}{
-  Arguments passed on to \code{\link[=tile_layer]{tile_layer}}
-  \describe{
-    \item{\code{}}{}
-  }}
-}
-\value{
-\code{\link{rdeck}}
-The \link{rdeck} map.
+\item{...}{additional deck.gl layer parameters}
 }
 \description{
-Add a \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/tile-layer.md}{TileLayer} deck.gl layer to an \link{rdeck} map.
+TileLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/tile-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/tile-layer.md}
+
+Other add_layers: 
+\code{\link{add_arc_layer}()},
+\code{\link{add_bitmap_layer}()},
+\code{\link{add_column_layer}()},
+\code{\link{add_contour_layer}()},
+\code{\link{add_cpu_grid_layer}()},
+\code{\link{add_geojson_layer}()},
+\code{\link{add_gpu_grid_layer}()},
+\code{\link{add_great_circle_layer}()},
+\code{\link{add_grid_cell_layer}()},
+\code{\link{add_grid_layer}()},
+\code{\link{add_h3_cluster_layer}()},
+\code{\link{add_h3_hexagon_layer}()},
+\code{\link{add_heatmap_layer}()},
+\code{\link{add_hexagon_layer}()},
+\code{\link{add_icon_layer}()},
+\code{\link{add_line_layer}()},
+\code{\link{add_path_layer}()},
+\code{\link{add_point_cloud_layer}()},
+\code{\link{add_polygon_layer}()},
+\code{\link{add_s2_layer}()},
+\code{\link{add_scatterplot_layer}()},
+\code{\link{add_scenegraph_layer}()},
+\code{\link{add_screen_grid_layer}()},
+\code{\link{add_simple_mesh_layer}()},
+\code{\link{add_solid_polygon_layer}()},
+\code{\link{add_text_layer}()},
+\code{\link{add_tile3d_layer}()},
+\code{\link{add_trips_layer}()}
 }
+\concept{add_layers}

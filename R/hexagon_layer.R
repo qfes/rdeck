@@ -1,85 +1,9 @@
-#' [HexagonLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/hexagon-layer.md) deck.gl layer.
-#'
 #' @name hexagon_layer
-#'
-#' @param id [`character`]
-#'  The id of the layer. Layer ids must be unique per layer `type` for deck.gl
-#'  to properly distinguish between them.
-#'
-#' @param data [`data.frame`] | [`sf::sf`]
-#'
-#' @param visible [`logical`]
-#'
-#' @param pickable [`logical`]
-#'
-#' @param opacity [`numeric`]
-#'
-#' @param position_format `XY` | `XYZ`
-#'
-#' @param color_format `RGB` | `RGBA`
-#'
-#' @param auto_highlight [`logical`]
-#'
-#' @param highlight_color [`integer`]
-#'
-#' @param color_domain [`numeric`]
-#'
-#' @param color_range [`list`]
-#'
-#' @param get_color_value accessor
-#'
-#' @param get_color_weight accessor | [`htmlwidgets::JS`]
-#'
-#' @param color_aggregation `SUM` | `MEAN` | `MIN` | `MAX`
-#'
-#' @param lower_percentile [`numeric`]
-#'
-#' @param upper_percentile [`numeric`]
-#'
-#' @param color_scale_type `quantize` | `linear` | `quantile` | `ordinal`
-#'
-#' @param elevation_domain [`numeric`]
-#'
-#' @param elevation_range [`numeric`]
-#'
-#' @param get_elevation_value accessor
-#'
-#' @param get_elevation_weight accessor | [`htmlwidgets::JS`]
-#'
-#' @param elevation_aggregation `SUM` | `MEAN` | `MIN` | `MAX`
-#'
-#' @param elevation_lower_percentile [`numeric`]
-#'
-#' @param elevation_upper_percentile [`numeric`]
-#'
-#' @param elevation_scale [`numeric`]
-#'
-#' @param elevation_scale_type `quantize` | `linear` | `quantile` | `ordinal`
-#'
-#' @param radius [`numeric`]
-#'
-#' @param coverage [`numeric`]
-#'
-#' @param extruded [`logical`]
-#'
-#' @param hexagon_aggregator [`htmlwidgets::JS`]
-#'
-#' @param get_position accessor | [`htmlwidgets::JS`]
-#'
-#' @param material [`logical`]
-#'
-#' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `camelCase`.
-#'
-#' @returns `HexagonLayer` & [`layer`]
-#'  A [HexagonLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/hexagon-layer.md) layer.
-#'  Add to an [rdeck] map via [`add_layer`] or [`rdeck`].
-#'
-#' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/hexagon-layer.md}
-#'
+#' @template hexagon_layer
+#' @family layers
 #' @export
-hexagon_layer <- function(id = NULL,
-                          data = NULL,
+hexagon_layer <- function(id = "HexagonLayer",
+                          data = data.frame(),
                           visible = TRUE,
                           pickable = FALSE,
                           opacity = 1,
@@ -97,7 +21,7 @@ hexagon_layer <- function(id = NULL,
                             c(189, 0, 38)
                           ),
                           get_color_value = NULL,
-                          get_color_weight = NULL,
+                          get_color_weight = 1,
                           color_aggregation = "SUM",
                           lower_percentile = 0,
                           upper_percentile = 100,
@@ -105,7 +29,7 @@ hexagon_layer <- function(id = NULL,
                           elevation_domain = NULL,
                           elevation_range = c(0, 1000),
                           get_elevation_value = NULL,
-                          get_elevation_weight = NULL,
+                          get_elevation_weight = 1,
                           elevation_aggregation = "SUM",
                           elevation_lower_percentile = 0,
                           elevation_upper_percentile = 100,
@@ -115,88 +39,30 @@ hexagon_layer <- function(id = NULL,
                           coverage = 1,
                           extruded = FALSE,
                           hexagon_aggregator = NULL,
-                          get_position = NULL,
+                          get_position = position,
                           material = TRUE,
                           ...) {
-  get_color_value <- substitute(get_color_value) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_color_weight <- substitute(get_color_weight) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_elevation_value <- substitute(get_elevation_value) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_elevation_weight <- substitute(get_elevation_weight) %>%
-    accessor(data = data, columnar = TRUE)
-
-  # auto-resolve geometry column
+  arguments <- get_arguments()
+  parameters <- c(
+    list(type = "HexagonLayer"),
+    get_arguments()
+  )
+  # auto-resolve geometry
   if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column")) %>%
-      accessor(data = data, columnar = TRUE)
+    parameters$get_position <- as.name(attr(data, "sf_column"))
   }
 
-  params <- c(
-    list(
-      type = "HexagonLayer",
-      id = id,
-      data = data,
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color,
-      color_domain = color_domain,
-      color_range = color_range,
-      get_color_value = get_color_value,
-      get_color_weight = get_color_weight,
-      color_aggregation = color_aggregation,
-      lower_percentile = lower_percentile,
-      upper_percentile = upper_percentile,
-      color_scale_type = color_scale_type,
-      elevation_domain = elevation_domain,
-      elevation_range = elevation_range,
-      get_elevation_value = get_elevation_value,
-      get_elevation_weight = get_elevation_weight,
-      elevation_aggregation = elevation_aggregation,
-      elevation_lower_percentile = elevation_lower_percentile,
-      elevation_upper_percentile = elevation_upper_percentile,
-      elevation_scale = elevation_scale,
-      elevation_scale_type = elevation_scale_type,
-      radius = radius,
-      coverage = coverage,
-      extruded = extruded,
-      hexagon_aggregator = hexagon_aggregator,
-      get_position = get_position,
-      material = material
-    ),
-    list(...)
-  )
-
-  do.call(layer, params)
+  do.call(layer, parameters)
 }
 
-#' Add a [HexagonLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/hexagon-layer.md) deck.gl layer to an [rdeck] map.
-#'
 #' @name add_hexagon_layer
-#'
-#' @param rdeck [`rdeck`]
-#'  An [rdeck] map.
-#'
-#' @inheritParams hexagon_layer
-#' @inheritDotParams hexagon_layer
-#'
-#' @returns [`rdeck`]
-#'  The [rdeck] map.
-#'
-#' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/hexagon-layer.md}
-#'
+#' @template hexagon_layer
+#' @param rdeck `rdeck`
+#' @family add_layers
 #' @export
 add_hexagon_layer <- function(rdeck,
-                              id = NULL,
-                              data = NULL,
+                              id = "HexagonLayer",
+                              data = data.frame(),
                               visible = TRUE,
                               pickable = FALSE,
                               opacity = 1,
@@ -214,7 +80,7 @@ add_hexagon_layer <- function(rdeck,
                                 c(189, 0, 38)
                               ),
                               get_color_value = NULL,
-                              get_color_weight = NULL,
+                              get_color_weight = 1,
                               color_aggregation = "SUM",
                               lower_percentile = 0,
                               upper_percentile = 100,
@@ -222,7 +88,7 @@ add_hexagon_layer <- function(rdeck,
                               elevation_domain = NULL,
                               elevation_range = c(0, 1000),
                               get_elevation_value = NULL,
-                              get_elevation_weight = NULL,
+                              get_elevation_weight = 1,
                               elevation_aggregation = "SUM",
                               elevation_lower_percentile = 0,
                               elevation_upper_percentile = 100,
@@ -232,11 +98,11 @@ add_hexagon_layer <- function(rdeck,
                               coverage = 1,
                               extruded = FALSE,
                               hexagon_aggregator = NULL,
-                              get_position = NULL,
+                              get_position = position,
                               material = TRUE,
                               ...) {
-  params <- as.list(match.call())[-(1:2)]
-  layer <- do.call(hexagon_layer, params)
+  parameters <- get_arguments()[-1]
+  layer <- do.call(hexagon_layer, parameters)
 
   add_layer(rdeck, layer)
 }

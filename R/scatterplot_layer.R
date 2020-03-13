@@ -1,67 +1,9 @@
-#' [ScatterplotLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/scatterplot-layer.md) deck.gl layer.
-#'
 #' @name scatterplot_layer
-#'
-#' @param id [`character`]
-#'  The id of the layer. Layer ids must be unique per layer `type` for deck.gl
-#'  to properly distinguish between them.
-#'
-#' @param data [`data.frame`] | [`sf::sf`]
-#'
-#' @param visible [`logical`]
-#'
-#' @param pickable [`logical`]
-#'
-#' @param opacity [`numeric`]
-#'
-#' @param position_format `XY` | `XYZ`
-#'
-#' @param color_format `RGB` | `RGBA`
-#'
-#' @param auto_highlight [`logical`]
-#'
-#' @param highlight_color [`integer`]
-#'
-#' @param radius_scale [`numeric`]
-#'
-#' @param radius_min_pixels [`numeric`]
-#'
-#' @param radius_max_pixels [`numeric`]
-#'
-#' @param line_width_units `pixels` | `meters`
-#'
-#' @param line_width_scale [`numeric`]
-#'
-#' @param line_width_min_pixels [`numeric`]
-#'
-#' @param line_width_max_pixels [`numeric`]
-#'
-#' @param stroked [`logical`]
-#'
-#' @param filled [`logical`]
-#'
-#' @param get_position accessor | [`htmlwidgets::JS`]
-#'
-#' @param get_radius accessor | [`numeric`]
-#'
-#' @param get_fill_color accessor
-#'
-#' @param get_line_color accessor
-#'
-#' @param get_line_width accessor | [`numeric`]
-#'
-#' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `camelCase`.
-#'
-#' @returns `ScatterplotLayer` & [`layer`]
-#'  A [ScatterplotLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/scatterplot-layer.md) layer.
-#'  Add to an [rdeck] map via [`add_layer`] or [`rdeck`].
-#'
-#' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/scatterplot-layer.md}
-#'
+#' @template scatterplot_layer
+#' @family layers
 #' @export
-scatterplot_layer <- function(id = NULL,
-                              data = NULL,
+scatterplot_layer <- function(id = "ScatterplotLayer",
+                              data = data.frame(),
                               visible = TRUE,
                               pickable = FALSE,
                               opacity = 1,
@@ -78,82 +20,33 @@ scatterplot_layer <- function(id = NULL,
                               line_width_max_pixels = 9007199254740991,
                               stroked = FALSE,
                               filled = TRUE,
-                              get_position = NULL,
-                              get_radius = NULL,
-                              get_fill_color = NULL,
-                              get_line_color = NULL,
-                              get_line_width = NULL,
+                              get_position = position,
+                              get_radius = 1,
+                              get_fill_color = c(0, 0, 0, 255),
+                              get_line_color = c(0, 0, 0, 255),
+                              get_line_width = 1,
                               ...) {
-  # auto-resolve geometry column
+  arguments <- get_arguments()
+  parameters <- c(
+    list(type = "ScatterplotLayer"),
+    get_arguments()
+  )
+  # auto-resolve geometry
   if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column")) %>%
-      accessor(data = data, columnar = TRUE)
+    parameters$get_position <- as.name(attr(data, "sf_column"))
   }
 
-  get_radius <- substitute(get_radius) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_fill_color <- substitute(get_fill_color) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_line_color <- substitute(get_line_color) %>%
-    accessor(data = data, columnar = TRUE)
-
-  get_line_width <- substitute(get_line_width) %>%
-    accessor(data = data, columnar = TRUE)
-
-  params <- c(
-    list(
-      type = "ScatterplotLayer",
-      id = id,
-      data = data,
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color,
-      radius_scale = radius_scale,
-      radius_min_pixels = radius_min_pixels,
-      radius_max_pixels = radius_max_pixels,
-      line_width_units = line_width_units,
-      line_width_scale = line_width_scale,
-      line_width_min_pixels = line_width_min_pixels,
-      line_width_max_pixels = line_width_max_pixels,
-      stroked = stroked,
-      filled = filled,
-      get_position = get_position,
-      get_radius = get_radius,
-      get_fill_color = get_fill_color,
-      get_line_color = get_line_color,
-      get_line_width = get_line_width
-    ),
-    list(...)
-  )
-
-  do.call(layer, params)
+  do.call(layer, parameters)
 }
 
-#' Add a [ScatterplotLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/scatterplot-layer.md) deck.gl layer to an [rdeck] map.
-#'
 #' @name add_scatterplot_layer
-#'
-#' @param rdeck [`rdeck`]
-#'  An [rdeck] map.
-#'
-#' @inheritParams scatterplot_layer
-#' @inheritDotParams scatterplot_layer
-#'
-#' @returns [`rdeck`]
-#'  The [rdeck] map.
-#'
-#' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/scatterplot-layer.md}
-#'
+#' @template scatterplot_layer
+#' @param rdeck `rdeck`
+#' @family add_layers
 #' @export
 add_scatterplot_layer <- function(rdeck,
-                                  id = NULL,
-                                  data = NULL,
+                                  id = "ScatterplotLayer",
+                                  data = data.frame(),
                                   visible = TRUE,
                                   pickable = FALSE,
                                   opacity = 1,
@@ -170,14 +63,14 @@ add_scatterplot_layer <- function(rdeck,
                                   line_width_max_pixels = 9007199254740991,
                                   stroked = FALSE,
                                   filled = TRUE,
-                                  get_position = NULL,
-                                  get_radius = NULL,
-                                  get_fill_color = NULL,
-                                  get_line_color = NULL,
-                                  get_line_width = NULL,
+                                  get_position = position,
+                                  get_radius = 1,
+                                  get_fill_color = c(0, 0, 0, 255),
+                                  get_line_color = c(0, 0, 0, 255),
+                                  get_line_width = 1,
                                   ...) {
-  params <- as.list(match.call())[-(1:2)]
-  layer <- do.call(scatterplot_layer, params)
+  parameters <- get_arguments()[-1]
+  layer <- do.call(scatterplot_layer, parameters)
 
   add_layer(rdeck, layer)
 }

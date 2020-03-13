@@ -4,10 +4,10 @@
 \alias{view_state}
 \title{Create a view_state}
 \usage{
-view_state(center = NULL, zoom = NULL, pitch = NULL, bearing = NULL)
+view_state(center = c(0, 0), zoom = 0, pitch = 0, bearing = 0, ...)
 }
 \arguments{
-\item{center}{\code{\link{numeric}} | \code{\link[sf:st_point]{sf::st_point}}
+\item{center}{\code{\link{numeric}} | \code{\link[sf:st_point]{sf::st_point()}}
 Center of the viewport on map}
 
 \item{zoom}{\code{\link{numeric}}
@@ -18,6 +18,8 @@ Camera angle in degrees (0 is straight down)}
 
 \item{bearing}{\code{\link{numeric}}
 Map rotation in degrees (0 means north is up)}
+
+\item{...}{additional parameters to pass to view_state | initial_view_state}
 }
 \description{
 Create a view_state

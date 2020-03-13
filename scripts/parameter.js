@@ -1,18 +1,15 @@
-const { snakeCase } = require("./utils");
+const { snakeCase } = require("snake-case");
+const NULL = "NULL";
 
 class Parameter {
   name;
   type;
-  default = "NULL";
+  default = NULL;
 
   constructor({ name, type, value: defaultValue }) {
     this.name = snakeCase(name);
     this.type = Parameter.getType({ name, type, defaultValue });
     this.default = Parameter.getDefault({ name, type, defaultValue });
-  }
-
-  get isAccessor() {
-    return this.type === "accessor" || (Array.isArray(this.type) && this.type.includes("accessor"));
   }
 
   get documentation() {
@@ -76,7 +73,11 @@ class Parameter {
       case "accessor": {
         let types = ["accessor"];
 
-        if (["number", "string", "boolean", "function"].includes(typeof defaultValue)) {
+        if (
+          ["number", "string", "boolean", "function"].includes(
+            typeof defaultValue
+          )
+        ) {
           types = [...types, typeToR(typeof defaultValue)];
         }
         return types;
@@ -89,13 +90,27 @@ class Parameter {
   }
 
   static getDefault({ name, type, defaultValue }) {
-    if (name === "characterSet") return "NULL";
+    switch (name) {
+      case "data":
+        return "data.frame()";
+      case "characterSet":
+        return Array.isArray(defaultValue)
+          ? `"${defaultValue
+              .join("")
+              .replace("\\", "\\\\")
+              .replace('"', '\\"')}"`
+          : NULL;
+    }
+
+    if (type == "accessor" && typeof defaultValue === "function") {
+      const [match] = /(?<=return\s+).*(?=;)/.exec(defaultValue.toString());
+
+      return match.split(".").pop();
+    }
 
     switch (type) {
-      case "characterSet":
-      case "accessor":
       case "function":
-        return "NULL";
+        return NULL;
       default:
         return valueToR(defaultValue);
     }
@@ -104,7 +119,7 @@ class Parameter {
 
 function valueToR(value) {
   if (value == null || (Array.isArray(value) && value.length === 0)) {
-    return "NULL";
+    return NULL;
   }
 
   if (Array.isArray(value)) {
@@ -125,7 +140,7 @@ function valueToR(value) {
       return JSON.stringify(value);
     case "function":
     default:
-      return "NULL";
+      return NULL;
   }
 }
 

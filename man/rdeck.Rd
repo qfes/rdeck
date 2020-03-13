@@ -2,14 +2,14 @@
 % Please edit documentation in R/widget.R
 \name{rdeck}
 \alias{rdeck}
-\title{Create rdeck widget}
+\title{RDeck}
 \usage{
 rdeck(
   mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
   map_style = "mapbox://styles/mapbox/dark-v10",
   initial_bounds = NULL,
-  initial_view_state = NULL,
-  layers = NULL,
+  initial_view_state = view_state(center = c(0, 0), zoom = 0),
+  layers = list(),
   controller = TRUE,
   picking_radius = 0,
   use_device_pixels = TRUE,
@@ -20,47 +20,47 @@ rdeck(
 )
 }
 \arguments{
-\item{mapbox_api_access_token}{\code{\link{character}}
+\item{mapbox_api_access_token}{\code{character}
 The api access token to use mapbox tiles.}
 
-\item{map_style}{\code{\link{character}}
+\item{map_style}{\code{character}
 A mapbox style url. \url{https://docs.mapbox.com/api/maps/#mapbox-styles}}
 
-\item{initial_bounds}{\code{\link{bounds}}
+\item{initial_bounds}{\code{sf::st_bbox} | \code{sf::sf} | \code{sf::sfc} | \code{sf::sfg}
 The initial bounds of the map; overwrites \code{initial_view_state}.}
 
-\item{initial_view_state}{\code{\link{view_state}}
-The initial view state of the map. See \link{view_state} for details.}
+\item{initial_view_state}{\code{view_state}
+The initial view state of the map. See \code{\link[=view_state]{view_state()}} for details.}
 
-\item{layers}{\code{\link{list}}
+\item{layers}{\code{list}
 The list of deck.gl layers.}
 
-\item{controller}{\code{\link{logical}}
+\item{controller}{\code{logical}
 If \code{NULL} or \code{FALSE}, the map is not interactive.}
 
-\item{picking_radius}{\code{\link{numeric}}
+\item{picking_radius}{\code{numeric}
 Extra pixels around the pointer to include while picking.}
 
-\item{use_device_pixels}{\code{\link{logical}} | \code{\link{numeric}}
+\item{use_device_pixels}{\code{logical} | \code{numeric}
 Controls the resolution of drawing buffer used for rendering.}
 
-\item{width}{\code{\link{numeric}}
+\item{width}{\code{numeric}
 Width of the map}
 
-\item{height}{\code{\link{numeric}}
+\item{height}{\code{numeric}
 Height of the map}
 
-\item{elementId}{\code{\link{character}}
-element id for the map.}
+\item{elementId}{\code{character}
+Element id for the map.}
 
-\item{...}{additional parameters to pass to the \href{https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md}{Deck}.}
+\item{...}{additional parameters to pass to the \code{Deck}.}
 }
 \value{
-\code{\link{rdeck}}
-An rdeck widget for a deck.gl map
+\code{rdeck}
+An \code{rdeck} widget for a deck.gl map.
 }
 \description{
-Create rdeck widget
+Create a Deck map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md}

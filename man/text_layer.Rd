@@ -2,11 +2,11 @@
 % Please edit documentation in R/text_layer.R
 \name{text_layer}
 \alias{text_layer}
-\title{\href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/text-layer.md}{TextLayer} deck.gl layer.}
+\title{TextLayer}
 \usage{
 text_layer(
-  id = NULL,
-  data = NULL,
+  id = "TextLayer",
+  data = data.frame(),
   visible = TRUE,
   pickable = FALSE,
   opacity = 1,
@@ -20,98 +20,94 @@ text_layer(
   size_min_pixels = 0,
   size_max_pixels = 9007199254740991,
   background_color = NULL,
-  character_set = NULL,
+ 
+    character_set = " !\\"#$\%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\\177",
   font_family = "Monaco, monospace",
   font_weight = "normal",
   line_height = 1,
   font_settings = NULL,
   word_break = "word-break",
   max_width = -1,
-  get_text = NULL,
-  get_position = NULL,
-  get_color = NULL,
-  get_size = NULL,
-  get_angle = NULL,
-  get_text_anchor = NULL,
-  get_alignment_baseline = NULL,
-  get_pixel_offset = NULL,
+  get_text = text,
+  get_position = position,
+  get_color = c(0, 0, 0, 255),
+  get_size = 32,
+  get_angle = 0,
+  get_text_anchor = "middle",
+  get_alignment_baseline = "center",
+  get_pixel_offset = c(0, 0),
   ...
 )
 }
 \arguments{
-\item{id}{\code{\link{character}}
+\item{id}{\code{character}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
 to properly distinguish between them.}
 
-\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
+\item{data}{\code{data.frame} | \code{sf::sf}
+Deck.gl layer data, either a \link{data.frame} or \link[sf:sf]{sf::sf}.}
 
-\item{visible}{\code{\link{logical}}}
+\item{visible}{\code{logical}
+Whether the layer is visible.}
 
-\item{pickable}{\code{\link{logical}}}
+\item{pickable}{\code{logical}
+Whether the layer responds to mouse pointer picking events.}
 
-\item{opacity}{\code{\link{numeric}}}
+\item{opacity}{\code{numeric}
+The opacity of the layer.}
 
-\item{position_format}{\code{XY} | \code{XYZ}}
+\item{position_format}{\code{"XY"} | \code{"XYZ"}
+Determines whether each coordinate has two (XY) or three (XYZ) numbers.}
 
-\item{color_format}{\code{RGB} | \code{RGBA}}
+\item{color_format}{\code{"RGB"} | \code{"RGBA"}
+RGB will make the layer ignore the alpha channel of colours returned by
+accessors. Opacity controlled by \code{opacity} is still applied.}
 
-\item{auto_highlight}{\code{\link{logical}}}
+\item{auto_highlight}{\code{logical}
+When \code{TRUE}, current object pointed by mouse pointer (when hovered over) is
+highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 
-\item{highlight_color}{\code{\link{integer}}}
+\item{highlight_color}{\code{integer} vector of (R,G,B) or (R,G,B,A)
+RGBA color to be used to render highlighted object. When 3 component (RGB)
+array is specified, a default value of 255 is used for alpha.}
 
-\item{billboard}{\code{\link{logical}}}
-
-\item{size_scale}{\code{\link{numeric}}}
-
-\item{size_units}{\code{pixels} | \code{meters}}
-
-\item{size_min_pixels}{\code{\link{numeric}}}
-
-\item{size_max_pixels}{\code{\link{numeric}}}
-
-\item{background_color}{\code{\link{integer}}}
-
-\item{character_set}{\verb{[character]}}
-
-\item{font_family}{\code{\link{character}}}
-
-\item{font_weight}{\code{\link{character}}}
-
-\item{line_height}{\code{\link{numeric}}}
-
-\item{font_settings}{\code{\link{list}}}
-
-\item{word_break}{\code{break-all} | \code{break-word}}
-
-\item{max_width}{\code{\link{numeric}}}
-
-\item{get_text}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
-
-\item{get_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
-
-\item{get_color}{accessor}
-
-\item{get_size}{accessor | \code{\link{numeric}}}
-
-\item{get_angle}{accessor | \code{\link{numeric}}}
-
-\item{get_text_anchor}{accessor | \verb{[character]}}
-
-\item{get_alignment_baseline}{accessor | \verb{[character]}}
-
-\item{get_pixel_offset}{accessor}
-
-\item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{camelCase}.}
-}
-\value{
-\code{TextLayer} & \code{\link{layer}}
-A \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/text-layer.md}{TextLayer} layer.
-Add to an \link{rdeck} map via \code{\link{add_layer}} or \code{\link{rdeck}}.
+\item{...}{additional deck.gl layer parameters}
 }
 \description{
-\href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/text-layer.md}{TextLayer} deck.gl layer.
+TextLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/text-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/text-layer.md}
+
+Other layers: 
+\code{\link{arc_layer}()},
+\code{\link{bitmap_layer}()},
+\code{\link{column_layer}()},
+\code{\link{contour_layer}()},
+\code{\link{cpu_grid_layer}()},
+\code{\link{geojson_layer}()},
+\code{\link{gpu_grid_layer}()},
+\code{\link{great_circle_layer}()},
+\code{\link{grid_cell_layer}()},
+\code{\link{grid_layer}()},
+\code{\link{h3_cluster_layer}()},
+\code{\link{h3_hexagon_layer}()},
+\code{\link{heatmap_layer}()},
+\code{\link{hexagon_layer}()},
+\code{\link{icon_layer}()},
+\code{\link{layer}()},
+\code{\link{line_layer}()},
+\code{\link{path_layer}()},
+\code{\link{point_cloud_layer}()},
+\code{\link{polygon_layer}()},
+\code{\link{s2_layer}()},
+\code{\link{scatterplot_layer}()},
+\code{\link{scenegraph_layer}()},
+\code{\link{screen_grid_layer}()},
+\code{\link{simple_mesh_layer}()},
+\code{\link{solid_polygon_layer}()},
+\code{\link{tile3d_layer}()},
+\code{\link{tile_layer}()},
+\code{\link{trips_layer}()}
 }
+\concept{layers}

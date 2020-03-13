@@ -1,2 +1,2 @@
-# globals
-globalVariables(c("."))
+# # globals
+# globalVariables(c("."))

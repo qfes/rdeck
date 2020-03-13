@@ -1,50 +1,52 @@
 #' Create a deck.gl [layer](https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md)
 #'
 #' @name layer
-#' @param type [`character`]
+#' @param type `character`
 #'  deck.gl layer type, one of [layer_types]
 #'
-#' @param id [`character`]
+#' @param id `character`
 #'  The id of the layer. Layer ids must be unique per layer `type` for deck.gl
 #'  to properly distinguish between them.
 #'
-#' @param data [`data.frame`] | [`sf::sf`]
+#' @param data `data.frame` | `sf::sf`
 #'  Deck.gl layer data, either a [data.frame] or [sf::sf].
 #'
-#' @param visible [`logical`]
+#' @param visible `logical`
 #'  Whether the layer is visible.
 #'
-#' @param pickable [`logical`]
+#' @param pickable `logical`
 #'  Whether the layer responds to mouse pointer picking events.
 #'
-#' @param opacity [`numeric`]
+#' @param opacity `numeric`
 #'  The opacity of the layer.
 #'
-#' @param position_format `XY` | `XYZ`
+#' @param position_format `"XY"` | `"XYZ"`
 #'  Determines whether each coordinate has two (XY) or three (XYZ) numbers.
 #'
-#' @param color_format `RGB` | `RGBA`
+#' @param color_format `"RGB"` | `"RGBA"`
 #'  RGB will make the layer ignore the alpha channel of colours returned by
 #'  accessors. Opacity controlled by `opacity` is still applied.
 #'
-#' @param auto_highlight [`logical`]
+#' @param auto_highlight `logical`
 #'  When `TRUE`, current object pointed by mouse pointer (when hovered over) is
 #'  highlighted with highlight_color. Requires `pickable` to be `TRUE`.
 #'
-#' @param highlight_color `RGB` | `RGBA`
+#' @param highlight_color `integer` vector of (R,G,B) or (R,G,B,A)
 #'  RGBA color to be used to render highlighted object. When 3 component (RGB)
 #'  array is specified, a default value of 255 is used for alpha.
 #'
 #' @param ... additional deck.gl layer parameters
-#' @returns [`layer`]
+#'
+#' @returns `layer`
 #'  A deck.gl layer of `type`
 #'
 #' @seealso \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}
+#' @family layers
 #'
 #' @export
-layer <- function(type = NULL,
-                  id = NULL,
-                  data = NULL,
+layer <- function(type,
+                  id = type,
+                  data = data.frame(),
                   visible = TRUE,
                   pickable = FALSE,
                   opacity = 1,
@@ -53,49 +55,45 @@ layer <- function(type = NULL,
                   auto_highlight = FALSE,
                   highlight_color = c(0, 0, 128, 128),
                   ...) {
-  match.arg(type, layer_types)
+  stopifnot(
+    type %in% layer_types,
+    position_format %in% c("XYZ", "XY"),
+    color_format %in% c("RGBA", "RGB")
+  )
 
+  properties <- get_arguments()
+  properties$data <- layer_data(data, type)
   if (inherits(data, "sf")) {
-    position_format <- get_position_format(data)
+    properties$position_format <- get_position_format(data)
   }
 
-  match.arg(position_format, c("XY", "XYZ"))
-  match.arg(color_format, c("RGB", "RGBA"))
+  # create accessor expressions for each accessor
+  is_accessor <- names(properties) %in% accessor_names
+  accessors <- lapply(properties[is_accessor], function(arg) {
+    accessor(arg, data, type != "GeoJsonLayer")
+  })
 
-  properties <- c(
-    list(
-      data = layer_data(data, type),
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color
-    ),
-    list(...)
-  ) %>%
-    Filter(x = ., function(x) !is.null(x))
-
-  names(properties) <- snakecase::to_lower_camel_case(names(properties))
+  # overwrite accessors
+  properties <- utils::modifyList(properties, accessors, keep.null = TRUE) %>%
+    camel_case_names()
 
   structure(
-    properties,
-    class = c(type, "layer")
+    properties %>% lapply(eval),
+    class = "layer"
   )
 }
 
-#' Add a deck.gl [layer](https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md) to an rdeck map.
+#' Add a deck.gl layer to an rdeck map.
 #'
 #' @name add_layer
 #'
 #' @param rdeck [`rdeck`]
-#'  An [rdeck] map.
+#'  An `rdeck` map.
 #'
 #' @param layer [`layer`]
 #'
 #' @returns [`rdeck`]
-#'  The [rdeck] map.
+#'  The `rdeck` map.
 #'
 #' @seealso \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}
 #'
@@ -108,25 +106,12 @@ add_layer <- function(rdeck, layer) {
 
   rdeck$x$layers <- c(
     rdeck$x$layers,
-    list(
-      list(
-        type = class(layer)[1],
-        props = layer
-      )
-    )
+    list(layer)
   )
 
   rdeck
 }
 
-
-#' Get layer data
-#'
-#' @name layer_data
-#' @param data [`data.frame`] | [`sf::sf`]
-#' @return [`list`] | `json`
-#'
-#' @keywords internal
 layer_data <- function(data, layer_type) {
   if (is.null(data)) {
     return(NULL)

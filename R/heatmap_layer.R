@@ -1,53 +1,9 @@
-#' [HeatmapLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/heatmap-layer.md) deck.gl layer.
-#'
 #' @name heatmap_layer
-#'
-#' @param id [`character`]
-#'  The id of the layer. Layer ids must be unique per layer `type` for deck.gl
-#'  to properly distinguish between them.
-#'
-#' @param data [`data.frame`] | [`sf::sf`]
-#'
-#' @param visible [`logical`]
-#'
-#' @param pickable [`logical`]
-#'
-#' @param opacity [`numeric`]
-#'
-#' @param position_format `XY` | `XYZ`
-#'
-#' @param color_format `RGB` | `RGBA`
-#'
-#' @param auto_highlight [`logical`]
-#'
-#' @param highlight_color [`integer`]
-#'
-#' @param get_position accessor | [`htmlwidgets::JS`]
-#'
-#' @param get_weight accessor | [`numeric`]
-#'
-#' @param intensity [`numeric`]
-#'
-#' @param radius_pixels [`numeric`]
-#'
-#' @param color_range [`list`]
-#'
-#' @param threshold [`numeric`]
-#'
-#' @param color_domain [`numeric`]
-#'
-#' @param ... additional layer parameters to pass to deck.gl.
-#'  `snake_case` parameters will be converted to `camelCase`.
-#'
-#' @returns `HeatmapLayer` & [`layer`]
-#'  A [HeatmapLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/heatmap-layer.md) layer.
-#'  Add to an [rdeck] map via [`add_layer`] or [`rdeck`].
-#'
-#' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/heatmap-layer.md}
-#'
+#' @template heatmap_layer
+#' @family layers
 #' @export
-heatmap_layer <- function(id = NULL,
-                          data = NULL,
+heatmap_layer <- function(id = "HeatmapLayer",
+                          data = data.frame(),
                           visible = TRUE,
                           pickable = FALSE,
                           opacity = 1,
@@ -55,8 +11,8 @@ heatmap_layer <- function(id = NULL,
                           color_format = "RGBA",
                           auto_highlight = FALSE,
                           highlight_color = c(0, 0, 128, 128),
-                          get_position = NULL,
-                          get_weight = NULL,
+                          get_position = position,
+                          get_weight = 1,
                           intensity = 1,
                           radius_pixels = 50,
                           color_range = list(
@@ -70,60 +26,27 @@ heatmap_layer <- function(id = NULL,
                           threshold = 0.05,
                           color_domain = NULL,
                           ...) {
-  # auto-resolve geometry column
+  arguments <- get_arguments()
+  parameters <- c(
+    list(type = "HeatmapLayer"),
+    get_arguments()
+  )
+  # auto-resolve geometry
   if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column")) %>%
-      accessor(data = data, columnar = TRUE)
+    parameters$get_position <- as.name(attr(data, "sf_column"))
   }
 
-  get_weight <- substitute(get_weight) %>%
-    accessor(data = data, columnar = TRUE)
-
-  params <- c(
-    list(
-      type = "HeatmapLayer",
-      id = id,
-      data = data,
-      visible = visible,
-      pickable = pickable,
-      opacity = opacity,
-      position_format = position_format,
-      color_format = color_format,
-      auto_highlight = auto_highlight,
-      highlight_color = highlight_color,
-      get_position = get_position,
-      get_weight = get_weight,
-      intensity = intensity,
-      radius_pixels = radius_pixels,
-      color_range = color_range,
-      threshold = threshold,
-      color_domain = color_domain
-    ),
-    list(...)
-  )
-
-  do.call(layer, params)
+  do.call(layer, parameters)
 }
 
-#' Add a [HeatmapLayer](https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/heatmap-layer.md) deck.gl layer to an [rdeck] map.
-#'
 #' @name add_heatmap_layer
-#'
-#' @param rdeck [`rdeck`]
-#'  An [rdeck] map.
-#'
-#' @inheritParams heatmap_layer
-#' @inheritDotParams heatmap_layer
-#'
-#' @returns [`rdeck`]
-#'  The [rdeck] map.
-#'
-#' @seealso \url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/heatmap-layer.md}
-#'
+#' @template heatmap_layer
+#' @param rdeck `rdeck`
+#' @family add_layers
 #' @export
 add_heatmap_layer <- function(rdeck,
-                              id = NULL,
-                              data = NULL,
+                              id = "HeatmapLayer",
+                              data = data.frame(),
                               visible = TRUE,
                               pickable = FALSE,
                               opacity = 1,
@@ -131,8 +54,8 @@ add_heatmap_layer <- function(rdeck,
                               color_format = "RGBA",
                               auto_highlight = FALSE,
                               highlight_color = c(0, 0, 128, 128),
-                              get_position = NULL,
-                              get_weight = NULL,
+                              get_position = position,
+                              get_weight = 1,
                               intensity = 1,
                               radius_pixels = 50,
                               color_range = list(
@@ -146,8 +69,8 @@ add_heatmap_layer <- function(rdeck,
                               threshold = 0.05,
                               color_domain = NULL,
                               ...) {
-  params <- as.list(match.call())[-(1:2)]
-  layer <- do.call(heatmap_layer, params)
+  parameters <- get_arguments()[-1]
+  layer <- do.call(heatmap_layer, parameters)
 
   add_layer(rdeck, layer)
 }

@@ -2,11 +2,11 @@
 % Please edit documentation in R/line_layer.R
 \name{line_layer}
 \alias{line_layer}
-\title{\href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/line-layer.md}{LineLayer} deck.gl layer.}
+\title{LineLayer}
 \usage{
 line_layer(
-  id = NULL,
-  data = NULL,
+  id = "LineLayer",
+  data = data.frame(),
   visible = TRUE,
   pickable = FALSE,
   opacity = 1,
@@ -14,10 +14,10 @@ line_layer(
   color_format = "RGBA",
   auto_highlight = FALSE,
   highlight_color = c(0, 0, 128, 128),
-  get_source_position = NULL,
-  get_target_position = NULL,
-  get_color = NULL,
-  get_width = NULL,
+  get_source_position = sourcePosition,
+  get_target_position = targetPosition,
+  get_color = c(0, 0, 0, 255),
+  get_width = 1,
   width_units = "pixels",
   width_scale = 1,
   width_min_pixels = 0,
@@ -26,53 +26,74 @@ line_layer(
 )
 }
 \arguments{
-\item{id}{\code{\link{character}}
+\item{id}{\code{character}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
 to properly distinguish between them.}
 
-\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
+\item{data}{\code{data.frame} | \code{sf::sf}
+Deck.gl layer data, either a \link{data.frame} or \link[sf:sf]{sf::sf}.}
 
-\item{visible}{\code{\link{logical}}}
+\item{visible}{\code{logical}
+Whether the layer is visible.}
 
-\item{pickable}{\code{\link{logical}}}
+\item{pickable}{\code{logical}
+Whether the layer responds to mouse pointer picking events.}
 
-\item{opacity}{\code{\link{numeric}}}
+\item{opacity}{\code{numeric}
+The opacity of the layer.}
 
-\item{position_format}{\code{XY} | \code{XYZ}}
+\item{position_format}{\code{"XY"} | \code{"XYZ"}
+Determines whether each coordinate has two (XY) or three (XYZ) numbers.}
 
-\item{color_format}{\code{RGB} | \code{RGBA}}
+\item{color_format}{\code{"RGB"} | \code{"RGBA"}
+RGB will make the layer ignore the alpha channel of colours returned by
+accessors. Opacity controlled by \code{opacity} is still applied.}
 
-\item{auto_highlight}{\code{\link{logical}}}
+\item{auto_highlight}{\code{logical}
+When \code{TRUE}, current object pointed by mouse pointer (when hovered over) is
+highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 
-\item{highlight_color}{\code{\link{integer}}}
+\item{highlight_color}{\code{integer} vector of (R,G,B) or (R,G,B,A)
+RGBA color to be used to render highlighted object. When 3 component (RGB)
+array is specified, a default value of 255 is used for alpha.}
 
-\item{get_source_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
-
-\item{get_target_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
-
-\item{get_color}{accessor}
-
-\item{get_width}{accessor | \code{\link{numeric}}}
-
-\item{width_units}{\code{pixels} | \code{meters}}
-
-\item{width_scale}{\code{\link{numeric}}}
-
-\item{width_min_pixels}{\code{\link{numeric}}}
-
-\item{width_max_pixels}{\code{\link{numeric}}}
-
-\item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{camelCase}.}
-}
-\value{
-\code{LineLayer} & \code{\link{layer}}
-A \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/line-layer.md}{LineLayer} layer.
-Add to an \link{rdeck} map via \code{\link{add_layer}} or \code{\link{rdeck}}.
+\item{...}{additional deck.gl layer parameters}
 }
 \description{
-\href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/line-layer.md}{LineLayer} deck.gl layer.
+LineLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/line-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/line-layer.md}
+
+Other layers: 
+\code{\link{arc_layer}()},
+\code{\link{bitmap_layer}()},
+\code{\link{column_layer}()},
+\code{\link{contour_layer}()},
+\code{\link{cpu_grid_layer}()},
+\code{\link{geojson_layer}()},
+\code{\link{gpu_grid_layer}()},
+\code{\link{great_circle_layer}()},
+\code{\link{grid_cell_layer}()},
+\code{\link{grid_layer}()},
+\code{\link{h3_cluster_layer}()},
+\code{\link{h3_hexagon_layer}()},
+\code{\link{heatmap_layer}()},
+\code{\link{hexagon_layer}()},
+\code{\link{icon_layer}()},
+\code{\link{layer}()},
+\code{\link{path_layer}()},
+\code{\link{point_cloud_layer}()},
+\code{\link{polygon_layer}()},
+\code{\link{s2_layer}()},
+\code{\link{scatterplot_layer}()},
+\code{\link{scenegraph_layer}()},
+\code{\link{screen_grid_layer}()},
+\code{\link{simple_mesh_layer}()},
+\code{\link{solid_polygon_layer}()},
+\code{\link{text_layer}()},
+\code{\link{tile3d_layer}()},
+\code{\link{tile_layer}()},
+\code{\link{trips_layer}()}
 }
+\concept{layers}

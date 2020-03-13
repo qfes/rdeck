@@ -1,123 +1,91 @@
-const { Deck } = require("@deck.gl/core");
+const fs = require("fs");
 const { dedent } = require("ts-dedent");
-const { paramCase: kebabCase } = require("param-case");
 const { snakeCase } = require("snake-case");
-
 const { Parameter } = require("./parameter");
 // @ts-ignore
 const { exclude } = require("./config.json");
-
-// FIXME: find a cleaner solution
-// @ts-ignore
-const LAYERS_URL = `https://github.com/uber/deck.gl/blob/v${Deck.VERSION}/docs/layers`;
 
 class Layer {
   type;
   name;
   parameters;
-  url;
 
-  constructor(layer) {
+  constructor(type) {
     // initialise _propTypes
-    new layer();
-
-    const parameters = Object.values(layer._propTypes)
-      .filter(propType => !exclude.includes(propType.name))
-      .filter(propType => !/^(_|on)/.test(propType.name))
-      .map(propType => new Parameter(propType));
+    new type();
 
     /**
      * HACK
      * GeoJsonLayer -> geojson_layer
      * Tile3DLayer -> tile3d_layer
      */
-    const name = layer.layerName.replace("GeoJson", "Geojson").replace("3D", "3d");
-    const page = kebabCase(name.replace("3d", "_3d"));
+    const name = type.layerName
+      .replace("GeoJson", "Geojson")
+      .replace("3D", "3d");
 
-    this.type = layer.layerName;
+    this.type = type;
     this.name = snakeCase(name);
-    this.url = `${LAYERS_URL}/${page}.md`;
-    this.parameters = parameters;
+    this.parameters = Object.values(type._propTypes)
+      .filter(propType => !exclude.includes(propType.name))
+      .filter(propType => !/^(_|on)/.test(propType.name))
+      .map(propType => new Parameter(propType))
+
+    this.parameters.unshift({ name: "id", default: `"${type.layerName}"` });
   }
 
   get documentation() {
     return dedent(`
-    #' [${this.type}](${this.url}) deck.gl layer.
-    #'
     #' @name ${this.name}
-    #'
-    #' @param id [\`character\`]
-    #'  The id of the layer. Layer ids must be unique per layer \`type\` for deck.gl
-    #'  to properly distinguish between them.
-    #'
-    ${this.parameters.map(param => param.documentation).join("\n#'\n")}
-    #'
-    #' @param ... additional layer parameters to pass to deck.gl.
-    #'  \`snake_case\` parameters will be converted to \`camelCase\`.
-    #'
-    #' @returns \`${this.type}\` & [\`layer\`]
-    #'  A [${this.type}](${this.url}) layer.
-    #'  Add to an [rdeck] map via [\`add_layer\`] or [\`rdeck\`].
-    #'
-    #' @seealso \\url{${this.url}}
-    #'
+    #' @template ${this.name}
+    #' @family layers
     #' @export
     `);
   }
 
   get signature() {
+    const parameters = this.parameters.map(p => {
+      return p.default ? `${p.name} = ${p.default}` : p.name;
+    });
+
     return dedent(`
-    ${this.name} <- function(id = NULL,
-      ${this.parameters.map(p => `${p.name} = ${p.default}`).join(",\n  ")},
+    ${this.name} <- function(${parameters.join(",\n")},
       ...)
     `);
   }
 
   get body() {
-    const isColumnar = this.type !== "GeoJsonLayer";
+    const geometryParam = this.parameters.find(param =>
+      ["get_path", "get_polygon", "get_position"].includes(param.name)
+    );
 
-    const accessors = this.parameters
-      .filter(p => p.isAccessor)
-      .map(param => {
-        if (["get_path", "get_polygon", "get_position"].includes(param.name)) {
-          return dedent(`
-            # auto-resolve geometry column
-            if (inherits(data, "sf")) {
-              ${param.name} <- as.name(attr(data, "sf_column")) %>%
-                accessor(data = data, columnar = ${isColumnar ? "TRUE" : "FALSE"})
-            }
-          `);
+    const autoGeometry = geometryParam
+      ? dedent(`
+        # auto-resolve geometry
+        if (inherits(data, "sf")) {
+          parameters$${geometryParam.name} <- as.name(attr(data, "sf_column"))
         }
 
-        return dedent(`
-          ${param.name} <- substitute(${param.name}) %>%
-            accessor(data = data, columnar = ${isColumnar ? "TRUE" : "FALSE"})
-        `);
-      });
+      `)
+      : "";
 
     return dedent(`
-      ${accessors.join("\n\n")}
-
-      params <- c(
-        list(
-          type = "${this.type}",
-          id = id,
-          ${this.parameters.map(param => `${param.name} = ${param.name}`).join(",\n  ")}
-        ),
-        list(...)
+      arguments <- get_arguments()
+      parameters <- c(
+        list(type = "${this.type.layerName}"),
+        get_arguments()
       )
-
-      do.call(layer, params)
+      ${autoGeometry}
+      do.call(layer, parameters)
     `);
   }
 
   get declaration() {
-    return dedent`
+    return dedent(`
       ${this.documentation}
       ${this.signature} {
         ${this.body}
       }
-  `;
+  `);
   }
 }
 
@@ -127,49 +95,38 @@ class AddLayer extends Layer {
 
     this.layer = this.name;
     this.name = `add_${this.name}`;
+
+    this.parameters.unshift({ name: "rdeck" });
   }
 
   get documentation() {
     return dedent(`
-    #' Add a [${this.type}](${this.url}) deck.gl layer to an [rdeck] map.
-    #'
     #' @name ${this.name}
-    #'
-    #' @param rdeck [\`rdeck\`]
-    #'  An [rdeck] map.
-    #'
-    #' @inheritParams ${this.layer}
-    #' @inheritDotParams ${this.layer}
-    #'
-    #' @returns [\`rdeck\`]
-    #'  The [rdeck] map.
-    #'
-    #' @seealso \\url{${this.url}}
-    #'
+    #' @template ${this.layer}
+    #' @param rdeck \`rdeck\`
+    #' @family add_layers
     #' @export
-    `);
-  }
-
-  get signature() {
-    return dedent(`
-      ${this.name} <- function(rdeck,
-        id = NULL,
-        ${this.parameters.map(p => `${p.name} = ${p.default}`).join(",\n  ")},
-        ...)
     `);
   }
 
   get body() {
     return dedent(`
-      params <- as.list(match.call())[-(1:2)]
-      layer <- do.call(${this.layer}, params)
+      parameters <- get_arguments()[-1]
+      layer <- do.call(${this.layer}, parameters)
 
       add_layer(rdeck, layer)
     `);
   }
 }
 
+function generateLayer(layerType) {
+  const layer = new Layer(layerType);
+  const addLayer = new AddLayer(layerType);
+
+  const content =  [layer, addLayer].map(x => x.declaration).join("\n\n");
+  fs.writeFileSync(`./R/${layer.name}.R`, content);
+}
+
 module.exports = {
-  Layer,
-  AddLayer
+  generateLayer
 };

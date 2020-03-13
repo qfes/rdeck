@@ -2,11 +2,11 @@
 % Please edit documentation in R/hexagon_layer.R
 \name{hexagon_layer}
 \alias{hexagon_layer}
-\title{\href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/hexagon-layer.md}{HexagonLayer} deck.gl layer.}
+\title{HexagonLayer}
 \usage{
 hexagon_layer(
-  id = NULL,
-  data = NULL,
+  id = "HexagonLayer",
+  data = data.frame(),
   visible = TRUE,
   pickable = FALSE,
   opacity = 1,
@@ -18,7 +18,7 @@ hexagon_layer(
   color_range = list(c(255, 255, 178), c(254, 217, 118), c(254, 178, 76), c(253, 141,
     60), c(240, 59, 32), c(189, 0, 38)),
   get_color_value = NULL,
-  get_color_weight = NULL,
+  get_color_weight = 1,
   color_aggregation = "SUM",
   lower_percentile = 0,
   upper_percentile = 100,
@@ -26,7 +26,7 @@ hexagon_layer(
   elevation_domain = NULL,
   elevation_range = c(0, 1000),
   get_elevation_value = NULL,
-  get_elevation_weight = NULL,
+  get_elevation_weight = 1,
   elevation_aggregation = "SUM",
   elevation_lower_percentile = 0,
   elevation_upper_percentile = 100,
@@ -36,89 +36,80 @@ hexagon_layer(
   coverage = 1,
   extruded = FALSE,
   hexagon_aggregator = NULL,
-  get_position = NULL,
+  get_position = position,
   material = TRUE,
   ...
 )
 }
 \arguments{
-\item{id}{\code{\link{character}}
+\item{id}{\code{character}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
 to properly distinguish between them.}
 
-\item{data}{\code{\link{data.frame}} | \code{\link[sf:sf]{sf::sf}}}
+\item{data}{\code{data.frame} | \code{sf::sf}
+Deck.gl layer data, either a \link{data.frame} or \link[sf:sf]{sf::sf}.}
 
-\item{visible}{\code{\link{logical}}}
+\item{visible}{\code{logical}
+Whether the layer is visible.}
 
-\item{pickable}{\code{\link{logical}}}
+\item{pickable}{\code{logical}
+Whether the layer responds to mouse pointer picking events.}
 
-\item{opacity}{\code{\link{numeric}}}
+\item{opacity}{\code{numeric}
+The opacity of the layer.}
 
-\item{position_format}{\code{XY} | \code{XYZ}}
+\item{position_format}{\code{"XY"} | \code{"XYZ"}
+Determines whether each coordinate has two (XY) or three (XYZ) numbers.}
 
-\item{color_format}{\code{RGB} | \code{RGBA}}
+\item{color_format}{\code{"RGB"} | \code{"RGBA"}
+RGB will make the layer ignore the alpha channel of colours returned by
+accessors. Opacity controlled by \code{opacity} is still applied.}
 
-\item{auto_highlight}{\code{\link{logical}}}
+\item{auto_highlight}{\code{logical}
+When \code{TRUE}, current object pointed by mouse pointer (when hovered over) is
+highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 
-\item{highlight_color}{\code{\link{integer}}}
+\item{highlight_color}{\code{integer} vector of (R,G,B) or (R,G,B,A)
+RGBA color to be used to render highlighted object. When 3 component (RGB)
+array is specified, a default value of 255 is used for alpha.}
 
-\item{color_domain}{\code{\link{numeric}}}
-
-\item{color_range}{\code{\link{list}}}
-
-\item{get_color_value}{accessor}
-
-\item{get_color_weight}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
-
-\item{color_aggregation}{\code{SUM} | \code{MEAN} | \code{MIN} | \code{MAX}}
-
-\item{lower_percentile}{\code{\link{numeric}}}
-
-\item{upper_percentile}{\code{\link{numeric}}}
-
-\item{color_scale_type}{\code{quantize} | \code{linear} | \code{quantile} | \code{ordinal}}
-
-\item{elevation_domain}{\code{\link{numeric}}}
-
-\item{elevation_range}{\code{\link{numeric}}}
-
-\item{get_elevation_value}{accessor}
-
-\item{get_elevation_weight}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
-
-\item{elevation_aggregation}{\code{SUM} | \code{MEAN} | \code{MIN} | \code{MAX}}
-
-\item{elevation_lower_percentile}{\code{\link{numeric}}}
-
-\item{elevation_upper_percentile}{\code{\link{numeric}}}
-
-\item{elevation_scale}{\code{\link{numeric}}}
-
-\item{elevation_scale_type}{\code{quantize} | \code{linear} | \code{quantile} | \code{ordinal}}
-
-\item{radius}{\code{\link{numeric}}}
-
-\item{coverage}{\code{\link{numeric}}}
-
-\item{extruded}{\code{\link{logical}}}
-
-\item{hexagon_aggregator}{\code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
-
-\item{get_position}{accessor | \code{\link[htmlwidgets:JS]{htmlwidgets::JS}}}
-
-\item{material}{\code{\link{logical}}}
-
-\item{...}{additional layer parameters to pass to deck.gl.
-\code{snake_case} parameters will be converted to \code{camelCase}.}
-}
-\value{
-\code{HexagonLayer} & \code{\link{layer}}
-A \href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/hexagon-layer.md}{HexagonLayer} layer.
-Add to an \link{rdeck} map via \code{\link{add_layer}} or \code{\link{rdeck}}.
+\item{...}{additional deck.gl layer parameters}
 }
 \description{
-\href{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/hexagon-layer.md}{HexagonLayer} deck.gl layer.
+HexagonLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.16/docs/layers/hexagon-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/hexagon-layer.md}
+
+Other layers: 
+\code{\link{arc_layer}()},
+\code{\link{bitmap_layer}()},
+\code{\link{column_layer}()},
+\code{\link{contour_layer}()},
+\code{\link{cpu_grid_layer}()},
+\code{\link{geojson_layer}()},
+\code{\link{gpu_grid_layer}()},
+\code{\link{great_circle_layer}()},
+\code{\link{grid_cell_layer}()},
+\code{\link{grid_layer}()},
+\code{\link{h3_cluster_layer}()},
+\code{\link{h3_hexagon_layer}()},
+\code{\link{heatmap_layer}()},
+\code{\link{icon_layer}()},
+\code{\link{layer}()},
+\code{\link{line_layer}()},
+\code{\link{path_layer}()},
+\code{\link{point_cloud_layer}()},
+\code{\link{polygon_layer}()},
+\code{\link{s2_layer}()},
+\code{\link{scatterplot_layer}()},
+\code{\link{scenegraph_layer}()},
+\code{\link{screen_grid_layer}()},
+\code{\link{simple_mesh_layer}()},
+\code{\link{solid_polygon_layer}()},
+\code{\link{text_layer}()},
+\code{\link{tile3d_layer}()},
+\code{\link{tile_layer}()},
+\code{\link{trips_layer}()}
 }
+\concept{layers}

@@ -11,10 +11,11 @@
 ^tsconfig\.json$
 ^webpack\.config\.js$
 
-# pkgdown
+# docs
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^man-roxygen$
 
 # discovery
 ^discovery$
