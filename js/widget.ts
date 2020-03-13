@@ -15,9 +15,20 @@ const binding: HTMLWidgets.Binding = {
       },
       renderValue({ props, layers }) {
         /* initial bounds */
-        if ("initialBounds" in props) {
-          let viewport = new WebMercatorViewport({ width, height });
-          props.initialViewState = viewport.fitBounds(props.initialBounds);
+        if (Array.isArray(props.initialBounds)) {
+          const viewport = new WebMercatorViewport({ width, height });
+
+          const { longitude, latitude, zoom } = viewport.fitBounds([
+            props.initialBounds.slice(0, 2),
+            props.initialBounds.slice(2, 4)
+          ]);
+
+          props.initialViewState = {
+            ...props.initialViewState,
+            longitude,
+            latitude,
+            zoom
+          };
         }
 
         _deckgl = new DeckGL({
@@ -37,12 +48,10 @@ function getTooltip(info: PickInfo<any>) {
   if (!(info.picked && info.handled)) return;
   let { name, entries } = info.handled;
 
-  const rows = entries
-    .map(
-      ([key, value]) =>
-        `<tr><td class="col-name">${key}</td><td class = "col-value">${value}</td></tr>`
-    )
-    .join("");
+  const row = ([key, value]: [string, any]) =>
+    `<tr><td class="col-name">${key}</td><td class="col-value">${value}</td></tr>`;
+
+  const rows = entries.map(row).join("");
   return {
     html: `<div class="layer-name">${name}</div><table><tbody>${rows}</tbody></table>`
   };

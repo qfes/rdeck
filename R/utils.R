@@ -1,3 +1,18 @@
+#' Tooltip
+#'
+#' @name tooltip
+#' @param ... names
+#' @return `character`
+#'  `...` converted to a character vector representing names to display.
+#'
+#' @export
+tooltip <- function(...) {
+  arguments <- as.list(match.call())[-1]
+  arguments %>%
+    lapply(function(name) deparse(name, backtick = FALSE)) %>%
+    unlist()
+}
+
 get_arguments <- function() {
   calling_environment <- parent.frame()
   call <- match.call(

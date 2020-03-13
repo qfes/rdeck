@@ -1,19 +1,13 @@
 import deck from "@deck.gl/layers";
 import { default as Layer, LayerProps } from "@deck.gl/core/lib/layer";
-import { Deck, PickInfo } from "@deck.gl/core";
+import { PickInfo } from "@deck.gl/core";
 
-interface DeckLayerProps {
+interface DeckLayerProps extends LayerProps<any> {
   type: string;
-  props: LayerProps<any>;
 }
 
-type Accessor = (
-  object: object,
-  { index, data }: { index: number; data: any }
-) => any;
-
 export default class DeckLayer {
-  static create({ type, props }: DeckLayerProps): Layer<any> {
+  static create({ type, ...props }: DeckLayerProps): Layer<any> {
     props.onHover = DeckLayer.onHover;
     // @ts-ignore
     return new deck[type](Object.assign(accessors, props)) as Layer;
@@ -37,6 +31,8 @@ export default class DeckLayer {
   }
 }
 
+type Accessor = (object: object, { index, data }: { index: number; data: any }) => any;
+
 const accessors: { [property: string]: Accessor } = {
   getHexagon: (object, { index, data }) => data.frame.hexagon[index],
   getHexagons: (object, { index, data }) => data.frame.hexagons[index],
@@ -46,8 +42,6 @@ const accessors: { [property: string]: Accessor } = {
   getPath: (object, { index, data }) => data.frame.path[index],
   getPolygon: (object, { index, data }) => data.frame.polygon[index],
   getPosition: (object, { index, data }) => data.frame.position[index],
-  getSourcePosition: (object, { index, data }) =>
-    data.frame.sourcePosition[index],
-  getTargetPosition: (object, { index, data }) =>
-    data.frame.targetPosition[index]
+  getSourcePosition: (object, { index, data }) => data.frame.sourcePosition[index],
+  getTargetPosition: (object, { index, data }) => data.frame.targetPosition[index]
 };

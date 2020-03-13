@@ -1,7 +1,6 @@
 declare module "@deck.gl/core" {
   import { Deck, DeckProps } from "@deck.gl/core";
   import { PickInfo } from "@deck.gl/core/lib/deck";
-  import { Map } from "mapbox-gl";
 
   export class DeckGL extends Deck {
     constructor(props: DeckGLProps);
@@ -22,6 +21,14 @@ declare module "@deck.gl/core" {
     style?: CssProps;
   }
 
+  export interface WebMercatorViewport {
+    longitude: number;
+    latitude: number;
+    zoom: number;
+    pitch: number;
+    bearing: number;
+  }
+
   export { PickInfo } from "@deck.gl/core/lib/deck";
 }
 
@@ -29,7 +36,6 @@ declare module "@deck.gl/core/lib/deck" {
   export interface PickInfo<D> {
     picked?: boolean;
     handled?: { name: string; entries: [[string, any]] };
-    object?: object | { [key: string]: any };
   }
 }
 

@@ -42,7 +42,7 @@ scatterplot_data <- read_json(
   st_as_sf(coords = c("lon", "lat"), crs = 4326)
 
 rdeck(
-  controller = TRUE,
+  picking_radius = 5,
   initial_view_state = view_state(
     center = c(-74, 40.76),
     zoom = 11
@@ -53,8 +53,9 @@ rdeck(
     radius_scale = 10,
     radius_min_pixels = 0.5,
     # some basic transpilation from R expressions
-    # (object, {index, data}) => data.frame[gender][index] ? [0, 128, 255] : [255, 0, 128]
-    get_fill_color = ~ gender == 1 ? c(0, 128, 255) : c(255, 0, 128)
+    get_fill_color = ~ gender == 1 ? c(0, 128, 255):c(255, 0, 128),
+    pickable = TRUE,
+    tooltip = tooltip(gender, geometry)
   )
 ```
 
@@ -72,11 +73,16 @@ heatmap_data <- read_csv(
   st_as_sf(coords = c("lng", "lat"), crs = 4326)
 
 rdeck(
-  initial_bounds = bounds(heatmap_data)
+  controller = TRUE,
+  initial_bounds = st_bbox(heatmap_data),
+  initial_view_state = view_state(
+    pitch = 30,
+    bearing = 45
+  )
 ) %>%
   add_hexagon_layer(
     data = heatmap_data,
-    extruded = TRUE,
+    pickable = TRUE,
     elevation_scale = 250,
     elevation_range = c(0, 1000)
   )
@@ -100,7 +106,8 @@ contour_data <- read_json(
   st_as_sf(coords = names(.), crs = 4326)
 
 rdeck(
-  initial_bounds = bounds(contour_data)
+  controller = TRUE,
+  initial_bounds = st_bbox(contour_data)
 ) %>%
   add_contour_layer(
     data = contour_data,
@@ -116,14 +123,8 @@ rdeck(
 ### Arc Layer
 
 ```r
-library(tidyverse)
-library(sf)
-library(jsonlite)
-library(janitor)
-library(rdeck)
-
 as_point <- function(data, lon, lat, crs = 4326) {
-  coords = c(
+  coords <- c(
     deparse(substitute(lon)),
     deparse(substitute(lat))
   )
@@ -141,15 +142,18 @@ arc_data <- read_json(
   clean_names() %>%
   mutate_at(vars(matches("coordinates")), as.numeric) %>%
   mutate(
-    src_position = as_point(., from_coordinates1, from_coordinates2),
+    source_position = as_point(., from_coordinates1, from_coordinates2),
     target_position = as_point(., to_coordinates1, to_coordinates2)
   ) %>%
-  select(inbound, outbound, src_position, target_position)
+  select(inbound, outbound, source_position, target_position)
 
 rdeck(
-  initial_view_state = view_state(
-    center = c(-122.4, 37.74),
+  controller = TRUE,
+  initial_view_state = list(
+    longitude = -122.4,
+    latitude = 37.74,
     zoom = 11,
+    maxZoom = 20,
     pitch = 30,
     bearing = 0
   )
@@ -158,10 +162,12 @@ rdeck(
     data = arc_data,
     pickable = TRUE,
     get_width = 12,
-    get_source_position = src_position,
+    width_units = "pixels",
+    get_source_position = source_position,
     get_target_position = target_position,
     get_source_color = ~ c(Math.sqrt(inbound), 140, 0),
     get_target_color = ~ c(Math.sqrt(outbound), 140, 0),
+    tooltip = tooltip(inbound, outbound)
   )
 ```
 
@@ -185,6 +191,7 @@ h3_hexagon_data <- read_json(
   )
 
 rdeck(
+  controller = TRUE,
   initial_view_state = list(
     longitude = -122.4,
     latitude = 37.74,
@@ -203,6 +210,7 @@ rdeck(
     elevation_scale = 20,
     get_hexagon = h3_index,
     get_fill_color = ~ c(255, (1 - count / 500) * 255, 0),
-    get_elevation = count
-)
+    get_elevation = count,
+    tooltip = names(h3_hexagon_data)
+  )
 ```

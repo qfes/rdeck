@@ -35,6 +35,10 @@
 #'  RGBA color to be used to render highlighted object. When 3 component (RGB)
 #'  array is specified, a default value of 255 is used for alpha.
 #'
+#' @param tooltip `character` | [tooltip()]
+#'  Tooltip columns. No validation is applied; original column names aren't
+#'  available in aggregation layers.
+#'
 #' @param ... additional deck.gl layer parameters
 #'
 #' @returns `layer`
@@ -54,6 +58,7 @@ layer <- function(type,
                   color_format = "RGBA",
                   auto_highlight = FALSE,
                   highlight_color = c(0, 0, 128, 128),
+                  tooltip = tooltip(),
                   ...) {
   stopifnot(
     type %in% layer_types,
