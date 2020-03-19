@@ -27,6 +27,8 @@ layer_types <- c(
   "H3ClusterLayer",
   "H3HexagonLayer",
   "Tile3DLayer",
+  "TerrainLayer",
+  "MVTLayer",
   "SimpleMeshLayer",
   "ScenegraphLayer"
 )
@@ -57,6 +59,8 @@ accessor_names <- c(
   "get_size",
   "getAngle",
   "get_angle",
+  "getPixelOffset",
+  "get_pixel_offset",
   "getNormal",
   "get_normal",
   "getRadius",
@@ -79,8 +83,6 @@ accessor_names <- c(
   "get_text_anchor",
   "getAlignmentBaseline",
   "get_alignment_baseline",
-  "getPixelOffset",
-  "get_pixel_offset",
   "getWeight",
   "get_weight",
   "getColorValue",

@@ -10,12 +10,12 @@ bitmap_layer <- function(id = "BitmapLayer",
                          position_format = "XYZ",
                          color_format = "RGBA",
                          auto_highlight = FALSE,
-                         highlight_color = c(0, 0, 128, 128),
+                         highlight_color = "#00008080",
                          image = NULL,
                          bounds = c(1, 0, 0, 1),
                          desaturate = 0,
-                         transparent_color = c(0, 0, 0, 0),
-                         tint_color = c(255, 255, 255),
+                         transparent_color = "#00000000",
+                         tint_color = "#ffffff",
                          ...) {
   arguments <- get_arguments()
   parameters <- c(
@@ -40,12 +40,12 @@ add_bitmap_layer <- function(rdeck,
                              position_format = "XYZ",
                              color_format = "RGBA",
                              auto_highlight = FALSE,
-                             highlight_color = c(0, 0, 128, 128),
+                             highlight_color = "#00008080",
                              image = NULL,
                              bounds = c(1, 0, 0, 1),
                              desaturate = 0,
-                             transparent_color = c(0, 0, 0, 0),
-                             tint_color = c(255, 255, 255),
+                             transparent_color = "#00000000",
+                             tint_color = "#ffffff",
                              ...) {
   parameters <- get_arguments()[-1]
   layer <- do.call(bitmap_layer, parameters)

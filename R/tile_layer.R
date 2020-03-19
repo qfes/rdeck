@@ -10,11 +10,14 @@ tile_layer <- function(id = "TileLayer",
                        position_format = "XYZ",
                        color_format = "RGBA",
                        auto_highlight = FALSE,
-                       highlight_color = c(0, 0, 128, 128),
+                       highlight_color = "#00008080",
                        get_tile_data = NULL,
+                       tile_size = 512,
                        max_zoom = NULL,
                        min_zoom = 0,
                        max_cache_size = NULL,
+                       max_cache_byte_size = NULL,
+                       refinement_strategy = "best-available",
                        ...) {
   arguments <- get_arguments()
   parameters <- c(
@@ -39,11 +42,14 @@ add_tile_layer <- function(rdeck,
                            position_format = "XYZ",
                            color_format = "RGBA",
                            auto_highlight = FALSE,
-                           highlight_color = c(0, 0, 128, 128),
+                           highlight_color = "#00008080",
                            get_tile_data = NULL,
+                           tile_size = 512,
                            max_zoom = NULL,
                            min_zoom = 0,
                            max_cache_size = NULL,
+                           max_cache_byte_size = NULL,
+                           refinement_strategy = "best-available",
                            ...) {
   parameters <- get_arguments()[-1]
   layer <- do.call(tile_layer, parameters)

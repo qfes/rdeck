@@ -73,11 +73,7 @@ class Parameter {
       case "accessor": {
         let types = ["accessor"];
 
-        if (
-          ["number", "string", "boolean", "function"].includes(
-            typeof defaultValue
-          )
-        ) {
+        if (["number", "string", "boolean", "function"].includes(typeof defaultValue)) {
           types = [...types, typeToR(typeof defaultValue)];
         }
         return types;
@@ -102,6 +98,16 @@ class Parameter {
           : NULL;
     }
 
+    if (name.endsWith("Color") && Array.isArray(defaultValue)) {
+      return `"${rgba2hex(defaultValue)}"`;
+    }
+
+    if (name == "colorRange" && Array.isArray(defaultValue)) {
+      return `c(
+        ${defaultValue.map(x => `"${rgba2hex(x)}"`).join(",\n")}
+      )`;
+    }
+
     if (type == "accessor" && typeof defaultValue === "function") {
       const [match] = /(?<=return\s+).*(?=;)/.exec(defaultValue.toString());
 
@@ -123,11 +129,6 @@ function valueToR(value) {
   }
 
   if (Array.isArray(value)) {
-    if (Array.isArray(value[0])) {
-      return `list(
-        ${value.map(valueToR).join(",\n")}
-      )`;
-    }
     return `c(${value.map(valueToR).join(", ")})`;
   }
 
@@ -157,6 +158,11 @@ function typeToR(type) {
     default:
       return "[`list`]";
   }
+}
+
+function rgba2hex(rgba) {
+  const hex = rgba.map(x => x.toString(16).padStart(2, 0));
+  return `#${hex.join("")}`;
 }
 
 module.exports = {

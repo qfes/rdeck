@@ -7,9 +7,7 @@ function generateAccessorNames(layers) {
     .map(layer => {
       new layer();
 
-      return Object.values(layer._propTypes).filter(
-        propType => propType.type === "accessor"
-      );
+      return Object.values(layer._propTypes).filter(propType => propType.type === "accessor");
     })
     .flat();
 
@@ -37,9 +35,7 @@ function generateLayerTypes(layers) {
 }
 
 function generateMetadata(layers) {
-  const content = [generateLayerTypes(layers), generateAccessorNames(layers)].join(
-    "\n\n"
-  );
+  const content = [generateLayerTypes(layers), generateAccessorNames(layers)].join("\n\n");
 
   fs.writeFileSync("./R/deckgl_metadata.R", content);
 }

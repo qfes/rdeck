@@ -10,10 +10,11 @@ tile3d_layer <- function(id = "Tile3DLayer",
                          position_format = "XYZ",
                          color_format = "RGBA",
                          auto_highlight = FALSE,
-                         highlight_color = c(0, 0, 128, 128),
-                         get_point_color = c(0, 0, 0),
+                         highlight_color = "#00008080",
+                         get_point_color = "#000000",
                          point_size = 1,
                          load_options = NULL,
+                         loader = NULL,
                          ...) {
   arguments <- get_arguments()
   parameters <- c(
@@ -38,10 +39,11 @@ add_tile3d_layer <- function(rdeck,
                              position_format = "XYZ",
                              color_format = "RGBA",
                              auto_highlight = FALSE,
-                             highlight_color = c(0, 0, 128, 128),
-                             get_point_color = c(0, 0, 0),
+                             highlight_color = "#00008080",
+                             get_point_color = "#000000",
                              point_size = 1,
                              load_options = NULL,
+                             loader = NULL,
                              ...) {
   parameters <- get_arguments()[-1]
   layer <- do.call(tile3d_layer, parameters)

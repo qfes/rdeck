@@ -1,13 +1,14 @@
-import { DeckGL, PickInfo, WebMercatorViewport } from "@deck.gl/core";
+import { DeckGL, WebMercatorViewport } from "@deck.gl/core";
 import Layer from "./layer";
+import { getTooltip } from "./tooltip";
 import "./widget.css";
-import { LayerProps } from "@deck.gl/core/lib/layer";
 
 const binding: HTMLWidgets.Binding = {
   name: "rdeck",
   type: "output",
   factory(el, width, height) {
     let _deckgl: DeckGL;
+    let _layers: Layer[];
 
     return {
       get deckgl() {
@@ -31,10 +32,12 @@ const binding: HTMLWidgets.Binding = {
           };
         }
 
+        _layers = layers.map(Layer.create);
+
         _deckgl = new DeckGL({
           container: el,
           ...props,
-          layers: layers.map(Layer.create),
+          layers: _layers.map(x => x.layer),
           getTooltip
         });
       },
@@ -43,20 +46,6 @@ const binding: HTMLWidgets.Binding = {
     };
   }
 };
-
-function getTooltip(info: PickInfo<any>) {
-  if (!(info.picked && info.handled)) return;
-  let { name, entries } = info.handled;
-
-  const row = ([key, value]: [string, any]) =>
-    `<tr><td class="col-name">${key}</td><td class="col-value">${value}</td></tr>`;
-
-  const rows = entries.map(row).join("");
-  return {
-    html: `<div class="layer-name">${name}</div><table><tbody>${rows}</tbody></table>`
-  };
-}
-
 /* register widget */
 // @ts-ignore
 HTMLWidgets.widget(binding);

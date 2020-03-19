@@ -1,50 +1,56 @@
 import deck from "@deck.gl/layers";
-import { default as Layer, LayerProps } from "@deck.gl/core/lib/layer";
-import { PickInfo } from "@deck.gl/core";
+import { LayerProps } from "@deck.gl/core/lib/layer";
+import { PickInfo, Layer } from "@deck.gl/core";
+import { isObject } from "./util";
+import { Scale } from "./scale";
+import { accessors } from "./accessor";
 
-interface DeckLayerProps extends LayerProps<any> {
+export interface RDeckLayerProps extends LayerProps<any> {
   type: string;
 }
 
-export default class DeckLayer {
-  static create({ type, ...props }: DeckLayerProps): Layer<any> {
-    props.onHover = DeckLayer.onHover;
+export default class RDeckLayer {
+  layer: Layer<any>;
+  constructor({ type, ...props }: RDeckLayerProps) {
+    const colorProps = Object.entries(props).filter(
+      ([name, value]) => /get.*color/i.test(name) && isObject(value)
+    );
+
+    // TODO: do something with the scales to create a legend
+    const scales: [string, Scale][] = colorProps.map(([name, scale]) => [
+      name,
+      new Scale(scale, props.data)
+    ]);
+
+    const scaleProps = Object.fromEntries(scales.map(([name, scale]) => [name, scale.accessor]));
+
     // @ts-ignore
-    return new deck[type](Object.assign(accessors, props)) as Layer;
+    this.layer = new deck[type](Object.assign(accessors, props, scaleProps));
   }
 
-  static onHover(info: PickInfo<any>) {
-    const { id, name, tooltip, data } = info.layer.props;
-    // not picked or no tooltip config
-    if (!(info.picked && tooltip)) return;
-    // no data
-    if (!(info.object || data?.frame)) return;
-
-    const names: string[] = [tooltip].flat();
-    const object: Record<string, any> = info.object;
-
-    const entries = object
-      ? names.map(key => [key, object[key]])
-      : names.map(key => [key, data.frame[key][info.index]]);
-
-    return {
-      name: name ?? id,
-      entries
-    };
+  static create(props: RDeckLayerProps) {
+    return new RDeckLayer(props);
   }
 }
 
-type Accessor = (object: object, { index, data }: { index: number; data: any }) => any;
+function onHover(info: PickInfo<any>) {
+  const { id, tooltip, data } = info.layer.props;
+  // not picked or no tooltip config
+  if (!(info.picked && tooltip)) return;
+  // no data
+  if (!(info.object || data?.frame)) return;
 
-const accessors: { [property: string]: Accessor } = {
-  getHexagon: (object, { index, data }) => data.frame.hexagon[index],
-  getHexagons: (object, { index, data }) => data.frame.hexagons[index],
-  getS2Token: (object, { index, data }) => data.frame.token[index],
-  getIcon: (object, { index, data }) => data.frame.icon[index],
-  getText: (object, { index, data }) => data.frame.text[index],
-  getPath: (object, { index, data }) => data.frame.path[index],
-  getPolygon: (object, { index, data }) => data.frame.polygon[index],
-  getPosition: (object, { index, data }) => data.frame.position[index],
-  getSourcePosition: (object, { index, data }) => data.frame.sourcePosition[index],
-  getTargetPosition: (object, { index, data }) => data.frame.targetPosition[index]
-};
+  const index = info.index;
+  const isColumnar = info.object == null;
+  const object = isColumnar ? data.frame : info.object;
+
+  const getValue = isColumnar ? (key: string) => object[key][index] : (key: string) => object[key];
+
+  const names = typeof tooltip === "boolean" ? Object.keys(object) : [tooltip].flat();
+  const entries = names.map(key => [key, getValue(key)]);
+
+  return {
+    name: id,
+    entries
+  };
+}

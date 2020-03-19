@@ -52,7 +52,10 @@ const config = {
     "@deck.gl/mapbox": "deck",
     "mapbox-gl": "mapboxgl",
     "h3-js": "h3",
-    "s2-geometry": "s2"
+    "s2-geometry": "s2",
+    "d3-array": "d3",
+    "d3-interpolate": "d3",
+    "d3-scale": "d3"
   },
   plugins: [],
   devtool: "source-map"

@@ -1,18 +1,3 @@
-#' Tooltip
-#'
-#' @name tooltip
-#' @param ... names
-#' @return `character`
-#'  `...` converted to a character vector representing names to display.
-#'
-#' @export
-tooltip <- function(...) {
-  arguments <- as.list(match.call())[-1]
-  arguments %>%
-    lapply(function(name) deparse(name, backtick = FALSE)) %>%
-    unlist()
-}
-
 get_arguments <- function() {
   calling_environment <- parent.frame()
   call <- match.call(
@@ -34,4 +19,12 @@ get_arguments <- function() {
 camel_case_names <- function(object) {
   names(object) <- snakecase::to_lower_camel_case(names(object))
   object
+}
+
+merge_list <- function(list, ...) {
+  Reduce(
+    function(x, y) utils::modifyList(x, y, keep.null = TRUE),
+    list(...),
+    list
+  )
 }
