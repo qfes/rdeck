@@ -96,7 +96,7 @@ layer <- function(type,
     accessors[is_color_accessor],
     function(color) {
       # constant color
-      if (is.character(color)) {
+      if (inherits(color, "character")) {
         return(hex_to_rgba(color)[, 1])
       }
 
