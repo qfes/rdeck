@@ -14,14 +14,16 @@ function getLayers(module) {
     .filter(layer => layer.layerName);
 }
 
-const layers = [
-  ...getLayers(require("@deck.gl/layers")),
-  ...getLayers(require("@deck.gl/aggregation-layers")),
-  ...getLayers(require("@deck.gl/geo-layers")),
-  ...getLayers(require("@deck.gl/mesh-layers"))
-];
+const layers = {
+  "core-layers": getLayers(require("@deck.gl/layers")),
+  "aggregation-layers": getLayers(require("@deck.gl/aggregation-layers")),
+  "geo-layers": getLayers(require("@deck.gl/geo-layers")),
+  "mesh-layers": getLayers(require("@deck.gl/mesh-layers"))
+};
 
-layers.forEach(generateLayer);
+// Object.values(layers)
+//   .flat()
+//   .forEach(generateLayer);
 
 generateMetadata(layers);
 generateDependencies();

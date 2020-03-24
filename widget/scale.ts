@@ -12,12 +12,13 @@ export class Scale {
   scale: any;
   accessor: Accessor;
 
-  constructor(scale: ScaleProps, data: any) {
-    const value = data.frame[scale.value];
+  constructor(scale: ScaleProps, data: DataFrame | GeoJSON.GeoJsonObject) {
+    const value = data.frame[scale.value].map((x: any) => x ?? undefined);
 
     this.scale = scaleQuantize<any>()
       .domain(scale.domain ?? getDomain(value))
       .range(scale.range)
+      .unknown(scale.unknown || [204, 204, 204])
       .nice();
 
     this.accessor = createAccessor(this.scale, value);

@@ -1,5 +1,4 @@
-# layer types
-layer_types <- c(
+core_layers <- c(
   "ArcLayer",
   "BitmapLayer",
   "IconLayer",
@@ -12,14 +11,20 @@ layer_types <- c(
   "PolygonLayer",
   "GeoJsonLayer",
   "TextLayer",
-  "SolidPolygonLayer",
+  "SolidPolygonLayer"
+)
+
+aggregation_layers <- c(
   "ScreenGridLayer",
   "CPUGridLayer",
   "HexagonLayer",
   "ContourLayer",
   "GridLayer",
   "GPUGridLayer",
-  "HeatmapLayer",
+  "HeatmapLayer"
+)
+
+geo_layers <- c(
   "GreatCircleLayer",
   "S2Layer",
   "TileLayer",
@@ -28,85 +33,106 @@ layer_types <- c(
   "H3HexagonLayer",
   "Tile3DLayer",
   "TerrainLayer",
-  "MVTLayer",
+  "MVTLayer"
+)
+
+mesh_layers <- c(
   "SimpleMeshLayer",
   "ScenegraphLayer"
 )
 
-# accessor names
-accessor_names <- c(
-  "getSourcePosition",
-  "get_source_position",
-  "getTargetPosition",
-  "get_target_position",
-  "getSourceColor",
-  "get_source_color",
-  "getTargetColor",
-  "get_target_color",
-  "getWidth",
-  "get_width",
-  "getHeight",
-  "get_height",
-  "getTilt",
-  "get_tilt",
-  "getPosition",
-  "get_position",
-  "getIcon",
-  "get_icon",
-  "getColor",
-  "get_color",
-  "getSize",
-  "get_size",
-  "getAngle",
-  "get_angle",
-  "getPixelOffset",
-  "get_pixel_offset",
-  "getNormal",
-  "get_normal",
-  "getRadius",
-  "get_radius",
-  "getFillColor",
-  "get_fill_color",
-  "getLineColor",
-  "get_line_color",
-  "getLineWidth",
-  "get_line_width",
-  "getElevation",
-  "get_elevation",
-  "getPath",
+layers <- c(
+  core_layers,
+  aggregation_layers,
+  geo_layers,
+  mesh_layers
+)
+
+geometry_accessors <- c(
   "get_path",
-  "getPolygon",
+  "getPath",
   "get_polygon",
-  "getText",
-  "get_text",
-  "getTextAnchor",
-  "get_text_anchor",
-  "getAlignmentBaseline",
-  "get_alignment_baseline",
-  "getWeight",
-  "get_weight",
-  "getColorValue",
-  "get_color_value",
-  "getColorWeight",
-  "get_color_weight",
-  "getElevationValue",
-  "get_elevation_value",
-  "getElevationWeight",
-  "get_elevation_weight",
-  "getS2Token",
-  "get_s2_token",
-  "getTimestamps",
-  "get_timestamps",
-  "getHexagons",
-  "get_hexagons",
-  "getHexagon",
+  "getPolygon",
+  "get_position",
+  "getPosition",
+  "get_source_position",
+  "getSourcePosition",
+  "get_target_position",
+  "getTargetPosition"
+)
+
+geo_accessors <- c(
   "get_hexagon",
-  "getOrientation",
+  "getHexagon",
+  "get_hexagons",
+  "getHexagons",
+  "get_s2_token",
+  "getS2Token"
+)
+
+scalable_accessors <- c(
+  "get_color",
+  "getColor",
+  "get_elevation",
+  "getElevation",
+  "get_fill_color",
+  "getFillColor",
+  "get_line_color",
+  "getLineColor",
+  "get_radius",
+  "getRadius",
+  "get_source_color",
+  "getSourceColor",
+  "get_target_color",
+  "getTargetColor"
+)
+
+accessors <- c(
+  geometry_accessors,
+  geo_accessors,
+  scalable_accessors,
+  "get_alignment_baseline",
+  "getAlignmentBaseline",
+  "get_angle",
+  "getAngle",
+  "get_color_value",
+  "getColorValue",
+  "get_color_weight",
+  "getColorWeight",
+  "get_elevation_value",
+  "getElevationValue",
+  "get_elevation_weight",
+  "getElevationWeight",
+  "get_height",
+  "getHeight",
+  "get_icon",
+  "getIcon",
+  "get_line_width",
+  "getLineWidth",
+  "get_normal",
+  "getNormal",
   "get_orientation",
-  "getScale",
+  "getOrientation",
+  "get_pixel_offset",
+  "getPixelOffset",
   "get_scale",
-  "getTranslation",
-  "get_translation",
+  "getScale",
+  "get_size",
+  "getSize",
+  "get_text",
+  "getText",
+  "get_text_anchor",
+  "getTextAnchor",
+  "get_tilt",
+  "getTilt",
+  "get_timestamps",
+  "getTimestamps",
+  "get_transform_matrix",
   "getTransformMatrix",
-  "get_transform_matrix"
+  "get_translation",
+  "getTranslation",
+  "get_weight",
+  "getWeight",
+  "get_width",
+  "getWidth"
 )

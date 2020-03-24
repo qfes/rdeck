@@ -1,6 +1,3 @@
-import { DeckGLProps, DeckGL } from "@deck.gl/core";
-import { RDeckLayerProps } from "../layer";
-
 /* exposed global */
 export as namespace HTMLWidgets;
 
@@ -15,7 +12,6 @@ export interface Binding {
 }
 
 export interface Widget {
-  readonly deckgl: DeckGL;
-  renderValue(x: { props: DeckGLProps; layers: RDeckLayerProps[] }): void;
+  renderValue(x: { props: any; layers: any[] }): void;
   resize(width: number, height: number): void;
 }

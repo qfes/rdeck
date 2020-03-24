@@ -1,0 +1,32 @@
+.tooltip {
+  box-sizing: border-box;
+  max-width: 500px;
+  padding: 10px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 1px;
+  position: absolute;
+
+  --color: 238, 238, 238;
+  /* https://github.com/uber/deck.gl/blob/master/modules/core/src/lib/tooltip.js */
+  z-index: 1;
+  pointer-events: none;
+  color: #a0a7b4;
+  background-color: #29323c;
+}
+
+.layer-name {
+  font-size: 12px;
+  padding: 6px;
+  color: rgb(var(--color));
+}
+
+.field-name,
+.field-value {
+  font-size: 11px;
+  padding: 2 4px;
+}
+
+.field-value {
+  text-align: right;
+  color: rgb(var(--color));
+}

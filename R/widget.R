@@ -101,16 +101,6 @@ rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
       padding = 0,
       browser.fill = TRUE,
     ),
-    elementId = elementId,
-    dependencies = dependencies
+    elementId = elementId
   )
-}
-
-rdeck_html <- function(id, style, class, ...) {
-  container <- htmltools::tags$div(
-    id = id,
-    style = style,
-    class = class
-  ) %>%
-    htmltools::attachDependencies(dependencies)
 }

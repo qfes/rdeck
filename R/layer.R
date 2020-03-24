@@ -47,7 +47,7 @@
 #' @seealso \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}
 #' @family layers
 #'
-#' @export
+#' @keywords internal
 layer <- function(type,
                   id = type,
                   data = data.frame(),
@@ -60,7 +60,7 @@ layer <- function(type,
                   highlight_color = c(0, 0, 128, 128),
                   ...) {
   stopifnot(
-    type %in% layer_types,
+    type %in% layers,
     position_format %in% c("XYZ", "XY"),
     color_format %in% c("RGBA", "RGB")
   )
@@ -85,7 +85,7 @@ layer <- function(type,
   }
 
   # create accessor expressions for each accessor
-  is_accessor <- property_names %in% accessor_names
+  is_accessor <- property_names %in% rdeck:::accessors
   accessors <- lapply(
     properties[is_accessor],
     function(expr) accessor(expr, data, type != "GeoJson")
