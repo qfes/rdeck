@@ -1,0 +1,56 @@
+.legend {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+  width: 180px;
+  pointer-events: none;
+
+  border-radius: 1px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 1px;
+
+  color: rgb(240, 240, 240);
+  background-color: rgb(36, 39, 48);
+}
+
+.layer {
+  padding: 10px 12px;
+}
+
+.layer + .layer {
+  border-top: 1px rgb(58, 65, 76) solid;
+}
+
+.layer-name {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.scale {
+  font-size: 11px;
+}
+
+.scale + .scale {
+  margin-top: 10px;
+}
+
+.scale-name,
+.scale-by {
+  color: rgb(106, 116, 133);
+}
+
+.field-name {
+  color: rgb(160, 167, 180);
+}
+
+.colors {
+  margin-top: 6px;
+  font-size: 9px;
+  width: 100%;
+}
+
+.tick {
+  fill: rgb(160, 167, 180);
+}

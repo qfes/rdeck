@@ -2,9 +2,7 @@
   "name": "rdeck",
   "version": "0.2.2",
   "private": true,
-  "sideEffects": [
-    "./widget/rdeck.css"
-  ],
+  "sideEffects": "**.css",
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "postinstall": "npm explore @danmarshall/deckgl-typings -- npm run postinstall",

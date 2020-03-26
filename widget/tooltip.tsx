@@ -22,12 +22,12 @@ const Tooltip = ({ info }: TooltipProps) => {
   return (
     <div className={styles.tooltip} style={{ transform: `translate(${x}px, ${y}px)` }}>
       <div className={styles.layerName}>{name}</div>
-      <table>
+      <table className={styles.table}>
         <tbody>
           {names.map((name) => (
             <tr key={name}>
               <td className={styles.fieldName}>{name}</td>
-              <td className={styles.fieldValue}>{JSON.stringify(getValue(name))}</td>
+              <td className={styles.fieldValue}>{String(getValue(name))}</td>
             </tr>
           ))}
         </tbody>

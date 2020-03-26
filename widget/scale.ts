@@ -1,32 +1,32 @@
-import { scaleQuantize } from "d3-scale";
-import { Color } from "@deck.gl/core/utils/color";
+import { scaleQuantize, ScaleQuantize } from "d3-scale";
 import { Accessor } from "./accessor";
 
-interface ScaleProps {
-  domain: [number, number];
-  range: Color[];
-  value: string;
-}
+export default class ScaledAccessor {
+  type = "quantize";
+  name: string;
+  value: Accessor;
+  field: string;
+  data: any[];
+  scale: ScaleQuantize<any>;
 
-export class Scale {
-  scale: any;
-  accessor: Accessor;
-
-  constructor(scale: ScaleProps, data: DataFrame | GeoJSON.GeoJsonObject) {
-    const value = data.frame[scale.value].map((x: any) => x ?? undefined);
+  constructor(props: any) {
+    const { name, field, data } = props;
+    this.name = name;
+    this.field = field;
+    this.data = data;
 
     this.scale = scaleQuantize<any>()
-      .domain(scale.domain ?? getDomain(value))
-      .range(scale.range)
-      .unknown(scale.unknown || [204, 204, 204])
+      .domain(props.domain ?? getDomain(data))
+      .range(props.range)
       .nice();
 
-    this.accessor = createAccessor(this.scale, value);
+    this.value = createAccessor(this.scale, data);
   }
 }
 
-function createAccessor(scale: Function, value: any[]): Accessor {
-  return (object, { index }) => scale(value[index]);
+function createAccessor(scale: any, data: any[]): Accessor {
+  // replace nulls with undefined for unknown value mapping - could be performance overhead
+  return (object, { index }) => scale(data[index] ?? undefined);
 }
 
 function getDomain(values: number[]): [number, number] {

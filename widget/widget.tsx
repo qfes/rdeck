@@ -14,6 +14,7 @@ const binding: HTMLWidgets.Binding = {
         return ref.current;
       },
       renderValue({ props, layers }) {
+        // TODO: move to RDeck
         if (Array.isArray(props.initialBounds)) {
           const viewport = new WebMercatorViewport({ width, height });
           const { longitude, latitude, zoom } = viewport.fitBounds([
