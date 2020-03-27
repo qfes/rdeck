@@ -3,7 +3,7 @@ import { Layer, LayerProps } from "deck.gl";
 import { Feature, FeatureCollection } from "geojson";
 
 import { isObject } from "./util";
-import Scale from "./scale";
+import ScaleAccessor from "./scale";
 import { accessors } from "./accessor";
 
 type LayerData = DataFrame | Feature | FeatureCollection;
@@ -18,7 +18,7 @@ export default class RDeckLayer {
   layer: Layer<any>;
   legend: {
     name: string;
-    scales: Scale[];
+    scales: ScaleAccessor[];
   };
 
   constructor({ type, ...props }: RDeckLayerProps) {
@@ -28,10 +28,9 @@ export default class RDeckLayer {
     );
 
     const scales = colorProps.map(([name, scaleProps]) => {
-      return new Scale({
+      return new ScaleAccessor({
         ...scaleProps,
         name,
-        field: scaleProps.value,
         data: getColumn(props.data, scaleProps.value),
       });
     });

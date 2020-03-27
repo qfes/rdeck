@@ -91,7 +91,8 @@ layer <- function(type,
     function(expr) accessor(expr, data, type != "GeoJson")
   )
 
-  is_color_accessor <- tolower(names(accessors)) %>% endsWith("color")
+
+  is_color_accessor <- names(accessors) %>% endsWith("color")
   color_accessors <- lapply(
     accessors[is_color_accessor],
     function(color) {
@@ -101,8 +102,16 @@ layer <- function(type,
       }
 
       # color object ? validate value name
-      if (inherits(color, "color") && !is.null(data)) {
-        stopifnot(color$value %in% colnames(data))
+      if (inherits(color, "scale")) {
+        stopifnot(is.null(data) || color$value %in% colnames(data))
+
+        color$range <- get_color_range(color$range)
+        if (is.null(color$domain) && color$type != "quantile") {
+          color$domain <- scale_domain(
+            data[color$value],
+            ifelse(color$type == "quantize", 2, nrow(color$range))
+          )
+        }
       }
 
       color
