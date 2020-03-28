@@ -12,7 +12,7 @@ scale_linear <- function(domain = NULL, range = c(0, 1), value, legend = TRUE) {
 
   stopifnot(
     is.character(value) && length(value) == 1,
-    is.null(domain) || length(domain) != length(range)
+    is.null(domain) || length(domain) == length(range)
   )
 
   scale(
