@@ -77,16 +77,18 @@ const Discrete = ({ scale }: DiscreteProps) => {
 const Continuous = ({ scale }: Pick<ScaleProps, "scale">) => {
   const id = useId("gradient");
 
-  const colors = useMemo(() => {
+  const colors: string[] = useMemo(() => {
     return scale.ticks(6).map((tick) => rgba(scale(tick)));
   }, [scale]);
 
-  const ticks = useMemo(() => {
+  const ticks: string[] = useMemo(() => {
     return scale.ticks(6);
   }, [scale]);
 
+  const height = 10 + 14 * (colors.length - 1);
+
   return (
-    <svg className={styles.colorScale} height={80} width="100%">
+    <svg className={styles.colorScale} height={height} width="100%">
       <defs>
         <linearGradient id={id} x1={0} x2={0} y1={0} y2={1}>
           {colors.map((color, index) => (

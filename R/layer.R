@@ -108,8 +108,8 @@ layer <- function(type,
         color$range <- get_color_range(color$range)
         if (is.null(color$domain) && color$type != "quantile") {
           color$domain <- scale_domain(
-            data[color$value],
-            ifelse(color$type == "quantize", 2, nrow(color$range))
+            color,
+            data[color$value]
           )
         }
       }

@@ -41,13 +41,13 @@ export default class ScaleAccessor {
 function createScale({ type, domain, range, exponent, base }: any): ScaleType {
   switch (type) {
     case "linear":
-      return scaleLinear().domain(domain).range(range).nice();
+      return scaleLinear().domain(domain).range(range);
     case "power":
-      return scalePow().domain(domain).range(range).exponent(exponent).nice();
+      return scalePow().domain(domain).range(range).exponent(exponent);
     case "log":
-      return scaleLog().domain(domain).range(range).base(base).nice();
+      return scaleLog().domain(domain).range(range).base(base);
     case "quantize":
-      return scaleQuantize().domain(domain).range(range).nice();
+      return scaleQuantize().domain(domain).range(range);
     case "quantile":
       return scaleQuantile().domain(domain).range(range);
     default:
