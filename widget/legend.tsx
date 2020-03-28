@@ -55,7 +55,7 @@ type DiscreteProps = Pick<ScaleProps, "scale">;
 
 const Discrete = ({ scale }: DiscreteProps) => {
   const colors: [string, any][] = useMemo(() => {
-    return "ticks" in scale ? scale.ticks(5).map((tick) => [rgba(scale(tick)), tick]) : [];
+    return "ticks" in scale ? scale.ticks(6).map((tick) => [rgba(scale(tick)), tick]) : [];
   }, [scale]);
 
   const height = 10 + 14 * (colors.length - 1);
@@ -92,7 +92,7 @@ const Continuous = ({ scale }: Pick<ScaleProps, "scale">) => {
       <defs>
         <linearGradient id={id} x1={0} x2={0} y1={0} y2={1}>
           {colors.map((color, index) => (
-            <stop key={index} offset={index / 5} stopColor={color} />
+            <stop key={index} offset={index / (colors.length - 1)} stopColor={color} />
           ))}
         </linearGradient>
       </defs>

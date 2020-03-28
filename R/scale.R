@@ -169,6 +169,10 @@ scale_domain.default <- function(scale, data) {
   domain(data, domain_length(scale$range))
 }
 
+scale_domain.scale_quantize <- function(scale, data) {
+  c(min(data, na.rm = TRUE), max(data, na.rm = TRUE))
+}
+
 scale_domain.scale_log <- function(scale, data) {
   invert <- function(x) scale$base^x
 

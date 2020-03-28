@@ -68,16 +68,3 @@ function getColumn(data: LayerData, name: string): any[] {
 
   throw TypeError("data type not suppported");
 }
-/*
-{
-  type: "quantize" | "quantile" | "linear",
-
-}
-
-{
-  power: exponent
-  log: base
-}
-
-log & power ticks are weirds
-*/
