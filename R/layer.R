@@ -61,12 +61,12 @@ layer <- function(type,
                   ...) {
   stopifnot(
     type %in% layers,
+    inherits(data, "data.frame"),
     position_format %in% c("XYZ", "XY"),
     color_format %in% c("RGBA", "RGB")
   )
 
   properties <- get_arguments()
-  property_names <- names(properties)
 
   # data
   properties$data <- layer_data(data, type)
@@ -79,56 +79,13 @@ layer <- function(type,
     properties$tooltip <- tooltip(properties$tooltip)
   }
 
-  # color_range
-  if ("color_range" %in% property_names) {
-    properties$color_range <- get_color_range(properties$color_range)
-  }
-
   # create accessor expressions for each accessor
-  is_accessor <- property_names %in% rdeck:::accessors
-  accessors <- lapply(
-    properties[is_accessor],
-    function(expr) accessor(expr, data, type != "GeoJson")
-  )
-
-
-  is_color_accessor <- names(accessors) %>% endsWith("color")
-  color_accessors <- lapply(
-    accessors[is_color_accessor],
-    function(color) {
-      # constant color
-      if (inherits(color, "character")) {
-        return(hex_to_rgba(color)[, 1])
-      }
-
-      # color object ? validate value name
-      if (inherits(color, "scale")) {
-        stopifnot(is.null(data) || color$value %in% colnames(data))
-
-        color$range <- get_color_range(color$range)
-        if (is.null(color$domain) && color$type != "quantile") {
-          color$domain <- scale_domain(
-            color,
-            data[color$value]
-          )
-        }
-      }
-
-      color
-    }
-  )
-
-  # convert constant color expressions
-  is_color_property <- tolower(property_names) %>% endsWith("color")
-  color_properties <- lapply(
-    properties[is_color_property & !is_accessor],
-    function(color) if (!is.character(color)) color else hex_to_rgba(color)[, 1]
-  )
+  accessors <- get_accessors(properties, data, type != "GeoJsonLayer")
+  scalable_accessors <- get_scalable_accessors(accessors, data)
 
   # overwrite accessors & colors
   properties <- properties %>%
-    merge_list(color_properties) %>%
-    merge_list(accessors, color_accessors)
+    merge_list(accessors, scalable_accessors)
 
   structure(
     lapply(properties, eval) %>%
@@ -199,5 +156,35 @@ layer_data.data.frame <- function(data, layer_type) {
       # performance optimisation for serialising points
       if (inherits(sfc, "sfc_POINT")) do.call(rbind, sfc) else sfc
     })
+  )
+}
+
+get_accessors <- function(properties, data, columnar = TRUE) {
+  is_accessor <- names(properties) %in% accessors
+
+  lapply(
+    properties[is_accessor],
+    function(expr) accessor(expr, data, columnar)
+  )
+}
+
+get_scalable_accessors <- function(properties, data) {
+  is_scalable <- names(properties) %in% scalable_accessors
+  data <- as.data.frame(data)
+
+  lapply(
+    properties[is_scalable],
+    function(scale) {
+      if (!inherits(scale, "scale")) {
+        return(scale)
+      }
+
+      stopifnot(scale$value %in% colnames(data))
+      if (is.null(scale$domain) && scale$type != "quantile") {
+        scale$domain <- scale_domain(scale, data[scale$value])
+      }
+
+      scale
+    }
   )
 }

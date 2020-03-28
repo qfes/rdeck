@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, Fragment } from "react";
+import React, { useMemo, useState, useCallback, Fragment, memo, useRef } from "react";
 import { DeckGL, DeckProps, PickInfo } from "deck.gl";
 import { StaticMap, StaticMapProps } from "react-map-gl";
 
@@ -13,7 +13,8 @@ export interface RDeckProps {
   layers: RDeckLayerProps[];
 }
 
-export default React.forwardRef<DeckGL, RDeckProps>((props, deckgl) => {
+const RDeck = (props: RDeckProps) => {
+  const deckgl = useRef<DeckGL>(null);
   const { mapboxApiAccessToken, mapStyle, mapOptions, ...deckProps } = props.props;
   const [deckLayers, legendLayers] = useMemo(() => {
     const layers = props.layers.map(Layer.create);
@@ -32,7 +33,9 @@ export default React.forwardRef<DeckGL, RDeckProps>((props, deckgl) => {
       <Legend layers={legendLayers} />
     </Fragment>
   );
-});
+};
+
+export default memo(RDeck);
 
 const useHover = () => {
   const [state, setState] = useState<PickInfo<any> | null>(null);

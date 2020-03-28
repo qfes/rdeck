@@ -8,6 +8,8 @@ export interface LegendProps {
 }
 
 const Legend = ({ layers }: LegendProps) => {
+  if (layers.length === 0) return null;
+
   return (
     <div className={styles.legend}>
       {layers.map((layer) => (
@@ -23,11 +25,13 @@ interface LayerProps {
 }
 
 const Layer = ({ name, scales }: LayerProps) => {
+  if (scales.length === 0) return null;
+
   return (
     <div className={styles.layer}>
       <div className={styles.layerName}>{name}</div>
       {scales.map((scale) => (
-        <Scale key={scale.name} {...scale} />
+        <Scale key={scale.name} {...scale} isContinuous={scale.isContinuous} />
       ))}
     </div>
   );
@@ -35,10 +39,9 @@ const Layer = ({ name, scales }: LayerProps) => {
 
 type ScaleProps = ScaleAccessor;
 
-const Scale = ({ name, field, scale }: ScaleProps) => {
+const Scale = ({ name, field, scale, isContinuous }: ScaleProps) => {
   const scaleName = words(name.replace(/^get/, ""));
   const isColor = /color$/i.test(name);
-  const isContinuous = "interpolate" in scale;
 
   return (
     <div className={styles.scale}>

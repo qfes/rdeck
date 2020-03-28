@@ -26,15 +26,21 @@ export default class ScaleAccessor {
   field: string;
   data: any[];
   scale: ScaleType;
+  legend: boolean;
 
-  constructor({ type, name, value: field, data, domain, range, exponent, base }: any) {
+  constructor({ type, name, value: field, data, domain, range, exponent, base, legend }: any) {
     this.type = type;
     this.name = name;
     this.field = field;
     this.data = data;
+    this.legend = legend;
 
     this.scale = createScale({ type, domain: domain ?? data, range, exponent, base });
     this.value = createAccessor(this.scale, data);
+  }
+
+  get isContinuous() {
+    return "interpolate" in this.scale;
   }
 }
 
@@ -56,6 +62,6 @@ function createScale({ type, domain, range, exponent, base }: any): ScaleType {
 }
 
 function createAccessor(scale: any, data: any[]): Accessor {
-  // replace nulls with undefined for unknown value mapping - could be performance overhead
+  // TODO: replace nulls with undefined for unknown value mapping - could be performance overhead
   return (object, { index }) => scale(data[index]);
 }
