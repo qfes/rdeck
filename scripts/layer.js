@@ -19,16 +19,14 @@ class Layer {
      * GeoJsonLayer -> geojson_layer
      * Tile3DLayer -> tile3d_layer
      */
-    const name = type.layerName
-      .replace("GeoJson", "Geojson")
-      .replace("3D", "3d");
+    const name = type.layerName.replace("GeoJson", "Geojson").replace("3D", "3d");
 
     this.type = type;
     this.name = snakeCase(name);
     this.parameters = Object.values(type._propTypes)
-      .filter(propType => !exclude.includes(propType.name))
-      .filter(propType => !/^(_|on)/.test(propType.name))
-      .map(propType => new Parameter(propType))
+      .filter((propType) => !exclude.includes(propType.name))
+      .filter((propType) => !/^(_|on)/.test(propType.name))
+      .map((propType) => new Parameter(propType));
 
     this.parameters.unshift({ name: "id", default: `"${type.layerName}"` });
   }
@@ -43,7 +41,7 @@ class Layer {
   }
 
   get signature() {
-    const parameters = this.parameters.map(p => {
+    const parameters = this.parameters.map((p) => {
       return p.default ? `${p.name} = ${p.default}` : p.name;
     });
 
@@ -54,7 +52,7 @@ class Layer {
   }
 
   get body() {
-    const geometryParam = this.parameters.find(param =>
+    const geometryParam = this.parameters.find((param) =>
       ["get_path", "get_polygon", "get_position"].includes(param.name)
     );
 
@@ -101,10 +99,9 @@ class AddLayer extends Layer {
 
   get documentation() {
     return dedent(`
-    #' @name ${this.name}
-    #' @template ${this.layer}
-    #' @param rdeck \`rdeck\`
-    #' @family add_layers
+    #' @describeIn ${this.layer}
+    #'  Add ${this.type.layerName} to an rdeck map
+    #' @inheritParams add_layer
     #' @export
     `);
   }
@@ -123,10 +120,10 @@ function generateLayer(layerType) {
   const layer = new Layer(layerType);
   const addLayer = new AddLayer(layerType);
 
-  const content =  [layer, addLayer].map(x => x.declaration).join("\n\n");
+  const content = [layer, addLayer].map((x) => x.declaration).join("\n\n");
   fs.writeFileSync(`./R/${layer.name}.R`, content);
 }
 
 module.exports = {
-  generateLayer
+  generateLayer,
 };

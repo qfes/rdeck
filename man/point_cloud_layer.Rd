@@ -2,9 +2,30 @@
 % Please edit documentation in R/point_cloud_layer.R
 \name{point_cloud_layer}
 \alias{point_cloud_layer}
+\alias{add_point_cloud_layer}
 \title{PointCloudLayer}
 \usage{
 point_cloud_layer(
+  id = "PointCloudLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  size_units = "pixels",
+  point_size = 10,
+  get_position = position,
+  get_normal = c(0, 0, 1),
+  get_color = "#000000ff",
+  material = TRUE,
+  ...
+)
+
+add_point_cloud_layer(
+  rdeck,
   id = "PointCloudLayer",
   data = data.frame(),
   visible = TRUE,
@@ -56,10 +77,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 PointCloudLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_point_cloud_layer}: Add PointCloudLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/point-cloud-layer.md}
 

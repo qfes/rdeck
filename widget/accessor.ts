@@ -11,6 +11,6 @@ export const accessors: { [property: string]: Accessor } = {
   getPath: (object, { index, data }) => data.frame.path[index],
   getPolygon: (object, { index, data }) => data.frame.polygon[index],
   getPosition: (object, { index, data }) => data.frame.position[index],
-  getSourcePosition: (object, { index, data }) => data.frame.sourcePosition[index],
-  getTargetPosition: (object, { index, data }) => data.frame.targetPosition[index]
+  getSourcePosition: (object, { index, data }) => data.frame.source_position[index],
+  getTargetPosition: (object, { index, data }) => data.frame.target_position[index]
 };

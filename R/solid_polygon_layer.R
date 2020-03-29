@@ -34,10 +34,9 @@ solid_polygon_layer <- function(id = "SolidPolygonLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_solid_polygon_layer
-#' @template solid_polygon_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn solid_polygon_layer
+#'  Add SolidPolygonLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_solid_polygon_layer <- function(rdeck,
                                     id = "SolidPolygonLayer",

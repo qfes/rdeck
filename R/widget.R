@@ -1,13 +1,13 @@
 #' RDeck
 #'
-#' Create a Deck map.
+#' Create a Deck.GL map.
 #'
 #' @name rdeck
 #' @param mapbox_api_access_token `character`
 #'  The api access token to use mapbox tiles.
 #'
 #' @param map_style `character`
-#'  A mapbox style url. \url{https://docs.mapbox.com/api/maps/#mapbox-styles}
+#'  A mapbox style url. <https://docs.mapbox.com/api/maps/#mapbox-styles>
 #'
 #' @param initial_bounds `sf::st_bbox` | `sf::sf` | `sf::sfc` | `sf::sfg`
 #'  The initial bounds of the map; overwrites `initial_view_state`.
@@ -37,9 +37,6 @@
 #'  Element id for the map.
 #'
 #' @param ... additional parameters to pass to the `Deck`.
-#'
-#' @return `rdeck`
-#'  An `rdeck` widget for a deck.gl map.
 #'
 #' @seealso <https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md>
 #'

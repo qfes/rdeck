@@ -7,19 +7,19 @@
 view_state(center = c(0, 0), zoom = 0, pitch = 0, bearing = 0, ...)
 }
 \arguments{
-\item{center}{\code{\link{numeric}} | \code{\link[sf:st_point]{sf::st_point()}}
+\item{center}{\code{numeric} | \code{sf::st_point}
 Center of the viewport on map}
 
-\item{zoom}{\code{\link{numeric}}
-Scale = \code{Math.pow(2, zoom)} on map}
+\item{zoom}{\code{numeric}
+Scale = \eqn{2^{zoom}}}
 
-\item{pitch}{\code{\link{numeric}}
+\item{pitch}{\code{numeric}
 Camera angle in degrees (0 is straight down)}
 
-\item{bearing}{\code{\link{numeric}}
+\item{bearing}{\code{numeric}
 Map rotation in degrees (0 means north is up)}
 
-\item{...}{additional parameters to pass to view_state | initial_view_state}
+\item{...}{additional parameters to pass to \code{view_state} | \code{initial_view_state}}
 }
 \description{
 Create a view_state

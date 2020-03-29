@@ -11,8 +11,8 @@ great_circle_layer <- function(id = "GreatCircleLayer",
                                color_format = "RGBA",
                                auto_highlight = FALSE,
                                highlight_color = "#00008080",
-                               get_source_position = sourcePosition,
-                               get_target_position = targetPosition,
+                               get_source_position = source_position,
+                               get_target_position = target_position,
                                get_source_color = "#000000ff",
                                get_target_color = "#000000ff",
                                get_width = 1,
@@ -32,10 +32,9 @@ great_circle_layer <- function(id = "GreatCircleLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_great_circle_layer
-#' @template great_circle_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn great_circle_layer
+#'  Add GreatCircleLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_great_circle_layer <- function(rdeck,
                                    id = "GreatCircleLayer",
@@ -47,8 +46,8 @@ add_great_circle_layer <- function(rdeck,
                                    color_format = "RGBA",
                                    auto_highlight = FALSE,
                                    highlight_color = "#00008080",
-                                   get_source_position = sourcePosition,
-                                   get_target_position = targetPosition,
+                                   get_source_position = source_position,
+                                   get_target_position = target_position,
                                    get_source_color = "#000000ff",
                                    get_target_color = "#000000ff",
                                    get_width = 1,

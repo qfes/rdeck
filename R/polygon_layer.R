@@ -42,10 +42,9 @@ polygon_layer <- function(id = "PolygonLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_polygon_layer
-#' @template polygon_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn polygon_layer
+#'  Add PolygonLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_polygon_layer <- function(rdeck,
                               id = "PolygonLayer",

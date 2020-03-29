@@ -11,8 +11,8 @@ line_layer <- function(id = "LineLayer",
                        color_format = "RGBA",
                        auto_highlight = FALSE,
                        highlight_color = "#00008080",
-                       get_source_position = sourcePosition,
-                       get_target_position = targetPosition,
+                       get_source_position = source_position,
+                       get_target_position = target_position,
                        get_color = "#000000ff",
                        get_width = 1,
                        width_units = "pixels",
@@ -29,10 +29,9 @@ line_layer <- function(id = "LineLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_line_layer
-#' @template line_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn line_layer
+#'  Add LineLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_line_layer <- function(rdeck,
                            id = "LineLayer",
@@ -44,8 +43,8 @@ add_line_layer <- function(rdeck,
                            color_format = "RGBA",
                            auto_highlight = FALSE,
                            highlight_color = "#00008080",
-                           get_source_position = sourcePosition,
-                           get_target_position = targetPosition,
+                           get_source_position = source_position,
+                           get_target_position = target_position,
                            get_color = "#000000ff",
                            get_width = 1,
                            width_units = "pixels",

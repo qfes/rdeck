@@ -2,9 +2,37 @@
 % Please edit documentation in R/trips_layer.R
 \name{trips_layer}
 \alias{trips_layer}
+\alias{add_trips_layer}
 \title{TripsLayer}
 \usage{
 trips_layer(
+  id = "TripsLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  width_units = "meters",
+  width_scale = 1,
+  width_min_pixels = 0,
+  width_max_pixels = 9007199254740991,
+  rounded = FALSE,
+  miter_limit = 4,
+  billboard = FALSE,
+  get_path = path,
+  get_color = "#000000ff",
+  get_width = 1,
+  trail_length = 120,
+  current_time = 0,
+  get_timestamps = NULL,
+  ...
+)
+
+add_trips_layer(
+  rdeck,
   id = "TripsLayer",
   data = data.frame(),
   visible = TRUE,
@@ -63,10 +91,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 TripsLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_trips_layer}: Add TripsLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/trips-layer.md}
 

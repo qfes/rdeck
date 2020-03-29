@@ -56,10 +56,9 @@ grid_layer <- function(id = "GridLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_grid_layer
-#' @template grid_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn grid_layer
+#'  Add GridLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_grid_layer <- function(rdeck,
                            id = "GridLayer",

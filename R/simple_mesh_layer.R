@@ -36,10 +36,9 @@ simple_mesh_layer <- function(id = "SimpleMeshLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_simple_mesh_layer
-#' @template simple_mesh_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn simple_mesh_layer
+#'  Add SimpleMeshLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_simple_mesh_layer <- function(rdeck,
                                   id = "SimpleMeshLayer",

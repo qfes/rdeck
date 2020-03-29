@@ -2,9 +2,29 @@
 % Please edit documentation in R/bitmap_layer.R
 \name{bitmap_layer}
 \alias{bitmap_layer}
+\alias{add_bitmap_layer}
 \title{BitmapLayer}
 \usage{
 bitmap_layer(
+  id = "BitmapLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  image = NULL,
+  bounds = c(1, 0, 0, 1),
+  desaturate = 0,
+  transparent_color = "#00000000",
+  tint_color = "#ffffff",
+  ...
+)
+
+add_bitmap_layer(
+  rdeck,
   id = "BitmapLayer",
   data = data.frame(),
   visible = TRUE,
@@ -55,10 +75,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 BitmapLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_bitmap_layer}: Add BitmapLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/bitmap-layer.md}
 

@@ -2,7 +2,7 @@
 #'
 #' @name layer
 #' @param type `character`
-#'  deck.gl layer type, one of [layer_types]
+#'  deck.gl layer type.
 #'
 #' @param id `character`
 #'  The id of the layer. Layer ids must be unique per layer `type` for deck.gl
@@ -94,19 +94,15 @@ layer <- function(type,
   )
 }
 
+#' Add Layer
+#'
 #' Add a deck.gl layer to an rdeck map.
 #'
 #' @name add_layer
-#'
-#' @param rdeck [`rdeck`]
-#'  An `rdeck` map.
-#'
-#' @param layer [`layer`]
-#'
-#' @returns [`rdeck`]
-#'  The `rdeck` map.
-#'
-#' @seealso <https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md>
+#' @param rdeck `rdeck`
+#'  An rdeck map
+#' @param layer
+#'  The layer
 #'
 #' @export
 add_layer <- function(rdeck, layer) {

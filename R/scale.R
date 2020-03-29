@@ -28,6 +28,8 @@ scale_linear <- function(domain = NULL, range = c(0, 1), value, legend = TRUE) {
 #'
 #' @name scale_power
 #' @param exponent
+#'  Sets the power exponent. \eqn{x^{exponent}}
+#'
 #' @inheritParams scale
 #'
 #' @family scales
@@ -56,6 +58,7 @@ scale_power <- function(domain = NULL, range = c(0, 1), exponent = 1, value, leg
 #'
 #' @name scale_log
 #' @param base
+#'  Sets the log base.
 #' @inheritParams scale
 #'
 #' @family scales
@@ -84,6 +87,8 @@ scale_log <- function(domain = NULL, range = c(0, 1), base = 10, value, legend =
 #'
 #' @name scale_quantize
 #' @inheritParams scale
+#' @param domain
+#'  The scale's domain; if supplied, the vector must contain two elements
 #'
 #' @family scales
 #' @export
@@ -134,12 +139,26 @@ scale_quantile <- function(range = c(0, 1), value, legend = TRUE) {
 #'
 #' @name scale
 #' @param type
+#'  Scale type
+#'
 #' @param domain
+#'  The scale's domain; if supplied, the vector must contain two or more
+#'  elements.
+#'
+#'  Specifying more than two values produces a piecewise scale.
+#'
 #' @param range
+#'  The scale's range; if supplied, the vector must be two or more elements.
+#'  for color scales, this will be an array of color values.
+#'
 #' @param value
-#' @param legend
+#'  The name of the column containing data to be scaled. Can be either a named
+#'  column (non-standard evaluation), or an expression evaluating a string.
+#'
+#' @param legend `logical`
+#'  Indicate whether the legend should be displayed for this scale.
+#'
 #' @param ...
-#' @family scales
 #' @keywords internal
 scale <- function(type,
                   domain = NULL,

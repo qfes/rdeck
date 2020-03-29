@@ -2,6 +2,7 @@
 % Please edit documentation in R/text_layer.R
 \name{text_layer}
 \alias{text_layer}
+\alias{add_text_layer}
 \title{TextLayer}
 \usage{
 text_layer(
@@ -20,8 +21,52 @@ text_layer(
   size_min_pixels = 0,
   size_max_pixels = 9007199254740991,
   background_color = NULL,
- 
-    character_set = " !\\"#$\%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\\177",
+  character_set = c(" ", "!", "\\"", "#", "$", "\%", "&", "'", "(", ")", "*", "+", ",",
+    "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=",
+    ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\\\\", "]", "^",
+    "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
+    "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~", "\\177"),
+  font_family = "Monaco, monospace",
+  font_weight = "normal",
+  line_height = 1,
+  font_settings = NULL,
+  word_break = "word-break",
+  max_width = -1,
+  get_text = text,
+  get_position = position,
+  get_color = "#000000ff",
+  get_size = 32,
+  get_angle = 0,
+  get_text_anchor = "middle",
+  get_alignment_baseline = "center",
+  get_pixel_offset = c(0, 0),
+  ...
+)
+
+add_text_layer(
+  rdeck,
+  id = "TextLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  billboard = TRUE,
+  size_scale = 1,
+  size_units = "pixels",
+  size_min_pixels = 0,
+  size_max_pixels = 9007199254740991,
+  background_color = NULL,
+  character_set = c(" ", "!", "\\"", "#", "$", "\%", "&", "'", "(", ")", "*", "+", ",",
+    "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=",
+    ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\\\\", "]", "^",
+    "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
+    "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~", "\\177"),
   font_family = "Monaco, monospace",
   font_weight = "normal",
   line_height = 1,
@@ -72,10 +117,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 TextLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_text_layer}: Add TextLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/text-layer.md}
 

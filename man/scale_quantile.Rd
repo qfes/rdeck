@@ -6,6 +6,16 @@
 \usage{
 scale_quantile(range = c(0, 1), value, legend = TRUE)
 }
+\arguments{
+\item{range}{The scale's range; if supplied, the vector must be two or more elements.
+for color scales, this will be an array of color values.}
+
+\item{value}{The name of the column containing data to be scaled. Can be either a named
+column (non-standard evaluation), or an expression evaluating a string.}
+
+\item{legend}{\code{logical}
+Indicate whether the legend should be displayed for this scale.}
+}
 \description{
 Quantile Scale
 }
@@ -14,7 +24,6 @@ Other scales:
 \code{\link{scale_linear}()},
 \code{\link{scale_log}()},
 \code{\link{scale_power}()},
-\code{\link{scale_quantize}()},
-\code{\link{scale}()}
+\code{\link{scale_quantize}()}
 }
 \concept{scales}

@@ -2,23 +2,16 @@
 % Please edit documentation in R/layer.R
 \name{add_layer}
 \alias{add_layer}
-\title{Add a deck.gl layer to an rdeck map.}
+\title{Add Layer}
 \usage{
 add_layer(rdeck, layer)
 }
 \arguments{
-\item{rdeck}{\code{\link{rdeck}}
-An \code{rdeck} map.}
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 
-\item{layer}{\code{\link{layer}}}
-}
-\value{
-\code{\link{rdeck}}
-The \code{rdeck} map.
+\item{layer}{The layer}
 }
 \description{
 Add a deck.gl layer to an rdeck map.
-}
-\seealso{
-\url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}
 }

@@ -2,9 +2,45 @@
 % Please edit documentation in R/column_layer.R
 \name{column_layer}
 \alias{column_layer}
+\alias{add_column_layer}
 \title{ColumnLayer}
 \usage{
 column_layer(
+  id = "ColumnLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  disk_resolution = 20,
+  vertices = NULL,
+  radius = 1000,
+  angle = 0,
+  offset = c(0, 0),
+  coverage = 1,
+  elevation_scale = 1,
+  line_width_units = "meters",
+  line_width_scale = 1,
+  line_width_min_pixels = 0,
+  line_width_max_pixels = 9007199254740991,
+  extruded = TRUE,
+  wireframe = FALSE,
+  filled = TRUE,
+  stroked = FALSE,
+  get_position = position,
+  get_fill_color = "#000000ff",
+  get_line_color = "#000000ff",
+  get_line_width = 1,
+  get_elevation = 1000,
+  material = TRUE,
+  ...
+)
+
+add_column_layer(
+  rdeck,
   id = "ColumnLayer",
   data = data.frame(),
   visible = TRUE,
@@ -71,10 +107,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 ColumnLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_column_layer}: Add ColumnLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/column-layer.md}
 

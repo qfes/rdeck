@@ -1,2 +1,0 @@
-# # globals
-# globalVariables(c("."))

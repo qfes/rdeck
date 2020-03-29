@@ -38,10 +38,9 @@ trips_layer <- function(id = "TripsLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_trips_layer
-#' @template trips_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn trips_layer
+#'  Add TripsLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_trips_layer <- function(rdeck,
                             id = "TripsLayer",

@@ -2,9 +2,35 @@
 % Please edit documentation in R/simple_mesh_layer.R
 \name{simple_mesh_layer}
 \alias{simple_mesh_layer}
+\alias{add_simple_mesh_layer}
 \title{SimpleMeshLayer}
 \usage{
 simple_mesh_layer(
+  id = "SimpleMeshLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  mesh = NULL,
+  texture = NULL,
+  size_scale = 1,
+  wireframe = FALSE,
+  material = TRUE,
+  get_position = position,
+  get_color = "#000000ff",
+  get_orientation = c(0, 0, 0),
+  get_scale = c(1, 1, 1),
+  get_translation = c(0, 0, 0),
+  get_transform_matrix = NULL,
+  ...
+)
+
+add_simple_mesh_layer(
+  rdeck,
   id = "SimpleMeshLayer",
   data = data.frame(),
   visible = TRUE,
@@ -61,10 +87,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 SimpleMeshLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_simple_mesh_layer}: Add SimpleMeshLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/simple-mesh-layer.md}
 

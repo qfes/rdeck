@@ -28,10 +28,9 @@ tile_layer <- function(id = "TileLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_tile_layer
-#' @template tile_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn tile_layer
+#'  Add TileLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_tile_layer <- function(rdeck,
                            id = "TileLayer",

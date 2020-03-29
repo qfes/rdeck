@@ -35,10 +35,9 @@ path_layer <- function(id = "PathLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_path_layer
-#' @template path_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn path_layer
+#'  Add PathLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_path_layer <- function(rdeck,
                            id = "PathLayer",

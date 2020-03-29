@@ -46,10 +46,9 @@ column_layer <- function(id = "ColumnLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_column_layer
-#' @template column_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn column_layer
+#'  Add ColumnLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_column_layer <- function(rdeck,
                              id = "ColumnLayer",

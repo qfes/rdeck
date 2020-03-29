@@ -43,10 +43,9 @@ h3_cluster_layer <- function(id = "H3ClusterLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_h3_cluster_layer
-#' @template h3_cluster_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn h3_cluster_layer
+#'  Add H3ClusterLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_h3_cluster_layer <- function(rdeck,
                                  id = "H3ClusterLayer",

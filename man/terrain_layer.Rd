@@ -2,9 +2,40 @@
 % Please edit documentation in R/terrain_layer.R
 \name{terrain_layer}
 \alias{terrain_layer}
+\alias{add_terrain_layer}
 \title{TerrainLayer}
 \usage{
 terrain_layer(
+  id = "TerrainLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  get_tile_data = NULL,
+  tile_size = 512,
+  max_zoom = NULL,
+  min_zoom = 0,
+  max_cache_size = NULL,
+  max_cache_byte_size = NULL,
+  refinement_strategy = "best-available",
+  elevation_data = "",
+  texture = "",
+  mesh_max_error = 4,
+  bounds = NULL,
+  color = c(255, 255, 255),
+  elevation_decoder = NULL,
+  worker_url = NULL,
+  wireframe = FALSE,
+  material = TRUE,
+  ...
+)
+
+add_terrain_layer(
+  rdeck,
   id = "TerrainLayer",
   data = data.frame(),
   visible = TRUE,
@@ -66,10 +97,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 TerrainLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_terrain_layer}: Add TerrainLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/terrain-layer.md}
 

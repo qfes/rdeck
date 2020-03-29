@@ -28,10 +28,9 @@ mvt_layer <- function(id = "MVTLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_mvt_layer
-#' @template mvt_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn mvt_layer
+#'  Add MVTLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_mvt_layer <- function(rdeck,
                           id = "MVTLayer",

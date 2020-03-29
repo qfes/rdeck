@@ -6,6 +6,23 @@
 \usage{
 scale_log(domain = NULL, range = c(0, 1), base = 10, value, legend = TRUE)
 }
+\arguments{
+\item{domain}{The scale's domain; if supplied, the vector must contain two or more
+elements.
+
+Specifying more than two values produces a piecewise scale.}
+
+\item{range}{The scale's range; if supplied, the vector must be two or more elements.
+for color scales, this will be an array of color values.}
+
+\item{base}{Sets the log base.}
+
+\item{value}{The name of the column containing data to be scaled. Can be either a named
+column (non-standard evaluation), or an expression evaluating a string.}
+
+\item{legend}{\code{logical}
+Indicate whether the legend should be displayed for this scale.}
+}
 \description{
 Log Scale
 }
@@ -14,7 +31,6 @@ Other scales:
 \code{\link{scale_linear}()},
 \code{\link{scale_power}()},
 \code{\link{scale_quantile}()},
-\code{\link{scale_quantize}()},
-\code{\link{scale}()}
+\code{\link{scale_quantize}()}
 }
 \concept{scales}

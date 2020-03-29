@@ -43,10 +43,9 @@ s2_layer <- function(id = "S2Layer",
   do.call(layer, parameters)
 }
 
-#' @name add_s2_layer
-#' @template s2_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn s2_layer
+#'  Add S2Layer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_s2_layer <- function(rdeck,
                          id = "S2Layer",

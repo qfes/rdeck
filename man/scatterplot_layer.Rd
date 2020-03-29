@@ -2,9 +2,38 @@
 % Please edit documentation in R/scatterplot_layer.R
 \name{scatterplot_layer}
 \alias{scatterplot_layer}
+\alias{add_scatterplot_layer}
 \title{ScatterplotLayer}
 \usage{
 scatterplot_layer(
+  id = "ScatterplotLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  radius_scale = 1,
+  radius_min_pixels = 0,
+  radius_max_pixels = 9007199254740991,
+  line_width_units = "meters",
+  line_width_scale = 1,
+  line_width_min_pixels = 0,
+  line_width_max_pixels = 9007199254740991,
+  stroked = FALSE,
+  filled = TRUE,
+  get_position = position,
+  get_radius = 1,
+  get_fill_color = "#000000ff",
+  get_line_color = "#000000ff",
+  get_line_width = 1,
+  ...
+)
+
+add_scatterplot_layer(
+  rdeck,
   id = "ScatterplotLayer",
   data = data.frame(),
   visible = TRUE,
@@ -64,10 +93,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 ScatterplotLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_scatterplot_layer}: Add ScatterplotLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/scatterplot-layer.md}
 

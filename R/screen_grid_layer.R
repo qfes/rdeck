@@ -40,10 +40,9 @@ screen_grid_layer <- function(id = "ScreenGridLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_screen_grid_layer
-#' @template screen_grid_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn screen_grid_layer
+#'  Add ScreenGridLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_screen_grid_layer <- function(rdeck,
                                   id = "ScreenGridLayer",

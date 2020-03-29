@@ -2,9 +2,41 @@
 % Please edit documentation in R/polygon_layer.R
 \name{polygon_layer}
 \alias{polygon_layer}
+\alias{add_polygon_layer}
 \title{PolygonLayer}
 \usage{
 polygon_layer(
+  id = "PolygonLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  stroked = TRUE,
+  filled = TRUE,
+  extruded = FALSE,
+  elevation_scale = 1,
+  wireframe = FALSE,
+  line_width_units = "meters",
+  line_width_scale = 1,
+  line_width_min_pixels = 0,
+  line_width_max_pixels = 9007199254740991,
+  line_joint_rounded = FALSE,
+  line_miter_limit = 4,
+  get_polygon = polygon,
+  get_fill_color = "#000000ff",
+  get_line_color = "#000000ff",
+  get_line_width = 1,
+  get_elevation = 1000,
+  material = TRUE,
+  ...
+)
+
+add_polygon_layer(
+  rdeck,
   id = "PolygonLayer",
   data = data.frame(),
   visible = TRUE,
@@ -67,10 +99,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 PolygonLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_polygon_layer}: Add PolygonLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/polygon-layer.md}
 

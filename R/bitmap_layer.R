@@ -26,10 +26,9 @@ bitmap_layer <- function(id = "BitmapLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_bitmap_layer
-#' @template bitmap_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn bitmap_layer
+#'  Add BitmapLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_bitmap_layer <- function(rdeck,
                              id = "BitmapLayer",

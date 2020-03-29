@@ -20,7 +20,7 @@ layer(
 }
 \arguments{
 \item{type}{\code{character}
-deck.gl layer type, one of \link{layer_types}}
+deck.gl layer type.}
 
 \item{id}{\code{character}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl

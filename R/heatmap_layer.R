@@ -39,10 +39,9 @@ heatmap_layer <- function(id = "HeatmapLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_heatmap_layer
-#' @template heatmap_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn heatmap_layer
+#'  Add HeatmapLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_heatmap_layer <- function(rdeck,
                               id = "HeatmapLayer",

@@ -46,10 +46,9 @@ h3_hexagon_layer <- function(id = "H3HexagonLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_h3_hexagon_layer
-#' @template h3_hexagon_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn h3_hexagon_layer
+#'  Add H3HexagonLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_h3_hexagon_layer <- function(rdeck,
                                  id = "H3HexagonLayer",

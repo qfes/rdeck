@@ -41,10 +41,9 @@ geojson_layer <- function(id = "GeoJsonLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_geojson_layer
-#' @template geojson_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn geojson_layer
+#'  Add GeoJsonLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_geojson_layer <- function(rdeck,
                               id = "GeoJsonLayer",

@@ -17,7 +17,7 @@ text_layer <- function(id = "TextLayer",
                        size_min_pixels = 0,
                        size_max_pixels = 9007199254740991,
                        background_color = NULL,
-                       character_set = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+                       character_set = c(" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~", ""),
                        font_family = "Monaco, monospace",
                        font_weight = "normal",
                        line_height = 1,
@@ -46,10 +46,9 @@ text_layer <- function(id = "TextLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_text_layer
-#' @template text_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn text_layer
+#'  Add TextLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_text_layer <- function(rdeck,
                            id = "TextLayer",
@@ -67,7 +66,7 @@ add_text_layer <- function(rdeck,
                            size_min_pixels = 0,
                            size_max_pixels = 9007199254740991,
                            background_color = NULL,
-                           character_set = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+                           character_set = c(" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~", ""),
                            font_family = "Monaco, monospace",
                            font_weight = "normal",
                            line_height = 1,

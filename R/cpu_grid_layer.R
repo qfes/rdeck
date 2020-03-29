@@ -55,10 +55,9 @@ cpu_grid_layer <- function(id = "CPUGridLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_cpu_grid_layer
-#' @template cpu_grid_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn cpu_grid_layer
+#'  Add CPUGridLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_cpu_grid_layer <- function(rdeck,
                                id = "CPUGridLayer",

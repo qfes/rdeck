@@ -55,12 +55,8 @@ Element id for the map.}
 
 \item{...}{additional parameters to pass to the \code{Deck}.}
 }
-\value{
-\code{rdeck}
-An \code{rdeck} widget for a deck.gl map.
-}
 \description{
-Create a Deck map.
+Create a Deck.GL map.
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md}

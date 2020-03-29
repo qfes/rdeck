@@ -17,7 +17,7 @@
 #' @return [`htmlwidgets::JS]` | `eval(expr)`
 #'  Either a [htmlwidgets::JS] or evaluated `expr`
 #'
-#' @keywords internal
+#' @noRd
 accessor <- function(expr, data = NULL, columnar = TRUE) {
   UseMethod("accessor")
 }
@@ -75,7 +75,7 @@ accessor.call <- function(expr, data = NULL, columnar = TRUE) {
 #' @return [`htmlwidgets::JS`] | [`name`] | [`call`] | value
 #'  Either a [htmlwidgets::JS] instance or the original expression.
 #'
-#' @keywords internal
+#' @noRd
 visit <- function(expr, names, columnar = TRUE) {
   if (is.call(expr) && !inherits(expr, "call")) {
     return(visit.call(expr, names, columnar))

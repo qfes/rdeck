@@ -57,6 +57,8 @@ class Parameter {
       case "colorScaleType":
       case "elevationScaleType":
         return ["`quantize`", "`linear`", "`quantile`", "`ordinal`"];
+      default:
+        break;
     }
 
     switch (type) {
@@ -80,6 +82,8 @@ class Parameter {
       }
       case "function":
         break;
+      default:
+        break;
     }
 
     return typeToR(type);
@@ -89,29 +93,27 @@ class Parameter {
     switch (name) {
       case "data":
         return "data.frame()";
-      case "characterSet":
-        return Array.isArray(defaultValue)
-          ? `"${defaultValue
-              .join("")
-              .replace("\\", "\\\\")
-              .replace('"', '\\"')}"`
-          : NULL;
+      // case "characterSet":
+      //   return Array.isArray(defaultValue)
+      //     ? `"${defaultValue.join("").replace("\\", "\\\\").replace('"', '\\"')}"`
+      //     : NULL;
+      default:
+        break;
     }
 
     if (name.endsWith("Color") && Array.isArray(defaultValue)) {
       return `"${rgba2hex(defaultValue)}"`;
     }
 
-    if (name == "colorRange" && Array.isArray(defaultValue)) {
+    if (name === "colorRange" && Array.isArray(defaultValue)) {
       return `c(
-        ${defaultValue.map(x => `"${rgba2hex(x)}"`).join(",\n")}
+        ${defaultValue.map((x) => `"${rgba2hex(x)}"`).join(",\n")}
       )`;
     }
 
-    if (type == "accessor" && typeof defaultValue === "function") {
+    if (type === "accessor" && typeof defaultValue === "function") {
       const [match] = /(?<=return\s+).*(?=;)/.exec(defaultValue.toString());
-
-      return match.split(".").pop();
+      return snakeCase(match.split(".").pop());
     }
 
     switch (type) {
@@ -161,10 +163,10 @@ function typeToR(type) {
 }
 
 function rgba2hex(rgba) {
-  const hex = rgba.map(x => x.toString(16).padStart(2, 0));
+  const hex = rgba.map((x) => x.toString(16).padStart(2, 0));
   return `#${hex.join("")}`;
 }
 
 module.exports = {
-  Parameter
+  Parameter,
 };

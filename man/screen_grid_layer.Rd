@@ -2,9 +2,32 @@
 % Please edit documentation in R/screen_grid_layer.R
 \name{screen_grid_layer}
 \alias{screen_grid_layer}
+\alias{add_screen_grid_layer}
 \title{ScreenGridLayer}
 \usage{
 screen_grid_layer(
+  id = "ScreenGridLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  cell_size_pixels = 100,
+  cell_margin_pixels = 2,
+  color_domain = NULL,
+  color_range = c("#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#f03b20", "#bd0026"),
+  get_position = position,
+  get_weight = 1,
+  gpu_aggregation = TRUE,
+  aggregation = "SUM",
+  ...
+)
+
+add_screen_grid_layer(
+  rdeck,
   id = "ScreenGridLayer",
   data = data.frame(),
   visible = TRUE,
@@ -58,10 +81,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 ScreenGridLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_screen_grid_layer}: Add ScreenGridLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/screen-grid-layer.md}
 

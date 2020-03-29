@@ -37,10 +37,9 @@ scenegraph_layer <- function(id = "ScenegraphLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_scenegraph_layer
-#' @template scenegraph_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn scenegraph_layer
+#'  Add ScenegraphLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_scenegraph_layer <- function(rdeck,
                                  id = "ScenegraphLayer",

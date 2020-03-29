@@ -2,6 +2,7 @@
 % Please edit documentation in R/great_circle_layer.R
 \name{great_circle_layer}
 \alias{great_circle_layer}
+\alias{add_great_circle_layer}
 \title{GreatCircleLayer}
 \usage{
 great_circle_layer(
@@ -14,8 +15,33 @@ great_circle_layer(
   color_format = "RGBA",
   auto_highlight = FALSE,
   highlight_color = "#00008080",
-  get_source_position = sourcePosition,
-  get_target_position = targetPosition,
+  get_source_position = source_position,
+  get_target_position = target_position,
+  get_source_color = "#000000ff",
+  get_target_color = "#000000ff",
+  get_width = 1,
+  get_height = 1,
+  get_tilt = 0,
+  width_units = "pixels",
+  width_scale = 1,
+  width_min_pixels = 0,
+  width_max_pixels = 9007199254740991,
+  ...
+)
+
+add_great_circle_layer(
+  rdeck,
+  id = "GreatCircleLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  get_source_position = source_position,
+  get_target_position = target_position,
   get_source_color = "#000000ff",
   get_target_color = "#000000ff",
   get_width = 1,
@@ -61,10 +87,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 GreatCircleLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_great_circle_layer}: Add GreatCircleLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/great-circle-layer.md}
 

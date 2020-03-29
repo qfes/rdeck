@@ -11,7 +11,8 @@
 #' - Arguments to `c()` are modified using the logic of the above.
 #'
 #' @return evaluated expression.
-#' @keywords internal
+#'
+#' @noRd
 tooltip <- function(expr) {
   UseMethod("tooltip")
 }

@@ -2,9 +2,28 @@
 % Please edit documentation in R/tile3d_layer.R
 \name{tile3d_layer}
 \alias{tile3d_layer}
+\alias{add_tile3d_layer}
 \title{Tile3DLayer}
 \usage{
 tile3d_layer(
+  id = "Tile3DLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  get_point_color = "#000000",
+  point_size = 1,
+  load_options = NULL,
+  loader = NULL,
+  ...
+)
+
+add_tile3d_layer(
+  rdeck,
   id = "Tile3DLayer",
   data = data.frame(),
   visible = TRUE,
@@ -54,10 +73,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 Tile3DLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_tile3d_layer}: Add Tile3DLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/tile-3d-layer.md}
 

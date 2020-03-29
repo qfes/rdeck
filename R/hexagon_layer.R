@@ -55,10 +55,9 @@ hexagon_layer <- function(id = "HexagonLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_hexagon_layer
-#' @template hexagon_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn hexagon_layer
+#'  Add HexagonLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_hexagon_layer <- function(rdeck,
                               id = "HexagonLayer",

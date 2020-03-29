@@ -32,10 +32,9 @@ contour_layer <- function(id = "ContourLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_contour_layer
-#' @template contour_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn contour_layer
+#'  Add ContourLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_contour_layer <- function(rdeck,
                               id = "ContourLayer",

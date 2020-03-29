@@ -2,6 +2,7 @@
 % Please edit documentation in R/line_layer.R
 \name{line_layer}
 \alias{line_layer}
+\alias{add_line_layer}
 \title{LineLayer}
 \usage{
 line_layer(
@@ -14,8 +15,30 @@ line_layer(
   color_format = "RGBA",
   auto_highlight = FALSE,
   highlight_color = "#00008080",
-  get_source_position = sourcePosition,
-  get_target_position = targetPosition,
+  get_source_position = source_position,
+  get_target_position = target_position,
+  get_color = "#000000ff",
+  get_width = 1,
+  width_units = "pixels",
+  width_scale = 1,
+  width_min_pixels = 0,
+  width_max_pixels = 9007199254740991,
+  ...
+)
+
+add_line_layer(
+  rdeck,
+  id = "LineLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  get_source_position = source_position,
+  get_target_position = target_position,
   get_color = "#000000ff",
   get_width = 1,
   width_units = "pixels",
@@ -58,10 +81,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 LineLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_line_layer}: Add LineLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/line-layer.md}
 

@@ -39,10 +39,9 @@ scatterplot_layer <- function(id = "ScatterplotLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_scatterplot_layer
-#' @template scatterplot_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn scatterplot_layer
+#'  Add ScatterplotLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_scatterplot_layer <- function(rdeck,
                                   id = "ScatterplotLayer",

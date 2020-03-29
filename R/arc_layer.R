@@ -11,8 +11,8 @@ arc_layer <- function(id = "ArcLayer",
                       color_format = "RGBA",
                       auto_highlight = FALSE,
                       highlight_color = "#00008080",
-                      get_source_position = sourcePosition,
-                      get_target_position = targetPosition,
+                      get_source_position = source_position,
+                      get_target_position = target_position,
                       get_source_color = "#000000ff",
                       get_target_color = "#000000ff",
                       get_width = 1,
@@ -32,10 +32,9 @@ arc_layer <- function(id = "ArcLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_arc_layer
-#' @template arc_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn arc_layer
+#'  Add ArcLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_arc_layer <- function(rdeck,
                           id = "ArcLayer",
@@ -47,8 +46,8 @@ add_arc_layer <- function(rdeck,
                           color_format = "RGBA",
                           auto_highlight = FALSE,
                           highlight_color = "#00008080",
-                          get_source_position = sourcePosition,
-                          get_target_position = targetPosition,
+                          get_source_position = source_position,
+                          get_target_position = target_position,
                           get_source_color = "#000000ff",
                           get_target_color = "#000000ff",
                           get_width = 1,

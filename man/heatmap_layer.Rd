@@ -2,9 +2,31 @@
 % Please edit documentation in R/heatmap_layer.R
 \name{heatmap_layer}
 \alias{heatmap_layer}
+\alias{add_heatmap_layer}
 \title{HeatmapLayer}
 \usage{
 heatmap_layer(
+  id = "HeatmapLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  get_position = position,
+  get_weight = 1,
+  intensity = 1,
+  radius_pixels = 50,
+  color_range = c("#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#f03b20", "#bd0026"),
+  threshold = 0.05,
+  color_domain = NULL,
+  ...
+)
+
+add_heatmap_layer(
+  rdeck,
   id = "HeatmapLayer",
   data = data.frame(),
   visible = TRUE,
@@ -57,10 +79,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 HeatmapLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_heatmap_layer}: Add HeatmapLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/heatmap-layer.md}
 

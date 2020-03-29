@@ -2,9 +2,31 @@
 % Please edit documentation in R/contour_layer.R
 \name{contour_layer}
 \alias{contour_layer}
+\alias{add_contour_layer}
 \title{ContourLayer}
 \usage{
 contour_layer(
+  id = "ContourLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  cell_size = 1000,
+  get_position = position,
+  get_weight = 1,
+  gpu_aggregation = TRUE,
+  aggregation = "SUM",
+  contours = c(NULL),
+  z_offset = 0.005,
+  ...
+)
+
+add_contour_layer(
+  rdeck,
   id = "ContourLayer",
   data = data.frame(),
   visible = TRUE,
@@ -57,10 +79,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 ContourLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_contour_layer}: Add ContourLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/contour-layer.md}
 

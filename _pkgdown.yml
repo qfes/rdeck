@@ -4,16 +4,14 @@ reference:
     desc: Create deck.gl map
     contents:
       - rdeck
-      - bounds
+      - add_layer
       - view_state
   - title: Layers
     desc: Create deck.gl layers
     contents:
-      - layer
       - ends_with("layer")
-      - -starts_with("add")
-  - title: Add Layers
-    desc: Wrapper functions for creating deck.gl layers and adding them to a rdeck map.
+      - -add_layer
+  - title: Scales
+    desc: Scale deck.gl accessors
     contents:
-      - add_layer
-      - matches("^add_.*layer$")
+      - starts_with("scale")

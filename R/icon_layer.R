@@ -39,10 +39,9 @@ icon_layer <- function(id = "IconLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_icon_layer
-#' @template icon_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn icon_layer
+#'  Add IconLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_icon_layer <- function(rdeck,
                            id = "IconLayer",

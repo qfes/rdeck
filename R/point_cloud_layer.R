@@ -31,10 +31,9 @@ point_cloud_layer <- function(id = "PointCloudLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_point_cloud_layer
-#' @template point_cloud_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn point_cloud_layer
+#'  Add PointCloudLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_point_cloud_layer <- function(rdeck,
                                   id = "PointCloudLayer",

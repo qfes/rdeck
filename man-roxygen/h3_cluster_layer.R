@@ -1,3 +1,3 @@
 #' @title H3ClusterLayer
 #' @inheritParams layer
-#' @seealso <https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/h3-cluster-layer.md>
+#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/h3-cluster-layer.md>

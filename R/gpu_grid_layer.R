@@ -46,10 +46,9 @@ gpu_grid_layer <- function(id = "GPUGridLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_gpu_grid_layer
-#' @template gpu_grid_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn gpu_grid_layer
+#'  Add GPUGridLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_gpu_grid_layer <- function(rdeck,
                                id = "GPUGridLayer",

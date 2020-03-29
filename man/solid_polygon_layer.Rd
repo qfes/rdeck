@@ -2,9 +2,33 @@
 % Please edit documentation in R/solid_polygon_layer.R
 \name{solid_polygon_layer}
 \alias{solid_polygon_layer}
+\alias{add_solid_polygon_layer}
 \title{SolidPolygonLayer}
 \usage{
 solid_polygon_layer(
+  id = "SolidPolygonLayer",
+  data = data.frame(),
+  visible = TRUE,
+  pickable = FALSE,
+  opacity = 1,
+  position_format = "XYZ",
+  color_format = "RGBA",
+  auto_highlight = FALSE,
+  highlight_color = "#00008080",
+  filled = TRUE,
+  extruded = FALSE,
+  wireframe = FALSE,
+  elevation_scale = 1,
+  get_polygon = polygon,
+  get_elevation = 1000,
+  get_fill_color = "#000000ff",
+  get_line_color = "#000000ff",
+  material = TRUE,
+  ...
+)
+
+add_solid_polygon_layer(
+  rdeck,
   id = "SolidPolygonLayer",
   data = data.frame(),
   visible = TRUE,
@@ -59,10 +83,18 @@ RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
 \item{...}{additional deck.gl layer parameters}
+
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 }
 \description{
 SolidPolygonLayer
 }
+\section{Functions}{
+\itemize{
+\item \code{add_solid_polygon_layer}: Add SolidPolygonLayer to an rdeck map
+}}
+
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/solid-polygon-layer.md}
 

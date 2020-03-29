@@ -37,10 +37,9 @@ terrain_layer <- function(id = "TerrainLayer",
   do.call(layer, parameters)
 }
 
-#' @name add_terrain_layer
-#' @template terrain_layer
-#' @param rdeck `rdeck`
-#' @family add_layers
+#' @describeIn terrain_layer
+#'  Add TerrainLayer to an rdeck map
+#' @inheritParams add_layer
 #' @export
 add_terrain_layer <- function(rdeck,
                               id = "TerrainLayer",
