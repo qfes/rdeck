@@ -4,10 +4,13 @@ import { WebMercatorViewport } from "react-map-gl";
 import DeckGL from "deck.gl";
 import RDeck from "./rdeck";
 
+import styles from "./rdeck.css";
+
 const binding: HTMLWidgets.Binding = {
   name: "rdeck",
   type: "output",
   factory(el, width, height) {
+    el.classList.add(styles.rdeck);
     const ref = React.createRef<DeckGL>();
     return {
       get deckgl() {

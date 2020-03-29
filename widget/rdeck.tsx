@@ -6,8 +6,6 @@ import Layer, { RDeckLayerProps } from "./layer";
 import Tooltip from "./tooltip";
 import Legend from "./legend";
 
-import "./rdeck.css";
-
 export interface RDeckProps {
   props: DeckProps & StaticMapProps;
   layers: RDeckLayerProps[];
