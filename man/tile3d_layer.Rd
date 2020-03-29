@@ -13,10 +13,11 @@ tile3d_layer(
   position_format = "XYZ",
   color_format = "RGBA",
   auto_highlight = FALSE,
-  highlight_color = c(0, 0, 128, 128),
-  get_point_color = c(0, 0, 0),
+  highlight_color = "#00008080",
+  get_point_color = "#000000",
   point_size = 1,
   load_options = NULL,
+  loader = NULL,
   ...
 )
 }
@@ -58,7 +59,7 @@ array is specified, a default value of 255 is used for alpha.}
 Tile3DLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/tile-3d-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/tile-3d-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}()},
@@ -78,6 +79,7 @@ Other layers:
 \code{\link{icon_layer}()},
 \code{\link{layer}()},
 \code{\link{line_layer}()},
+\code{\link{mvt_layer}()},
 \code{\link{path_layer}()},
 \code{\link{point_cloud_layer}()},
 \code{\link{polygon_layer}()},
@@ -87,6 +89,7 @@ Other layers:
 \code{\link{screen_grid_layer}()},
 \code{\link{simple_mesh_layer}()},
 \code{\link{solid_polygon_layer}()},
+\code{\link{terrain_layer}()},
 \code{\link{text_layer}()},
 \code{\link{tile_layer}()},
 \code{\link{trips_layer}()}

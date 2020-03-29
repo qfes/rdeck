@@ -14,12 +14,12 @@ add_bitmap_layer(
   position_format = "XYZ",
   color_format = "RGBA",
   auto_highlight = FALSE,
-  highlight_color = c(0, 0, 128, 128),
+  highlight_color = "#00008080",
   image = NULL,
   bounds = c(1, 0, 0, 1),
   desaturate = 0,
-  transparent_color = c(0, 0, 0, 0),
-  tint_color = c(255, 255, 255),
+  transparent_color = "#00000000",
+  tint_color = "#ffffff",
   ...
 )
 }
@@ -63,7 +63,7 @@ array is specified, a default value of 255 is used for alpha.}
 BitmapLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/bitmap-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/bitmap-layer.md}
 
 Other add_layers: 
 \code{\link{add_arc_layer}()},
@@ -81,6 +81,7 @@ Other add_layers:
 \code{\link{add_hexagon_layer}()},
 \code{\link{add_icon_layer}()},
 \code{\link{add_line_layer}()},
+\code{\link{add_mvt_layer}()},
 \code{\link{add_path_layer}()},
 \code{\link{add_point_cloud_layer}()},
 \code{\link{add_polygon_layer}()},
@@ -90,6 +91,7 @@ Other add_layers:
 \code{\link{add_screen_grid_layer}()},
 \code{\link{add_simple_mesh_layer}()},
 \code{\link{add_solid_polygon_layer}()},
+\code{\link{add_terrain_layer}()},
 \code{\link{add_text_layer}()},
 \code{\link{add_tile3d_layer}()},
 \code{\link{add_tile_layer}()},

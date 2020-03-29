@@ -13,11 +13,11 @@ great_circle_layer(
   position_format = "XYZ",
   color_format = "RGBA",
   auto_highlight = FALSE,
-  highlight_color = c(0, 0, 128, 128),
+  highlight_color = "#00008080",
   get_source_position = sourcePosition,
   get_target_position = targetPosition,
-  get_source_color = c(0, 0, 0, 255),
-  get_target_color = c(0, 0, 0, 255),
+  get_source_color = "#000000ff",
+  get_target_color = "#000000ff",
   get_width = 1,
   get_height = 1,
   get_tilt = 0,
@@ -66,7 +66,7 @@ array is specified, a default value of 255 is used for alpha.}
 GreatCircleLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/great-circle-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/great-circle-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}()},
@@ -85,6 +85,7 @@ Other layers:
 \code{\link{icon_layer}()},
 \code{\link{layer}()},
 \code{\link{line_layer}()},
+\code{\link{mvt_layer}()},
 \code{\link{path_layer}()},
 \code{\link{point_cloud_layer}()},
 \code{\link{polygon_layer}()},
@@ -94,6 +95,7 @@ Other layers:
 \code{\link{screen_grid_layer}()},
 \code{\link{simple_mesh_layer}()},
 \code{\link{solid_polygon_layer}()},
+\code{\link{terrain_layer}()},
 \code{\link{text_layer}()},
 \code{\link{tile3d_layer}()},
 \code{\link{tile_layer}()},

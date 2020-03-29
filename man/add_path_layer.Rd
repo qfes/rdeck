@@ -14,7 +14,7 @@ add_path_layer(
   position_format = "XYZ",
   color_format = "RGBA",
   auto_highlight = FALSE,
-  highlight_color = c(0, 0, 128, 128),
+  highlight_color = "#00008080",
   width_units = "meters",
   width_scale = 1,
   width_min_pixels = 0,
@@ -23,7 +23,7 @@ add_path_layer(
   miter_limit = 4,
   billboard = FALSE,
   get_path = path,
-  get_color = c(0, 0, 0, 255),
+  get_color = "#000000ff",
   get_width = 1,
   ...
 )
@@ -68,7 +68,7 @@ array is specified, a default value of 255 is used for alpha.}
 PathLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/path-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/path-layer.md}
 
 Other add_layers: 
 \code{\link{add_arc_layer}()},
@@ -87,6 +87,7 @@ Other add_layers:
 \code{\link{add_hexagon_layer}()},
 \code{\link{add_icon_layer}()},
 \code{\link{add_line_layer}()},
+\code{\link{add_mvt_layer}()},
 \code{\link{add_point_cloud_layer}()},
 \code{\link{add_polygon_layer}()},
 \code{\link{add_s2_layer}()},
@@ -95,6 +96,7 @@ Other add_layers:
 \code{\link{add_screen_grid_layer}()},
 \code{\link{add_simple_mesh_layer}()},
 \code{\link{add_solid_polygon_layer}()},
+\code{\link{add_terrain_layer}()},
 \code{\link{add_text_layer}()},
 \code{\link{add_tile3d_layer}()},
 \code{\link{add_tile_layer}()},

@@ -10,3 +10,4 @@ inst/htmlwidgets/vendor.js linguist-vendored
 R/*_layer.R linguist-generated
 man/* linguist-generated
 man-roxygen/* linguist-documentation
+scripts/* linguist-detectable

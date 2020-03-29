@@ -14,7 +14,7 @@ add_scatterplot_layer(
   position_format = "XYZ",
   color_format = "RGBA",
   auto_highlight = FALSE,
-  highlight_color = c(0, 0, 128, 128),
+  highlight_color = "#00008080",
   radius_scale = 1,
   radius_min_pixels = 0,
   radius_max_pixels = 9007199254740991,
@@ -26,8 +26,8 @@ add_scatterplot_layer(
   filled = TRUE,
   get_position = position,
   get_radius = 1,
-  get_fill_color = c(0, 0, 0, 255),
-  get_line_color = c(0, 0, 0, 255),
+  get_fill_color = "#000000ff",
+  get_line_color = "#000000ff",
   get_line_width = 1,
   ...
 )
@@ -72,7 +72,7 @@ array is specified, a default value of 255 is used for alpha.}
 ScatterplotLayer
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.0.17/docs/layers/scatterplot-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/scatterplot-layer.md}
 
 Other add_layers: 
 \code{\link{add_arc_layer}()},
@@ -91,6 +91,7 @@ Other add_layers:
 \code{\link{add_hexagon_layer}()},
 \code{\link{add_icon_layer}()},
 \code{\link{add_line_layer}()},
+\code{\link{add_mvt_layer}()},
 \code{\link{add_path_layer}()},
 \code{\link{add_point_cloud_layer}()},
 \code{\link{add_polygon_layer}()},
@@ -99,6 +100,7 @@ Other add_layers:
 \code{\link{add_screen_grid_layer}()},
 \code{\link{add_simple_mesh_layer}()},
 \code{\link{add_solid_polygon_layer}()},
+\code{\link{add_terrain_layer}()},
 \code{\link{add_text_layer}()},
 \code{\link{add_tile3d_layer}()},
 \code{\link{add_tile_layer}()},

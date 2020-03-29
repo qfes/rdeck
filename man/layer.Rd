@@ -15,7 +15,6 @@ layer(
   color_format = "RGBA",
   auto_highlight = FALSE,
   highlight_color = c(0, 0, 128, 128),
-  tooltip = tooltip(),
   ...
 )
 }
@@ -54,11 +53,11 @@ highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
-\item{tooltip}{\code{character} | \code{\link[=tooltip]{tooltip()}}
-Tooltip columns. No validation is applied; original column names aren't
-available in aggregation layers.}
-
 \item{...}{additional deck.gl layer parameters}
+
+\item{tooltip}{\code{character} | \code{name}
+Tooltip columns; either an expression returning a character vector, or an
+expression to deparse. Example: \code{c(date, count, "a_literal")}}
 }
 \value{
 \code{layer}
@@ -87,6 +86,7 @@ Other layers:
 \code{\link{hexagon_layer}()},
 \code{\link{icon_layer}()},
 \code{\link{line_layer}()},
+\code{\link{mvt_layer}()},
 \code{\link{path_layer}()},
 \code{\link{point_cloud_layer}()},
 \code{\link{polygon_layer}()},
@@ -96,9 +96,11 @@ Other layers:
 \code{\link{screen_grid_layer}()},
 \code{\link{simple_mesh_layer}()},
 \code{\link{solid_polygon_layer}()},
+\code{\link{terrain_layer}()},
 \code{\link{text_layer}()},
 \code{\link{tile3d_layer}()},
 \code{\link{tile_layer}()},
 \code{\link{trips_layer}()}
 }
 \concept{layers}
+\keyword{internal}

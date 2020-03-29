@@ -55,6 +55,7 @@ scale_power <- function(domain = NULL, range = c(0, 1), exponent = 1, value, leg
 #' Log Scale
 #'
 #' @name scale_log
+#' @param base
 #' @inheritParams scale
 #'
 #' @family scales
@@ -129,6 +130,8 @@ scale_quantile <- function(range = c(0, 1), value, legend = TRUE) {
   )
 }
 
+#' Scale
+#'
 #' @name scale
 #' @param type
 #' @param domain
