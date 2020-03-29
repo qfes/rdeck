@@ -1,9 +1,7 @@
 dependencies:
-  - name: rdeck-vendor
+  - name: rdeck
     version: 0.2.2
     src: htmlwidgets
     script: vendor.js
-  - name: rdeck-style
-    version: 0.2.2
-    src: htmlwidgets
     stylesheet: rdeck.css
+    all_files: false

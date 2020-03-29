@@ -1,3 +1,10 @@
 * text=auto
-inst/htmlwidgets/** -diff
+
+inst/htmlwidgets/*.js -diff
+inst/htmlwidgets/*.css -diff
 package-lock.json -diff
+
+inst/htmlwidgets/*.js linguist-generated
+inst/htmlwidgets/*.css linguist-generated
+inst/htmlwidgets/vendor.js linguist-vendored
+R/*_layer.R linguist-generated
