@@ -1,4 +1,7 @@
-#' @name grid_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname grid_layer
 #' @template grid_layer
 #' @family layers
 #' @export
@@ -57,7 +60,7 @@ grid_layer <- function(id = "GridLayer",
 }
 
 #' @describeIn grid_layer
-#'  Add GridLayer to an rdeck map
+#' Add GridLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_grid_layer <- function(rdeck,

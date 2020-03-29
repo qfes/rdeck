@@ -1,4 +1,7 @@
-#' @name tile3d_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname tile3d_layer
 #' @template tile3d_layer
 #' @family layers
 #' @export
@@ -26,7 +29,7 @@ tile3d_layer <- function(id = "Tile3DLayer",
 }
 
 #' @describeIn tile3d_layer
-#'  Add Tile3DLayer to an rdeck map
+#' Add Tile3DLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_tile3d_layer <- function(rdeck,

@@ -1,4 +1,7 @@
-#' @name terrain_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname terrain_layer
 #' @template terrain_layer
 #' @family layers
 #' @export
@@ -38,7 +41,7 @@ terrain_layer <- function(id = "TerrainLayer",
 }
 
 #' @describeIn terrain_layer
-#'  Add TerrainLayer to an rdeck map
+#' Add TerrainLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_terrain_layer <- function(rdeck,

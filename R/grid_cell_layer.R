@@ -1,4 +1,7 @@
-#' @name grid_cell_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname grid_cell_layer
 #' @template grid_cell_layer
 #' @family layers
 #' @export
@@ -48,7 +51,7 @@ grid_cell_layer <- function(id = "GridCellLayer",
 }
 
 #' @describeIn grid_cell_layer
-#'  Add GridCellLayer to an rdeck map
+#' Add GridCellLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_grid_cell_layer <- function(rdeck,

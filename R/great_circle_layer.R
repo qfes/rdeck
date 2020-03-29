@@ -1,4 +1,7 @@
-#' @name great_circle_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname great_circle_layer
 #' @template great_circle_layer
 #' @family layers
 #' @export
@@ -33,7 +36,7 @@ great_circle_layer <- function(id = "GreatCircleLayer",
 }
 
 #' @describeIn great_circle_layer
-#'  Add GreatCircleLayer to an rdeck map
+#' Add GreatCircleLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_great_circle_layer <- function(rdeck,

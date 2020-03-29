@@ -1,4 +1,7 @@
-#' @name line_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname line_layer
 #' @template line_layer
 #' @family layers
 #' @export
@@ -30,7 +33,7 @@ line_layer <- function(id = "LineLayer",
 }
 
 #' @describeIn line_layer
-#'  Add LineLayer to an rdeck map
+#' Add LineLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_line_layer <- function(rdeck,

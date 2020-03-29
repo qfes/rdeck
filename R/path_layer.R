@@ -1,4 +1,7 @@
-#' @name path_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname path_layer
 #' @template path_layer
 #' @family layers
 #' @export
@@ -36,7 +39,7 @@ path_layer <- function(id = "PathLayer",
 }
 
 #' @describeIn path_layer
-#'  Add PathLayer to an rdeck map
+#' Add PathLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_path_layer <- function(rdeck,

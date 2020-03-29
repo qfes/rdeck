@@ -1,4 +1,7 @@
-#' @name simple_mesh_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname simple_mesh_layer
 #' @template simple_mesh_layer
 #' @family layers
 #' @export
@@ -37,7 +40,7 @@ simple_mesh_layer <- function(id = "SimpleMeshLayer",
 }
 
 #' @describeIn simple_mesh_layer
-#'  Add SimpleMeshLayer to an rdeck map
+#' Add SimpleMeshLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_simple_mesh_layer <- function(rdeck,

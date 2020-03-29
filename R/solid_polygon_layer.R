@@ -1,4 +1,7 @@
-#' @name solid_polygon_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname solid_polygon_layer
 #' @template solid_polygon_layer
 #' @family layers
 #' @export
@@ -35,7 +38,7 @@ solid_polygon_layer <- function(id = "SolidPolygonLayer",
 }
 
 #' @describeIn solid_polygon_layer
-#'  Add SolidPolygonLayer to an rdeck map
+#' Add SolidPolygonLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_solid_polygon_layer <- function(rdeck,

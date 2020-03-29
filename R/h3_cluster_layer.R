@@ -1,4 +1,7 @@
-#' @name h3_cluster_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname h3_cluster_layer
 #' @template h3_cluster_layer
 #' @family layers
 #' @export
@@ -44,7 +47,7 @@ h3_cluster_layer <- function(id = "H3ClusterLayer",
 }
 
 #' @describeIn h3_cluster_layer
-#'  Add H3ClusterLayer to an rdeck map
+#' Add H3ClusterLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_h3_cluster_layer <- function(rdeck,

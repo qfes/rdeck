@@ -1,3 +1,5 @@
+#' Layer
+#'
 #' Create a deck.gl [layer](https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md)
 #'
 #' @name layer
@@ -44,8 +46,7 @@
 #' @returns `layer`
 #'  A deck.gl layer of `type`
 #'
-#' @seealso \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}
-#' @family layers
+#' @seealso <https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md>
 #'
 #' @keywords internal
 layer <- function(type,

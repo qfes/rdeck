@@ -92,6 +92,34 @@ highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
+\item{color_domain}{\code{description-placeholder}}
+
+\item{color_range}{\code{description-placeholder}}
+
+\item{get_color_weight}{\code{description-placeholder}}
+
+\item{color_aggregation}{\code{description-placeholder}}
+
+\item{elevation_domain}{\code{description-placeholder}}
+
+\item{elevation_range}{\code{description-placeholder}}
+
+\item{get_elevation_weight}{\code{description-placeholder}}
+
+\item{elevation_aggregation}{\code{description-placeholder}}
+
+\item{elevation_scale}{\code{description-placeholder}}
+
+\item{cell_size}{\code{description-placeholder}}
+
+\item{coverage}{\code{description-placeholder}}
+
+\item{get_position}{\code{description-placeholder}}
+
+\item{extruded}{\code{description-placeholder}}
+
+\item{material}{\code{description-placeholder}}
+
 \item{...}{additional deck.gl layer parameters}
 
 \item{rdeck}{\code{rdeck}
@@ -123,7 +151,6 @@ Other layers:
 \code{\link{heatmap_layer}()},
 \code{\link{hexagon_layer}()},
 \code{\link{icon_layer}()},
-\code{\link{layer}()},
 \code{\link{line_layer}()},
 \code{\link{mvt_layer}()},
 \code{\link{path_layer}()},

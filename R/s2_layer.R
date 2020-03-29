@@ -1,4 +1,7 @@
-#' @name s2_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname s2_layer
 #' @template s2_layer
 #' @family layers
 #' @export
@@ -44,7 +47,7 @@ s2_layer <- function(id = "S2Layer",
 }
 
 #' @describeIn s2_layer
-#'  Add S2Layer to an rdeck map
+#' Add S2Layer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_s2_layer <- function(rdeck,

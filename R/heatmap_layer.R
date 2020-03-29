@@ -1,4 +1,7 @@
-#' @name heatmap_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname heatmap_layer
 #' @template heatmap_layer
 #' @family layers
 #' @export
@@ -40,7 +43,7 @@ heatmap_layer <- function(id = "HeatmapLayer",
 }
 
 #' @describeIn heatmap_layer
-#'  Add HeatmapLayer to an rdeck map
+#' Add HeatmapLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_heatmap_layer <- function(rdeck,

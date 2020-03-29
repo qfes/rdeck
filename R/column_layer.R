@@ -1,4 +1,7 @@
-#' @name column_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname column_layer
 #' @template column_layer
 #' @family layers
 #' @export
@@ -47,7 +50,7 @@ column_layer <- function(id = "ColumnLayer",
 }
 
 #' @describeIn column_layer
-#'  Add ColumnLayer to an rdeck map
+#' Add ColumnLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_column_layer <- function(rdeck,

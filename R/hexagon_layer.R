@@ -1,4 +1,7 @@
-#' @name hexagon_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname hexagon_layer
 #' @template hexagon_layer
 #' @family layers
 #' @export
@@ -56,7 +59,7 @@ hexagon_layer <- function(id = "HexagonLayer",
 }
 
 #' @describeIn hexagon_layer
-#'  Add HexagonLayer to an rdeck map
+#' Add HexagonLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_hexagon_layer <- function(rdeck,

@@ -1,4 +1,7 @@
-#' @name bitmap_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname bitmap_layer
 #' @template bitmap_layer
 #' @family layers
 #' @export
@@ -27,7 +30,7 @@ bitmap_layer <- function(id = "BitmapLayer",
 }
 
 #' @describeIn bitmap_layer
-#'  Add BitmapLayer to an rdeck map
+#' Add BitmapLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_bitmap_layer <- function(rdeck,

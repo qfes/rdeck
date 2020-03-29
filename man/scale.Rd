@@ -22,6 +22,8 @@ column (non-standard evaluation), or an expression evaluating a string.}
 
 \item{legend}{\code{logical}
 Indicate whether the legend should be displayed for this scale.}
+
+\item{...}{Additional scale parameters}
 }
 \description{
 Scale

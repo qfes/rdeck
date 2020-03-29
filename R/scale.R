@@ -159,6 +159,7 @@ scale_quantile <- function(range = c(0, 1), value, legend = TRUE) {
 #'  Indicate whether the legend should be displayed for this scale.
 #'
 #' @param ...
+#'  Additional scale parameters
 #' @keywords internal
 scale <- function(type,
                   domain = NULL,
@@ -175,7 +176,8 @@ scale <- function(type,
       legend = legend
     ),
     list(...)
-  )
+  ) %>%
+    camel_case_names()
 
   structure(
     properties,

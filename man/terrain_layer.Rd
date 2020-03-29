@@ -96,6 +96,38 @@ highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
+\item{get_tile_data}{\code{description-placeholder}}
+
+\item{tile_size}{\code{description-placeholder}}
+
+\item{max_zoom}{\code{description-placeholder}}
+
+\item{min_zoom}{\code{description-placeholder}}
+
+\item{max_cache_size}{\code{description-placeholder}}
+
+\item{max_cache_byte_size}{\code{description-placeholder}}
+
+\item{refinement_strategy}{\code{description-placeholder}}
+
+\item{elevation_data}{\code{description-placeholder}}
+
+\item{texture}{\code{description-placeholder}}
+
+\item{mesh_max_error}{\code{description-placeholder}}
+
+\item{bounds}{\code{description-placeholder}}
+
+\item{color}{\code{description-placeholder}}
+
+\item{elevation_decoder}{\code{description-placeholder}}
+
+\item{worker_url}{\code{description-placeholder}}
+
+\item{wireframe}{\code{description-placeholder}}
+
+\item{material}{\code{description-placeholder}}
+
 \item{...}{additional deck.gl layer parameters}
 
 \item{rdeck}{\code{rdeck}
@@ -128,7 +160,6 @@ Other layers:
 \code{\link{heatmap_layer}()},
 \code{\link{hexagon_layer}()},
 \code{\link{icon_layer}()},
-\code{\link{layer}()},
 \code{\link{line_layer}()},
 \code{\link{mvt_layer}()},
 \code{\link{path_layer}()},

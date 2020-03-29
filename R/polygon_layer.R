@@ -1,4 +1,7 @@
-#' @name polygon_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname polygon_layer
 #' @template polygon_layer
 #' @family layers
 #' @export
@@ -43,7 +46,7 @@ polygon_layer <- function(id = "PolygonLayer",
 }
 
 #' @describeIn polygon_layer
-#'  Add PolygonLayer to an rdeck map
+#' Add PolygonLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_polygon_layer <- function(rdeck,

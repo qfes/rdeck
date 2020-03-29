@@ -112,6 +112,54 @@ highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
+\item{color_domain}{\code{description-placeholder}}
+
+\item{color_range}{\code{description-placeholder}}
+
+\item{get_color_weight}{\code{description-placeholder}}
+
+\item{color_aggregation}{\code{description-placeholder}}
+
+\item{elevation_domain}{\code{description-placeholder}}
+
+\item{elevation_range}{\code{description-placeholder}}
+
+\item{get_elevation_weight}{\code{description-placeholder}}
+
+\item{elevation_aggregation}{\code{description-placeholder}}
+
+\item{elevation_scale}{\code{description-placeholder}}
+
+\item{cell_size}{\code{description-placeholder}}
+
+\item{coverage}{\code{description-placeholder}}
+
+\item{get_position}{\code{description-placeholder}}
+
+\item{extruded}{\code{description-placeholder}}
+
+\item{material}{\code{description-placeholder}}
+
+\item{get_color_value}{\code{description-placeholder}}
+
+\item{lower_percentile}{\code{description-placeholder}}
+
+\item{upper_percentile}{\code{description-placeholder}}
+
+\item{color_scale_type}{\code{description-placeholder}}
+
+\item{get_elevation_value}{\code{description-placeholder}}
+
+\item{elevation_lower_percentile}{\code{description-placeholder}}
+
+\item{elevation_upper_percentile}{\code{description-placeholder}}
+
+\item{elevation_scale_type}{\code{description-placeholder}}
+
+\item{grid_aggregator}{\code{description-placeholder}}
+
+\item{gpu_aggregation}{\code{description-placeholder}}
+
 \item{...}{additional deck.gl layer parameters}
 
 \item{rdeck}{\code{rdeck}
@@ -143,7 +191,6 @@ Other layers:
 \code{\link{heatmap_layer}()},
 \code{\link{hexagon_layer}()},
 \code{\link{icon_layer}()},
-\code{\link{layer}()},
 \code{\link{line_layer}()},
 \code{\link{mvt_layer}()},
 \code{\link{path_layer}()},

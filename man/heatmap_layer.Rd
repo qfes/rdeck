@@ -78,6 +78,20 @@ highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
+\item{get_position}{\code{description-placeholder}}
+
+\item{get_weight}{\code{description-placeholder}}
+
+\item{intensity}{\code{description-placeholder}}
+
+\item{radius_pixels}{\code{description-placeholder}}
+
+\item{color_range}{\code{description-placeholder}}
+
+\item{threshold}{\code{description-placeholder}}
+
+\item{color_domain}{\code{description-placeholder}}
+
 \item{...}{additional deck.gl layer parameters}
 
 \item{rdeck}{\code{rdeck}
@@ -109,7 +123,6 @@ Other layers:
 \code{\link{h3_hexagon_layer}()},
 \code{\link{hexagon_layer}()},
 \code{\link{icon_layer}()},
-\code{\link{layer}()},
 \code{\link{line_layer}()},
 \code{\link{mvt_layer}()},
 \code{\link{path_layer}()},

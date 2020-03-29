@@ -1,4 +1,7 @@
-#' @name text_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname text_layer
 #' @template text_layer
 #' @family layers
 #' @export
@@ -47,7 +50,7 @@ text_layer <- function(id = "TextLayer",
 }
 
 #' @describeIn text_layer
-#'  Add TextLayer to an rdeck map
+#' Add TextLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_text_layer <- function(rdeck,

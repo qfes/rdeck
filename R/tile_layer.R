@@ -1,4 +1,7 @@
-#' @name tile_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname tile_layer
 #' @template tile_layer
 #' @family layers
 #' @export
@@ -29,7 +32,7 @@ tile_layer <- function(id = "TileLayer",
 }
 
 #' @describeIn tile_layer
-#'  Add TileLayer to an rdeck map
+#' Add TileLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_tile_layer <- function(rdeck,

@@ -116,6 +116,48 @@ highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
+\item{billboard}{\code{description-placeholder}}
+
+\item{size_scale}{\code{description-placeholder}}
+
+\item{size_units}{\code{description-placeholder}}
+
+\item{size_min_pixels}{\code{description-placeholder}}
+
+\item{size_max_pixels}{\code{description-placeholder}}
+
+\item{background_color}{\code{description-placeholder}}
+
+\item{character_set}{\code{description-placeholder}}
+
+\item{font_family}{\code{description-placeholder}}
+
+\item{font_weight}{\code{description-placeholder}}
+
+\item{line_height}{\code{description-placeholder}}
+
+\item{font_settings}{\code{description-placeholder}}
+
+\item{word_break}{\code{description-placeholder}}
+
+\item{max_width}{\code{description-placeholder}}
+
+\item{get_text}{\code{description-placeholder}}
+
+\item{get_position}{\code{description-placeholder}}
+
+\item{get_color}{\code{description-placeholder}}
+
+\item{get_size}{\code{description-placeholder}}
+
+\item{get_angle}{\code{description-placeholder}}
+
+\item{get_text_anchor}{\code{description-placeholder}}
+
+\item{get_alignment_baseline}{\code{description-placeholder}}
+
+\item{get_pixel_offset}{\code{description-placeholder}}
+
 \item{...}{additional deck.gl layer parameters}
 
 \item{rdeck}{\code{rdeck}
@@ -148,7 +190,6 @@ Other layers:
 \code{\link{heatmap_layer}()},
 \code{\link{hexagon_layer}()},
 \code{\link{icon_layer}()},
-\code{\link{layer}()},
 \code{\link{line_layer}()},
 \code{\link{mvt_layer}()},
 \code{\link{path_layer}()},

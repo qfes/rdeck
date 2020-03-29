@@ -1,4 +1,7 @@
-#' @name scenegraph_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname scenegraph_layer
 #' @template scenegraph_layer
 #' @family layers
 #' @export
@@ -38,7 +41,7 @@ scenegraph_layer <- function(id = "ScenegraphLayer",
 }
 
 #' @describeIn scenegraph_layer
-#'  Add ScenegraphLayer to an rdeck map
+#' Add ScenegraphLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_scenegraph_layer <- function(rdeck,

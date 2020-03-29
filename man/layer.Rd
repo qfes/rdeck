@@ -2,7 +2,7 @@
 % Please edit documentation in R/layer.R
 \name{layer}
 \alias{layer}
-\title{Create a deck.gl \href{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}{layer}}
+\title{Layer}
 \usage{
 layer(
   type,
@@ -68,39 +68,5 @@ Create a deck.gl \href{https://github.com/uber/deck.gl/blob/master/docs/api-refe
 }
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}
-
-Other layers: 
-\code{\link{arc_layer}()},
-\code{\link{bitmap_layer}()},
-\code{\link{column_layer}()},
-\code{\link{contour_layer}()},
-\code{\link{cpu_grid_layer}()},
-\code{\link{geojson_layer}()},
-\code{\link{gpu_grid_layer}()},
-\code{\link{great_circle_layer}()},
-\code{\link{grid_cell_layer}()},
-\code{\link{grid_layer}()},
-\code{\link{h3_cluster_layer}()},
-\code{\link{h3_hexagon_layer}()},
-\code{\link{heatmap_layer}()},
-\code{\link{hexagon_layer}()},
-\code{\link{icon_layer}()},
-\code{\link{line_layer}()},
-\code{\link{mvt_layer}()},
-\code{\link{path_layer}()},
-\code{\link{point_cloud_layer}()},
-\code{\link{polygon_layer}()},
-\code{\link{s2_layer}()},
-\code{\link{scatterplot_layer}()},
-\code{\link{scenegraph_layer}()},
-\code{\link{screen_grid_layer}()},
-\code{\link{simple_mesh_layer}()},
-\code{\link{solid_polygon_layer}()},
-\code{\link{terrain_layer}()},
-\code{\link{text_layer}()},
-\code{\link{tile3d_layer}()},
-\code{\link{tile_layer}()},
-\code{\link{trips_layer}()}
 }
-\concept{layers}
 \keyword{internal}

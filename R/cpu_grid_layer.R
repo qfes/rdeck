@@ -1,4 +1,7 @@
-#' @name cpu_grid_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname cpu_grid_layer
 #' @template cpu_grid_layer
 #' @family layers
 #' @export
@@ -56,7 +59,7 @@ cpu_grid_layer <- function(id = "CPUGridLayer",
 }
 
 #' @describeIn cpu_grid_layer
-#'  Add CPUGridLayer to an rdeck map
+#' Add CPUGridLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_cpu_grid_layer <- function(rdeck,

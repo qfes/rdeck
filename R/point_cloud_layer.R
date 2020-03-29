@@ -1,4 +1,7 @@
-#' @name point_cloud_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname point_cloud_layer
 #' @template point_cloud_layer
 #' @family layers
 #' @export
@@ -32,7 +35,7 @@ point_cloud_layer <- function(id = "PointCloudLayer",
 }
 
 #' @describeIn point_cloud_layer
-#'  Add PointCloudLayer to an rdeck map
+#' Add PointCloudLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_point_cloud_layer <- function(rdeck,

@@ -1,7 +1,9 @@
 const fs = require("fs");
 const { dedent } = require("ts-dedent");
 const { snakeCase } = require("snake-case");
+const { paramCase } = require("param-case");
 const { Parameter } = require("./parameter");
+const { Deck } = require("@deck.gl/core");
 // @ts-ignore
 const { exclude } = require("./config.json");
 
@@ -33,7 +35,10 @@ class Layer {
 
   get documentation() {
     return dedent(`
-    #' @name ${this.name}
+    # generated code: this code was generated from deck.gl v${Deck.VERSION}
+
+
+    #' @rdname ${this.name}
     #' @template ${this.name}
     #' @family layers
     #' @export
@@ -100,7 +105,7 @@ class AddLayer extends Layer {
   get documentation() {
     return dedent(`
     #' @describeIn ${this.layer}
-    #'  Add ${this.type.layerName} to an rdeck map
+    #' Add ${this.type.layerName} to an rdeck map
     #' @inheritParams add_layer
     #' @export
     `);
@@ -122,6 +127,35 @@ function generateLayer(layerType) {
 
   const content = [layer, addLayer].map((x) => x.declaration).join("\n\n");
   fs.writeFileSync(`./R/${layer.name}.R`, content);
+
+  const filter = [
+    "id",
+    "data",
+    "visible",
+    "pickable",
+    "opacity",
+    "position_format",
+    "color_format",
+    "auto_highlight",
+    "highlight_color",
+  ];
+
+  const doc = dedent(`
+    #' ${layer.type.layerName}
+    #'
+    #' @name ${layer.name}
+    ${layer.parameters
+      .filter((p) => !filter.includes(p.name))
+      .map((p) => `#' @param ${p.name} \`description-placeholder\``)
+      .join("\n")}
+    #' @inheritParams layer
+    #' @seealso <https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/${paramCase(
+      layer.name
+    )}.md>
+    NULL
+  `);
+
+  //fs.writeFileSync(`./R/${layer.name}-doc.R`, doc);
 }
 
 module.exports = {

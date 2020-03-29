@@ -1,4 +1,7 @@
-#' @name trips_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname trips_layer
 #' @template trips_layer
 #' @family layers
 #' @export
@@ -39,7 +42,7 @@ trips_layer <- function(id = "TripsLayer",
 }
 
 #' @describeIn trips_layer
-#'  Add TripsLayer to an rdeck map
+#' Add TripsLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_trips_layer <- function(rdeck,

@@ -1,4 +1,7 @@
-#' @name icon_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname icon_layer
 #' @template icon_layer
 #' @family layers
 #' @export
@@ -40,7 +43,7 @@ icon_layer <- function(id = "IconLayer",
 }
 
 #' @describeIn icon_layer
-#'  Add IconLayer to an rdeck map
+#' Add IconLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_icon_layer <- function(rdeck,

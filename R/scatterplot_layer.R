@@ -1,4 +1,7 @@
-#' @name scatterplot_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname scatterplot_layer
 #' @template scatterplot_layer
 #' @family layers
 #' @export
@@ -40,7 +43,7 @@ scatterplot_layer <- function(id = "ScatterplotLayer",
 }
 
 #' @describeIn scatterplot_layer
-#'  Add ScatterplotLayer to an rdeck map
+#' Add ScatterplotLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_scatterplot_layer <- function(rdeck,

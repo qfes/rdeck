@@ -1,4 +1,7 @@
-#' @name arc_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname arc_layer
 #' @template arc_layer
 #' @family layers
 #' @export
@@ -33,7 +36,7 @@ arc_layer <- function(id = "ArcLayer",
 }
 
 #' @describeIn arc_layer
-#'  Add ArcLayer to an rdeck map
+#' Add ArcLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_arc_layer <- function(rdeck,

@@ -1,4 +1,7 @@
-#' @name contour_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname contour_layer
 #' @template contour_layer
 #' @family layers
 #' @export
@@ -33,7 +36,7 @@ contour_layer <- function(id = "ContourLayer",
 }
 
 #' @describeIn contour_layer
-#'  Add ContourLayer to an rdeck map
+#' Add ContourLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_contour_layer <- function(rdeck,

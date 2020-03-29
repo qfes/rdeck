@@ -1,4 +1,7 @@
-#' @name mvt_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname mvt_layer
 #' @template mvt_layer
 #' @family layers
 #' @export
@@ -29,7 +32,7 @@ mvt_layer <- function(id = "MVTLayer",
 }
 
 #' @describeIn mvt_layer
-#'  Add MVTLayer to an rdeck map
+#' Add MVTLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_mvt_layer <- function(rdeck,

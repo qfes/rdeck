@@ -1,4 +1,7 @@
-#' @name gpu_grid_layer
+# generated code: this code was generated from deck.gl v8.1.0
+
+
+#' @rdname gpu_grid_layer
 #' @template gpu_grid_layer
 #' @family layers
 #' @export
@@ -47,7 +50,7 @@ gpu_grid_layer <- function(id = "GPUGridLayer",
 }
 
 #' @describeIn gpu_grid_layer
-#'  Add GPUGridLayer to an rdeck map
+#' Add GPUGridLayer to an rdeck map
 #' @inheritParams add_layer
 #' @export
 add_gpu_grid_layer <- function(rdeck,
