@@ -7,18 +7,19 @@ import Tooltip from "./tooltip";
 import Legend from "./legend";
 
 export interface RDeckProps {
-  props: DeckProps & StaticMapProps;
+  props: DeckProps & StaticMapProps & { initialBounds?: [number, number, number, number] };
   layers: RDeckLayerProps[];
 }
 
-const RDeck = (props: RDeckProps) => {
+const RDeck = ({ props, layers }: RDeckProps) => {
   const deckgl = useRef<DeckGL>(null);
-  const { mapboxApiAccessToken, mapStyle, mapOptions, ...deckProps } = props.props;
-  const [deckLayers, legendLayers] = useMemo(() => {
-    const layers = props.layers.map(Layer.create);
+  const { mapboxApiAccessToken, mapStyle, mapOptions, ...deckProps } = props;
 
-    return [layers.map(({ layer }) => layer), layers.map(({ legend }) => legend)];
-  }, [props.layers]);
+  const [deckLayers, legendLayers] = useMemo(() => {
+    const rdeckLayers = layers.map(Layer.create);
+
+    return [rdeckLayers.map(({ layer }) => layer), rdeckLayers.map(({ legend }) => legend)];
+  }, [layers]);
 
   const [info, handleHover] = useHover();
 

@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { WebMercatorViewport } from "react-map-gl";
-import DeckGL from "deck.gl";
-import RDeck from "./rdeck";
 
+import RDeck from "./rdeck";
 import styles from "./rdeck.css";
 
 const binding: HTMLWidgets.Binding = {
@@ -11,11 +10,7 @@ const binding: HTMLWidgets.Binding = {
   type: "output",
   factory(el, width, height) {
     el.classList.add(styles.rdeck);
-    const ref = React.createRef<DeckGL>();
     return {
-      get deckgl() {
-        return ref.current;
-      },
       renderValue({ props, layers }) {
         // TODO: move to RDeck
         if (Array.isArray(props.initialBounds)) {
@@ -32,7 +27,7 @@ const binding: HTMLWidgets.Binding = {
             zoom,
           };
         }
-        ReactDOM.render(<RDeck {...{ ref, props, layers }} />, el);
+        ReactDOM.render(<RDeck {...{ props, layers }} />, el);
       },
       /* deck.gl handles resize automatically */
       resize(width, height) {},

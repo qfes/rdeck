@@ -53,7 +53,7 @@ function isScalable(name: string) {
 function getColorProps(props: Record<string, any>) {
   type ColorEntry = [string, Color | Color[]];
   const entries: ColorEntry[] = Object.entries(props)
-    .filter(([name, value]) => isColor(name) && typeof value === "string")
+    .filter(([name, value]) => isColor(name))
     .map(([name, value]) => [name, parseColor(value)]);
 
   if ("colorRange" in props) {
