@@ -13,5 +13,5 @@
 #' @param get_translation `description-placeholder`
 #' @param get_transform_matrix `description-placeholder`
 #' @inheritParams layer
-#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/simple-mesh-layer.md>
+#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.1/docs/layers/simple-mesh-layer.md>
 NULL

@@ -23,5 +23,5 @@
 #' @param get_alignment_baseline `description-placeholder`
 #' @param get_pixel_offset `description-placeholder`
 #' @inheritParams layer
-#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/text-layer.md>
+#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.1/docs/layers/text-layer.md>
 NULL

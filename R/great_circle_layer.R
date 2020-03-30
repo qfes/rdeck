@@ -1,4 +1,4 @@
-# generated code: this code was generated from deck.gl v8.1.0
+# generated code: this code was generated from deck.gl v8.1.1
 
 
 #' @rdname great_circle_layer

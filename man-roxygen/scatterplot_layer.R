@@ -16,5 +16,5 @@
 #' @param get_line_color `description-placeholder`
 #' @param get_line_width `description-placeholder`
 #' @inheritParams layer
-#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/scatterplot-layer.md>
+#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.1/docs/layers/scatterplot-layer.md>
 NULL

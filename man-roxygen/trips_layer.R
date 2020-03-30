@@ -5,5 +5,5 @@
 #' @param current_time `description-placeholder`
 #' @param get_timestamps `description-placeholder`
 #' @inheritParams path_layer
-#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/trips-layer.md>
+#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.1/docs/layers/trips-layer.md>
 NULL

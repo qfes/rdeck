@@ -26,5 +26,5 @@
 #' @param grid_aggregator `description-placeholder`
 #' @param gpu_aggregation `description-placeholder`
 #' @inheritParams layer
-#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/grid-layer.md>
+#' @seealso <https://github.com/uber/deck.gl/blob/v8.1.1/docs/layers/grid-layer.md>
 NULL
