@@ -28,7 +28,12 @@ export default class RDeckLayer {
     const scaleProps = Object.fromEntries(scales.map(({ name, value }) => [name, value]));
 
     // @ts-ignore
-    this.layer = new deck[type](Object.assign(accessors, props, colorProps, scaleProps));
+    this.layer = new deck[type]({
+      ...accessors,
+      ...props,
+      ...colorProps,
+      ...scaleProps,
+    });
     this.legend = { name: props.id || type, scales: scales.filter((scale) => scale.legend) };
   }
 
