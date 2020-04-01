@@ -122,7 +122,7 @@ SimpleMeshLayer
 }}
 
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/v8.1.0/docs/layers/simple-mesh-layer.md}
+\url{https://github.com/uber/deck.gl/blob/v8.1.1/docs/layers/simple-mesh-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}()},
