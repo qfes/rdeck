@@ -45,10 +45,10 @@ hexagon_layer <- function(id = "HexagonLayer",
                           get_position = position,
                           material = TRUE,
                           ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "HexagonLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -103,7 +103,7 @@ add_hexagon_layer <- function(rdeck,
                               get_position = position,
                               material = TRUE,
                               ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(hexagon_layer, parameters)
 
   add_layer(rdeck, layer)

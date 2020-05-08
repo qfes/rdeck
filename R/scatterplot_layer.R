@@ -29,10 +29,10 @@ scatterplot_layer <- function(id = "ScatterplotLayer",
                               get_line_color = "#000000ff",
                               get_line_width = 1,
                               ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "ScatterplotLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -71,7 +71,7 @@ add_scatterplot_layer <- function(rdeck,
                                   get_line_color = "#000000ff",
                                   get_line_width = 1,
                                   ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(scatterplot_layer, parameters)
 
   add_layer(rdeck, layer)

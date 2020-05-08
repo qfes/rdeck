@@ -20,10 +20,10 @@ bitmap_layer <- function(id = "BitmapLayer",
                          transparent_color = "#00000000",
                          tint_color = "#ffffff",
                          ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "BitmapLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
 
   do.call(layer, parameters)
@@ -49,7 +49,7 @@ add_bitmap_layer <- function(rdeck,
                              transparent_color = "#00000000",
                              tint_color = "#ffffff",
                              ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(bitmap_layer, parameters)
 
   add_layer(rdeck, layer)

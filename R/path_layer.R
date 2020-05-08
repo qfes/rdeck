@@ -25,10 +25,10 @@ path_layer <- function(id = "PathLayer",
                        get_color = "#000000ff",
                        get_width = 1,
                        ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "PathLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -63,7 +63,7 @@ add_path_layer <- function(rdeck,
                            get_color = "#000000ff",
                            get_width = 1,
                            ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(path_layer, parameters)
 
   add_layer(rdeck, layer)

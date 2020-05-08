@@ -19,10 +19,10 @@ tile3d_layer <- function(id = "Tile3DLayer",
                          load_options = NULL,
                          loader = NULL,
                          ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "Tile3DLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
 
   do.call(layer, parameters)
@@ -47,7 +47,7 @@ add_tile3d_layer <- function(rdeck,
                              load_options = NULL,
                              loader = NULL,
                              ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(tile3d_layer, parameters)
 
   add_layer(rdeck, layer)

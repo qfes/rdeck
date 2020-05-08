@@ -31,10 +31,10 @@ terrain_layer <- function(id = "TerrainLayer",
                           wireframe = FALSE,
                           material = TRUE,
                           ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "TerrainLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
 
   do.call(layer, parameters)
@@ -71,7 +71,7 @@ add_terrain_layer <- function(rdeck,
                               wireframe = FALSE,
                               material = TRUE,
                               ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(terrain_layer, parameters)
 
   add_layer(rdeck, layer)

@@ -36,10 +36,10 @@ text_layer <- function(id = "TextLayer",
                        get_alignment_baseline = "center",
                        get_pixel_offset = c(0, 0),
                        ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "TextLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -85,7 +85,7 @@ add_text_layer <- function(rdeck,
                            get_alignment_baseline = "center",
                            get_pixel_offset = c(0, 0),
                            ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(text_layer, parameters)
 
   add_layer(rdeck, layer)

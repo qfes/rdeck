@@ -36,10 +36,10 @@ gpu_grid_layer <- function(id = "GPUGridLayer",
                            extruded = FALSE,
                            material = TRUE,
                            ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "GPUGridLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -85,7 +85,7 @@ add_gpu_grid_layer <- function(rdeck,
                                extruded = FALSE,
                                material = TRUE,
                                ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(gpu_grid_layer, parameters)
 
   add_layer(rdeck, layer)

@@ -27,10 +27,10 @@ scenegraph_layer <- function(id = "ScenegraphLayer",
                              get_translation = c(0, 0, 0),
                              get_transform_matrix = NULL,
                              ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "ScenegraphLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -67,7 +67,7 @@ add_scenegraph_layer <- function(rdeck,
                                  get_translation = c(0, 0, 0),
                                  get_transform_matrix = NULL,
                                  ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(scenegraph_layer, parameters)
 
   add_layer(rdeck, layer)

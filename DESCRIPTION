@@ -1,7 +1,7 @@
 Type: Package
 Package: rdeck
 Title: Deck.gl Widget
-Version: 0.2.2.9000
+Version: 0.2.3.9000
 Authors@R:
     person(given = "Anthony", family = "North", role = c("aut", "cre"), email = "anthony.jl.north@gmail.com")
 Description: Deck.gl widget for R.
@@ -21,3 +21,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
+Suggests:
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

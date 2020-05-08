@@ -1,18 +1,19 @@
-get_arguments <- function() {
+get_layer_arguments <- function() {
   calling_environment <- parent.frame()
   call <- match.call(
     sys.function(-1),
     sys.call(-1)
   )
 
-  is_pipe <- function(x) is.name(x) && x == "."
-  eval_pipe <- function(name) eval(as.name(name), calling_environment)
+  # hack: this pattern needs a rethink
+  is_accessor <- function(name) name %in% accessors
+  eval_name <- function(name) eval(as.name(name), calling_environment)
 
   arguments <- as.list(call)[-1]
 
-  # arg is pipe ? eval : arg
+  # eval all args that aren't accessors
   Map(function(arg, name) {
-    if (is_pipe(arg)) eval_pipe(name) else arg
+    if (is.name(arg) && !is_accessor(name)) eval_name(name) else arg
   }, arguments, names(arguments))
 }
 

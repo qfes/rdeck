@@ -37,10 +37,10 @@ grid_cell_layer <- function(id = "GridCellLayer",
                             material = TRUE,
                             cell_size = 1000,
                             ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "GridCellLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -87,7 +87,7 @@ add_grid_cell_layer <- function(rdeck,
                                 material = TRUE,
                                 cell_size = 1000,
                                 ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(grid_cell_layer, parameters)
 
   add_layer(rdeck, layer)

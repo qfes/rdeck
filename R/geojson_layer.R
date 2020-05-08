@@ -35,10 +35,10 @@ geojson_layer <- function(id = "GeoJsonLayer",
                           get_elevation = 1000,
                           material = TRUE,
                           ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "GeoJsonLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
 
   do.call(layer, parameters)
@@ -79,7 +79,7 @@ add_geojson_layer <- function(rdeck,
                               get_elevation = 1000,
                               material = TRUE,
                               ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(geojson_layer, parameters)
 
   add_layer(rdeck, layer)

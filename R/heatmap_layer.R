@@ -29,10 +29,10 @@ heatmap_layer <- function(id = "HeatmapLayer",
                           threshold = 0.05,
                           color_domain = NULL,
                           ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "HeatmapLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -71,7 +71,7 @@ add_heatmap_layer <- function(rdeck,
                               threshold = 0.05,
                               color_domain = NULL,
                               ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(heatmap_layer, parameters)
 
   add_layer(rdeck, layer)

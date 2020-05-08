@@ -30,10 +30,10 @@ screen_grid_layer <- function(id = "ScreenGridLayer",
                               gpu_aggregation = TRUE,
                               aggregation = "SUM",
                               ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "ScreenGridLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -73,7 +73,7 @@ add_screen_grid_layer <- function(rdeck,
                                   gpu_aggregation = TRUE,
                                   aggregation = "SUM",
                                   ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(screen_grid_layer, parameters)
 
   add_layer(rdeck, layer)

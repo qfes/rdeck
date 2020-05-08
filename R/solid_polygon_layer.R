@@ -24,10 +24,10 @@ solid_polygon_layer <- function(id = "SolidPolygonLayer",
                                 get_line_color = "#000000ff",
                                 material = TRUE,
                                 ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "SolidPolygonLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -61,7 +61,7 @@ add_solid_polygon_layer <- function(rdeck,
                                     get_line_color = "#000000ff",
                                     material = TRUE,
                                     ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(solid_polygon_layer, parameters)
 
   add_layer(rdeck, layer)

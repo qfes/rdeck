@@ -72,10 +72,10 @@ class Layer {
       : "";
 
     return dedent(`
-      arguments <- get_arguments()
+      arguments <- get_layer_arguments()
       parameters <- c(
         list(type = "${this.type.layerName}"),
-        get_arguments()
+        get_layer_arguments()
       )
       ${autoGeometry}
       do.call(layer, parameters)
@@ -113,7 +113,7 @@ class AddLayer extends Layer {
 
   get body() {
     return dedent(`
-      parameters <- get_arguments()[-1]
+      parameters <- get_layer_arguments()[-1]
       layer <- do.call(${this.layer}, parameters)
 
       add_layer(rdeck, layer)

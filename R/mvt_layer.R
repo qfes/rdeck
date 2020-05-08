@@ -22,10 +22,10 @@ mvt_layer <- function(id = "MVTLayer",
                       max_cache_byte_size = NULL,
                       refinement_strategy = "best-available",
                       ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "MVTLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
 
   do.call(layer, parameters)
@@ -53,7 +53,7 @@ add_mvt_layer <- function(rdeck,
                           max_cache_byte_size = NULL,
                           refinement_strategy = "best-available",
                           ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(mvt_layer, parameters)
 
   add_layer(rdeck, layer)

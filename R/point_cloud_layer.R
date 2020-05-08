@@ -21,10 +21,10 @@ point_cloud_layer <- function(id = "PointCloudLayer",
                               get_color = "#000000ff",
                               material = TRUE,
                               ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "PointCloudLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -55,7 +55,7 @@ add_point_cloud_layer <- function(rdeck,
                                   get_color = "#000000ff",
                                   material = TRUE,
                                   ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(point_cloud_layer, parameters)
 
   add_layer(rdeck, layer)

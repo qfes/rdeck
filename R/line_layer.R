@@ -23,10 +23,10 @@ line_layer <- function(id = "LineLayer",
                        width_min_pixels = 0,
                        width_max_pixels = 9007199254740991,
                        ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "LineLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
 
   do.call(layer, parameters)
@@ -55,7 +55,7 @@ add_line_layer <- function(rdeck,
                            width_min_pixels = 0,
                            width_max_pixels = 9007199254740991,
                            ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(line_layer, parameters)
 
   add_layer(rdeck, layer)

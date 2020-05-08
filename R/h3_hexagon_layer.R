@@ -36,10 +36,10 @@ h3_hexagon_layer <- function(id = "H3HexagonLayer",
                              center_hexagon = NULL,
                              get_hexagon = hexagon,
                              ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "H3HexagonLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -85,7 +85,7 @@ add_h3_hexagon_layer <- function(rdeck,
                                  center_hexagon = NULL,
                                  get_hexagon = hexagon,
                                  ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(h3_hexagon_layer, parameters)
 
   add_layer(rdeck, layer)

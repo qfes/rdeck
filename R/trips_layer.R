@@ -28,10 +28,10 @@ trips_layer <- function(id = "TripsLayer",
                         current_time = 0,
                         get_timestamps = NULL,
                         ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "TripsLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -69,7 +69,7 @@ add_trips_layer <- function(rdeck,
                             current_time = 0,
                             get_timestamps = NULL,
                             ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(trips_layer, parameters)
 
   add_layer(rdeck, layer)

@@ -67,7 +67,7 @@ layer <- function(type,
     color_format %in% c("RGBA", "RGB")
   )
 
-  properties <- get_arguments()
+  properties <- get_layer_arguments()
 
   # data
   properties$data <- layer_data(data, type)

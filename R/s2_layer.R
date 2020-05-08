@@ -33,10 +33,10 @@ s2_layer <- function(id = "S2Layer",
                      get_elevation = 1000,
                      material = TRUE,
                      ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "S2Layer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -79,7 +79,7 @@ add_s2_layer <- function(rdeck,
                          get_elevation = 1000,
                          material = TRUE,
                          ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(s2_layer, parameters)
 
   add_layer(rdeck, layer)

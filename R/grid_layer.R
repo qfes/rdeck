@@ -46,10 +46,10 @@ grid_layer <- function(id = "GridLayer",
                        grid_aggregator = NULL,
                        gpu_aggregation = FALSE,
                        ...) {
-  arguments <- get_arguments()
+  arguments <- get_layer_arguments()
   parameters <- c(
     list(type = "GridLayer"),
-    get_arguments()
+    get_layer_arguments()
   )
   # auto-resolve geometry
   if (inherits(data, "sf")) {
@@ -105,7 +105,7 @@ add_grid_layer <- function(rdeck,
                            grid_aggregator = NULL,
                            gpu_aggregation = FALSE,
                            ...) {
-  parameters <- get_arguments()[-1]
+  parameters <- get_layer_arguments()[-1]
   layer <- do.call(grid_layer, parameters)
 
   add_layer(rdeck, layer)
