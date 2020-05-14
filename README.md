@@ -55,7 +55,7 @@ rdeck(
     # some basic transpilation from R expressions
     get_fill_color = ~ gender == 1 ? c(0, 128, 255):c(255, 0, 128),
     pickable = TRUE,
-    tooltip = tooltip(gender, geometry)
+    tooltip = c(gender, geometry)
   )
 ```
 
@@ -123,6 +123,12 @@ rdeck(
 ### Arc Layer
 
 ```r
+library(tidyverse)
+library(janitor)
+library(sf)
+library(jsonlite)
+library(rdeck)
+
 as_point <- function(data, lon, lat, crs = 4326) {
   coords <- c(
     deparse(substitute(lon)),
@@ -167,7 +173,7 @@ rdeck(
     get_target_position = target_position,
     get_source_color = ~ c(Math.sqrt(inbound), 140, 0),
     get_target_color = ~ c(Math.sqrt(outbound), 140, 0),
-    tooltip = tooltip(inbound, outbound)
+    tooltip = c(inbound, outbound)
   )
 ```
 
