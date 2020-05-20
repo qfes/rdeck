@@ -47,7 +47,7 @@ function isColor(name: string) {
 }
 
 function isScalable(name: string) {
-  return /(Radius|Elevation|Color)$/.test(name);
+  return /(Radius|Elevation|Color|Weight|Width|Height|Size)$/.test(name);
 }
 
 function getColorProps(props: Record<string, any>) {
