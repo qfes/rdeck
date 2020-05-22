@@ -5,33 +5,9 @@
 \alias{add_scenegraph_layer}
 \title{ScenegraphLayer}
 \usage{
-scenegraph_layer(
-  id = "ScenegraphLayer",
-  data = data.frame(),
-  visible = TRUE,
-  pickable = FALSE,
-  opacity = 1,
-  position_format = "XYZ",
-  color_format = "RGBA",
-  auto_highlight = FALSE,
-  highlight_color = "#00008080",
-  scenegraph = NULL,
-  get_scene = NULL,
-  get_animator = NULL,
-  size_scale = 1,
-  size_min_pixels = 0,
-  size_max_pixels = 9007199254740991,
-  get_position = position,
-  get_color = "#ffffffff",
-  get_orientation = c(0, 0, 0),
-  get_scale = c(1, 1, 1),
-  get_translation = c(0, 0, 0),
-  get_transform_matrix = NULL,
-  ...
-)
-
 add_scenegraph_layer(
   rdeck,
+  ...,
   id = "ScenegraphLayer",
   data = data.frame(),
   visible = TRUE,
@@ -53,10 +29,15 @@ add_scenegraph_layer(
   get_scale = c(1, 1, 1),
   get_translation = c(0, 0, 0),
   get_transform_matrix = NULL,
-  ...
+  tooltip = FALSE
 )
 }
 \arguments{
+\item{rdeck}{\code{rdeck}
+An rdeck map}
+
+\item{...}{additional deck.gl layer parameters}
+
 \item{id}{\code{character}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
 to properly distinguish between them.}
@@ -112,52 +93,46 @@ array is specified, a default value of 255 is used for alpha.}
 
 \item{get_transform_matrix}{\code{description-placeholder}}
 
-\item{...}{additional deck.gl layer parameters}
-
-\item{rdeck}{\code{rdeck}
-An rdeck map}
+\item{tooltip}{\code{character} | \code{name}
+Tooltip columns; either an expression returning a character vector, or an
+expression to deparse. Example: \code{c(date, count, "a_literal")}}
 }
 \description{
 ScenegraphLayer
 }
-\section{Functions}{
-\itemize{
-\item \code{add_scenegraph_layer}: Add ScenegraphLayer to an rdeck map
-}}
-
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.1/docs/layers/scenegraph-layer.md}
 
 Other layers: 
-\code{\link{arc_layer}()},
-\code{\link{bitmap_layer}()},
-\code{\link{column_layer}()},
-\code{\link{contour_layer}()},
-\code{\link{cpu_grid_layer}()},
-\code{\link{geojson_layer}()},
-\code{\link{gpu_grid_layer}()},
-\code{\link{great_circle_layer}()},
-\code{\link{grid_cell_layer}()},
-\code{\link{grid_layer}()},
-\code{\link{h3_cluster_layer}()},
-\code{\link{h3_hexagon_layer}()},
-\code{\link{heatmap_layer}()},
-\code{\link{hexagon_layer}()},
-\code{\link{icon_layer}()},
-\code{\link{line_layer}()},
-\code{\link{mvt_layer}()},
-\code{\link{path_layer}()},
-\code{\link{point_cloud_layer}()},
-\code{\link{polygon_layer}()},
-\code{\link{s2_layer}()},
-\code{\link{scatterplot_layer}()},
-\code{\link{screen_grid_layer}()},
-\code{\link{simple_mesh_layer}()},
-\code{\link{solid_polygon_layer}()},
-\code{\link{terrain_layer}()},
-\code{\link{text_layer}()},
-\code{\link{tile3d_layer}()},
-\code{\link{tile_layer}()},
-\code{\link{trips_layer}()}
+\code{\link{arc_layer}},
+\code{\link{bitmap_layer}},
+\code{\link{column_layer}},
+\code{\link{contour_layer}},
+\code{\link{cpu_grid_layer}},
+\code{\link{geojson_layer}},
+\code{\link{gpu_grid_layer}},
+\code{\link{great_circle_layer}},
+\code{\link{grid_cell_layer}},
+\code{\link{grid_layer}},
+\code{\link{h3_cluster_layer}},
+\code{\link{h3_hexagon_layer}},
+\code{\link{heatmap_layer}},
+\code{\link{hexagon_layer}},
+\code{\link{icon_layer}},
+\code{\link{line_layer}},
+\code{\link{mvt_layer}},
+\code{\link{path_layer}},
+\code{\link{point_cloud_layer}},
+\code{\link{polygon_layer}},
+\code{\link{s2_layer}},
+\code{\link{scatterplot_layer}},
+\code{\link{screen_grid_layer}},
+\code{\link{simple_mesh_layer}},
+\code{\link{solid_polygon_layer}},
+\code{\link{terrain_layer}},
+\code{\link{text_layer}},
+\code{\link{tile3d_layer}},
+\code{\link{tile_layer}},
+\code{\link{trips_layer}}
 }
 \concept{layers}

@@ -1,59 +1,11 @@
 # generated code: this code was generated from deck.gl v8.1.1
 
-
 #' @rdname gpu_grid_layer
 #' @template gpu_grid_layer
 #' @family layers
 #' @export
-gpu_grid_layer <- function(id = "GPUGridLayer",
-                           data = data.frame(),
-                           visible = TRUE,
-                           pickable = FALSE,
-                           opacity = 1,
-                           position_format = "XYZ",
-                           color_format = "RGBA",
-                           auto_highlight = FALSE,
-                           highlight_color = "#00008080",
-                           color_domain = NULL,
-                           color_range = c(
-                             "#ffffb2",
-                             "#fed976",
-                             "#feb24c",
-                             "#fd8d3c",
-                             "#f03b20",
-                             "#bd0026"
-                           ),
-                           get_color_weight = 1,
-                           color_aggregation = "SUM",
-                           elevation_domain = NULL,
-                           elevation_range = c(0, 1000),
-                           get_elevation_weight = 1,
-                           elevation_aggregation = "SUM",
-                           elevation_scale = 1,
-                           cell_size = 1000,
-                           coverage = 1,
-                           get_position = position,
-                           extruded = FALSE,
-                           material = TRUE,
-                           ...) {
-  arguments <- get_layer_arguments()
-  parameters <- c(
-    list(type = "GPUGridLayer"),
-    get_layer_arguments()
-  )
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    parameters$get_position <- as.name(attr(data, "sf_column"))
-  }
-
-  do.call(layer, parameters)
-}
-
-#' @describeIn gpu_grid_layer
-#' Add GPUGridLayer to an rdeck map
-#' @inheritParams add_layer
-#' @export
 add_gpu_grid_layer <- function(rdeck,
+                               ...,
                                id = "GPUGridLayer",
                                data = data.frame(),
                                visible = TRUE,
@@ -84,9 +36,43 @@ add_gpu_grid_layer <- function(rdeck,
                                get_position = position,
                                extruded = FALSE,
                                material = TRUE,
-                               ...) {
-  parameters <- get_layer_arguments()[-1]
-  layer <- do.call(gpu_grid_layer, parameters)
-
-  add_layer(rdeck, layer)
+                               tooltip = FALSE) {
+  arg_names <- rlang::call_args_names(sys.call())[-1]
+  # auto-resolve geometry
+  if (inherits(data, "sf")) {
+    get_position <- as.name(attr(data, "sf_column"))
+    arg_names <- c(arg_names, "get_position") %>% unique()
+  }
+  props <- c(
+    list(
+      type = "GPUGridLayer",
+      id = id,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = highlight_color,
+      color_domain = color_domain,
+      color_range = color_range,
+      get_color_weight = make_scalable_accessor(rlang::enquo(get_color_weight), data, TRUE),
+      color_aggregation = color_aggregation,
+      elevation_domain = elevation_domain,
+      elevation_range = elevation_range,
+      get_elevation_weight = make_scalable_accessor(rlang::enquo(get_elevation_weight), data, TRUE),
+      elevation_aggregation = elevation_aggregation,
+      elevation_scale = elevation_scale,
+      cell_size = cell_size,
+      coverage = coverage,
+      get_position = make_accessor(rlang::enquo(get_position), data, TRUE),
+      extruded = extruded,
+      material = material,
+      tooltip = make_tooltip(rlang::enquo(tooltip), data)
+    ),
+    list(...)
+  )[c("type", arg_names)]
+  gpu_grid_layer <- do.call(layer, props)
+  add_layer(rdeck, gpu_grid_layer)
 }

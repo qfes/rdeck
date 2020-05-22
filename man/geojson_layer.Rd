@@ -5,41 +5,9 @@
 \alias{add_geojson_layer}
 \title{GeoJsonLayer}
 \usage{
-geojson_layer(
-  id = "GeoJsonLayer",
-  data = data.frame(),
-  visible = TRUE,
-  pickable = FALSE,
-  opacity = 1,
-  position_format = "XYZ",
-  color_format = "RGBA",
-  auto_highlight = FALSE,
-  highlight_color = "#00008080",
-  stroked = TRUE,
-  filled = TRUE,
-  extruded = FALSE,
-  wireframe = FALSE,
-  line_width_units = "meters",
-  line_width_scale = 1,
-  line_width_min_pixels = 0,
-  line_width_max_pixels = 9007199254740991,
-  line_joint_rounded = FALSE,
-  line_miter_limit = 4,
-  elevation_scale = 1,
-  point_radius_scale = 1,
-  point_radius_min_pixels = 0,
-  point_radius_max_pixels = 9007199254740991,
-  get_line_color = "#000000ff",
-  get_fill_color = "#000000ff",
-  get_radius = 1,
-  get_line_width = 1,
-  get_elevation = 1000,
-  material = TRUE,
-  ...
-)
-
 add_geojson_layer(
   rdeck,
+  ...,
   id = "GeoJsonLayer",
   data = data.frame(),
   visible = TRUE,
@@ -69,10 +37,15 @@ add_geojson_layer(
   get_line_width = 1,
   get_elevation = 1000,
   material = TRUE,
-  ...
+  tooltip = FALSE
 )
 }
 \arguments{
+\item{rdeck}{\code{rdeck}
+An rdeck map}
+
+\item{...}{additional deck.gl layer parameters}
+
 \item{id}{\code{character}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
 to properly distinguish between them.}
@@ -144,52 +117,46 @@ array is specified, a default value of 255 is used for alpha.}
 
 \item{material}{\code{description-placeholder}}
 
-\item{...}{additional deck.gl layer parameters}
-
-\item{rdeck}{\code{rdeck}
-An rdeck map}
+\item{tooltip}{\code{character} | \code{name}
+Tooltip columns; either an expression returning a character vector, or an
+expression to deparse. Example: \code{c(date, count, "a_literal")}}
 }
 \description{
 GeoJsonLayer
 }
-\section{Functions}{
-\itemize{
-\item \code{add_geojson_layer}: Add GeoJsonLayer to an rdeck map
-}}
-
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.1/docs/layers/geojson-layer.md}
 
 Other layers: 
-\code{\link{arc_layer}()},
-\code{\link{bitmap_layer}()},
-\code{\link{column_layer}()},
-\code{\link{contour_layer}()},
-\code{\link{cpu_grid_layer}()},
-\code{\link{gpu_grid_layer}()},
-\code{\link{great_circle_layer}()},
-\code{\link{grid_cell_layer}()},
-\code{\link{grid_layer}()},
-\code{\link{h3_cluster_layer}()},
-\code{\link{h3_hexagon_layer}()},
-\code{\link{heatmap_layer}()},
-\code{\link{hexagon_layer}()},
-\code{\link{icon_layer}()},
-\code{\link{line_layer}()},
-\code{\link{mvt_layer}()},
-\code{\link{path_layer}()},
-\code{\link{point_cloud_layer}()},
-\code{\link{polygon_layer}()},
-\code{\link{s2_layer}()},
-\code{\link{scatterplot_layer}()},
-\code{\link{scenegraph_layer}()},
-\code{\link{screen_grid_layer}()},
-\code{\link{simple_mesh_layer}()},
-\code{\link{solid_polygon_layer}()},
-\code{\link{terrain_layer}()},
-\code{\link{text_layer}()},
-\code{\link{tile3d_layer}()},
-\code{\link{tile_layer}()},
-\code{\link{trips_layer}()}
+\code{\link{arc_layer}},
+\code{\link{bitmap_layer}},
+\code{\link{column_layer}},
+\code{\link{contour_layer}},
+\code{\link{cpu_grid_layer}},
+\code{\link{gpu_grid_layer}},
+\code{\link{great_circle_layer}},
+\code{\link{grid_cell_layer}},
+\code{\link{grid_layer}},
+\code{\link{h3_cluster_layer}},
+\code{\link{h3_hexagon_layer}},
+\code{\link{heatmap_layer}},
+\code{\link{hexagon_layer}},
+\code{\link{icon_layer}},
+\code{\link{line_layer}},
+\code{\link{mvt_layer}},
+\code{\link{path_layer}},
+\code{\link{point_cloud_layer}},
+\code{\link{polygon_layer}},
+\code{\link{s2_layer}},
+\code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
+\code{\link{screen_grid_layer}},
+\code{\link{simple_mesh_layer}},
+\code{\link{solid_polygon_layer}},
+\code{\link{terrain_layer}},
+\code{\link{text_layer}},
+\code{\link{tile3d_layer}},
+\code{\link{tile_layer}},
+\code{\link{trips_layer}}
 }
 \concept{layers}

@@ -1,146 +1,62 @@
-#' Create accessors for deck.gl layers.
+#' Make accessor
 #'
-#' @name accessor
-#' @param expr [`name`] | [`call`] | value
-#'  An expression or a value.
+#' @name make_accessor
+#' @param quosure
+#' A quosure expression
+#' @param data
+#' A data frame from which to obtain names
+#' @param columnar
+#' Determine if the generated accessor js function is column or row structure
 #'
-#' @param data [`data.frame`]
-#'  Each [name] in `expr` that appears in `names(data)` will be converted into
-#'  one of the following:
-#'    * `data.frame["name"][index]` for `columnar` == [TRUE]
-#'    * `data["name"]` else
-#'
-#' @param columnar [`logical`]
-#'  Will the layer data in javascript be a columnar table (an object with array
-#'  properties), or an array of objects?
-#'
-#' @return [`htmlwidgets::JS]` | `eval(expr)`
-#'  Either a [htmlwidgets::JS] or evaluated `expr`
-#'
+#' @keywords internal
 #' @noRd
-accessor <- function(expr, data = NULL, columnar = TRUE) {
-  UseMethod("accessor")
-}
+make_accessor <- function(quosure, data = NULL, columnar = TRUE) {
+  stopifnot(rlang::is_quosure(quosure))
+  expr <- rlang::get_expr(quosure)
 
-accessor.default <- function(expr, ...) {
-  eval(expr)
-}
+  if (rlang::is_symbol(expr)) {
+    name <- deparse(expr, backtick = FALSE)
+    stopifnot(rlang::is_empty(data) || rlang::has_name(data, name))
 
-accessor.name <- function(expr, data = NULL, columnar = TRUE) {
-  names <- names(data)
-  if (!(deparse(expr, backtick = FALSE) %in% names)) {
-    return(eval(expr))
-  }
-
-  lambda <- ifelse(
-    columnar,
-    "(object, {index, data}) => ",
-    "data => "
-  )
-
-  name <- visit(expr, names, columnar)
-  htmlwidgets::JS(paste0(lambda, deparse(name, backtick = FALSE)))
-}
-
-accessor.call <- function(expr, data = NULL, columnar = TRUE) {
-  names <- names(data)
-
-  if (!(deparse(expr[[1]]) %in% c("~", "?"))) {
-    return(eval(expr))
-  }
-
-  lambda <- ifelse(
-    columnar,
-    "(object, {index, data}) => ",
-    "data => "
-  )
-
-  call <- visit(expr, names, columnar)
-  htmlwidgets::JS(paste0(lambda, deparse(call, backtick = FALSE)))
-}
-
-#' Simple expression visitor for translating R into accessors
-#'
-#' @name visit
-#' @param expr [`name`] | [`call`] | value
-#'  The expression to visit.
-#'
-#' @param names [`character`]
-#'  Vector of names to expand into either `data.frame[expr][index]`
-#'  or `data[expr]`, depending on the value of `columnar` parameter
-#'
-#' @param columnar [`logical`]
-#'  Is the data passed to layers a columnar table, or an array of objects?
-#'
-#' @return [`htmlwidgets::JS`] | [`name`] | [`call`] | value
-#'  Either a [htmlwidgets::JS] instance or the original expression.
-#'
-#' @noRd
-visit <- function(expr, names, columnar = TRUE) {
-  if (is.call(expr) && !inherits(expr, "call")) {
-    return(visit.call(expr, names, columnar))
-  }
-
-  UseMethod("visit")
-}
-
-visit.default <- function(expr, ...) {
-  expr
-}
-
-visit.name <- function(expr, names, columnar) {
-  name <- deparse(expr, backtick = FALSE)
-  if (name %in% names) {
-    ifelse(
+    lambda <- ifelse(
       columnar,
-      paste0(
-        "data.frame[\"", name, "\"][index]"
-      ),
-      paste0("data.", name)
-    ) %>%
-      as.name()
-  } else {
-    expr
+      paste0("(object, {index, data}) => data.frame[\"", name, "\"][index]"),
+      paste0("data => data[\"", name, "\"]")
+    )
+
+    return(htmlwidgets::JS(lambda))
   }
+
+  rlang::eval_tidy(quosure)
 }
 
-visit.call <- function(expr, names, columnar) {
-  if (expr[[1]] == "~") {
-    # rhs of formula
-    expr <- expr[[length(expr)]]
+#' Make scalable accessor
+#'
+#' @name make_scalable_accessor
+#' @param quosure
+#' A quosure expression
+#' @param data
+#' A data frame from which to obtain names
+#' @param columnar
+#' Determine if the generated accessor js function is column or row structure
+#'
+#' @keywords internal
+#' @noRd
+make_scalable_accessor <- function(quosure, data = NULL, columnar = TRUE) {
+  stopifnot(rlang::is_quosure(quosure))
+  expr <- rlang::get_expr(quosure)
+
+  if (rlang::is_call(expr) && grepl("scale_\\w+", rlang::call_name(expr), perl = TRUE)) {
+    scale <- rlang::eval_tidy(quosure)
+    stopifnot(rlang::is_empty(data) || rlang::has_name(data, scale$value))
+
+    if (is.null(scale$domain) && scale$type != "quantile" && !rlang::is_empty(data)) {
+      data <- as.data.frame(data)
+      scale$domain <- scale_domain(scale, data[scale$value])
+    }
+
+    return(scale)
   }
 
-  # may no longer be a call
-  if (!is.call(expr)) {
-    return(visit(expr, names, columnar))
-  }
-
-  call_name <- expr[[1]]
-  call_args <- as.list(expr)[-1] %>%
-    lapply(function(expr) visit(expr, names, columnar))
-
-  new_call <- as.call(c(call_name, call_args))
-
-  # transpile c() into []
-  if (new_call[[1]] == "c") {
-    name <- deparse(new_call, backtick = FALSE) %>%
-      substr(3, nchar(.) - 1) %>%
-      paste0("[", ., "]") %>%
-      as.name()
-
-    return(name)
-  }
-
-  # transpile ternary
-  if (new_call[[1]] == "?") {
-    # hack into an infix operator
-    new_call[1] <- call("%?%")
-    name <- deparse(new_call, backtick = FALSE) %>%
-      sub("%\\?%", "?", x = .) %>%
-      as.name()
-
-    return(name)
-  }
-
-  new_call
+  make_accessor(quosure, data, columnar)
 }

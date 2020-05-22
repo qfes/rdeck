@@ -5,6 +5,7 @@
 \title{Layer}
 \usage{
 layer(
+  ...,
   type,
   id = type,
   data = data.frame(),
@@ -14,11 +15,12 @@ layer(
   position_format = "XYZ",
   color_format = "RGBA",
   auto_highlight = FALSE,
-  highlight_color = c(0, 0, 128, 128),
-  ...
+  highlight_color = "#00008080"
 )
 }
 \arguments{
+\item{...}{additional deck.gl layer parameters}
+
 \item{type}{\code{character}
 deck.gl layer type.}
 
@@ -53,15 +55,12 @@ highlighted with highlight_color. Requires \code{pickable} to be \code{TRUE}.}
 RGBA color to be used to render highlighted object. When 3 component (RGB)
 array is specified, a default value of 255 is used for alpha.}
 
-\item{...}{additional deck.gl layer parameters}
+\item{rdeck}{\code{rdeck}
+An rdeck map}
 
 \item{tooltip}{\code{character} | \code{name}
 Tooltip columns; either an expression returning a character vector, or an
 expression to deparse. Example: \code{c(date, count, "a_literal")}}
-}
-\value{
-\code{layer}
-A deck.gl layer of \code{type}
 }
 \description{
 Create a deck.gl \href{https://github.com/uber/deck.gl/blob/master/docs/api-reference/layer.md}{layer}

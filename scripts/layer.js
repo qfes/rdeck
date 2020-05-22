@@ -2,14 +2,19 @@ const fs = require("fs");
 const { dedent } = require("ts-dedent");
 const { snakeCase } = require("snake-case");
 const { paramCase } = require("param-case");
-const { Parameter } = require("./parameter");
+const { Parameter, isAccessor, isGeometry, isScalable } = require("./parameter");
 const { Deck } = require("@deck.gl/core");
 // @ts-ignore
 const { exclude } = require("./config.json");
 
+const DISCLAIMER = `# generated code: this code was generated from deck.gl v${Deck.VERSION}`;
+
 class Layer {
+  /** @type {import("@deck.gl/core").Layer} */
   type;
+  /** @type {string} */
   name;
+  /** @type {Parameter[]} */
   parameters;
 
   constructor(type) {
@@ -30,14 +35,16 @@ class Layer {
       .filter((propType) => !/^(_|on)/.test(propType.name))
       .map((propType) => new Parameter(propType));
 
-    this.parameters.unshift({ name: "id", default: `"${type.layerName}"` });
+    this.parameters.unshift(
+      // @ts-ignore
+      { name: "id", default: `"${type.layerName}"` }
+    );
+    // @ts-ignore
+    this.parameters.push({ name: "tooltip", default: "FALSE" });
   }
 
-  get documentation() {
+  get roxygen() {
     return dedent(`
-    # generated code: this code was generated from deck.gl v${Deck.VERSION}
-
-
     #' @rdname ${this.name}
     #' @template ${this.name}
     #' @family layers
@@ -46,86 +53,147 @@ class Layer {
   }
 
   get signature() {
-    const parameters = this.parameters.map((p) => {
-      return p.default ? `${p.name} = ${p.default}` : p.name;
-    });
+    const parameters = this.parameters.map((p) =>
+      p.default ? `${p.name} = ${p.default}` : p.name
+    );
 
     return dedent(`
-    ${this.name} <- function(${parameters.join(",\n")},
-      ...)
+    add_${this.name} <- function(rdeck,
+      ...,
+      ${parameters.join(",\n")})
     `);
   }
 
-  get body() {
-    const geometryParam = this.parameters.find((param) =>
-      ["get_path", "get_polygon", "get_position"].includes(param.name)
-    );
+  get argnamesBlock() {
+    return "";
+  }
 
-    const autoGeometry = geometryParam
-      ? dedent(`
+  get paramsBlock() {
+    const params = this.parameters
+      .map((p) => modifyParam(p, this.type.layerName !== "GeoJsonLayer"))
+      .join(",\n");
+
+    const geometryParam = this.parameters.find(isGeometry);
+    const autoGeometry =
+      geometryParam == null
+        ? ""
+        : dedent(`
         # auto-resolve geometry
         if (inherits(data, "sf")) {
-          parameters$${geometryParam.name} <- as.name(attr(data, "sf_column"))
+          ${geometryParam.name} <- as.name(attr(data, "sf_column"))
+          arg_names <- c(arg_names, "${geometryParam.name}") %>% unique()
         }
-
-      `)
-      : "";
+      `);
 
     return dedent(`
-      arguments <- get_layer_arguments()
-      parameters <- c(
-        list(type = "${this.type.layerName}"),
-        get_layer_arguments()
-      )
-      ${autoGeometry}
-      do.call(layer, parameters)
+    arg_names <- rlang::call_args_names(sys.call())[-1]
+    ${autoGeometry}
+    props <- c(
+      list(
+        type = "${this.type.layerName}",
+        ${params}
+      ),
+      list(...)
+    )[c("type", arg_names)]
+  `);
+  }
+
+  get body() {
+    return dedent(`
+      ${this.paramsBlock}
+      ${this.name} <- do.call(layer, props)
+      add_layer(rdeck, ${this.name})
     `);
   }
 
   get declaration() {
     return dedent(`
-      ${this.documentation}
+      ${this.roxygen}
       ${this.signature} {
         ${this.body}
       }
   `);
   }
+
+  toString() {
+    return this.declaration;
+  }
+}
+
+/**
+ *
+ * @param {Parameter} param
+ */
+function modifyParam(param, isColumnar = false) {
+  const columnar = isColumnar ? "TRUE" : "FALSE";
+  const enquo = (x) => `rlang::enquo(${x})`;
+  if (param.name === "tooltip") {
+    return `${param.name} = make_tooltip(${enquo(param.name)}, data)`;
+  }
+
+  if (isScalable(param)) {
+    return `${param.name} = make_scalable_accessor(${enquo(param.name)}, data, ${columnar})`;
+  }
+
+  if (isAccessor(param)) {
+    return `${param.name} = make_accessor(${enquo(param.name)}, data, ${columnar})`;
+  }
+
+  return `${param.name} = ${param.name}`;
 }
 
 class AddLayer extends Layer {
-  constructor(layer) {
-    super(layer);
+  /** @type {string} */
+  layerName;
 
-    this.layer = this.name;
+  constructor(type) {
+    super(type);
+
+    this.layerName = this.name;
     this.name = `add_${this.name}`;
 
+    //@ts-ignore
     this.parameters.unshift({ name: "rdeck" });
   }
 
-  get documentation() {
+  get roxygen() {
     return dedent(`
-    #' @describeIn ${this.layer}
+    #' @describeIn ${this.layerName}
     #' Add ${this.type.layerName} to an rdeck map
     #' @inheritParams add_layer
     #' @export
     `);
   }
 
+  get paramsBlock() {
+    const params = this.parameters
+      .map((p) =>
+        p.type === "accessor" || p.name === "tooltip"
+          ? `${p.name} = substitute(${p.name})`
+          : `${p.name} = ${p.name}`
+      )
+      .join(",\n");
+    return dedent(`
+    c(
+      list(${params}),
+      list(...)
+    )[get_argument_names()[-1]]
+  `);
+  }
+
   get body() {
     return dedent(`
-      parameters <- get_layer_arguments()[-1]
-      layer <- do.call(${this.layer}, parameters)
-
+      params <- ${this.paramsBlock}
+      layer <- do.call(${this.layerName}, params)
       add_layer(rdeck, layer)
     `);
   }
 }
 
-function generateLayer(layerType) {
-  const layer = new Layer(layerType);
-  const addLayer = new AddLayer(layerType);
+function generateLayer(module, type) {
+  const layer = new Layer(type);
 
-  const content = [layer, addLayer].map((x) => x.declaration).join("\n\n");
+  const content = [DISCLAIMER, layer].join("\n\n");
   fs.writeFileSync(`./R/${layer.name}.R`, content);
 
   const filter = [

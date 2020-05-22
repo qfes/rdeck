@@ -1,7 +1,7 @@
 Type: Package
 Package: rdeck
 Title: Deck.gl Widget
-Version: 0.2.3.9000
+Version: 0.2.4.9000
 Authors@R:
     person(given = "Anthony", family = "North", role = c("aut", "cre"), email = "anthony.jl.north@gmail.com")
 Description: Deck.gl widget for R.
@@ -15,8 +15,9 @@ Imports:
     htmltools (>= 0.4.0),
     htmlwidgets (>= 1.5.1),
     magrittr,
-    sf (>= 0.8.1),
-    snakecase (>= 0.11.0)
+    sf (>= 0.9.3),
+    snakecase (>= 0.11.0),
+    rlang (>= 0.4.6)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

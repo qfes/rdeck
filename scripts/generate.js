@@ -20,6 +20,7 @@ const layers = {
   "mesh-layers": getLayers(require("@deck.gl/mesh-layers")),
 };
 
-Object.values(layers).flat().forEach(generateLayer);
-
+Object.entries(layers).forEach(([module, layers]) =>
+  layers.forEach((layer) => generateLayer(module, layer))
+);
 generateMetadata(layers);

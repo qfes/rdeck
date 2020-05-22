@@ -1,6 +1,7 @@
 const fs = require("fs");
 const { dedent } = require("ts-dedent");
 const { snakeCase } = require("snake-case");
+const { isAccessor, isGeo, isGeometry, isScalable } = require("./parameter");
 
 function generateAccessorNames(layers) {
   const accessors = Object.values(layers)
@@ -9,20 +10,14 @@ function generateAccessorNames(layers) {
     .map((layer) => {
       new layer();
 
-      return Object.values(layer._propTypes).filter((propType) => propType.type === "accessor");
+      return Object.values(layer._propTypes).filter(isAccessor);
     })
     .flat();
 
-  const geometryAccessors = accessors.filter((accessor) =>
-    /path|polygon|position/i.test(accessor.name)
-  );
+  const geometryAccessors = accessors.filter(isGeometry);
+  const geoAccessors = accessors.filter(isGeo);
+  const scalableAccessors = accessors.filter(isScalable);
 
-  const geoAccessors = accessors.filter((accessor) => /s2|hexagon/i.test(accessor.name));
-  const scalableAccessors = accessors.filter((accessor) =>
-    /(radius|elevation|color|weight|width|height|size)$/i.test(accessor.name)
-  );
-
-  debugger;
   const otherAccessors = accessors
     .filter((x) => !geometryAccessors.includes(x))
     .filter((x) => !geoAccessors.includes(x))

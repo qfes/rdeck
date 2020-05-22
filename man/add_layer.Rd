@@ -15,3 +15,4 @@ An rdeck map}
 \description{
 Add a deck.gl layer to an rdeck map.
 }
+\keyword{internal}

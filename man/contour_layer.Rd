@@ -5,28 +5,9 @@
 \alias{add_contour_layer}
 \title{ContourLayer}
 \usage{
-contour_layer(
-  id = "ContourLayer",
-  data = data.frame(),
-  visible = TRUE,
-  pickable = FALSE,
-  opacity = 1,
-  position_format = "XYZ",
-  color_format = "RGBA",
-  auto_highlight = FALSE,
-  highlight_color = "#00008080",
-  cell_size = 1000,
-  get_position = position,
-  get_weight = 1,
-  gpu_aggregation = TRUE,
-  aggregation = "SUM",
-  contours = c(NULL),
-  z_offset = 0.005,
-  ...
-)
-
 add_contour_layer(
   rdeck,
+  ...,
   id = "ContourLayer",
   data = data.frame(),
   visible = TRUE,
@@ -43,10 +24,15 @@ add_contour_layer(
   aggregation = "SUM",
   contours = c(NULL),
   z_offset = 0.005,
-  ...
+  tooltip = FALSE
 )
 }
 \arguments{
+\item{rdeck}{\code{rdeck}
+An rdeck map}
+
+\item{...}{additional deck.gl layer parameters}
+
 \item{id}{\code{character}
 The id of the layer. Layer ids must be unique per layer \code{type} for deck.gl
 to properly distinguish between them.}
@@ -92,52 +78,46 @@ array is specified, a default value of 255 is used for alpha.}
 
 \item{z_offset}{\code{description-placeholder}}
 
-\item{...}{additional deck.gl layer parameters}
-
-\item{rdeck}{\code{rdeck}
-An rdeck map}
+\item{tooltip}{\code{character} | \code{name}
+Tooltip columns; either an expression returning a character vector, or an
+expression to deparse. Example: \code{c(date, count, "a_literal")}}
 }
 \description{
 ContourLayer
 }
-\section{Functions}{
-\itemize{
-\item \code{add_contour_layer}: Add ContourLayer to an rdeck map
-}}
-
 \seealso{
 \url{https://github.com/uber/deck.gl/blob/v8.1.1/docs/layers/contour-layer.md}
 
 Other layers: 
-\code{\link{arc_layer}()},
-\code{\link{bitmap_layer}()},
-\code{\link{column_layer}()},
-\code{\link{cpu_grid_layer}()},
-\code{\link{geojson_layer}()},
-\code{\link{gpu_grid_layer}()},
-\code{\link{great_circle_layer}()},
-\code{\link{grid_cell_layer}()},
-\code{\link{grid_layer}()},
-\code{\link{h3_cluster_layer}()},
-\code{\link{h3_hexagon_layer}()},
-\code{\link{heatmap_layer}()},
-\code{\link{hexagon_layer}()},
-\code{\link{icon_layer}()},
-\code{\link{line_layer}()},
-\code{\link{mvt_layer}()},
-\code{\link{path_layer}()},
-\code{\link{point_cloud_layer}()},
-\code{\link{polygon_layer}()},
-\code{\link{s2_layer}()},
-\code{\link{scatterplot_layer}()},
-\code{\link{scenegraph_layer}()},
-\code{\link{screen_grid_layer}()},
-\code{\link{simple_mesh_layer}()},
-\code{\link{solid_polygon_layer}()},
-\code{\link{terrain_layer}()},
-\code{\link{text_layer}()},
-\code{\link{tile3d_layer}()},
-\code{\link{tile_layer}()},
-\code{\link{trips_layer}()}
+\code{\link{arc_layer}},
+\code{\link{bitmap_layer}},
+\code{\link{column_layer}},
+\code{\link{cpu_grid_layer}},
+\code{\link{geojson_layer}},
+\code{\link{gpu_grid_layer}},
+\code{\link{great_circle_layer}},
+\code{\link{grid_cell_layer}},
+\code{\link{grid_layer}},
+\code{\link{h3_cluster_layer}},
+\code{\link{h3_hexagon_layer}},
+\code{\link{heatmap_layer}},
+\code{\link{hexagon_layer}},
+\code{\link{icon_layer}},
+\code{\link{line_layer}},
+\code{\link{mvt_layer}},
+\code{\link{path_layer}},
+\code{\link{point_cloud_layer}},
+\code{\link{polygon_layer}},
+\code{\link{s2_layer}},
+\code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
+\code{\link{screen_grid_layer}},
+\code{\link{simple_mesh_layer}},
+\code{\link{solid_polygon_layer}},
+\code{\link{terrain_layer}},
+\code{\link{text_layer}},
+\code{\link{tile3d_layer}},
+\code{\link{tile_layer}},
+\code{\link{trips_layer}}
 }
 \concept{layers}
