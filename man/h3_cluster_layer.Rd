@@ -29,7 +29,6 @@ add_h3_cluster_layer(
   line_width_max_pixels = 9007199254740991,
   line_joint_rounded = FALSE,
   line_miter_limit = 4,
-  get_polygon = polygon,
   get_fill_color = "#000000ff",
   get_line_color = "#000000ff",
   get_line_width = 1,
@@ -98,8 +97,6 @@ array is specified, a default value of 255 is used for alpha.}
 \item{line_joint_rounded}{\code{description-placeholder}}
 
 \item{line_miter_limit}{\code{description-placeholder}}
-
-\item{get_polygon}{\code{description-placeholder}}
 
 \item{get_fill_color}{\code{description-placeholder}}
 
