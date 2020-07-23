@@ -141,7 +141,7 @@ layer_data.data.frame <- function(data, layer_type) {
         sf::st_transform(4326)
 
       # performance optimisation for serialising points
-      if (inherits(sfc, "sfc_POINT")) do.call(rbind, sfc) else sfc
+      if (inherits(sfc, "sfc_POINT")) do.call(rbind, sfc) else unclass(sfc)
     })
   )
 }
