@@ -1,6 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 dist: focal
+cache: packages
 
 language: r
 sudo: required
@@ -14,7 +15,7 @@ before_install:
   - sudo apt-get install --yes libudunits2-dev libproj-dev libgeos-dev libgdal-dev
 
 # pkgdown
-before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+before_cache: Rscript -e 'remotes::install_github("r-lib/pkgdown@*release")'
 deploy:
   provider: script
   script: Rscript -e 'pkgdown::deploy_site_github()'
