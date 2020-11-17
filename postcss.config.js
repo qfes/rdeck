@@ -1,8 +1,6 @@
-module.exports = ({ env }) => {
-  return {
-    plugins: {
-      "postcss-preset-env": {},
-      "cssnano": env === "production"
-    }
-  };
+module.exports = {
+  plugins: {
+    "postcss-preset-env": {},
+    "postcss-import-url": { modernBrowser: true },
+  },
 };
