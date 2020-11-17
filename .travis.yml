@@ -1,8 +1,8 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: r
 cache: packages
 sudo: required
+language: r
 
 # https://github.com/edzer/sf_dep/blob/master/.travis.yml
 before_install:
@@ -11,8 +11,12 @@ before_install:
   - sudo apt-get install --yes libudunits2-dev libproj-dev libgeos-dev libgdal-dev
 
 # pkgdown
-before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+# before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+# revert to cran version once fix is released
+before_cache: Rscript -e 'remotes::install_github("r-lib/pkgdown#1276")'
 deploy:
   provider: script
   script: Rscript -e 'pkgdown::deploy_site_github(ssh_id = Sys.getenv("TRAVIS_DEPLOY_KEY"))'
   skip_cleanup: true
+  on:
+    all_branches: true
