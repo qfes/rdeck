@@ -20,7 +20,7 @@ before_install:
 before_cache: Rscript -e 'remotes::install_github("r-lib/pkgdown#1276")'
 deploy:
   provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github(ssh_id = Sys.getenv("TRAVIS_DEPLOY_KEY"))'
+  script: Rscript -e 'pkgdown::deploy_site_github()'
   skip_cleanup: true
   on:
     all_branches: true
