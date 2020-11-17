@@ -1,10 +1,10 @@
 const { resolve } = require("path");
-const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = (env, { mode }) => {
   process.env.NODE_ENV = mode;
-  const isDevelopment = mode === "development";
 
   return {
     mode,
@@ -34,8 +34,9 @@ module.exports = (env, { mode }) => {
               loader: "css-loader",
               options: {
                 importLoaders: 1,
-                modules: true,
-                localsConvention: "camelCase",
+                modules: {
+                  exportLocalsConvention: "camelCase",
+                },
               },
             },
             "postcss-loader",
@@ -44,20 +45,36 @@ module.exports = (env, { mode }) => {
       ],
     },
     // externals,
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: "[name].css",
-      }),
-    ],
-    devtool: isDevelopment && "inline-source-map",
+    plugins: [new MiniCssExtractPlugin({ filename: "[name].css" })],
+    devtool: mode === "development" && "inline-source-map",
     optimization: {
+      minimize: mode === "production",
+      minimizer: [new TerserPlugin({ extractComments: false }), new CssMinimizerPlugin()],
       splitChunks: {
-        chunks: "initial",
+        chunks: "all",
         cacheGroups: {
+          react: {
+            name: "react",
+            test: /[\\/]node_modules[\\/](react|react-dom|react-is|prop-types|scheduler)[\\/]/,
+          },
+          mapboxgl: {
+            name: "mapbox-gl",
+            test: /[\\/]node_modules[\\/](@mapbox|mapbox-gl)[\\/]/,
+          },
+          deckgl: {
+            name: "deck.gl",
+            test: /[\\/]node_modules[\\/]@?(deck|loaders|luma|math)\.gl[\\/]/,
+          },
+          h3js: {
+            name: "h3-js",
+            test: /[\\/]node_modules[\\/]h3-js[\\/]/,
+          },
           defaultVendors: {
             name: "vendor",
-            test: /node_modules/,
+            test: /[\\/]node_modules[\\/]/,
+            reuseExistingChunk: true,
             enforce: true,
+            priority: -10,
           },
         },
       },
