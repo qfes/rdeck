@@ -35,9 +35,18 @@ add_<%- name -%> <- function(rdeck,
         ...,
         type = "<%- type -%>",
         <% for (const p of props) { -%>
-            <%- p.name -%> = <%- p.type === "accessor" ? `rlang::enquo(${p.name})` : p.name -%>,
+            <%
+              const isAccessor = p.type === "accessor";
+              const isScaleable = /^get_(radius|elevation|color|weight|width|height|size)$/.test(p.name);
+              const value = isAccessor
+                ? isScaleable
+                  ? `accessor_scale(rlang::enquo(${p.name}), data)`
+                  : `accessor(rlang::enquo(${p.name}), data)`
+                : p.name;
+            -%>
+            <%- p.name -%> = <%- value ?? "NULL" -%>,
         <% } -%>
-        tooltip = rlang::enquo(tooltip)
+        tooltip = eval_tooltip(rlang::enquo(tooltip), data)
     )
 
     add_layer(rdeck, <%- name -%>)
