@@ -6,9 +6,7 @@
     "postinstall": "npm explore @danmarshall/deckgl-typings -- npm run postinstall",
     "build": "webpack --mode production",
     "start": "webpack --watch --mode development",
-    "gen:interface": "node ./scripts/generate.js",
-    "generate": "npm run gen:interface && npm run styler",
-    "styler": "R -e \"styler::style_dir('./R')\""
+    "codegen": "node ./scripts/generate-layers.js"
   },
   "dependencies": {
     "@danmarshall/deckgl-typings": "^4.3.10",
@@ -43,6 +41,7 @@
     "browserslist-config-google": "^2.0.0",
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^1.1.5",
+    "ejs": "^3.1.5",
     "eslint": "^7.13.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
@@ -50,10 +49,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "marked": "^1.2.4",
     "mini-css-extract-plugin": "^1.3.1",
-    "node-fetch": "^2.6.1",
-    "param-case": "^3.0.3",
     "postcss-import-url": "^5.1.0",
     "postcss-loader": "^4.0.4",
     "postcss-preset-env": "^6.7.0",
@@ -61,7 +57,6 @@
     "snake-case": "^3.0.3",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.0.3",
-    "ts-dedent": "^2.0.0",
     "typescript": "^4.0.5",
     "webpack": "^5.4.0",
     "webpack-cli": "^4.2.0"

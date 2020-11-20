@@ -1,0 +1,44 @@
+<%#
+  template for generating a function to add deck.gl layers to a map.
+  data is expected with the following form:
+  data = {
+    type: "H3HexagonLayer",
+    name: "h3_hexagon_layer",
+    props: [{
+      name: "get_hexagon",
+      default: "hexagon",
+      type: "accessor"
+    }]
+  }
+-%>
+#' @rdname <%- name %>
+#' @autoglobal
+#' @export
+add_<%- name -%> <- function(rdeck,
+                            ...,
+                            id = "<%- type -%>",
+                            <% for (const p of props) { -%>
+                              <%- p.name -%> = <%- p.value ?? "NULL" -%>,
+                            <% } -%>
+                            tooltip = FALSE) {
+
+    <% const geom = props.find(p => /^get_(path|polygon|position)$/.test(p.name)); -%>
+    <% if (geom) { -%>
+        # auto-resolve geometry
+        if (inherits(data, "sf")) {
+            <%- geom.name -%> <- as.name(attr(data, "sf_column"))
+        }
+    <% } -%>
+
+    <%- name -%> <- layer(
+        rdeck,
+        ...,
+        type = "<%- type -%>",
+        <% for (const p of props) { -%>
+            <%- p.name -%> = <%- p.type === "accessor" ? `rlang::enquo(${p.name})` : p.name -%>,
+        <% } -%>
+        tooltip = rlang::enquo(tooltip)
+    )
+
+    add_layer(rdeck, <%- name -%>)
+}
