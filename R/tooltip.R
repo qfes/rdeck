@@ -1,21 +1,21 @@
-#' Make Tooltip
+#' Evaluate Tooltip
 #'
-#' Create a character vector representing names to be included in a tooltip
+#' Create a character vector representing names to be included in a tooltip.
+#' @name eval_tooltip
+#' @param quo The quosure to evaluate.
 #'
-#' @name make_tooltip
-#' @param quosure
-#' The quosure to evaluate.
-#'
-#' - Literals and calls other than `c()` are evaluated
-#' - Names are deparsed
-#' - Arguments to `c()` are modified using the logic of the above.
-#' @param data
+#' - Logicals are interpreted as tooltip on / off. NULL & NA are falsey
+#' - If `data` is a `data.frame`, quo is a tidyselect::eval_select() clause
+#' - Otherwise:
+#'   - Names are deparsed
+#'   - Literals and calls other than `c()` are evaluated
+#'   - `c()` arguments are evaluated recursively with `eval_tooltip`
+#' @param data The data to evaluate names on
 #'
 #' @keywords internal
 #' @noRd
-make_tooltip <- function(quosure, data = NULL) {
-  stopifnot(rlang::is_quosure(quosure))
-  expr <- rlang::get_expr(quosure)
+eval_tooltip <- function(quo, data = NULL) {
+  expr <- rlang::get_expr(quo)
 
   if (rlang::is_false(expr) || rlang::is_null(expr) || rlang::is_na(expr)) {
     return(FALSE)
@@ -25,38 +25,30 @@ make_tooltip <- function(quosure, data = NULL) {
     return(TRUE)
   }
 
-  # character expr
-  if (rlang::is_character(expr)) {
-    name <- rlang::eval_tidy(expr)
-    stopifnot(rlang::is_empty(data) || rlang::has_name(data, name))
+  UseMethod("eval_tooltip", data)
+}
 
-    return(name)
-  }
+eval_tooltip.default <- function(quo, data = NULL) {
+  expr <- rlang::get_expr(quo)
 
-  # name expr
+  # name / symbol
   if (rlang::is_symbol(expr)) {
-    name <- deparse(expr, backtick = FALSE)
-    stopifnot(rlang::is_empty(data) || rlang::has_name(data, name))
-
-    return(name)
+    return(rlang::as_name(expr))
   }
 
-  # call expr
-  if (rlang::is_call(quosure)) {
-    if (rlang::call_name(quosure) == "c") {
-      return(
-        rlang::call_args(quosure) %>%
-          lapply(function(arg) make_tooltip(rlang::enquo(arg), data)) %>%
+  # c()
+  if (rlang::is_call(expr) && rlang::call_name(expr) == "c") {
+    return(
+      rlang::call_args(expr) %>%
+        lapply(function(arg) eval_tooltip(rlang::expr(!!arg), data)) %>%
           unlist()
-      )
-    }
-
-    value <- rlang::eval_tidy(expr)
-    stopifnot(rlang::is_character(value))
-
-    return(value)
+    )
   }
 
-  # todo: helpful message
-  stop("Not supported")
+  rlang::eval_tidy(expr)
+}
+
+eval_tooltip.data.frame <- function(quo, data) {
+  tidyselect::eval_select(quo, data) %>%
+    names()
 }
