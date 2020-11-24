@@ -32,9 +32,8 @@ add_<%- name -%> <- function(rdeck,
     <% } -%>
     # construct layer object
     <%- name -%> <- layer(
-        rdeck,
-        ...,
         type = "<%- type -%>",
+        ...,
         <% for (const p of props) { -%>
             <%
               const isAccessor = p.type === "accessor";

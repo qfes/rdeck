@@ -30,9 +30,8 @@ add_arc_layer <- function(rdeck,
                           tooltip = FALSE) {
   # construct layer object
   arc_layer <- layer(
-    rdeck,
-    ...,
     type = "ArcLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -81,9 +80,8 @@ add_bitmap_layer <- function(rdeck,
                              tooltip = FALSE) {
   # construct layer object
   bitmap_layer <- layer(
-    rdeck,
-    ...,
     type = "BitmapLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -139,9 +137,8 @@ add_icon_layer <- function(rdeck,
   }
   # construct layer object
   icon_layer <- layer(
-    rdeck,
-    ...,
     type = "IconLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -195,9 +192,8 @@ add_line_layer <- function(rdeck,
                            tooltip = FALSE) {
   # construct layer object
   line_layer <- layer(
-    rdeck,
-    ...,
     type = "LineLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -248,9 +244,8 @@ add_point_cloud_layer <- function(rdeck,
   }
   # construct layer object
   point_cloud_layer <- layer(
-    rdeck,
-    ...,
     type = "PointCloudLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -308,9 +303,8 @@ add_scatterplot_layer <- function(rdeck,
   }
   # construct layer object
   scatterplot_layer <- layer(
-    rdeck,
-    ...,
     type = "ScatterplotLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -384,9 +378,8 @@ add_grid_cell_layer <- function(rdeck,
   }
   # construct layer object
   grid_cell_layer <- layer(
-    rdeck,
-    ...,
     type = "GridCellLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -466,9 +459,8 @@ add_column_layer <- function(rdeck,
   }
   # construct layer object
   column_layer <- layer(
-    rdeck,
-    ...,
     type = "ColumnLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -536,9 +528,8 @@ add_path_layer <- function(rdeck,
   }
   # construct layer object
   path_layer <- layer(
-    rdeck,
-    ...,
     type = "PathLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -602,9 +593,8 @@ add_polygon_layer <- function(rdeck,
   }
   # construct layer object
   polygon_layer <- layer(
-    rdeck,
-    ...,
     type = "PolygonLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -667,9 +657,8 @@ add_solid_polygon_layer <- function(rdeck,
   }
   # construct layer object
   solid_polygon_layer <- layer(
-    rdeck,
-    ...,
     type = "SolidPolygonLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -731,9 +720,8 @@ add_geojson_layer <- function(rdeck,
                               tooltip = FALSE) {
   # construct layer object
   geojson_layer <- layer(
-    rdeck,
-    ...,
     type = "GeoJsonLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -811,9 +799,8 @@ add_text_layer <- function(rdeck,
   }
   # construct layer object
   text_layer <- layer(
-    rdeck,
-    ...,
     type = "TextLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -878,9 +865,8 @@ add_screen_grid_layer <- function(rdeck,
   }
   # construct layer object
   screen_grid_layer <- layer(
-    rdeck,
-    ...,
     type = "ScreenGridLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -948,9 +934,8 @@ add_cpu_grid_layer <- function(rdeck,
   }
   # construct layer object
   cpu_grid_layer <- layer(
-    rdeck,
-    ...,
     type = "CPUGridLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1033,9 +1018,8 @@ add_hexagon_layer <- function(rdeck,
   }
   # construct layer object
   hexagon_layer <- layer(
-    rdeck,
-    ...,
     type = "HexagonLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1102,9 +1086,8 @@ add_contour_layer <- function(rdeck,
   }
   # construct layer object
   contour_layer <- layer(
-    rdeck,
-    ...,
     type = "ContourLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1172,9 +1155,8 @@ add_grid_layer <- function(rdeck,
   }
   # construct layer object
   grid_layer <- layer(
-    rdeck,
-    ...,
     type = "GridLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1249,9 +1231,8 @@ add_gpu_grid_layer <- function(rdeck,
   }
   # construct layer object
   gpu_grid_layer <- layer(
-    rdeck,
-    ...,
     type = "GPUGridLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1309,9 +1290,8 @@ add_heatmap_layer <- function(rdeck,
   }
   # construct layer object
   heatmap_layer <- layer(
-    rdeck,
-    ...,
     type = "HeatmapLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1362,9 +1342,8 @@ add_great_circle_layer <- function(rdeck,
                                    tooltip = FALSE) {
   # construct layer object
   great_circle_layer <- layer(
-    rdeck,
-    ...,
     type = "GreatCircleLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1425,9 +1404,8 @@ add_s2_layer <- function(rdeck,
                          tooltip = FALSE) {
   # construct layer object
   s2_layer <- layer(
-    rdeck,
-    ...,
     type = "S2Layer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1493,9 +1471,8 @@ add_h3_cluster_layer <- function(rdeck,
                                  tooltip = FALSE) {
   # construct layer object
   h3_cluster_layer <- layer(
-    rdeck,
-    ...,
     type = "H3ClusterLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1564,9 +1541,8 @@ add_h3_hexagon_layer <- function(rdeck,
                                  tooltip = FALSE) {
   # construct layer object
   h3_hexagon_layer <- layer(
-    rdeck,
-    ...,
     type = "H3HexagonLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1628,9 +1604,8 @@ add_tile_layer <- function(rdeck,
                            tooltip = FALSE) {
   # construct layer object
   tile_layer <- layer(
-    rdeck,
-    ...,
     type = "TileLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1690,9 +1665,8 @@ add_trips_layer <- function(rdeck,
   }
   # construct layer object
   trips_layer <- layer(
-    rdeck,
-    ...,
     type = "TripsLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1757,9 +1731,8 @@ add_tile3d_layer <- function(rdeck,
                              tooltip = FALSE) {
   # construct layer object
   tile3d_layer <- layer(
-    rdeck,
-    ...,
     type = "Tile3DLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1819,9 +1792,8 @@ add_terrain_layer <- function(rdeck,
                               tooltip = FALSE) {
   # construct layer object
   terrain_layer <- layer(
-    rdeck,
-    ...,
     type = "TerrainLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1884,9 +1856,8 @@ add_mvt_layer <- function(rdeck,
                           tooltip = FALSE) {
   # construct layer object
   mvt_layer <- layer(
-    rdeck,
-    ...,
     type = "MVTLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -1946,9 +1917,8 @@ add_simple_mesh_layer <- function(rdeck,
   }
   # construct layer object
   simple_mesh_layer <- layer(
-    rdeck,
-    ...,
     type = "SimpleMeshLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
@@ -2008,9 +1978,8 @@ add_scenegraph_layer <- function(rdeck,
   }
   # construct layer object
   scenegraph_layer <- layer(
-    rdeck,
-    ...,
     type = "ScenegraphLayer",
+    ...,
     data = data,
     visible = visible,
     pickable = pickable,
