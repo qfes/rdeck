@@ -17,21 +17,25 @@
 eval_tooltip <- function(quo, data = NULL) {
   expr <- rlang::get_expr(quo)
 
+  # tooltip disabled
   if (rlang::is_false(expr) || rlang::is_null(expr) || rlang::is_na(expr)) {
     return(FALSE)
   }
 
+  # tooltip enabled, all names used
   if (rlang::is_true(expr)) {
     return(TRUE)
   }
 
-  UseMethod("eval_tooltip", data)
-}
+  # tidyselect
+  if (inherits(data, "data.frame")) {
+    return(
+      tidyselect::eval_select(quo, data) %>%
+        names()
+    )
+  }
 
-eval_tooltip.default <- function(quo, data = NULL) {
-  expr <- rlang::get_expr(quo)
-
-  # name / symbol
+  # name
   if (rlang::is_symbol(expr)) {
     return(rlang::as_name(expr))
   }
@@ -41,14 +45,9 @@ eval_tooltip.default <- function(quo, data = NULL) {
     return(
       rlang::call_args(expr) %>%
         lapply(function(arg) eval_tooltip(rlang::expr(!!arg), data)) %>%
-          unlist()
+        unlist()
     )
   }
 
   rlang::eval_tidy(expr)
-}
-
-eval_tooltip.data.frame <- function(quo, data) {
-  tidyselect::eval_select(quo, data) %>%
-    names()
 }

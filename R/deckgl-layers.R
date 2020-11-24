@@ -28,6 +28,7 @@ add_arc_layer <- function(rdeck,
                           width_min_pixels = 0,
                           width_max_pixels = 9007199254740991,
                           tooltip = FALSE) {
+  # construct layer object
   arc_layer <- layer(
     rdeck,
     ...,
@@ -54,6 +55,7 @@ add_arc_layer <- function(rdeck,
     width_max_pixels = width_max_pixels,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, arc_layer)
 }
 
@@ -77,6 +79,7 @@ add_bitmap_layer <- function(rdeck,
                              transparent_color = "#00000000",
                              tint_color = "#ffffff",
                              tooltip = FALSE) {
+  # construct layer object
   bitmap_layer <- layer(
     rdeck,
     ...,
@@ -96,6 +99,7 @@ add_bitmap_layer <- function(rdeck,
     tint_color = tint_color,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, bitmap_layer)
 }
 
@@ -131,7 +135,9 @@ add_icon_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   icon_layer <- layer(
     rdeck,
     ...,
@@ -160,6 +166,7 @@ add_icon_layer <- function(rdeck,
     get_pixel_offset = accessor(rlang::enquo(get_pixel_offset), data),
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, icon_layer)
 }
 
@@ -186,6 +193,7 @@ add_line_layer <- function(rdeck,
                            width_min_pixels = 0,
                            width_max_pixels = 9007199254740991,
                            tooltip = FALSE) {
+  # construct layer object
   line_layer <- layer(
     rdeck,
     ...,
@@ -208,6 +216,7 @@ add_line_layer <- function(rdeck,
     width_max_pixels = width_max_pixels,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, line_layer)
 }
 
@@ -235,7 +244,9 @@ add_point_cloud_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   point_cloud_layer <- layer(
     rdeck,
     ...,
@@ -256,6 +267,7 @@ add_point_cloud_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, point_cloud_layer)
 }
 
@@ -292,7 +304,9 @@ add_scatterplot_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   scatterplot_layer <- layer(
     rdeck,
     ...,
@@ -322,6 +336,7 @@ add_scatterplot_layer <- function(rdeck,
     get_line_width = accessor(rlang::enquo(get_line_width), data),
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, scatterplot_layer)
 }
 
@@ -365,7 +380,9 @@ add_grid_cell_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   grid_cell_layer <- layer(
     rdeck,
     ...,
@@ -402,6 +419,7 @@ add_grid_cell_layer <- function(rdeck,
     cell_size = cell_size,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, grid_cell_layer)
 }
 
@@ -444,7 +462,9 @@ add_column_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   column_layer <- layer(
     rdeck,
     ...,
@@ -480,6 +500,7 @@ add_column_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, column_layer)
 }
 
@@ -511,7 +532,9 @@ add_path_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_path <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   path_layer <- layer(
     rdeck,
     ...,
@@ -536,6 +559,7 @@ add_path_layer <- function(rdeck,
     get_width = accessor_scale(rlang::enquo(get_width), data),
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, path_layer)
 }
 
@@ -574,7 +598,9 @@ add_polygon_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_polygon <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   polygon_layer <- layer(
     rdeck,
     ...,
@@ -606,6 +632,7 @@ add_polygon_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, polygon_layer)
 }
 
@@ -636,7 +663,9 @@ add_solid_polygon_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_polygon <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   solid_polygon_layer <- layer(
     rdeck,
     ...,
@@ -660,6 +689,7 @@ add_solid_polygon_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, solid_polygon_layer)
 }
 
@@ -699,6 +729,7 @@ add_geojson_layer <- function(rdeck,
                               get_elevation = 1000,
                               material = TRUE,
                               tooltip = FALSE) {
+  # construct layer object
   geojson_layer <- layer(
     rdeck,
     ...,
@@ -734,6 +765,7 @@ add_geojson_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, geojson_layer)
 }
 
@@ -775,7 +807,9 @@ add_text_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   text_layer <- layer(
     rdeck,
     ...,
@@ -810,6 +844,7 @@ add_text_layer <- function(rdeck,
     get_pixel_offset = accessor(rlang::enquo(get_pixel_offset), data),
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, text_layer)
 }
 
@@ -839,7 +874,9 @@ add_screen_grid_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   screen_grid_layer <- layer(
     rdeck,
     ...,
@@ -862,6 +899,7 @@ add_screen_grid_layer <- function(rdeck,
     aggregation = aggregation,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, screen_grid_layer)
 }
 
@@ -906,7 +944,9 @@ add_cpu_grid_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   cpu_grid_layer <- layer(
     rdeck,
     ...,
@@ -944,6 +984,7 @@ add_cpu_grid_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, cpu_grid_layer)
 }
 
@@ -988,7 +1029,9 @@ add_hexagon_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   hexagon_layer <- layer(
     rdeck,
     ...,
@@ -1026,6 +1069,7 @@ add_hexagon_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, hexagon_layer)
 }
 
@@ -1054,7 +1098,9 @@ add_contour_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   contour_layer <- layer(
     rdeck,
     ...,
@@ -1076,6 +1122,7 @@ add_contour_layer <- function(rdeck,
     z_offset = z_offset,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, contour_layer)
 }
 
@@ -1121,7 +1168,9 @@ add_grid_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   grid_layer <- layer(
     rdeck,
     ...,
@@ -1160,6 +1209,7 @@ add_grid_layer <- function(rdeck,
     gpu_aggregation = gpu_aggregation,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, grid_layer)
 }
 
@@ -1195,7 +1245,9 @@ add_gpu_grid_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   gpu_grid_layer <- layer(
     rdeck,
     ...,
@@ -1224,6 +1276,7 @@ add_gpu_grid_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, gpu_grid_layer)
 }
 
@@ -1252,7 +1305,9 @@ add_heatmap_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   heatmap_layer <- layer(
     rdeck,
     ...,
@@ -1274,6 +1329,7 @@ add_heatmap_layer <- function(rdeck,
     color_domain = color_domain,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, heatmap_layer)
 }
 
@@ -1304,6 +1360,7 @@ add_great_circle_layer <- function(rdeck,
                                    width_min_pixels = 0,
                                    width_max_pixels = 9007199254740991,
                                    tooltip = FALSE) {
+  # construct layer object
   great_circle_layer <- layer(
     rdeck,
     ...,
@@ -1330,6 +1387,7 @@ add_great_circle_layer <- function(rdeck,
     width_max_pixels = width_max_pixels,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, great_circle_layer)
 }
 
@@ -1365,6 +1423,7 @@ add_s2_layer <- function(rdeck,
                          get_elevation = 1000,
                          material = TRUE,
                          tooltip = FALSE) {
+  # construct layer object
   s2_layer <- layer(
     rdeck,
     ...,
@@ -1396,6 +1455,7 @@ add_s2_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, s2_layer)
 }
 
@@ -1431,6 +1491,7 @@ add_h3_cluster_layer <- function(rdeck,
                                  get_elevation = 1000,
                                  material = TRUE,
                                  tooltip = FALSE) {
+  # construct layer object
   h3_cluster_layer <- layer(
     rdeck,
     ...,
@@ -1462,6 +1523,7 @@ add_h3_cluster_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, h3_cluster_layer)
 }
 
@@ -1500,6 +1562,7 @@ add_h3_hexagon_layer <- function(rdeck,
                                  center_hexagon = NULL,
                                  get_hexagon = hexagon,
                                  tooltip = FALSE) {
+  # construct layer object
   h3_hexagon_layer <- layer(
     rdeck,
     ...,
@@ -1534,6 +1597,7 @@ add_h3_hexagon_layer <- function(rdeck,
     get_hexagon = accessor(rlang::enquo(get_hexagon), data),
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, h3_hexagon_layer)
 }
 
@@ -1562,6 +1626,7 @@ add_tile_layer <- function(rdeck,
                            z_range = NULL,
                            max_requests = 6,
                            tooltip = FALSE) {
+  # construct layer object
   tile_layer <- layer(
     rdeck,
     ...,
@@ -1586,6 +1651,7 @@ add_tile_layer <- function(rdeck,
     max_requests = max_requests,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, tile_layer)
 }
 
@@ -1620,7 +1686,9 @@ add_trips_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_path <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   trips_layer <- layer(
     rdeck,
     ...,
@@ -1648,6 +1716,7 @@ add_trips_layer <- function(rdeck,
     get_timestamps = accessor(rlang::enquo(get_timestamps), data),
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, trips_layer)
 }
 
@@ -1686,6 +1755,7 @@ add_tile3d_layer <- function(rdeck,
                                ))
                              ),
                              tooltip = FALSE) {
+  # construct layer object
   tile3d_layer <- layer(
     rdeck,
     ...,
@@ -1704,6 +1774,7 @@ add_tile3d_layer <- function(rdeck,
     loader = loader,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, tile3d_layer)
 }
 
@@ -1746,6 +1817,7 @@ add_terrain_layer <- function(rdeck,
                               wireframe = FALSE,
                               material = TRUE,
                               tooltip = FALSE) {
+  # construct layer object
   terrain_layer <- layer(
     rdeck,
     ...,
@@ -1779,6 +1851,7 @@ add_terrain_layer <- function(rdeck,
     material = material,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, terrain_layer)
 }
 
@@ -1809,6 +1882,7 @@ add_mvt_layer <- function(rdeck,
                           unique_id_property = "",
                           highlighted_feature_id = NULL,
                           tooltip = FALSE) {
+  # construct layer object
   mvt_layer <- layer(
     rdeck,
     ...,
@@ -1835,6 +1909,7 @@ add_mvt_layer <- function(rdeck,
     highlighted_feature_id = highlighted_feature_id,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, mvt_layer)
 }
 
@@ -1867,7 +1942,9 @@ add_simple_mesh_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   simple_mesh_layer <- layer(
     rdeck,
     ...,
@@ -1893,6 +1970,7 @@ add_simple_mesh_layer <- function(rdeck,
     get_transform_matrix = accessor(rlang::enquo(get_transform_matrix), data),
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, simple_mesh_layer)
 }
 
@@ -1926,7 +2004,9 @@ add_scenegraph_layer <- function(rdeck,
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
+    position_format <- get_position_format(data)
   }
+  # construct layer object
   scenegraph_layer <- layer(
     rdeck,
     ...,
@@ -1953,5 +2033,6 @@ add_scenegraph_layer <- function(rdeck,
     get_transform_matrix = accessor(rlang::enquo(get_transform_matrix), data),
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
+  # add layer to map
   add_layer(rdeck, scenegraph_layer)
 }

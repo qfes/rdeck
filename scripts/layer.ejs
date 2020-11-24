@@ -27,9 +27,10 @@ add_<%- name -%> <- function(rdeck,
         # auto-resolve geometry
         if (inherits(data, "sf")) {
             <%- geom.name -%> <- as.name(attr(data, "sf_column"))
+            position_format <- get_position_format(data)
         }
     <% } -%>
-
+    # construct layer object
     <%- name -%> <- layer(
         rdeck,
         ...,
@@ -48,6 +49,6 @@ add_<%- name -%> <- function(rdeck,
         <% } -%>
         tooltip = eval_tooltip(rlang::enquo(tooltip), data)
     )
-
+    # add layer to map
     add_layer(rdeck, <%- name -%>)
 }

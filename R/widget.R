@@ -101,3 +101,19 @@ rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
     elementId = elementId
   )
 }
+
+layers <- function(rdeck) {
+  stopifnot(inherits(rdeck, "rdeck"))
+
+  rdeck$x$layers
+}
+
+add_layer <- function(rdeck, layer) {
+  stopifnot(
+    inherits(rdeck, "rdeck"),
+    inherits(layer, "Layer")
+  )
+
+  rdeck$x$layers <- c(layers(rdeck), layer)
+  rdeck
+}
