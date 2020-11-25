@@ -1,5 +1,5 @@
 layer_data <- function(layer) {
-  UseMethod(layer)
+  UseMethod("layer_data")
 }
 
 layer_data.default <- function(layer) {

@@ -8,15 +8,16 @@
 #' @keywords internal
 #' @noRd
 accessor <- function(quo, data = NULL, is_columnar = NULL) {
-  expr <- rlang::get_expr(quo)
+  assert_type(quo, "quosure")
+  name <- rlang::as_name(quo)
 
-  if (!rlang::is_symbol(expr)) {
-    return(rlang::eval_tidy(expr))
+  if (!rlang::quo_is_symbol(quo)) {
+    value <- rlang::eval_tidy(quo)
+    assert_scalar(value, name)
   }
 
-  name <- rlang::as_name(expr)
-  if (inherits(data, "data.frame") && !rlang::has_name(data, name)) {
-    rlang::abort(paste0("Column `", name, "` doesn't exist"))
+  if (inherits(data, "data.frame")) {
+    assert_col_exists(name, data)
   }
 
   structure(
@@ -36,37 +37,35 @@ accessor <- function(quo, data = NULL, is_columnar = NULL) {
 #' @keywords internal
 #' @noRd
 accessor_scale <- function(quo, data = NULL, is_columnar = NULL) {
+  assert_type(quo, "quosure")
   expr <- rlang::get_expr(quo)
+
+  # is quo a scale object or scale call
   is_scale <- inherits(expr, "scale") ||
     rlang::is_call(expr) &&
       grepl("scale_\\w+", rlang::call_name(expr), perl = TRUE)
 
   if (!is_scale) {
-    return(accessor(quo, data))
+    return(accessor(quo, data, is_columnar))
   }
 
   scale_expr <- rlang::eval_tidy(expr)
+  col_name <- as.name(scale_expr$value)
+
+  # create accessor
   scale <- structure(
     utils::modifyList(
       scale_expr,
-      accessor(rlang::expr(!!scale_expr$value), data, is_columnar)
+      accessor(rlang::new_quosure(col_name), data, is_columnar),
+      keep.null = TRUE
     ),
     class = c("accessor_scale", "accessor")
   )
 
-  if (is.null(scale$domain) && scale$type != "quantile" && nrow(data) > 0) {
-    data <- as.data.frame(data)
-    scale$domain <- scale_domain(scale, data[as.character(scale$value)])
+  # compute scale domain
+  if (is.null(scale$domain) && scale$type != "quantile" && !rlang::is_empty(data)) {
+    scale$domain <- scale_domain(scale, data[[as.character(scale$value)]])
   }
 
   scale
 }
-
-setOldClass("accessor")
-#' @importMethodsFrom jsonlite asJSON
-#' @export
-setMethod("asJSON", "accessor", function(x, force = FALSE, ...) {
-  camel_case_names(x) %>%
-    unclass() %>%
-    asJSON(force, ...)
-})

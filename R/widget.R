@@ -57,23 +57,25 @@ rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
                   elementId = NULL,
                   ...) {
   if (!is.null(initial_bounds)) {
-    stopifnot(inherits(initial_bounds, c("bbox", "sf", "sfc", "sfg")))
+    assert_type(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
     initial_bounds <- sf::st_bbox(initial_bounds)
   }
 
-  props <- c(
-    list(
-      mapbox_api_access_token = mapbox_api_access_token,
-      map_style = map_style,
-      initial_bounds = initial_bounds,
-      initial_view_state = initial_view_state,
-      controller = controller,
-      picking_radius = picking_radius,
-      use_device_pixels = use_device_pixels
+  props <- structure(
+    c(
+      list(
+        mapbox_api_access_token = mapbox_api_access_token,
+        map_style = map_style,
+        initial_bounds = initial_bounds,
+        initial_view_state = initial_view_state,
+        controller = controller,
+        picking_radius = picking_radius,
+        use_device_pixels = use_device_pixels
+      ),
+      list(...)
     ),
-    list(...)
-  ) %>%
-    camel_case_names()
+    class = "rdeck_props"
+  )
 
   x <- structure(
     list(
@@ -98,22 +100,39 @@ rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
       padding = 0,
       browser.fill = TRUE,
     ),
-    elementId = elementId
+    elementId = elementId,
+    preRenderHook = function(rdeck) to_json(rdeck)
   )
 }
 
+#' Layers
+#'
+#' Get map layers
+#' @name layers
+#' @param rdeck an rdeck instance
+#' @export
 layers <- function(rdeck) {
-  stopifnot(inherits(rdeck, "rdeck"))
+  assert_type(rdeck, "rdeck")
 
   rdeck$x$layers
 }
 
 add_layer <- function(rdeck, layer) {
-  stopifnot(
-    inherits(rdeck, "rdeck"),
-    inherits(layer, "Layer")
-  )
+  assert_type(rdeck, "rdeck")
+  assert_type(layer, "layer")
 
-  rdeck$x$layers <- c(layers(rdeck), layer)
+  rdeck$x$layers <- c(layers(rdeck), list(layer))
   rdeck
+}
+
+#' Props
+#'
+#' Get map props
+#' @name props
+#' @param rdeck an rdeck instance
+#' @export
+props <- function(rdeck) {
+  assert_type(rdeck, "rdeck")
+
+  rdeck$x$props
 }

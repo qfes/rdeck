@@ -176,12 +176,11 @@ scale <- function(type,
       legend = legend
     ),
     list(...)
-  ) %>%
-    camel_case_names()
+  )
 
   structure(
     properties,
-    class = c("scale", paste0("scale_", type))
+    class = c(paste0("scale_", type), "scale")
   )
 }
 
