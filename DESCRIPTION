@@ -18,7 +18,8 @@ Imports:
     sf (>= 0.9.3),
     snakecase,
     rlang,
-    tidyselect
+    tidyselect,
+    uuid
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(

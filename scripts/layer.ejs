@@ -16,7 +16,8 @@
 #' @export
 add_<%- name -%> <- function(rdeck,
                             ...,
-                            id = "<%- type -%>",
+                            id = NULL,
+                            name = "<%- type -%>",
                             <% for (const p of props) { -%>
                               <%- p.name -%> = <%- p.value ?? "NULL" -%>,
                             <% } -%>
@@ -34,6 +35,8 @@ add_<%- name -%> <- function(rdeck,
     <%- name -%> <- layer(
         type = "<%- type -%>",
         ...,
+        id = id %||% uuid::UUIDgenerate(),
+        name = name,
         <% for (const p of props) { -%>
             <%
               const isAccessor = p.type === "accessor";
