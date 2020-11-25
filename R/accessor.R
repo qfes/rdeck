@@ -9,13 +9,14 @@
 #' @noRd
 accessor <- function(quo, data = NULL, is_columnar = NULL) {
   assert_type(quo, "quosure")
-  name <- rlang::as_name(quo)
 
   if (!rlang::quo_is_symbol(quo)) {
     value <- rlang::eval_tidy(quo)
-    assert_scalar(value, name)
+    assert_scalar(value)
+    return(value)
   }
 
+  name <- rlang::as_name(quo)
   if (inherits(data, "data.frame")) {
     assert_col_exists(name, data)
   }
