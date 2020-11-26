@@ -83,3 +83,16 @@ assert_rgba <- function(obj, name = NULL) {
     )
   }
 }
+
+assert_in <- function(obj, values, name = NULL) {
+  quo <- rlang::enquo(obj)
+  value <- rlang::eval_tidy(quo)
+
+  if (!value %in% values) {
+    name <- name %||% rlang::as_name(quo)
+    vals <- paste0(values, collapse = ", ")
+    rlang::abort(
+      paste0(name, " must be one of [", vals, "]")
+    )
+  }
+}
