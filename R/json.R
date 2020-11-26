@@ -12,20 +12,7 @@ to_json <- function(obj) {
 to_json.default <- function(obj) obj
 
 to_json.rdeck <- function(obj) {
-  rdeck_data <- utils::modifyList(
-    obj$x,
-    list(
-      props = to_json(props(obj)),
-      layers = to_json(layers(obj))
-    ),
-    keep.null = TRUE
-  )
-
-  utils::modifyList(
-    obj,
-    list(x = rdeck_data),
-    keep.null = TRUE
-  )
+  to_json.list(obj)
 }
 
 to_json.list <- function(obj) {
