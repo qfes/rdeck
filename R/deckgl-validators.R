@@ -758,7 +758,7 @@ validate_get_path.default <- function(layer) {
     col <- get_path$value
     assert_col_exists(col, data)
     # validate sfc type
-    assert_type(data[[col]], c("sfc_LINESTRING", "sfc"))
+    assert_type(data[[col]], "sfc_LINESTRING", "get_path")
   }
 }
 
@@ -806,7 +806,7 @@ validate_get_polygon.default <- function(layer) {
     col <- get_polygon$value
     assert_col_exists(col, data)
     # validate sfc type
-    assert_type(data[[col]], c("sfc_POLYGON", "sfc"))
+    assert_type(data[[col]], "sfc_POLYGON", "get_polygon")
   }
 }
 
@@ -824,7 +824,7 @@ validate_get_position.default <- function(layer) {
     col <- get_position$value
     assert_col_exists(col, data)
     # validate sfc type
-    assert_type(data[[col]], c("sfc_POINT", "sfc"))
+    assert_type(data[[col]], "sfc_POINT", "get_position")
   }
 }
 
@@ -940,7 +940,7 @@ validate_get_source_position.default <- function(layer) {
     col <- get_source_position$value
     assert_col_exists(col, data)
     # validate sfc type
-    assert_type(data[[col]], c("sfc_POINT", "sfc"))
+    assert_type(data[[col]], "sfc_POINT", "get_source_position")
   }
 }
 
@@ -969,7 +969,7 @@ validate_get_target_position.default <- function(layer) {
     col <- get_target_position$value
     assert_col_exists(col, data)
     # validate sfc type
-    assert_type(data[[col]], c("sfc_POINT", "sfc"))
+    assert_type(data[[col]], "sfc_POINT", "get_target_position")
   }
 }
 

@@ -47,7 +47,7 @@
       assert_col_exists(col, data)
       <% if (sfc !== null) { -%>
         # validate sfc type
-        assert_type(data[[col]], c("<%- sfc -%>", "sfc"))
+        assert_type(data[[col]], "<%- sfc -%>", "<%- name -%>")
       <% } -%>
     }
   <% } -%>
