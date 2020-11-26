@@ -92,7 +92,8 @@ assert_in <- function(obj, values, name = NULL) {
     name <- name %||% rlang::as_name(quo)
     vals <- paste0(values, collapse = ", ")
     rlang::abort(
-      paste0(name, " must be one of [", vals, "]")
+      paste0(name, " must be one of [", vals, "]"),
+      "rdeck_in_error"
     )
   }
 }
