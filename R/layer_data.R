@@ -43,7 +43,7 @@ layer_df <- function(data) {
 
 layer_data.GeoJsonLayer <- function(layer) {
   data <- subset_data(layer)
-  geojsonsf::sf_geojson(data, digits = 6L)
+  geojsonsf::sf_geojson(data, digits = 6L, simplify = FALSE)
 }
 
 subset_data <- function(layer) {
