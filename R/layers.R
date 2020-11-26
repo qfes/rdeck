@@ -28,17 +28,23 @@ layer.GeoJsonLayer <- function(type,
                                get_radius,
                                get_line_width,
                                get_elevation) {
-  if (!is.null(data)) {
-    assert_type(data, "sf")
-    data <- sf::st_transform(4326)
+  if (inherits(highlight_color, "accessor")) {
+    highlight_color$is_columnar <- FALSE
   }
-
-  highlight_color$is_columnar <- FALSE
-  get_line_color$is_columnar <- FALSE
-  get_fill_color$is_columnar <- FALSE
-  get_radius$is_columnar <- FALSE
-  get_line_width$is_columnar <- FALSE
-  get_elevation$is_columnar <- FALSE
-
+  if (inherits(get_line_color, "accessor")) {
+    get_line_color$is_columnar <- FALSE
+  }
+  if (inherits(get_fill_color, "accessor")) {
+    get_fill_color$is_columnar <- FALSE
+  }
+  if (inherits(get_radius, "accessor")) {
+    get_radius$is_columnar <- FALSE
+  }
+  if (inherits(get_line_width, "accessor")) {
+    get_line_width$is_columnar <- FALSE
+  }
+  if (inherits(get_elevation, "accessor")) {
+    get_elevation$is_columnar <- FALSE
+  }
   NextMethod()
 }

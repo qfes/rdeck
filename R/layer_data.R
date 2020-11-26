@@ -7,9 +7,11 @@ layer_data.default <- function(layer) {
     return(layer$data)
   }
 
-  data <- layer$data
-  if (inherits(layer$data, "sf")) {
-    data <- split_geometry(layer$data)
+  data <- subset_data(layer)
+
+  # FIXME: this is not the right place
+  if (inherits(data, "sf")) {
+    data <- split_geometry(data)
   }
 
   list(
@@ -40,6 +42,26 @@ layer_df <- function(data) {
 }
 
 layer_data.GeoJsonLayer <- function(layer) {
-  stopifnot(inherits(layer$data, "sf"))
-  geojsonsf::sf_geojson(layer, digits = 6L)
+  data <- subset_data(layer)
+  geojsonsf::sf_geojson(data, digits = 6L)
+}
+
+subset_data <- function(layer) {
+  colnames <- get_colnames(layer)
+  layer$data[colnames]
+}
+
+get_colnames <- function(layer) {
+  tooltip <- layer$tooltip
+  if (is.logical(tooltip) && tooltip == TRUE) return(names(layer$data))
+
+  tooltip_cols <- if (is.character(tooltip)) tooltip
+
+  accessors <- layer %>%
+    vapply(function(p) inherits(p, "accessor"), logical(1))
+
+  accessor_cols <- layer[accessors] %>%
+    vapply(function(a) a$value, character(1), USE.NAMES = FALSE)
+
+  unique(c(accessor_cols, tooltip_cols))
 }
