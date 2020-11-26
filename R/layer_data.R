@@ -7,7 +7,10 @@ layer_data.default <- function(layer) {
     return(layer$data)
   }
 
-  data <- if (inherits(data, "sf")) split_geometry(layer$data) else layer$data
+  data <- layer$data
+  if (inherits(layer$data, "sf")) {
+    data <- split_geometry(layer$data)
+  }
 
   list(
     length = nrow(data),
