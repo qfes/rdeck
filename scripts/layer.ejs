@@ -51,6 +51,10 @@ add_<%- name -%> <- function(rdeck,
         <% } -%>
         tooltip = eval_tooltip(rlang::enquo(tooltip), data)
     )
+    # validate layer props
+    <% for (const p of props) { -%>
+      validate_<%- p.name -%>(<%- name -%>)
+    <% } -%>
     # add layer to map
     add_layer(rdeck, <%- name -%>)
 }

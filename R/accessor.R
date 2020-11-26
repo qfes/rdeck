@@ -11,9 +11,7 @@ accessor <- function(quo, data = NULL, is_columnar = NULL) {
   assert_type(quo, "quosure")
 
   if (!rlang::quo_is_symbol(quo)) {
-    value <- rlang::eval_tidy(quo)
-    assert_scalar(value)
-    return(value)
+    return(rlang::eval_tidy(quo))
   }
 
   name <- rlang::as_name(quo)

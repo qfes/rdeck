@@ -32,3 +32,54 @@ assert_scalar <- function(obj, name = NULL) {
     )
   }
 }
+
+assert_not_null <- function(obj, name = NULL) {
+  quo <- rlang::enquo(obj)
+
+  if (is.null(rlang::eval_tidy(quo))) {
+    name <- name %||% rlang::as_name(quo)
+    rlang::abort(
+      paste0(name, " must not be NULL"),
+      "rdeck_not_null_error"
+    )
+  }
+}
+
+assert_finite <- function(obj, name = NULL) {
+  quo <- rlang::enquo(obj)
+
+  if (!is.finite(rlang::eval_tidy(quo))) {
+    name <- name %||% rlang::as_name(quo)
+    rlang::abort(
+      paste0(name, " must be finite"),
+      "rdeck_finite_error"
+    )
+  }
+}
+
+assert_range <- function(obj, min = NULL, max = NULL, name = NULL) {
+  quo <- rlang::enquo(obj)
+  value <- rlang::eval_tidy(quo)
+
+  if (!is.null(min) && value < min || !is.null(max) && value > max) {
+    name <- name %||% rlang::as_name(quo)
+    range <- paste(min %||% "NULL", max %||% "NULL", sep = ", ")
+    rlang::abort(
+      paste0(name, " must be in range [", range, "]"),
+      "rdeck_range_error"
+    )
+  }
+}
+
+assert_rgba <- function(obj, name = NULL) {
+  quo <- rlang::enquo(obj)
+  value <- rlang::eval_tidy(quo)
+
+  if (!grepl("^#[0-9A-F]{6,8}$", value, ignore.case = TRUE)) {
+    name <- name %||% rlang::as_name(quo)
+    rlang::abort(
+      paste0(name, " must be a valid rgb[a] hex string"),
+      "rdeck_rgba_error"
+    )
+  }
+}

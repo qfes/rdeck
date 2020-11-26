@@ -1,0 +1,75 @@
+<%#
+  template for generating a function to validate a deck.gl layer prop.
+  data is expected with the following form:
+  data = {
+    name: "foo",
+    type: "number",
+    valueType: "number",
+    min: 0,
+    max: 100
+    optional: true
+  }
+-%>
+<% const func = `validate_${name}`; -%>
+# validate <%- name %>
+<%- func -%> <- function(layer) {
+  UseMethod("<%- func -%>")
+}
+
+<%- func -%>.default <- function(layer) {
+  <%- name -%> <- layer$<%- name %>
+
+  <% if (optional) { -%>
+    # optional
+    if (is.null(<%- name -%>)) {
+      return()
+    }
+  <% } else { -%>
+    assert_not_null(<%- name -%>)
+  <% } -%>
+
+  <%- assert(type) -%>
+
+  <% if (type === "accessor") { -%>
+    <%# constant validation -%>
+    <% if (valueType !== "function" && valueType) { -%>
+      if(!inherits(<%- name -%>, "accessor")) {
+        <%- assert(valueType) -%>
+        return()
+      }
+    <% } -%>
+
+    <%# accessor validation -%>
+    assert_type(<%- name -%>, "accessor")
+    data <- layer$data
+    if (inherits(data, "data.frame")) {
+      col <- <%- name -%>$value
+      assert_col_exists(col, data)
+      <% if (sfc !== null) { -%>
+        # validate sfc type
+        assert_type(data[[col]], c("<%- sfc -%>", "sfc"))
+      <% } -%>
+    }
+  <% } -%>
+}
+<% function assert(type) { -%>
+  <% if (type === "boolean") { -%>
+    assert_type(<%- name -%>, "logical")
+  <% } -%>
+
+  <% if (type === "string") { -%>
+    assert_type(<%- name -%>, "character")
+  <% } -%>
+
+  <% if (type === "number") { -%>
+    assert_type(<%- name -%>, c("integer", "numeric"))
+    assert_finite(<%- name -%>)
+    <% if (min !== null || max !== null) { -%>
+      assert_range(<%- name -%>, <%- min ?? "NULL" -%>, <%- max ?? "NULL" -%>)
+    <% } -%>
+  <% } -%>
+
+  <% if (type === "color" || /color$/.test(name)) { -%>
+    assert_rgba(<%- name -%>)
+  <% } -%>
+<% } -%>

@@ -6,7 +6,7 @@
     "postinstall": "npm explore @danmarshall/deckgl-typings -- npm run postinstall",
     "build": "webpack --mode production",
     "start": "webpack --watch --mode development",
-    "codegen": "node ./scripts/generate-layers.js"
+    "codegen": "node ./scripts/generate-layers.js && node ./scripts/generate-validators.js"
   },
   "dependencies": {
     "@danmarshall/deckgl-typings": "^4.3.10",

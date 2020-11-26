@@ -1,0 +1,315 @@
+[
+  {
+    "name": "getAlignmentBaseline",
+    "type": "accessor",
+    "value": "center",
+    "defaultType": "string"
+  },
+  { "name": "getAngle", "type": "accessor", "value": 0, "defaultType": "number" },
+  { "name": "getAngle", "type": "accessor", "value": 0, "defaultType": "number" },
+  { "name": "getColor", "type": "accessor", "value": [255, 255, 255, 255], "defaultType": "array" },
+  { "name": "getColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getColorValue", "type": "accessor", "value": null, "defaultType": "object" },
+  { "name": "getColorValue", "type": "accessor", "value": null, "defaultType": "object" },
+  { "name": "getColorValue", "type": "accessor", "value": null, "defaultType": "object" },
+  { "name": "getColorWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getColorWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getColorWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getColorWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getElevation", "type": "accessor", "value": 1000, "defaultType": "number" },
+  { "name": "getElevation", "type": "accessor", "value": 1000, "defaultType": "number" },
+  { "name": "getElevation", "type": "accessor", "value": 1000, "defaultType": "number" },
+  { "name": "getElevation", "type": "accessor", "value": 1000, "defaultType": "number" },
+  { "name": "getElevation", "type": "accessor", "value": 1000, "defaultType": "number" },
+  { "name": "getElevation", "type": "accessor", "value": 1000, "defaultType": "number" },
+  { "name": "getElevation", "type": "accessor", "value": 1000, "defaultType": "number" },
+  { "name": "getElevation", "type": "accessor", "value": 1000, "defaultType": "number" },
+  { "name": "getElevationValue", "type": "accessor", "value": null, "defaultType": "object" },
+  { "name": "getElevationValue", "type": "accessor", "value": null, "defaultType": "object" },
+  { "name": "getElevationValue", "type": "accessor", "value": null, "defaultType": "object" },
+  { "name": "getElevationWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getElevationWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getElevationWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getElevationWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getFillColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getFillColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getFillColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getFillColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getFillColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getFillColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getFillColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getFillColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getFillColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getHeight", "type": "accessor", "value": 0, "defaultType": "number" },
+  { "name": "getHeight", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getHexagon", "type": "accessor", "defaultType": "function" },
+  { "name": "getHexagons", "type": "accessor", "defaultType": "function" },
+  { "name": "getIcon", "type": "accessor", "defaultType": "function" },
+  { "name": "getLineColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getLineColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getLineColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getLineColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getLineColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getLineColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getLineColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getLineColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getLineColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getLineWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getLineWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getLineWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getLineWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getLineWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getLineWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getLineWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getLineWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getNormal", "type": "accessor", "value": [0, 0, 1], "defaultType": "array" },
+  { "name": "getOrientation", "type": "accessor", "value": [0, 0, 0], "defaultType": "array" },
+  { "name": "getOrientation", "type": "accessor", "value": [0, 0, 0], "defaultType": "array" },
+  { "name": "getPath", "type": "accessor", "defaultType": "function" },
+  { "name": "getPath", "type": "accessor", "defaultType": "function" },
+  { "name": "getPixelOffset", "type": "accessor", "value": [0, 0], "defaultType": "array" },
+  { "name": "getPixelOffset", "type": "accessor", "value": [0, 0], "defaultType": "array" },
+  { "name": "getPolygon", "type": "accessor", "defaultType": "function" },
+  { "name": "getPolygon", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getRadius", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getRadius", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getS2Token", "type": "accessor", "defaultType": "function" },
+  { "name": "getScale", "type": "accessor", "value": [1, 1, 1], "defaultType": "array" },
+  { "name": "getScale", "type": "accessor", "value": [1, 1, 1], "defaultType": "array" },
+  { "name": "getSize", "type": "accessor", "value": 32, "defaultType": "number" },
+  { "name": "getSize", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getSourceColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getSourceColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getSourcePosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getSourcePosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getSourcePosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getTargetColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getTargetColor", "type": "accessor", "value": [0, 0, 0, 255], "defaultType": "array" },
+  { "name": "getTargetPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getTargetPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getTargetPosition", "type": "accessor", "defaultType": "function" },
+  { "name": "getText", "type": "accessor", "defaultType": "function" },
+  { "name": "getTextAnchor", "type": "accessor", "value": "middle", "defaultType": "string" },
+  { "name": "getTilt", "type": "accessor", "value": 0, "defaultType": "number" },
+  { "name": "getTilt", "type": "accessor", "value": 0, "defaultType": "number" },
+  { "name": "getTimestamps", "type": "accessor", "value": null, "defaultType": "object" },
+  { "name": "getTransformMatrix", "type": "accessor", "value": [], "defaultType": "array" },
+  { "name": "getTransformMatrix", "type": "accessor", "value": [], "defaultType": "array" },
+  { "name": "getTranslation", "type": "accessor", "value": [0, 0, 0], "defaultType": "array" },
+  { "name": "getTranslation", "type": "accessor", "value": [0, 0, 0], "defaultType": "array" },
+  { "name": "getWeight", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getWeight", "type": "accessor", "defaultType": "function" },
+  { "name": "getWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  { "name": "getWidth", "type": "accessor", "value": 1, "defaultType": "number" },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  },
+  {
+    "name": "highlightColor",
+    "type": "accessor",
+    "value": [0, 0, 128, 128],
+    "defaultType": "array"
+  }
+]
