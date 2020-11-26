@@ -6,15 +6,13 @@ layer <- function(type, ...) {
 
 layer.default <- function(type, ...) {
   props <- c(
-    list(
-      type = type
-    ),
-    list(...)
+    list(type = type),
+    rlang:::dots_list(..., .ignore_empty = "all")
   )
 
   structure(
     props,
-    class = c(type, "layer")
+    class = c(type, "Layer", "layer")
   )
 }
 

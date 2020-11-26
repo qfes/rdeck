@@ -72,7 +72,7 @@ rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
         picking_radius = picking_radius,
         use_device_pixels = use_device_pixels
       ),
-      list(...)
+      rlang::dots_list(...)
     ),
     class = "rdeck_props"
   )
