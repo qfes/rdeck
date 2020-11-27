@@ -55,9 +55,8 @@ accessor_scale <- function(quo, data = NULL, is_columnar = NULL) {
   # create accessor
   scale <- structure(
     utils::modifyList(
-      scale_expr,
+      c(scale_expr, list(scale = scale_expr$type)),
       accessor(rlang::new_quosure(col_name), data, is_columnar),
-      list(scale = scale_expr$type),
       keep.null = TRUE
     ),
     class = c("accessor_scale", "accessor")

@@ -23,7 +23,7 @@ add_<%- name -%> <- function(rdeck,
                             <% } -%>
                             tooltip = FALSE) {
 
-    <% const geom = props.find(p => /^get_(path|polygon|position)$/.test(p.name)); -%>
+    <% const geom = props.find(p => /get_(path|polygon|position)$/i.test(p.name)); -%>
     <% if (geom) { -%>
         # auto-resolve geometry
         if (inherits(data, "sf")) {
@@ -40,7 +40,7 @@ add_<%- name -%> <- function(rdeck,
         <% for (const p of props) { -%>
             <%
               const isAccessor = p.type === "accessor";
-              const isScaleable = /^get_(radius|elevation|color|weight|width|height|size)$/.test(p.name);
+              const isScaleable = /(radius|elevation|color|weight|width|height|size)$/i.test(p.name);
               const value = isAccessor
                 ? isScaleable
                   ? `accessor_scale(rlang::enquo(${p.name}), data)`
