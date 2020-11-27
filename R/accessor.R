@@ -21,6 +21,7 @@ accessor <- function(quo, data = NULL, is_columnar = NULL) {
 
   structure(
     list(
+      type = "accessor",
       value = name,
       is_columnar = is_columnar %||% inherits(data, "data.frame")
     ),
@@ -56,6 +57,7 @@ accessor_scale <- function(quo, data = NULL, is_columnar = NULL) {
     utils::modifyList(
       scale_expr,
       accessor(rlang::new_quosure(col_name), data, is_columnar),
+      list(scale = scale_expr$type),
       keep.null = TRUE
     ),
     class = c("accessor_scale", "accessor")
