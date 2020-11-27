@@ -45,7 +45,6 @@ function unique(props) {
 function templateData(propType) {
   return {
     ...propType,
-    type: /color$/i.test(propType.name) ? "color" : propType.type,
     sfc: sfcType(propType),
     name: snakeCase(propType.name),
     min: propType.min ?? null,

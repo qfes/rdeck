@@ -28,8 +28,6 @@
     assert_not_null(<%- name -%>)
   <% } -%>
 
-  <%- assert(type) -%>
-
   <% if (type === "accessor") { -%>
     <%# constant validation -%>
     <% if (valueType !== "function" && valueType) { -%>
@@ -50,6 +48,8 @@
         assert_type(data[[col]], "<%- sfc -%>", "<%- name -%>")
       <% } -%>
     }
+  <% } else { -%>
+    <%- assert(type) -%>
   <% } -%>
 }
 <% function assert(type) { -%>
