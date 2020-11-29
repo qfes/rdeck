@@ -456,7 +456,7 @@ validate_get_alignment_baseline.default <- function(layer) {
   assert_type(get_alignment_baseline, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_alignment_baseline$value
+    col <- get_alignment_baseline$col
     assert_col_exists(col, data)
   }
 }
@@ -477,7 +477,7 @@ validate_get_angle.default <- function(layer) {
   assert_type(get_angle, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_angle$value
+    col <- get_angle$col
     assert_col_exists(col, data)
   }
 }
@@ -507,7 +507,7 @@ validate_get_color.default <- function(layer) {
   assert_type(get_color, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_color$value
+    col <- get_color$col
     assert_col_exists(col, data)
   }
 }
@@ -526,7 +526,7 @@ validate_get_color_value.default <- function(layer) {
   assert_type(get_color_value, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_color_value$value
+    col <- get_color_value$col
     assert_col_exists(col, data)
   }
 }
@@ -542,7 +542,7 @@ validate_get_color_weight.default <- function(layer) {
   assert_type(get_color_weight, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_color_weight$value
+    col <- get_color_weight$col
     assert_col_exists(col, data)
   }
 }
@@ -563,7 +563,7 @@ validate_get_elevation.default <- function(layer) {
   assert_type(get_elevation, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_elevation$value
+    col <- get_elevation$col
     assert_col_exists(col, data)
   }
 }
@@ -582,7 +582,7 @@ validate_get_elevation_value.default <- function(layer) {
   assert_type(get_elevation_value, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_elevation_value$value
+    col <- get_elevation_value$col
     assert_col_exists(col, data)
   }
 }
@@ -598,7 +598,7 @@ validate_get_elevation_weight.default <- function(layer) {
   assert_type(get_elevation_weight, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_elevation_weight$value
+    col <- get_elevation_weight$col
     assert_col_exists(col, data)
   }
 }
@@ -618,7 +618,7 @@ validate_get_fill_color.default <- function(layer) {
   assert_type(get_fill_color, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_fill_color$value
+    col <- get_fill_color$col
     assert_col_exists(col, data)
   }
 }
@@ -639,7 +639,7 @@ validate_get_height.default <- function(layer) {
   assert_type(get_height, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_height$value
+    col <- get_height$col
     assert_col_exists(col, data)
   }
 }
@@ -655,7 +655,7 @@ validate_get_hexagon.default <- function(layer) {
   assert_type(get_hexagon, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_hexagon$value
+    col <- get_hexagon$col
     assert_col_exists(col, data)
   }
 }
@@ -671,7 +671,7 @@ validate_get_hexagons.default <- function(layer) {
   assert_type(get_hexagons, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_hexagons$value
+    col <- get_hexagons$col
     assert_col_exists(col, data)
   }
 }
@@ -687,7 +687,7 @@ validate_get_icon.default <- function(layer) {
   assert_type(get_icon, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_icon$value
+    col <- get_icon$col
     assert_col_exists(col, data)
   }
 }
@@ -707,7 +707,7 @@ validate_get_line_color.default <- function(layer) {
   assert_type(get_line_color, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_line_color$value
+    col <- get_line_color$col
     assert_col_exists(col, data)
   }
 }
@@ -728,7 +728,7 @@ validate_get_line_width.default <- function(layer) {
   assert_type(get_line_width, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_line_width$value
+    col <- get_line_width$col
     assert_col_exists(col, data)
   }
 }
@@ -747,7 +747,7 @@ validate_get_normal.default <- function(layer) {
   assert_type(get_normal, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_normal$value
+    col <- get_normal$col
     assert_col_exists(col, data)
   }
 }
@@ -766,7 +766,7 @@ validate_get_orientation.default <- function(layer) {
   assert_type(get_orientation, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_orientation$value
+    col <- get_orientation$col
     assert_col_exists(col, data)
   }
 }
@@ -782,7 +782,7 @@ validate_get_path.default <- function(layer) {
   assert_type(get_path, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_path$value
+    col <- get_path$col
     assert_col_exists(col, data)
     # validate sfc type
     assert_type(data[[col]], "sfc_LINESTRING", "get_path")
@@ -803,7 +803,7 @@ validate_get_pixel_offset.default <- function(layer) {
   assert_type(get_pixel_offset, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_pixel_offset$value
+    col <- get_pixel_offset$col
     assert_col_exists(col, data)
   }
 }
@@ -830,7 +830,7 @@ validate_get_polygon.default <- function(layer) {
   assert_type(get_polygon, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_polygon$value
+    col <- get_polygon$col
     assert_col_exists(col, data)
     # validate sfc type
     assert_type(data[[col]], "sfc_POLYGON", "get_polygon")
@@ -848,7 +848,7 @@ validate_get_position.default <- function(layer) {
   assert_type(get_position, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_position$value
+    col <- get_position$col
     assert_col_exists(col, data)
     # validate sfc type
     assert_type(data[[col]], "sfc_POINT", "get_position")
@@ -871,7 +871,7 @@ validate_get_radius.default <- function(layer) {
   assert_type(get_radius, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_radius$value
+    col <- get_radius$col
     assert_col_exists(col, data)
   }
 }
@@ -887,7 +887,7 @@ validate_get_s2_token.default <- function(layer) {
   assert_type(get_s2_token, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_s2_token$value
+    col <- get_s2_token$col
     assert_col_exists(col, data)
   }
 }
@@ -906,7 +906,7 @@ validate_get_scale.default <- function(layer) {
   assert_type(get_scale, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_scale$value
+    col <- get_scale$col
     assert_col_exists(col, data)
   }
 }
@@ -937,7 +937,7 @@ validate_get_size.default <- function(layer) {
   assert_type(get_size, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_size$value
+    col <- get_size$col
     assert_col_exists(col, data)
   }
 }
@@ -957,7 +957,7 @@ validate_get_source_color.default <- function(layer) {
   assert_type(get_source_color, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_source_color$value
+    col <- get_source_color$col
     assert_col_exists(col, data)
   }
 }
@@ -973,7 +973,7 @@ validate_get_source_position.default <- function(layer) {
   assert_type(get_source_position, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_source_position$value
+    col <- get_source_position$col
     assert_col_exists(col, data)
     # validate sfc type
     assert_type(data[[col]], "sfc_POINT", "get_source_position")
@@ -995,7 +995,7 @@ validate_get_target_color.default <- function(layer) {
   assert_type(get_target_color, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_target_color$value
+    col <- get_target_color$col
     assert_col_exists(col, data)
   }
 }
@@ -1011,7 +1011,7 @@ validate_get_target_position.default <- function(layer) {
   assert_type(get_target_position, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_target_position$value
+    col <- get_target_position$col
     assert_col_exists(col, data)
     # validate sfc type
     assert_type(data[[col]], "sfc_POINT", "get_target_position")
@@ -1029,7 +1029,7 @@ validate_get_text.default <- function(layer) {
   assert_type(get_text, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_text$value
+    col <- get_text$col
     assert_col_exists(col, data)
   }
 }
@@ -1049,7 +1049,7 @@ validate_get_text_anchor.default <- function(layer) {
   assert_type(get_text_anchor, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_text_anchor$value
+    col <- get_text_anchor$col
     assert_col_exists(col, data)
   }
 }
@@ -1083,7 +1083,7 @@ validate_get_tilt.default <- function(layer) {
   assert_type(get_tilt, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_tilt$value
+    col <- get_tilt$col
     assert_col_exists(col, data)
   }
 }
@@ -1102,7 +1102,7 @@ validate_get_timestamps.default <- function(layer) {
   assert_type(get_timestamps, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_timestamps$value
+    col <- get_timestamps$col
     assert_col_exists(col, data)
   }
 }
@@ -1121,7 +1121,7 @@ validate_get_transform_matrix.default <- function(layer) {
   assert_type(get_transform_matrix, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_transform_matrix$value
+    col <- get_transform_matrix$col
     assert_col_exists(col, data)
   }
 }
@@ -1140,7 +1140,7 @@ validate_get_translation.default <- function(layer) {
   assert_type(get_translation, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_translation$value
+    col <- get_translation$col
     assert_col_exists(col, data)
   }
 }
@@ -1161,7 +1161,7 @@ validate_get_weight.default <- function(layer) {
   assert_type(get_weight, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_weight$value
+    col <- get_weight$col
     assert_col_exists(col, data)
   }
 }
@@ -1182,7 +1182,7 @@ validate_get_width.default <- function(layer) {
   assert_type(get_width, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- get_width$value
+    col <- get_width$col
     assert_col_exists(col, data)
   }
 }
@@ -1255,7 +1255,7 @@ validate_highlight_color.default <- function(layer) {
   assert_type(highlight_color, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
-    col <- highlight_color$value
+    col <- highlight_color$col
     assert_col_exists(col, data)
   }
 }

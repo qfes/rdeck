@@ -11,10 +11,6 @@ to_json <- function(obj) {
 
 to_json.default <- function(obj) obj
 
-to_json.rdeck <- function(obj) {
-  to_json.list(obj)
-}
-
 to_json.list <- function(obj) {
   obj_json <- structure(
     lapply(obj, function(p) to_json(p)),
@@ -25,26 +21,22 @@ to_json.list <- function(obj) {
   obj_json
 }
 
-to_json.layer <- function(obj) {
+to_json.rdeck <- function(obj) to_json.list(obj)
+
+camel_case <- function(obj) {
   names(obj) <- snakecase::to_lower_camel_case(names(obj))
+  to_json.list(obj)
+}
+
+to_json.layer <- function(obj) {
   if (!is.null(obj$data)) {
     obj$data <- layer_data(obj)
   }
 
-  to_json.list(obj)
+  camel_case(obj)
 }
 
-to_json.accessor <- function(obj) {
-  names(obj) <- snakecase::to_lower_camel_case(names(obj))
-  to_json.list(obj)
-}
-
-to_json.rdeck_props <- function(obj) {
-  names(obj) <- snakecase::to_lower_camel_case(names(obj))
-  to_json.list(obj)
-}
-
-to_json.view_state <- function(obj) {
-  names(obj) <- snakecase::to_lower_camel_case(names(obj))
-  to_json.list(obj)
-}
+to_json.accessor <- function(obj) camel_case(obj)
+to_json.tooltip <- function(obj) camel_case(obj)
+to_json.rdeck_props <- function(obj) camel_case(obj)
+to_json.view_state <- function(obj) camel_case(obj)

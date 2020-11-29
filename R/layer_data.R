@@ -52,23 +52,29 @@ subset_data <- function(layer) {
 }
 
 get_colnames <- function(layer) {
-  tooltip <- if (layer$pickable) layer$tooltip
-  # if tooltip = TRUE, all cols
-  if (is.logical(tooltip) && tooltip) {
-    return(names(layer$data))
+  tooltip <- layer$tooltip
+  tooltip_cols <- if (layer$pickable && inherits(tooltip, "tooltip")) {
+    # tooltip$cols == TRUE -> all names
+    ifelse(
+      is.logical(tooltip$cols) && tooltip$cols,
+      names(data),
+      tooltip$cols
+    )
   }
 
   js_props <- layer %>%
     vapply(function(p) inherits(p, "JS_EVAL"), logical(1))
   # if any js() accessors, we cannot know what columns are referenced
-  if (sum(js_props) != 0) return(names(layer$data))
+  if (sum(js_props) != 0) {
+    return(names(layer$data))
+  }
 
   accessors <- layer %>%
-    vapply(function(p) inherits(p, "accessor"), logical(1))
+    vapply(function(prop) inherits(prop, "accessor"), logical(1))
 
   # all cols in accessor props
   accessor_cols <- layer[accessors] %>%
-    vapply(function(a) a$value, character(1), USE.NAMES = FALSE)
+    vapply(function(accessor) accessor$col, character(1), USE.NAMES = FALSE)
 
-  unique(c(accessor_cols, tooltip))
+  unique(c(accessor_cols, tooltip_cols))
 }

@@ -3,12 +3,18 @@
 #' @name accessor
 #' @param quo a quosure
 #' @param data anything. If data.frame, names evaluated from `quo` are validated against data
-#' @param is_columnar determine if data is serialised as a data.frame or a list of object
+#' @param data_type determine the structure of the serialised data. One of:
+#' - table
+#' - object
+#' - geojson
 #'
 #' @keywords internal
 #' @noRd
-accessor <- function(quo, data = NULL, is_columnar = NULL) {
+accessor <- function(quo, data = NULL, data_type = NULL) {
   assert_type(quo, "quosure")
+  if (!is.null(data_type)) {
+    assert_in(data_type, c("table", "object", "geojson"))
+  }
 
   if (!rlang::quo_is_symbol(quo)) {
     return(rlang::eval_tidy(quo))
@@ -22,8 +28,8 @@ accessor <- function(quo, data = NULL, is_columnar = NULL) {
   structure(
     list(
       type = "accessor",
-      value = name,
-      is_columnar = is_columnar %||% inherits(data, "data.frame")
+      col = name,
+      data_type = data_type %||% ifelse(inherits(data, "data.frame"), "table", "object")
     ),
     class = "accessor"
   )
@@ -36,17 +42,19 @@ accessor <- function(quo, data = NULL, is_columnar = NULL) {
 #'
 #' @keywords internal
 #' @noRd
-accessor_scale <- function(quo, data = NULL, is_columnar = NULL) {
+accessor_scale <- function(quo, data = NULL, data_type = NULL) {
   assert_type(quo, "quosure")
+  if (!is.null(data_type)) {
+    assert_in(data_type, c("table", "object", "geojson"))
+  }
   expr <- rlang::get_expr(quo)
 
   # is quo a scale object or scale call
   is_scale <- inherits(expr, "scale") ||
-    rlang::is_call(expr) &&
-      grepl("scale_\\w+", rlang::call_name(expr), perl = TRUE)
+    rlang::is_call(expr) && grepl("scale_\\w+", rlang::call_name(expr))
 
   if (!is_scale) {
-    return(accessor(quo, data, is_columnar))
+    return(accessor(quo, data, data_type))
   }
 
   scale_expr <- rlang::eval_tidy(expr)
@@ -56,7 +64,7 @@ accessor_scale <- function(quo, data = NULL, is_columnar = NULL) {
   scale <- structure(
     utils::modifyList(
       c(scale_expr, list(scale = scale_expr$type)),
-      accessor(rlang::new_quosure(col_name), data, is_columnar),
+      accessor(rlang::new_quosure(col_name), data, data_type),
       keep.null = TRUE
     ),
     class = c("accessor_scale", "accessor")

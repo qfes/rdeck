@@ -41,7 +41,7 @@
     assert_type(<%- name -%>, "accessor")
     data <- layer$data
     if (inherits(data, "data.frame")) {
-      col <- <%- name -%>$value
+      col <- <%- name -%>$col
       assert_col_exists(col, data)
       <% if (sfc !== null) { -%>
         # validate sfc type

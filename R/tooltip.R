@@ -10,44 +10,63 @@
 #'   - Names are deparsed
 #'   - Literals and calls other than `c()` are evaluated
 #'   - `c()` arguments are evaluated recursively with `eval_tooltip`
-#' @param data The data to evaluate names on
+#' @inheritParams accessor
 #'
 #' @keywords internal
 #' @noRd
-eval_tooltip <- function(quo, data = NULL) {
+eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
+  assert_type(quo, "quosure")
+  if (!is.null(data_type)) {
+    assert_in(data_type, c("table", "object", "geojson"))
+  }
+
   expr <- rlang::get_expr(quo)
 
   # tooltip disabled
   if (rlang::is_false(expr) || rlang::is_null(expr) || rlang::is_na(expr)) {
-    return(FALSE)
+    return(NULL)
   }
 
   # tooltip enabled, all names used
   if (rlang::is_true(expr)) {
-    return(TRUE)
+    return(tooltip(TRUE, data, data_type))
   }
 
   # tidyselect
   if (inherits(data, "data.frame")) {
-    return(
-      tidyselect::eval_select(quo, data) %>%
-        names()
-    )
+    cols <- tidyselect::eval_select(quo, data) %>%
+      names()
+
+    return(tooltip(cols, data, data_type))
   }
 
   # name
   if (rlang::is_symbol(expr)) {
-    return(rlang::as_name(expr))
+    return(tooltip(rlang::as_name(expr), data, data_type))
   }
 
   # c()
   if (rlang::is_call(expr) && rlang::call_name(expr) == "c") {
-    return(
-      rlang::call_args(expr) %>%
-        lapply(function(arg) eval_tooltip(rlang::expr(!!arg), data)) %>%
-        unlist()
-    )
+    cols <- rlang::call_args(expr) %>%
+      lapply(function(arg) eval_tooltip(rlang::expr(!!arg), data, data_type)) %>%
+      unlist()
+
+    return(tooltip(cols, data, data_type))
   }
 
-  rlang::eval_tidy(expr)
+  # a character vector
+  cols <- rlang::eval_tidy(expr)
+  assert_type(cols, "character", "tooltip")
+
+  tooltip(cols, data)
+}
+
+tooltip <- function(cols, data = NULL, data_type = NULL) {
+  structure(
+    list(
+      cols = cols,
+      data_type = data_type %||% ifelse(inherits(data, "data.frame"), "table", "object")
+    ),
+    class = "tooltip"
+  )
 }

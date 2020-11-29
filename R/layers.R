@@ -16,8 +16,8 @@ layer.default <- function(type, ...) {
   )
 }
 
-# geojson properties stored as an object
-# x => x.property
+# geojson properties stored as a object
+# x => x.properties[propertyName]
 layer.GeoJsonLayer <- function(type,
                                ...,
                                highlight_color,
@@ -25,24 +25,29 @@ layer.GeoJsonLayer <- function(type,
                                get_fill_color,
                                get_radius,
                                get_line_width,
-                               get_elevation) {
+                               get_elevation,
+                               tooltip) {
   if (inherits(highlight_color, "accessor")) {
-    highlight_color$is_columnar <- FALSE
+    highlight_color$data_type <- "geojson"
   }
   if (inherits(get_line_color, "accessor")) {
-    get_line_color$is_columnar <- FALSE
+    get_line_color$data_type <- "geojson"
   }
   if (inherits(get_fill_color, "accessor")) {
-    get_fill_color$is_columnar <- FALSE
+    get_fill_color$data_type <- "geojson"
   }
   if (inherits(get_radius, "accessor")) {
-    get_radius$is_columnar <- FALSE
+    get_radius$data_type <- "geojson"
   }
   if (inherits(get_line_width, "accessor")) {
-    get_line_width$is_columnar <- FALSE
+    get_line_width$data_type <- "geojson"
   }
   if (inherits(get_elevation, "accessor")) {
-    get_elevation$is_columnar <- FALSE
+    get_elevation$data_type <- "geojson"
   }
+  if (inherits(tooltip, "tooltip")) {
+    tooltip$data_type <- "geojson"
+  }
+
   NextMethod()
 }
