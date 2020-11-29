@@ -19,7 +19,6 @@ eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
   if (!is.null(data_type)) {
     assert_in(data_type, c("table", "object", "geojson"))
   }
-
   expr <- rlang::get_expr(quo)
 
   # tooltip disabled
@@ -48,7 +47,7 @@ eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
   # c()
   if (rlang::is_call(expr) && rlang::call_name(expr) == "c") {
     cols <- rlang::call_args(expr) %>%
-      lapply(function(arg) eval_tooltip(rlang::expr(!!arg), data, data_type)) %>%
+      lapply(function(arg) rlang::as_name(arg)) %>%
       unlist()
 
     return(tooltip(cols, data, data_type))

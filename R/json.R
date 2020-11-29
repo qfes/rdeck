@@ -21,7 +21,7 @@ to_json.list <- function(obj) {
   obj_json
 }
 
-to_json.rdeck <- function(obj) to_json.list(obj)
+to_json.rdeck <- to_json.list
 
 camel_case <- function(obj) {
   names(obj) <- snakecase::to_lower_camel_case(names(obj))
@@ -36,7 +36,12 @@ to_json.layer <- function(obj) {
   camel_case(obj)
 }
 
-to_json.accessor <- function(obj) camel_case(obj)
-to_json.tooltip <- function(obj) camel_case(obj)
-to_json.rdeck_props <- function(obj) camel_case(obj)
-to_json.view_state <- function(obj) camel_case(obj)
+to_json.accessor <- camel_case
+to_json.rdeck_props <- camel_case
+to_json.view_state <- camel_case
+
+to_json.tooltip <- function(obj) {
+  camel_case(obj)
+  obj$cols <- list(obj$cols)
+  obj
+}
