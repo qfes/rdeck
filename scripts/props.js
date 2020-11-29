@@ -39,6 +39,18 @@ function getProps(Layer) {
     Layer._propTypes.fontSettings.value = { sdf: true };
   }
 
+  // mvt layer should inherit geojson
+  if (Layer === deck.MVTLayer) {
+    new deck.GeoJsonLayer({});
+
+    // include geojson props, preserving order
+    Layer._propTypes = {
+      ...Layer._propTypes,
+      // @ts-ignore
+      ...deck.GeoJsonLayer._propTypes
+    };
+  }
+
   return Object.values(Layer._propTypes)
     .filter((propType) => !excludeProps.includes(propType.name))
     .filter((propType) => !/^(_|on)/.test(propType.name))

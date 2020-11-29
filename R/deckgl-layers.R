@@ -2591,6 +2591,27 @@ add_mvt_layer <- function(rdeck,
                           color_format = "RGBA",
                           auto_highlight = FALSE,
                           highlight_color = "#00008080",
+                          stroked = TRUE,
+                          filled = TRUE,
+                          extruded = FALSE,
+                          wireframe = FALSE,
+                          line_width_units = "meters",
+                          line_width_scale = 1,
+                          line_width_min_pixels = 0,
+                          line_width_max_pixels = 9007199254740991,
+                          line_joint_rounded = FALSE,
+                          line_miter_limit = 4,
+                          elevation_scale = 1,
+                          point_radius_units = "meters",
+                          point_radius_scale = 1,
+                          point_radius_min_pixels = 0,
+                          point_radius_max_pixels = 9007199254740991,
+                          get_line_color = "#000000ff",
+                          get_fill_color = "#000000ff",
+                          get_radius = 1,
+                          get_line_width = 1,
+                          get_elevation = 1000,
+                          material = TRUE,
                           get_tile_data = NULL,
                           extent = NULL,
                           tile_size = 512,
@@ -2618,6 +2639,27 @@ add_mvt_layer <- function(rdeck,
     color_format = color_format,
     auto_highlight = auto_highlight,
     highlight_color = accessor_scale(rlang::enquo(highlight_color), data),
+    stroked = stroked,
+    filled = filled,
+    extruded = extruded,
+    wireframe = wireframe,
+    line_width_units = line_width_units,
+    line_width_scale = line_width_scale,
+    line_width_min_pixels = line_width_min_pixels,
+    line_width_max_pixels = line_width_max_pixels,
+    line_joint_rounded = line_joint_rounded,
+    line_miter_limit = line_miter_limit,
+    elevation_scale = elevation_scale,
+    point_radius_units = point_radius_units,
+    point_radius_scale = point_radius_scale,
+    point_radius_min_pixels = point_radius_min_pixels,
+    point_radius_max_pixels = point_radius_max_pixels,
+    get_line_color = accessor_scale(rlang::enquo(get_line_color), data),
+    get_fill_color = accessor_scale(rlang::enquo(get_fill_color), data),
+    get_radius = accessor_scale(rlang::enquo(get_radius), data),
+    get_line_width = accessor_scale(rlang::enquo(get_line_width), data),
+    get_elevation = accessor_scale(rlang::enquo(get_elevation), data),
+    material = material,
     get_tile_data = get_tile_data,
     extent = extent,
     tile_size = tile_size,
@@ -2641,6 +2683,27 @@ add_mvt_layer <- function(rdeck,
   validate_color_format(mvt_layer)
   validate_auto_highlight(mvt_layer)
   validate_highlight_color(mvt_layer)
+  validate_stroked(mvt_layer)
+  validate_filled(mvt_layer)
+  validate_extruded(mvt_layer)
+  validate_wireframe(mvt_layer)
+  validate_line_width_units(mvt_layer)
+  validate_line_width_scale(mvt_layer)
+  validate_line_width_min_pixels(mvt_layer)
+  validate_line_width_max_pixels(mvt_layer)
+  validate_line_joint_rounded(mvt_layer)
+  validate_line_miter_limit(mvt_layer)
+  validate_elevation_scale(mvt_layer)
+  validate_point_radius_units(mvt_layer)
+  validate_point_radius_scale(mvt_layer)
+  validate_point_radius_min_pixels(mvt_layer)
+  validate_point_radius_max_pixels(mvt_layer)
+  validate_get_line_color(mvt_layer)
+  validate_get_fill_color(mvt_layer)
+  validate_get_radius(mvt_layer)
+  validate_get_line_width(mvt_layer)
+  validate_get_elevation(mvt_layer)
+  validate_material(mvt_layer)
   validate_get_tile_data(mvt_layer)
   validate_extent(mvt_layer)
   validate_tile_size(mvt_layer)
