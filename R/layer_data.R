@@ -32,9 +32,7 @@ layer_df <- function(data) {
     }
 
     # performance optimisation for points
-    coords <- sf::st_coordinates(col)
-    colnames(coords) <- NULL
-    coords
+    sf::st_coordinates(col)
   })
 
   # HACK: apply data.frame json serialisation
