@@ -2,8 +2,8 @@
 % Please edit documentation in R/rdeck-package.R
 \docType{package}
 \name{rdeck-package}
-\alias{rdeck}
 \alias{rdeck-package}
+\alias{_PACKAGE}
 \title{rdeck: Deck.gl Widget}
 \description{
 Deck.gl widget for R.
