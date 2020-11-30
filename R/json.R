@@ -55,11 +55,13 @@ to_json.accessor <- function(obj) {
 }
 
 to_json.tooltip <- function(obj) {
+  cols <- if (is.logical(obj$cols)) obj$cols else list(obj$cols)
+
   utils::modifyList(
     camel_case(obj),
     list(
       type = "tooltip",
-      cols = list(obj$cols)
+      cols = cols
     ),
     keep.null = TRUE
   )

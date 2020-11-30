@@ -1,16 +1,21 @@
-declare module "*.css";
+import { FeatureCollection } from "geojson";
 
-type Bounds = [[number, number], [number, number]];
+declare global {
 
-interface DataFrame {
-  length: number;
-  frame: Record<string, any[]>;
-}
+  type Bounds = [[number, number], [number, number]];
+  type Color = [number, number, number, number];
+  type DataType = "table" | "object" | "geojson";
 
-type DataType = "table" | "object" | "geojson";
+  interface DataFrame {
+    length: number;
+    frame: Record<string, any[]>;
+  }
 
-interface TooltipInfo {
-  type: "tooltip";
-  cols: string[];
-  dataType: DataType;
+  type LayerData = DataFrame | Record<string, any> | FeatureCollection | string | null;
+
+  interface TooltipInfo {
+    type: "tooltip";
+    cols: true | string[];
+    dataType: DataType;
+  }
 }

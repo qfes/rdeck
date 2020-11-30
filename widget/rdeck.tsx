@@ -70,7 +70,7 @@ const useHover = () => {
 
   const handleHover = useCallback((info: PickInfo<any>) => {
     // not picked or no tooltip prop
-    if (!info.picked || !info?.layer.props.tooltip) return setState(null);
+    if (!info.picked || !info.layer.props.tooltip) return setState(null);
 
     setState(info);
   }, []);

@@ -1,16 +1,68 @@
-export interface Accessor {
-  (object: object, { index, data }: { index: number; data: any }): any;
+import { Feature } from "geojson";
+
+export type AccessorFn<T> = (object: T, info: ObjectInfo<T>) => any;
+export type ObjectInfo<T> = {
+  index: number;
+  data: T;
+  target: any[];
+};
+
+type AccessorBase = {
+  type: "accessor";
+  col: string;
+};
+
+type AccessorTable = AccessorBase & {
+  dataType: "table";
+  getData: AccessorFn<DataFrame>;
+};
+
+type AccessorObject = AccessorBase & {
+  dataType: "object";
+  getData: AccessorFn<Record<string, any>>;
 }
 
-export const accessors: { [property: string]: Accessor } = {
-  getHexagon: (object, { index, data }) => data.frame.hexagon[index],
-  getHexagons: (object, { index, data }) => data.frame.hexagons[index],
-  getS2Token: (object, { index, data }) => data.frame.token[index],
-  getIcon: (object, { index, data }) => data.frame.icon[index],
-  getText: (object, { index, data }) => data.frame.text[index],
-  getPath: (object, { index, data }) => data.frame.path[index],
-  getPolygon: (object, { index, data }) => data.frame.polygon[index],
-  getPosition: (object, { index, data }) => data.frame.position[index],
-  getSourcePosition: (object, { index, data }) => data.frame.source_position[index],
-  getTargetPosition: (object, { index, data }) => data.frame.target_position[index]
-};
+type AccessorGeoJson = AccessorBase & {
+  dataType: "geojson";
+  getData: AccessorFn<Feature>;
+}
+
+export type Accessor = AccessorTable | AccessorObject | AccessorGeoJson;
+
+export function isAccessor(obj: any): obj is Accessor {
+  return obj !== null && typeof obj === "object" && obj.type === "accessor";
+}
+
+export function accessor(obj: Accessor): Accessor {
+  const getData = accessorFn(obj) as any;
+  return {
+    ...obj,
+    getData,
+  };
+}
+
+function accessorFn({ col, dataType }: Accessor) {
+  switch (dataType) {
+    case "table":
+      return tableFn(col);
+    case "object":
+      return objectFn(col);
+    case "geojson":
+      return geojsonFn(col);
+    default:
+      throw TypeError(`${dataType} not supported`);
+  }
+}
+
+function geojsonFn(col: string): AccessorFn<Feature> {
+  // object.properties will always exist
+  return (object) => object.properties![col];
+}
+
+function objectFn(col: string): AccessorFn<Record<string, any>> {
+  return (object) => object[col];
+}
+
+function tableFn(col: string): AccessorFn<DataFrame> {
+  return (object, { index, data }) => data.frame[col][index];
+}
