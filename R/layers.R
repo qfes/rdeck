@@ -51,3 +51,5 @@ layer.GeoJsonLayer <- function(type,
 
   NextMethod()
 }
+
+layer.MVTLayer <- layer.GeoJsonLayer

@@ -36,12 +36,31 @@ to_json.layer <- function(obj) {
   camel_case(obj)
 }
 
-to_json.accessor <- camel_case
-to_json.rdeck_props <- camel_case
+to_json.rdeck_props <- function(obj) {
+  if (!is.null(obj$initial_bounds)) {
+    obj$initial_bounds <- matrix(obj$initial_bounds, nrow = 2, byrow = TRUE)
+  }
+
+  camel_case(obj)
+}
+
 to_json.view_state <- camel_case
 
+to_json.accessor <- function(obj) {
+  utils::modifyList(
+    camel_case(obj),
+    list(type = "accessor"),
+    keep.null = TRUE
+  )
+}
+
 to_json.tooltip <- function(obj) {
-  camel_case(obj)
-  obj$cols <- list(obj$cols)
-  obj
+  utils::modifyList(
+    camel_case(obj),
+    list(
+      type = "tooltip",
+      cols = list(obj$cols)
+    ),
+    keep.null = TRUE
+  )
 }

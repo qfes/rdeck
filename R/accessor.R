@@ -27,7 +27,6 @@ accessor <- function(quo, data = NULL, data_type = NULL) {
 
   structure(
     list(
-      type = "accessor",
       col = name,
       data_type = data_type %||% ifelse(inherits(data, "data.frame"), "table", "object")
     ),
