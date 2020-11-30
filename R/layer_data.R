@@ -55,7 +55,7 @@ get_colnames <- function(layer) {
     # tooltip$cols == TRUE -> all names
     ifelse(
       is.logical(tooltip$cols) && tooltip$cols,
-      names(data),
+      names(layer$data),
       tooltip$cols
     )
   }
