@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { WebMercatorViewport } from "react-map-gl";
 
 import RDeck from "./rdeck";
 import styles from "./rdeck.css";
@@ -12,22 +11,7 @@ const binding: HTMLWidgets.Binding = {
     el.classList.add(styles.rdeck);
     return {
       renderValue({ props, layers }) {
-        // TODO: move to RDeck
-        if (Array.isArray(props.initialBounds)) {
-          const viewport = new WebMercatorViewport({ width, height });
-          const { longitude, latitude, zoom } = viewport.fitBounds([
-            props.initialBounds.slice(0, 2),
-            props.initialBounds.slice(2, 4),
-          ]);
-
-          props.initialViewState = {
-            ...props.initialViewState,
-            longitude,
-            latitude,
-            zoom,
-          };
-        }
-        ReactDOM.render(<RDeck {...{ props, layers }} />, el);
+        ReactDOM.render(<RDeck {...{ props, layers, width, height }} />, el);
       },
       /* deck.gl handles resize automatically */
       resize(width, height) {},
