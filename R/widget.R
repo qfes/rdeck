@@ -41,7 +41,7 @@
 #' @seealso <https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md>
 #'
 #' @export
-rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
+rdeck <- function(mapbox_api_access_token = NULL,
                   map_style = "mapbox://styles/mapbox/dark-v10",
                   initial_bounds = NULL,
                   initial_view_state = view_state(
@@ -56,6 +56,8 @@ rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
                   height = NULL,
                   elementId = NULL,
                   ...) {
+  mapbox_api_access_token <- mapbox_api_access_token %||% mapbox_access_token()
+
   if (!is.null(initial_bounds)) {
     assert_type(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
     initial_bounds <- sf::st_bbox(initial_bounds)
