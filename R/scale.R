@@ -196,7 +196,7 @@ scale_color_quantile <- function(col, palette, legend = TRUE) {
 
 #' @name scale_quantile
 #' @export
-scale_quantile <- function(col, range = 1:5, legend = TRUE) {
+scale_quantile <- function(col, range = 1:5, legend = FALSE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
   assert_type(range, c("integer", "numeric"))
