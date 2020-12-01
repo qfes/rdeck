@@ -19,6 +19,7 @@ Imports:
     snakecase,
     rlang,
     tidyselect,
+    urltools,
     uuid
 Encoding: UTF-8
 LazyData: true
