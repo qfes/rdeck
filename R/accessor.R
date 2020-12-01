@@ -20,14 +20,14 @@ accessor <- function(quo, data = NULL, data_type = NULL) {
     return(rlang::eval_tidy(quo))
   }
 
-  name <- rlang::as_name(quo)
+  col <- rlang::as_name(quo)
   if (inherits(data, "data.frame")) {
-    assert_col_exists(name, data)
+    assert_col_exists(col, data)
   }
 
   structure(
     list(
-      col = name,
+      col = col,
       data_type = data_type %||% ifelse(inherits(data, "data.frame"), "table", "object")
     ),
     class = "accessor"
@@ -57,12 +57,12 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
   }
 
   scale_expr <- rlang::eval_tidy(expr)
-  col_name <- as.name(scale_expr$value)
+  col_name <- as.name(scale_expr$col)
 
   # create accessor
   scale <- structure(
     utils::modifyList(
-      c(scale_expr, list(scale = scale_expr$type)),
+      scale_expr,
       accessor(rlang::new_quosure(col_name), data, data_type),
       keep.null = TRUE
     ),
@@ -71,7 +71,7 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
 
   # compute scale domain
   if (is.null(scale$domain) && scale$type != "quantile" && !rlang::is_empty(data)) {
-    scale$domain <- scale_domain(scale, data[[as.character(scale$value)]])
+    scale$domain <- scale_domain(scale, data[[scale$col]])
   }
 
   scale

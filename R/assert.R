@@ -75,7 +75,8 @@ assert_rgba <- function(obj, name = NULL) {
   quo <- rlang::enquo(obj)
   value <- rlang::eval_tidy(quo)
 
-  if (!grepl("^#[0-9A-F]{6,8}$", value, ignore.case = TRUE)) {
+  is_color <- grepl("^#[0-9A-F]{6,8}$", value, ignore.case = TRUE)
+  if (sum(is_color) != length(value)) {
     name <- name %||% rlang::as_name(quo)
     rlang::abort(
       paste0(name, " must be a valid rgb[a] hex string"),
@@ -94,6 +95,19 @@ assert_in <- function(obj, values, name = NULL) {
     rlang::abort(
       paste0(name, " must be one of [", vals, "]"),
       "rdeck_in_error"
+    )
+  }
+}
+
+assert_quo_is_sym <- function(obj, name = NULL) {
+  assert_type(obj, "quosure")
+  expr <- rlang::quo_get_expr(obj)
+
+  if (!rlang::is_symbol(expr) && !rlang::is_string(rlang::eval_tidy(expr))) {
+    name <- name %||% rlang::quo_text(obj)
+    rlang::abort(
+      paste0(name, " must be a symbol or a string"),
+      "rdeck_sym_error"
     )
   }
 }
