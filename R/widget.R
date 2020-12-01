@@ -60,7 +60,9 @@ rdeck <- function(mapbox_api_access_token = NULL,
 
   if (!is.null(initial_bounds)) {
     assert_type(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
-    initial_bounds <- sf::st_bbox(initial_bounds)
+    initial_bounds <- sf::st_as_sfc(initial_bounds) %>%
+      sf::st_transform(4326) %>%
+      sf::st_bbox()
   }
 
   props <- structure(
