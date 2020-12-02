@@ -43,11 +43,11 @@ function getProps(Layer) {
   if (Layer === deck.MVTLayer) {
     new deck.GeoJsonLayer({});
 
-    // include geojson props, preserving order
+    // include geojson props
     Layer._propTypes = {
-      ...Layer._propTypes,
       // @ts-ignore
-      ...deck.GeoJsonLayer._propTypes
+      ...deck.GeoJsonLayer._propTypes,
+      ...Layer._propTypes
     };
   }
 
@@ -56,16 +56,30 @@ function getProps(Layer) {
     .filter((propType) => !/^(_|on)/.test(propType.name))
     .map(propType => ({
       ...propType,
+      value: getValue(propType),
       valueType: getValueType(propType)
     }));
 }
 
+function getValue(propType) {
+  if (typeof propType.value !== "function") {
+    return propType.value;
+  }
+
+  try {
+    return propType.value();
+  } catch {
+    return propType.value;
+  }
+}
+
 function getValueType(propType) {
-  if (propType.value == null) {
+  const value = getValue(propType);
+  if (value == null) {
     return null;
   }
 
-  return Array.isArray(propType.value) ? "array" : typeof propType.value;
+  return Array.isArray(value) ? "array" : typeof value;
 }
 
 module.exports = { getProps };

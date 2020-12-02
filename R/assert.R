@@ -88,11 +88,14 @@ assert_rgba <- function(obj, name = NULL) {
   quo <- rlang::enquo(obj)
   value <- rlang::eval_tidy(quo)
 
-  is_color <- grepl("^#[0-9A-F]{6,8}$", value, ignore.case = TRUE)
+  is_color <- grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", value, ignore.case = TRUE)
   if (sum(is_color) != length(value)) {
     name <- name %||% rlang::quo_text(quo)
     rlang::abort(
-      paste0(name, " must be a valid rgb[a] hex string"),
+      paste(
+        name, "must be a valid rgb[a] hex",
+        ifelse(length(value) > 1, "character vector", "string")
+      ),
       "rdeck_rgba_error"
     )
   }
