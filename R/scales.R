@@ -9,9 +9,8 @@ scale_color_linear <- function(col, palette,
                                limits = NULL, breaks = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_rgba(palette)
 
-  scale(
+  linear_scale <- scale(
     "linear",
     col = rlang::as_name(col),
     palette = palette,
@@ -19,6 +18,13 @@ scale_color_linear <- function(col, palette,
     breaks = breaks,
     legend = legend
   )
+
+  validate_palette(linear_scale)
+  validate_limits(linear_scale)
+  validate_breaks(linear_scale)
+  validate_legend(linear_scale)
+
+  linear_scale
 }
 
 #' @name scale_linear
@@ -27,9 +33,8 @@ scale_linear <- function(col, range = 0:1,
                          limits = NULL, breaks = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_type(range, c("integer", "numeric"))
 
-  scale(
+  linear_scale <- scale(
     "linear",
     col = rlang::as_name(col),
     range = range,
@@ -37,6 +42,13 @@ scale_linear <- function(col, range = 0:1,
     breaks = breaks,
     legend = legend
   )
+
+  validate_range(linear_scale)
+  validate_limits(linear_scale)
+  validate_breaks(linear_scale)
+  validate_legend(linear_scale)
+
+  linear_scale
 }
 
 #' Scale power
@@ -52,9 +64,8 @@ scale_color_power <- function(col, palette, exponent = 0.5,
                               limits = NULL, breaks = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_rgba(palette)
 
-  scale(
+  power_scale <- scale(
     "power",
     col = rlang::as_name(col),
     palette = palette,
@@ -63,6 +74,14 @@ scale_color_power <- function(col, palette, exponent = 0.5,
     breaks = breaks,
     legend = legend
   )
+
+  validate_palette(power_scale)
+  validate_exponent(power_scale)
+  validate_limits(power_scale)
+  validate_breaks(power_scale)
+  validate_legend(power_scale)
+
+  power_scale
 }
 
 #' @name scale_power
@@ -71,9 +90,8 @@ scale_power <- function(col, range = 0:1, exponent = 0.5,
                         limits = NULL, breaks = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_type(range, c("integer", "numeric"))
 
-  scale(
+  power_scale <- scale(
     "power",
     col = rlang::as_name(col),
     range = range,
@@ -82,6 +100,14 @@ scale_power <- function(col, range = 0:1, exponent = 0.5,
     breaks = breaks,
     legend = legend
   )
+
+  validate_range(power_scale)
+  validate_exponent(power_scale)
+  validate_limits(power_scale)
+  validate_breaks(power_scale)
+  validate_legend(power_scale)
+
+  power_scale
 }
 
 #' Scale log
@@ -98,9 +124,8 @@ scale_color_log <- function(col, palette, base = 10,
                             limits = NULL, breaks = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_rgba(palette)
 
-  scale(
+  log_scale <- scale(
     "log",
     col = rlang::as_name(col),
     palette = palette,
@@ -109,6 +134,14 @@ scale_color_log <- function(col, palette, base = 10,
     breaks = breaks,
     legend = legend
   )
+
+  validate_palette(log_scale)
+  validate_base(log_scale)
+  validate_limits(log_scale)
+  validate_breaks(log_scale)
+  validate_legend(log_scale)
+
+  log_scale
 }
 
 #' @name scale_log
@@ -117,9 +150,8 @@ scale_log <- function(col, range = 0:1, base = 10,
                       limits = NULL, breaks = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_type(range, c("integer", "numeric"))
 
-  scale(
+  log_scale <- scale(
     "log",
     col = rlang::as_name(col),
     range = range,
@@ -128,6 +160,14 @@ scale_log <- function(col, range = 0:1, base = 10,
     breaks = breaks,
     legend = legend
   )
+
+  validate_range(log_scale)
+  validate_base(log_scale)
+  validate_limits(log_scale)
+  validate_breaks(log_scale)
+  validate_legend(log_scale)
+
+  log_scale
 }
 
 #' Scale threshold
@@ -141,34 +181,47 @@ scale_log <- function(col, range = 0:1, base = 10,
 #' @inheritParams scale
 #' @family scales
 #' @export
-scale_color_threshold <- function(col, palette, breaks = 0.5, legend = TRUE) {
+scale_color_threshold <- function(col, palette, limits = NULL, breaks = 0.5, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_rgba(palette)
 
-  scale(
+  threshold_scale <- scale(
     "threshold",
     col = rlang::as_name(col),
     palette = palette,
+    limits = limits,
     breaks = breaks,
     legend = legend
   )
+
+  validate_palette(threshold_scale)
+  validate_limits(threshold_scale)
+  validate_breaks(threshold_scale)
+  validate_legend(threshold_scale)
+
+  threshold_scale
 }
 
 #' @name scale_threshold
 #' @export
-scale_threshold <- function(col, range = 0:1, breaks = 0.5, legend = FALSE) {
+scale_threshold <- function(col, range = 0:1, limits = NULL, breaks = 0.5, legend = FALSE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_type(range, c("integer", "numeric"))
 
-  scale(
+  threshold_scale <- scale(
     "threshold",
     col = rlang::as_name(col),
     range = range,
     breaks = breaks,
     legend = legend
   )
+
+  validate_range(threshold_scale)
+  validate_limits(threshold_scale)
+  validate_breaks(threshold_scale)
+  validate_legend(threshold_scale)
+
+  threshold_scale
 }
 
 #' Scale quantile
@@ -184,14 +237,18 @@ scale_threshold <- function(col, range = 0:1, breaks = 0.5, legend = FALSE) {
 scale_color_quantile <- function(col, palette, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_rgba(palette)
 
-  scale(
+  quantile_scale <- scale(
     "quantile",
     col = rlang::as_name(col),
     palette = palette,
     legend = legend
   )
+
+  validate_palette(quantile_scale)
+  validate_legend(quantile_scale)
+
+  quantile_scale
 }
 
 #' @name scale_quantile
@@ -199,14 +256,18 @@ scale_color_quantile <- function(col, palette, legend = TRUE) {
 scale_quantile <- function(col, range = 1:5, legend = FALSE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_type(range, c("integer", "numeric"))
 
-  scale(
+  quantile_scale <- scale(
     "quantile",
     col = rlang::as_name(col),
-    palette = palette,
+    range = range,
     legend = legend
   )
+
+  validate_range(quantile_scale)
+  validate_legend(quantile_scale)
+
+  quantile_scale
 }
 
 #' Scale category
@@ -215,7 +276,7 @@ scale_quantile <- function(col, range = 1:5, legend = FALSE) {
 #' @name scale_category
 #' @param levels The category levels. If NULL, will be populated from input data.
 #' The order of the levels is determined by `levels()` for factors & `unique()` otherwise.
-#' Length of `levels` must be <= `palette` or `range`, such that each category level is
+#' Length of `levels` must equal `palette` or `range`, such that each category level is
 #' assigned a `color` or `range` value.
 #' @inheritParams scale
 #' @family scales
@@ -223,15 +284,19 @@ scale_quantile <- function(col, range = 1:5, legend = FALSE) {
 scale_color_category <- function(col, palette, levels = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_rgba(palette)
 
-  scale(
+  category_scale <- scale(
     "category",
     col = rlang::as_name(col),
     palette = palette,
     levels = levels,
     legend = legend
   )
+
+  validate_palette(category_scale)
+  validate_legend(category_scale)
+
+  category_scale
 }
 
 #' @name scale_category
@@ -239,15 +304,19 @@ scale_color_category <- function(col, palette, levels = NULL, legend = TRUE) {
 scale_category <- function(col, range = 0:1, levels = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_type(range, c("integer", "numeric"))
 
-  scale(
+  category_scale <- scale(
     "category",
     col = rlang::as_name(col),
     range = range,
     levels = levels,
     legend = legend
   )
+
+  validate_range(category_scale)
+  validate_legend(category_scale)
+
+  category_scale
 }
 
 #' Scale quantize
@@ -261,15 +330,20 @@ scale_category <- function(col, range = 0:1, levels = NULL, legend = FALSE) {
 scale_color_quantize <- function(col, palette, limits = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_rgba(palette)
 
-  scale(
+  quantize_scale <- scale(
     "quantize",
     col = rlang::as_name(col),
     palette = palette,
-    levels = levels,
+    limits = limits,
     legend = legend
   )
+
+  validate_palette(quantize_scale)
+  validate_limits(quantize_scale)
+  validate_legend(quantize_scale)
+
+  quantize_scale
 }
 
 #' @name scale_quantize
@@ -277,15 +351,20 @@ scale_color_quantize <- function(col, palette, limits = NULL, legend = TRUE) {
 scale_quantize <- function(col, range = 0:1, limits = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col)
-  assert_type(range, c("integer", "numeric"))
 
-  scale(
+  quantize_scale <- scale(
     "quantize",
     col = rlang::as_name(col),
     range = range,
-    levels = levels,
+    limits = limits,
     legend = legend
   )
+
+  validate_range(quantize_scale)
+  validate_limits(quantize_scale)
+  validate_legend(quantize_scale)
+
+  quantize_scale
 }
 
 #' @name scale

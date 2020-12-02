@@ -1,39 +1,53 @@
-scale_domain <- function(scale, data) {
+scale_domain <- function(scale, data = NULL) {
   UseMethod("scale_domain")
 }
 
-scale_domain.default <- function(scale, data) {
-  domain(data, domain_length(scale$range))
+scale_domain.scale_linear <- function(scale, data = NULL) {
+  range_len <- length(scale$palette %||% scale$range)
+  continuous_domain(scale$limits, scale$breaks, range_len)
 }
 
-scale_domain.scale_quantize <- function(scale, data) {
-  c(min(data, na.rm = TRUE), max(data, na.rm = TRUE))
-}
-
-scale_domain.scale_log <- function(scale, data) {
-  invert <- function(x) scale$base^x
-
-  domain(
-    log(data, scale$base),
-    domain_length(scale$range)
-  ) %>%
-    invert()
-}
-
-scale_domain.scale_power <- function(scale, data) {
+scale_domain.scale_power <- function(scale, data = NULL) {
+  trans <- function(x) x^scale$exponent
   invert <- function(x) x^(1 / scale$exponent)
 
-  domain(
-    data^scale$exponent,
-    domain_length(scale$range)
-  ) %>%
-    invert()
+  range_len <- length(scale$palette %||% scale$range)
+  trans_limits <- trans(scale$limits)
+  trans_breaks <- if (!is.null(scale$breaks)) trans(scale$breaks)
+  domain <- continuous_domain(trans_limits, trans_breaks, range_len)
+  invert(domain)
 }
 
-domain_length <- function(range) {
-  ifelse(is.matrix(range), nrow(range), length(range))
+scale_domain.scale_log <- function(scale, data = NULL) {
+  trans <- function(x) log(x, scale$base)
+  invert <- function(x) scale$base^x
+
+  range_len <- length(scale$palette %||% scale$range)
+  trans_limits <- trans(scale$limits)
+  trans_breaks <- if (!is.null(scale$breaks)) trans(scale$breaks)
+  domain <- continuous_domain(trans_limits, trans_breaks, range_len)
+  invert(domain)
 }
 
-domain <- function(data, length) {
-  seq(min(data, na.rm = TRUE), max(data, na.rm = TRUE), length.out = length)
+scale_domain.scale_quantile <- function(scale, data = NULL) {
+  assert_type(data, "data.frame")
+  col <- data[[scale$col]]
+
+  # compute the quantile breaks
+  n_breaks <- length(scale$palette %||% scale$range) - 1
+  breaks <- seq(0, 1, length.out = n_breaks + 2)[seq_len(n_breaks) + 1]
+
+  quantile(col, probs = breaks, na.rm = TRUE, names = FALSE)
+}
+
+scale_domain.scale_threshold <- function(scale, data) scale$breaks
+scale_domain.scale_category <- function(scale, data) scale$levels
+scale_domain.scale_quantize <- function(scale, data) scale$limits
+
+continuous_domain <- function(limits, breaks = NULL, length) {
+  if (is.null(breaks)) {
+    seq(limits[1], limits[2], length.out = length)
+  } else {
+    c(limits[1], breaks, limits[2])
+  }
 }

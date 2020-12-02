@@ -59,20 +59,30 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
   scale_expr <- rlang::eval_tidy(expr)
   col_name <- as.name(scale_expr$col)
 
+  accessor_ <- accessor(rlang::new_quosure(col_name), data, data_type)
+
   # create accessor
   scale <- structure(
     utils::modifyList(
+      accessor_,
       scale_expr,
-      accessor(rlang::new_quosure(col_name), data, data_type),
       keep.null = TRUE
     ),
-    class = c("accessor_scale", "accessor")
+    class = c(class(scale_expr), "accessor_scale", class(accessor_))
   )
 
-  # compute scale domain
-  if (is.null(scale$domain) && scale$type != "quantile" && !rlang::is_empty(data)) {
-    scale$domain <- scale_domain(scale, data[[scale$col]])
+  # scale limits
+  if (rlang::has_name(scale, "limits")) {
+    if (!inherits(data, "data.frame")) {
+      assert_not_null(scale$limits)
+    }
+
+    scale$limits <- scale$limits %||% range(data[[scale$col]])
   }
+
+  # scale domain
+  scale$domain <- scale_domain(scale, data)
 
   scale
 }
+
