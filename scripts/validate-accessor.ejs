@@ -1,0 +1,43 @@
+<%#
+  template for generating an accessor validator
+  data is expected with the following form:
+  data = {
+    name: "foo",
+    type: "number",
+    min: 0,
+    max: 100
+  }
+%>
+<%# validate constant -%>
+<% if (type !== "function" && type) { -%>
+  if(!inherits(<%- name -%>, "accessor")) {
+    <%- include("./validate-type", {name, type, min, max}) -%>
+    return()
+  }
+<% } -%>
+<%# validate accessor -%>
+<% const col = `data[[${name}$col]]`; -%>
+assert_type(<%- name -%>, "accessor")
+data <- layer$data
+if (inherits(data, "data.frame")) {
+  assert_col_exists(<%- name -%>$col, data)
+  if (!inherits(<%- name -%>, "accessor_scale")) {
+    <%-
+      sfc !== null
+        ? `assert_type(${col}, "${sfc}")`
+        : include("./validate-type", {name: col, type, min, max});
+    -%>
+  }
+}
+<% if (scalable) { -%>
+  if (inherits(<%- name -%>, "accessor_scale")) {
+    <%# colors must be rgba, others numeric -%>
+    <%-
+      type === "color" || /color$/.test(name)
+        ? `assert_scalable_is_color(${name})`
+        : `assert_scalable_is_numeric(${name})`;
+    %>
+    <%# check data type compatible with scale type -%>
+    validate_col(<%- name -%>, data)
+  }
+<% } -%>

@@ -71,6 +71,9 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
     class = c(class(scale_expr), "accessor_scale", class(accessor_))
   )
 
+  # scale col references a vector of the correct type
+  validate_col(scale, data)
+
   # scale limits
   if (rlang::has_name(scale, "limits")) {
     if (!inherits(data, "data.frame")) {

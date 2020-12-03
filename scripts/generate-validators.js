@@ -72,7 +72,7 @@ const generatedBy = `
 
 Promise.all(uniqueProps.map((prop) => ejs.renderFile(template, prop, { rmWhitespace: true })))
   .then((validators) => {
-    const content = [generatedBy, ...validators].join("\n");
+    const content = [generatedBy, ...validators].join("\n\n");
     return fs.writeFile(output, content);
   })
   .then(() => styleFile(output));

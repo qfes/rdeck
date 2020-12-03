@@ -33,14 +33,15 @@ assert_scalar <- function(obj, name = NULL) {
   }
 }
 
-assert_length <- function(obj, len, name = NULL) {
+assert_length <- function(obj, len, cmp = `==`, name = NULL) {
   quo <- rlang::enquo(obj)
   value <- rlang::eval_tidy(quo)
 
-  if (length(value) != len) {
+  if (!cmp(length(value), len)) {
     name <- name %||% rlang::quo_text(quo)
+    cmp_name <- deparse(substitute(cmp))
     rlang::abort(
-      paste0(name, " must be length: ", len),
+      paste(name, "must be length", cmp_name, len),
       "rdeck_len_error"
     )
   }
@@ -119,7 +120,8 @@ assert_quo_is_sym <- function(obj, name = NULL) {
   assert_type(obj, "quosure")
   expr <- rlang::quo_get_expr(obj)
 
-  if (!rlang::is_symbol(expr) && !rlang::is_string(rlang::eval_tidy(expr))) {
+  if (rlang::quo_is_missing(obj) ||
+    !rlang::is_symbol(expr) && !rlang::is_string(rlang::eval_tidy(expr))) {
     name <- name %||% rlang::quo_text(obj)
     rlang::abort(
       paste0(name, " must be a symbol or a string"),
@@ -136,6 +138,32 @@ assert_is_string <- function(obj, name = NULL) {
     name <- name %||% rlang::quo_text(quo)
     rlang::abort(
       paste0(name, " must be a string"),
+      "rdeck_type_error"
+    )
+  }
+}
+
+assert_scalable_is_color <- function(obj, name = NULL) {
+  quo <- rlang::enquo(obj)
+  value <- rlang::eval_tidy(quo)
+
+  if (!rlang::has_name(value, "palette")) {
+    name <- name %||% rlang::quo_text(quo)
+    rlang::abort(
+      paste0(name, " must be a color scale"),
+      "rdeck_type_error"
+    )
+  }
+}
+
+assert_scalable_is_numeric <- function(obj, name = NULL) {
+  quo <- rlang::enquo(obj)
+  value <- rlang::eval_tidy(quo)
+
+  if (!rlang::has_name(value, "range")) {
+    name <- name %||% rlang::quo_text(quo)
+    rlang::abort(
+      paste0(name, " must be a numeric scale"),
       "rdeck_type_error"
     )
   }

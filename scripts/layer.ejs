@@ -39,10 +39,8 @@ add_<%- name -%> <- function(rdeck,
         name = name,
         <% for (const p of props) { -%>
             <%
-              const isAccessor = p.type === "accessor";
-              const isScaleable = /(radius|elevation|color|weight|width|height|size)$/i.test(p.name);
-              const value = isAccessor
-                ? isScaleable
+              const value = p.type === "accessor"
+                ? p.scalable
                   ? `accessor_scale(rlang::enquo(${p.name}), data)`
                   : `accessor(rlang::enquo(${p.name}), data)`
                 : p.name;

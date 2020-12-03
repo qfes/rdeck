@@ -10,7 +10,6 @@ validate_aggregation.default <- function(layer) {
   assert_not_null(aggregation)
 }
 
-
 # validate alpha_cutoff
 validate_alpha_cutoff <- function(layer) {
   UseMethod("validate_alpha_cutoff")
@@ -23,7 +22,6 @@ validate_alpha_cutoff.default <- function(layer) {
   assert_range(alpha_cutoff, 0, 1)
 }
 
-
 # validate angle
 validate_angle <- function(layer) {
   UseMethod("validate_angle")
@@ -35,7 +33,6 @@ validate_angle.default <- function(layer) {
   assert_finite(angle)
 }
 
-
 # validate auto_highlight
 validate_auto_highlight <- function(layer) {
   UseMethod("validate_auto_highlight")
@@ -46,20 +43,17 @@ validate_auto_highlight.default <- function(layer) {
   assert_type(auto_highlight, "logical")
 }
 
-
 # validate background_color
 validate_background_color <- function(layer) {
   UseMethod("validate_background_color")
 }
 validate_background_color.default <- function(layer) {
   background_color <- layer$background_color
-  # optional
   if (is.null(background_color)) {
     return()
   }
   assert_rgba(background_color)
 }
-
 
 # validate billboard
 validate_billboard <- function(layer) {
@@ -71,19 +65,16 @@ validate_billboard.default <- function(layer) {
   assert_type(billboard, "logical")
 }
 
-
 # validate bounds
 validate_bounds <- function(layer) {
   UseMethod("validate_bounds")
 }
 validate_bounds.default <- function(layer) {
   bounds <- layer$bounds
-  # optional
   if (is.null(bounds)) {
     return()
   }
 }
-
 
 # validate cell_margin_pixels
 validate_cell_margin_pixels <- function(layer) {
@@ -97,7 +88,6 @@ validate_cell_margin_pixels.default <- function(layer) {
   assert_range(cell_margin_pixels, 0, 5)
 }
 
-
 # validate cell_size
 validate_cell_size <- function(layer) {
   UseMethod("validate_cell_size")
@@ -109,7 +99,6 @@ validate_cell_size.default <- function(layer) {
   assert_finite(cell_size)
   assert_range(cell_size, 1, 1000)
 }
-
 
 # validate cell_size_pixels
 validate_cell_size_pixels <- function(layer) {
@@ -123,19 +112,16 @@ validate_cell_size_pixels.default <- function(layer) {
   assert_range(cell_size_pixels, 1, NULL)
 }
 
-
 # validate center_hexagon
 validate_center_hexagon <- function(layer) {
   UseMethod("validate_center_hexagon")
 }
 validate_center_hexagon.default <- function(layer) {
   center_hexagon <- layer$center_hexagon
-  # optional
   if (is.null(center_hexagon)) {
     return()
   }
 }
-
 
 # validate color
 validate_color <- function(layer) {
@@ -147,7 +133,6 @@ validate_color.default <- function(layer) {
   assert_rgba(color)
 }
 
-
 # validate color_aggregation
 validate_color_aggregation <- function(layer) {
   UseMethod("validate_color_aggregation")
@@ -157,19 +142,16 @@ validate_color_aggregation.default <- function(layer) {
   assert_not_null(color_aggregation)
 }
 
-
 # validate color_domain
 validate_color_domain <- function(layer) {
   UseMethod("validate_color_domain")
 }
 validate_color_domain.default <- function(layer) {
   color_domain <- layer$color_domain
-  # optional
   if (is.null(color_domain)) {
     return()
   }
 }
-
 
 # validate color_format
 validate_color_format <- function(layer) {
@@ -179,7 +161,6 @@ validate_color_format.default <- function(layer) {
   color_format <- layer$color_format
   assert_not_null(color_format)
 }
-
 
 # validate color_range
 validate_color_range <- function(layer) {
@@ -191,7 +172,6 @@ validate_color_range.default <- function(layer) {
   assert_rgba(color_range)
 }
 
-
 # validate color_scale_type
 validate_color_scale_type <- function(layer) {
   UseMethod("validate_color_scale_type")
@@ -201,7 +181,6 @@ validate_color_scale_type.default <- function(layer) {
   assert_not_null(color_scale_type)
 }
 
-
 # validate contours
 validate_contours <- function(layer) {
   UseMethod("validate_contours")
@@ -210,7 +189,6 @@ validate_contours.default <- function(layer) {
   contours <- layer$contours
   assert_not_null(contours)
 }
-
 
 # validate coverage
 validate_coverage <- function(layer) {
@@ -224,7 +202,6 @@ validate_coverage.default <- function(layer) {
   assert_range(coverage, 0, 1)
 }
 
-
 # validate current_time
 validate_current_time <- function(layer) {
   UseMethod("validate_current_time")
@@ -237,19 +214,16 @@ validate_current_time.default <- function(layer) {
   assert_range(current_time, 0, NULL)
 }
 
-
 # validate data
 validate_data <- function(layer) {
   UseMethod("validate_data")
 }
 validate_data.default <- function(layer) {
   data <- layer$data
-  # optional
   if (is.null(data)) {
     return()
   }
 }
-
 
 # validate desaturate
 validate_desaturate <- function(layer) {
@@ -263,7 +237,6 @@ validate_desaturate.default <- function(layer) {
   assert_range(desaturate, 0, 1)
 }
 
-
 # validate disk_resolution
 validate_disk_resolution <- function(layer) {
   UseMethod("validate_disk_resolution")
@@ -276,7 +249,6 @@ validate_disk_resolution.default <- function(layer) {
   assert_range(disk_resolution, 4, NULL)
 }
 
-
 # validate elevation_aggregation
 validate_elevation_aggregation <- function(layer) {
   UseMethod("validate_elevation_aggregation")
@@ -285,7 +257,6 @@ validate_elevation_aggregation.default <- function(layer) {
   elevation_aggregation <- layer$elevation_aggregation
   assert_not_null(elevation_aggregation)
 }
-
 
 # validate elevation_data
 validate_elevation_data <- function(layer) {
@@ -296,7 +267,6 @@ validate_elevation_data.default <- function(layer) {
   assert_not_null(elevation_data)
 }
 
-
 # validate elevation_decoder
 validate_elevation_decoder <- function(layer) {
   UseMethod("validate_elevation_decoder")
@@ -306,19 +276,16 @@ validate_elevation_decoder.default <- function(layer) {
   assert_not_null(elevation_decoder)
 }
 
-
 # validate elevation_domain
 validate_elevation_domain <- function(layer) {
   UseMethod("validate_elevation_domain")
 }
 validate_elevation_domain.default <- function(layer) {
   elevation_domain <- layer$elevation_domain
-  # optional
   if (is.null(elevation_domain)) {
     return()
   }
 }
-
 
 # validate elevation_lower_percentile
 validate_elevation_lower_percentile <- function(layer) {
@@ -332,7 +299,6 @@ validate_elevation_lower_percentile.default <- function(layer) {
   assert_range(elevation_lower_percentile, 0, 100)
 }
 
-
 # validate elevation_range
 validate_elevation_range <- function(layer) {
   UseMethod("validate_elevation_range")
@@ -341,7 +307,6 @@ validate_elevation_range.default <- function(layer) {
   elevation_range <- layer$elevation_range
   assert_not_null(elevation_range)
 }
-
 
 # validate elevation_scale
 validate_elevation_scale <- function(layer) {
@@ -354,7 +319,6 @@ validate_elevation_scale.default <- function(layer) {
   assert_finite(elevation_scale)
 }
 
-
 # validate elevation_scale_type
 validate_elevation_scale_type <- function(layer) {
   UseMethod("validate_elevation_scale_type")
@@ -363,7 +327,6 @@ validate_elevation_scale_type.default <- function(layer) {
   elevation_scale_type <- layer$elevation_scale_type
   assert_not_null(elevation_scale_type)
 }
-
 
 # validate elevation_upper_percentile
 validate_elevation_upper_percentile <- function(layer) {
@@ -377,19 +340,16 @@ validate_elevation_upper_percentile.default <- function(layer) {
   assert_range(elevation_upper_percentile, 0, 100)
 }
 
-
 # validate extent
 validate_extent <- function(layer) {
   UseMethod("validate_extent")
 }
 validate_extent.default <- function(layer) {
   extent <- layer$extent
-  # optional
   if (is.null(extent)) {
     return()
   }
 }
-
 
 # validate extruded
 validate_extruded <- function(layer) {
@@ -401,7 +361,6 @@ validate_extruded.default <- function(layer) {
   assert_type(extruded, "logical")
 }
 
-
 # validate filled
 validate_filled <- function(layer) {
   UseMethod("validate_filled")
@@ -412,7 +371,6 @@ validate_filled.default <- function(layer) {
   assert_type(filled, "logical")
 }
 
-
 # validate font_family
 validate_font_family <- function(layer) {
   UseMethod("validate_font_family")
@@ -421,7 +379,6 @@ validate_font_family.default <- function(layer) {
   font_family <- layer$font_family
   assert_not_null(font_family)
 }
-
 
 # validate font_settings
 validate_font_settings <- function(layer) {
@@ -432,7 +389,6 @@ validate_font_settings.default <- function(layer) {
   assert_not_null(font_settings)
 }
 
-
 # validate font_weight
 validate_font_weight <- function(layer) {
   UseMethod("validate_font_weight")
@@ -441,7 +397,6 @@ validate_font_weight.default <- function(layer) {
   font_weight <- layer$font_weight
   assert_not_null(font_weight)
 }
-
 
 # validate get_alignment_baseline
 validate_get_alignment_baseline <- function(layer) {
@@ -458,10 +413,11 @@ validate_get_alignment_baseline.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_alignment_baseline$col, data)
-    assert_type(data[[get_alignment_baseline$col]], "character")
+    if (!inherits(get_alignment_baseline, "accessor_scale")) {
+      assert_type(data[[get_alignment_baseline$col]], "character")
+    }
   }
 }
-
 
 # validate get_angle
 validate_get_angle <- function(layer) {
@@ -479,11 +435,12 @@ validate_get_angle.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_angle$col, data)
-    assert_type(data[[get_angle$col]], c("integer", "numeric"))
-    assert_finite(data[[get_angle$col]])
+    if (!inherits(get_angle, "accessor_scale")) {
+      assert_type(data[[get_angle$col]], c("integer", "numeric"))
+      assert_finite(data[[get_angle$col]])
+    }
   }
 }
-
 
 # validate get_animator
 validate_get_animator <- function(layer) {
@@ -493,7 +450,6 @@ validate_get_animator.default <- function(layer) {
   get_animator <- layer$get_animator
   assert_not_null(get_animator)
 }
-
 
 # validate get_color
 validate_get_color <- function(layer) {
@@ -510,10 +466,15 @@ validate_get_color.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_color$col, data)
-    assert_rgba(data[[get_color$col]])
+    if (!inherits(get_color, "accessor_scale")) {
+      assert_rgba(data[[get_color$col]])
+    }
+  }
+  if (inherits(get_color, "accessor_scale")) {
+    assert_scalable_is_color(get_color)
+    validate_col(get_color, data)
   }
 }
-
 
 # validate get_color_value
 validate_get_color_value <- function(layer) {
@@ -521,17 +482,10 @@ validate_get_color_value <- function(layer) {
 }
 validate_get_color_value.default <- function(layer) {
   get_color_value <- layer$get_color_value
-  # optional
   if (is.null(get_color_value)) {
     return()
   }
-  assert_type(get_color_value, "accessor")
-  data <- layer$data
-  if (inherits(data, "data.frame")) {
-    assert_col_exists(get_color_value$col, data)
-  }
 }
-
 
 # validate get_color_weight
 validate_get_color_weight <- function(layer) {
@@ -549,11 +503,16 @@ validate_get_color_weight.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_color_weight$col, data)
-    assert_type(data[[get_color_weight$col]], c("integer", "numeric"))
-    assert_finite(data[[get_color_weight$col]])
+    if (!inherits(get_color_weight, "accessor_scale")) {
+      assert_type(data[[get_color_weight$col]], c("integer", "numeric"))
+      assert_finite(data[[get_color_weight$col]])
+    }
+  }
+  if (inherits(get_color_weight, "accessor_scale")) {
+    assert_scalable_is_numeric(get_color_weight)
+    validate_col(get_color_weight, data)
   }
 }
-
 
 # validate get_elevation
 validate_get_elevation <- function(layer) {
@@ -571,11 +530,16 @@ validate_get_elevation.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_elevation$col, data)
-    assert_type(data[[get_elevation$col]], c("integer", "numeric"))
-    assert_finite(data[[get_elevation$col]])
+    if (!inherits(get_elevation, "accessor_scale")) {
+      assert_type(data[[get_elevation$col]], c("integer", "numeric"))
+      assert_finite(data[[get_elevation$col]])
+    }
+  }
+  if (inherits(get_elevation, "accessor_scale")) {
+    assert_scalable_is_numeric(get_elevation)
+    validate_col(get_elevation, data)
   }
 }
-
 
 # validate get_elevation_value
 validate_get_elevation_value <- function(layer) {
@@ -583,17 +547,10 @@ validate_get_elevation_value <- function(layer) {
 }
 validate_get_elevation_value.default <- function(layer) {
   get_elevation_value <- layer$get_elevation_value
-  # optional
   if (is.null(get_elevation_value)) {
     return()
   }
-  assert_type(get_elevation_value, "accessor")
-  data <- layer$data
-  if (inherits(data, "data.frame")) {
-    assert_col_exists(get_elevation_value$col, data)
-  }
 }
-
 
 # validate get_elevation_weight
 validate_get_elevation_weight <- function(layer) {
@@ -611,11 +568,16 @@ validate_get_elevation_weight.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_elevation_weight$col, data)
-    assert_type(data[[get_elevation_weight$col]], c("integer", "numeric"))
-    assert_finite(data[[get_elevation_weight$col]])
+    if (!inherits(get_elevation_weight, "accessor_scale")) {
+      assert_type(data[[get_elevation_weight$col]], c("integer", "numeric"))
+      assert_finite(data[[get_elevation_weight$col]])
+    }
+  }
+  if (inherits(get_elevation_weight, "accessor_scale")) {
+    assert_scalable_is_numeric(get_elevation_weight)
+    validate_col(get_elevation_weight, data)
   }
 }
-
 
 # validate get_fill_color
 validate_get_fill_color <- function(layer) {
@@ -632,10 +594,15 @@ validate_get_fill_color.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_fill_color$col, data)
-    assert_rgba(data[[get_fill_color$col]])
+    if (!inherits(get_fill_color, "accessor_scale")) {
+      assert_rgba(data[[get_fill_color$col]])
+    }
+  }
+  if (inherits(get_fill_color, "accessor_scale")) {
+    assert_scalable_is_color(get_fill_color)
+    validate_col(get_fill_color, data)
   }
 }
-
 
 # validate get_height
 validate_get_height <- function(layer) {
@@ -653,11 +620,16 @@ validate_get_height.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_height$col, data)
-    assert_type(data[[get_height$col]], c("integer", "numeric"))
-    assert_finite(data[[get_height$col]])
+    if (!inherits(get_height, "accessor_scale")) {
+      assert_type(data[[get_height$col]], c("integer", "numeric"))
+      assert_finite(data[[get_height$col]])
+    }
+  }
+  if (inherits(get_height, "accessor_scale")) {
+    assert_scalable_is_numeric(get_height)
+    validate_col(get_height, data)
   }
 }
-
 
 # validate get_hexagon
 validate_get_hexagon <- function(layer) {
@@ -670,9 +642,11 @@ validate_get_hexagon.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_hexagon$col, data)
+    if (!inherits(get_hexagon, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_hexagons
 validate_get_hexagons <- function(layer) {
@@ -685,9 +659,11 @@ validate_get_hexagons.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_hexagons$col, data)
+    if (!inherits(get_hexagons, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_icon
 validate_get_icon <- function(layer) {
@@ -700,9 +676,11 @@ validate_get_icon.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_icon$col, data)
+    if (!inherits(get_icon, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_line_color
 validate_get_line_color <- function(layer) {
@@ -719,10 +697,15 @@ validate_get_line_color.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_line_color$col, data)
-    assert_rgba(data[[get_line_color$col]])
+    if (!inherits(get_line_color, "accessor_scale")) {
+      assert_rgba(data[[get_line_color$col]])
+    }
+  }
+  if (inherits(get_line_color, "accessor_scale")) {
+    assert_scalable_is_color(get_line_color)
+    validate_col(get_line_color, data)
   }
 }
-
 
 # validate get_line_width
 validate_get_line_width <- function(layer) {
@@ -740,11 +723,16 @@ validate_get_line_width.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_line_width$col, data)
-    assert_type(data[[get_line_width$col]], c("integer", "numeric"))
-    assert_finite(data[[get_line_width$col]])
+    if (!inherits(get_line_width, "accessor_scale")) {
+      assert_type(data[[get_line_width$col]], c("integer", "numeric"))
+      assert_finite(data[[get_line_width$col]])
+    }
+  }
+  if (inherits(get_line_width, "accessor_scale")) {
+    assert_scalable_is_numeric(get_line_width)
+    validate_col(get_line_width, data)
   }
 }
-
 
 # validate get_normal
 validate_get_normal <- function(layer) {
@@ -760,9 +748,11 @@ validate_get_normal.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_normal$col, data)
+    if (!inherits(get_normal, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_orientation
 validate_get_orientation <- function(layer) {
@@ -778,9 +768,11 @@ validate_get_orientation.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_orientation$col, data)
+    if (!inherits(get_orientation, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_path
 validate_get_path <- function(layer) {
@@ -793,10 +785,11 @@ validate_get_path.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_path$col, data)
-    assert_type(data[[get_path$col]], "sfc_LINESTRING")
+    if (!inherits(get_path, "accessor_scale")) {
+      assert_type(data[[get_path$col]], "sfc_LINESTRING")
+    }
   }
 }
-
 
 # validate get_pixel_offset
 validate_get_pixel_offset <- function(layer) {
@@ -812,9 +805,11 @@ validate_get_pixel_offset.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_pixel_offset$col, data)
+    if (!inherits(get_pixel_offset, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_point_color
 validate_get_point_color <- function(layer) {
@@ -825,7 +820,6 @@ validate_get_point_color.default <- function(layer) {
   assert_not_null(get_point_color)
   assert_rgba(get_point_color)
 }
-
 
 # validate get_polygon
 validate_get_polygon <- function(layer) {
@@ -838,10 +832,11 @@ validate_get_polygon.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_polygon$col, data)
-    assert_type(data[[get_polygon$col]], "sfc_POLYGON")
+    if (!inherits(get_polygon, "accessor_scale")) {
+      assert_type(data[[get_polygon$col]], "sfc_POLYGON")
+    }
   }
 }
-
 
 # validate get_position
 validate_get_position <- function(layer) {
@@ -854,10 +849,11 @@ validate_get_position.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_position$col, data)
-    assert_type(data[[get_position$col]], "sfc_POINT")
+    if (!inherits(get_position, "accessor_scale")) {
+      assert_type(data[[get_position$col]], "sfc_POINT")
+    }
   }
 }
-
 
 # validate get_radius
 validate_get_radius <- function(layer) {
@@ -875,11 +871,16 @@ validate_get_radius.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_radius$col, data)
-    assert_type(data[[get_radius$col]], c("integer", "numeric"))
-    assert_finite(data[[get_radius$col]])
+    if (!inherits(get_radius, "accessor_scale")) {
+      assert_type(data[[get_radius$col]], c("integer", "numeric"))
+      assert_finite(data[[get_radius$col]])
+    }
+  }
+  if (inherits(get_radius, "accessor_scale")) {
+    assert_scalable_is_numeric(get_radius)
+    validate_col(get_radius, data)
   }
 }
-
 
 # validate get_s2_token
 validate_get_s2_token <- function(layer) {
@@ -892,9 +893,11 @@ validate_get_s2_token.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_s2_token$col, data)
+    if (!inherits(get_s2_token, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_scale
 validate_get_scale <- function(layer) {
@@ -910,9 +913,11 @@ validate_get_scale.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_scale$col, data)
+    if (!inherits(get_scale, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_scene
 validate_get_scene <- function(layer) {
@@ -922,7 +927,6 @@ validate_get_scene.default <- function(layer) {
   get_scene <- layer$get_scene
   assert_not_null(get_scene)
 }
-
 
 # validate get_size
 validate_get_size <- function(layer) {
@@ -940,11 +944,16 @@ validate_get_size.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_size$col, data)
-    assert_type(data[[get_size$col]], c("integer", "numeric"))
-    assert_finite(data[[get_size$col]])
+    if (!inherits(get_size, "accessor_scale")) {
+      assert_type(data[[get_size$col]], c("integer", "numeric"))
+      assert_finite(data[[get_size$col]])
+    }
+  }
+  if (inherits(get_size, "accessor_scale")) {
+    assert_scalable_is_numeric(get_size)
+    validate_col(get_size, data)
   }
 }
-
 
 # validate get_source_color
 validate_get_source_color <- function(layer) {
@@ -961,10 +970,15 @@ validate_get_source_color.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_source_color$col, data)
-    assert_rgba(data[[get_source_color$col]])
+    if (!inherits(get_source_color, "accessor_scale")) {
+      assert_rgba(data[[get_source_color$col]])
+    }
+  }
+  if (inherits(get_source_color, "accessor_scale")) {
+    assert_scalable_is_color(get_source_color)
+    validate_col(get_source_color, data)
   }
 }
-
 
 # validate get_source_position
 validate_get_source_position <- function(layer) {
@@ -977,10 +991,11 @@ validate_get_source_position.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_source_position$col, data)
-    assert_type(data[[get_source_position$col]], "sfc_POINT")
+    if (!inherits(get_source_position, "accessor_scale")) {
+      assert_type(data[[get_source_position$col]], "sfc_POINT")
+    }
   }
 }
-
 
 # validate get_target_color
 validate_get_target_color <- function(layer) {
@@ -997,10 +1012,15 @@ validate_get_target_color.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_target_color$col, data)
-    assert_rgba(data[[get_target_color$col]])
+    if (!inherits(get_target_color, "accessor_scale")) {
+      assert_rgba(data[[get_target_color$col]])
+    }
+  }
+  if (inherits(get_target_color, "accessor_scale")) {
+    assert_scalable_is_color(get_target_color)
+    validate_col(get_target_color, data)
   }
 }
-
 
 # validate get_target_position
 validate_get_target_position <- function(layer) {
@@ -1013,10 +1033,11 @@ validate_get_target_position.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_target_position$col, data)
-    assert_type(data[[get_target_position$col]], "sfc_POINT")
+    if (!inherits(get_target_position, "accessor_scale")) {
+      assert_type(data[[get_target_position$col]], "sfc_POINT")
+    }
   }
 }
-
 
 # validate get_text
 validate_get_text <- function(layer) {
@@ -1029,9 +1050,11 @@ validate_get_text.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_text$col, data)
+    if (!inherits(get_text, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_text_anchor
 validate_get_text_anchor <- function(layer) {
@@ -1048,10 +1071,11 @@ validate_get_text_anchor.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_text_anchor$col, data)
-    assert_type(data[[get_text_anchor$col]], "character")
+    if (!inherits(get_text_anchor, "accessor_scale")) {
+      assert_type(data[[get_text_anchor$col]], "character")
+    }
   }
 }
-
 
 # validate get_tile_data
 validate_get_tile_data <- function(layer) {
@@ -1059,12 +1083,10 @@ validate_get_tile_data <- function(layer) {
 }
 validate_get_tile_data.default <- function(layer) {
   get_tile_data <- layer$get_tile_data
-  # optional
   if (is.null(get_tile_data)) {
     return()
   }
 }
-
 
 # validate get_tilt
 validate_get_tilt <- function(layer) {
@@ -1082,11 +1104,12 @@ validate_get_tilt.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_tilt$col, data)
-    assert_type(data[[get_tilt$col]], c("integer", "numeric"))
-    assert_finite(data[[get_tilt$col]])
+    if (!inherits(get_tilt, "accessor_scale")) {
+      assert_type(data[[get_tilt$col]], c("integer", "numeric"))
+      assert_finite(data[[get_tilt$col]])
+    }
   }
 }
-
 
 # validate get_timestamps
 validate_get_timestamps <- function(layer) {
@@ -1094,7 +1117,6 @@ validate_get_timestamps <- function(layer) {
 }
 validate_get_timestamps.default <- function(layer) {
   get_timestamps <- layer$get_timestamps
-  # optional
   if (is.null(get_timestamps)) {
     return()
   }
@@ -1102,9 +1124,11 @@ validate_get_timestamps.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_timestamps$col, data)
+    if (!inherits(get_timestamps, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_transform_matrix
 validate_get_transform_matrix <- function(layer) {
@@ -1120,9 +1144,11 @@ validate_get_transform_matrix.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_transform_matrix$col, data)
+    if (!inherits(get_transform_matrix, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_translation
 validate_get_translation <- function(layer) {
@@ -1138,9 +1164,11 @@ validate_get_translation.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_translation$col, data)
+    if (!inherits(get_translation, "accessor_scale")) {
+
+    }
   }
 }
-
 
 # validate get_weight
 validate_get_weight <- function(layer) {
@@ -1158,11 +1186,16 @@ validate_get_weight.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_weight$col, data)
-    assert_type(data[[get_weight$col]], c("integer", "numeric"))
-    assert_finite(data[[get_weight$col]])
+    if (!inherits(get_weight, "accessor_scale")) {
+      assert_type(data[[get_weight$col]], c("integer", "numeric"))
+      assert_finite(data[[get_weight$col]])
+    }
+  }
+  if (inherits(get_weight, "accessor_scale")) {
+    assert_scalable_is_numeric(get_weight)
+    validate_col(get_weight, data)
   }
 }
-
 
 # validate get_width
 validate_get_width <- function(layer) {
@@ -1180,11 +1213,16 @@ validate_get_width.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_width$col, data)
-    assert_type(data[[get_width$col]], c("integer", "numeric"))
-    assert_finite(data[[get_width$col]])
+    if (!inherits(get_width, "accessor_scale")) {
+      assert_type(data[[get_width$col]], c("integer", "numeric"))
+      assert_finite(data[[get_width$col]])
+    }
+  }
+  if (inherits(get_width, "accessor_scale")) {
+    assert_scalable_is_numeric(get_width)
+    validate_col(get_width, data)
   }
 }
-
 
 # validate gpu_aggregation
 validate_gpu_aggregation <- function(layer) {
@@ -1196,7 +1234,6 @@ validate_gpu_aggregation.default <- function(layer) {
   assert_type(gpu_aggregation, "logical")
 }
 
-
 # validate great_circle
 validate_great_circle <- function(layer) {
   UseMethod("validate_great_circle")
@@ -1207,7 +1244,6 @@ validate_great_circle.default <- function(layer) {
   assert_type(great_circle, "logical")
 }
 
-
 # validate grid_aggregator
 validate_grid_aggregator <- function(layer) {
   UseMethod("validate_grid_aggregator")
@@ -1216,7 +1252,6 @@ validate_grid_aggregator.default <- function(layer) {
   grid_aggregator <- layer$grid_aggregator
   assert_not_null(grid_aggregator)
 }
-
 
 # validate hexagon_aggregator
 validate_hexagon_aggregator <- function(layer) {
@@ -1227,7 +1262,6 @@ validate_hexagon_aggregator.default <- function(layer) {
   assert_not_null(hexagon_aggregator)
 }
 
-
 # validate high_precision
 validate_high_precision <- function(layer) {
   UseMethod("validate_high_precision")
@@ -1237,7 +1271,6 @@ validate_high_precision.default <- function(layer) {
   assert_not_null(high_precision)
   assert_type(high_precision, "logical")
 }
-
 
 # validate highlight_color
 validate_highlight_color <- function(layer) {
@@ -1254,10 +1287,15 @@ validate_highlight_color.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(highlight_color$col, data)
-    assert_rgba(data[[highlight_color$col]])
+    if (!inherits(highlight_color, "accessor_scale")) {
+      assert_rgba(data[[highlight_color$col]])
+    }
+  }
+  if (inherits(highlight_color, "accessor_scale")) {
+    assert_scalable_is_color(highlight_color)
+    validate_col(highlight_color, data)
   }
 }
-
 
 # validate highlighted_feature_id
 validate_highlighted_feature_id <- function(layer) {
@@ -1265,12 +1303,10 @@ validate_highlighted_feature_id <- function(layer) {
 }
 validate_highlighted_feature_id.default <- function(layer) {
   highlighted_feature_id <- layer$highlighted_feature_id
-  # optional
   if (is.null(highlighted_feature_id)) {
     return()
   }
 }
-
 
 # validate icon_atlas
 validate_icon_atlas <- function(layer) {
@@ -1278,12 +1314,10 @@ validate_icon_atlas <- function(layer) {
 }
 validate_icon_atlas.default <- function(layer) {
   icon_atlas <- layer$icon_atlas
-  # optional
   if (is.null(icon_atlas)) {
     return()
   }
 }
-
 
 # validate icon_mapping
 validate_icon_mapping <- function(layer) {
@@ -1294,19 +1328,16 @@ validate_icon_mapping.default <- function(layer) {
   assert_not_null(icon_mapping)
 }
 
-
 # validate image
 validate_image <- function(layer) {
   UseMethod("validate_image")
 }
 validate_image.default <- function(layer) {
   image <- layer$image
-  # optional
   if (is.null(image)) {
     return()
   }
 }
-
 
 # validate intensity
 validate_intensity <- function(layer) {
@@ -1320,7 +1351,6 @@ validate_intensity.default <- function(layer) {
   assert_range(intensity, 0, NULL)
 }
 
-
 # validate line_height
 validate_line_height <- function(layer) {
   UseMethod("validate_line_height")
@@ -1332,7 +1362,6 @@ validate_line_height.default <- function(layer) {
   assert_finite(line_height)
 }
 
-
 # validate line_joint_rounded
 validate_line_joint_rounded <- function(layer) {
   UseMethod("validate_line_joint_rounded")
@@ -1342,7 +1371,6 @@ validate_line_joint_rounded.default <- function(layer) {
   assert_not_null(line_joint_rounded)
   assert_type(line_joint_rounded, "logical")
 }
-
 
 # validate line_miter_limit
 validate_line_miter_limit <- function(layer) {
@@ -1355,7 +1383,6 @@ validate_line_miter_limit.default <- function(layer) {
   assert_finite(line_miter_limit)
 }
 
-
 # validate line_width_max_pixels
 validate_line_width_max_pixels <- function(layer) {
   UseMethod("validate_line_width_max_pixels")
@@ -1366,7 +1393,6 @@ validate_line_width_max_pixels.default <- function(layer) {
   assert_type(line_width_max_pixels, c("integer", "numeric"))
   assert_finite(line_width_max_pixels)
 }
-
 
 # validate line_width_min_pixels
 validate_line_width_min_pixels <- function(layer) {
@@ -1379,7 +1405,6 @@ validate_line_width_min_pixels.default <- function(layer) {
   assert_finite(line_width_min_pixels)
 }
 
-
 # validate line_width_scale
 validate_line_width_scale <- function(layer) {
   UseMethod("validate_line_width_scale")
@@ -1391,7 +1416,6 @@ validate_line_width_scale.default <- function(layer) {
   assert_finite(line_width_scale)
 }
 
-
 # validate line_width_units
 validate_line_width_units <- function(layer) {
   UseMethod("validate_line_width_units")
@@ -1400,7 +1424,6 @@ validate_line_width_units.default <- function(layer) {
   line_width_units <- layer$line_width_units
   assert_not_null(line_width_units)
 }
-
 
 # validate load_options
 validate_load_options <- function(layer) {
@@ -1411,7 +1434,6 @@ validate_load_options.default <- function(layer) {
   assert_not_null(load_options)
 }
 
-
 # validate loader
 validate_loader <- function(layer) {
   UseMethod("validate_loader")
@@ -1420,7 +1442,6 @@ validate_loader.default <- function(layer) {
   loader <- layer$loader
   assert_not_null(loader)
 }
-
 
 # validate lower_percentile
 validate_lower_percentile <- function(layer) {
@@ -1434,7 +1455,6 @@ validate_lower_percentile.default <- function(layer) {
   assert_range(lower_percentile, 0, 100)
 }
 
-
 # validate material
 validate_material <- function(layer) {
   UseMethod("validate_material")
@@ -1445,19 +1465,16 @@ validate_material.default <- function(layer) {
   assert_type(material, "logical")
 }
 
-
 # validate max_cache_byte_size
 validate_max_cache_byte_size <- function(layer) {
   UseMethod("validate_max_cache_byte_size")
 }
 validate_max_cache_byte_size.default <- function(layer) {
   max_cache_byte_size <- layer$max_cache_byte_size
-  # optional
   if (is.null(max_cache_byte_size)) {
     return()
   }
 }
-
 
 # validate max_cache_size
 validate_max_cache_size <- function(layer) {
@@ -1465,12 +1482,10 @@ validate_max_cache_size <- function(layer) {
 }
 validate_max_cache_size.default <- function(layer) {
   max_cache_size <- layer$max_cache_size
-  # optional
   if (is.null(max_cache_size)) {
     return()
   }
 }
-
 
 # validate max_requests
 validate_max_requests <- function(layer) {
@@ -1483,7 +1498,6 @@ validate_max_requests.default <- function(layer) {
   assert_finite(max_requests)
 }
 
-
 # validate max_width
 validate_max_width <- function(layer) {
   UseMethod("validate_max_width")
@@ -1495,19 +1509,16 @@ validate_max_width.default <- function(layer) {
   assert_finite(max_width)
 }
 
-
 # validate max_zoom
 validate_max_zoom <- function(layer) {
   UseMethod("validate_max_zoom")
 }
 validate_max_zoom.default <- function(layer) {
   max_zoom <- layer$max_zoom
-  # optional
   if (is.null(max_zoom)) {
     return()
   }
 }
-
 
 # validate mesh
 validate_mesh <- function(layer) {
@@ -1515,12 +1526,10 @@ validate_mesh <- function(layer) {
 }
 validate_mesh.default <- function(layer) {
   mesh <- layer$mesh
-  # optional
   if (is.null(mesh)) {
     return()
   }
 }
-
 
 # validate mesh_max_error
 validate_mesh_max_error <- function(layer) {
@@ -1533,7 +1542,6 @@ validate_mesh_max_error.default <- function(layer) {
   assert_finite(mesh_max_error)
 }
 
-
 # validate min_zoom
 validate_min_zoom <- function(layer) {
   UseMethod("validate_min_zoom")
@@ -1544,7 +1552,6 @@ validate_min_zoom.default <- function(layer) {
   assert_type(min_zoom, c("integer", "numeric"))
   assert_finite(min_zoom)
 }
-
 
 # validate miter_limit
 validate_miter_limit <- function(layer) {
@@ -1558,7 +1565,6 @@ validate_miter_limit.default <- function(layer) {
   assert_range(miter_limit, 0, NULL)
 }
 
-
 # validate offset
 validate_offset <- function(layer) {
   UseMethod("validate_offset")
@@ -1567,7 +1573,6 @@ validate_offset.default <- function(layer) {
   offset <- layer$offset
   assert_not_null(offset)
 }
-
 
 # validate opacity
 validate_opacity <- function(layer) {
@@ -1581,7 +1586,6 @@ validate_opacity.default <- function(layer) {
   assert_range(opacity, 0, 1)
 }
 
-
 # validate pickable
 validate_pickable <- function(layer) {
   UseMethod("validate_pickable")
@@ -1591,7 +1595,6 @@ validate_pickable.default <- function(layer) {
   assert_not_null(pickable)
   assert_type(pickable, "logical")
 }
-
 
 # validate point_radius_max_pixels
 validate_point_radius_max_pixels <- function(layer) {
@@ -1604,7 +1607,6 @@ validate_point_radius_max_pixels.default <- function(layer) {
   assert_finite(point_radius_max_pixels)
 }
 
-
 # validate point_radius_min_pixels
 validate_point_radius_min_pixels <- function(layer) {
   UseMethod("validate_point_radius_min_pixels")
@@ -1615,7 +1617,6 @@ validate_point_radius_min_pixels.default <- function(layer) {
   assert_type(point_radius_min_pixels, c("integer", "numeric"))
   assert_finite(point_radius_min_pixels)
 }
-
 
 # validate point_radius_scale
 validate_point_radius_scale <- function(layer) {
@@ -1628,7 +1629,6 @@ validate_point_radius_scale.default <- function(layer) {
   assert_finite(point_radius_scale)
 }
 
-
 # validate point_radius_units
 validate_point_radius_units <- function(layer) {
   UseMethod("validate_point_radius_units")
@@ -1637,7 +1637,6 @@ validate_point_radius_units.default <- function(layer) {
   point_radius_units <- layer$point_radius_units
   assert_not_null(point_radius_units)
 }
-
 
 # validate point_size
 validate_point_size <- function(layer) {
@@ -1650,7 +1649,6 @@ validate_point_size.default <- function(layer) {
   assert_finite(point_size)
 }
 
-
 # validate position_format
 validate_position_format <- function(layer) {
   UseMethod("validate_position_format")
@@ -1659,7 +1657,6 @@ validate_position_format.default <- function(layer) {
   position_format <- layer$position_format
   assert_not_null(position_format)
 }
-
 
 # validate radius
 validate_radius <- function(layer) {
@@ -1673,7 +1670,6 @@ validate_radius.default <- function(layer) {
   assert_range(radius, 1, NULL)
 }
 
-
 # validate radius_max_pixels
 validate_radius_max_pixels <- function(layer) {
   UseMethod("validate_radius_max_pixels")
@@ -1685,7 +1681,6 @@ validate_radius_max_pixels.default <- function(layer) {
   assert_finite(radius_max_pixels)
   assert_range(radius_max_pixels, 0, NULL)
 }
-
 
 # validate radius_min_pixels
 validate_radius_min_pixels <- function(layer) {
@@ -1699,7 +1694,6 @@ validate_radius_min_pixels.default <- function(layer) {
   assert_range(radius_min_pixels, 0, NULL)
 }
 
-
 # validate radius_pixels
 validate_radius_pixels <- function(layer) {
   UseMethod("validate_radius_pixels")
@@ -1711,7 +1705,6 @@ validate_radius_pixels.default <- function(layer) {
   assert_finite(radius_pixels)
   assert_range(radius_pixels, 1, 100)
 }
-
 
 # validate radius_scale
 validate_radius_scale <- function(layer) {
@@ -1725,7 +1718,6 @@ validate_radius_scale.default <- function(layer) {
   assert_range(radius_scale, 0, NULL)
 }
 
-
 # validate radius_units
 validate_radius_units <- function(layer) {
   UseMethod("validate_radius_units")
@@ -1735,7 +1727,6 @@ validate_radius_units.default <- function(layer) {
   assert_not_null(radius_units)
 }
 
-
 # validate refinement_strategy
 validate_refinement_strategy <- function(layer) {
   UseMethod("validate_refinement_strategy")
@@ -1744,7 +1735,6 @@ validate_refinement_strategy.default <- function(layer) {
   refinement_strategy <- layer$refinement_strategy
   assert_not_null(refinement_strategy)
 }
-
 
 # validate rounded
 validate_rounded <- function(layer) {
@@ -1756,19 +1746,16 @@ validate_rounded.default <- function(layer) {
   assert_type(rounded, "logical")
 }
 
-
 # validate scenegraph
 validate_scenegraph <- function(layer) {
   UseMethod("validate_scenegraph")
 }
 validate_scenegraph.default <- function(layer) {
   scenegraph <- layer$scenegraph
-  # optional
   if (is.null(scenegraph)) {
     return()
   }
 }
-
 
 # validate size_max_pixels
 validate_size_max_pixels <- function(layer) {
@@ -1782,7 +1769,6 @@ validate_size_max_pixels.default <- function(layer) {
   assert_range(size_max_pixels, 0, NULL)
 }
 
-
 # validate size_min_pixels
 validate_size_min_pixels <- function(layer) {
   UseMethod("validate_size_min_pixels")
@@ -1794,7 +1780,6 @@ validate_size_min_pixels.default <- function(layer) {
   assert_finite(size_min_pixels)
   assert_range(size_min_pixels, 0, NULL)
 }
-
 
 # validate size_scale
 validate_size_scale <- function(layer) {
@@ -1808,7 +1793,6 @@ validate_size_scale.default <- function(layer) {
   assert_range(size_scale, 0, NULL)
 }
 
-
 # validate size_units
 validate_size_units <- function(layer) {
   UseMethod("validate_size_units")
@@ -1817,7 +1801,6 @@ validate_size_units.default <- function(layer) {
   size_units <- layer$size_units
   assert_not_null(size_units)
 }
-
 
 # validate stroked
 validate_stroked <- function(layer) {
@@ -1829,19 +1812,16 @@ validate_stroked.default <- function(layer) {
   assert_type(stroked, "logical")
 }
 
-
 # validate texture
 validate_texture <- function(layer) {
   UseMethod("validate_texture")
 }
 validate_texture.default <- function(layer) {
   texture <- layer$texture
-  # optional
   if (is.null(texture)) {
     return()
   }
 }
-
 
 # validate threshold
 validate_threshold <- function(layer) {
@@ -1855,7 +1835,6 @@ validate_threshold.default <- function(layer) {
   assert_range(threshold, 0, 1)
 }
 
-
 # validate tile_size
 validate_tile_size <- function(layer) {
   UseMethod("validate_tile_size")
@@ -1867,7 +1846,6 @@ validate_tile_size.default <- function(layer) {
   assert_finite(tile_size)
 }
 
-
 # validate tint_color
 validate_tint_color <- function(layer) {
   UseMethod("validate_tint_color")
@@ -1877,7 +1855,6 @@ validate_tint_color.default <- function(layer) {
   assert_not_null(tint_color)
   assert_rgba(tint_color)
 }
-
 
 # validate trail_length
 validate_trail_length <- function(layer) {
@@ -1891,7 +1868,6 @@ validate_trail_length.default <- function(layer) {
   assert_range(trail_length, 0, NULL)
 }
 
-
 # validate transparent_color
 validate_transparent_color <- function(layer) {
   UseMethod("validate_transparent_color")
@@ -1902,7 +1878,6 @@ validate_transparent_color.default <- function(layer) {
   assert_rgba(transparent_color)
 }
 
-
 # validate unique_id_property
 validate_unique_id_property <- function(layer) {
   UseMethod("validate_unique_id_property")
@@ -1912,7 +1887,6 @@ validate_unique_id_property.default <- function(layer) {
   assert_not_null(unique_id_property)
   assert_type(unique_id_property, "character")
 }
-
 
 # validate upper_percentile
 validate_upper_percentile <- function(layer) {
@@ -1926,19 +1900,16 @@ validate_upper_percentile.default <- function(layer) {
   assert_range(upper_percentile, 0, 100)
 }
 
-
 # validate vertices
 validate_vertices <- function(layer) {
   UseMethod("validate_vertices")
 }
 validate_vertices.default <- function(layer) {
   vertices <- layer$vertices
-  # optional
   if (is.null(vertices)) {
     return()
   }
 }
-
 
 # validate visible
 validate_visible <- function(layer) {
@@ -1949,7 +1920,6 @@ validate_visible.default <- function(layer) {
   assert_not_null(visible)
   assert_type(visible, "logical")
 }
-
 
 # validate width_max_pixels
 validate_width_max_pixels <- function(layer) {
@@ -1963,7 +1933,6 @@ validate_width_max_pixels.default <- function(layer) {
   assert_range(width_max_pixels, 0, NULL)
 }
 
-
 # validate width_min_pixels
 validate_width_min_pixels <- function(layer) {
   UseMethod("validate_width_min_pixels")
@@ -1975,7 +1944,6 @@ validate_width_min_pixels.default <- function(layer) {
   assert_finite(width_min_pixels)
   assert_range(width_min_pixels, 0, NULL)
 }
-
 
 # validate width_scale
 validate_width_scale <- function(layer) {
@@ -1989,7 +1957,6 @@ validate_width_scale.default <- function(layer) {
   assert_range(width_scale, 0, NULL)
 }
 
-
 # validate width_units
 validate_width_units <- function(layer) {
   UseMethod("validate_width_units")
@@ -1998,7 +1965,6 @@ validate_width_units.default <- function(layer) {
   width_units <- layer$width_units
   assert_not_null(width_units)
 }
-
 
 # validate wireframe
 validate_wireframe <- function(layer) {
@@ -2010,7 +1976,6 @@ validate_wireframe.default <- function(layer) {
   assert_type(wireframe, "logical")
 }
 
-
 # validate word_break
 validate_word_break <- function(layer) {
   UseMethod("validate_word_break")
@@ -2020,20 +1985,17 @@ validate_word_break.default <- function(layer) {
   assert_not_null(word_break)
 }
 
-
 # validate worker_url
 validate_worker_url <- function(layer) {
   UseMethod("validate_worker_url")
 }
 validate_worker_url.default <- function(layer) {
   worker_url <- layer$worker_url
-  # optional
   if (is.null(worker_url)) {
     return()
   }
   assert_type(worker_url, "character")
 }
-
 
 # validate z_offset
 validate_z_offset <- function(layer) {
@@ -2046,14 +2008,12 @@ validate_z_offset.default <- function(layer) {
   assert_finite(z_offset)
 }
 
-
 # validate z_range
 validate_z_range <- function(layer) {
   UseMethod("validate_z_range")
 }
 validate_z_range.default <- function(layer) {
   z_range <- layer$z_range
-  # optional
   if (is.null(z_range)) {
     return()
   }

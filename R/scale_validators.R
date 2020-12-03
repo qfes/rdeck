@@ -24,11 +24,29 @@ validate_col.scale_category <- function(scale, data = NULL) {
 
 # validate palette
 validate_palette <- function(scale) {
+  UseMethod("validate_palette")
+}
+
+validate_palette.default <- function(scale) {
+  assert_rgba(scale$palette, "palette")
+  assert_length(scale$palette, 2, `>=`, "palette")
+}
+
+validate_palette.scale_category <- function(scale) {
   assert_rgba(scale$palette, "palette")
 }
 
 # validate range
 validate_range <- function(scale) {
+  UseMethod("validate_range")
+}
+
+validate_range.default <- function(scale) {
+  assert_type(scale$range, c("integer", "numeric"), "range")
+  assert_length(scale$palette, 2, `>=`, "palette")
+}
+
+validate_range.scale_category <- function(scale) {
   assert_type(scale$range, c("integer", "numeric"), "range")
 }
 

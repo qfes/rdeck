@@ -8,7 +8,7 @@
 scale_color_linear <- function(col, palette,
                                limits = NULL, breaks = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   linear_scale <- scale(
     "linear",
@@ -32,7 +32,7 @@ scale_color_linear <- function(col, palette,
 scale_linear <- function(col, range = 0:1,
                          limits = NULL, breaks = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   linear_scale <- scale(
     "linear",
@@ -63,7 +63,7 @@ scale_linear <- function(col, range = 0:1,
 scale_color_power <- function(col, palette, exponent = 0.5,
                               limits = NULL, breaks = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   power_scale <- scale(
     "power",
@@ -89,7 +89,7 @@ scale_color_power <- function(col, palette, exponent = 0.5,
 scale_power <- function(col, range = 0:1, exponent = 0.5,
                         limits = NULL, breaks = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   power_scale <- scale(
     "power",
@@ -123,7 +123,7 @@ scale_power <- function(col, range = 0:1, exponent = 0.5,
 scale_color_log <- function(col, palette, base = 10,
                             limits = NULL, breaks = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   log_scale <- scale(
     "log",
@@ -149,7 +149,7 @@ scale_color_log <- function(col, palette, base = 10,
 scale_log <- function(col, range = 0:1, base = 10,
                       limits = NULL, breaks = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   log_scale <- scale(
     "log",
@@ -183,7 +183,7 @@ scale_log <- function(col, range = 0:1, base = 10,
 #' @export
 scale_color_threshold <- function(col, palette, limits = NULL, breaks = 0.5, legend = TRUE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   threshold_scale <- scale(
     "threshold",
@@ -206,7 +206,7 @@ scale_color_threshold <- function(col, palette, limits = NULL, breaks = 0.5, leg
 #' @export
 scale_threshold <- function(col, range = 0:1, limits = NULL, breaks = 0.5, legend = FALSE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   threshold_scale <- scale(
     "threshold",
@@ -236,7 +236,7 @@ scale_threshold <- function(col, range = 0:1, limits = NULL, breaks = 0.5, legen
 #' @export
 scale_color_quantile <- function(col, palette, legend = TRUE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   quantile_scale <- scale(
     "quantile",
@@ -255,7 +255,7 @@ scale_color_quantile <- function(col, palette, legend = TRUE) {
 #' @export
 scale_quantile <- function(col, range = 1:5, legend = FALSE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   quantile_scale <- scale(
     "quantile",
@@ -283,7 +283,7 @@ scale_quantile <- function(col, range = 1:5, legend = FALSE) {
 #' @export
 scale_color_category <- function(col, palette, levels = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   category_scale <- scale(
     "category",
@@ -303,7 +303,7 @@ scale_color_category <- function(col, palette, levels = NULL, legend = TRUE) {
 #' @export
 scale_category <- function(col, range = 0:1, levels = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   category_scale <- scale(
     "category",
@@ -329,7 +329,7 @@ scale_category <- function(col, range = 0:1, levels = NULL, legend = FALSE) {
 #' @export
 scale_color_quantize <- function(col, palette, limits = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   quantize_scale <- scale(
     "quantize",
@@ -350,7 +350,7 @@ scale_color_quantize <- function(col, palette, limits = NULL, legend = TRUE) {
 #' @export
 scale_quantize <- function(col, range = 0:1, limits = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
-  assert_quo_is_sym(col)
+  assert_quo_is_sym(col, "col")
 
   quantize_scale <- scale(
     "quantize",

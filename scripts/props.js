@@ -29,7 +29,6 @@ function getProps(Layer) {
   // remove polygon from geo-layers
   if (/^S2|H3/.test(Layer.layerName)) {
     // we don't need this
-
     delete Layer._propTypes.getPolygon;
   }
 
@@ -47,17 +46,21 @@ function getProps(Layer) {
     Layer._propTypes = {
       // @ts-ignore
       ...deck.GeoJsonLayer._propTypes,
-      ...Layer._propTypes
+      ...Layer._propTypes,
     };
   }
 
   return Object.values(Layer._propTypes)
     .filter((propType) => !excludeProps.includes(propType.name))
     .filter((propType) => !/^(_|on)/.test(propType.name))
-    .map(propType => ({
+    .map((propType) => ({
       ...propType,
+      type: /get(Color|Elevation)Value/.test(propType.name) ? "unknown" : propType.type,
       value: getValue(propType),
-      valueType: getValueType(propType)
+      valueType: getValueType(propType),
+      scalable:
+        propType.type === "accessor" &&
+        /(radius|elevation|color|weight|width|height|size)$/i.test(propType.name),
     }));
 }
 

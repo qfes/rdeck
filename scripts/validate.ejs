@@ -19,58 +19,15 @@
 <%- func -%>.default <- function(layer) {
   <%- name -%> <- layer$<%- name -%>
   <%# validate optional / required %>
-  <% if (optional) { -%>
-    # optional
-    if (is.null(<%- name -%>)) {
-      return()
-    }
-  <% } else { -%>
-    assert_not_null(<%- name -%>)
-  <% } -%>
+  <%- optional
+    ? `if (is.null(${name})) { return() }`
+    : `assert_not_null(${name})`
+  -%>
   <%# accessors -%>
   <% if (type === "accessor") { -%>
-    <%# validate constant -%>
-    <% if (valueType !== "function" && valueType) { -%>
-      if(!inherits(<%- name -%>, "accessor")) {
-        <%- assert(valueType, name) -%>
-        return()
-      }
-    <% } -%>
-    <%# validate accessor -%>
-    assert_type(<%- name -%>, "accessor")
-    data <- layer$data
-    if (inherits(data, "data.frame")) {
-      assert_col_exists(<%- name -%>$col, data)
-      <% const col = `data[[${name}$col]]`; -%>
-      <%# validate accessor data -%>
-      <%- assert(valueType, col) -%>
-      <% if (sfc !== null) { -%>
-        assert_type(<%- col -%>, "<%- sfc -%>")
-      <% } -%>
-    }
+    <%- include("./validate-accessor", {name, type: valueType, scalable, min, max}) -%>
   <%# others -%>
   <% } else { -%>
-    <%- assert(type, name) -%>
+    <%- include("./validate-type", {name, type, min, max}) -%>
   <% } -%>
 }
-<% function assert(type, name) { -%>
-  <% if (type === "boolean") { -%>
-    assert_type(<%- name -%>, "logical")
-  <% } -%>
-
-  <% if (type === "string") { -%>
-    assert_type(<%- name -%>, "character")
-  <% } -%>
-
-  <% if (type === "number") { -%>
-    assert_type(<%- name -%>, c("integer", "numeric"))
-    assert_finite(<%- name -%>)
-    <% if (min !== null || max !== null) { -%>
-      assert_range(<%- name -%>, <%- min ?? "NULL" -%>, <%- max ?? "NULL" -%>)
-    <% } -%>
-  <% } -%>
-
-  <% if (type === "color" || /color$|color\$/.test(name) || name === "color_range") { -%>
-    assert_rgba(<%- name -%>)
-  <% } -%>
-<% } -%>
