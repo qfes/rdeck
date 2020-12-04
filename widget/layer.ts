@@ -26,7 +26,7 @@ export default class RDeckLayer {
   constructor({ type, ...props }: RDeckLayerProps) {
     const entries = Object.entries(props);
 
-    const colors = convertColors(entries);
+    const colors = getColors(entries);
     const accessors = getAccessors(entries);
 
     // @ts-ignore
@@ -53,13 +53,13 @@ export default class RDeckLayer {
   }
 }
 
-function isColor(name: string, value: any) {
+export function isColor([name, value]: [string, any]) {
   return name.endsWith("Color") && (Array.isArray(value) || typeof value === "string");
 }
 
-function convertColors(entries: Entry<any>[]): Entry<Color | Color[]>[] {
+function getColors(entries: Entry<any>[]): Entry<Color | Color[]>[] {
   const colors = entries
-    .filter(([name, value]) => isColor(name, value))
+    .filter(isColor)
     .map(([name, color]): Entry<Color> => [name, parseColor(color)]);
 
   const colorRange = entries.find(([name]) => name === "colorRange");
@@ -75,7 +75,7 @@ function getAccessors(entries: Entry<any>[]): Entry<Accessor>[] {
     .filter(([, value]) => isAccessor(value))
     .map(([name, value]) => [
       name,
-      isAccessorScale(value) ? accessorScale(value, name) : accessor(value),
+      isAccessorScale(value) ? accessorScale(value, name) : accessor(value, name),
     ]);
 }
 

@@ -7,10 +7,12 @@ import {
   ScaleOrdinal,
   scalePow,
   ScalePower,
-  ScaleQuantile,
   scaleQuantize,
   ScaleQuantize,
-} from "d3";
+  ScaleThreshold,
+  scaleThreshold,
+} from "d3-scale";
+import { access } from "fs/promises";
 import { Feature } from "geojson";
 import { Accessor, AccessorFn, isAccessor } from "./accessor";
 import { parseColor } from "./color";
@@ -20,6 +22,8 @@ type ScaleFn = (data: any) => number | Color;
 type AccessorScaleBase = Accessor & {
   name: string;
   range: (number | Color)[];
+  palette: (string | Color)[];
+  unknown: number | Color;
   legend: boolean;
 };
 
@@ -29,6 +33,13 @@ export type AccessorScaleLinear = AccessorScaleBase & {
   scaleData: ScaleLinear<number, number | Color>;
 };
 
+export type AccessorScalePower = AccessorScaleBase & {
+  scale: "power";
+  domain: number[];
+  exponent: number;
+  scaleData: ScalePower<number, number | Color>;
+};
+
 export type AccessorScaleLog = AccessorScaleBase & {
   scale: "log";
   domain: number[];
@@ -36,11 +47,22 @@ export type AccessorScaleLog = AccessorScaleBase & {
   scaleData: ScaleLogarithmic<number, number | Color>;
 };
 
-export type AccessorScalePower = AccessorScaleBase & {
-  scale: "power";
+export type AccessorScaleThreshold = AccessorScaleBase & {
+  scale: "threshold";
   domain: number[];
-  exponent: number;
-  scaleData: ScalePower<number, number | Color>;
+  scaleData: ScaleThreshold<number, number | Color>;
+};
+
+export type AccessorScaleQuantile = AccessorScaleBase & {
+  scale: "quantile";
+  domain: number[];
+  scaleData: ScaleThreshold<number, number | Color>;
+};
+
+export type AccessorScaleCategory = AccessorScaleBase & {
+  scale: "category";
+  domain: string[];
+  scaleData: ScaleOrdinal<string, number | Color>;
 };
 
 export type AccessorScaleQuantize = AccessorScaleBase & {
@@ -49,41 +71,26 @@ export type AccessorScaleQuantize = AccessorScaleBase & {
   scaleData: ScaleQuantize<number | Color>;
 };
 
-export type AccessorScaleQuantile = AccessorScaleBase & {
-  scale: "quantile";
-  domain: [number, number];
-  scaleData: ScaleQuantile<number | Color>;
-};
-
-export type AccessorScaleOrdinal = AccessorScaleBase & {
-  scale: "ordinal";
-  domain: string[];
-  scaleData: ScaleOrdinal<string, number | Color>;
-};
-
 export type AccessorScale =
   | AccessorScaleLinear
-  | AccessorScaleLog
   | AccessorScalePower
-  | AccessorScaleQuantize
+  | AccessorScaleLog
+  | AccessorScaleThreshold
   | AccessorScaleQuantile
-  | AccessorScaleOrdinal;
+  | AccessorScaleCategory
+  | AccessorScaleQuantize;
 
 export function isAccessorScale(obj: any): obj is AccessorScale {
   return isAccessor(obj) && "scale" in obj;
 }
 
 export function accessorScale(obj: AccessorScale, name: string): AccessorScale {
-  if (name.endsWith("Color")) {
-    obj = {
-      ...obj,
-      // colours can have a range consisting of hex strings
-      range: obj.range.map((color: any) => parseColor(color))
-    }
+  if ("palette" in obj) {
+    obj.range = obj.palette.map((color) => parseColor(color));
   }
 
   const scaleData = scaleFn(obj) as any;
-  const getData = accessorFn(obj, scaleData) as AccessorFn<any>
+  const getData = accessorFn(obj, scaleData) as AccessorFn<any>;
   return {
     ...obj,
     name,
@@ -94,22 +101,44 @@ export function accessorScale(obj: AccessorScale, name: string): AccessorScale {
 
 function scaleFn(accessor: AccessorScale) {
   type T = number | Color;
+
   switch (accessor.scale) {
     case "linear":
-      return scaleLinear<T>().domain(accessor.domain).range(accessor.range);
-    case "log":
-      return scaleLog<T>().domain(accessor.domain).range(accessor.range).base(accessor.base);
-    case "power":
-      return scalePow<T>()
+      return scaleLinear<T>()
         .domain(accessor.domain)
         .range(accessor.range)
-        .exponent(accessor.exponent);
-    case "quantize":
-      return scaleQuantize<T>().domain(accessor.domain).range(accessor.range);
+        .unknown(accessor.unknown)
+        .clamp(true);
+    case "power":
+      return scalePow<T>()
+        .exponent(accessor.exponent)
+        .domain(accessor.domain)
+        .range(accessor.range)
+        .unknown(accessor.unknown)
+        .clamp(true);
+    case "log":
+      return scaleLog<T>()
+        .base(accessor.base)
+        .domain(accessor.domain)
+        .range(accessor.range)
+        .unknown(accessor.unknown)
+        .clamp(true);
+    case "threshold":
     case "quantile":
-      return scaleQuantize<T>().domain(accessor.domain).range(accessor.range);
-    case "ordinal":
-      return scaleOrdinal<T>().domain(accessor.domain).range(accessor.range);
+      return scaleThreshold<number, T>()
+        .domain(accessor.domain)
+        .range(accessor.range)
+        .unknown(accessor.unknown);
+    case "category":
+      return scaleOrdinal<T>() //
+        .domain(accessor.domain)
+        .range(accessor.range)
+        .unknown(accessor.unknown);
+    case "quantize":
+      return scaleQuantize<T>() //
+        .domain(accessor.domain)
+        .range(accessor.range)
+        .unknown(accessor.unknown);
     default:
       throw TypeError(`scale ${(accessor as any).scale} not supported`);
   }

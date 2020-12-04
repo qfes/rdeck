@@ -29,6 +29,8 @@ scale_domain.scale_log <- function(scale, data = NULL) {
   invert(domain)
 }
 
+scale_domain.scale_threshold <- function(scale, data) scale$breaks
+
 scale_domain.scale_quantile <- function(scale, data = NULL) {
   assert_type(data, "data.frame")
   col <- data[[scale$col]]
@@ -40,8 +42,18 @@ scale_domain.scale_quantile <- function(scale, data = NULL) {
   quantile(col, probs = breaks, na.rm = TRUE, names = FALSE)
 }
 
-scale_domain.scale_threshold <- function(scale, data) scale$breaks
-scale_domain.scale_category <- function(scale, data) scale$levels
+scale_domain.scale_category <- function(scale, data) {
+  if (!inherits(data, "data.frame")) {
+    assert_not_null(scale$levels)
+  }
+
+  levels_ <- scale$levels %||% data[[scale$col]]
+  scale$levels <- levels(levels_) %||% unique(levels_)
+
+  assert_length(scale$levels, length(scale$palette %||% scale$range), name = "levels")
+  scale$levels
+}
+
 scale_domain.scale_quantize <- function(scale, data) scale$limits
 
 continuous_domain <- function(limits, breaks = NULL, length) {

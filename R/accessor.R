@@ -85,7 +85,6 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
 
   # scale domain
   scale$domain <- scale_domain(scale, data)
-
   scale
 }
 

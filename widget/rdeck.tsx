@@ -58,7 +58,7 @@ const RDeck = ({ props, layers, width, height }: RDeckProps) => {
         )}
       </DeckGL>
       <Tooltip info={info} />
-      <Legend layers={legendLayers} />
+      {/* <Legend layers={legendLayers} /> */}
     </Fragment>
   );
 };

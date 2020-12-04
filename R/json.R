@@ -54,8 +54,18 @@ to_json.accessor <- function(obj) {
   )
 }
 
+to_json.accessor_scale <- function(obj) {
+  if (!is.null(obj$domain)) {
+    # prevent simplification
+    obj$domain <- as.list(obj$domain)
+  }
+
+  NextMethod()
+}
+
 to_json.tooltip <- function(obj) {
-  cols <- if (is.logical(obj$cols)) obj$cols else list(obj$cols)
+  # true can be simplified, names cannot
+  cols <- if (is.logical(obj$cols)) obj$cols else as.list(obj$cols)
 
   utils::modifyList(
     camel_case(obj),
