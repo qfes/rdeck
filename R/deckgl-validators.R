@@ -1136,7 +1136,9 @@ validate_get_transform_matrix <- function(layer) {
 }
 validate_get_transform_matrix.default <- function(layer) {
   get_transform_matrix <- layer$get_transform_matrix
-  assert_not_null(get_transform_matrix)
+  if (is.null(get_transform_matrix)) {
+    return()
+  }
   if (!inherits(get_transform_matrix, "accessor")) {
     return()
   }

@@ -34,8 +34,7 @@ function getProps(Layer) {
 
   // default text layer font
   if (Layer === deck.TextLayer) {
-    Layer._propTypes.fontFamily.value = "Roboto, san-serif";
-    Layer._propTypes.fontSettings.value = { sdf: true };
+    Layer._propTypes.fontFamily.value = "Roboto, Helvetica, Arial, san-serif";
   }
 
   // mvt layer should inherit geojson
@@ -58,21 +57,21 @@ function getProps(Layer) {
       type: /get(Color|Elevation)Value/.test(propType.name) ? "unknown" : propType.type,
       value: getValue(propType),
       valueType: getValueType(propType),
-      scalable:
-        propType.type === "accessor" &&
-        /(radius|elevation|color|weight|width|height|size)$/i.test(propType.name),
+      scalable: getScalable(propType),
+      optional: getOptional(propType),
     }));
 }
 
-function getValue(propType) {
-  if (typeof propType.value !== "function") {
-    return propType.value;
+function getValue({ value }) {
+  if (typeof value !== "function") {
+    return value;
   }
 
   try {
-    return propType.value();
+    // is accessor a function returning a constant?
+    return value();
   } catch {
-    return propType.value;
+    return value;
   }
 }
 
@@ -83,6 +82,18 @@ function getValueType(propType) {
   }
 
   return Array.isArray(value) ? "array" : typeof value;
+}
+
+function getScalable({ type, name }) {
+  return type === "accessor" && /(radius|elevation|color|weight|width|height|size)$/i.test(name);
+}
+
+function getOptional({ optional, value }) {
+  return (
+    optional ||
+    value === null ||
+    (Array.isArray(value) && value.length === 0)
+  );
 }
 
 module.exports = { getProps };

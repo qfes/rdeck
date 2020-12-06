@@ -48,8 +48,7 @@ function templateData(propType) {
     sfc: sfcType(propType),
     name: snakeCase(propType.name),
     min: propType.min ?? null,
-    max: propType.max ?? null,
-    optional: propType.optional || propType.value === null || propType.name === "data",
+    max: propType.max ?? null
   };
 }
 
