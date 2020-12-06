@@ -51,17 +51,15 @@ subset_data <- function(layer) {
 
 get_colnames <- function(layer) {
   tooltip <- layer$tooltip
-  tooltip_cols <- if (layer$pickable && inherits(tooltip, "tooltip")) {
-    # tooltip$cols == TRUE -> all names
-    ifelse(
-      is.logical(tooltip$cols) && tooltip$cols,
-      names(layer$data),
-      tooltip$cols
-    )
+  tooltip_cols <- if (layer$pickable && inherits(tooltip, "tooltip")) tooltip$cols
+
+  # tooltip$cols == TRUE -> all names
+  if (is.logical(tooltip_cols) && tooltip_cols) {
+    return(names(layer$data))
   }
 
   js_props <- layer %>%
-    vapply(function(p) inherits(p, "JS_EVAL"), logical(1))
+    vapply(function(p) inherits(p, "JS_EVAL"), logical(1), USE.NAMES = FALSE)
   # if any js() accessors, we cannot know what columns are referenced
   if (sum(js_props) != 0) {
     return(names(layer$data))
