@@ -12,7 +12,7 @@ import {
   ScaleThreshold,
   scaleThreshold,
 } from "d3-scale";
-import { access } from "fs/promises";
+import { PickInfo } from "deck.gl";
 import { Feature } from "geojson";
 import { Accessor, AccessorFn, isAccessor } from "./accessor";
 import { parseColor } from "./color";
@@ -90,7 +90,8 @@ export function accessorScale(obj: AccessorScale, name: string): AccessorScale {
   }
 
   const scaleData = scaleFn(obj) as any;
-  const getData = accessorFn(obj, scaleData) as AccessorFn<any>;
+  const getData: AccessorFn<any, any> =
+    name === "highlightColor" ? highlightFn(obj, scaleData) : accessorFn(obj, scaleData);
   return {
     ...obj,
     name,
@@ -144,29 +145,57 @@ function scaleFn(accessor: AccessorScale) {
   }
 }
 
-// TODO: replace nulls with undefined for unknown value mapping
-function accessorFn({ col, dataType }: Accessor, scaleData: ScaleFn): AccessorFn<any> {
+function accessorFn({ col, dataType }: Accessor, scaleData: ScaleFn): AccessorFn<any, any> {
   switch (dataType) {
     case "table":
-      return tableFn(col, scaleData);
+      return tableData(col, scaleData);
     case "object":
-      return objectFn(col, scaleData);
+      return objectData(col, scaleData);
     case "geojson":
-      return geojsonFn(col, scaleData);
+      return geojsonData(col, scaleData);
     default:
       throw TypeError(`${dataType} not supported`);
   }
 }
 
-function geojsonFn(col: string, scaleData: ScaleFn): AccessorFn<Feature> {
-  // object.properties will always exist
-  return (object) => scaleData(object.properties![col]);
+function highlightFn({ col, dataType }: Accessor, scaleData: ScaleFn): AccessorFn<any, any> {
+  switch (dataType) {
+    case "table":
+      return tableHighlight(col, scaleData);
+    case "object":
+      return objectHighlight(col, scaleData);
+    case "geojson":
+      return geojsonHighlight(col, scaleData);
+    default:
+      throw TypeError(`${dataType} not supported`);
+  }
 }
 
-function objectFn(col: string, scaleData: ScaleFn): AccessorFn<Record<string, any>> {
-  return (object) => scaleData(object[col]);
+function tableData(col: string, scaleData: ScaleFn): AccessorFn<DataFrame, any> {
+  return (_, { index, data }) => scaleData(data.frame[col][index] ?? undefined);
 }
 
-function tableFn(col: string, scaleData: ScaleFn): AccessorFn<DataFrame> {
-  return (object, { index, data }) => scaleData(data.frame[col][index]);
+function tableHighlight(col: string, scaleData: ScaleFn): AccessorFn<PickInfo<null>, any> {
+  return ({ index, layer }) =>
+    // @ts-ignore
+    scaleData(layer.props.data!.frame[col][index] ?? undefined);
+}
+
+function objectData(col: string, scaleData: ScaleFn): AccessorFn<Record<string, any>, any> {
+  return (object) => scaleData(object[col] ?? undefined);
+}
+
+function objectHighlight(
+  col: string,
+  scaleData: ScaleFn
+): AccessorFn<PickInfo<Record<string, any>>, any> {
+  return ({ object }) => scaleData(object[col] ?? undefined);
+}
+
+function geojsonData(col: string, scaleData: ScaleFn): AccessorFn<Feature, any> {
+  return (object) => scaleData(object.properties![col] ?? undefined);
+}
+
+function geojsonHighlight(col: string, scaleData: ScaleFn): AccessorFn<PickInfo<Feature>, any> {
+  return ({ object }) => scaleData(object.properties![col] ?? undefined);
 }

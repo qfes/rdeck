@@ -1,5 +1,6 @@
 import * as deck from "./deck-bundle";
-import { Layer, LayerProps } from "deck.gl";
+import { Layer as DeckLayer, LayerProps as DeckLayerProps } from "deck.gl";
+import { TextLayerProps } from "@deck.gl/layers/text-layer/text-layer";
 import { FeatureCollection } from "geojson";
 
 import { parseColor } from "./color";
@@ -9,21 +10,21 @@ import { accessor, Accessor, isAccessor } from "./accessor";
 type LayerData = string | DataFrame | FeatureCollection;
 type Entry<T> = [string, T];
 
-export interface RDeckLayerProps extends Omit<LayerProps<any>, "data"> {
+export interface LayerProps extends Omit<DeckLayerProps<any>, "data"> {
   type: string;
   name: string;
   data: LayerData | null;
   tooltip: TooltipInfo | null;
 }
 
-export default class RDeckLayer {
-  layer: Layer<any>;
+export class Layer {
+  layer: DeckLayer<any>;
   legend: {
     name: string;
     scales: AccessorScale[];
   };
 
-  constructor({ type, ...props }: RDeckLayerProps) {
+  constructor({ type, ...props }: LayerProps) {
     const entries = Object.entries(props);
 
     const colors = getColors(entries);
@@ -38,6 +39,13 @@ export default class RDeckLayer {
       ])
     );
 
+    // load font
+    if (type === "TextLayer" && "fonts" in document) {
+      const _props = props as TextLayerProps<any>;
+      // @ts-ignore
+      document.fonts.load(`16px ${_props.fontFamily}`);
+    }
+
     const scales = accessors
       .filter(([, value]) => isAccessorScale(value) && value.legend)
       .map(([, value]) => value as AccessorScale);
@@ -48,8 +56,8 @@ export default class RDeckLayer {
     };
   }
 
-  static create(props: RDeckLayerProps) {
-    return new RDeckLayer(props);
+  static create(props: LayerProps) {
+    return new Layer(props);
   }
 }
 
@@ -78,47 +86,3 @@ function getAccessors(entries: Entry<any>[]): Entry<Accessor>[] {
       isAccessorScale(value) ? accessorScale(value, name) : accessor(value, name),
     ]);
 }
-
-// function convertScales(entries: Entry<Accessor | ScaleAccessor>[], data?: LayerData) {
-//   const isScale = (value: any) => value.scale != null;
-
-//   const scales = entries
-//     .filter(([, value]) => isScale(value))
-//     .map(([name, scale]) => {
-//       let range = scale.range;
-//       if (isColor(name)) {
-//         range = range.map((color: string | Color) => parseColor(color));
-//       }
-
-//       return new ScaleAccessor({
-//         ...scale,
-//         range,
-//         name,
-//         data: null //getColumn(scale.value, data),
-//       });
-//     });
-
-//   return scales;
-// }
-
-// function getColumn(name: string, data: LayerData): any[] {
-//   if (Array.isArray(data) && data.length === 0) return [];
-
-//   // data frame
-//   if ("frame" in data) {
-//     return data.frame[name];
-//   }
-
-//   if ("type" in data) {
-//     const getProperty = (feature: GeoJSON.Feature) => feature.properties?.[name];
-
-//     switch (data.type) {
-//       case "Feature":
-//         return getProperty(data);
-//       case "FeatureCollection":
-//         return data.features.map(getProperty);
-//     }
-//   }
-
-//   throw TypeError("data type not suppported");
-// }

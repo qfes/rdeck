@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import RDeck from "./rdeck";
+import { RDeck } from "./rdeck";
 import styles from "./rdeck.css";
 
 const binding: HTMLWidgets.Binding = {
