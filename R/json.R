@@ -55,10 +55,13 @@ to_json.accessor <- function(obj) {
 }
 
 to_json.accessor_scale <- function(obj) {
-  if (!is.null(obj$domain)) {
-    # prevent simplification
-    obj$domain <- as.list(obj$domain)
-  }
+  # prevent simplification
+  obj$domain <- as.list(obj$domain)
+  # get unknown value
+  obj$unknown <- obj$na_color %||% obj$na_value %||% obj$unmapped_color %||% obj$unmapped_value
+  # remove unneeded
+  rm_names <- c("na_color", "na_value", "unmapped_color", "unmapped_value")
+  obj[rm_names] <- NULL
 
   NextMethod()
 }
