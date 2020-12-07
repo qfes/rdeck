@@ -1,6 +1,6 @@
 {
   "name": "rdeck",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "postinstall": "npm explore @danmarshall/deckgl-typings -- npm run postinstall",
