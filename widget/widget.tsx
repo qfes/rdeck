@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { RDeck } from "./rdeck";
-import styles from "./rdeck.css";
+import { App } from "./app";
+import styles from "./app.css";
 
 const binding: HTMLWidgets.Binding = {
   name: "rdeck",
@@ -11,7 +11,7 @@ const binding: HTMLWidgets.Binding = {
     el.classList.add(styles.rdeck);
     return {
       renderValue({ props, layers }) {
-        ReactDOM.render(<RDeck {...{ props, layers, width, height }} />, el);
+        ReactDOM.render(<App {...{ props, layers, width, height }} />, el);
       },
       /* deck.gl handles resize automatically */
       resize(width, height) {},
