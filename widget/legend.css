@@ -54,3 +54,8 @@
 .tick {
   fill: rgb(160, 167, 180);
 }
+
+.line {
+  stroke: rgb(240, 240, 240);
+  stroke-width: 0.5px;
+}

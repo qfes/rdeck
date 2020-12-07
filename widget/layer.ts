@@ -21,7 +21,7 @@ export class Layer {
   layer: DeckLayer<any>;
   legend: {
     name: string;
-    scales: AccessorScale[];
+    scales: AccessorScale<number | Color>[];
   };
 
   constructor({ type, ...props }: LayerProps) {
@@ -48,7 +48,7 @@ export class Layer {
 
     const scales = accessors
       .filter(([, value]) => isAccessorScale(value) && value.legend)
-      .map(([, value]) => value as AccessorScale);
+      .map(([, value]) => value as AccessorScale<number | Color>);
 
     this.legend = {
       name: props.name,

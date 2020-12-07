@@ -1,13 +1,22 @@
-import React, { memo, useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
+import {
+  AccessorScale,
+  AccessorScaleCategory,
+  AccessorScaleContinuous,
+  AccessorScaleDiscrete,
+  isColorScale,
+  isContinuousScale,
+  isDiscreteScale,
+} from "./scale";
+import { rgba } from "./color";
+import { words } from "./util";
 import styles from "./legend.css";
-import ScaleAccessor from "./scale";
-import { words, rgba } from "./util";
 
-export interface LegendProps {
+type LegendProps = {
   layers: LayerProps[];
-}
+};
 
-const Legend = ({ layers }: LegendProps) => {
+export function Legend({ layers }: LegendProps) {
   if (layers.length === 0) return null;
 
   return (
@@ -17,78 +26,53 @@ const Legend = ({ layers }: LegendProps) => {
       ))}
     </div>
   );
-};
-
-interface LayerProps {
-  name: string;
-  scales: ScaleAccessor[];
 }
 
-const Layer = ({ name, scales }: LayerProps) => {
+type LayerProps = {
+  name: string;
+  scales: AccessorScale<number | Color>[];
+};
+
+function Layer({ name, scales }: LayerProps) {
   if (scales.length === 0) return null;
 
   return (
     <div className={styles.layer}>
       <div className={styles.layerName}>{name}</div>
       {scales.map((scale) => (
-        <Scale key={scale.name} {...scale} isContinuous={scale.isContinuous} />
+        <Scale key={scale.name} {...scale} />
       ))}
     </div>
   );
-};
+}
 
-type ScaleProps = ScaleAccessor;
-
-const Scale = ({ name, field, scale, isContinuous }: ScaleProps) => {
-  const scaleName = words(name.replace(/^get/, ""));
-  const isColor = /color$/i.test(name);
+function Scale(scale: AccessorScale<number | Color>) {
+  const scaleName = words(scale.name.replace(/^get/, ""));
+  const isColor = isColorScale(scale);
+  const isContinuous = isContinuousScale(scale);
+  const isDiscrete = isDiscreteScale(scale);
 
   return (
     <div className={styles.scale}>
       <div className={styles.scaleName}>{scaleName}</div>
       <span className={styles.scaleBy}>by </span>
-      <span className={styles.fieldName}>{field}</span>
-      {isColor && !isContinuous && <Discrete scale={scale} />}
-      {isColor && isContinuous && <Continuous scale={scale} />}
+      <span className={styles.fieldName}>{scale.col}</span>
+      {isColor && isContinuous && <Continuous {...(scale as AccessorScaleContinuous<Color>)} />}
+      {isColor && isDiscrete && <Discrete {...(scale as AccessorScaleDiscrete<Color>)} />}
+      {isColor && scale.scale === "category" && (
+        <Category {...(scale as AccessorScaleCategory<Color>)} />
+      )}
     </div>
   );
-};
+}
 
-type DiscreteProps = Pick<ScaleProps, "scale">;
-
-const Discrete = ({ scale }: DiscreteProps) => {
-  const colors: [string, any][] = useMemo(() => {
-    return "ticks" in scale ? scale.ticks(6).map((tick) => [rgba(scale(tick)), tick]) : [];
-  }, [scale]);
-
-  const height = 10 + 14 * (colors.length - 1);
-
-  return (
-    <svg className={styles.colorScale} height={height}>
-      {colors.map(([color, tick], index) => (
-        <svg key={tick} y={14 * index}>
-          <rect width={20} height={10} fill={color} />
-          <text className={styles.tick} x={28} y={8}>
-            {tick}
-          </text>
-        </svg>
-      ))}
-    </svg>
-  );
-};
-
-const Continuous = ({ scale }: Pick<ScaleProps, "scale">) => {
+const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
   const id = useId("gradient");
+  const colors = range.map(rgba);
+  const tickHeight = 16;
 
-  const colors: string[] = useMemo(() => {
-    return scale.ticks(6).map((tick) => rgba(scale(tick)));
-  }, [scale]);
-
-  const ticks: string[] = useMemo(() => {
-    return scale.ticks(6);
-  }, [scale]);
-
-  const height = 10 + 14 * (colors.length - 1);
+  const scaleHeight = tickHeight * (ticks.length - 1);
+  const height = scaleHeight + 11;
 
   return (
     <svg className={styles.colorScale} height={height} width="100%">
@@ -99,17 +83,99 @@ const Continuous = ({ scale }: Pick<ScaleProps, "scale">) => {
           ))}
         </linearGradient>
       </defs>
-      <rect width={20} height="100%" fill={`url(#${id})`} />
-      <svg x={28}>
-        {ticks.map((tick, index) => (
-          <text key={index} className={styles.tick} y={8 + index * 14}>
-            {tick}
-          </text>
-        ))}
-      </svg>
+      <rect width={20} y={5.5} height={scaleHeight} fill={`url(#${id})`} />
+      <Ticks {...{ ticks, tickHeight }} x={30} />
+      <Lines {...{ ticks, tickHeight }} x={0} y={5} width={26} />
     </svg>
   );
 };
+
+const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
+  const colors = range.map(rgba);
+  const tickHeight = 16;
+
+  const scaleHeight = tickHeight * (ticks.length - 1);
+  const height = scaleHeight + 11;
+
+  return (
+    <svg className={styles.colorScale} height={height}>
+      <svg y={5.5}>
+        {colors.map((color, index) => (
+          <rect width={20} height={tickHeight} y={index * tickHeight} fill={color} />
+        ))}
+      </svg>
+      <Ticks {...{ ticks, tickHeight }} x={30} />
+      <Lines {...{ ticks, tickHeight }} x={0} y={5} width={26} />
+    </svg>
+  );
+};
+
+function Category({ domain: ticks, range }: AccessorScaleCategory<Color>) {
+  const colors = range.map(rgba);
+  const tickHeight = 16;
+
+  const height = tickHeight * ticks.length;
+
+  return (
+    <svg className={styles.colorScale} height={height}>
+      <svg y={1}>
+        {colors.map((color, index) => (
+          <rect width={20} height={14} y={1 + index * tickHeight} fill={color} />
+        ))}
+      </svg>
+      <Ticks {...{ ticks, tickHeight }} x={30} y={4} />
+    </svg>
+  );
+}
+
+type LinesProps = {
+  ticks: any[];
+  tickHeight: number;
+  width: string | number;
+  x?: string | number;
+  y?: string | number;
+};
+
+function Lines({ ticks, tickHeight, width, x = 0, y = 4 }: LinesProps) {
+  const getY = (index: number) => {
+    const offset = index === ticks.length - 1 ? 0 : 0.5;
+    return tickHeight * index + offset;
+  };
+
+  return (
+    <svg {...{ width, x, y }}>
+      {ticks.map((_, index) => (
+        <line
+          key={index}
+          className={styles.line}
+          shapeRendering="crispEdges"
+          x2="100%"
+          y1={getY(index)}
+          y2={getY(index)}
+        />
+      ))}
+    </svg>
+  );
+}
+
+type TicksProps = {
+  ticks: any[];
+  tickHeight: number;
+  x?: string | number;
+  y?: string | number;
+};
+
+function Ticks({ ticks, tickHeight, x = 0, y = 0 }: TicksProps) {
+  return (
+    <svg {...{ x, y }}>
+      {ticks.map((tick, index) => (
+        <text key={index} className={styles.tick} y={tickHeight * index} dy={8}>
+          {tick}
+        </text>
+      ))}
+    </svg>
+  );
+}
 
 const useId = (prefix: string) => {
   return useMemo(() => {
@@ -121,5 +187,3 @@ const counter = (() => {
   let count = 0;
   return () => count++;
 })();
-
-export default memo(Legend);

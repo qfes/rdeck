@@ -19,74 +19,93 @@ import { parseColor } from "./color";
 
 type ScaleFn = (data: any) => number | Color;
 
-type AccessorScaleBase = Accessor & {
+type AccessorScaleBase<Range> = Accessor & {
   name: string;
-  range: (number | Color)[];
-  palette: (string | Color)[];
-  unknown: number | Color;
+  domain: number[];
+  range: Range[];
+  palette?: Color[];
+  unknown: Range;
   legend: boolean;
+  ticks: string[];
 };
 
-export type AccessorScaleLinear = AccessorScaleBase & {
+export type AccessorScaleLinear<Range> = AccessorScaleBase<Range> & {
   scale: "linear";
-  domain: number[];
-  scaleData: ScaleLinear<number, number | Color>;
+  scaleData: ScaleLinear<Range, Range>;
 };
 
-export type AccessorScalePower = AccessorScaleBase & {
+export type AccessorScalePower<Range> = AccessorScaleBase<Range> & {
   scale: "power";
-  domain: number[];
   exponent: number;
-  scaleData: ScalePower<number, number | Color>;
+  scaleData: ScalePower<Range, Range>;
 };
 
-export type AccessorScaleLog = AccessorScaleBase & {
+export type AccessorScaleLog<Range> = AccessorScaleBase<Range> & {
   scale: "log";
-  domain: number[];
   base: number;
-  scaleData: ScaleLogarithmic<number, number | Color>;
+  scaleData: ScaleLogarithmic<Range, Range>;
 };
 
-export type AccessorScaleThreshold = AccessorScaleBase & {
+export type AccessorScaleThreshold<Range> = AccessorScaleBase<Range> & {
   scale: "threshold";
-  domain: number[];
-  scaleData: ScaleThreshold<number, number | Color>;
+  scaleData: ScaleThreshold<number, Range>;
 };
 
-export type AccessorScaleQuantile = AccessorScaleBase & {
+export type AccessorScaleQuantile<Range> = AccessorScaleBase<Range> & {
   scale: "quantile";
-  domain: number[];
-  scaleData: ScaleThreshold<number, number | Color>;
+  scaleData: ScaleThreshold<number, Range>;
 };
 
-export type AccessorScaleCategory = AccessorScaleBase & {
+export type AccessorScaleCategory<Range> = AccessorScaleBase<Range> & {
   scale: "category";
   domain: string[];
-  scaleData: ScaleOrdinal<string, number | Color>;
+  scaleData: ScaleOrdinal<string, Range>;
 };
 
-export type AccessorScaleQuantize = AccessorScaleBase & {
+export type AccessorScaleQuantize<Range> = AccessorScaleBase<Range> & {
   scale: "quantize";
   domain: [number, number];
-  scaleData: ScaleQuantize<number | Color>;
+  scaleData: ScaleQuantize<Range>;
 };
 
-export type AccessorScale =
-  | AccessorScaleLinear
-  | AccessorScalePower
-  | AccessorScaleLog
-  | AccessorScaleThreshold
-  | AccessorScaleQuantile
-  | AccessorScaleCategory
-  | AccessorScaleQuantize;
+export type AccessorScaleContinuous<Range> =
+  | AccessorScaleLinear<Range>
+  | AccessorScalePower<Range>
+  | AccessorScaleLog<Range>;
+export type AccessorScaleDiscrete<Range> =
+  | AccessorScaleThreshold<Range>
+  | AccessorScaleQuantile<Range>
+  | AccessorScaleQuantize<Range>;
+export type AccessorScale<Range> =
+  | AccessorScaleContinuous<Range>
+  | AccessorScaleDiscrete<Range>
+  | AccessorScaleCategory<Range>;
 
-export function isAccessorScale(obj: any): obj is AccessorScale {
+export function isAccessorScale(obj: any): obj is AccessorScale<number | Color> {
   return isAccessor(obj) && "scale" in obj;
 }
 
-export function accessorScale(obj: AccessorScale, name: string): AccessorScale {
+export function isColorScale(obj: AccessorScale<number | Color>): obj is AccessorScale<Color> {
+  return "palette" in obj;
+}
+
+export function isContinuousScale<T>(obj: AccessorScale<T>): obj is AccessorScaleContinuous<T> {
+  return obj.scale === "linear" || obj.scale === "power" || obj.scale === "log"
+}
+
+export function isDiscreteScale<T>(obj: AccessorScale<T>): obj is AccessorScaleDiscrete<T> {
+  return obj.scale === "threshold" || obj.scale === "quantile" || obj.scale === "quantize";
+}
+
+
+export function accessorScale(
+  obj: AccessorScale<number | Color>,
+  name: string
+): AccessorScale<number | Color> {
   if ("palette" in obj) {
-    obj.range = obj.palette.map((color) => parseColor(color));
+    obj.range = obj.palette!.map((color) => parseColor(color));
+    // @ts-ignore
+    obj.unknown = parseColor(obj.unknown);
   }
 
   const scaleData = scaleFn(obj) as any;
@@ -100,7 +119,7 @@ export function accessorScale(obj: AccessorScale, name: string): AccessorScale {
   };
 }
 
-function scaleFn(accessor: AccessorScale) {
+function scaleFn(accessor: AccessorScale<any>) {
   type T = number | Color;
 
   switch (accessor.scale) {
