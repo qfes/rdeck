@@ -43,11 +43,39 @@ validate_range <- function(scale) {
 
 validate_range.default <- function(scale) {
   assert_type(scale$range, c("integer", "numeric"), "range")
-  assert_length(scale$palette, 2, `>=`, "palette")
+  assert_length(scale$range, 2, `>=`, "range")
 }
 
 validate_range.scale_category <- function(scale) {
   assert_type(scale$range, c("integer", "numeric"), "range")
+}
+
+# validate na_color
+validate_na_color <- function(scale) {
+  assert_not_null(scale$na_color, "na_color")
+  assert_rgba(scale$na_color, "na_color")
+  assert_scalar(scale$na_color, "na_color")
+}
+
+# validate na_value
+validate_na_value <- function(scale) {
+  assert_not_null(scale$na_value, "na_value")
+  assert_type(scale$na_value, c("integer", "numeric"), "na_value")
+  assert_scalar(scale$na_value, "na_value")
+}
+
+# validate unmapped_color
+validate_unmapped_color <- function(scale) {
+  assert_not_null(scale$unmapped_color, "unmapped_color")
+  assert_rgba(scale$unmapped_color, "unmapped_color")
+  assert_scalar(scale$unmapped_color, "unmapped_color")
+}
+
+# validate unmapped_value
+validate_unmapped_value <- function(scale) {
+  assert_not_null(scale$unmapped_value, "unmapped_value")
+  assert_type(scale$unmapped_value, c("integer", "numeric"), "unmapped_value")
+  assert_scalar(scale$unmapped_value, "unmapped_value")
 }
 
 # validate limits
