@@ -147,3 +147,11 @@ validate_base <- function(scale) {
     )
   }
 }
+
+# validate n_ticks
+validate_n_ticks <- function(scale) {
+  assert_not_null(scale$n_ticks, "n_ticks")
+  assert_type(scale$n_ticks, c("integer", "numeric"), "n_ticks")
+  assert_scalar(scale$n_ticks, "n_ticks")
+  assert_range(scale$n_ticks, min = 2, name = "n_ticks")
+}

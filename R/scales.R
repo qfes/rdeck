@@ -6,7 +6,7 @@
 #' @family scales
 #' @export
 scale_color_linear <- function(col, palette, na_color = "#000000",
-                               limits = NULL, breaks = NULL, legend = TRUE) {
+                               limits = NULL, breaks = NULL, n_ticks = 6, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -17,6 +17,7 @@ scale_color_linear <- function(col, palette, na_color = "#000000",
     na_color = na_color,
     limits = limits,
     breaks = breaks,
+    n_ticks = n_ticks,
     legend = legend
   )
 
@@ -24,6 +25,7 @@ scale_color_linear <- function(col, palette, na_color = "#000000",
   validate_na_color(linear_scale)
   validate_limits(linear_scale)
   validate_breaks(linear_scale)
+  validate_n_ticks(linear_scale)
   validate_legend(linear_scale)
 
   linear_scale
@@ -65,7 +67,7 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
 #' @family scales
 #' @export
 scale_color_power <- function(col, palette, na_color = "#000000", exponent = 0.5,
-                              limits = NULL, breaks = NULL, legend = TRUE) {
+                              limits = NULL, breaks = NULL, n_ticks = 6, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -77,6 +79,7 @@ scale_color_power <- function(col, palette, na_color = "#000000", exponent = 0.5
     exponent = exponent,
     limits = limits,
     breaks = breaks,
+    n_ticks = n_ticks,
     legend = legend
   )
 
@@ -85,6 +88,7 @@ scale_color_power <- function(col, palette, na_color = "#000000", exponent = 0.5
   validate_exponent(power_scale)
   validate_limits(power_scale)
   validate_breaks(power_scale)
+  validate_n_ticks(power_scale)
   validate_legend(power_scale)
 
   power_scale
@@ -129,7 +133,7 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
 #' @family scales
 #' @export
 scale_color_log <- function(col, palette, na_color = "#000000", base = 10,
-                            limits = NULL, breaks = NULL, legend = TRUE) {
+                            limits = NULL, breaks = NULL, n_ticks = 6, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -141,6 +145,7 @@ scale_color_log <- function(col, palette, na_color = "#000000", base = 10,
     base = base,
     limits = limits,
     breaks = breaks,
+    n_ticks = n_ticks,
     legend = legend
   )
 
@@ -149,6 +154,7 @@ scale_color_log <- function(col, palette, na_color = "#000000", base = 10,
   validate_base(log_scale)
   validate_limits(log_scale)
   validate_breaks(log_scale)
+  validate_n_ticks(log_scale)
   validate_legend(log_scale)
 
   log_scale
@@ -194,7 +200,7 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
 #' @family scales
 #' @export
 scale_color_threshold <- function(col, palette, na_color = "#000000",
-limits = NULL, breaks = 0.5, legend = TRUE) {
+                                  limits = NULL, breaks = 0.5, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -220,7 +226,7 @@ limits = NULL, breaks = 0.5, legend = TRUE) {
 #' @name scale_threshold
 #' @export
 scale_threshold <- function(col, range = 0:1, na_value = 0,
-limits = NULL, breaks = 0.5, legend = FALSE) {
+                            limits = NULL, breaks = 0.5, legend = FALSE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -305,7 +311,7 @@ scale_quantile <- function(col, range = 1:5, na_value = 0, legend = FALSE) {
 #' @family scales
 #' @export
 scale_color_category <- function(col, palette, unmapped_color = "#000000", levels = NULL,
-legend = TRUE) {
+                                 legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -357,7 +363,7 @@ scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, 
 #' @family scales
 #' @export
 scale_color_quantize <- function(col, palette, na_color = "#000000",
-limits = NULL, legend = TRUE) {
+                                 limits = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -416,6 +422,8 @@ scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, legend
 #' @param breaks The breaks of the scale, allowing to define a piecewise scale. If not
 #' null, must be `length(palette) - 2` or `length(range) - 2`, such that each `break`
 #' is mapped to a `palette` or `range` entry.
+#' @param n_ticks The number of ticks to display on the legend. Includes the domain
+#' of the scale.
 #'
 #' @param legend Indicate whether the legend should be displayed for this scale.
 #'

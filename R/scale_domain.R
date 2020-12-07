@@ -4,7 +4,7 @@ scale_domain <- function(scale, data = NULL) {
 
 scale_domain.scale_linear <- function(scale, data = NULL) {
   range_len <- length(scale$palette %||% scale$range)
-  continuous_domain(scale$limits, scale$breaks, range_len)
+  domain(scale$limits, scale$breaks, range_len)
 }
 
 scale_domain.scale_power <- function(scale, data = NULL) {
@@ -14,8 +14,8 @@ scale_domain.scale_power <- function(scale, data = NULL) {
   range_len <- length(scale$palette %||% scale$range)
   trans_limits <- trans(scale$limits)
   trans_breaks <- if (!is.null(scale$breaks)) trans(scale$breaks)
-  domain <- continuous_domain(trans_limits, trans_breaks, range_len)
-  invert(domain)
+  domain(trans_limits, trans_breaks, range_len) %>%
+    invert()
 }
 
 scale_domain.scale_log <- function(scale, data = NULL) {
@@ -25,8 +25,8 @@ scale_domain.scale_log <- function(scale, data = NULL) {
   range_len <- length(scale$palette %||% scale$range)
   trans_limits <- trans(scale$limits)
   trans_breaks <- if (!is.null(scale$breaks)) trans(scale$breaks)
-  domain <- continuous_domain(trans_limits, trans_breaks, range_len)
-  invert(domain)
+  domain(trans_limits, trans_breaks, range_len) %>%
+    invert()
 }
 
 scale_domain.scale_threshold <- function(scale, data) scale$breaks
@@ -48,15 +48,15 @@ scale_domain.scale_category <- function(scale, data) {
   }
 
   levels_ <- scale$levels %||% data[[scale$col]]
-  scale$levels <- levels(levels_) %||% unique(levels_)
+  levels_ <- levels(levels_) %||% unique(levels_)
 
-  assert_length(scale$levels, length(scale$palette %||% scale$range), name = "levels")
-  scale$levels
+  assert_length(levels_, length(scale$palette %||% scale$range), name = "levels")
+  levels_
 }
 
 scale_domain.scale_quantize <- function(scale, data) scale$limits
 
-continuous_domain <- function(limits, breaks = NULL, length) {
+domain <- function(limits, breaks = NULL, length) {
   if (is.null(breaks)) {
     seq(limits[1], limits[2], length.out = length)
   } else {

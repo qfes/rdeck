@@ -75,15 +75,18 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
   validate_col(scale, data)
 
   # scale limits
-  if (rlang::has_name(scale, "limits")) {
-    if (!inherits(data, "data.frame")) {
-      assert_not_null(scale$limits)
-    }
+  if (rlang::has_name(scale, "limits") && !inherits(data, "data.frame")) {
+    assert_not_null(scale$limits)
+  }
 
+  if (!inherits(scale, "scale_category") && is.null(scale$limits)) {
     scale$limits <- scale$limits %||% range(data[[scale$col]], na.rm = TRUE)
   }
 
-  # scale domain
+  # scale domain & ticks
   scale$domain <- scale_domain(scale, data)
+  if (!inherits(scale, "scale_category")) {
+    scale$ticks <- scale_ticks(scale)
+  }
   scale
 }
