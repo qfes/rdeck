@@ -27,15 +27,23 @@ eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
   }
 
   # tooltip enabled, all names used
-  if (rlang::is_true(expr)) {
+  if (rlang::is_true(expr) && !inherits(data, "data.frame")) {
     return(tooltip(TRUE, data, data_type))
   }
 
   # tidyselect
   if (inherits(data, "data.frame")) {
-    cols <- tidyselect::eval_select(quo, data) %>%
-      names()
+    all_cols <- names(data)
+    # TRUE -> everything()
+    tidy_expr <- if (rlang::is_true(expr)) rlang::expr(!!all_cols) else quo
+    tidy_cols <- tidyselect::eval_select(tidy_expr, data) %>%
+        names()
 
+    # remove sfc cols
+    is_sfc <- vapply(data, function(col) inherits(col, "sfc"), logical(1))
+    sfc_cols <- all_cols[is_sfc]
+
+    cols <- setdiff(tidy_cols, sfc_cols)
     return(tooltip(cols, data, data_type))
   }
 
