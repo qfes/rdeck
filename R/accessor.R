@@ -80,11 +80,10 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
       assert_not_null(scale$limits)
     }
 
-    scale$limits <- scale$limits %||% range(data[[scale$col]])
+    scale$limits <- scale$limits %||% range(data[[scale$col]], na.rm = TRUE)
   }
 
   # scale domain
   scale$domain <- scale_domain(scale, data)
   scale
 }
-
