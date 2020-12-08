@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-.rdeck {
+:global(.rdeck) {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
   position: relative;
 }
 
-.rdeck :is(*, *:before, *:after) {
+:global(.rdeck) :is(*, *:before, *:after) {
   box-sizing: inherit;
 }

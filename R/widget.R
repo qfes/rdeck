@@ -8,6 +8,8 @@
 #'
 #' @param map_style `character`
 #'  A mapbox style url. <https://docs.mapbox.com/api/maps/#mapbox-styles>
+#' 
+#' @param theme The widget theme. Either "kepler" or "light".
 #'
 #' @param initial_bounds `sf::st_bbox` | `sf::sf` | `sf::sfc` | `sf::sfg`
 #'  The initial bounds of the map; overwrites `initial_view_state`.
@@ -43,6 +45,7 @@
 #' @export
 rdeck <- function(mapbox_api_access_token = NULL,
                   map_style = "mapbox://styles/mapbox/dark-v10",
+                  theme = "kepler",
                   initial_bounds = NULL,
                   initial_view_state = view_state(
                     center = c(0, 0),
@@ -84,7 +87,8 @@ rdeck <- function(mapbox_api_access_token = NULL,
   x <- structure(
     list(
       props = props,
-      layers = layers
+      layers = layers,
+      theme = theme
     ),
     TOJSON_ARGS = list(
       digits = 9,

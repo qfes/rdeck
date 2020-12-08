@@ -12,6 +12,6 @@ export interface Binding {
 }
 
 export interface Widget {
-  renderValue(x: { props: any; layers: any[] }): void;
+  renderValue(x: { props: any; layers: any[]; theme: "kepler" | "light" }): void;
   resize(width: number, height: number): void;
 }
