@@ -407,7 +407,16 @@ scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, legend
   quantize_scale
 }
 
+scale <- function(scale, ...) {
+  structure(
+    c(list(scale = scale), rlang::dots_list(...)),
+    class = c(paste0("scale_", scale), "scale")
+  )
+}
+
+#' @title scale
 #' @name scale
+#' @rdname _scale
 #' @param col The name of the column containing data to be scaled. Can be either
 #' a named column (non-standard evaluation), or an expression evaluating a string.
 #' @param palette The color palette of the color scale. Must be a vector of
@@ -424,13 +433,5 @@ scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, legend
 #' is mapped to a `palette` or `range` entry.
 #' @param n_ticks The number of ticks to display on the legend. Includes the domain
 #' of the scale.
-#'
 #' @param legend Indicate whether the legend should be displayed for this scale.
-#'
-#' @keywords internal
-scale <- function(scale, ...) {
-  structure(
-    c(list(scale = scale), rlang::dots_list(...)),
-    class = c(paste0("scale_", scale), "scale")
-  )
-}
+NULL
