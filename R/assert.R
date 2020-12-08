@@ -61,8 +61,9 @@ assert_not_null <- function(obj, name = NULL) {
 
 assert_finite <- function(obj, name = NULL) {
   quo <- rlang::enquo(obj)
+  is_infinite <- is.infinite(rlang::eval_tidy(quo))
 
-  if (!is.finite(rlang::eval_tidy(quo))) {
+  if (any(is_infinite, na.rm = TRUE)) {
     name <- name %||% rlang::quo_text(quo)
     rlang::abort(
       paste0(name, " must be finite"),
