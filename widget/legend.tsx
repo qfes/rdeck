@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   AccessorScale,
   AccessorScaleCategory,
@@ -11,6 +11,8 @@ import {
 import { rgba } from "./color";
 import { words } from "./util";
 import styles from "./legend.css";
+
+const TICK_HEIGHT = 16;
 
 type LegendProps = {
   layers: LayerProps[];
@@ -69,107 +71,82 @@ function Scale(scale: AccessorScale<number | Color>) {
 const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
   const id = useId("gradient");
   const colors = range.map(rgba);
-  const tickHeight = 16;
+  const lines = ticks.map((_, index) => index).slice(1, -1);
 
-  const scaleHeight = tickHeight * (ticks.length - 1);
-  const height = scaleHeight + 11;
+  const gradientHeight = TICK_HEIGHT * (ticks.length - 1);
+  const height = gradientHeight + 11;
 
   return (
-    <svg className={styles.colorScale} height={height} width="100%">
-      <defs>
-        <linearGradient id={id} x1={0} x2={0} y1={0} y2={1}>
-          {colors.map((color, index) => (
-            <stop key={index} offset={index / (colors.length - 1)} stopColor={color} />
-          ))}
-        </linearGradient>
-      </defs>
-      <rect width={20} y={5.5} height={scaleHeight} fill={`url(#${id})`} />
-      <Ticks {...{ ticks, tickHeight }} x={30} />
-      <Lines {...{ ticks, tickHeight }} x={0} y={5} width={26} />
+    <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
+      <svg y={4}>
+        <defs>
+          <linearGradient id={id} x1={0} x2={0} y1={0} y2={1}>
+            {colors.map((color, index) => (
+              <stop key={index} offset={index / (colors.length - 1)} stopColor={color} />
+            ))}
+          </linearGradient>
+        </defs>
+        <rect width={20} height={gradientHeight} fill={`url(#${id})`} />
+        {lines.map((index) => (
+          <line
+            key={index}
+            className={styles.line}
+            x2={20}
+            y1={TICK_HEIGHT * index}
+            y2={TICK_HEIGHT * index}
+          />
+        ))}
+      </svg>
+      <Ticks {...{ ticks }} x={28} y={-4} />
     </svg>
   );
 };
 
 const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
   const colors = range.map(rgba);
-  const tickHeight = 16;
-
-  const scaleHeight = tickHeight * (ticks.length - 1);
+  const scaleHeight = TICK_HEIGHT * (ticks.length - 1);
   const height = scaleHeight + 11;
 
   return (
-    <svg className={styles.colorScale} height={height}>
-      <svg y={5.5}>
+    <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
+      <svg y={4}>
         {colors.map((color, index) => (
-          <rect width={20} height={tickHeight} y={index * tickHeight} fill={color} />
+          <rect width={20} height={TICK_HEIGHT} y={index * TICK_HEIGHT} fill={color} />
         ))}
       </svg>
-      <Ticks {...{ ticks, tickHeight }} x={30} />
-      <Lines {...{ ticks, tickHeight }} x={0} y={5} width={26} />
+      <Ticks {...{ ticks, TICK_HEIGHT }} x={28} y={-4} />
     </svg>
   );
 };
 
 function Category({ domain: ticks, range }: AccessorScaleCategory<Color>) {
   const colors = range.map(rgba);
-  const tickHeight = 16;
 
-  const height = tickHeight * ticks.length;
+  const height = TICK_HEIGHT * ticks.length;
 
   return (
     <svg className={styles.colorScale} height={height}>
-      <svg y={1}>
+      <svg>
         {colors.map((color, index) => (
-          <rect width={20} height={14} y={1 + index * tickHeight} fill={color} />
+          <rect key={index} width={20} height={14} y={1 + index * TICK_HEIGHT} fill={color} />
         ))}
       </svg>
-      <Ticks {...{ ticks, tickHeight }} x={30} y={4} />
-    </svg>
-  );
-}
-
-type LinesProps = {
-  ticks: any[];
-  tickHeight: number;
-  width: string | number;
-  x?: string | number;
-  y?: string | number;
-};
-
-function Lines({ ticks, tickHeight, width, x = 0, y = 4 }: LinesProps) {
-  const getY = (index: number) => {
-    const offset = index === ticks.length - 1 ? 0 : 0.5;
-    return tickHeight * index + offset;
-  };
-
-  return (
-    <svg {...{ width, x, y }}>
-      {ticks.map((_, index) => (
-        <line
-          key={index}
-          className={styles.line}
-          shapeRendering="crispEdges"
-          x2="100%"
-          y1={getY(index)}
-          y2={getY(index)}
-        />
-      ))}
+      <Ticks {...{ ticks, TICK_HEIGHT }} x={28} />
     </svg>
   );
 }
 
 type TicksProps = {
   ticks: any[];
-  tickHeight: number;
   x?: string | number;
   y?: string | number;
 };
 
-function Ticks({ ticks, tickHeight, x = 0, y = 0 }: TicksProps) {
+function Ticks({ ticks, x = 0, y = 0 }: TicksProps) {
   return (
     <svg {...{ x, y }}>
       {ticks.map((tick, index) => (
-        <text key={index} className={styles.tick} y={tickHeight * index} dy={8}>
+        <text key={index} className={styles.tick} y={TICK_HEIGHT * index} dy={12}>
           {tick}
         </text>
       ))}
