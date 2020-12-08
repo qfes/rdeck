@@ -72,7 +72,7 @@ function getColors(entries: Entry<any>[]): Entry<Color | Color[]>[] {
 
   const colorRange = entries.find(([name]) => name === "colorRange");
   if (colorRange) {
-    colors.push([colorRange[0], colorRange[1].map(parseColor)]);
+    colors.push([colorRange[0], colorRange[1].map((color: string | Color) => parseColor(color))]);
   }
 
   return colors;
