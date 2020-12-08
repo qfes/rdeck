@@ -46,17 +46,14 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
   if (!is.null(data_type)) {
     assert_in(data_type, c("table", "object", "geojson"))
   }
-  expr <- rlang::get_expr(quo)
 
   # is quo a scale object or scale call
-  is_scale <- inherits(expr, "scale") ||
-    rlang::is_call(expr) && grepl("scale_\\w+", rlang::call_name(expr))
-
-  if (!is_scale) {
+  expr <- if (rlang::quo_is_call(quo)) rlang::eval_tidy(quo) else rlang::get_expr(quo)
+  if (!inherits(expr, "scale")) {
     return(accessor(quo, data, data_type))
   }
 
-  scale_expr <- rlang::eval_tidy(expr)
+  scale_expr <- rlang::eval_tidy(quo)
   col_name <- as.name(scale_expr$col)
 
   accessor_ <- accessor(rlang::new_quosure(col_name), data, data_type)

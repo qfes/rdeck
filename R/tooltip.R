@@ -62,7 +62,7 @@ eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
   }
 
   # a character vector
-  cols <- rlang::eval_tidy(expr)
+  cols <- rlang::eval_tidy(quo)
   assert_type(cols, "character", "tooltip")
 
   tooltip(cols, data)
