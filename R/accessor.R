@@ -82,7 +82,7 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
 
   # scale domain & ticks
   scale$domain <- scale_domain(scale, data)
-  if (rlang::has_name(scale, "n_ticks")) {
+  if (rlang::has_name(scale, "palette") && !inherits(scale, "scale_category")) {
     scale$ticks <- scale_ticks(scale)
   }
   scale
