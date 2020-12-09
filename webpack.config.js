@@ -35,7 +35,8 @@ module.exports = (env, { mode }) => {
               options: {
                 importLoaders: 1,
                 modules: {
-                  exportLocalsConvention: "camelCase",
+                  exportGlobals: true,
+                  exportLocalsConvention: "camelCase"
                 },
               },
             },

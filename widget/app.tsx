@@ -5,7 +5,7 @@ import { StaticMapProps, WebMercatorViewport } from "react-map-gl";
 import { Layer, LayerProps } from "./layer";
 import { Map } from "./map";
 import { Legend } from "./legend";
-import "./app.css";
+import styles from "./app.css";
 
 export interface AppProps {
   props: DeckProps & StaticMapProps & { initialBounds: Bounds | null };
@@ -31,7 +31,7 @@ export function App({ props, layers, theme = "kepler", width, height }: AppProps
   }, [initialBounds, initialViewState, width, height]);
 
   const _layers = layers.map(Layer.create);
-  const className = `.rdeck ${theme}`;
+  const className = `${styles.rdeck} ${theme}`;
 
   return (
     <div className={className}>
