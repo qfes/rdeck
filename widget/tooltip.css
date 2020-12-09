@@ -8,20 +8,22 @@
   z-index: 1;
   pointer-events: none;
   user-select: none;
-  
+
   color: var(--color);
   background-color: var(--background-color);
 }
 
 :global(.kepler) .tooltip {
-  --color: hsl(0, 0%, 93%);
   /* https://github.com/uber/deck.gl/blob/master/modules/core/src/lib/tooltip.js */
-  --muted-color: hsl(219, 12%, 67%);
+  --focus-color: hsl(0, 0%, 93%);
+  --color: hsl(0, 0%, 89%);
+  --muted-color: hsl(219, 12%, 65%);
   --background-color: hsl(212, 19%, 20%);
 }
 
 :global(.light) .tooltip {
-  --color: hsl(0, 0%, 4%);
+  --focus-color: hsl(0, 0%, 4%);
+  --color: hsl(0, 0%, 16%);
   --muted-color: hsl(0, 2%, 50%);
   --background-color: hsl(0, 0%, 94%);
 }
@@ -29,6 +31,7 @@
 .layer-name {
   font-size: 12px;
   margin-bottom: 6px;
+  color: var(--focus-color);
 }
 
 .table {
@@ -45,7 +48,7 @@
   padding: 0;
 }
 
-.field-value {
+.field-name {
   color: var(--muted-color);
 }
 

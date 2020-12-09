@@ -74,7 +74,7 @@ const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
   const lines = ticks.map((_, index) => index).slice(1, -1);
 
   const gradientHeight = TICK_HEIGHT * (ticks.length - 1);
-  const height = gradientHeight + 12;
+  const height = gradientHeight + 11;
 
   return (
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
@@ -97,7 +97,7 @@ const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
           />
         ))}
       </svg>
-      <Ticks {...{ ticks }} x={28} y={-4} />
+      <Ticks {...{ ticks }} y={-4} />
     </svg>
   );
 };
@@ -105,7 +105,7 @@ const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
 const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
   const colors = range.map(rgba);
   const scaleHeight = TICK_HEIGHT * (ticks.length - 1);
-  const height = scaleHeight + 12;
+  const height = scaleHeight + 11;
 
   return (
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
@@ -114,7 +114,7 @@ const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
           <rect width={20} height={TICK_HEIGHT} y={index * TICK_HEIGHT} fill={color} />
         ))}
       </svg>
-      <Ticks {...{ ticks, TICK_HEIGHT }} x={28} y={-4} />
+      <Ticks {...{ ticks }} y={-4} />
     </svg>
   );
 };
@@ -131,7 +131,7 @@ function Category({ domain: ticks, range }: AccessorScaleCategory<Color>) {
           <rect key={index} width={20} height={14} y={1 + index * TICK_HEIGHT} fill={color} />
         ))}
       </svg>
-      <Ticks {...{ ticks, TICK_HEIGHT }} x={28} />
+      <Ticks {...{ ticks }} />
     </svg>
   );
 }
@@ -142,11 +142,11 @@ type TicksProps = {
   y?: string | number;
 };
 
-function Ticks({ ticks, x = 0, y = 0 }: TicksProps) {
+function Ticks({ ticks, x = 28, y = 0 }: TicksProps) {
   return (
     <svg {...{ x, y }}>
       {ticks.map((tick, index) => (
-        <text key={index} className={styles.tick} y={TICK_HEIGHT * index} dy={12}>
+        <text key={index} className={styles.tick} y={TICK_HEIGHT * index} dy={10}>
           {tick}
         </text>
       ))}

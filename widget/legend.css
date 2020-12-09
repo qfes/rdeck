@@ -27,7 +27,7 @@
 :global(.light) .legend {
   --focus-color: hsl(0, 0%, 3%);
   --color: hsl(0, 2%, 15%);
-  --muted-color: hsl(0, 2%, 45%);
+  --muted-color: hsl(0, 2%, 52%);
   --background-color: hsl(0, 0%, 98%);
   --border-color: hsl(5, 0%, 85%);
 }
@@ -67,9 +67,10 @@
 
 .tick {
   fill: var(--color);
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .line {
   stroke: var(--background-color);
+  stroke-width: 0.5px;
 }
