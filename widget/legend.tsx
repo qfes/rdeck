@@ -74,7 +74,7 @@ const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
   const lines = ticks.map((_, index) => index).slice(1, -1);
 
   const gradientHeight = TICK_HEIGHT * (ticks.length - 1);
-  const height = gradientHeight + 11;
+  const height = gradientHeight + 12;
 
   return (
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
@@ -105,7 +105,7 @@ const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
 const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
   const colors = range.map(rgba);
   const scaleHeight = TICK_HEIGHT * (ticks.length - 1);
-  const height = scaleHeight + 11;
+  const height = scaleHeight + 12;
 
   return (
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
