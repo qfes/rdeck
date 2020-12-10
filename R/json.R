@@ -56,7 +56,7 @@ to_json.accessor <- function(obj) {
 
 to_json.accessor_scale <- function(obj) {
   # prevent simplification
-  obj$domain <- as.list(obj$domain)
+  obj$domain <- I(obj$domain)
   # get unknown value
   obj$unknown <- obj$na_color %||% obj$na_value %||% obj$unmapped_color %||% obj$unmapped_value
   # remove unneeded
@@ -72,7 +72,7 @@ to_json.accessor_scale <- function(obj) {
 
 to_json.tooltip <- function(obj) {
   # true can be simplified, names cannot
-  cols <- if (is.logical(obj$cols) || length(obj$cols) > 1) obj$cols else as.list(obj$cols)
+  cols <- if (is.logical(obj$cols)) obj$cols else I(obj$cols)
 
   utils::modifyList(
     camel_case(obj),
