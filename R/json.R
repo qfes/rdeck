@@ -72,7 +72,7 @@ to_json.accessor_scale <- function(obj) {
 
 to_json.tooltip <- function(obj) {
   # true can be simplified, names cannot
-  cols <- if (is.logical(obj$cols)) obj$cols else as.list(obj$cols)
+  cols <- if (is.logical(obj$cols) || length(obj$cols) > 1) obj$cols else as.list(obj$cols)
 
   utils::modifyList(
     camel_case(obj),
