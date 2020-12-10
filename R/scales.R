@@ -320,7 +320,7 @@ scale_color_category <- function(col, palette, unmapped_color = "#000000", level
     col = rlang::as_name(col),
     palette = palette,
     unmapped_color = unmapped_color,
-    levels = levels,
+    levels = base::levels(levels) %||% unique(levels),
     legend = legend
   )
 
@@ -343,7 +343,7 @@ scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, 
     col = rlang::as_name(col),
     range = range,
     unmapped_value = unmapped_value,
-    levels = levels,
+    levels = base::levels(levels) %||% unique(levels),
     legend = legend
   )
 
