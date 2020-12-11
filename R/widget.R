@@ -49,7 +49,7 @@ rdeck <- function(mapbox_api_access_token = NULL,
                   initial_bounds = NULL,
                   initial_view_state = view_state(
                     center = c(0, 0),
-                    zoom = 0
+                    zoom = 1
                   ),
                   layers = list(),
                   controller = TRUE,
@@ -59,13 +59,10 @@ rdeck <- function(mapbox_api_access_token = NULL,
                   height = NULL,
                   elementId = NULL,
                   ...) {
-  mapbox_api_access_token <- mapbox_api_access_token %||% mapbox_access_token()
+  mapbox_api_access_token <- if (missing(mapbox_api_access_token)) mapbox_access_token()
 
   if (!is.null(initial_bounds)) {
-    assert_type(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
-    initial_bounds <- sf::st_as_sfc(initial_bounds) %>%
-      sf::st_transform(4326) %>%
-      sf::st_bbox()
+    initial_bounds <- map_bounds(initial_bounds)
   }
 
   props <- structure(
@@ -139,4 +136,16 @@ props <- function(rdeck) {
   assert_type(rdeck, "rdeck")
 
   rdeck$x$props
+}
+
+map_bounds <- function(initial_bounds) {
+  assert_type(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
+
+  bounds <- sf::st_geometry(initial_bounds) %>%
+    sf::st_transform(4326) %>%
+    sf::st_bbox()
+
+  bounds["ymin"] <- max(-85, bounds$ymin)
+  bounds["ymax"] <- min(85, bounds$ymax)
+  bounds
 }
