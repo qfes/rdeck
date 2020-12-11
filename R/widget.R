@@ -89,10 +89,6 @@ rdeck <- function(mapbox_api_access_token = NULL,
       props = props,
       layers = layers,
       theme = theme
-    ),
-    TOJSON_ARGS = list(
-      digits = 9,
-      keep_vec_names = FALSE
     )
   )
 

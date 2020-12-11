@@ -28,15 +28,22 @@ layer_df <- function(data) {
 
     # avoid serialising as geojson
     if (!inherits(col, "sfc_POINT")) {
-      return(lapply(col, unclass))
+      return(
+        lapply(col, unclass) %>%
+          round_sfc()
+      )
     }
 
     # performance optimisation for points
-    sf::st_coordinates(col)
+    sf::st_coordinates(col) %>%
+      round_sfc()
   })
 
-  # HACK: apply data.frame json serialisation
-  structure(cols, class = "data.frame")
+  lapply(cols, I)
+}
+
+round_sfc <- function(sfc, digits = 6L) {
+  if (is.atomic(sfc)) round(sfc, digits) else lapply(sfc, round_sfc, digits)
 }
 
 layer_data.GeoJsonLayer <- function(layer) {
