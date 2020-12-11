@@ -13,9 +13,10 @@ import { words } from "./util";
 import styles from "./legend.css";
 
 const TICK_HEIGHT = 16;
+const TICK_FONT_SIZE = 10;
 
-type LegendProps = {
-  layers: LayerProps[];
+export type LegendProps = {
+  layers: LegendLayerProps[];
 };
 
 export function Legend({ layers }: LegendProps) {
@@ -24,18 +25,19 @@ export function Legend({ layers }: LegendProps) {
   return (
     <div className={styles.legend}>
       {layers.map((layer) => (
-        <Layer key={layer.name} {...layer} />
+        <Layer key={layer.id} {...layer} />
       ))}
     </div>
   );
 }
 
-type LayerProps = {
+export type LegendLayerProps = {
+  id: string;
   name: string;
   scales: AccessorScale<number | Color>[];
 };
 
-function Layer({ name, scales }: LayerProps) {
+function Layer({ name, scales }: LegendLayerProps) {
   if (scales.length === 0) return null;
 
   return (
@@ -74,7 +76,7 @@ const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
   const lines = ticks.map((_, index) => index).slice(1, -1);
 
   const gradientHeight = TICK_HEIGHT * (ticks.length - 1);
-  const height = gradientHeight + 11;
+  const height = gradientHeight + TICK_FONT_SIZE + 1;
 
   return (
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
@@ -105,13 +107,13 @@ const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
 const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
   const colors = range.map(rgba);
   const scaleHeight = TICK_HEIGHT * (ticks.length - 1);
-  const height = scaleHeight + 11;
+  const height = scaleHeight + TICK_FONT_SIZE + 1;
 
   return (
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
       <svg y={4}>
         {colors.map((color, index) => (
-          <rect width={20} height={TICK_HEIGHT} y={index * TICK_HEIGHT} fill={color} />
+          <rect key={index} width={20} height={TICK_HEIGHT} y={index * TICK_HEIGHT} fill={color} />
         ))}
       </svg>
       <Ticks {...{ ticks }} y={-3} />
@@ -121,7 +123,6 @@ const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
 
 function Category({ domain: ticks, range }: AccessorScaleCategory<Color>) {
   const colors = range.map(rgba);
-
   const height = TICK_HEIGHT * ticks.length;
 
   return (
@@ -146,7 +147,7 @@ function Ticks({ ticks, x = 28, y = 0 }: TicksProps) {
   return (
     <svg {...{ x, y }}>
       {ticks.map((tick, index) => (
-        <text key={index} className={styles.tick} y={TICK_HEIGHT * index} dy={10}>
+        <text key={index} className={styles.tick} y={TICK_HEIGHT * index} dy={TICK_FONT_SIZE}>
           {tick}
         </text>
       ))}

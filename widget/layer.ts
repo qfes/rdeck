@@ -6,6 +6,7 @@ import { FeatureCollection } from "geojson";
 import { parseColor } from "./color";
 import { AccessorScale, accessorScale, isAccessorScale } from "./scale";
 import { accessor, Accessor, isAccessor } from "./accessor";
+import { LegendLayerProps } from "./legend";
 
 type LayerData = string | DataFrame | FeatureCollection;
 type Entry<T> = [string, T];
@@ -19,10 +20,7 @@ export interface LayerProps extends Omit<DeckLayerProps<any>, "data"> {
 
 export class Layer {
   layer: DeckLayer<any>;
-  legend: {
-    name: string;
-    scales: AccessorScale<number | Color>[];
-  };
+  legend: LegendLayerProps;
 
   constructor({ type, ...props }: LayerProps) {
     const entries = Object.entries(props);
@@ -51,6 +49,7 @@ export class Layer {
       .map(([, value]) => value as AccessorScale<number | Color>);
 
     this.legend = {
+      id: props.id!,
       name: props.name,
       scales,
     };
