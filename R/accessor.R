@@ -28,7 +28,7 @@ accessor <- function(quo, data = NULL, data_type = NULL) {
   structure(
     list(
       col = col,
-      data_type = data_type %||% ifelse(inherits(data, "data.frame"), "table", "object")
+      data_type = data_type %||% resolve_data_type(data)
     ),
     class = "accessor"
   )
@@ -86,4 +86,8 @@ accessor_scale <- function(quo, data = NULL, data_type = NULL) {
     scale$ticks <- scale_ticks(scale)
   }
   scale
+}
+
+resolve_data_type <- function(data = NULL) {
+  ifelse(is.null(data) | inherits(data, "data.frame"), "table", "object")
 }
