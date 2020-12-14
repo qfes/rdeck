@@ -40,14 +40,11 @@ to_json.layer <- function(obj) {
 }
 
 to_json.rdeck_props <- function(obj) {
-  if (!is.null(obj$initial_bounds)) {
-    obj$initial_bounds <- matrix(obj$initial_bounds, nrow = 2, byrow = TRUE)
-  }
-
-  camel_case(obj)
+  to_json.list(camel_case(obj))
 }
 
 to_json.view_state <- camel_case
+to_json.bbox <- as.vector
 
 to_json.accessor <- function(obj) {
   utils::modifyList(

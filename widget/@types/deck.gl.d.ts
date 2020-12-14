@@ -1,10 +1,10 @@
 declare module "@deck.gl/core" {
-  export { PickInfo } from "@deck.gl/core/lib/deck";
+  export { PickInfo, InitialViewStateProps } from "@deck.gl/core/lib/deck";
   export { LayerProps } from "@deck.gl/core/lib/layer";
 }
 
 declare module "deck.gl" {
-  export { LayerProps } from "@deck.gl/core";
+  export { InitialViewStateProps, LayerProps } from "@deck.gl/core";
 }
 
 declare module "@deck.gl/core/lib/deck" {
