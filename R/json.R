@@ -24,7 +24,10 @@ to_json.list <- function(obj) {
 to_json.rdeck <- to_json.list
 
 camel_case <- function(obj) {
-  names(obj) <- snakecase::to_lower_camel_case(names(obj))
+  obj_names <- names(obj)
+  # preserve _ prefix
+  prefix <- ifelse(startsWith(obj_names, "_"), "_", "")
+  names(obj) <- snakecase::to_lower_camel_case(obj_names, prefix = prefix)
   to_json.list(obj)
 }
 
