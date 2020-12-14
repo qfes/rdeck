@@ -29,7 +29,6 @@ utils::globalVariables(c(
   "hexagons", # <add_h3_cluster_layer>
   "hexagon", # <add_h3_hexagon_layer>
   "path", # <add_trips_layer>
-  "null", # <add_tile3d_layer>
   "position", # <add_simple_mesh_layer>
   "position", # <add_scenegraph_layer>
   NULL

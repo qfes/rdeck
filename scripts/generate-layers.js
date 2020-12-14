@@ -63,7 +63,7 @@ function defaultValue({ name, type, value }) {
         const entries = Object.entries(value);
         /* escape name */
         const sep = entries.length > 1 ? ",\n" : ", ";
-        const items = entries.map(([k, v]) => quoteName(k) + " = " + format(v)).join(sep);
+        const items = entries.map(([k, v]) => quoteName(k) + " = " + (format(v) ?? "NULL")).join(sep);
         return `list(${items})`;
       }
       default:
@@ -78,7 +78,7 @@ function templateData(Layer) {
       // GeoJsonLayer -> geojson_layer
       .replace("geo_json", "geojson")
       // Tile3DLayer -> tile3d_layer
-      .replace("3_d", "3d"),
+      .replace("3_d", "_3d"),
     type: Layer.layerName,
     props: getProps(Layer).map((propType) => ({
       ...propType,
