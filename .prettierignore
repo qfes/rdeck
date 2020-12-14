@@ -1,3 +1,4 @@
-*
-!widget/**
-!scripts/**
+inst/
+man/
+node_modules/
+R/
