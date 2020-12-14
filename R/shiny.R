@@ -30,8 +30,82 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 #' RDeck proxy
 #'
+#' Creates an [rdeck()] interface for asynchronous updates of a pre-rendered rdeck map
+#' in Shiny apps.
+#'
+#' All rdeck props can be updated through the proxy, layers that are added
+#' to the proxy (e.g. `rdeck_proxy %>% add_h3_hexagon_layer()`) will be merged with
+#' pre-rendered rdeck layers.
+#'
+#' Layers are merged by their `id`. Matched layers will be updated in place, new layers
+#' will be appended and hence drawn _on top_ of all existing layers. For layer updates, you
+#' may omit the `data` prop to avoid re-serialising unchanged data. All other props will
+#' assume their defaults if omitted.
 #' @name rdeck_proxy
 #' @param id the map id
+#' @param session the shiny session
+#' @examples
+#' library(shiny)
+#' library(dplyr)
+#' library(h3jsr)
+#' library(viridis)
+#'
+#' ui <- fillPage(
+#'   rdeckOutput("map", height = "100%"),
+#'   absolutePanel(
+#'     top = 10, left = 10,
+#'     sliderInput("range", "value", 0, 1, c(0, 1), step = 0.1)
+#'   )
+#' )
+#'
+#' h3_data <- tibble(
+#'   hexagon = get_res0() %>%
+#'     get_children(res = 3) %>%
+#'     unlist() %>%
+#'     unique(),
+#'   value = runif(length(hexagon))
+#' )
+#'
+#' map <- rdeck() %>%
+#'   add_h3_hexagon_layer(
+#'     id = "h3_hexagon",
+#'     name = "hexagons",
+#'     data = h3_data,
+#'     get_fill_color = scale_color_quantize(
+#'       col = value,
+#'       palette = viridis(6, 0.3)
+#'     ),
+#'     pickable = TRUE,
+#'     auto_highlight = TRUE,
+#'     tooltip = c(hexagon, value)
+#'   )
+#'
+#' server <- function(input, output, session) {
+#'   output$map <- renderRdeck(map)
+#'
+#'   filtered_data <- reactive({
+#'     h3_data %>%
+#'       filter(value >= input$range[1] & value <= input$range[2])
+#'   })
+#'
+#'   observe({
+#'     rdeck_proxy("map") %>%
+#'       add_h3_hexagon_layer(
+#'         id = "h3_hexagon",
+#'         name = "hexagons",
+#'         data = filtered_data(),
+#'         get_fill_color = scale_color_quantize(
+#'           col = value,
+#'           palette = cividis(6, 0.3)
+#'         ),
+#'         pickable = TRUE,
+#'         auto_highlight = TRUE,
+#'         tooltip = c(hexagon, value)
+#'       )
+#'   })
+#' }
+#'
+#' app <- shinyApp(ui, server)
 #' @export
 rdeck_proxy <- function(id, session = shiny::getDefaultReactiveDomain(), ...) {
   assert_is_string(id)
