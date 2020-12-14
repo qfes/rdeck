@@ -16,6 +16,7 @@ Imports:
     htmlwidgets (>= 1.5.1),
     magrittr,
     sf (>= 0.9.3),
+    shiny,
     snakecase,
     rlang,
     tidyselect,

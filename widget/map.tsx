@@ -30,7 +30,7 @@ export function Map({ props, layers }: MapProps) {
     >
       {mapboxApiAccessToken && (
         // @ts-ignore
-        <StaticMap {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />
+        <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />
       )}
       <Tooltip info={info} />
     </DeckGL>

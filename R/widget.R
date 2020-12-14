@@ -119,7 +119,10 @@ layers <- function(rdeck) {
 }
 
 add_layer <- function(rdeck, layer) {
-  assert_type(rdeck, "rdeck")
+  UseMethod("add_layer")
+}
+
+add_layer.rdeck <- function(rdeck, layer) {
   assert_type(layer, "layer")
 
   rdeck$x$layers <- c(layers(rdeck), list(layer))
