@@ -45,14 +45,7 @@ function mergeLayers(layers: LayerProps[], layer: LayerProps) {
   }
 
   // layer.data === undefined ? use value from props
-  return layers.map((x) =>
-    x !== _layer
-      ? x
-      : {
-          ...layer,
-          data: layer.data !== undefined ? layer.data : _layer.data,
-        }
-  );
+  return layers.map((x) => (x !== _layer ? x : { ...layer, data: layer.data ?? _layer.data }));
 }
 
 /* register widget */
