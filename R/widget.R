@@ -141,11 +141,13 @@ props <- function(rdeck) {
 map_bounds <- function(initial_bounds) {
   assert_type(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
 
-  bounds <- sf::st_geometry(initial_bounds) %>%
+  sfc <- if (inherits(initial_bounds, "bbox")) {
+    sf::st_as_sfc(initial_bounds)
+  } else {
+    sf::st_geometry(initial_bounds)
+  }
+
+  sfc %>%
     sf::st_transform(4326) %>%
     sf::st_bbox()
-
-  bounds["ymin"] <- max(-85, bounds$ymin)
-  bounds["ymax"] <- min(85, bounds$ymax)
-  bounds
 }
