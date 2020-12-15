@@ -26,8 +26,11 @@ export function App({ props, layers, theme = "kepler", width, height }: AppProps
 
   return (
     <div className={className}>
-      <Map props={{ ...deckglProps, initialViewState: _initialViewState }} layers={_layers} />
-      <Legend layers={_layers.map((x) => x.legend)} />
+      <Map
+        props={{ ...deckglProps, initialViewState: _initialViewState }}
+        layers={_layers.map((layer) => layer.renderLayer())}
+      />
+      <Legend layers={_layers.map((layer) => layer.renderLegend()).reverse()} />
     </div>
   );
 }
@@ -36,7 +39,7 @@ function useBounds(
   width: number,
   height: number,
   initialBounds?: Bounds,
-  initialViewState?: InitialViewStateProps,
+  initialViewState?: InitialViewStateProps
 ) {
   return useMemo(() => {
     if (!Array.isArray(initialBounds)) {
