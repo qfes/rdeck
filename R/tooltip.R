@@ -72,7 +72,7 @@ tooltip <- function(cols, data = NULL, data_type = NULL) {
   structure(
     list(
       cols = cols,
-      data_type = data_type %||% ifelse(inherits(data, "data.frame"), "table", "object")
+      data_type = data_type %||% resolve_data_type(data)
     ),
     class = "tooltip"
   )
