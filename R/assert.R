@@ -174,21 +174,23 @@ check_dots <- function(...) {
   dots <- rlang::dots_list(...)
   dots_names <- names(dots)
 
-  if (length(dots) != length(dots_names)) {
-    rlang::error(
+  if (!all(nzchar(dots_names))) {
+    rlang::abort(
       paste0("All dots must be named."),
-      class = "rdeck_dots_error"
+      class = "rdeck_dots_unnamed"
     )
   }
 
   if (length(dots) != 0) {
     rlang::warn(
       paste(
-        "These dots are unrecognised arguments that will forwarded to Deck.GL javascript:",
-        paste0("* `", dots_names, "` -> `", to_camel_case(dots_names), "`"),
-        sep = "\n"
+        c(
+          "These dots are unrecognised arguments that will be forwarded to Deck.GL javascript:",
+          paste0("* `", dots_names, "` -> `", to_camel_case(dots_names), "`")
+        ),
+        collapse = "\n"
       ),
-      class = "rdeck_dots_used"
+      class = "rdeck_dots_nonempty"
     )
   }
 }
