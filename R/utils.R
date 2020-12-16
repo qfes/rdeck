@@ -17,3 +17,10 @@ mvt_url <- function(tileset_id) {
   url <- file.path(mvt_endpoint, id, xyz_template, fsep = "/") %>%
     urltools::param_set("access_token", mapbox_access_token())
 }
+
+discard_null <- function(obj) {
+  obj_filtered <- obj[!vapply(obj, is.null, logical(1))]
+  mostattributes(obj_filtered) <- c(attributes(obj), names = names(obj_filtered))
+
+  obj_filtered
+}

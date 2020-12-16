@@ -33,9 +33,9 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' Creates an [rdeck()] interface for asynchronous updates of a pre-rendered rdeck map
 #' in Shiny apps.
 #'
-#' All rdeck props can be updated through the proxy, layers that are added
-#' to the proxy (e.g. `rdeck_proxy %>% add_h3_hexagon_layer()`) will be merged with
-#' pre-rendered rdeck layers.
+#' All rdeck props can be updated through the proxy (`NULL` values will be discarded),
+#' layers that are added to the proxy (e.g. `rdeck_proxy %>% add_h3_hexagon_layer()`)
+#' will be merged with pre-rendered rdeck layers.
 #'
 #' Layers are merged by their `id`. Matched layers will be updated in place, new layers
 #' will be appended and hence drawn _on top_ of all existing layers. For layer updates, you
@@ -44,6 +44,7 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @name rdeck_proxy
 #' @param id the map id
 #' @param session the shiny session
+#' @inheritParams rdeck
 #' @examples
 #' library(shiny)
 #' library(dplyr)
@@ -109,17 +110,14 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @export
 rdeck_proxy <- function(id,
                         session = shiny::getDefaultReactiveDomain(),
-                        mapbox_api_access_token = NULL,
-                        map_style = "mapbox://styles/mapbox/dark-v10",
-                        theme = "kepler",
+                        map_style = NULL,
+                        theme = NULL,
                         initial_bounds = NULL,
-                        initial_view_state = view_state(
-                          center = c(0, 0),
-                          zoom = 1
-                        ),
-                        controller = TRUE,
-                        picking_radius = 0,
-                        use_device_pixels = TRUE, ...) {
+                        initial_view_state = NULL,
+                        controller = NULL,
+                        picking_radius = NULL,
+                        use_device_pixels = NULL,
+                        ...) {
   assert_is_string(id)
   assert_type(session, "ShinySession")
 
@@ -131,27 +129,21 @@ rdeck_proxy <- function(id,
     class = c("rdeck_proxy", "rdeck")
   )
 
-  if (missing(mapbox_api_access_token)) {
-    mapbox_api_access_token <- mapbox_access_token()
+  props <- rdeck_props(
+    map_style = map_style,
+    initial_bounds = initial_bounds,
+    initial_view_state = initial_view_state,
+    controller = controller,
+    picking_radius = picking_radius,
+    use_device_pixels = use_device_pixels,
+    ...
+  ) %>%
+    discard_null()
+
+  if (length(props) != 0) {
+    send_msg(rdeck, "deck", to_json(list(theme = theme, props = props)))
   }
 
-  rdeck_props <- structure(
-    c(
-      list(
-        mapbox_api_access_token = mapbox_api_access_token,
-        map_style = map_style,
-        initial_bounds = initial_bounds,
-        initial_view_state = initial_view_state,
-        controller = controller,
-        picking_radius = picking_radius,
-        use_device_pixels = use_device_pixels
-      ),
-      rlang::dots_list(...)
-    ),
-    class = "rdeck_props"
-  )
-
-  send_msg(rdeck, "deck", to_json(list(theme = theme, props = rdeck_props)))
   rdeck
 }
 

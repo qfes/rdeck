@@ -145,13 +145,13 @@ map_bounds <- function(initial_bounds) {
     sf::st_bbox()
 }
 
-rdeck_props <- function(mapbox_api_access_token,
-                        map_style,
-                        initial_bounds,
-                        initial_view_state,
-                        controller,
-                        picking_radius,
-                        use_device_pixels,
+rdeck_props <- function(mapbox_api_access_token = NULL,
+                        map_style = NULL,
+                        initial_bounds = NULL,
+                        initial_view_state = NULL,
+                        controller = NULL,
+                        picking_radius = NULL,
+                        use_device_pixels = NULL,
                         ...) {
   check_dots(...)
   structure(
