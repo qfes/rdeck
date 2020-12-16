@@ -9,7 +9,9 @@ to_json <- function(obj) {
   UseMethod("to_json")
 }
 
-to_json.default <- function(obj) obj
+to_json.default <- function(obj) {
+  if (is.vector(obj) && !is.null(names(obj))) as.vector(obj) else obj
+}
 
 to_json.list <- function(obj) {
   obj_json <- structure(
@@ -39,10 +41,7 @@ to_json.layer <- function(obj) {
   camel_case(obj)
 }
 
-to_json.rdeck_props <- function(obj) {
-  to_json.list(camel_case(obj))
-}
-
+to_json.rdeck_props <- camel_case
 to_json.view_state <- camel_case
 to_json.bbox <- as.vector
 

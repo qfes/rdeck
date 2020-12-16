@@ -8,7 +8,7 @@
 #'
 #' @param map_style `character`
 #'  A mapbox style url. <https://docs.mapbox.com/api/maps/#mapbox-styles>
-#' 
+#'
 #' @param theme The widget theme. Either "kepler" or "light".
 #'
 #' @param initial_bounds `sf::st_bbox` | `sf::sf` | `sf::sfc` | `sf::sfg`
@@ -81,12 +81,10 @@ rdeck <- function(mapbox_api_access_token = NULL,
     class = "rdeck_props"
   )
 
-  x <- structure(
-    list(
-      props = props,
-      layers = layers,
-      theme = theme
-    )
+  x <- list(
+    props = props,
+    layers = layers,
+    theme = theme
   )
 
   # create widget
