@@ -30,7 +30,7 @@ export function App({ props, layers, theme = "kepler", width, height }: AppProps
         props={{ ...deckglProps, initialViewState: _initialViewState }}
         layers={_layers.map((layer) => layer.renderLayer())}
       />
-      <Legend layers={_layers.map((layer) => layer.renderLegend()).reverse()} />
+      <Legend layers={_layers.reverse().map((layer) => layer.renderLegend())} />
     </div>
   );
 }
@@ -52,9 +52,7 @@ function useBounds(
       [xmax, Math.min(ymax, 85)],
     ];
 
-    // tabs create zero-height map when not active
-    const _height = height > 0 ? height : width;
-    const viewport = new WebMercatorViewport({ width, height: _height });
+    const viewport = new WebMercatorViewport({ width, height });
     const { longitude, latitude, zoom } = viewport.fitBounds(bounds);
 
     return { ...initialViewState, longitude, latitude, zoom };
