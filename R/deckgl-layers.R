@@ -29,11 +29,6 @@ add_arc_layer <- function(rdeck,
                           width_min_pixels = 0,
                           width_max_pixels = 9007199254740991,
                           tooltip = FALSE) {
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_target_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   arc_layer <- layer(
     type = "ArcLayer",
@@ -263,11 +258,6 @@ add_line_layer <- function(rdeck,
                            width_min_pixels = 0,
                            width_max_pixels = 9007199254740991,
                            tooltip = FALSE) {
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_target_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   line_layer <- layer(
     type = "LineLayer",
@@ -1877,11 +1867,6 @@ add_great_circle_layer <- function(rdeck,
                                    width_min_pixels = 0,
                                    width_max_pixels = 9007199254740991,
                                    tooltip = FALSE) {
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_target_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   great_circle_layer <- layer(
     type = "GreatCircleLayer",
