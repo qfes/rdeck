@@ -169,3 +169,26 @@ assert_scalable_is_numeric <- function(obj, name = NULL) {
     )
   }
 }
+
+check_dots <- function(...) {
+  dots <- rlang::dots_list(...)
+  dots_names <- names(dots)
+
+  if (length(dots) != length(dots_names)) {
+    rlang::error(
+      paste0("All dots must be named."),
+      class = "rdeck_dots_error"
+    )
+  }
+
+  if (length(dots) != 0) {
+    rlang::warn(
+      paste(
+        "These dots are unrecognised arguments that will forwarded to Deck.GL javascript:",
+        paste0("* `", dots_names, "` -> `", to_camel_case(dots_names), "`"),
+        sep = "\n"
+      ),
+      class = "rdeck_dots_used"
+    )
+  }
+}

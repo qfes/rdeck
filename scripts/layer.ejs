@@ -22,7 +22,7 @@ add_<%- name -%> <- function(rdeck,
                               <%- p.name -%> = <%- p.value ?? "NULL" -%>,
                             <% } -%>
                             tooltip = FALSE) {
-
+    check_dots(...)
     <% const geom = props.find(p => /^get_(path|polygon|position)$/i.test(p.name)); -%>
     <% if (geom) { -%>
         # auto-resolve geometry

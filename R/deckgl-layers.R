@@ -29,6 +29,7 @@ add_arc_layer <- function(rdeck,
                           width_min_pixels = 0,
                           width_max_pixels = 9007199254740991,
                           tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   arc_layer <- layer(
     type = "ArcLayer",
@@ -103,6 +104,7 @@ add_bitmap_layer <- function(rdeck,
                              transparent_color = "#00000000",
                              tint_color = "#ffffff",
                              tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   bitmap_layer <- layer(
     type = "BitmapLayer",
@@ -172,6 +174,7 @@ add_icon_layer <- function(rdeck,
                            get_angle = 0,
                            get_pixel_offset = c(0, 0),
                            tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -258,6 +261,7 @@ add_line_layer <- function(rdeck,
                            width_min_pixels = 0,
                            width_max_pixels = 9007199254740991,
                            tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   line_layer <- layer(
     type = "LineLayer",
@@ -325,6 +329,7 @@ add_point_cloud_layer <- function(rdeck,
                                   get_color = "#000000ff",
                                   material = TRUE,
                                   tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -402,6 +407,7 @@ add_scatterplot_layer <- function(rdeck,
                                   get_line_color = "#000000ff",
                                   get_line_width = 1,
                                   tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -504,6 +510,7 @@ add_grid_cell_layer <- function(rdeck,
                                 material = TRUE,
                                 cell_size = 1000,
                                 tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -619,6 +626,7 @@ add_column_layer <- function(rdeck,
                              get_elevation = 1000,
                              material = TRUE,
                              tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -721,6 +729,7 @@ add_path_layer <- function(rdeck,
                            get_color = "#000000ff",
                            get_width = 1,
                            tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_path <- as.name(attr(data, "sf_column"))
@@ -808,6 +817,7 @@ add_polygon_layer <- function(rdeck,
                               get_elevation = 1000,
                               material = TRUE,
                               tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_polygon <- as.name(attr(data, "sf_column"))
@@ -901,6 +911,7 @@ add_solid_polygon_layer <- function(rdeck,
                                     get_line_color = "#000000ff",
                                     material = TRUE,
                                     tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_polygon <- as.name(attr(data, "sf_column"))
@@ -990,6 +1001,7 @@ add_geojson_layer <- function(rdeck,
                               get_elevation = 1000,
                               material = TRUE,
                               tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   geojson_layer <- layer(
     type = "GeoJsonLayer",
@@ -1097,6 +1109,7 @@ add_text_layer <- function(rdeck,
                            get_alignment_baseline = "center",
                            get_pixel_offset = c(0, 0),
                            tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -1195,6 +1208,7 @@ add_screen_grid_layer <- function(rdeck,
                                   gpu_aggregation = TRUE,
                                   aggregation = "SUM",
                                   tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -1284,6 +1298,7 @@ add_cpu_grid_layer <- function(rdeck,
                                extruded = FALSE,
                                material = TRUE,
                                tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -1403,6 +1418,7 @@ add_hexagon_layer <- function(rdeck,
                               get_position = position,
                               material = TRUE,
                               tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -1506,6 +1522,7 @@ add_contour_layer <- function(rdeck,
                               contours = c(list(threshold = 1)),
                               z_offset = 0.005,
                               tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -1594,6 +1611,7 @@ add_grid_layer <- function(rdeck,
                            grid_aggregator = NULL,
                            gpu_aggregation = FALSE,
                            tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -1706,6 +1724,7 @@ add_gpu_grid_layer <- function(rdeck,
                                extruded = FALSE,
                                material = TRUE,
                                tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -1791,6 +1810,7 @@ add_heatmap_layer <- function(rdeck,
                               threshold = 0.05,
                               color_domain = NULL,
                               tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -1867,6 +1887,7 @@ add_great_circle_layer <- function(rdeck,
                                    width_min_pixels = 0,
                                    width_max_pixels = 9007199254740991,
                                    tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   great_circle_layer <- layer(
     type = "GreatCircleLayer",
@@ -1953,6 +1974,7 @@ add_s2_layer <- function(rdeck,
                          get_elevation = 1000,
                          material = TRUE,
                          tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   s2_layer <- layer(
     type = "S2Layer",
@@ -2049,6 +2071,7 @@ add_h3_cluster_layer <- function(rdeck,
                                  get_elevation = 1000,
                                  material = TRUE,
                                  tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   h3_cluster_layer <- layer(
     type = "H3ClusterLayer",
@@ -2148,6 +2171,7 @@ add_h3_hexagon_layer <- function(rdeck,
                                  center_hexagon = NULL,
                                  get_hexagon = hexagon,
                                  tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   h3_hexagon_layer <- layer(
     type = "H3HexagonLayer",
@@ -2243,6 +2267,7 @@ add_tile_layer <- function(rdeck,
                            z_range = NULL,
                            max_requests = 6,
                            tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   tile_layer <- layer(
     type = "TileLayer",
@@ -2321,6 +2346,7 @@ add_trips_layer <- function(rdeck,
                             current_time = 0,
                             get_timestamps = NULL,
                             tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_path <- as.name(attr(data, "sf_column"))
@@ -2417,6 +2443,7 @@ add_tile_3d_layer <- function(rdeck,
                                 ))
                               ),
                               tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   tile_3d_layer <- layer(
     type = "Tile3DLayer",
@@ -2494,6 +2521,7 @@ add_terrain_layer <- function(rdeck,
                               wireframe = FALSE,
                               material = TRUE,
                               tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   terrain_layer <- layer(
     type = "TerrainLayer",
@@ -2610,6 +2638,7 @@ add_mvt_layer <- function(rdeck,
                           unique_id_property = "",
                           highlighted_feature_id = NULL,
                           tooltip = FALSE) {
+  check_dots(...)
   # construct layer object
   mvt_layer <- layer(
     type = "MVTLayer",
@@ -2732,6 +2761,7 @@ add_simple_mesh_layer <- function(rdeck,
                                   get_translation = c(0, 0, 0),
                                   get_transform_matrix = NULL,
                                   tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))
@@ -2816,6 +2846,7 @@ add_scenegraph_layer <- function(rdeck,
                                  get_translation = c(0, 0, 0),
                                  get_transform_matrix = NULL,
                                  tooltip = FALSE) {
+  check_dots(...)
   # auto-resolve geometry
   if (inherits(data, "sf")) {
     get_position <- as.name(attr(data, "sf_column"))

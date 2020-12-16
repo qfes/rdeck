@@ -51,7 +51,6 @@ rdeck <- function(mapbox_api_access_token = NULL,
                     center = c(0, 0),
                     zoom = 1
                   ),
-                  layers = list(),
                   controller = TRUE,
                   picking_radius = 0,
                   use_device_pixels = TRUE,
@@ -59,31 +58,24 @@ rdeck <- function(mapbox_api_access_token = NULL,
                   height = NULL,
                   elementId = NULL,
                   ...) {
-  mapbox_api_access_token <- if (missing(mapbox_api_access_token)) mapbox_access_token()
-
-  if (!is.null(initial_bounds)) {
-    initial_bounds <- map_bounds(initial_bounds)
+  if (missing(mapbox_api_access_token)) {
+    mapbox_api_access_token <- mapbox_access_token()
   }
 
-  props <- structure(
-    c(
-      list(
-        mapbox_api_access_token = mapbox_api_access_token,
-        map_style = map_style,
-        initial_bounds = initial_bounds,
-        initial_view_state = initial_view_state,
-        controller = controller,
-        picking_radius = picking_radius,
-        use_device_pixels = use_device_pixels
-      ),
-      rlang::dots_list(...)
-    ),
-    class = "rdeck_props"
+  props <- rdeck_props(
+    mapbox_api_access_token = mapbox_api_access_token,
+    map_style = map_style,
+    initial_bounds = if (!is.null(initial_bounds)) map_bounds(initial_bounds),
+    initial_view_state = initial_view_state,
+    controller = controller,
+    picking_radius = picking_radius,
+    use_device_pixels = use_device_pixels,
+    ...
   )
 
   x <- list(
     props = props,
-    layers = layers,
+    layers = list(),
     theme = theme
   )
 
@@ -151,4 +143,30 @@ map_bounds <- function(initial_bounds) {
   sfc %>%
     sf::st_transform(4326) %>%
     sf::st_bbox()
+}
+
+rdeck_props <- function(mapbox_api_access_token,
+                        map_style,
+                        initial_bounds,
+                        initial_view_state,
+                        controller,
+                        picking_radius,
+                        use_device_pixels,
+                        ...) {
+  check_dots(...)
+  structure(
+    c(
+      list(
+        mapbox_api_access_token = mapbox_api_access_token,
+        map_style = map_style,
+        initial_bounds = initial_bounds,
+        initial_view_state = initial_view_state,
+        controller = controller,
+        picking_radius = picking_radius,
+        use_device_pixels = use_device_pixels
+      ),
+      rlang::dots_list(...)
+    ),
+    class = "rdeck_props"
+  )
 }
