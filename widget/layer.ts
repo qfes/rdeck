@@ -1,5 +1,5 @@
 import * as deck from "./deck-bundle";
-import { Layer as DeckLayer, LayerProps as DeckLayerProps } from "deck.gl";
+import { Layer as DeckLayer, LayerProps as DeckLayerProps } from "@deck.gl/core";
 import { TextLayerProps } from "@deck.gl/layers/text-layer/text-layer";
 import { FeatureCollection } from "geojson";
 

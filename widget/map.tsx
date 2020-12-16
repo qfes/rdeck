@@ -1,10 +1,11 @@
 import React, { useCallback, useRef, useState } from "react";
-import DeckGL, { DeckProps, Layer as DeckLayer, PickInfo } from "deck.gl";
+import { DeckGL, DeckGLProps } from "@deck.gl/react";
+import { Layer as DeckLayer, MapView, PickInfo } from "@deck.gl/core";
 import { StaticMap, StaticMapProps } from "react-map-gl";
 import Tooltip from "./tooltip";
 
 type MapProps = {
-  props: DeckProps & StaticMapProps;
+  props: DeckGLProps & StaticMapProps;
   layers: DeckLayer<any, any>[];
 };
 
@@ -16,9 +17,11 @@ export function Map({ props, layers }: MapProps) {
 
   return (
     <DeckGL ref={deckgl} {...deckProps} layers={layers} onHover={handleHover}>
-      {mapboxApiAccessToken && (
-        // @ts-ignore
-        <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />
+      {mapStyle && (
+        <MapView id="map" controller={deckProps.controller} repeat={true}>
+          {/* @ts-ignore */}
+          <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />
+        </MapView>
       )}
       <Tooltip info={info} />
     </DeckGL>
