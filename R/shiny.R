@@ -107,11 +107,22 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'
 #' app <- shinyApp(ui, server)
 #' @export
-rdeck_proxy <- function(id, session = shiny::getDefaultReactiveDomain(), ...) {
+rdeck_proxy <- function(id,
+                        session = shiny::getDefaultReactiveDomain(),
+                        mapbox_api_access_token = NULL,
+                        map_style = "mapbox://styles/mapbox/dark-v10",
+                        theme = "kepler",
+                        initial_bounds = NULL,
+                        initial_view_state = view_state(
+                          center = c(0, 0),
+                          zoom = 1
+                        ),
+                        controller = TRUE,
+                        picking_radius = 0,
+                        use_device_pixels = TRUE, ...) {
   assert_is_string(id)
   assert_type(session, "ShinySession")
 
-  # mirror all stuff from the rdeck constructor
   rdeck <- structure(
     list(
       id = session$ns(id),
@@ -120,7 +131,28 @@ rdeck_proxy <- function(id, session = shiny::getDefaultReactiveDomain(), ...) {
     class = c("rdeck_proxy", "rdeck")
   )
 
-  # TODO: send msg
+  if (missing(mapbox_api_access_token)) {
+    mapbox_api_access_token <- mapbox_access_token()
+  }
+
+  rdeck_props <- structure(
+    c(
+      list(
+        mapbox_api_access_token = mapbox_api_access_token,
+        map_style = map_style,
+        initial_bounds = initial_bounds,
+        initial_view_state = initial_view_state,
+        controller = controller,
+        picking_radius = picking_radius,
+        use_device_pixels = use_device_pixels
+      ),
+      rlang::dots_list(...)
+    ),
+    class = "rdeck_props"
+  )
+
+  send_msg(rdeck, "deck", to_json(list(theme = theme, props = rdeck_props)))
+  rdeck
 }
 
 add_layer.rdeck_proxy <- function(rdeck, layer) {

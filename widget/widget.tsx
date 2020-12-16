@@ -29,7 +29,7 @@ const binding: HTMLWidgets.Binding = {
           });
 
           /* update map */
-          Shiny.addCustomMessageHandler(`${el.id}:map`, (data: RDeckProps) => {
+          Shiny.addCustomMessageHandler(`${el.id}:deck`, (data: RDeckProps) => {
             props = { ...props, ...data.props };
             theme = data.theme;
 

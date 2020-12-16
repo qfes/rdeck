@@ -4,7 +4,19 @@
 \alias{rdeck_proxy}
 \title{RDeck proxy}
 \usage{
-rdeck_proxy(id, session = shiny::getDefaultReactiveDomain(), ...)
+rdeck_proxy(
+  id,
+  session = shiny::getDefaultReactiveDomain(),
+  mapbox_api_access_token = NULL,
+  map_style = "mapbox://styles/mapbox/dark-v10",
+  theme = "kepler",
+  initial_bounds = NULL,
+  initial_view_state = view_state(center = c(0, 0), zoom = 1),
+  controller = TRUE,
+  picking_radius = 0,
+  use_device_pixels = TRUE,
+  ...
+)
 }
 \arguments{
 \item{id}{the map id}

@@ -10,7 +10,7 @@ export interface Binding {
   type: "output";
   sizing?: object;
 
-  factory(el: Element, width: number, height: number): Widget;
+  factory(el: HTMLElement, width: number, height: number): Widget;
 }
 
 export interface Widget {
