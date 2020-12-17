@@ -10,6 +10,7 @@ scale_color_category(
   palette,
   unmapped_color = "#000000",
   levels = NULL,
+  tick_format = NULL,
   legend = TRUE
 )
 
@@ -34,6 +35,8 @@ rgb\link{a} hex strings of length >= 2.}
 The order of the levels is determined by \code{levels()} for factors & \code{unique()} otherwise.
 Length of \code{levels} must equal \code{palette} or \code{range}, such that each category level is
 assigned a \code{color} or \code{range} value.}
+
+\item{tick_format}{A function taking a vector of ticks returning formatted ticks.}
 
 \item{legend}{Indicate whether the legend should be displayed for this scale.}
 

@@ -70,9 +70,9 @@ function Scale(scale: AccessorScale<number | Color>) {
   );
 }
 
-const Continuous = ({ range: palette, domain, ticks }: AccessorScaleContinuous<Color>) => {
+const Continuous = ({ range, domain, ticks }: AccessorScaleContinuous<Color>) => {
   const id = useId("gradient");
-  const colors = palette.map(rgba);
+  const colors = range.map(rgba);
   const lines = ticks.map((_, index) => index).slice(1, -1);
   const domainSize = domain[domain.length - 1] - domain[0];
 
@@ -122,7 +122,7 @@ const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
   );
 };
 
-function Category({ domain: ticks, range }: AccessorScaleCategory<Color>) {
+function Category({ ticks, range }: AccessorScaleCategory<Color>) {
   const colors = range.map(rgba);
   const height = TICK_HEIGHT * ticks.length;
 
@@ -149,7 +149,7 @@ function Ticks({ ticks, x = 28, y = 0 }: TicksProps) {
     <svg {...{ x, y }}>
       {ticks.map((tick, index) => (
         <text key={index} className={styles.tick} y={TICK_HEIGHT * index} dy={TICK_FONT_SIZE}>
-          {tick}
+          {String(tick)}
         </text>
       ))}
     </svg>

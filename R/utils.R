@@ -24,3 +24,10 @@ discard_null <- function(obj) {
 
   obj_filtered
 }
+
+pick <- function(obj, names) {
+  obj_filtered <- obj[base::names(obj) %in% names]
+  class(obj_filtered) <- class(obj)
+
+  obj_filtered
+}

@@ -7,14 +7,13 @@
 rdeck_proxy(
   id,
   session = shiny::getDefaultReactiveDomain(),
-  mapbox_api_access_token = NULL,
-  map_style = "mapbox://styles/mapbox/dark-v10",
-  theme = "kepler",
+  map_style = NULL,
+  theme = NULL,
   initial_bounds = NULL,
-  initial_view_state = view_state(center = c(0, 0), zoom = 1),
-  controller = TRUE,
-  picking_radius = 0,
-  use_device_pixels = TRUE,
+  initial_view_state = NULL,
+  controller = NULL,
+  picking_radius = NULL,
+  use_device_pixels = NULL,
   ...
 )
 }
@@ -22,15 +21,37 @@ rdeck_proxy(
 \item{id}{the map id}
 
 \item{session}{the shiny session}
+
+\item{map_style}{\code{character}
+A mapbox style url. \url{https://docs.mapbox.com/api/maps/#mapbox-styles}}
+
+\item{theme}{The widget theme. Either "kepler" or "light".}
+
+\item{initial_bounds}{\code{sf::st_bbox} | \code{sf::sf} | \code{sf::sfc} | \code{sf::sfg}
+The initial bounds of the map; overwrites \code{initial_view_state}.}
+
+\item{initial_view_state}{\code{view_state}
+The initial view state of the map. See \code{\link[=view_state]{view_state()}} for details.}
+
+\item{controller}{\code{logical}
+If \code{NULL} or \code{FALSE}, the map is not interactive.}
+
+\item{picking_radius}{\code{numeric}
+Extra pixels around the pointer to include while picking.}
+
+\item{use_device_pixels}{\code{logical} | \code{numeric}
+Controls the resolution of drawing buffer used for rendering.}
+
+\item{...}{additional parameters to pass to the \code{Deck}.}
 }
 \description{
 Creates an \code{\link[=rdeck]{rdeck()}} interface for asynchronous updates of a pre-rendered rdeck map
 in Shiny apps.
 }
 \details{
-All rdeck props can be updated through the proxy, layers that are added
-to the proxy (e.g. \code{rdeck_proxy \%>\% add_h3_hexagon_layer()}) will be merged with
-pre-rendered rdeck layers.
+All rdeck props can be updated through the proxy (\code{NULL} values will be discarded),
+layers that are added to the proxy (e.g. \code{rdeck_proxy \%>\% add_h3_hexagon_layer()})
+will be merged with pre-rendered rdeck layers.
 
 Layers are merged by their \code{id}. Matched layers will be updated in place, new layers
 will be appended and hence drawn \emph{on top} of all existing layers. For layer updates, you

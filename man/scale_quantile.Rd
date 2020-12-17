@@ -5,7 +5,13 @@
 \alias{scale_color_quantile}
 \title{Scale quantile}
 \usage{
-scale_color_quantile(col, palette, na_color = "#000000", legend = TRUE)
+scale_color_quantile(
+  col,
+  palette,
+  na_color = "#000000",
+  tick_format = format_number,
+  legend = TRUE
+)
 
 scale_quantile(col, range = 1:5, na_value = 0, legend = FALSE)
 }
@@ -17,6 +23,8 @@ a named column (non-standard evaluation), or an expression evaluating a string.}
 rgb\link{a} hex strings of length >= 2.}
 
 \item{na_color}{The color value for \code{NA} input values.}
+
+\item{tick_format}{A function taking a vector of ticks returning formatted ticks.}
 
 \item{legend}{Indicate whether the legend should be displayed for this scale.}
 

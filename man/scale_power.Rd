@@ -13,6 +13,7 @@ scale_color_power(
   limits = NULL,
   breaks = NULL,
   n_ticks = 6,
+  tick_format = format_number,
   legend = TRUE
 )
 
@@ -47,6 +48,8 @@ is mapped to a \code{palette} or \code{range} entry.}
 
 \item{n_ticks}{The number of ticks to display on the legend. Includes the domain
 of the scale.}
+
+\item{tick_format}{A function taking a vector of ticks returning formatted ticks.}
 
 \item{legend}{Indicate whether the legend should be displayed for this scale.}
 

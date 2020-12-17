@@ -158,3 +158,10 @@ validate_n_ticks <- function(scale) {
   assert_scalar(scale$n_ticks, "n_ticks")
   assert_range(scale$n_ticks, min = 2, name = "n_ticks")
 }
+
+# validate tick_format
+validate_tick_format <- function(scale) {
+  if (!is.null(scale$tick_format)) {
+    assert_type(scale$tick_format, "function", "tick_format")
+  }
+}

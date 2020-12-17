@@ -56,13 +56,15 @@ to_json.accessor_scale <- function(obj) {
   obj$domain <- I(obj$domain)
   # get unknown value
   obj$unknown <- obj$na_color %||% obj$na_value %||% obj$unmapped_color %||% obj$unmapped_value
-  # remove unneeded
-  rm_names <- c(
-    "na_color", "na_value",
-    "unmapped_color", "unmapped_value",
-    "levels"
+
+  keep <- c(
+    "col", "data_type",
+    "scale", "domain", "range",
+    "palette", "unknown",
+    "exponent", "base",
+    "ticks", "legend"
   )
-  obj[rm_names] <- NULL
+  obj <- pick(obj, keep)
 
   NextMethod()
 }

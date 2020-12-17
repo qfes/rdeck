@@ -11,6 +11,7 @@ scale_color_threshold(
   na_color = "#000000",
   limits = NULL,
   breaks = 0.5,
+  tick_format = format_number,
   legend = TRUE
 )
 
@@ -20,6 +21,7 @@ scale_threshold(
   na_value = 0,
   limits = NULL,
   breaks = 0.5,
+  tick_format = format_number,
   legend = FALSE
 )
 }
@@ -39,6 +41,8 @@ constrained to the limits of the scale.}
 \item{breaks}{The threshold breaks of the scale. Must be \code{length(palette) - 1}
 or \code{length(range) - 1}, such that each \code{break} defines boundary between between a
 pair of a \code{palette} or \code{range} entries.}
+
+\item{tick_format}{A function taking a vector of ticks returning formatted ticks.}
 
 \item{legend}{Indicate whether the legend should be displayed for this scale.}
 

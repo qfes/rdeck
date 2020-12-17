@@ -10,6 +10,7 @@ scale_color_quantize(
   palette,
   na_color = "#000000",
   limits = NULL,
+  tick_format = format_number,
   legend = TRUE
 )
 
@@ -27,6 +28,8 @@ rgb\link{a} hex strings of length >= 2.}
 \item{limits}{The limits of the scale's input. If not null, must be a numeric vector
 of length 2, representing \code{c(min, max)}. Values outside the range of \code{limits} will be
 constrained to the limits of the scale.}
+
+\item{tick_format}{A function taking a vector of ticks returning formatted ticks.}
 
 \item{legend}{Indicate whether the legend should be displayed for this scale.}
 
