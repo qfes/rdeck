@@ -57,7 +57,6 @@ export class Layer {
   }
 
   renderLegend() {
-    // top-most layer on top of legend
     const scales = this.scales.filter((scale) => scale.legend);
     return { id: this.props.id!, name: this.props.name, scales };
   }

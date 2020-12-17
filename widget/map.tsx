@@ -13,12 +13,12 @@ export function Map({ props, layers }: MapProps) {
   const deckgl = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
-  const { mapboxApiAccessToken, mapStyle, mapOptions, ...deckProps } = props;
+  const { mapboxApiAccessToken, mapStyle, mapOptions, controller, ...deckProps } = props;
 
   return (
     <DeckGL ref={deckgl} {...deckProps} layers={layers} onHover={handleHover}>
       {mapStyle && (
-        <MapView id="map" controller={deckProps.controller} repeat={true}>
+        <MapView id="map" controller={controller} repeat={true}>
           {/* @ts-ignore */}
           <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />
         </MapView>

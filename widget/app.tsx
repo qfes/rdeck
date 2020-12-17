@@ -47,9 +47,11 @@ function useBounds(
     }
 
     const [xmin, ymin, xmax, ymax] = initialBounds;
+    // constrain to web mercator limits
+    // https://en.wikipedia.org/wiki/Web_Mercator_projection
     const bounds: [[number, number], [number, number]] = [
-      [xmin, Math.max(ymin, -85)],
-      [xmax, Math.min(ymax, 85)],
+      [Math.max(-180, xmin), Math.max(ymin, -85.051129)],
+      [Math.min(180, xmax), Math.min(ymax, 85.051129)],
     ];
 
     const viewport = new WebMercatorViewport({ width, height });
