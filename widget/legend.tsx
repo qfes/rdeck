@@ -70,10 +70,11 @@ function Scale(scale: AccessorScale<number | Color>) {
   );
 }
 
-const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
+const Continuous = ({ range: palette, domain, ticks }: AccessorScaleContinuous<Color>) => {
   const id = useId("gradient");
-  const colors = range.map(rgba);
+  const colors = palette.map(rgba);
   const lines = ticks.map((_, index) => index).slice(1, -1);
+  const domainSize = domain[domain.length - 1] - domain[0];
 
   const gradientHeight = TICK_HEIGHT * (ticks.length - 1);
   const height = gradientHeight + TICK_FONT_SIZE + 1;
@@ -82,9 +83,9 @@ const Continuous = ({ range, ticks }: AccessorScaleContinuous<Color>) => {
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
       <svg y={4}>
         <defs>
-          <linearGradient id={id} x1={0} x2={0} y1={0} y2={1}>
+          <linearGradient id={id} x2={0} y2={1}>
             {colors.map((color, index) => (
-              <stop key={index} offset={index / (colors.length - 1)} stopColor={color} />
+              <stop key={index} offset={domain[index] / domainSize} stopColor={color} />
             ))}
           </linearGradient>
         </defs>

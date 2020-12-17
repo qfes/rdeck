@@ -5,7 +5,6 @@
   max-height: 500px;
   overflow-y: auto;
   width: 180px;
-  pointer-events: none;
   user-select: none;
 
   border-radius: 1px;
