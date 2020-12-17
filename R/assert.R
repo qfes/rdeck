@@ -170,6 +170,19 @@ assert_scalable_is_numeric <- function(obj, name = NULL) {
   }
 }
 
+assert_is_sorted <- function(obj, name = NULL) {
+  quo <- rlang::enquo(obj)
+  value <- rlang::eval_tidy(quo)
+
+  if (is.unsorted(value)) {
+    name <- name %||% rlang::quo_text(quo)
+    rlang::abort(
+      paste0(name, " must be sorted"),
+      "rdeck_error"
+    )
+  }
+}
+
 check_dots <- function(...) {
   dots <- rlang::dots_list(...)
   dots_names <- names(dots)

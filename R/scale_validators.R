@@ -84,6 +84,7 @@ validate_limits <- function(scale) {
   if (!is.null(limits)) {
     assert_type(limits, c("integer", "numeric"))
     assert_length(limits, 2)
+    assert_is_sorted(limits)
   }
 }
 
@@ -96,6 +97,7 @@ validate_breaks.scale <- function(scale) {
   breaks <- scale$breaks
   if (!is.null(breaks)) {
     assert_type(breaks, c("integer", "numeric"))
+    assert_is_sorted(breaks)
 
     # check length
     name <- if (rlang::has_name(scale, "palette")) "palette" else "range"
@@ -111,6 +113,7 @@ validate_breaks.scale <- function(scale) {
 validate_breaks.scale_threshold <- function(scale) {
   breaks <- scale$breaks
   assert_type(breaks, c("integer", "numeric"))
+  assert_is_sorted(breaks)
 
   # check length
   name <- if (rlang::has_name(scale, "palette")) "palette" else "range"

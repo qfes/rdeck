@@ -58,8 +58,15 @@ scale_domain.scale_quantize <- function(scale, data) scale$limits
 
 domain <- function(limits, breaks = NULL, length) {
   if (is.null(breaks)) {
-    seq(limits[1], limits[2], length.out = length)
-  } else {
-    c(limits[1], breaks, limits[2])
+    return(seq(limits[1], limits[2], length.out = length))
   }
+
+  if (any(breaks < limits[1]) | any(breaks > limits[2])) {
+    rlang::abort(
+      "breaks must fall within the range of limits",
+      "rdeck_error"
+    )
+  }
+
+  c(limits[1], breaks, limits[2])
 }
