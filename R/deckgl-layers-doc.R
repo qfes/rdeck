@@ -387,7 +387,9 @@ NULL
 #' @param size_units unknown
 #' @param size_min_pixels number
 #' @param size_max_pixels number
-#' @param get_position <[`accessor`]>
+#' @param get_position <[`accessor`]> The position geometry column, an
+#' `sfc_POINT` column with CRS EPSG:4326. Supports
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)>.
 #' @param get_color <[`accessor`]>
 #' @param get_size <[`accessor`]>
 #' @param get_angle <[`accessor`]>
@@ -417,10 +419,14 @@ NULL
 #' @param cell_size number
 #' @param rounded <`logical`>
 #' @param miter_limit number
-#' @param get_path <[`accessor`]>
+#' @param get_path <[`accessor`]> The path geometry column, an
+#' `sfc_LINESTRING` column with CRS EPSG:4326. Supports
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)>.
 #' @param line_joint_rounded <`logical`>
 #' @param line_miter_limit number
-#' @param get_polygon <[`accessor`]>
+#' @param get_polygon <[`accessor`]> The polygon geometry column, an
+#' `sfc_POLYGON` column with CRS EPSG:4326. Supports
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)>.
 #' @param point_radius_units unknown
 #' @param point_radius_scale number
 #' @param point_radius_min_pixels number
