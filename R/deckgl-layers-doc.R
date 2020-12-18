@@ -321,6 +321,9 @@ NULL
 #' @title layer_props
 #' @name layer_props
 #' @rdname _layer_props
+#' @param ... Additional parameters that will be forwarded to deck.gl javascript without
+#' validation nor processing. All dots must be named and will be `camelCased` when serialised.
+#' Layers will raise a warning when dots are used, warning class `rdeck_dots_nonempty`.
 #' @param id <`string`> The layer's identifier must be unique for among all layers of the same
 #' type for a map. Defaults to [uuid::UUIDgenerate()], but should be explicitly defined for
 #' updatable layers in a shiny application.
