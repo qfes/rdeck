@@ -27,8 +27,38 @@ add_bitmap_layer(
 )
 }
 \arguments{
+\item{id}{string}
+
+\item{name}{string}
+
+\item{data}{data}
+
+\item{visible}{boolean}
+
+\item{pickable}{boolean}
+
+\item{opacity}{number}
+
+\item{position_format}{unknown}
+
+\item{color_format}{unknown}
+
+\item{auto_highlight}{boolean}
+
+\item{highlight_color}{accessor}
+
 \item{image}{The image to display. Either a string interpreted as a URL or Data URL,
 or an array raster image.}
+
+\item{bounds}{array}
+
+\item{desaturate}{number}
+
+\item{transparent_color}{color}
+
+\item{tint_color}{color}
+
+\item{tooltip}{accessor}
 }
 \description{
 Bitmap Layer

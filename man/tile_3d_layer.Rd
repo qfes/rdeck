@@ -29,6 +29,37 @@ add_tile_3d_layer(
   tooltip = FALSE
 )
 }
+\arguments{
+\item{id}{string}
+
+\item{name}{string}
+
+\item{data}{data}
+
+\item{visible}{boolean}
+
+\item{pickable}{boolean}
+
+\item{opacity}{number}
+
+\item{position_format}{unknown}
+
+\item{color_format}{unknown}
+
+\item{auto_highlight}{boolean}
+
+\item{highlight_color}{accessor}
+
+\item{get_point_color}{array}
+
+\item{point_size}{number}
+
+\item{load_options}{object}
+
+\item{loader}{object}
+
+\item{tooltip}{accessor}
+}
 \description{
 Tile 3D Layer
 }
