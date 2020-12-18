@@ -35,6 +35,10 @@ add_trips_layer(
 )
 }
 \arguments{
+\item{...}{Additional parameters that will be forwarded to deck.gl javascript without
+validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
+Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
+
 \item{id}{<\code{string}> The layer's identifier must be unique for among all layers of the same
 type for a map. Defaults to \code{\link[uuid:UUIDgenerate]{uuid::UUIDgenerate()}}, but should be explicitly defined for
 updatable layers in a shiny application.}
@@ -63,10 +67,10 @@ will be ignored by accessors, making all colours opaque.}
 highlighted by \code{highlight_color}.}
 
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
-\code{pickable} are enabled, \code{highlight_color} determines the colour of the currently highlighted
-object. If a single colour value is supplied, that colour will be used to highlight all objects
-in the layer. Per-object highlighting is achieved with an \code{accessor} resolving a column in \code{data},
-or a \code{scale} to transform a column into a colour.}
+\code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
+highlighted object. If a single colour value is supplied, that colour will be used to
+highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
+resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
 
 \item{width_units}{unknown}
 
@@ -76,11 +80,11 @@ or a \code{scale} to transform a column into a colour.}
 
 \item{width_max_pixels}{number}
 
-\item{rounded}{boolean}
+\item{rounded}{<\code{logical}>}
 
 \item{miter_limit}{number}
 
-\item{billboard}{boolean}
+\item{billboard}{<\code{logical}>}
 
 \item{get_path}{<\code{\link{accessor}}>}
 

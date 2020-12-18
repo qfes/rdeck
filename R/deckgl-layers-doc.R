@@ -230,7 +230,7 @@ NULL
 #'
 #' @name h3_hexagon_layer
 #' @inherit layer_props
-#' @param high_precision boolean
+#' @param high_precision <`logical`>
 #' @param center_hexagon unknown
 #' @param get_hexagon <[`accessor`]>
 #' @eval deckgl_docs("geo-layers", "h3-hexagon-layer")
@@ -356,14 +356,14 @@ NULL
 #' @param get_width <[`accessor`]>
 #' @param get_height <[`accessor`]>
 #' @param get_tilt <[`accessor`]>
-#' @param great_circle boolean
+#' @param great_circle <`logical`>
 #' @param width_units unknown
 #' @param width_scale number
 #' @param width_min_pixels number
 #' @param width_max_pixels number
 #' @param bounds array
 #' @param size_scale number
-#' @param billboard boolean
+#' @param billboard <`logical`>
 #' @param size_units unknown
 #' @param size_min_pixels number
 #' @param size_max_pixels number
@@ -373,13 +373,13 @@ NULL
 #' @param get_angle <[`accessor`]>
 #' @param get_pixel_offset <[`accessor`]>
 #' @param point_size number
-#' @param material boolean
+#' @param material <`logical`>
 #' @param line_width_units unknown
 #' @param line_width_scale number
 #' @param line_width_min_pixels number
 #' @param line_width_max_pixels number
-#' @param stroked boolean
-#' @param filled boolean
+#' @param stroked <`logical`>
+#' @param filled <`logical`>
 #' @param get_radius <[`accessor`]>
 #' @param get_fill_color <[`accessor`]>
 #' @param get_line_color <[`accessor`]>
@@ -391,14 +391,14 @@ NULL
 #' @param offset array
 #' @param coverage number
 #' @param elevation_scale number
-#' @param extruded boolean
-#' @param wireframe boolean
+#' @param extruded <`logical`>
+#' @param wireframe <`logical`>
 #' @param get_elevation <[`accessor`]>
 #' @param cell_size number
-#' @param rounded boolean
+#' @param rounded <`logical`>
 #' @param miter_limit number
 #' @param get_path <[`accessor`]>
-#' @param line_joint_rounded boolean
+#' @param line_joint_rounded <`logical`>
 #' @param line_miter_limit number
 #' @param get_polygon <[`accessor`]>
 #' @param point_radius_units unknown
@@ -408,7 +408,7 @@ NULL
 #' @param color_domain unknown
 #' @param color_range array
 #' @param get_weight <[`accessor`]>
-#' @param gpu_aggregation boolean
+#' @param gpu_aggregation <`logical`>
 #' @param aggregation unknown
 #' @param get_color_value unknown
 #' @param get_color_weight <[`accessor`]>

@@ -55,6 +55,10 @@ add_mvt_layer(
 )
 }
 \arguments{
+\item{...}{Additional parameters that will be forwarded to deck.gl javascript without
+validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
+Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
+
 \item{id}{<\code{string}> The layer's identifier must be unique for among all layers of the same
 type for a map. Defaults to \code{\link[uuid:UUIDgenerate]{uuid::UUIDgenerate()}}, but should be explicitly defined for
 updatable layers in a shiny application.}
@@ -83,18 +87,18 @@ will be ignored by accessors, making all colours opaque.}
 highlighted by \code{highlight_color}.}
 
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
-\code{pickable} are enabled, \code{highlight_color} determines the colour of the currently highlighted
-object. If a single colour value is supplied, that colour will be used to highlight all objects
-in the layer. Per-object highlighting is achieved with an \code{accessor} resolving a column in \code{data},
-or a \code{scale} to transform a column into a colour.}
+\code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
+highlighted object. If a single colour value is supplied, that colour will be used to
+highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
+resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
 
-\item{stroked}{boolean}
+\item{stroked}{<\code{logical}>}
 
-\item{filled}{boolean}
+\item{filled}{<\code{logical}>}
 
-\item{extruded}{boolean}
+\item{extruded}{<\code{logical}>}
 
-\item{wireframe}{boolean}
+\item{wireframe}{<\code{logical}>}
 
 \item{line_width_units}{unknown}
 
@@ -104,7 +108,7 @@ or a \code{scale} to transform a column into a colour.}
 
 \item{line_width_max_pixels}{number}
 
-\item{line_joint_rounded}{boolean}
+\item{line_joint_rounded}{<\code{logical}>}
 
 \item{line_miter_limit}{number}
 
@@ -128,7 +132,7 @@ or a \code{scale} to transform a column into a colour.}
 
 \item{get_elevation}{<\code{\link{accessor}}>}
 
-\item{material}{boolean}
+\item{material}{<\code{logical}>}
 
 \item{get_tile_data}{function}
 
