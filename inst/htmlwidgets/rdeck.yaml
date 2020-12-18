@@ -1,6 +1,6 @@
 dependencies:
   - name: rdeck
-    version: 0.2.6
+    version: 0.3.0
     src: htmlwidgets
     # other vendors
     script: rdeck-vendors.js
@@ -12,7 +12,7 @@ dependencies:
     script: react.js
     all_files: false
   - name: deck.gl
-    version: 8.3.10
+    version: 8.3.11
     src: htmlwidgets
     script: deck.gl.js
     all_files: false

@@ -16,7 +16,3 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^man-roxygen$
-
-# discovery
-^discovery$
