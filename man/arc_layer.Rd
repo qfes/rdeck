@@ -79,9 +79,15 @@ resolving a column in \code{data}, or a \code{scale} to transform a column into 
 \code{sfc_POINT} column with CRS EPSG:4326. Supports
 <\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}>.}
 
-\item{get_source_color}{<\code{\link{accessor}}>}
+\item{get_source_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of the
+\emph{source end} of the arc. Accepts a single colour value, a
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
+colours or a scale function.}
 
-\item{get_target_color}{<\code{\link{accessor}}>}
+\item{get_target_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of the
+\emph{target end} of the arc. Accepts a single colour value, a
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
+colours or a scale function.}
 
 \item{get_width}{<\code{\link{accessor}}>}
 

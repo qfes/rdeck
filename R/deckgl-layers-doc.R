@@ -355,8 +355,14 @@ NULL
 #' @param get_target_position <[`accessor`]> The target position geometry column, an
 #' `sfc_POINT` column with CRS EPSG:4326. Supports
 #' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)>.
-#' @param get_source_color <[`accessor`]>
-#' @param get_target_color <[`accessor`]>
+#' @param get_source_color <[`accessor`] | [`scale`] | [`color`]> The colour of the
+#' _source end_ of the arc. Accepts a single colour value, a
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)> column of
+#' colours or a scale function.
+#' @param get_target_color <[`accessor`] | [`scale`] | [`color`]> The colour of the
+#' _target end_ of the arc. Accepts a single colour value, a
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)> column of
+#' colours or a scale function.
 #' @param get_width <[`accessor`]>
 #' @param get_height <[`accessor`]>
 #' @param get_tilt <[`accessor`]>
