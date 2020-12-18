@@ -439,22 +439,30 @@ NULL
 #' @param elevation_domain unknown
 #' @param elevation_range array
 #' @param get_elevation_value unknown
-#' @param get_elevation_weight <[`accessor`]>
-#' @param elevation_aggregation unknown
-#' @param elevation_lower_percentile number
-#' @param elevation_upper_percentile number
+#' @param get_elevation_weight <[`accessor`]> A length one numeric vector
+#'  (applied to all values), or tidy evaluated reference to a column in `data`.
+#'  Defaults to `1`.
+#' @param elevation_aggregation <`"SUM"` | `"MEAN"` | `"MIN"` | `"MAX"`>
+#'   Operation used to aggregate data values/weights to calculate a cell's
+#'   elevation value. Defaults to `"SUM"`.
+#' @param elevation_lower_percentile <`number`> Between `0` and `100`. Cells
+#'   with elevation value lower than this percentile will be hidden.
+#' @param elevation_upper_percentile <`number`> Between `0` and `100`. Cells
+#'   with elevation value larger than this percentile will be hidden.
 #' @param elevation_scale_type unknown
-#' @param grid_aggregator function
-#' @param get_tile_data function
-#' @param extent array
-#' @param tile_size number
-#' @param max_zoom unknown
-#' @param min_zoom number
-#' @param max_cache_size unknown
-#' @param max_cache_byte_size unknown
-#' @param refinement_strategy unknown
-#' @param z_range unknown
-#' @param max_requests <number> The maximiun number of concurrent HTTP
+#' @param grid_aggregator <`function`> A JS function supplied with [htmlwidgets::JS]. See deck.gl layer documentation.
+#' @param get_tile_data <`function`> A JS function supplied with [htmlwidgets::JS]. See deck.gl layer documentation.
+#' @param extent <`c(min_x, min_y, max_x, max_y)`> Tiles in this bounding box
+#'   will be rendered at `min_zoom`, when zoomed out below `min_zoom`.
+#' @param tile_size <`number`> A power of 2 that is the pixel dimensions of the tile.
+#' @param max_zoom <`number`> Tiles above this zoom level are not shown. Defaults to `NULL`.
+#' @param min_zoom <`number`> Tiles below this zoom level are not shown. Defaults to `0`.
+#' @param max_cache_size <`number`> Maximum number of tiles that can be cached. Defaults to 5x the number of tiles in current viewport.
+#' @param max_cache_byte_size <`number`> Maximum memory used for caching tiles.
+#' @param refinement_strategy <`"best-available"` | `"no-overlap"` | `"never"`> How the tile layer refines visibility of tiles.
+#'   Defaults to `"best-available"`.
+#' @param z_range <`c(min, max)`> Array representing the range of heights in the tile.
+#' @param max_requests <`number`> Maximum number of concurrent HTTP
 #'   requests across all specified tile provider domains. If a negative number is
 #'   supplied no throttling occurs (HTTP/2 only).
 #' @param texture not yet supported.
