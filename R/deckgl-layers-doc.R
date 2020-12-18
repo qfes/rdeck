@@ -321,17 +321,31 @@ NULL
 #' @title layer_props
 #' @name layer_props
 #' @rdname _layer_props
-#' @param id string
-#' @param name string
-#' @param tooltip <[`accessor`]>
-#' @param data data
-#' @param visible boolean
-#' @param pickable boolean
-#' @param opacity number
-#' @param position_format unknown
-#' @param color_format unknown
-#' @param auto_highlight boolean
-#' @param highlight_color <[`accessor`]>
+#' @param id <`string`> The layer's identifier must be unique for among all layers of the same
+#' type for a map. Defaults to [uuid::UUIDgenerate()], but should be explicitly defined for
+#' updatable layers in a shiny application.
+#' @param name <`string`> Identifies the layer on tooltips and legends. It does
+#' not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.
+#' @param tooltip <[`tooltip`]> Defines the columns (and their order) that will be displayed in
+#' the layer tooltip, if `pickable = TRUE`.
+#' @param data <`data.frame` | `sf` | `string`> The layer's data. Data frames will contain all
+#' columns that are referenced by the layer's accessors. Strings will be interpreted as a URL and
+#' data will be retrieved dynamically in the browser.
+#' @param visible <`logical`> Determines whether the layer is visible or not; also determines
+#' whether any legend elements for the layer will be displayed.
+#' @param pickable <`logical`> Determines if the layer responds to pointer / touch events.
+#' @param opacity <`numeric`> Determines the layer's opacity.
+#' @param position_format <`"XY"` | `"XYZ"`> Determines whether each coordinate has two (XY)
+#' or three (XYZ) elements.
+#' @param color_format <`"RGB"` | `"RGBA"`> Determines whether the alpha channel of the colours
+#' will be ignored by accessors, making all colours opaque.
+#' @param auto_highlight <`logical`> When `TRUE`, the current object _hovered_ by the cursor is
+#' highlighted by `highlight_color`.
+#' @param highlight_color <[`accessor`] | [`scale`] | [`color`]> When `auto_highlight` and
+#' `pickable` are enabled, `highlight_color` determines the colour of the currently
+#' highlighted object. If a single colour value is supplied, that colour will be used to
+#' highlight all objects in the layer. Per-object highlighting is achieved with an `accessor`
+#' resolving a column in `data`, or a `scale` to transform a column into a colour.
 #' @param get_source_position <[`accessor`]>
 #' @param get_target_position <[`accessor`]>
 #' @param get_source_color <[`accessor`]>

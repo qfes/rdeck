@@ -1,3 +1,8 @@
+#' Prop Type: Tooltip
+#'
+#' @name tooltip
+NULL
+
 #' Evaluate Tooltip
 #'
 #' Create a character vector representing names to be included in a tooltip.
