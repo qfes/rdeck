@@ -1,3 +1,8 @@
+#' Prop Type: Accessor
+#'
+#' @name accessor
+NULL
+
 #' Accessor
 #'
 #' @name accessor
