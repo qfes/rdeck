@@ -28,9 +28,12 @@ add_point_cloud_layer(
 )
 }
 \arguments{
-\item{id}{string}
+\item{id}{\code{string} The layer's identifier must be unique for among all layers of the same
+type for a map. Defaults to \code{\link[uuid:UUIDgenerate]{uuid::UUIDgenerate()}}, but should be explicitly defined for
+updatable layers in a shiny application.}
 
-\item{name}{string}
+\item{name}{\code{string} The layer's name identifies the layer on tooltips and legends. It does
+not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.}
 
 \item{data}{data}
 
@@ -60,7 +63,8 @@ add_point_cloud_layer(
 
 \item{material}{boolean}
 
-\item{tooltip}{<\code{\link{accessor}}>}
+\item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
+the layer tooltip, if \code{pickable = TRUE}.}
 }
 \description{
 Point Cloud Layer

@@ -321,9 +321,13 @@ NULL
 #' @title layer_props
 #' @name layer_props
 #' @rdname _layer_props
-#' @param id string
-#' @param name string
-#' @param tooltip <[`accessor`]>
+#' @param id `string` The layer's identifier must be unique for among all layers of the same
+#' type for a map. Defaults to [uuid::UUIDgenerate()], but should be explicitly defined for
+#' updatable layers in a shiny application.
+#' @param name `string` The layer's name identifies the layer on tooltips and legends. It does
+#' not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.
+#' @param tooltip <[`tooltip`]> Defines the columns (and their order) that will be displayed in
+#' the layer tooltip, if `pickable = TRUE`.
 #' @param data data
 #' @param visible boolean
 #' @param pickable boolean
@@ -332,6 +336,7 @@ NULL
 #' @param color_format unknown
 #' @param auto_highlight boolean
 #' @param highlight_color <[`accessor`]>
+#'
 #' @param get_source_position <[`accessor`]>
 #' @param get_target_position <[`accessor`]>
 #' @param get_source_color <[`accessor`]>
