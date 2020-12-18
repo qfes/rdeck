@@ -96,11 +96,13 @@ resolving a column in \code{data}, or a \code{scale} to transform a column into 
 
 \item{z_range}{unknown}
 
-\item{max_requests}{number}
+\item{max_requests}{<number> The maximiun number of concurrent HTTP
+requests across all specified tile provider domains. If a negative number is
+supplied no throttling occurs (HTTP/2 only).}
 
 \item{elevation_data}{url}
 
-\item{texture}{url}
+\item{texture}{not yet supported.}
 
 \item{mesh_max_error}{number}
 

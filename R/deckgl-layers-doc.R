@@ -349,8 +349,12 @@ NULL
 #' highlighted object. If a single colour value is supplied, that colour will be used to
 #' highlight all objects in the layer. Per-object highlighting is achieved with an `accessor`
 #' resolving a column in `data`, or a `scale` to transform a column into a colour.
-#' @param get_source_position <[`accessor`]>
-#' @param get_target_position <[`accessor`]>
+#' @param get_source_position <[`accessor`]> The source position geometry column, an
+#' `sfc_POINT` column with CRS EPSG:4326. Supports
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)>.
+#' @param get_target_position <[`accessor`]> The target position geometry column, an
+#' `sfc_POINT` column with CRS EPSG:4326. Supports
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)>.
 #' @param get_source_color <[`accessor`]>
 #' @param get_target_color <[`accessor`]>
 #' @param get_width <[`accessor`]>

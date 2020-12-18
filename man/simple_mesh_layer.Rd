@@ -72,7 +72,7 @@ resolving a column in \code{data}, or a \code{scale} to transform a column into 
 
 \item{mesh}{object}
 
-\item{texture}{url}
+\item{texture}{not yet supported.}
 
 \item{size_scale}{number}
 
@@ -84,13 +84,13 @@ resolving a column in \code{data}, or a \code{scale} to transform a column into 
 
 \item{get_color}{<\code{\link{accessor}}>}
 
-\item{get_orientation}{<\code{\link{accessor}}>}
+\item{get_orientation}{<\code{\link{accessor}}> not yet supported.}
 
-\item{get_scale}{<\code{\link{accessor}}>}
+\item{get_scale}{<\code{\link{accessor}}> not yet supported.}
 
-\item{get_translation}{<\code{\link{accessor}}>}
+\item{get_translation}{<\code{\link{accessor}}> not yet supported.}
 
-\item{get_transform_matrix}{<\code{\link{accessor}}>}
+\item{get_transform_matrix}{<\code{\link{accessor}}> not yet supported.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable = TRUE}.}

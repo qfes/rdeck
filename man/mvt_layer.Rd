@@ -152,7 +152,9 @@ resolving a column in \code{data}, or a \code{scale} to transform a column into 
 
 \item{z_range}{unknown}
 
-\item{max_requests}{number}
+\item{max_requests}{<number> The maximiun number of concurrent HTTP
+requests across all specified tile provider domains. If a negative number is
+supplied no throttling occurs (HTTP/2 only).}
 
 \item{unique_id_property}{string}
 

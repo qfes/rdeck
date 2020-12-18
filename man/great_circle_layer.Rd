@@ -71,9 +71,13 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
 resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
 
-\item{get_source_position}{<\code{\link{accessor}}>}
+\item{get_source_position}{<\code{\link{accessor}}> The source position geometry column, an
+\code{sfc_POINT} column with CRS EPSG:4326. Supports
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}>.}
 
-\item{get_target_position}{<\code{\link{accessor}}>}
+\item{get_target_position}{<\code{\link{accessor}}> The target position geometry column, an
+\code{sfc_POINT} column with CRS EPSG:4326. Supports
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}>.}
 
 \item{get_source_color}{<\code{\link{accessor}}>}
 
