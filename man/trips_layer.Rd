@@ -53,7 +53,7 @@ add_trips_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{width_units}{unknown}
 
@@ -69,19 +69,19 @@ add_trips_layer(
 
 \item{billboard}{boolean}
 
-\item{get_path}{accessor}
+\item{get_path}{<\code{\link{accessor}}>}
 
-\item{get_color}{accessor}
+\item{get_color}{<\code{\link{accessor}}>}
 
-\item{get_width}{accessor}
+\item{get_width}{<\code{\link{accessor}}>}
 
 \item{trail_length}{number}
 
 \item{current_time}{number}
 
-\item{get_timestamps}{accessor}
+\item{get_timestamps}{<\code{\link{accessor}}>}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Trips Layer

@@ -26,7 +26,7 @@ NULL
 #' @param icon_atlas object
 #' @param icon_mapping object
 #' @param alpha_cutoff number
-#' @param get_icon accessor
+#' @param get_icon <[`accessor`]>
 #' @eval deckgl_docs("layers", "icon-layer")
 #' @family layers
 NULL
@@ -43,7 +43,7 @@ NULL
 #'
 #' @name point_cloud_layer
 #' @inherit layer_props
-#' @param get_normal accessor
+#' @param get_normal <[`accessor`]>
 #' @eval deckgl_docs("layers", "point-cloud-layer")
 #' @family layers
 NULL
@@ -119,9 +119,9 @@ NULL
 #' @param font_settings object
 #' @param word_break unknown
 #' @param max_width number
-#' @param get_text accessor
-#' @param get_text_anchor accessor
-#' @param get_alignment_baseline accessor
+#' @param get_text <[`accessor`]>
+#' @param get_text_anchor <[`accessor`]>
+#' @param get_alignment_baseline <[`accessor`]>
 #' @eval deckgl_docs("layers", "text-layer")
 #' @family layers
 NULL
@@ -210,7 +210,7 @@ NULL
 #'
 #' @name s2_layer
 #' @inherit layer_props
-#' @param get_s2_token accessor
+#' @param get_s2_token <[`accessor`]>
 #' @eval deckgl_docs("geo-layers", "s2-layer")
 #' @family layers
 #' @family geo-layers
@@ -220,7 +220,7 @@ NULL
 #'
 #' @name h3_cluster_layer
 #' @inherit layer_props
-#' @param get_hexagons accessor
+#' @param get_hexagons <[`accessor`]>
 #' @eval deckgl_docs("geo-layers", "h3-cluster-layer")
 #' @family layers
 #' @family geo-layers
@@ -232,7 +232,7 @@ NULL
 #' @inherit layer_props
 #' @param high_precision boolean
 #' @param center_hexagon unknown
-#' @param get_hexagon accessor
+#' @param get_hexagon <[`accessor`]>
 #' @eval deckgl_docs("geo-layers", "h3-hexagon-layer")
 #' @family layers
 #' @family geo-layers
@@ -253,7 +253,7 @@ NULL
 #' @inherit layer_props
 #' @param trail_length number
 #' @param current_time number
-#' @param get_timestamps accessor
+#' @param get_timestamps <[`accessor`]>
 #' @eval deckgl_docs("geo-layers", "trips-layer")
 #' @family layers
 #' @family geo-layers
@@ -323,7 +323,7 @@ NULL
 #' @rdname _layer_props
 #' @param id string
 #' @param name string
-#' @param tooltip accessor
+#' @param tooltip <[`accessor`]>
 #' @param data data
 #' @param visible boolean
 #' @param pickable boolean
@@ -331,14 +331,14 @@ NULL
 #' @param position_format unknown
 #' @param color_format unknown
 #' @param auto_highlight boolean
-#' @param highlight_color accessor
-#' @param get_source_position accessor
-#' @param get_target_position accessor
-#' @param get_source_color accessor
-#' @param get_target_color accessor
-#' @param get_width accessor
-#' @param get_height accessor
-#' @param get_tilt accessor
+#' @param highlight_color <[`accessor`]>
+#' @param get_source_position <[`accessor`]>
+#' @param get_target_position <[`accessor`]>
+#' @param get_source_color <[`accessor`]>
+#' @param get_target_color <[`accessor`]>
+#' @param get_width <[`accessor`]>
+#' @param get_height <[`accessor`]>
+#' @param get_tilt <[`accessor`]>
 #' @param great_circle boolean
 #' @param width_units unknown
 #' @param width_scale number
@@ -350,11 +350,11 @@ NULL
 #' @param size_units unknown
 #' @param size_min_pixels number
 #' @param size_max_pixels number
-#' @param get_position accessor
-#' @param get_color accessor
-#' @param get_size accessor
-#' @param get_angle accessor
-#' @param get_pixel_offset accessor
+#' @param get_position <[`accessor`]>
+#' @param get_color <[`accessor`]>
+#' @param get_size <[`accessor`]>
+#' @param get_angle <[`accessor`]>
+#' @param get_pixel_offset <[`accessor`]>
 #' @param point_size number
 #' @param material boolean
 #' @param line_width_units unknown
@@ -363,10 +363,10 @@ NULL
 #' @param line_width_max_pixels number
 #' @param stroked boolean
 #' @param filled boolean
-#' @param get_radius accessor
-#' @param get_fill_color accessor
-#' @param get_line_color accessor
-#' @param get_line_width accessor
+#' @param get_radius <[`accessor`]>
+#' @param get_fill_color <[`accessor`]>
+#' @param get_line_color <[`accessor`]>
+#' @param get_line_width <[`accessor`]>
 #' @param disk_resolution number
 #' @param vertices unknown
 #' @param radius number
@@ -376,25 +376,25 @@ NULL
 #' @param elevation_scale number
 #' @param extruded boolean
 #' @param wireframe boolean
-#' @param get_elevation accessor
+#' @param get_elevation <[`accessor`]>
 #' @param cell_size number
 #' @param rounded boolean
 #' @param miter_limit number
-#' @param get_path accessor
+#' @param get_path <[`accessor`]>
 #' @param line_joint_rounded boolean
 #' @param line_miter_limit number
-#' @param get_polygon accessor
+#' @param get_polygon <[`accessor`]>
 #' @param point_radius_units unknown
 #' @param point_radius_scale number
 #' @param point_radius_min_pixels number
 #' @param point_radius_max_pixels number
 #' @param color_domain unknown
 #' @param color_range array
-#' @param get_weight accessor
+#' @param get_weight <[`accessor`]>
 #' @param gpu_aggregation boolean
 #' @param aggregation unknown
 #' @param get_color_value unknown
-#' @param get_color_weight accessor
+#' @param get_color_weight <[`accessor`]>
 #' @param color_aggregation unknown
 #' @param lower_percentile number
 #' @param upper_percentile number
@@ -402,7 +402,7 @@ NULL
 #' @param elevation_domain unknown
 #' @param elevation_range array
 #' @param get_elevation_value unknown
-#' @param get_elevation_weight accessor
+#' @param get_elevation_weight <[`accessor`]>
 #' @param elevation_aggregation unknown
 #' @param elevation_lower_percentile number
 #' @param elevation_upper_percentile number
@@ -419,10 +419,10 @@ NULL
 #' @param z_range unknown
 #' @param max_requests number
 #' @param texture url
-#' @param get_orientation accessor
-#' @param get_scale accessor
-#' @param get_translation accessor
-#' @param get_transform_matrix accessor
+#' @param get_orientation <[`accessor`]>
+#' @param get_scale <[`accessor`]>
+#' @param get_translation <[`accessor`]>
+#' @param get_transform_matrix <[`accessor`]>
 NULL
 
 deckgl_docs <- function(module, name) {

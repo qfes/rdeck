@@ -60,7 +60,7 @@ add_h3_hexagon_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{stroked}{boolean}
 
@@ -84,13 +84,13 @@ add_h3_hexagon_layer(
 
 \item{line_miter_limit}{number}
 
-\item{get_fill_color}{accessor}
+\item{get_fill_color}{<\code{\link{accessor}}>}
 
-\item{get_line_color}{accessor}
+\item{get_line_color}{<\code{\link{accessor}}>}
 
-\item{get_line_width}{accessor}
+\item{get_line_width}{<\code{\link{accessor}}>}
 
-\item{get_elevation}{accessor}
+\item{get_elevation}{<\code{\link{accessor}}>}
 
 \item{material}{boolean}
 
@@ -100,9 +100,9 @@ add_h3_hexagon_layer(
 
 \item{center_hexagon}{unknown}
 
-\item{get_hexagon}{accessor}
+\item{get_hexagon}{<\code{\link{accessor}}>}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 H3 Hexagon Layer

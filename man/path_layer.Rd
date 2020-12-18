@@ -50,7 +50,7 @@ add_path_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{width_units}{unknown}
 
@@ -66,13 +66,13 @@ add_path_layer(
 
 \item{billboard}{boolean}
 
-\item{get_path}{accessor}
+\item{get_path}{<\code{\link{accessor}}>}
 
-\item{get_color}{accessor}
+\item{get_color}{<\code{\link{accessor}}>}
 
-\item{get_width}{accessor}
+\item{get_width}{<\code{\link{accessor}}>}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Path Layer

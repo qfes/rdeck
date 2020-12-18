@@ -63,7 +63,7 @@ add_hexagon_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{color_domain}{unknown}
 
@@ -71,7 +71,7 @@ add_hexagon_layer(
 
 \item{get_color_value}{unknown}
 
-\item{get_color_weight}{accessor}
+\item{get_color_weight}{<\code{\link{accessor}}>}
 
 \item{color_aggregation}{unknown}
 
@@ -87,7 +87,7 @@ add_hexagon_layer(
 
 \item{get_elevation_value}{unknown}
 
-\item{get_elevation_weight}{accessor}
+\item{get_elevation_weight}{<\code{\link{accessor}}>}
 
 \item{elevation_aggregation}{unknown}
 
@@ -107,11 +107,11 @@ add_hexagon_layer(
 
 \item{hexagon_aggregator}{function}
 
-\item{get_position}{accessor}
+\item{get_position}{<\code{\link{accessor}}>}
 
 \item{material}{boolean}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Hexagon Layer

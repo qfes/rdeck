@@ -48,7 +48,7 @@ add_screen_grid_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{cell_size_pixels}{number}
 
@@ -58,15 +58,15 @@ add_screen_grid_layer(
 
 \item{color_range}{array}
 
-\item{get_position}{accessor}
+\item{get_position}{<\code{\link{accessor}}>}
 
-\item{get_weight}{accessor}
+\item{get_weight}{<\code{\link{accessor}}>}
 
 \item{gpu_aggregation}{boolean}
 
 \item{aggregation}{unknown}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Screen Grid Layer

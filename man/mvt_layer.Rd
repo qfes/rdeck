@@ -73,7 +73,7 @@ add_mvt_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{stroked}{boolean}
 
@@ -105,15 +105,15 @@ add_mvt_layer(
 
 \item{point_radius_max_pixels}{number}
 
-\item{get_line_color}{accessor}
+\item{get_line_color}{<\code{\link{accessor}}>}
 
-\item{get_fill_color}{accessor}
+\item{get_fill_color}{<\code{\link{accessor}}>}
 
-\item{get_radius}{accessor}
+\item{get_radius}{<\code{\link{accessor}}>}
 
-\item{get_line_width}{accessor}
+\item{get_line_width}{<\code{\link{accessor}}>}
 
-\item{get_elevation}{accessor}
+\item{get_elevation}{<\code{\link{accessor}}>}
 
 \item{material}{boolean}
 
@@ -141,7 +141,7 @@ add_mvt_layer(
 
 \item{highlighted_feature_id}{unknown}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 MVT Layer

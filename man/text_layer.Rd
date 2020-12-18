@@ -60,7 +60,7 @@ add_text_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{billboard}{boolean}
 
@@ -86,23 +86,23 @@ add_text_layer(
 
 \item{max_width}{number}
 
-\item{get_text}{accessor}
+\item{get_text}{<\code{\link{accessor}}>}
 
-\item{get_position}{accessor}
+\item{get_position}{<\code{\link{accessor}}>}
 
-\item{get_color}{accessor}
+\item{get_color}{<\code{\link{accessor}}>}
 
-\item{get_size}{accessor}
+\item{get_size}{<\code{\link{accessor}}>}
 
-\item{get_angle}{accessor}
+\item{get_angle}{<\code{\link{accessor}}>}
 
-\item{get_text_anchor}{accessor}
+\item{get_text_anchor}{<\code{\link{accessor}}>}
 
-\item{get_alignment_baseline}{accessor}
+\item{get_alignment_baseline}{<\code{\link{accessor}}>}
 
-\item{get_pixel_offset}{accessor}
+\item{get_pixel_offset}{<\code{\link{accessor}}>}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Text Layer

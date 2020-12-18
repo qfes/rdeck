@@ -59,7 +59,7 @@ add_terrain_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{get_tile_data}{function}
 
@@ -99,7 +99,7 @@ add_terrain_layer(
 
 \item{material}{boolean}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Terrain Layer

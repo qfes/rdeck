@@ -52,21 +52,21 @@ add_arc_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
-\item{get_source_position}{accessor}
+\item{get_source_position}{<\code{\link{accessor}}>}
 
-\item{get_target_position}{accessor}
+\item{get_target_position}{<\code{\link{accessor}}>}
 
-\item{get_source_color}{accessor}
+\item{get_source_color}{<\code{\link{accessor}}>}
 
-\item{get_target_color}{accessor}
+\item{get_target_color}{<\code{\link{accessor}}>}
 
-\item{get_width}{accessor}
+\item{get_width}{<\code{\link{accessor}}>}
 
-\item{get_height}{accessor}
+\item{get_height}{<\code{\link{accessor}}>}
 
-\item{get_tilt}{accessor}
+\item{get_tilt}{<\code{\link{accessor}}>}
 
 \item{great_circle}{boolean}
 
@@ -78,7 +78,7 @@ add_arc_layer(
 
 \item{width_max_pixels}{number}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Arc Layer

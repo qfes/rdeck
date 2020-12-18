@@ -52,7 +52,7 @@ add_scenegraph_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{scenegraph}{object}
 
@@ -66,19 +66,19 @@ add_scenegraph_layer(
 
 \item{size_max_pixels}{number}
 
-\item{get_position}{accessor}
+\item{get_position}{<\code{\link{accessor}}>}
 
-\item{get_color}{accessor}
+\item{get_color}{<\code{\link{accessor}}>}
 
-\item{get_orientation}{accessor}
+\item{get_orientation}{<\code{\link{accessor}}>}
 
-\item{get_scale}{accessor}
+\item{get_scale}{<\code{\link{accessor}}>}
 
-\item{get_translation}{accessor}
+\item{get_translation}{<\code{\link{accessor}}>}
 
-\item{get_transform_matrix}{accessor}
+\item{get_transform_matrix}{<\code{\link{accessor}}>}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Scenegraph Layer

@@ -48,15 +48,15 @@ add_line_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
-\item{get_source_position}{accessor}
+\item{get_source_position}{<\code{\link{accessor}}>}
 
-\item{get_target_position}{accessor}
+\item{get_target_position}{<\code{\link{accessor}}>}
 
-\item{get_color}{accessor}
+\item{get_color}{<\code{\link{accessor}}>}
 
-\item{get_width}{accessor}
+\item{get_width}{<\code{\link{accessor}}>}
 
 \item{width_units}{unknown}
 
@@ -66,7 +66,7 @@ add_line_layer(
 
 \item{width_max_pixels}{number}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Line Layer

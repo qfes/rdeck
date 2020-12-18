@@ -45,7 +45,7 @@ add_bitmap_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{image}{The image to display. Either a string interpreted as a URL or Data URL,
 or an array raster image.}
@@ -58,7 +58,7 @@ or an array raster image.}
 
 \item{tint_color}{color}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Bitmap Layer

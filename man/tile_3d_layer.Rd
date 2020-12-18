@@ -48,7 +48,7 @@ add_tile_3d_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{get_point_color}{array}
 
@@ -58,7 +58,7 @@ add_tile_3d_layer(
 
 \item{loader}{object}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Tile 3D Layer

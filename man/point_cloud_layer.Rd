@@ -46,21 +46,21 @@ add_point_cloud_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{size_units}{unknown}
 
 \item{point_size}{number}
 
-\item{get_position}{accessor}
+\item{get_position}{<\code{\link{accessor}}>}
 
-\item{get_normal}{accessor}
+\item{get_normal}{<\code{\link{accessor}}>}
 
-\item{get_color}{accessor}
+\item{get_color}{<\code{\link{accessor}}>}
 
 \item{material}{boolean}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Point Cloud Layer

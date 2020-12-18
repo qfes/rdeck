@@ -57,7 +57,7 @@ add_polygon_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{stroked}{boolean}
 
@@ -81,19 +81,19 @@ add_polygon_layer(
 
 \item{line_miter_limit}{number}
 
-\item{get_polygon}{accessor}
+\item{get_polygon}{<\code{\link{accessor}}>}
 
-\item{get_fill_color}{accessor}
+\item{get_fill_color}{<\code{\link{accessor}}>}
 
-\item{get_line_color}{accessor}
+\item{get_line_color}{<\code{\link{accessor}}>}
 
-\item{get_line_width}{accessor}
+\item{get_line_width}{<\code{\link{accessor}}>}
 
-\item{get_elevation}{accessor}
+\item{get_elevation}{<\code{\link{accessor}}>}
 
 \item{material}{boolean}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Polygon Layer

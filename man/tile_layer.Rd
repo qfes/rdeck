@@ -50,7 +50,7 @@ add_tile_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{get_tile_data}{function}
 
@@ -72,7 +72,7 @@ add_tile_layer(
 
 \item{max_requests}{number}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Tile Layer

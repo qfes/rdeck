@@ -54,7 +54,7 @@ add_icon_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{icon_atlas}{object}
 
@@ -72,19 +72,19 @@ add_icon_layer(
 
 \item{alpha_cutoff}{number}
 
-\item{get_position}{accessor}
+\item{get_position}{<\code{\link{accessor}}>}
 
-\item{get_icon}{accessor}
+\item{get_icon}{<\code{\link{accessor}}>}
 
-\item{get_color}{accessor}
+\item{get_color}{<\code{\link{accessor}}>}
 
-\item{get_size}{accessor}
+\item{get_size}{<\code{\link{accessor}}>}
 
-\item{get_angle}{accessor}
+\item{get_angle}{<\code{\link{accessor}}>}
 
-\item{get_pixel_offset}{accessor}
+\item{get_pixel_offset}{<\code{\link{accessor}}>}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Icon Layer

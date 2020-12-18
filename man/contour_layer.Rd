@@ -47,13 +47,13 @@ add_contour_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{cell_size}{number}
 
-\item{get_position}{accessor}
+\item{get_position}{<\code{\link{accessor}}>}
 
-\item{get_weight}{accessor}
+\item{get_weight}{<\code{\link{accessor}}>}
 
 \item{gpu_aggregation}{boolean}
 
@@ -63,7 +63,7 @@ add_contour_layer(
 
 \item{z_offset}{number}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Contour Layer

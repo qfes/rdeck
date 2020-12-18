@@ -64,13 +64,13 @@ add_grid_layer(
 
 \item{auto_highlight}{boolean}
 
-\item{highlight_color}{accessor}
+\item{highlight_color}{<\code{\link{accessor}}>}
 
 \item{color_domain}{unknown}
 
 \item{color_range}{array}
 
-\item{get_color_weight}{accessor}
+\item{get_color_weight}{<\code{\link{accessor}}>}
 
 \item{color_aggregation}{unknown}
 
@@ -78,7 +78,7 @@ add_grid_layer(
 
 \item{elevation_range}{array}
 
-\item{get_elevation_weight}{accessor}
+\item{get_elevation_weight}{<\code{\link{accessor}}>}
 
 \item{elevation_aggregation}{unknown}
 
@@ -88,7 +88,7 @@ add_grid_layer(
 
 \item{coverage}{number}
 
-\item{get_position}{accessor}
+\item{get_position}{<\code{\link{accessor}}>}
 
 \item{extruded}{boolean}
 
@@ -114,7 +114,7 @@ add_grid_layer(
 
 \item{gpu_aggregation}{boolean}
 
-\item{tooltip}{accessor}
+\item{tooltip}{<\code{\link{accessor}}>}
 }
 \description{
 Grid Layer
