@@ -230,7 +230,7 @@ NULL
 #'
 #' @name h3_hexagon_layer
 #' @inherit layer_props
-#' @param high_precision boolean
+#' @param high_precision <`logical`>
 #' @param center_hexagon unknown
 #' @param get_hexagon <[`accessor`]>
 #' @eval deckgl_docs("geo-layers", "h3-hexagon-layer")
@@ -321,6 +321,9 @@ NULL
 #' @title layer_props
 #' @name layer_props
 #' @rdname _layer_props
+#' @param ... Additional parameters that will be forwarded to deck.gl javascript without
+#' validation nor processing. All dots must be named and will be `camelCased` when serialised.
+#' Layers will raise a warning when dots are used, warning class `rdeck_dots_nonempty`.
 #' @param id <`string`> The layer's identifier must be unique for among all layers of the same
 #' type for a map. Defaults to [uuid::UUIDgenerate()], but should be explicitly defined for
 #' updatable layers in a shiny application.
@@ -346,21 +349,31 @@ NULL
 #' highlighted object. If a single colour value is supplied, that colour will be used to
 #' highlight all objects in the layer. Per-object highlighting is achieved with an `accessor`
 #' resolving a column in `data`, or a `scale` to transform a column into a colour.
-#' @param get_source_position <[`accessor`]>
-#' @param get_target_position <[`accessor`]>
-#' @param get_source_color <[`accessor`]>
-#' @param get_target_color <[`accessor`]>
+#' @param get_source_position <[`accessor`]> The source position geometry column, an
+#' `sfc_POINT` column with CRS EPSG:4326. Supports
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)>.
+#' @param get_target_position <[`accessor`]> The target position geometry column, an
+#' `sfc_POINT` column with CRS EPSG:4326. Supports
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)>.
+#' @param get_source_color <[`accessor`] | [`scale`] | [`color`]> The colour of the
+#' _source end_ of the arc. Accepts a single colour value, a
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)> column of
+#' colours or a scale function.
+#' @param get_target_color <[`accessor`] | [`scale`] | [`color`]> The colour of the
+#' _target end_ of the arc. Accepts a single colour value, a
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)> column of
+#' colours or a scale function.
 #' @param get_width <[`accessor`]>
 #' @param get_height <[`accessor`]>
 #' @param get_tilt <[`accessor`]>
-#' @param great_circle boolean
+#' @param great_circle <`logical`>
 #' @param width_units unknown
 #' @param width_scale number
 #' @param width_min_pixels number
 #' @param width_max_pixels number
 #' @param bounds array
 #' @param size_scale number
-#' @param billboard boolean
+#' @param billboard <`logical`>
 #' @param size_units unknown
 #' @param size_min_pixels number
 #' @param size_max_pixels number
@@ -370,13 +383,13 @@ NULL
 #' @param get_angle <[`accessor`]>
 #' @param get_pixel_offset <[`accessor`]>
 #' @param point_size number
-#' @param material boolean
+#' @param material <`logical`>
 #' @param line_width_units unknown
 #' @param line_width_scale number
 #' @param line_width_min_pixels number
 #' @param line_width_max_pixels number
-#' @param stroked boolean
-#' @param filled boolean
+#' @param stroked <`logical`>
+#' @param filled <`logical`>
 #' @param get_radius <[`accessor`]>
 #' @param get_fill_color <[`accessor`]>
 #' @param get_line_color <[`accessor`]>
@@ -388,14 +401,14 @@ NULL
 #' @param offset array
 #' @param coverage number
 #' @param elevation_scale number
-#' @param extruded boolean
-#' @param wireframe boolean
+#' @param extruded <`logical`>
+#' @param wireframe <`logical`>
 #' @param get_elevation <[`accessor`]>
 #' @param cell_size number
-#' @param rounded boolean
+#' @param rounded <`logical`>
 #' @param miter_limit number
 #' @param get_path <[`accessor`]>
-#' @param line_joint_rounded boolean
+#' @param line_joint_rounded <`logical`>
 #' @param line_miter_limit number
 #' @param get_polygon <[`accessor`]>
 #' @param point_radius_units unknown
@@ -405,7 +418,7 @@ NULL
 #' @param color_domain unknown
 #' @param color_range array
 #' @param get_weight <[`accessor`]>
-#' @param gpu_aggregation boolean
+#' @param gpu_aggregation <`logical`>
 #' @param aggregation unknown
 #' @param get_color_value unknown
 #' @param get_color_weight <[`accessor`]>

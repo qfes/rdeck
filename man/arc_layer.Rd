@@ -34,6 +34,10 @@ add_arc_layer(
 )
 }
 \arguments{
+\item{...}{Additional parameters that will be forwarded to deck.gl javascript without
+validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
+Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
+
 \item{id}{<\code{string}> The layer's identifier must be unique for among all layers of the same
 type for a map. Defaults to \code{\link[uuid:UUIDgenerate]{uuid::UUIDgenerate()}}, but should be explicitly defined for
 updatable layers in a shiny application.}
@@ -62,18 +66,28 @@ will be ignored by accessors, making all colours opaque.}
 highlighted by \code{highlight_color}.}
 
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
-\code{pickable} are enabled, \code{highlight_color} determines the colour of the currently highlighted
-object. If a single colour value is supplied, that colour will be used to highlight all objects
-in the layer. Per-object highlighting is achieved with an \code{accessor} resolving a column in \code{data},
-or a \code{scale} to transform a column into a colour.}
+\code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
+highlighted object. If a single colour value is supplied, that colour will be used to
+highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
+resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
 
-\item{get_source_position}{<\code{\link{accessor}}>}
+\item{get_source_position}{<\code{\link{accessor}}> The source position geometry column, an
+\code{sfc_POINT} column with CRS EPSG:4326. Supports
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}>.}
 
-\item{get_target_position}{<\code{\link{accessor}}>}
+\item{get_target_position}{<\code{\link{accessor}}> The target position geometry column, an
+\code{sfc_POINT} column with CRS EPSG:4326. Supports
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}>.}
 
-\item{get_source_color}{<\code{\link{accessor}}>}
+\item{get_source_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of the
+\emph{source end} of the arc. Accepts a single colour value, a
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
+colours or a scale function.}
 
-\item{get_target_color}{<\code{\link{accessor}}>}
+\item{get_target_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of the
+\emph{target end} of the arc. Accepts a single colour value, a
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
+colours or a scale function.}
 
 \item{get_width}{<\code{\link{accessor}}>}
 
@@ -81,7 +95,7 @@ or a \code{scale} to transform a column into a colour.}
 
 \item{get_tilt}{<\code{\link{accessor}}>}
 
-\item{great_circle}{boolean}
+\item{great_circle}{<\code{logical}>}
 
 \item{width_units}{unknown}
 
