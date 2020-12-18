@@ -3,7 +3,7 @@
 \name{tile_layer}
 \alias{tile_layer}
 \alias{add_tile_layer}
-\title{TileLayer}
+\title{Tile Layer}
 \usage{
 add_tile_layer(
   rdeck,
@@ -32,10 +32,10 @@ add_tile_layer(
 )
 }
 \description{
-TileLayer
+Tile Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/geo-layers/tile-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/geo-layers/tile-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -60,7 +60,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
@@ -68,5 +67,16 @@ Other layers:
 \code{\link{text_layer}},
 \code{\link{tile_3d_layer}},
 \code{\link{trips_layer}}
+
+Other geo-layers: 
+\code{\link{great_circle_layer}},
+\code{\link{h3_cluster_layer}},
+\code{\link{h3_hexagon_layer}},
+\code{\link{mvt_layer}},
+\code{\link{s2_layer}},
+\code{\link{terrain_layer}},
+\code{\link{tile_3d_layer}},
+\code{\link{trips_layer}}
 }
+\concept{geo-layers}
 \concept{layers}

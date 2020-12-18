@@ -3,7 +3,7 @@
 \name{s2_layer}
 \alias{s2_layer}
 \alias{add_s2_layer}
-\title{S2Layer}
+\title{S2 Layer}
 \usage{
 add_s2_layer(
   rdeck,
@@ -39,10 +39,10 @@ add_s2_layer(
 )
 }
 \description{
-S2Layer
+S2 Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/geo-layers/s2-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/geo-layers/s2-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -66,7 +66,6 @@ Other layers:
 \code{\link{point_cloud_layer}},
 \code{\link{polygon_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
@@ -75,5 +74,16 @@ Other layers:
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
+
+Other geo-layers: 
+\code{\link{great_circle_layer}},
+\code{\link{h3_cluster_layer}},
+\code{\link{h3_hexagon_layer}},
+\code{\link{mvt_layer}},
+\code{\link{terrain_layer}},
+\code{\link{tile_3d_layer}},
+\code{\link{tile_layer}},
+\code{\link{trips_layer}}
 }
+\concept{geo-layers}
 \concept{layers}

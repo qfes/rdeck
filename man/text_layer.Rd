@@ -3,7 +3,7 @@
 \name{text_layer}
 \alias{text_layer}
 \alias{add_text_layer}
-\title{TextLayer}
+\title{Text Layer}
 \usage{
 add_text_layer(
   rdeck,
@@ -42,10 +42,10 @@ add_text_layer(
 )
 }
 \description{
-TextLayer
+Text Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/layers/text-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/layers/text-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -70,7 +70,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},

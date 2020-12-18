@@ -3,7 +3,7 @@
 \name{line_layer}
 \alias{line_layer}
 \alias{add_line_layer}
-\title{LineLayer}
+\title{Line Layer}
 \usage{
 add_line_layer(
   rdeck,
@@ -30,10 +30,10 @@ add_line_layer(
 )
 }
 \description{
-LineLayer
+Line Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/layers/line-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/layers/line-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -57,7 +57,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},

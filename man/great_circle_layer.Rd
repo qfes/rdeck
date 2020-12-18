@@ -3,7 +3,7 @@
 \name{great_circle_layer}
 \alias{great_circle_layer}
 \alias{add_great_circle_layer}
-\title{GreatCircleLayer}
+\title{Great Circle Layer}
 \usage{
 add_great_circle_layer(
   rdeck,
@@ -37,10 +37,10 @@ add_great_circle_layer(
 \item{get_source_position}{<\code{\link{accessor}}>}
 }
 \description{
-GreatCircleLayer
+Great Circle Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/geo-layers/great-circle-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/geo-layers/great-circle-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -64,7 +64,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
@@ -73,5 +72,16 @@ Other layers:
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
+
+Other geo-layers: 
+\code{\link{h3_cluster_layer}},
+\code{\link{h3_hexagon_layer}},
+\code{\link{mvt_layer}},
+\code{\link{s2_layer}},
+\code{\link{terrain_layer}},
+\code{\link{tile_3d_layer}},
+\code{\link{tile_layer}},
+\code{\link{trips_layer}}
 }
+\concept{geo-layers}
 \concept{layers}

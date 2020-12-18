@@ -3,7 +3,7 @@
 \name{screen_grid_layer}
 \alias{screen_grid_layer}
 \alias{add_screen_grid_layer}
-\title{ScreenGridLayer}
+\title{Screen Grid Layer}
 \usage{
 add_screen_grid_layer(
   rdeck,
@@ -30,10 +30,10 @@ add_screen_grid_layer(
 )
 }
 \description{
-ScreenGridLayer
+Screen Grid Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/aggregation-layers/screen-grid-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/aggregation-layers/screen-grid-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -58,7 +58,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
 \code{\link{terrain_layer}},
@@ -66,5 +65,14 @@ Other layers:
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
+
+Other aggregation-layers: 
+\code{\link{contour_layer}},
+\code{\link{cpu_grid_layer}},
+\code{\link{gpu_grid_layer}},
+\code{\link{grid_layer}},
+\code{\link{heatmap_layer}},
+\code{\link{hexagon_layer}}
 }
+\concept{aggregation-layers}
 \concept{layers}

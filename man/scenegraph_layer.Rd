@@ -3,7 +3,7 @@
 \name{scenegraph_layer}
 \alias{scenegraph_layer}
 \alias{add_scenegraph_layer}
-\title{ScenegraphLayer}
+\title{Scenegraph Layer}
 \usage{
 add_scenegraph_layer(
   rdeck,
@@ -34,41 +34,12 @@ add_scenegraph_layer(
 )
 }
 \description{
-ScenegraphLayer
+Scenegraph Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/mesh-layers/scenegraph-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/mesh-layers/scenegraph-layer.md}
 
-Other layers: 
-\code{\link{arc_layer}},
-\code{\link{bitmap_layer}},
-\code{\link{column_layer}},
-\code{\link{contour_layer}},
-\code{\link{cpu_grid_layer}},
-\code{\link{geojson_layer}},
-\code{\link{gpu_grid_layer}},
-\code{\link{great_circle_layer}},
-\code{\link{grid_cell_layer}},
-\code{\link{grid_layer}},
-\code{\link{h3_cluster_layer}},
-\code{\link{h3_hexagon_layer}},
-\code{\link{heatmap_layer}},
-\code{\link{hexagon_layer}},
-\code{\link{icon_layer}},
-\code{\link{line_layer}},
-\code{\link{mvt_layer}},
-\code{\link{path_layer}},
-\code{\link{point_cloud_layer}},
-\code{\link{polygon_layer}},
-\code{\link{s2_layer}},
-\code{\link{scatterplot_layer}},
-\code{\link{screen_grid_layer}},
-\code{\link{simple_mesh_layer}},
-\code{\link{solid_polygon_layer}},
-\code{\link{terrain_layer}},
-\code{\link{text_layer}},
-\code{\link{tile_3d_layer}},
-\code{\link{tile_layer}},
-\code{\link{trips_layer}}
+Other mesh-layers: 
+\code{\link{simple_mesh_layer}}
 }
-\concept{layers}
+\concept{mesh-layers}

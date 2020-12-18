@@ -3,7 +3,7 @@
 \name{solid_polygon_layer}
 \alias{solid_polygon_layer}
 \alias{add_solid_polygon_layer}
-\title{SolidPolygonLayer}
+\title{Solid Polygon Layer}
 \usage{
 add_solid_polygon_layer(
   rdeck,
@@ -31,10 +31,10 @@ add_solid_polygon_layer(
 )
 }
 \description{
-SolidPolygonLayer
+Solid Polygon Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/layers/solid-polygon-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/layers/solid-polygon-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -59,7 +59,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{terrain_layer}},

@@ -1,4 +1,4 @@
-#' ArcLayer
+#' Arc Layer
 #'
 #' @name arc_layer
 #' @inherit layer
@@ -18,7 +18,7 @@
 #' @family layers
 NULL
 
-#' BitmapLayer
+#' Bitmap Layer
 #'
 #' @name bitmap_layer
 #' @inherit layer
@@ -32,7 +32,7 @@ NULL
 #' @family layers
 NULL
 
-#' IconLayer
+#' Icon Layer
 #'
 #' @name icon_layer
 #' @inherit layer
@@ -54,7 +54,7 @@ NULL
 #' @family layers
 NULL
 
-#' LineLayer
+#' Line Layer
 #'
 #' @name line_layer
 #' @inherit layer
@@ -70,7 +70,7 @@ NULL
 #' @family layers
 NULL
 
-#' PointCloudLayer
+#' Point Cloud Layer
 #'
 #' @name point_cloud_layer
 #' @inherit layer
@@ -84,7 +84,7 @@ NULL
 #' @family layers
 NULL
 
-#' ScatterplotLayer
+#' Scatterplot Layer
 #'
 #' @name scatterplot_layer
 #' @inherit layer
@@ -107,7 +107,7 @@ NULL
 #' @family layers
 NULL
 
-#' GridCellLayer
+#' Grid Cell Layer
 #'
 #' @name grid_cell_layer
 #' @inherit column_layer
@@ -116,7 +116,7 @@ NULL
 #' @family layers
 NULL
 
-#' ColumnLayer
+#' Column Layer
 #'
 #' @name column_layer
 #' @inherit layer
@@ -145,7 +145,7 @@ NULL
 #' @family layers
 NULL
 
-#' PathLayer
+#' Path Layer
 #'
 #' @name path_layer
 #' @inherit layer
@@ -163,7 +163,7 @@ NULL
 #' @family layers
 NULL
 
-#' PolygonLayer
+#' Polygon Layer
 #'
 #' @name polygon_layer
 #' @inherit solid_polygon_layer
@@ -179,7 +179,7 @@ NULL
 #' @family layers
 NULL
 
-#' SolidPolygonLayer
+#' Solid Polygon Layer
 #'
 #' @name solid_polygon_layer
 #' @inherit layer
@@ -196,7 +196,7 @@ NULL
 #' @family layers
 NULL
 
-#' GeoJsonLayer
+#' GeoJson Layer
 #'
 #' @name geojson_layer
 #' @inherit polygon_layer
@@ -210,7 +210,7 @@ NULL
 #' @family layers
 NULL
 
-#' TextLayer
+#' Text Layer
 #'
 #' @name text_layer
 #' @inherit icon_layer
@@ -228,7 +228,7 @@ NULL
 #' @family layers
 NULL
 
-#' ScreenGridLayer
+#' Screen Grid Layer
 #'
 #' @name screen_grid_layer
 #' @inherit grid_aggregation_layer
@@ -242,9 +242,10 @@ NULL
 #' @param aggregation
 #' @eval deckgl_docs("aggregation-layers", "screen-grid-layer")
 #' @family layers
+#' @family aggregation-layers
 NULL
 
-#' CPUGridLayer
+#' CPU Grid Layer
 #'
 #' @name cpu_grid_layer
 #' @inherit aggregation_layer
@@ -256,9 +257,10 @@ NULL
 #' @param material
 #' @eval deckgl_docs("aggregation-layers", "cpu-grid-layer")
 #' @family layers
+#' @family aggregation-layers
 NULL
 
-#' HexagonLayer
+#' Hexagon Layer
 #'
 #' @name hexagon_layer
 #' @inherit column_layer
@@ -266,9 +268,10 @@ NULL
 #' @param hexagon_aggregator
 #' @eval deckgl_docs("aggregation-layers", "hexagon-layer")
 #' @family layers
+#' @family aggregation-layers
 NULL
 
-#' ContourLayer
+#' Contour Layer
 #'
 #' @name contour_layer
 #' @inherit grid_aggregation_layer
@@ -281,9 +284,10 @@ NULL
 #' @param z_offset
 #' @eval deckgl_docs("aggregation-layers", "contour-layer")
 #' @family layers
+#' @family aggregation-layers
 NULL
 
-#' GridLayer
+#' Grid Layer
 #'
 #' @name grid_layer
 #' @inherit layer
@@ -313,9 +317,10 @@ NULL
 #' @param gpu_aggregation
 #' @eval deckgl_docs("aggregation-layers", "grid-layer")
 #' @family layers
+#' @family aggregation-layers
 NULL
 
-#' GPUGridLayer
+#' GPU Grid Layer
 #'
 #' @name gpu_grid_layer
 #' @inherit grid_aggregation_layer
@@ -335,9 +340,10 @@ NULL
 #' @param material
 #' @eval deckgl_docs("aggregation-layers", "gpu-grid-layer")
 #' @family layers
+#' @family aggregation-layers
 NULL
 
-#' HeatmapLayer
+#' Heatmap Layer
 #'
 #' @name heatmap_layer
 #' @inherit aggregation_layer
@@ -350,35 +356,39 @@ NULL
 #' @param color_domain
 #' @eval deckgl_docs("aggregation-layers", "heatmap-layer")
 #' @family layers
+#' @family aggregation-layers
 NULL
 
-#' GreatCircleLayer
+#' Great Circle Layer
 #'
 #' @name great_circle_layer
 #' @inherit arc_layer
 #' @eval deckgl_docs("geo-layers", "great-circle-layer")
 #' @family layers
+#' @family geo-layers
 NULL
 
-#' S2Layer
+#' S2 Layer
 #'
 #' @name s2_layer
 #' @inherit layer
 #' @param get_s2_token
 #' @eval deckgl_docs("geo-layers", "s2-layer")
 #' @family layers
+#' @family geo-layers
 NULL
 
-#' H3ClusterLayer
+#' H3 Cluster Layer
 #'
 #' @name h3_cluster_layer
 #' @inherit h3_hexagon_layer
 #' @param get_hexagons
 #' @eval deckgl_docs("geo-layers", "h3-cluster-layer")
 #' @family layers
+#' @family geo-layers
 NULL
 
-#' H3HexagonLayer
+#' H3 Hexagon Layer
 #'
 #' @name h3_hexagon_layer
 #' @inherit polygon_layer
@@ -388,9 +398,10 @@ NULL
 #' @param get_hexagon
 #' @eval deckgl_docs("geo-layers", "h3-hexagon-layer")
 #' @family layers
+#' @family geo-layers
 NULL
 
-#' TileLayer
+#' Tile Layer
 #'
 #' @name tile_layer
 #' @inherit layer
@@ -406,9 +417,10 @@ NULL
 #' @param max_requests
 #' @eval deckgl_docs("geo-layers", "tile-layer")
 #' @family layers
+#' @family geo-layers
 NULL
 
-#' TripsLayer
+#' Trips Layer
 #'
 #' @name trips_layer
 #' @inherit path_layer
@@ -417,9 +429,10 @@ NULL
 #' @param get_timestamps
 #' @eval deckgl_docs("geo-layers", "trips-layer")
 #' @family layers
+#' @family geo-layers
 NULL
 
-#' Tile3DLayer
+#' Tile 3D Layer
 #'
 #' @name tile_3d_layer
 #' @inherit layer
@@ -429,9 +442,10 @@ NULL
 #' @param loader
 #' @eval deckgl_docs("geo-layers", "tile3d-layer")
 #' @family layers
+#' @family geo-layers
 NULL
 
-#' TerrainLayer
+#' Terrain Layer
 #'
 #' @name terrain_layer
 #' @inherit tile_layer
@@ -445,9 +459,10 @@ NULL
 #' @param worker_url
 #' @eval deckgl_docs("geo-layers", "terrain-layer")
 #' @family layers
+#' @family geo-layers
 NULL
 
-#' MVTLayer
+#' MVT Layer
 #'
 #' @name mvt_layer
 #' @inherit tile_layer
@@ -457,9 +472,10 @@ NULL
 #' @param highlighted_feature_id
 #' @eval deckgl_docs("geo-layers", "mvt-layer")
 #' @family layers
+#' @family geo-layers
 NULL
 
-#' SimpleMeshLayer
+#' Simple Mesh Layer
 #'
 #' @name simple_mesh_layer
 #' @inherit layer
@@ -476,9 +492,10 @@ NULL
 #' @param get_transform_matrix
 #' @eval deckgl_docs("mesh-layers", "simple-mesh-layer")
 #' @family layers
+#' @family mesh-layers
 NULL
 
-#' ScenegraphLayer
+#' Scenegraph Layer
 #'
 #' @name scenegraph_layer
 #' @inherit layer
@@ -495,7 +512,7 @@ NULL
 #' @param get_translation
 #' @param get_transform_matrix
 #' @eval deckgl_docs("mesh-layers", "scenegraph-layer")
-#' @family layers
+#' @family mesh-layers
 NULL
 
 

@@ -3,7 +3,7 @@
 \name{simple_mesh_layer}
 \alias{simple_mesh_layer}
 \alias{add_simple_mesh_layer}
-\title{SimpleMeshLayer}
+\title{Simple Mesh Layer}
 \usage{
 add_simple_mesh_layer(
   rdeck,
@@ -33,10 +33,10 @@ add_simple_mesh_layer(
 )
 }
 \description{
-SimpleMeshLayer
+Simple Mesh Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/mesh-layers/simple-mesh-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/mesh-layers/simple-mesh-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -61,7 +61,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{solid_polygon_layer}},
 \code{\link{terrain_layer}},
@@ -69,5 +68,9 @@ Other layers:
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
+
+Other mesh-layers: 
+\code{\link{scenegraph_layer}}
 }
 \concept{layers}
+\concept{mesh-layers}

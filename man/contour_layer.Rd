@@ -3,7 +3,7 @@
 \name{contour_layer}
 \alias{contour_layer}
 \alias{add_contour_layer}
-\title{ContourLayer}
+\title{Contour Layer}
 \usage{
 add_contour_layer(
   rdeck,
@@ -29,10 +29,10 @@ add_contour_layer(
 )
 }
 \description{
-ContourLayer
+Contour Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/aggregation-layers/contour-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/aggregation-layers/contour-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -56,7 +56,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
@@ -65,5 +64,14 @@ Other layers:
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
+
+Other aggregation-layers: 
+\code{\link{cpu_grid_layer}},
+\code{\link{gpu_grid_layer}},
+\code{\link{grid_layer}},
+\code{\link{heatmap_layer}},
+\code{\link{hexagon_layer}},
+\code{\link{screen_grid_layer}}
 }
+\concept{aggregation-layers}
 \concept{layers}

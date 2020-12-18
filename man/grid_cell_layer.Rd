@@ -3,7 +3,7 @@
 \name{grid_cell_layer}
 \alias{grid_cell_layer}
 \alias{add_grid_cell_layer}
-\title{GridCellLayer}
+\title{Grid Cell Layer}
 \usage{
 add_grid_cell_layer(
   rdeck,
@@ -44,10 +44,10 @@ add_grid_cell_layer(
 )
 }
 \description{
-GridCellLayer
+Grid Cell Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/layers/grid-cell-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/layers/grid-cell-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -71,7 +71,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},

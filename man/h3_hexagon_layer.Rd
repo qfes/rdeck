@@ -3,7 +3,7 @@
 \name{h3_hexagon_layer}
 \alias{h3_hexagon_layer}
 \alias{add_h3_hexagon_layer}
-\title{H3HexagonLayer}
+\title{H3 Hexagon Layer}
 \usage{
 add_h3_hexagon_layer(
   rdeck,
@@ -42,10 +42,10 @@ add_h3_hexagon_layer(
 )
 }
 \description{
-H3HexagonLayer
+H3 Hexagon Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.10/docs/api-reference/geo-layers/h3-hexagon-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/geo-layers/h3-hexagon-layer.md}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -69,7 +69,6 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
-\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
@@ -78,5 +77,16 @@ Other layers:
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
+
+Other geo-layers: 
+\code{\link{great_circle_layer}},
+\code{\link{h3_cluster_layer}},
+\code{\link{mvt_layer}},
+\code{\link{s2_layer}},
+\code{\link{terrain_layer}},
+\code{\link{tile_3d_layer}},
+\code{\link{tile_layer}},
+\code{\link{trips_layer}}
 }
+\concept{geo-layers}
 \concept{layers}
