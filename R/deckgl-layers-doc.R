@@ -417,12 +417,14 @@ NULL
 #' @param max_cache_byte_size unknown
 #' @param refinement_strategy unknown
 #' @param z_range unknown
-#' @param max_requests number
-#' @param texture url
-#' @param get_orientation <[`accessor`]>
-#' @param get_scale <[`accessor`]>
-#' @param get_translation <[`accessor`]>
-#' @param get_transform_matrix <[`accessor`]>
+#' @param max_requests <number> The maximiun number of concurrent HTTP
+#'   requests across all specified tile provider domains. If a negative number is
+#'   supplied no throttling occurs (HTTP/2 only).
+#' @param texture not yet supported.
+#' @param get_orientation <[`accessor`]> not yet supported.
+#' @param get_scale <[`accessor`]> not yet supported.
+#' @param get_translation <[`accessor`]> not yet supported.
+#' @param get_transform_matrix <[`accessor`]> not yet supported.
 NULL
 
 deckgl_docs <- function(module, name) {
