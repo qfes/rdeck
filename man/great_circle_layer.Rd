@@ -89,21 +89,31 @@ colours or a scale function.}
 <\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
 colours or a scale function.}
 
-\item{get_width}{<\code{\link{accessor}}>}
+\item{get_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The width of each object, in units
+specified by \code{width_scale}. May be a single value, a
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
+weights, or a scale function.}
 
-\item{get_height}{<\code{\link{accessor}}>}
+\item{get_height}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The multiplier of layer of
+layer height. Mat be a single value, a
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
+heights, or a scale function. A value of 0 will make the layer flat.}
 
-\item{get_tilt}{<\code{\link{accessor}}>}
+\item{get_tilt}{<\code{\link{accessor}} | \code{numeric}> Tilts the arcs by the specified number of
+degrees (between \code{c(-90, 90)}). May be a single value, or a
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
+tilt values.}
 
-\item{great_circle}{<\code{logical}>}
+\item{great_circle}{<\code{logical}> If \code{TRUE}, create the arc along the shortest path on the
+earth surface.}
 
-\item{width_units}{unknown}
+\item{width_units}{<\code{"pixels"} | \code{"meters"}> The units of the \code{line_width}.}
 
-\item{width_scale}{number}
+\item{width_scale}{<\code{numeric}> The scaling multiplier for the width of each line.}
 
-\item{width_min_pixels}{number}
+\item{width_min_pixels}{<\code{numeric}> The minimum line width in pixels.}
 
-\item{width_max_pixels}{number}
+\item{width_max_pixels}{<\code{numeric}> The maximum line width in pixels.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable = TRUE}.}

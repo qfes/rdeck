@@ -69,13 +69,13 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
 resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
 
-\item{width_units}{unknown}
+\item{width_units}{<\code{"pixels"} | \code{"meters"}> The units of the \code{line_width}.}
 
-\item{width_scale}{number}
+\item{width_scale}{<\code{numeric}> The scaling multiplier for the width of each line.}
 
-\item{width_min_pixels}{number}
+\item{width_min_pixels}{<\code{numeric}> The minimum line width in pixels.}
 
-\item{width_max_pixels}{number}
+\item{width_max_pixels}{<\code{numeric}> The maximum line width in pixels.}
 
 \item{rounded}{<\code{logical}>}
 
@@ -87,7 +87,10 @@ resolving a column in \code{data}, or a \code{scale} to transform a column into 
 
 \item{get_color}{<\code{\link{accessor}}>}
 
-\item{get_width}{<\code{\link{accessor}}>}
+\item{get_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The width of each object, in units
+specified by \code{width_scale}. May be a single value, a
+<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
+weights, or a scale function.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable = TRUE}.}

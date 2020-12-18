@@ -363,14 +363,24 @@ NULL
 #' _target end_ of the arc. Accepts a single colour value, a
 #' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)> column of
 #' colours or a scale function.
-#' @param get_width <[`accessor`]>
-#' @param get_height <[`accessor`]>
-#' @param get_tilt <[`accessor`]>
-#' @param great_circle <`logical`>
-#' @param width_units unknown
-#' @param width_scale number
-#' @param width_min_pixels number
-#' @param width_max_pixels number
+#' @param get_width <[`accessor`] | [`scale`] | `numeric`> The width of each object, in units
+#' specified by `width_scale`. May be a single value, a
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)> column of
+#' weights, or a scale function.
+#' @param get_height <[`accessor`] | [`scale`] | `numeric`> The multiplier of layer of
+#' layer height. Mat be a single value, a
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)> column of
+#' heights, or a scale function. A value of 0 will make the layer flat.
+#' @param get_tilt <[`accessor`] | `numeric`> Tilts the arcs by the specified number of
+#' degrees (between `c(-90, 90)`). May be a single value, or a
+#' <[`tidy-eval`](https://dplyr.tidyverse.org/articles/programming.html)> column of
+#' tilt values.
+#' @param great_circle <`logical`> If `TRUE`, create the arc along the shortest path on the
+#' earth surface.
+#' @param width_units <`"pixels"` | `"meters"`> The units of the `line_width`.
+#' @param width_scale <`numeric`> The scaling multiplier for the width of each line.
+#' @param width_min_pixels <`numeric`> The minimum line width in pixels.
+#' @param width_max_pixels <`numeric`> The maximum line width in pixels.
 #' @param bounds array
 #' @param size_scale number
 #' @param billboard <`logical`>
