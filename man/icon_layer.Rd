@@ -36,28 +36,38 @@ add_icon_layer(
 )
 }
 \arguments{
-\item{id}{\code{string} The layer's identifier must be unique for among all layers of the same
+\item{id}{<\code{string}> The layer's identifier must be unique for among all layers of the same
 type for a map. Defaults to \code{\link[uuid:UUIDgenerate]{uuid::UUIDgenerate()}}, but should be explicitly defined for
 updatable layers in a shiny application.}
 
-\item{name}{\code{string} The layer's name identifies the layer on tooltips and legends. It does
+\item{name}{<\code{string}> Identifies the layer on tooltips and legends. It does
 not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.}
 
-\item{data}{data}
+\item{data}{<\code{data.frame} | \code{sf} | \code{string}> The layer's data. Data frames will contain all
+columns that are referenced by the layer's accessors. Strings will be interpreted as a URL and
+data will be retrieved dynamically in the browser.}
 
-\item{visible}{boolean}
+\item{visible}{<\code{logical}> Determines whether the layer is visible or not; also determines
+whether any legend elements for the layer will be displayed.}
 
-\item{pickable}{boolean}
+\item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{number}
+\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
 
-\item{position_format}{unknown}
+\item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
+or three (XYZ) elements.}
 
-\item{color_format}{unknown}
+\item{color_format}{<\code{"RGB"} | \code{"RGBA"}> Determines whether the alpha channel of the colours
+will be ignored by accessors, making all colours opaque.}
 
-\item{auto_highlight}{boolean}
+\item{auto_highlight}{<\code{logical}> When \code{TRUE}, the current object \emph{hovered} by the cursor is
+highlighted by \code{highlight_color}.}
 
-\item{highlight_color}{<\code{\link{accessor}}>}
+\item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
+\code{pickable} are enabled, \code{highlight_color} determines the colour of the currently highlighted
+object. If a single colour value is supplied, that colour will be used to highlight all objects
+in the layer. Per-object highlighting is achieved with an \code{accessor} resolving a column in \code{data},
+or a \code{scale} to transform a column into a colour.}
 
 \item{icon_atlas}{object}
 
