@@ -9,6 +9,8 @@
 #' @param map_style `character`
 #'  A mapbox style url. <https://docs.mapbox.com/api/maps/#mapbox-styles>
 #'
+#' @param theme The widget theme. Either "kepler" or "light".
+#'
 #' @param initial_bounds `sf::st_bbox` | `sf::sf` | `sf::sfc` | `sf::sfg`
 #'  The initial bounds of the map; overwrites `initial_view_state`.
 #'
@@ -41,14 +43,14 @@
 #' @seealso <https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md>
 #'
 #' @export
-rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
+rdeck <- function(mapbox_api_access_token = NULL,
                   map_style = "mapbox://styles/mapbox/dark-v10",
+                  theme = "kepler",
                   initial_bounds = NULL,
                   initial_view_state = view_state(
                     center = c(0, 0),
-                    zoom = 0
+                    zoom = 1
                   ),
-                  layers = list(),
                   controller = TRUE,
                   picking_radius = 0,
                   use_device_pixels = TRUE,
@@ -56,34 +58,25 @@ rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
                   height = NULL,
                   elementId = NULL,
                   ...) {
-  if (!is.null(initial_bounds)) {
-    stopifnot(inherits(initial_bounds, c("bbox", "sf", "sfc", "sfg")))
-    initial_bounds <- sf::st_bbox(initial_bounds)
+  if (missing(mapbox_api_access_token)) {
+    mapbox_api_access_token <- mapbox_access_token()
   }
 
-  props <- c(
-    list(
-      mapbox_api_access_token = mapbox_api_access_token,
-      map_style = map_style,
-      initial_bounds = initial_bounds,
-      initial_view_state = initial_view_state,
-      controller = controller,
-      picking_radius = picking_radius,
-      use_device_pixels = use_device_pixels
-    ),
-    list(...)
-  ) %>%
-    camel_case_names()
+  props <- rdeck_props(
+    mapbox_api_access_token = mapbox_api_access_token,
+    map_style = map_style,
+    initial_bounds = if (!is.null(initial_bounds)) map_bounds(initial_bounds),
+    initial_view_state = initial_view_state,
+    controller = controller,
+    picking_radius = picking_radius,
+    use_device_pixels = use_device_pixels,
+    ...
+  )
 
-  x <- structure(
-    list(
-      props = props,
-      layers = layers
-    ),
-    TOJSON_ARGS = list(
-      digits = 9,
-      keep_vec_names = FALSE
-    )
+  x <- list(
+    props = props,
+    layers = list(),
+    theme = theme
   )
 
   # create widget
@@ -98,6 +91,82 @@ rdeck <- function(mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
       padding = 0,
       browser.fill = TRUE,
     ),
-    elementId = elementId
+    elementId = elementId,
+    preRenderHook = function(rdeck) to_json(rdeck)
+  )
+}
+
+#' Layers
+#'
+#' Get map layers
+#' @name layers
+#' @param rdeck an rdeck instance
+#' @export
+layers <- function(rdeck) {
+  assert_type(rdeck, "rdeck")
+
+  rdeck$x$layers
+}
+
+add_layer <- function(rdeck, layer) {
+  UseMethod("add_layer")
+}
+
+add_layer.rdeck <- function(rdeck, layer) {
+  assert_type(layer, "layer")
+
+  rdeck$x$layers <- c(layers(rdeck), list(layer))
+  rdeck
+}
+
+#' Props
+#'
+#' Get map props
+#' @name props
+#' @param rdeck an rdeck instance
+#' @export
+props <- function(rdeck) {
+  assert_type(rdeck, "rdeck")
+
+  rdeck$x$props
+}
+
+map_bounds <- function(initial_bounds) {
+  assert_type(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
+
+  sfc <- if (inherits(initial_bounds, "bbox")) {
+    sf::st_as_sfc(initial_bounds)
+  } else {
+    sf::st_geometry(initial_bounds)
+  }
+
+  sfc %>%
+    sf::st_transform(4326) %>%
+    sf::st_bbox()
+}
+
+rdeck_props <- function(mapbox_api_access_token = NULL,
+                        map_style = NULL,
+                        initial_bounds = NULL,
+                        initial_view_state = NULL,
+                        controller = NULL,
+                        picking_radius = NULL,
+                        use_device_pixels = NULL,
+                        ...) {
+  check_dots(...)
+  structure(
+    c(
+      list(
+        mapbox_api_access_token = mapbox_api_access_token,
+        map_style = map_style,
+        initial_bounds = initial_bounds,
+        initial_view_state = initial_view_state,
+        controller = controller,
+        picking_radius = picking_radius,
+        use_device_pixels = use_device_pixels
+      ),
+      rlang::dots_list(...)
+    ),
+    class = "rdeck_props"
   )
 }

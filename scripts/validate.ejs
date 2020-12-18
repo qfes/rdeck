@@ -1,0 +1,33 @@
+<%#
+  template for generating a function to validate a deck.gl layer prop.
+  data is expected with the following form:
+  data = {
+    name: "foo",
+    type: "number",
+    valueType: "number",
+    min: 0,
+    max: 100
+    optional: true
+  }
+-%>
+<% const func = `validate_${name}`; -%>
+# validate <%- name %>
+<%- func -%> <- function(layer) {
+  UseMethod("<%- func -%>")
+}
+
+<%- func -%>.default <- function(layer) {
+  <%- name -%> <- layer$<%- name -%>
+  <%# validate optional / required %>
+  <%- optional
+    ? `if (is.null(${name})) { return() }`
+    : `assert_not_null(${name})`
+  -%>
+  <%# accessors -%>
+  <% if (type === "accessor") { -%>
+    <%- include("./validate-accessor", {name, type: valueType, scalable, min, max}) -%>
+  <%# others -%>
+  <% } else { -%>
+    <%- include("./validate-type", {name, type, min, max}) -%>
+  <% } -%>
+}

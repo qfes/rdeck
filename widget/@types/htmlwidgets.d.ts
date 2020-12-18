@@ -1,3 +1,5 @@
+import { AppProps } from "../app";
+
 /* exposed global */
 export as namespace HTMLWidgets;
 
@@ -8,10 +10,12 @@ export interface Binding {
   type: "output";
   sizing?: object;
 
-  factory(el: Element, width: number, height: number): Widget;
+  factory(el: HTMLElement, width: number, height: number): Widget;
 }
 
 export interface Widget {
-  renderValue(x: { props: any; layers: any[] }): void;
+  renderValue(x: RDeckProps): void;
   resize(width: number, height: number): void;
 }
+
+export const shinyMode: boolean;

@@ -1,62 +1,79 @@
-#' Make Tooltip
+#' Evaluate Tooltip
 #'
-#' Create a character vector representing names to be included in a tooltip
+#' Create a character vector representing names to be included in a tooltip.
+#' @name eval_tooltip
+#' @param quo The quosure to evaluate.
 #'
-#' @name make_tooltip
-#' @param quosure
-#' The quosure to evaluate.
-#'
-#' - Literals and calls other than `c()` are evaluated
-#' - Names are deparsed
-#' - Arguments to `c()` are modified using the logic of the above.
-#' @param data
+#' - Logicals are interpreted as tooltip on / off. NULL & NA are falsey
+#' - If `data` is a `data.frame`, quo is a tidyselect::eval_select() clause
+#' - Otherwise:
+#'   - Names are deparsed
+#'   - Literals and calls other than `c()` are evaluated
+#'   - `c()` arguments are evaluated recursively with `eval_tooltip`
+#' @inheritParams accessor
 #'
 #' @keywords internal
 #' @noRd
-make_tooltip <- function(quosure, data = NULL) {
-  stopifnot(rlang::is_quosure(quosure))
-  expr <- rlang::get_expr(quosure)
+eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
+  assert_type(quo, "quosure")
+  if (!is.null(data_type)) {
+    assert_in(data_type, c("table", "object", "geojson"))
+  }
+  expr <- rlang::get_expr(quo)
 
+  # tooltip disabled
   if (rlang::is_false(expr) || rlang::is_null(expr) || rlang::is_na(expr)) {
-    return(FALSE)
+    return(NULL)
   }
 
-  if (rlang::is_true(expr)) {
-    return(TRUE)
+  # tooltip enabled, all names used
+  if (rlang::is_true(expr) && !inherits(data, "data.frame")) {
+    return(tooltip(TRUE, data, data_type))
   }
 
-  # character expr
-  if (rlang::is_character(expr)) {
-    name <- rlang::eval_tidy(expr)
-    stopifnot(rlang::is_empty(data) || rlang::has_name(data, name))
+  # tidyselect
+  if (inherits(data, "data.frame")) {
+    all_cols <- names(data)
+    # TRUE -> everything()
+    tidy_expr <- if (rlang::is_true(expr)) rlang::expr(!!all_cols) else quo
+    tidy_cols <- tidyselect::eval_select(tidy_expr, data) %>%
+        names()
 
-    return(name)
+    # remove sfc cols
+    is_sfc <- vapply(data, function(col) inherits(col, "sfc"), logical(1))
+    sfc_cols <- all_cols[is_sfc]
+
+    cols <- setdiff(tidy_cols, sfc_cols)
+    return(tooltip(cols, data, data_type))
   }
 
-  # name expr
+  # name
   if (rlang::is_symbol(expr)) {
-    name <- deparse(expr, backtick = FALSE)
-    stopifnot(rlang::is_empty(data) || rlang::has_name(data, name))
-
-    return(name)
+    return(tooltip(rlang::as_name(expr), data, data_type))
   }
 
-  # call expr
-  if (rlang::is_call(quosure)) {
-    if (rlang::call_name(quosure) == "c") {
-      return(
-        rlang::call_args(quosure) %>%
-          lapply(function(arg) make_tooltip(rlang::enquo(arg), data)) %>%
-          unlist()
-      )
-    }
+  # c()
+  if (rlang::is_call(expr) && rlang::call_name(expr) == "c") {
+    cols <- rlang::call_args(expr) %>%
+      lapply(function(arg) rlang::as_name(arg)) %>%
+      unlist()
 
-    value <- rlang::eval_tidy(expr)
-    stopifnot(rlang::is_character(value))
-
-    return(value)
+    return(tooltip(cols, data, data_type))
   }
 
-  # todo: helpful message
-  stop("Not supported")
+  # a character vector
+  cols <- rlang::eval_tidy(quo)
+  assert_type(cols, "character", "tooltip")
+
+  tooltip(cols, data)
+}
+
+tooltip <- function(cols, data = NULL, data_type = NULL) {
+  structure(
+    list(
+      cols = cols,
+      data_type = data_type %||% resolve_data_type(data)
+    ),
+    class = "tooltip"
+  )
 }

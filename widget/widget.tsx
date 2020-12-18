@@ -1,33 +1,41 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { WebMercatorViewport } from "react-map-gl";
-
-import RDeck from "./rdeck";
-import styles from "./rdeck.css";
+import { App } from "./app";
+import { LayerProps } from "./layer";
+import { getElementDimensions } from "./util";
 
 const binding: HTMLWidgets.Binding = {
   name: "rdeck",
   type: "output",
   factory(el, width, height) {
-    el.classList.add(styles.rdeck);
-    return {
-      renderValue({ props, layers }) {
-        // TODO: move to RDeck
-        if (Array.isArray(props.initialBounds)) {
-          const viewport = new WebMercatorViewport({ width, height });
-          const { longitude, latitude, zoom } = viewport.fitBounds([
-            props.initialBounds.slice(0, 2),
-            props.initialBounds.slice(2, 4),
-          ]);
+    // compute el dimensions if initially hidden
+    if (width === 0 || height === 0) {
+      [width, height] = getElementDimensions(el)
+    }
+    function render({ props, layers, theme }: RDeckProps) {
+      ReactDOM.render(<App {...{ props, layers, theme, width, height }} />, el);
+    }
 
-          props.initialViewState = {
-            ...props.initialViewState,
-            longitude,
-            latitude,
-            zoom,
-          };
+    return {
+      renderValue({ props, layers, theme }) {
+        render({ props, layers, theme });
+
+        /* TODO: move to app.tsx */
+        if (HTMLWidgets.shinyMode) {
+          /* update layer */
+          Shiny.addCustomMessageHandler(`${el.id}:layer`, (layer: LayerProps) => {
+            layers = mergeLayers(layers, layer);
+            render({ props, layers, theme });
+          });
+
+          /* update map */
+          Shiny.addCustomMessageHandler(`${el.id}:deck`, (data: RDeckProps) => {
+            props = { ...props, ...data.props };
+            theme = data.theme;
+
+            render({ props, layers, theme });
+          });
         }
-        ReactDOM.render(<RDeck {...{ props, layers }} />, el);
       },
       /* deck.gl handles resize automatically */
       resize(width, height) {},
@@ -35,7 +43,16 @@ const binding: HTMLWidgets.Binding = {
   },
 };
 
+function mergeLayers(layers: LayerProps[], layer: LayerProps) {
+  const _layer = layers.find((x) => x.id === layer.id);
+  if (!_layer) {
+    return [...layers, layer];
+  }
+
+  // layer.data === undefined ? use value from props
+  return layers.map((x) => (x !== _layer ? x : { ...layer, data: layer.data ?? _layer.data }));
+}
+
 /* register widget */
-// @ts-ignore
 HTMLWidgets.widget(binding);
 export default binding;

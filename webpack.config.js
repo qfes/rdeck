@@ -35,7 +35,8 @@ module.exports = (env, { mode }) => {
               options: {
                 importLoaders: 1,
                 modules: {
-                  exportLocalsConvention: "camelCase",
+                  exportGlobals: true,
+                  exportLocalsConvention: "camelCase"
                 },
               },
             },
@@ -70,7 +71,7 @@ module.exports = (env, { mode }) => {
             test: /[\\/]node_modules[\\/]h3-js[\\/]/,
           },
           defaultVendors: {
-            name: "vendor",
+            name: "rdeck-vendors",
             test: /[\\/]node_modules[\\/]/,
             reuseExistingChunk: true,
             enforce: true,

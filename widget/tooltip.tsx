@@ -1,24 +1,24 @@
 import React, { memo } from "react";
 import { PickInfo } from "deck.gl";
 import styles from "./tooltip.css";
+import { ObjectInfo } from "./accessor";
 
 export interface TooltipProps {
   info: PickInfo<any> | null;
 }
 
 const Tooltip = ({ info }: TooltipProps) => {
-  // TODO: move logic to hover handle
   if (info == null) return null;
 
   const { index, layer, x, y } = info;
-  const { id: name, tooltip, data } = layer.props;
-  const isColumnar = info.object == null;
-  const object = isColumnar ? data.frame : info.object;
+  const { name, tooltip } = layer.props;
+
+  const getData = accessorFn(tooltip!.dataType);
+  // we only use data when it is stored as a dataframe
+  const data = getData(info.object, { index, data: layer.props.data as any });
+  const names = tooltip!.cols === true ? Object.keys(data) : tooltip!.cols;
 
   // TODO: do something sensible with array properties
-  const getValue = isColumnar ? (key: string) => object[key][index] : (key: string) => object[key];
-  const names = typeof tooltip === "boolean" ? Object.keys(object) : [tooltip].flat();
-
   return (
     <div className={styles.tooltip} style={{ transform: `translate(${x}px, ${y}px)` }}>
       <div className={styles.layerName}>{name}</div>
@@ -27,7 +27,7 @@ const Tooltip = ({ info }: TooltipProps) => {
           {names.map((name) => (
             <tr key={name}>
               <td className={styles.fieldName}>{name}</td>
-              <td className={styles.fieldValue}>{String(getValue(name))}</td>
+              <td className={styles.fieldValue}>{String(data[name])}</td>
             </tr>
           ))}
         </tbody>
@@ -37,3 +37,22 @@ const Tooltip = ({ info }: TooltipProps) => {
 };
 
 export default memo(Tooltip);
+
+type Info = Omit<ObjectInfo<DataFrame>, "target">;
+type DataFn = (object: Record<string, any>, info: Info) => Record<string, any>;
+
+function accessorFn(dataType: DataType): DataFn {
+  switch (dataType) {
+    case "table":
+      return (object, { index, data }) => {
+        const entries = Object.entries(data.frame).map(([name, value]) => [name, value[index]]);
+        return Object.fromEntries(entries);
+      }
+    case "object":
+      return (object) => object;
+    case "geojson":
+      return (object) => object.properties;
+    default:
+      throw TypeError(`${dataType} not supported`);
+  }
+}

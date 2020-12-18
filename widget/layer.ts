@@ -1,111 +1,99 @@
 import * as deck from "./deck-bundle";
-import { Layer, LayerProps } from "deck.gl";
-import { Feature, FeatureCollection } from "geojson";
+import { Layer as DeckLayer, LayerProps as DeckLayerProps } from "@deck.gl/core";
+import { TextLayerProps } from "@deck.gl/layers/text-layer/text-layer";
+import { FeatureCollection } from "geojson";
 
-import { isObject, parseColor, Color } from "./util";
-import ScaleAccessor from "./scale";
-import { accessors } from "./accessor";
+import { parseColor } from "./color";
+import { AccessorScale, accessorScale, isAccessorScale } from "./scale";
+import { accessor, Accessor, isAccessor } from "./accessor";
 
-type LayerData = DataFrame | Feature | FeatureCollection;
+type LayerData = string | DataFrame | FeatureCollection;
+type Entry<T> = [string, T];
 
-export interface RDeckLayerProps extends Omit<LayerProps<any>, "data"> {
+export interface LayerProps extends Omit<DeckLayerProps<any>, "data"> {
   type: string;
-  data: LayerData;
-  tooltip: boolean | string[];
+  name: string;
+  data: LayerData | null;
+  tooltip: TooltipInfo | null;
 }
 
-export default class RDeckLayer {
-  layer: Layer<any>;
-  legend: {
-    name: string;
-    scales: ScaleAccessor[];
-  };
+export class Layer {
+  type: string;
+  props: LayerProps;
+  scales: AccessorScale<any>[];
 
-  constructor({ type, ...props }: RDeckLayerProps) {
-    const colorProps = getColorProps(props);
+  constructor({ type, ...props }: LayerProps) {
+    const entries = Object.entries(props);
+    const colors = getColors(entries);
+    const accessors = getAccessors(entries);
 
-    const scales = getScales(props);
-    const scaleProps = Object.fromEntries(scales.map(({ name, value }) => [name, value]));
-
-    // @ts-ignore
-    this.layer = new deck[type]({
-      ...accessors,
-      ...props,
-      ...colorProps,
-      ...scaleProps,
-    });
-    this.legend = { name: props.id || type, scales: scales.filter((scale) => scale.legend) };
-  }
-
-  static create(props: RDeckLayerProps) {
-    return new RDeckLayer(props);
-  }
-}
-
-function isColor(name: string) {
-  return name.endsWith("Color");
-}
-
-function isScalable(name: string) {
-  return /(Radius|Elevation|Color|Weight|Width|Height|Size)$/.test(name);
-}
-
-function getColorProps(props: Record<string, any>) {
-  type ColorEntry = [string, Color | Color[]];
-  const entries: ColorEntry[] = Object.entries(props)
-    .filter(([name, value]) => isColor(name))
-    .map(([name, value]) => [name, parseColor(value)]);
-
-  if ("colorRange" in props) {
-    entries.push([
-      "colorRange",
-      props.colorRange.map((color: string | Color) => parseColor(color)),
+    this.type = type;
+    this.props = Object.fromEntries([
+      ...entries,
+      ...colors,
+      ...accessors.map(([name, value]) => [name, value.getData]),
+      ["updateTriggers", getUpdateTriggers(accessors)],
     ]);
-  }
 
-  return Object.fromEntries(entries) as Record<string, Color | Color[]>;
-}
+    this.scales = accessors
+      .filter(([, value]) => isAccessorScale(value))
+      .map(([, value]) => value as AccessorScale<number | Color>);
 
-function getScales(props: Record<string, any>) {
-  const isScale = (value: any) => isObject(value) && "type" in value;
-
-  const scales = Object.entries(props)
-    .filter(([name, value]) => isScalable(name) && isScale(value))
-    .map(([name, scaleProps]) => {
-      let range = scaleProps.range;
-      if (isColor(name)) {
-        range = range.map((color: string | Color) => parseColor(color));
-      }
-
-      return new ScaleAccessor({
-        ...scaleProps,
-        range,
-        name,
-        data: getColumn(props.data, scaleProps.value),
-      });
-    });
-
-  return scales;
-}
-
-function getColumn(data: LayerData, name: string): any[] {
-  if (Array.isArray(data) && data.length === 0) return [];
-
-  // data frame
-  if ("frame" in data) {
-    return data.frame[name];
-  }
-
-  if ("type" in data) {
-    const getProperty = (feature: GeoJSON.Feature) => feature.properties?.[name];
-
-    switch (data.type) {
-      case "Feature":
-        return getProperty(data);
-      case "FeatureCollection":
-        return data.features.map(getProperty);
+    // load font
+    if (type === "TextLayer" && "fonts" in document) {
+      const _props = props as TextLayerProps<any>;
+      // @ts-ignore
+      document.fonts.load(`16px ${_props.fontFamily}`);
     }
   }
 
-  throw TypeError("data type not suppported");
+  static create(props: LayerProps) {
+    return new Layer(props);
+  }
+
+  renderLayer(): DeckLayer<any, any> {
+    // @ts-ignore
+    return new deck[this.type](this.props);
+  }
+
+  renderLegend() {
+    const scales = this.scales.filter((scale) => scale.legend);
+    return { id: this.props.id!, name: this.props.name, scales };
+  }
+}
+
+export function isColor([name, value]: [string, any]) {
+  return name.endsWith("Color") && (Array.isArray(value) || typeof value === "string");
+}
+
+function getColors(entries: Entry<any>[]): Entry<Color | Color[]>[] {
+  const colors = entries
+    .filter(isColor)
+    .map(([name, color]): Entry<Color> => [name, parseColor(color)]);
+
+  const colorRange = entries.find(([name]) => name === "colorRange");
+  if (colorRange) {
+    colors.push([colorRange[0], colorRange[1].map((color: string | Color) => parseColor(color))]);
+  }
+
+  return colors;
+}
+
+function getAccessors(entries: Entry<any>[]): Entry<Accessor | AccessorScale<any>>[] {
+  return entries
+    .filter(([, value]) => isAccessor(value))
+    .map(([name, value]) => [
+      name,
+      isAccessorScale(value) ? accessorScale(value, name) : accessor(value, name),
+    ]);
+}
+
+function getUpdateTriggers(entries: Entry<Accessor | AccessorScale<any>>[]) {
+  const scaleProps = (accessor: any) => {
+    const { getData, scaleData, palette, ...props } = accessor;
+    return props;
+  };
+
+  const propTriggers = entries.map(([name, accessor]) => [name, scaleProps(accessor)]);
+  return Object.fromEntries(propTriggers);
 }

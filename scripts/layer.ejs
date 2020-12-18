@@ -1,0 +1,58 @@
+<%#
+  template for generating a function to add deck.gl layers to a map.
+  data is expected with the following form:
+  data = {
+    type: "H3HexagonLayer",
+    name: "h3_hexagon_layer",
+    props: [{
+      name: "get_hexagon",
+      default: "hexagon",
+      type: "accessor"
+    }]
+  }
+-%>
+#' @rdname <%- name %>
+#' @autoglobal
+#' @export
+add_<%- name -%> <- function(rdeck,
+                            ...,
+                            id = NULL,
+                            name = "<%- type -%>",
+                            <% for (const p of props) { -%>
+                              <%- p.name -%> = <%- p.value ?? "NULL" -%>,
+                            <% } -%>
+                            tooltip = FALSE) {
+    check_dots(...)
+    <% const geom = props.find(p => /^get_(path|polygon|position)$/i.test(p.name)); -%>
+    <% if (geom) { -%>
+        # auto-resolve geometry
+        if (inherits(data, "sf")) {
+            <%- geom.name -%> <- as.name(attr(data, "sf_column"))
+            position_format <- get_position_format(data)
+        }
+    <% } -%>
+    # construct layer object
+    <%- name -%> <- layer(
+        type = "<%- type -%>",
+        ...,
+        id = id %||% uuid::UUIDgenerate(),
+        name = name,
+        <% for (const p of props) { -%>
+            <%
+              const value = p.type === "accessor"
+                ? p.scalable
+                  ? `accessor_scale(rlang::enquo(${p.name}), data)`
+                  : `accessor(rlang::enquo(${p.name}), data)`
+                : p.name;
+            -%>
+            <%- p.name -%> = <%- value ?? "NULL" -%>,
+        <% } -%>
+        tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+    )
+    # validate layer props
+    <% for (const p of props) { -%>
+      validate_<%- p.name -%>(<%- name -%>)
+    <% } -%>
+    # add layer to map
+    add_layer(rdeck, <%- name -%>)
+}

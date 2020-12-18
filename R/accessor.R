@@ -1,62 +1,98 @@
-#' Make accessor
+#' Prop Type: Accessor
 #'
-#' @name make_accessor
-#' @param quosure
-#' A quosure expression
-#' @param data
-#' A data frame from which to obtain names
-#' @param columnar
-#' Determine if the generated accessor js function is column or row structure
+#' @name accessor
+NULL
+
+#' Accessor
+#'
+#' @name accessor
+#' @param quo a quosure
+#' @param data anything. If data.frame, names evaluated from `quo` are validated against data
+#' @param data_type determine the structure of the serialised data. One of:
+#' - table
+#' - object
+#' - geojson
 #'
 #' @keywords internal
 #' @noRd
-make_accessor <- function(quosure, data = NULL, columnar = TRUE) {
-  stopifnot(rlang::is_quosure(quosure))
-  expr <- rlang::get_expr(quosure)
-
-  if (rlang::is_symbol(expr)) {
-    name <- deparse(expr, backtick = FALSE)
-    stopifnot(rlang::is_empty(data) || rlang::has_name(data, name))
-
-    lambda <- ifelse(
-      columnar,
-      paste0("(object, {index, data}) => data.frame[\"", name, "\"][index]"),
-      paste0("data => data[\"", name, "\"]")
-    )
-
-    return(htmlwidgets::JS(lambda))
+accessor <- function(quo, data = NULL, data_type = NULL) {
+  assert_type(quo, "quosure")
+  if (!is.null(data_type)) {
+    assert_in(data_type, c("table", "object", "geojson"))
   }
 
-  rlang::eval_tidy(quosure)
+  if (!rlang::quo_is_symbol(quo)) {
+    return(rlang::eval_tidy(quo))
+  }
+
+  col <- rlang::as_name(quo)
+  if (inherits(data, "data.frame")) {
+    assert_col_exists(col, data)
+  }
+
+  structure(
+    list(
+      col = col,
+      data_type = data_type %||% resolve_data_type(data)
+    ),
+    class = "accessor"
+  )
 }
 
-#' Make scalable accessor
+#' Accessor Scale
 #'
-#' @name make_scalable_accessor
-#' @param quosure
-#' A quosure expression
-#' @param data
-#' A data frame from which to obtain names
-#' @param columnar
-#' Determine if the generated accessor js function is column or row structure
+#' @name accessor_scale
+#' @inheritParams accessor
 #'
 #' @keywords internal
 #' @noRd
-make_scalable_accessor <- function(quosure, data = NULL, columnar = TRUE) {
-  stopifnot(rlang::is_quosure(quosure))
-  expr <- rlang::get_expr(quosure)
-
-  if (rlang::is_call(expr) && grepl("scale_\\w+", rlang::call_name(expr), perl = TRUE)) {
-    scale <- rlang::eval_tidy(quosure)
-    stopifnot(rlang::is_empty(data) || rlang::has_name(data, scale$value))
-
-    if (is.null(scale$domain) && scale$type != "quantile" && !rlang::is_empty(data)) {
-      data <- as.data.frame(data)
-      scale$domain <- scale_domain(scale, data[scale$value])
-    }
-
-    return(scale)
+accessor_scale <- function(quo, data = NULL, data_type = NULL) {
+  assert_type(quo, "quosure")
+  if (!is.null(data_type)) {
+    assert_in(data_type, c("table", "object", "geojson"))
   }
 
-  make_accessor(quosure, data, columnar)
+  # is quo a scale object or scale call
+  expr <- if (rlang::quo_is_call(quo)) rlang::eval_tidy(quo) else rlang::get_expr(quo)
+  if (!inherits(expr, "scale")) {
+    return(accessor(quo, data, data_type))
+  }
+
+  scale_expr <- rlang::eval_tidy(quo)
+  col_name <- as.name(scale_expr$col)
+
+  accessor_ <- accessor(rlang::new_quosure(col_name), data, data_type)
+
+  # create accessor
+  scale <- structure(
+    utils::modifyList(
+      accessor_,
+      scale_expr,
+      keep.null = TRUE
+    ),
+    class = c(class(scale_expr), "accessor_scale", class(accessor_))
+  )
+
+  # scale col references a vector of the correct type
+  validate_col(scale, data)
+
+  # scale limits
+  if (rlang::has_name(scale, "limits") && !inherits(data, "data.frame")) {
+    assert_not_null(scale$limits)
+  }
+
+  if (!inherits(scale, "scale_category") && is.null(scale$limits)) {
+    scale$limits <- scale$limits %||% range(data[[scale$col]], na.rm = TRUE)
+  }
+
+  # scale domain & ticks
+  scale$domain <- scale_domain(scale, data)
+  if (rlang::has_name(scale, "palette")) {
+    scale$ticks <- scale_ticks(scale)
+  }
+  scale
+}
+
+resolve_data_type <- function(data = NULL) {
+  ifelse(is.null(data) | inherits(data, "data.frame"), "table", "object")
 }

@@ -32,8 +32,7 @@ view_state <- function(center = c(0, 0),
       bearing = bearing
     ),
     list(...)
-  ) %>%
-    camel_case_names()
+  )
 
   structure(
     props,

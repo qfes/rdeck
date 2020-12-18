@@ -10,50 +10,30 @@ export function words(camelCase: string) {
   return camelCase.replace(/([A-Z])/g, " $1").toLowerCase();
 }
 
-export type Color = [number, number, number, number];
+function getFirstVisible(el: HTMLElement): Element | null {
+  if (el.clientHeight > 0 && el.clientHeight > 0) {
+    return el;
+  }
 
-export function rgba([r, g, b, a = 255]: Color) {
-  return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+  return el.parentElement ? getFirstVisible(el.parentElement) : null;
 }
 
-// https://github.com/uber/deck.gl/blob/master/modules/core/src/utils/color.js
-export function parseColor(color: string | number[], target?: Color, index = 0): Color {
-  if (Array.isArray(color) || ArrayBuffer.isView(color)) {
-    if (!target && color.length === 4) {
-      return color;
-    }
+export function getElementDimensions(el: HTMLElement): [number, number] {
+  const visible = getFirstVisible(el);
 
-    target = target || [];
-    target[index + 0] = color[0];
-    target[index + 1] = color[1];
-    target[index + 2] = color[2];
-    target[index + 3] = color.length === 4 ? color[3] : 255;
-    return target;
+  if (el === visible || visible == null) {
+    return [el.clientWidth, el.clientHeight];
   }
 
-  if (typeof color === "string") {
-    target = target || [];
-    parseHexColor(color, target, index);
-    return target;
-  }
+  const { width, height } = getComputedStyle(el);
+  const node = document.createElement("div");
+  Object.assign(node.style, {
+    width, height, display: "hidden"
+  });
 
-  return [0, 0, 0, 255];
-}
+  visible.appendChild(node);
+  const dims: [number, number] = [node.clientWidth, node.clientHeight];
+  visible.removeChild(node);
 
-// Parse a hex color
-function parseHexColor(color: string, target: Color, index: number) {
-  if (color.length === 7) {
-    const value = parseInt(color.substring(1), 16);
-    target[index + 0] = Math.floor(value / 65536);
-    target[index + 1] = Math.floor((value / 256) % 256);
-    target[index + 2] = value % 256;
-    target[index + 3] = 255;
-  } else if (color.length === 9) {
-    const value = parseInt(color.substring(1), 16);
-    target[index + 0] = Math.floor(value / 16777216);
-    target[index + 1] = Math.floor((value / 65536) % 256);
-    target[index + 2] = Math.floor((value / 256) % 256);
-    target[index + 3] = value % 256;
-  }
-  return index + 4;
+  return dims;
 }

@@ -16,13 +16,22 @@ Imports:
     htmlwidgets (>= 1.5.1),
     magrittr,
     sf (>= 0.9.3),
-    snakecase (>= 0.11.0),
-    rlang (>= 0.4.6)
+    shiny,
+    snakecase,
+    rlang,
+    tidyselect,
+    urltools,
+    uuid
 Encoding: UTF-8
 LazyData: true
-Roxygen: list(markdown = TRUE)
+Roxygen: list(
+    markdown = TRUE,
+    roclets = c("collate", "namespace", "rd", "roxyglobals::global_roclet"))
 RoxygenNote: 7.1.1
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    roxyglobals (>= 0.2.1)
 VignetteBuilder: knitr
+Remotes:
+    anthonynorth/roxyglobals

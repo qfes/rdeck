@@ -5,14 +5,30 @@
   max-height: 500px;
   overflow-y: auto;
   width: 180px;
-  pointer-events: none;
+  user-select: none;
 
   border-radius: 1px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 1px;
 
-  color: rgb(240, 240, 240);
-  background-color: rgb(36, 39, 48);
+  color: var(--color);
+  background-color: var(--background-color);
+}
+
+:global(.kepler) .legend {
+  --focus-color: hsl(0, 0%, 94%);
+  --color: hsl(219, 12%, 67%);
+  --muted-color: hsl(218, 11%, 47%);
+  --background-color: hsl(225, 14%, 16%);
+  --border-color: hsl(217, 13%, 26%);
+}
+
+:global(.light) .legend {
+  --focus-color: hsl(0, 0%, 3%);
+  --color: hsl(0, 2%, 15%);
+  --muted-color: hsl(0, 2%, 52%);
+  --background-color: hsl(0, 0%, 98%);
+  --border-color: hsl(5, 0%, 85%);
 }
 
 .layer {
@@ -20,12 +36,13 @@
 }
 
 .layer + .layer {
-  border-top: 1px rgb(58, 65, 76) solid;
+  border-top: 1px var(--border-color) solid;
 }
 
 .layer-name {
   font-size: 12px;
   margin-bottom: 2px;
+  color: var(--focus-color);
 }
 
 .scale {
@@ -38,11 +55,7 @@
 
 .scale-name,
 .scale-by {
-  color: rgb(106, 116, 133);
-}
-
-.field-name {
-  color: rgb(160, 167, 180);
+  color: var(--muted-color);
 }
 
 .color-scale {
@@ -52,5 +65,11 @@
 }
 
 .tick {
-  fill: rgb(160, 167, 180);
+  fill: var(--color);
+  font-size: 10px;
+}
+
+.line {
+  stroke: var(--background-color);
+  stroke-width: 0.5px;
 }

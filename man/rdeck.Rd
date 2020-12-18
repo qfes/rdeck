@@ -5,11 +5,11 @@
 \title{RDeck}
 \usage{
 rdeck(
-  mapbox_api_access_token = Sys.getenv("MAPBOX_ACCESS_TOKEN"),
+  mapbox_api_access_token = NULL,
   map_style = "mapbox://styles/mapbox/dark-v10",
+  theme = "kepler",
   initial_bounds = NULL,
-  initial_view_state = view_state(center = c(0, 0), zoom = 0),
-  layers = list(),
+  initial_view_state = view_state(center = c(0, 0), zoom = 1),
   controller = TRUE,
   picking_radius = 0,
   use_device_pixels = TRUE,
@@ -26,14 +26,13 @@ The api access token to use mapbox tiles.}
 \item{map_style}{\code{character}
 A mapbox style url. \url{https://docs.mapbox.com/api/maps/#mapbox-styles}}
 
+\item{theme}{The widget theme. Either "kepler" or "light".}
+
 \item{initial_bounds}{\code{sf::st_bbox} | \code{sf::sf} | \code{sf::sfc} | \code{sf::sfg}
 The initial bounds of the map; overwrites \code{initial_view_state}.}
 
 \item{initial_view_state}{\code{view_state}
 The initial view state of the map. See \code{\link[=view_state]{view_state()}} for details.}
-
-\item{layers}{\code{list}
-The list of deck.gl layers.}
 
 \item{controller}{\code{logical}
 If \code{NULL} or \code{FALSE}, the map is not interactive.}
@@ -54,6 +53,9 @@ Height of the map}
 Element id for the map.}
 
 \item{...}{additional parameters to pass to the \code{Deck}.}
+
+\item{layers}{\code{list}
+The list of deck.gl layers.}
 }
 \description{
 Create a Deck.GL map.
