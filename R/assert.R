@@ -76,7 +76,7 @@ assert_range <- function(obj, min = NULL, max = NULL, name = NULL) {
   quo <- rlang::enquo(obj)
   value <- rlang::eval_tidy(quo)
 
-  if (!is.null(min) && value < min || !is.null(max) && value > max) {
+  if (!is.null(min) && any(value < min) || !is.null(max) && any(value > max)) {
     name <- name %||% rlang::quo_text(quo)
     range <- paste(min %||% "NULL", max %||% "NULL", sep = ", ")
     rlang::abort(
@@ -153,6 +153,19 @@ assert_scalable_is_color <- function(obj, name = NULL) {
     rlang::abort(
       paste0(name, " must be a color scale"),
       "rdeck_type_error"
+    )
+  }
+}
+
+assert_crs <- function(obj, crs = sf::st_crs(4326), name = NULL) {
+  quo <- rlang::enquo(obj)
+  value <- rlang::eval_tidy(quo)
+
+  if (!sf::st_crs(value)$input == crs$input) {
+    name <- name %||% rlang::quo_text(quo)
+    rlang::abort(
+      paste0(name, " crs must equal ", crs$input),
+      "rdeck_error"
     )
   }
 }

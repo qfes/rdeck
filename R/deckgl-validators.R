@@ -407,15 +407,15 @@ validate_get_alignment_baseline.default <- function(layer) {
   assert_not_null(get_alignment_baseline)
   if (!inherits(get_alignment_baseline, "accessor")) {
     assert_type(get_alignment_baseline, "character")
+    assert_scalar(get_alignment_baseline)
     return()
   }
   assert_type(get_alignment_baseline, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_alignment_baseline$col, data)
-    if (!inherits(get_alignment_baseline, "accessor_scale")) {
-      assert_type(data[[get_alignment_baseline$col]], "character")
-    }
+
+    assert_type(data[[get_alignment_baseline$col]], "character")
   }
 }
 
@@ -429,16 +429,16 @@ validate_get_angle.default <- function(layer) {
   if (!inherits(get_angle, "accessor")) {
     assert_type(get_angle, c("integer", "numeric"))
     assert_finite(get_angle)
+    assert_scalar(get_angle)
     return()
   }
   assert_type(get_angle, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_angle$col, data)
-    if (!inherits(get_angle, "accessor_scale")) {
-      assert_type(data[[get_angle$col]], c("integer", "numeric"))
-      assert_finite(data[[get_angle$col]])
-    }
+
+    assert_type(data[[get_angle$col]], c("integer", "numeric"))
+    assert_finite(data[[get_angle$col]])
   }
 }
 
@@ -497,6 +497,7 @@ validate_get_color_weight.default <- function(layer) {
   if (!inherits(get_color_weight, "accessor")) {
     assert_type(get_color_weight, c("integer", "numeric"))
     assert_finite(get_color_weight)
+    assert_scalar(get_color_weight)
     return()
   }
   assert_type(get_color_weight, "accessor")
@@ -524,6 +525,7 @@ validate_get_elevation.default <- function(layer) {
   if (!inherits(get_elevation, "accessor")) {
     assert_type(get_elevation, c("integer", "numeric"))
     assert_finite(get_elevation)
+    assert_scalar(get_elevation)
     return()
   }
   assert_type(get_elevation, "accessor")
@@ -562,6 +564,7 @@ validate_get_elevation_weight.default <- function(layer) {
   if (!inherits(get_elevation_weight, "accessor")) {
     assert_type(get_elevation_weight, c("integer", "numeric"))
     assert_finite(get_elevation_weight)
+    assert_scalar(get_elevation_weight)
     return()
   }
   assert_type(get_elevation_weight, "accessor")
@@ -614,6 +617,7 @@ validate_get_height.default <- function(layer) {
   if (!inherits(get_height, "accessor")) {
     assert_type(get_height, c("integer", "numeric"))
     assert_finite(get_height)
+    assert_scalar(get_height)
     return()
   }
   assert_type(get_height, "accessor")
@@ -642,9 +646,6 @@ validate_get_hexagon.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_hexagon$col, data)
-    if (!inherits(get_hexagon, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -659,9 +660,6 @@ validate_get_hexagons.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_hexagons$col, data)
-    if (!inherits(get_hexagons, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -676,9 +674,6 @@ validate_get_icon.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_icon$col, data)
-    if (!inherits(get_icon, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -717,6 +712,7 @@ validate_get_line_width.default <- function(layer) {
   if (!inherits(get_line_width, "accessor")) {
     assert_type(get_line_width, c("integer", "numeric"))
     assert_finite(get_line_width)
+    assert_scalar(get_line_width)
     return()
   }
   assert_type(get_line_width, "accessor")
@@ -748,9 +744,6 @@ validate_get_normal.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_normal$col, data)
-    if (!inherits(get_normal, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -768,9 +761,6 @@ validate_get_orientation.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_orientation$col, data)
-    if (!inherits(get_orientation, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -785,9 +775,6 @@ validate_get_path.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_path$col, data)
-    if (!inherits(get_path, "accessor_scale")) {
-      assert_type(data[[get_path$col]], "sfc_LINESTRING")
-    }
   }
 }
 
@@ -805,9 +792,6 @@ validate_get_pixel_offset.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_pixel_offset$col, data)
-    if (!inherits(get_pixel_offset, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -832,9 +816,6 @@ validate_get_polygon.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_polygon$col, data)
-    if (!inherits(get_polygon, "accessor_scale")) {
-      assert_type(data[[get_polygon$col]], "sfc_POLYGON")
-    }
   }
 }
 
@@ -849,9 +830,6 @@ validate_get_position.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_position$col, data)
-    if (!inherits(get_position, "accessor_scale")) {
-      assert_type(data[[get_position$col]], "sfc_POINT")
-    }
   }
 }
 
@@ -865,6 +843,7 @@ validate_get_radius.default <- function(layer) {
   if (!inherits(get_radius, "accessor")) {
     assert_type(get_radius, c("integer", "numeric"))
     assert_finite(get_radius)
+    assert_scalar(get_radius)
     return()
   }
   assert_type(get_radius, "accessor")
@@ -893,9 +872,6 @@ validate_get_s2_token.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_s2_token$col, data)
-    if (!inherits(get_s2_token, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -913,9 +889,6 @@ validate_get_scale.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_scale$col, data)
-    if (!inherits(get_scale, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -938,6 +911,7 @@ validate_get_size.default <- function(layer) {
   if (!inherits(get_size, "accessor")) {
     assert_type(get_size, c("integer", "numeric"))
     assert_finite(get_size)
+    assert_scalar(get_size)
     return()
   }
   assert_type(get_size, "accessor")
@@ -991,9 +965,6 @@ validate_get_source_position.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_source_position$col, data)
-    if (!inherits(get_source_position, "accessor_scale")) {
-      assert_type(data[[get_source_position$col]], "sfc_POINT")
-    }
   }
 }
 
@@ -1033,9 +1004,6 @@ validate_get_target_position.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_target_position$col, data)
-    if (!inherits(get_target_position, "accessor_scale")) {
-      assert_type(data[[get_target_position$col]], "sfc_POINT")
-    }
   }
 }
 
@@ -1050,9 +1018,6 @@ validate_get_text.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_text$col, data)
-    if (!inherits(get_text, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -1065,15 +1030,15 @@ validate_get_text_anchor.default <- function(layer) {
   assert_not_null(get_text_anchor)
   if (!inherits(get_text_anchor, "accessor")) {
     assert_type(get_text_anchor, "character")
+    assert_scalar(get_text_anchor)
     return()
   }
   assert_type(get_text_anchor, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_text_anchor$col, data)
-    if (!inherits(get_text_anchor, "accessor_scale")) {
-      assert_type(data[[get_text_anchor$col]], "character")
-    }
+
+    assert_type(data[[get_text_anchor$col]], "character")
   }
 }
 
@@ -1098,16 +1063,16 @@ validate_get_tilt.default <- function(layer) {
   if (!inherits(get_tilt, "accessor")) {
     assert_type(get_tilt, c("integer", "numeric"))
     assert_finite(get_tilt)
+    assert_scalar(get_tilt)
     return()
   }
   assert_type(get_tilt, "accessor")
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_tilt$col, data)
-    if (!inherits(get_tilt, "accessor_scale")) {
-      assert_type(data[[get_tilt$col]], c("integer", "numeric"))
-      assert_finite(data[[get_tilt$col]])
-    }
+
+    assert_type(data[[get_tilt$col]], c("integer", "numeric"))
+    assert_finite(data[[get_tilt$col]])
   }
 }
 
@@ -1124,9 +1089,6 @@ validate_get_timestamps.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_timestamps$col, data)
-    if (!inherits(get_timestamps, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -1146,9 +1108,6 @@ validate_get_transform_matrix.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_transform_matrix$col, data)
-    if (!inherits(get_transform_matrix, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -1166,9 +1125,6 @@ validate_get_translation.default <- function(layer) {
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_translation$col, data)
-    if (!inherits(get_translation, "accessor_scale")) {
-
-    }
   }
 }
 
@@ -1182,6 +1138,7 @@ validate_get_weight.default <- function(layer) {
   if (!inherits(get_weight, "accessor")) {
     assert_type(get_weight, c("integer", "numeric"))
     assert_finite(get_weight)
+    assert_scalar(get_weight)
     return()
   }
   assert_type(get_weight, "accessor")
@@ -1209,6 +1166,7 @@ validate_get_width.default <- function(layer) {
   if (!inherits(get_width, "accessor")) {
     assert_type(get_width, c("integer", "numeric"))
     assert_finite(get_width)
+    assert_scalar(get_width)
     return()
   }
   assert_type(get_width, "accessor")

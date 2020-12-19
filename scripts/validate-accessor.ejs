@@ -12,6 +12,10 @@
 <% if (type !== "function" && type) { -%>
   if(!inherits(<%- name -%>, "accessor")) {
     <%- include("./validate-type", {name, type, min, max}) -%>
+    <%# validate scalar for non-array / objects -%>
+    <% if (["number", "string", "boolean"].includes(type)) { -%>
+      assert_scalar(<%- name -%>)
+    <% } -%>
     return()
   }
 <% } -%>
@@ -21,13 +25,13 @@ assert_type(<%- name -%>, "accessor")
 data <- layer$data
 if (inherits(data, "data.frame")) {
   assert_col_exists(<%- name -%>$col, data)
-  if (!inherits(<%- name -%>, "accessor_scale")) {
-    <%-
-      sfc !== null
-        ? `assert_type(${col}, "${sfc}")`
-        : include("./validate-type", {name: col, type, min, max});
-    -%>
-  }
+  <% if (scalable) { -%>
+    if (!inherits(<%- name -%>, "accessor_scale")) {
+      <%- include("./validate-type", {name: col, type, min, max}); -%>
+    }
+  <% } else { -%>
+    <%- include("./validate-type", {name: col, type, min, max}); -%>
+  <% } -%>
 }
 <% if (scalable) { -%>
   if (inherits(<%- name -%>, "accessor_scale")) {

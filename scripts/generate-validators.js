@@ -11,25 +11,6 @@ const { snakeCase } = require("snake-case");
 const { getProps } = require("./props");
 const { styleFile } = require("./styler");
 
-function sfcType(propType) {
-  if (propType.type !== "accessor") {
-    return null;
-  }
-
-  switch (snakeCase(propType.name)) {
-    case "get_path":
-      return "sfc_LINESTRING";
-    case "get_polygon":
-      return "sfc_POLYGON";
-    case "get_position":
-    case "get_source_position":
-    case "get_target_position":
-      return "sfc_POINT";
-    default:
-      return null;
-  }
-}
-
 function unique(props) {
   const map = props.reduce((set, prop) => {
     set[prop.name] = {
@@ -45,7 +26,6 @@ function unique(props) {
 function templateData(propType) {
   return {
     ...propType,
-    sfc: sfcType(propType),
     name: snakeCase(propType.name),
     min: propType.min ?? null,
     max: propType.max ?? null
