@@ -1,12 +1,12 @@
 <p align="right">
   <a href="https://github.com/anthonynorth/rdeck/releases/latest">
-    <img src="https://img.shields.io/github/v/release/anthonynorth/rdeck?sort=semver&style=flat-square" alt="release">
+    <img src="https://img.shields.io/github/v/release/anthonynorth/rdeck?sort=semver" alt="release">
   </a>
   <a href="https://www.tidyverse.org/lifecycle/#experimental">
-    <img src="https://img.shields.io/badge/lifecycle-experimental-orange?style=flat-square" alt="lifecycle" />
+    <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle" />
   </a>
-  <a href="https://travis-ci.com/anthonynorth/rdeck">
-    <img src="https://img.shields.io/travis/com/anthonynorth/rdeck?style=flat-square" alt="build">
+  <a href="https://github.com/anthonynorth/rdeck/actions">
+    <img src="https://github.com/anthonynorth/rdeck/workflows/R-CMD-check/badge.svg" alt="R build status">
   </a>
 </p>
 
