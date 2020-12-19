@@ -96,7 +96,7 @@ NULL
 #' @inherit layer_props
 #' @param radius <`number`> The radius of the column in metres.
 #' @param line_width_units <`"pixels"` | `"meters"`> The units of outline width.
-#' Applied when `extruded = FALSE` and `stroked = TRUE`.
+#' Applied when `extruded == FALSE` and `stroked == TRUE`.
 #' @eval deckgl_docs("layers", "column-layer")
 #' @family core-layers
 #' @family layers
@@ -183,8 +183,8 @@ NULL
 #'
 #' @name screen_grid_layer
 #' @inherit layer_props
-#' @param cell_size_pixels number
-#' @param cell_margin_pixels number
+#' @param cell_size_pixels <`number`> Unit width / height of the bins.
+#' @param cell_margin_pixels <`number`> Cell margin size in pixels.
 #' @eval deckgl_docs("aggregation-layers", "screen-grid-layer")
 #' @family aggregation-layers
 #' @family layers
@@ -204,7 +204,9 @@ NULL
 #' @name hexagon_layer
 #' @inherit layer_props
 #' @param radius <`number`> The radius of the hexagon bin in metres.
-#' @param hexagon_aggregator function
+#' @param hexagon_aggregator <[`JS`][htmlwidgets::JS]> Hexagon aggregator function. Defaults
+#' to `d3-hexbin`.
+#' See deck.gl [hexagonAggregator](https://deck.gl/docs/api-reference/aggregation-layers/hexagon-layer#hexagonaggregator).
 #' @eval deckgl_docs("aggregation-layers", "hexagon-layer")
 #' @family aggregation-layers
 #' @family layers
@@ -215,7 +217,9 @@ NULL
 #' @name contour_layer
 #' @inherit layer_props
 #' @param contours array
-#' @param z_offset number
+#' @param z_offset <`number`> A very small z offset that is added for each vertex of a
+#' contour (isoline or isoband). Needed to control the layout of the contours.
+#' See deck.gl [contours](https://deck.gl/docs/api-reference/aggregation-layers/contour-layer#contours)
 #' @eval deckgl_docs("aggregation-layers", "contour-layer")
 #' @family aggregation-layers
 #' @family layers
@@ -243,9 +247,14 @@ NULL
 #'
 #' @name heatmap_layer
 #' @inherit layer_props
-#' @param intensity number
-#' @param radius_pixels number
-#' @param threshold number
+#' @param intensity <`number`> Value that is multiplied with the total weight at a pixel to
+#' obtain the final weight. A value > `1` biases the output colour towards the higher end
+#' of the `color_range`, and a value < `1` biases the output towards the lower end of the
+#' `color_range`.
+#' @param radius_pixels <`number`> The radius of the circle in pixels.
+#' @param threshold <`number`> Larger threshold values creates smoother boundaries of colour
+#' _blobs_, while making pixels with low weight values more transparent.
+#' Ignored when `color_domain` is specified.
 #' @eval deckgl_docs("aggregation-layers", "heatmap-layer")
 #' @family aggregation-layers
 #' @family layers
@@ -264,7 +273,8 @@ NULL
 #'
 #' @name s2_layer
 #' @inherit layer_props
-#' @param get_s2_token <[`accessor`]>
+#' @param get_s2_token <[`accessor`]> The S2 hex token for each S2 cell. Accepts a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) character column.
 #' @eval deckgl_docs("geo-layers", "s2-layer")
 #' @family geo-layers
 #' @family layers
@@ -284,9 +294,19 @@ NULL
 #'
 #' @name h3_hexagon_layer
 #' @inherit layer_props
-#' @param high_precision <`logical`>
-#' @param center_hexagon unknown
-#' @param get_hexagon <[`accessor`]>
+#' @param high_precision <`logical`> If `TRUE`, draw each hexagon as a polygon using each
+#' hexagon's true geometry. If `FALSE`, draw each hexagon with the same shape as
+#' `center_hexagon`. High precision trades rendering performance for geometry precision.
+#' High precision is required (forcibly enabled) when:
+#'
+#' - Rendering hex resolutions in range `c(0, 5)`
+#' - Pentagons are present in the data
+#' - Multiple resolution hexes are present in the data
+#' @param center_hexagon <`string`> If `high_precision == FALSE`, defines the H3 hexagon
+#' that will be used as the shape of all hexagons in the layer. Defaults to the hexagon in
+#' the centre of the viewport.
+#' @param get_hexagon <[`accessor`]> The H3 hex token for each H3 hexagon. Accepts a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) character column.
 #' @eval deckgl_docs("geo-layers", "h3-hexagon-layer")
 #' @family geo-layers
 #' @family layers
@@ -390,7 +410,7 @@ NULL
 #' @param name <`string`> Identifies the layer on tooltips and legends. It does
 #' not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.
 #' @param tooltip <[`tooltip`]> Defines the columns (and their order) that will be displayed in
-#' the layer tooltip, if `pickable = TRUE`. Supports <[`tidy-select`][dplyr::dplyr_tidy_select]>
+#' the layer tooltip, if `pickable == TRUE`. Supports <[`tidy-select`][dplyr::dplyr_tidy_select]>
 #' if a `data` is a `data.frame`. `sfc` columns are always removed.
 #' @param data <`data.frame` | `sf` | `string`> The layer's data. Data frames will contain all
 #' columns that are referenced by the layer's accessors. Strings will be interpreted as a URL and
@@ -497,7 +517,7 @@ NULL
 #' @param elevation_scale <`number`> The elevation multiplier.
 #' @param extruded <`logical`> If `TRUE`, extrude objects along the z-axis; if `FALSE`, all
 #' objects will be flat.
-#' @param wireframe <`logical`> If `TRUE` and `extruded = TRUE`, draw a line wireframe of the
+#' @param wireframe <`logical`> If `TRUE` and `extruded == TRUE`, draw a line wireframe of the
 #' object. The outline will have horizontal lines closing the top and bottom polygons and
 #' vertical lines for each vertex of the polygon.
 #' @param get_elevation <[`accessor`] | [`scale`] | `number`> The elevation to extrude each
@@ -508,7 +528,7 @@ NULL
 #' @param rounded <`logical`> The type of joint. If `TRUE`, draw round joints, else draw mitre
 #' joints.
 #' @param miter_limit <`number`> The maximum extent of a joint in ratio to the stroke width.
-#' Only applicable if `rounded = FALSE`.
+#' Only applicable if `rounded == FALSE`.
 #' @param get_path <[`accessor`]> The path geometry column, an
 #' `sfc_LINESTRING` column with CRS [EPSG:4326](http://epsg.io/4326). Supports
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
@@ -571,7 +591,7 @@ NULL
 #' @param elevation_scale_type <`"quantize"` | `"linear"` | `"quantile"` | `"ordinal"`> The scaling
 #' function used to determine the elevation of a the grid cell.
 #' @param get_tile_data <[`JS`][htmlwidgets::JS]> retrieves the data of each tile.
-#' See deck.gl [TileLayer](https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata).
+#' See deck.gl [getTileData](https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata).
 #' @param extent <`c(min_x, min_y, max_x, max_y)`> Tiles in this bounding box
 #'   will be rendered at `min_zoom`, when zoomed out below `min_zoom`.
 #' @param tile_size <`number`> A power of 2 that is the pixel dimensions of the tile.

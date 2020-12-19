@@ -83,7 +83,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 joints.}
 
 \item{miter_limit}{<\code{number}> The maximum extent of a joint in ratio to the stroke width.
-Only applicable if \code{rounded = FALSE}.}
+Only applicable if \code{rounded == FALSE}.}
 
 \item{billboard}{<\code{logical}> If \code{TRUE}, extrude the path in screen space (width always faces)
 the camera; if \code{FALSE}, the width always faces up (z).}
@@ -102,7 +102,7 @@ Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+the layer tooltip, if \code{pickable == TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{

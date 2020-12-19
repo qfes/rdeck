@@ -101,7 +101,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{extruded}{<\code{logical}> If \code{TRUE}, extrude objects along the z-axis; if \code{FALSE}, all
 objects will be flat.}
 
-\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded = TRUE}, draw a line wireframe of the
+\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded == TRUE}, draw a line wireframe of the
 object. The outline will have horizontal lines closing the top and bottom polygons and
 vertical lines for each vertex of the polygon.}
 
@@ -153,7 +153,7 @@ Accepts a single numeric value, a numeric scale, or a
 \item{material}{<\code{logical}>}
 
 \item{get_tile_data}{<\code{\link[htmlwidgets:JS]{JS}}> retrieves the data of each tile.
-See deck.gl \href{https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata}{TileLayer}.}
+See deck.gl \href{https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata}{getTileData}.}
 
 \item{extent}{<\code{c(min_x, min_y, max_x, max_y)}> Tiles in this bounding box
 will be rendered at \code{min_zoom}, when zoomed out below \code{min_zoom}.}
@@ -183,7 +183,7 @@ supplied no throttling occurs (HTTP/2 only).}
 \item{highlighted_feature_id}{unknown}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+the layer tooltip, if \code{pickable == TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{

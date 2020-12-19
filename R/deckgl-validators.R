@@ -446,7 +446,9 @@ validate_get_animator <- function(layer) {
 }
 validate_get_animator.default <- function(layer) {
   get_animator <- layer$get_animator
-  assert_not_null(get_animator)
+  if (is.null(get_animator)) {
+    return()
+  }
 }
 
 # validate get_color
@@ -876,7 +878,9 @@ validate_get_scene <- function(layer) {
 }
 validate_get_scene.default <- function(layer) {
   get_scene <- layer$get_scene
-  assert_not_null(get_scene)
+  if (is.null(get_scene)) {
+    return()
+  }
 }
 
 # validate get_size
@@ -1175,7 +1179,9 @@ validate_hexagon_aggregator <- function(layer) {
 }
 validate_hexagon_aggregator.default <- function(layer) {
   hexagon_aggregator <- layer$hexagon_aggregator
-  assert_not_null(hexagon_aggregator)
+  if (is.null(hexagon_aggregator)) {
+    return()
+  }
 }
 
 # validate high_precision

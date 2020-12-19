@@ -76,21 +76,26 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{intensity}{number}
+\item{intensity}{<\code{number}> Value that is multiplied with the total weight at a pixel to
+obtain the final weight. A value > \code{1} biases the output colour towards the higher end
+of the \code{color_range}, and a value < \code{1} biases the output towards the lower end of the
+\code{color_range}.}
 
-\item{radius_pixels}{number}
+\item{radius_pixels}{<\code{number}> The radius of the circle in pixels.}
 
 \item{color_range}{<\code{\link{color}}> The colour palette.
 \code{color_domain} is divided into \code{length(color_range)} equal segments, each mapped to
 one color in \code{color_range}.}
 
-\item{threshold}{number}
+\item{threshold}{<\code{number}> Larger threshold values creates smoother boundaries of colour
+\emph{blobs}, while making pixels with low weight values more transparent.
+Ignored when \code{color_domain} is specified.}
 
 \item{color_domain}{<\code{number}> The colour scale domain, default is set to the range
 of aggregated weights in each bin.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+the layer tooltip, if \code{pickable == TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{

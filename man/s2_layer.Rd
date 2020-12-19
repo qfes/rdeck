@@ -78,7 +78,8 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_s2_token}{<\code{\link{accessor}}>}
+\item{get_s2_token}{<\code{\link{accessor}}> The S2 hex token for each S2 cell. Accepts a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column.}
 
 \item{stroked}{<\code{logical}> If \code{TRUE}, draw an outline around each object.}
 
@@ -89,7 +90,7 @@ objects will be flat.}
 
 \item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
-\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded = TRUE}, draw a line wireframe of the
+\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded == TRUE}, draw a line wireframe of the
 object. The outline will have horizontal lines closing the top and bottom polygons and
 vertical lines for each vertex of the polygon.}
 
@@ -126,7 +127,7 @@ Accepts a single numeric value, a numeric scale, or a
 \item{material}{<\code{logical}>}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+the layer tooltip, if \code{pickable == TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{

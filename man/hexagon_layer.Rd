@@ -153,7 +153,9 @@ calculated by \code{coverage * radius}.}
 \item{extruded}{<\code{logical}> If \code{TRUE}, extrude objects along the z-axis; if \code{FALSE}, all
 objects will be flat.}
 
-\item{hexagon_aggregator}{function}
+\item{hexagon_aggregator}{<\code{\link[htmlwidgets:JS]{JS}}> Hexagon aggregator function. Defaults
+to \code{d3-hexbin}.
+See deck.gl \href{https://deck.gl/docs/api-reference/aggregation-layers/hexagon-layer#hexagonaggregator}{hexagonAggregator}.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, an
 \code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
@@ -162,7 +164,7 @@ objects will be flat.}
 \item{material}{<\code{logical}>}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+the layer tooltip, if \code{pickable == TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{

@@ -95,10 +95,11 @@ function getScalable({ type, name }) {
   return type === "accessor" && /(radius|elevation|color|weight|width|height|size)$/i.test(name);
 }
 
-function getOptional({ optional, value }) {
+function getOptional({ optional, value, type }) {
   return (
     optional ||
     value === null ||
+    type === "function" ||
     (Array.isArray(value) && value.length === 0)
   );
 }

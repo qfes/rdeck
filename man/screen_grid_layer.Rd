@@ -69,9 +69,9 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{cell_size_pixels}{number}
+\item{cell_size_pixels}{<\code{number}> Unit width / height of the bins.}
 
-\item{cell_margin_pixels}{number}
+\item{cell_margin_pixels}{<\code{number}> Cell margin size in pixels.}
 
 \item{color_domain}{<\code{number}> The colour scale domain, default is set to the range
 of aggregated weights in each bin.}
@@ -94,7 +94,7 @@ Requires \code{WebGL2}.}
 \item{aggregation}{<\code{"SUM"} | \code{"MEAN"} | \code{"MIN"} | \code{"MAX"}> Defines the aggregation function.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+the layer tooltip, if \code{pickable == TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{

@@ -103,7 +103,7 @@ calculated by \code{coverage * radius}.}
 \item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
 \item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of outline width.
-Applied when \code{extruded = FALSE} and \code{stroked = TRUE}.}
+Applied when \code{extruded == FALSE} and \code{stroked == TRUE}.}
 
 \item{line_width_scale}{<\code{number}> The line width multiplier.}
 
@@ -114,7 +114,7 @@ Applied when \code{extruded = FALSE} and \code{stroked = TRUE}.}
 \item{extruded}{<\code{logical}> If \code{TRUE}, extrude objects along the z-axis; if \code{FALSE}, all
 objects will be flat.}
 
-\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded = TRUE}, draw a line wireframe of the
+\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded == TRUE}, draw a line wireframe of the
 object. The outline will have horizontal lines closing the top and bottom polygons and
 vertical lines for each vertex of the polygon.}
 
@@ -147,7 +147,7 @@ Accepts a single numeric value, a numeric scale, or a
 \item{material}{<\code{logical}>}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+the layer tooltip, if \code{pickable == TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{

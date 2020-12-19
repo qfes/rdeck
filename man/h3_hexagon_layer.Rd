@@ -90,7 +90,7 @@ objects will be flat.}
 
 \item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
-\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded = TRUE}, draw a line wireframe of the
+\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded == TRUE}, draw a line wireframe of the
 object. The outline will have horizontal lines closing the top and bottom polygons and
 vertical lines for each vertex of the polygon.}
 
@@ -126,17 +126,28 @@ Accepts a single numeric value, a numeric scale, or a
 
 \item{material}{<\code{logical}>}
 
-\item{high_precision}{<\code{logical}>}
+\item{high_precision}{<\code{logical}> If \code{TRUE}, draw each hexagon as a polygon using each
+hexagon's true geometry. If \code{FALSE}, draw each hexagon with the same shape as
+\code{center_hexagon}. High precision trades rendering performance for geometry precision.
+High precision is required (forcibly enabled) when:
+\itemize{
+\item Rendering hex resolutions in range \code{c(0, 5)}
+\item Pentagons are present in the data
+\item Multiple resolution hexes are present in the data
+}}
 
 \item{coverage}{<\code{number}> Radius multiplier, between 0 - 1. The radius of each disk is
 calculated by \code{coverage * radius}.}
 
-\item{center_hexagon}{unknown}
+\item{center_hexagon}{<\code{string}> If \code{high_precision == FALSE}, defines the H3 hexagon
+that will be used as the shape of all hexagons in the layer. Defaults to the hexagon in
+the centre of the viewport.}
 
-\item{get_hexagon}{<\code{\link{accessor}}>}
+\item{get_hexagon}{<\code{\link{accessor}}> The H3 hex token for each H3 hexagon. Accepts a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+the layer tooltip, if \code{pickable == TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
