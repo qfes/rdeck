@@ -11,11 +11,13 @@ NULL
 #'
 #' @name bitmap_layer
 #' @inherit layer_props
-#' @param image The image to display. Either a string interpreted as a URL or Data URL,
-#' or an array raster image.
-#' @param desaturate number
-#' @param transparent_color color
-#' @param tint_color color
+#' @param image <`string` | `array`> The image to display. Either a string interpreted as a
+#' URL or Data URL, or an array raster image.
+#' @param desaturate <`numeric`> The desaturation of the bitmap. Between `0` and `1`, `being`
+#' the original colour, `1` being greyscale.
+#' @param transparent_color <[`color`]> The colour to use for transparent pixels.
+#' @param tint_color <[`color`]> The colour to tint the bitmap by. Alpha channel is ignored
+#' if supplied.
 #' @eval deckgl_docs("layers", "bitmap-layer")
 #' @family core-layers
 #' @family layers

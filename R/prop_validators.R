@@ -151,3 +151,10 @@ validate_get_tilt.layer <- function(layer) {
     assert_range(get_tilt, -90, 90)
   }
 }
+
+# validate image
+validate_image.layer <- function(layer) {
+  if (!is.null(layer$image)) {
+    assert_type(layer$image, c("character", "array"))
+  }
+}

@@ -36,6 +36,11 @@ to_json.layer <- function(obj) {
     obj$data <- layer_data(obj)
   }
 
+  if (!is.null(obj$image) && inherits(obj$image, "array")) {
+    b64_image <- base64enc::base64encode(png::writePNG(obj$image))
+    obj$image <- paste0("data:image/png;base64,", b64_image)
+  }
+
   camel_case(obj)
 }
 
