@@ -56,7 +56,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -79,11 +79,11 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{get_animator}{function}
 
-\item{size_scale}{<\code{numeric}> The size multiplier.}
+\item{size_scale}{<\code{number}> The size multiplier.}
 
-\item{size_min_pixels}{<\code{numeric}> The minimum size in pixels.}
+\item{size_min_pixels}{<\code{number}> The minimum size in pixels.}
 
-\item{size_max_pixels}{<\code{numeric}> The maximum size in pixels.}
+\item{size_max_pixels}{<\code{number}> The maximum size in pixels.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, an
 \code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports

@@ -52,7 +52,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -81,18 +81,18 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 Accepts a single colour value, a colour scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The width of each object, in units
+\item{get_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The width of each object, in units
 specified by \code{width_scale}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
 \item{width_units}{<\code{"pixels"} | \code{"meters"}> The units of the \code{line_width}.}
 
-\item{width_scale}{<\code{numeric}> The scaling multiplier for the width of each line.}
+\item{width_scale}{<\code{number}> The scaling multiplier for the width of each line.}
 
-\item{width_min_pixels}{<\code{numeric}> The minimum line width in pixels.}
+\item{width_min_pixels}{<\code{number}> The minimum line width in pixels.}
 
-\item{width_max_pixels}{<\code{numeric}> The maximum line width in pixels.}
+\item{width_max_pixels}{<\code{number}> The maximum line width in pixels.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>

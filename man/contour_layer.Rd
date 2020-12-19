@@ -51,7 +51,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -68,13 +68,13 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{cell_size}{<\code{numeric}> The size of each cell in metres.}
+\item{cell_size}{<\code{number}> The size of each cell in metres.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, an
 \code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{get_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The weight of each object.
+\item{get_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The weight of each object.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 

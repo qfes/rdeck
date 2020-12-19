@@ -57,7 +57,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -76,16 +76,16 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{width_units}{<\code{"pixels"} | \code{"meters"}> The units of the \code{line_width}.}
 
-\item{width_scale}{<\code{numeric}> The scaling multiplier for the width of each line.}
+\item{width_scale}{<\code{number}> The scaling multiplier for the width of each line.}
 
-\item{width_min_pixels}{<\code{numeric}> The minimum line width in pixels.}
+\item{width_min_pixels}{<\code{number}> The minimum line width in pixels.}
 
-\item{width_max_pixels}{<\code{numeric}> The maximum line width in pixels.}
+\item{width_max_pixels}{<\code{number}> The maximum line width in pixels.}
 
 \item{rounded}{<\code{logical}> The type of joint. If \code{TRUE}, draw round joints, else draw mitre
 joints.}
 
-\item{miter_limit}{<\code{numeric}> The maximum extent of a joint in ratio to the stroke width.
+\item{miter_limit}{<\code{number}> The maximum extent of a joint in ratio to the stroke width.
 Only applicable if \code{rounded = FALSE}.}
 
 \item{billboard}{<\code{logical}> If \code{TRUE}, extrude the path in screen space (width always faces)
@@ -99,7 +99,7 @@ the camera; if \code{FALSE}, the width always faces up (z).}
 Accepts a single colour value, a colour scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The width of each object, in units
+\item{get_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The width of each object, in units
 specified by \code{width_scale}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}

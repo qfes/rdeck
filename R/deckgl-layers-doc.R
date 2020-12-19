@@ -13,7 +13,7 @@ NULL
 #' @inherit layer_props
 #' @param image <`string` | `array`> The image to display. Either a string interpreted as a
 #' URL or Data URL, or an array raster image.
-#' @param desaturate <`numeric`> The desaturation of the bitmap. Between `0` and `1`, `being`
+#' @param desaturate <`number`> The desaturation of the bitmap. Between `0` and `1`, `being`
 #' the original colour, `1` being greyscale.
 #' @param transparent_color <[`color`]> The colour to use for transparent pixels.
 #' @param tint_color <[`color`]> The colour to tint the bitmap by. Alpha channel is ignored
@@ -33,11 +33,11 @@ NULL
 #' faces up (z).
 #' @param alpha_cutoff number
 #' @param get_icon <[`accessor`]>
-#' @param get_size <[`accessor`] | [`scale`] | `numeric`> The icon size of each text label,
+#' @param get_size <[`accessor`] | [`scale`] | `number`> The icon size of each text label,
 #' in units specified by `size_units`.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param get_angle <[`accessor`] | `numeric`> The rotating angle of each icon in degrees.
+#' @param get_angle <[`accessor`] | `number`> The rotating angle of each icon in degrees.
 #' Accepts a single numeric value, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @eval deckgl_docs("layers", "icon-layer")
@@ -92,7 +92,7 @@ NULL
 #'
 #' @name column_layer
 #' @inherit layer_props
-#' @param radius <`numeric`> The radius of the column in metres.
+#' @param radius <`number`> The radius of the column in metres.
 #' @param line_width_units <`"pixels"` | `"meters"`> The units of outline width.
 #' Applied when `extruded = FALSE` and `stroked = TRUE`.
 #' @eval deckgl_docs("layers", "column-layer")
@@ -151,11 +151,11 @@ NULL
 #' @param word_break unknown
 #' @param max_width number
 #' @param get_text <[`accessor`]>
-#' @param get_size <[`accessor`] | [`scale`] | `numeric`> The font size of each text label,
+#' @param get_size <[`accessor`] | [`scale`] | `number`> The font size of each text label,
 #' in units specified by `size_units`.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param get_angle <[`accessor`] | `numeric`> The rotating angle of each icon in degrees.
+#' @param get_angle <[`accessor`] | `number`> The rotating angle of each icon in degrees.
 #' Accepts a single numeric value, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param get_text_anchor <[`accessor`]>
@@ -189,7 +189,7 @@ NULL
 #'
 #' @name hexagon_layer
 #' @inherit layer_props
-#' @param radius <`numeric`> The radius of the hexagon bin in metres.
+#' @param radius <`number`> The radius of the hexagon bin in metres.
 #' @param hexagon_aggregator function
 #' @eval deckgl_docs("aggregation-layers", "hexagon-layer")
 #' @family aggregation-layers
@@ -384,7 +384,7 @@ NULL
 #' @param visible <`logical`> Determines whether the layer is visible or not; also determines
 #' whether any legend elements for the layer will be displayed.
 #' @param pickable <`logical`> Determines if the layer responds to pointer / touch events.
-#' @param opacity <`numeric`> Determines the layer's opacity.
+#' @param opacity <`number`> Determines the layer's opacity.
 #' @param position_format <`"XY"` | `"XYZ"`> Determines whether each coordinate has two (XY)
 #' or three (XYZ) elements.
 #' @param color_format <`"RGB"` | `"RGBA"`> Determines whether the alpha channel of the colours
@@ -410,50 +410,50 @@ NULL
 #' _target end_ of the arc.
 #' Accepts a single colour value, a colour scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
-#' @param get_width <[`accessor`] | [`scale`] | `numeric`> The width of each object, in units
+#' @param get_width <[`accessor`] | [`scale`] | `number`> The width of each object, in units
 #' specified by `width_scale`.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param get_height <[`accessor`] | [`scale`] | `numeric`> The multiplier of layer of
+#' @param get_height <[`accessor`] | [`scale`] | `number`> The multiplier of layer of
 #' layer height.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' A value of 0 will make the layer flat.
-#' @param get_tilt <[`accessor`] | `numeric`> Tilts the arcs by the specified number of
+#' @param get_tilt <[`accessor`] | `number`> Tilts the arcs by the specified number of
 #' degrees (between `c(-90, 90)`).
 #' Accepts a single numeric value or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param great_circle <`logical`> If `TRUE`, create the arc along the shortest path on the
 #' earth surface.
 #' @param width_units <`"pixels"` | `"meters"`> The units of the `line_width`.
-#' @param width_scale <`numeric`> The scaling multiplier for the width of each line.
-#' @param width_min_pixels <`numeric`> The minimum line width in pixels.
-#' @param width_max_pixels <`numeric`> The maximum line width in pixels.
+#' @param width_scale <`number`> The scaling multiplier for the width of each line.
+#' @param width_min_pixels <`number`> The minimum line width in pixels.
+#' @param width_max_pixels <`number`> The maximum line width in pixels.
 #' @param bounds <`bbox`> A sf::st_bbox() object with CRS [EPSG:4326](http://epsg.io/4326).
 #' @param billboard <`logical`> If `TRUE`, extrude the path in screen space (width always faces)
 #' the camera; if `FALSE`, the width always faces up (z).
-#' @param size_scale <`numeric`> The size multiplier.
+#' @param size_scale <`number`> The size multiplier.
 #' @param size_units <`"pixels"` | `"meters"`> The units of the size specified by
 #' `get_size`.
-#' @param size_min_pixels <`numeric`> The minimum size in pixels.
-#' @param size_max_pixels <`numeric`> The maximum size in pixels.
+#' @param size_min_pixels <`number`> The minimum size in pixels.
+#' @param size_max_pixels <`number`> The maximum size in pixels.
 #' @param get_position <[`accessor`]> The position geometry column, an
 #' `sfc_POINT` column with CRS [EPSG:4326](http://epsg.io/4326). Supports
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param get_color <[`accessor`] | [`scale`] | [`color`]> The colour of each object.
 #' Accepts a single colour value, a colour scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
-#' @param get_pixel_offset <[`accessor`] | `numeric`>
-#' @param point_size <`numeric`> The radius of all points in units specified
+#' @param get_pixel_offset <[`accessor`] | `number`>
+#' @param point_size <`number`> The radius of all points in units specified
 #' by `size_units`.
 #' @param material <`logical`>
 #' @param line_width_units <`"pixels"` | `"meters"`> The units of line width.
-#' @param line_width_scale <`numeric`> The line width multiplier.
-#' @param line_width_min_pixels <`numeric`> The minimum line width in pixels.
-#' @param line_width_max_pixels <`numeric`> The maximum line width in pixels.
+#' @param line_width_scale <`number`> The line width multiplier.
+#' @param line_width_min_pixels <`number`> The minimum line width in pixels.
+#' @param line_width_max_pixels <`number`> The maximum line width in pixels.
 #' @param stroked <`logical`> If `TRUE`, draw an outline around each object.
 #' @param filled <`logical`> If `TRUE`, draw the filled area of each point.
-#' @param get_radius <[`accessor`] | [`scale`] | `numeric`> The radius of each point, in units
+#' @param get_radius <[`accessor`] | [`scale`] | `number`> The radius of each point, in units
 #' specified by `radius_units`.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
@@ -463,36 +463,36 @@ NULL
 #' @param get_line_color <[`accessor`] | [`scale`] | [`color`]> The line colour of each object.
 #' Accepts a single colour value, a colour scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
-#' @param get_line_width <[`accessor`] | [`scale`] | `numeric`> The outline of the object
+#' @param get_line_width <[`accessor`] | [`scale`] | `number`> The outline of the object
 #' in units specified by `line_width_units`.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param disk_resolution <`numeric`> The number of sides to render the disk as. The disk
+#' @param disk_resolution <`number`> The number of sides to render the disk as. The disk
 #' is a regular polygon that fits inside the given `radius`. A higher resolution will yield
 #' a smoother look close-up, but also need more resources to render.
 #' @param vertices `matrix` Replace the default geometry (regular polygon that fits inside the
 #' unit circle) with a custom one. The length of the array must be at least `disk_resolution`.
 #' Each vertex is a row `c(x, y)` that is the offset from the instance position, relative
 #' to the radius.
-#' @param radius <`numeric`> The radius of the object in metres.
-#' @param angle <`numeric`> The disk rotation, counter-clockwise in radians.
-#' @param offset <`numeric`> The disk offset from the position, relative to the radius.
-#' @param coverage <`numeric`> Radius multiplier, between 0 - 1. The radius of each disk is
+#' @param radius <`number`> The radius of the object in metres.
+#' @param angle <`number`> The disk rotation, counter-clockwise in radians.
+#' @param offset <`number`> The disk offset from the position, relative to the radius.
+#' @param coverage <`number`> Radius multiplier, between 0 - 1. The radius of each disk is
 #' calculated by `coverage * radius`.
-#' @param elevation_scale <`numeric`> The elevation multiplier.
+#' @param elevation_scale <`number`> The elevation multiplier.
 #' @param extruded <`logical`> If `TRUE`, extrude objects along the z-axis; if `FALSE`, all
 #' objects will be flat.
 #' @param wireframe <`logical`> If `TRUE` and `extruded = TRUE`, draw a line wireframe of the
 #' object. The outline will have horizontal lines closing the top and bottom polygons and
 #' vertical lines for each vertex of the polygon.
-#' @param get_elevation <[`accessor`] | [`scale`] | `numeric`> The elevation to extrude each
+#' @param get_elevation <[`accessor`] | [`scale`] | `number`> The elevation to extrude each
 #' object in the z-axis. Height units are in metres.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param cell_size <`numeric`> The size of each cell in metres.
+#' @param cell_size <`number`> The size of each cell in metres.
 #' @param rounded <`logical`> The type of joint. If `TRUE`, draw round joints, else draw mitre
 #' joints.
-#' @param miter_limit <`numeric`> The maximum extent of a joint in ratio to the stroke width.
+#' @param miter_limit <`number`> The maximum extent of a joint in ratio to the stroke width.
 #' Only applicable if `rounded = FALSE`.
 #' @param get_path <[`accessor`]> The path geometry column, an
 #' `sfc_LINESTRING` column with CRS [EPSG:4326](http://epsg.io/4326). Supports
@@ -503,15 +503,15 @@ NULL
 #' `sfc_POLYGON` column with CRS [EPSG:4326](http://epsg.io/4326). Supports
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param point_radius_units <`"pixels"` | `"meters"`> The units of point radius.
-#' @param point_radius_scale <`numeric`> The radius multiplier for all points.
-#' @param point_radius_min_pixels <`numeric`> The minimum radius in pixels.
-#' @param point_radius_max_pixels <`numeric`> The maximum radius in pixels.
-#' @param color_domain <`numeric`> The colour scale domain, default is set to the range
+#' @param point_radius_scale <`number`> The radius multiplier for all points.
+#' @param point_radius_min_pixels <`number`> The minimum radius in pixels.
+#' @param point_radius_max_pixels <`number`> The maximum radius in pixels.
+#' @param color_domain <`number`> The colour scale domain, default is set to the range
 #' of aggregated weights in each bin.
 #' @param color_range <[`color`]> The colour palette.
 #' `color_domain` is divided into `length(color_range)` equal segments, each mapped to
 #' one color in `color_range`.
-#' @param get_weight <[`accessor`] | [`scale`] | `numeric`> The weight of each object.
+#' @param get_weight <[`accessor`] | [`scale`] | `number`> The weight of each object.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param gpu_aggregation <`logical`> If `TRUE`, aggregation is performed on GPU if supported.
@@ -521,21 +521,21 @@ NULL
 #' this accessor is called on each bin to get the value that its colour is based on. If supplied,
 #' this will override the effect of `get_color_weight` and `color_aggregation` props.
 #' See deck.gl docs for details.
-#' @param get_color_weight <[`accessor`] | [`scale`] | `numeric`> The weight of each object used
+#' @param get_color_weight <[`accessor`] | [`scale`] | `number`> The weight of each object used
 #' to calculate the colour value for a bin.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param color_aggregation <`"SUM"` | `"MEAN"` | `"MIN"` | `"MAX"`>  Operation used to
 #' aggregate data values/weights to calculate a bin's colour.
-#' @param lower_percentile <`numeric`> Between `0` and `100`. Filter bins and re-calculate colour
+#' @param lower_percentile <`number`> Between `0` and `100`. Filter bins and re-calculate colour
 #' by `lower_percentile`. Cells with `value < lower_percentile` will be hidden.
-#' @param upper_percentile <`numeric`> Between `0` and `100`. Filter bins and re-calculate colour
+#' @param upper_percentile <`number`> Between `0` and `100`. Filter bins and re-calculate colour
 #' by `upper_percentile`. Cells with `value < upper_percentile` will be hidden.
 #' @param color_scale_type <`"quantize"` | `"linear"` | `"quantile"` | `"ordinal"`> The scaling
 #' function used to determine the colour of a the grid cell.
-#' @param elevation_domain <`numeric`> The elevation scale input domain. Defaults to the range
+#' @param elevation_domain <`number`> The elevation scale input domain. Defaults to the range
 #' of the aggregated weights in each bin.
-#' @param elevation_range <`numeric`> The elevation scale output range.
+#' @param elevation_range <`number`> The elevation scale output range.
 #' @param get_elevation_value <[`JS`][htmlwidgets::JS]> After data objects are aggregated into
 #' bins, this accessor is called on each bin to get the value that its elevation is based on.
 #' If supplied, this will override the effect of `get_elevation_weight` and
@@ -547,10 +547,10 @@ NULL
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param elevation_aggregation <`"SUM"` | `"MEAN"` | `"MIN"` | `"MAX"`> Operation used to
 #' aggregate data values/weights to calculate a bin's elevation value.
-#' @param elevation_lower_percentile <`numeric`> Between `0` and `100`. Filter bins and
+#' @param elevation_lower_percentile <`number`> Between `0` and `100`. Filter bins and
 #' re-calculate elevation by `elevation_lower_percentile`.
 #' Cells with `value < elevation_lower_percentile` will be hidden.
-#' @param elevation_upper_percentile <`numeric`> Between `0` and `100`. Filter bins and
+#' @param elevation_upper_percentile <`number`> Between `0` and `100`. Filter bins and
 #' re-calculate elevation by `elevation_upper_percentile`.
 #' Cells with `value < elevation_upper_percentile` will be hidden.
 #' @param elevation_scale_type <`"quantize"` | `"linear"` | `"quantile"` | `"ordinal"`> The scaling
@@ -559,16 +559,16 @@ NULL
 #' See deck.gl [TileLayer](https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata).
 #' @param extent <`c(min_x, min_y, max_x, max_y)`> Tiles in this bounding box
 #'   will be rendered at `min_zoom`, when zoomed out below `min_zoom`.
-#' @param tile_size <`numeric`> A power of 2 that is the pixel dimensions of the tile.
-#' @param max_zoom <`numeric`> Tiles above this zoom level are not shown. Defaults to `NULL`.
-#' @param min_zoom <`numeric`> Tiles below this zoom level are not shown. Defaults to `0`.
-#' @param max_cache_size <`numeric`> Maximum number of tiles that can be cached. Defaults to
+#' @param tile_size <`number`> A power of 2 that is the pixel dimensions of the tile.
+#' @param max_zoom <`number`> Tiles above this zoom level are not shown. Defaults to `NULL`.
+#' @param min_zoom <`number`> Tiles below this zoom level are not shown. Defaults to `0`.
+#' @param max_cache_size <`number`> Maximum number of tiles that can be cached. Defaults to
 #' 5x the number of tiles in current viewport.
-#' @param max_cache_byte_size <`numeric`> Maximum memory used for caching tiles.
+#' @param max_cache_byte_size <`number`> Maximum memory used for caching tiles.
 #' @param refinement_strategy <`"best-available"` | `"no-overlap"` | `"never"`> How the tile
 #' layer refines visibility of tiles. Defaults to `"best-available"`.
 #' @param z_range <`c(min, max)`> Array representing the range of heights in the tile.
-#' @param max_requests <`numeric`> Maximum number of concurrent HTTP
+#' @param max_requests <`number`> Maximum number of concurrent HTTP
 #'   requests across all specified tile provider domains. If a negative number is
 #'   supplied no throttling occurs (HTTP/2 only).
 #' @param texture not yet supported.

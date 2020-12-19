@@ -58,7 +58,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -79,7 +79,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{icon_mapping}{object}
 
-\item{size_scale}{<\code{numeric}> The size multiplier.}
+\item{size_scale}{<\code{number}> The size multiplier.}
 
 \item{billboard}{<\code{logical}> If \code{TRUE}, the text label always faces the camera, otherwise it
 faces up (z).}
@@ -87,9 +87,9 @@ faces up (z).}
 \item{size_units}{<\code{"pixels"} | \code{"meters"}> The units of the size specified by
 \code{get_size}.}
 
-\item{size_min_pixels}{<\code{numeric}> The minimum size in pixels.}
+\item{size_min_pixels}{<\code{number}> The minimum size in pixels.}
 
-\item{size_max_pixels}{<\code{numeric}> The maximum size in pixels.}
+\item{size_max_pixels}{<\code{number}> The maximum size in pixels.}
 
 \item{alpha_cutoff}{number}
 
@@ -103,16 +103,16 @@ faces up (z).}
 Accepts a single colour value, a colour scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_size}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The icon size of each text label,
+\item{get_size}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The icon size of each text label,
 in units specified by \code{size_units}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{get_angle}{<\code{\link{accessor}} | \code{numeric}> The rotating angle of each icon in degrees.
+\item{get_angle}{<\code{\link{accessor}} | \code{number}> The rotating angle of each icon in degrees.
 Accepts a single numeric value, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{get_pixel_offset}{<\code{\link{accessor}} | \code{numeric}>}
+\item{get_pixel_offset}{<\code{\link{accessor}} | \code{number}>}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>

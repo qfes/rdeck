@@ -65,7 +65,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -82,7 +82,7 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{disk_resolution}{<\code{numeric}> The number of sides to render the disk as. The disk
+\item{disk_resolution}{<\code{number}> The number of sides to render the disk as. The disk
 is a regular polygon that fits inside the given \code{radius}. A higher resolution will yield
 a smoother look close-up, but also need more resources to render.}
 
@@ -91,25 +91,25 @@ unit circle) with a custom one. The length of the array must be at least \code{d
 Each vertex is a row \code{c(x, y)} that is the offset from the instance position, relative
 to the radius.}
 
-\item{radius}{<\code{numeric}> The radius of the column in metres.}
+\item{radius}{<\code{number}> The radius of the column in metres.}
 
-\item{angle}{<\code{numeric}> The disk rotation, counter-clockwise in radians.}
+\item{angle}{<\code{number}> The disk rotation, counter-clockwise in radians.}
 
-\item{offset}{<\code{numeric}> The disk offset from the position, relative to the radius.}
+\item{offset}{<\code{number}> The disk offset from the position, relative to the radius.}
 
-\item{coverage}{<\code{numeric}> Radius multiplier, between 0 - 1. The radius of each disk is
+\item{coverage}{<\code{number}> Radius multiplier, between 0 - 1. The radius of each disk is
 calculated by \code{coverage * radius}.}
 
-\item{elevation_scale}{<\code{numeric}> The elevation multiplier.}
+\item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
 \item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of outline width.
 Applied when \code{extruded = FALSE} and \code{stroked = TRUE}.}
 
-\item{line_width_scale}{<\code{numeric}> The line width multiplier.}
+\item{line_width_scale}{<\code{number}> The line width multiplier.}
 
-\item{line_width_min_pixels}{<\code{numeric}> The minimum line width in pixels.}
+\item{line_width_min_pixels}{<\code{number}> The minimum line width in pixels.}
 
-\item{line_width_max_pixels}{<\code{numeric}> The maximum line width in pixels.}
+\item{line_width_max_pixels}{<\code{number}> The maximum line width in pixels.}
 
 \item{extruded}{<\code{logical}> If \code{TRUE}, extrude objects along the z-axis; if \code{FALSE}, all
 objects will be flat.}
@@ -134,12 +134,12 @@ Accepts a single colour value, a colour scale, or a
 Accepts a single colour value, a colour scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_line_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The outline of the object
+\item{get_line_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The outline of the object
 in units specified by \code{line_width_units}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{get_elevation}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The elevation to extrude each
+\item{get_elevation}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The elevation to extrude each
 object in the z-axis. Height units are in metres.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}

@@ -52,7 +52,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -73,7 +73,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{cell_margin_pixels}{number}
 
-\item{color_domain}{<\code{numeric}> The colour scale domain, default is set to the range
+\item{color_domain}{<\code{number}> The colour scale domain, default is set to the range
 of aggregated weights in each bin.}
 
 \item{color_range}{<\code{\link{color}}> The colour palette.
@@ -84,7 +84,7 @@ one color in \code{color_range}.}
 \code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{get_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The weight of each object.
+\item{get_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The weight of each object.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 

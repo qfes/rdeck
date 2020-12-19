@@ -49,7 +49,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -71,7 +71,7 @@ URL or Data URL, or an array raster image.}
 
 \item{bounds}{<\code{bbox}> A sf::st_bbox() object with CRS \href{http://epsg.io/4326}{EPSG:4326}.}
 
-\item{desaturate}{<\code{numeric}> The desaturation of the bitmap. Between \code{0} and \code{1}, \code{being}
+\item{desaturate}{<\code{number}> The desaturation of the bitmap. Between \code{0} and \code{1}, \code{being}
 the original colour, \code{1} being greyscale.}
 
 \item{transparent_color}{<\code{\link{color}}> The colour to use for transparent pixels.}

@@ -63,7 +63,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -93,25 +93,25 @@ vertical lines for each vertex of the polygon.}
 
 \item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of line width.}
 
-\item{line_width_scale}{<\code{numeric}> The line width multiplier.}
+\item{line_width_scale}{<\code{number}> The line width multiplier.}
 
-\item{line_width_min_pixels}{<\code{numeric}> The minimum line width in pixels.}
+\item{line_width_min_pixels}{<\code{number}> The minimum line width in pixels.}
 
-\item{line_width_max_pixels}{<\code{numeric}> The maximum line width in pixels.}
+\item{line_width_max_pixels}{<\code{number}> The maximum line width in pixels.}
 
 \item{line_joint_rounded}{<\code{logical}>}
 
 \item{line_miter_limit}{number}
 
-\item{elevation_scale}{<\code{numeric}> The elevation multiplier.}
+\item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
 \item{point_radius_units}{<\code{"pixels"} | \code{"meters"}> The units of point radius.}
 
-\item{point_radius_scale}{<\code{numeric}> The radius multiplier for all points.}
+\item{point_radius_scale}{<\code{number}> The radius multiplier for all points.}
 
-\item{point_radius_min_pixels}{<\code{numeric}> The minimum radius in pixels.}
+\item{point_radius_min_pixels}{<\code{number}> The minimum radius in pixels.}
 
-\item{point_radius_max_pixels}{<\code{numeric}> The maximum radius in pixels.}
+\item{point_radius_max_pixels}{<\code{number}> The maximum radius in pixels.}
 
 \item{get_line_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The line colour of each object.
 Accepts a single colour value, a colour scale, or a
@@ -121,17 +121,17 @@ Accepts a single colour value, a colour scale, or a
 Accepts a single colour value, a colour scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_radius}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The radius of each point, in units
+\item{get_radius}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The radius of each point, in units
 specified by \code{radius_units}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{get_line_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The outline of the object
+\item{get_line_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The outline of the object
 in units specified by \code{line_width_units}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{get_elevation}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The elevation to extrude each
+\item{get_elevation}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The elevation to extrude each
 object in the z-axis. Height units are in metres.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}

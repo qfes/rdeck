@@ -50,7 +50,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -70,7 +70,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{size_units}{<\code{"pixels"} | \code{"meters"}> The units of the size specified by
 \code{get_size}.}
 
-\item{point_size}{<\code{numeric}> The radius of all points in units specified
+\item{point_size}{<\code{number}> The radius of all points in units specified
 by \code{size_units}.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, an

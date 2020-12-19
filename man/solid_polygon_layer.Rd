@@ -53,7 +53,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -79,13 +79,13 @@ objects will be flat.}
 object. The outline will have horizontal lines closing the top and bottom polygons and
 vertical lines for each vertex of the polygon.}
 
-\item{elevation_scale}{<\code{numeric}> The elevation multiplier.}
+\item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
 \item{get_polygon}{<\code{\link{accessor}}> The polygon geometry column, an
 \code{sfc_POLYGON} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{get_elevation}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The elevation to extrude each
+\item{get_elevation}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The elevation to extrude each
 object in the z-axis. Height units are in metres.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}

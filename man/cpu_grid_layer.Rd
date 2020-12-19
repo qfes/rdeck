@@ -66,7 +66,7 @@ whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
 
-\item{opacity}{<\code{numeric}> Determines the layer's opacity.}
+\item{opacity}{<\code{number}> Determines the layer's opacity.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -83,7 +83,7 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{color_domain}{<\code{numeric}> The colour scale domain, default is set to the range
+\item{color_domain}{<\code{number}> The colour scale domain, default is set to the range
 of aggregated weights in each bin.}
 
 \item{color_range}{<\code{\link{color}}> The colour palette.
@@ -95,7 +95,7 @@ this accessor is called on each bin to get the value that its colour is based on
 this will override the effect of \code{get_color_weight} and \code{color_aggregation} props.
 See deck.gl docs for details.}
 
-\item{get_color_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The weight of each object used
+\item{get_color_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The weight of each object used
 to calculate the colour value for a bin.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
@@ -103,19 +103,19 @@ Accepts a single numeric value, a numeric scale, or a
 \item{color_aggregation}{<\code{"SUM"} | \code{"MEAN"} | \code{"MIN"} | \code{"MAX"}>  Operation used to
 aggregate data values/weights to calculate a bin's colour.}
 
-\item{lower_percentile}{<\code{numeric}> Between \code{0} and \code{100}. Filter bins and re-calculate colour
+\item{lower_percentile}{<\code{number}> Between \code{0} and \code{100}. Filter bins and re-calculate colour
 by \code{lower_percentile}. Cells with \code{value < lower_percentile} will be hidden.}
 
-\item{upper_percentile}{<\code{numeric}> Between \code{0} and \code{100}. Filter bins and re-calculate colour
+\item{upper_percentile}{<\code{number}> Between \code{0} and \code{100}. Filter bins and re-calculate colour
 by \code{upper_percentile}. Cells with \code{value < upper_percentile} will be hidden.}
 
 \item{color_scale_type}{<\code{"quantize"} | \code{"linear"} | \code{"quantile"} | \code{"ordinal"}> The scaling
 function used to determine the colour of a the grid cell.}
 
-\item{elevation_domain}{<\code{numeric}> The elevation scale input domain. Defaults to the range
+\item{elevation_domain}{<\code{number}> The elevation scale input domain. Defaults to the range
 of the aggregated weights in each bin.}
 
-\item{elevation_range}{<\code{numeric}> The elevation scale output range.}
+\item{elevation_range}{<\code{number}> The elevation scale output range.}
 
 \item{get_elevation_value}{<\code{\link[htmlwidgets:JS]{JS}}> After data objects are aggregated into
 bins, this accessor is called on each bin to get the value that its elevation is based on.
@@ -131,22 +131,22 @@ Accepts a single numeric value, a numeric scale, or a
 \item{elevation_aggregation}{<\code{"SUM"} | \code{"MEAN"} | \code{"MIN"} | \code{"MAX"}> Operation used to
 aggregate data values/weights to calculate a bin's elevation value.}
 
-\item{elevation_lower_percentile}{<\code{numeric}> Between \code{0} and \code{100}. Filter bins and
+\item{elevation_lower_percentile}{<\code{number}> Between \code{0} and \code{100}. Filter bins and
 re-calculate elevation by \code{elevation_lower_percentile}.
 Cells with \code{value < elevation_lower_percentile} will be hidden.}
 
-\item{elevation_upper_percentile}{<\code{numeric}> Between \code{0} and \code{100}. Filter bins and
+\item{elevation_upper_percentile}{<\code{number}> Between \code{0} and \code{100}. Filter bins and
 re-calculate elevation by \code{elevation_upper_percentile}.
 Cells with \code{value < elevation_upper_percentile} will be hidden.}
 
-\item{elevation_scale}{<\code{numeric}> The elevation multiplier.}
+\item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
 \item{elevation_scale_type}{<\code{"quantize"} | \code{"linear"} | \code{"quantile"} | \code{"ordinal"}> The scaling
 function used to determine the elevation of a the grid cell.}
 
-\item{cell_size}{<\code{numeric}> The size of each cell in metres.}
+\item{cell_size}{<\code{number}> The size of each cell in metres.}
 
-\item{coverage}{<\code{numeric}> Radius multiplier, between 0 - 1. The radius of each disk is
+\item{coverage}{<\code{number}> Radius multiplier, between 0 - 1. The radius of each disk is
 calculated by \code{coverage * radius}.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, an
