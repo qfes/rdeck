@@ -100,7 +100,7 @@ const Continuous = ({ range, domain, ticks }: AccessorScaleContinuous<Color>) =>
           />
         ))}
       </svg>
-      <Ticks {...{ ticks }} y={-3} />
+      <Ticks {...{ ticks }} y={-2} />
     </svg>
   );
 };
@@ -117,7 +117,7 @@ const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
           <rect key={index} width={20} height={TICK_HEIGHT} y={index * TICK_HEIGHT} fill={color} />
         ))}
       </svg>
-      <Ticks {...{ ticks }} y={-3} />
+      <Ticks {...{ ticks }} y={-2} />
     </svg>
   );
 };
