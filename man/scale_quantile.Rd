@@ -16,28 +16,31 @@ scale_color_quantile(
 scale_quantile(col, range = 1:5, na_value = 0, legend = FALSE)
 }
 \arguments{
-\item{col}{The name of the column containing data to be scaled. Can be either
-a named column (non-standard evaluation), or an expression evaluating a string.}
+\item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
+Can be either a named column (non-standard evaluation), or an expression evaluating a string.}
 
-\item{palette}{The color palette of the color scale. Must be a vector of
+\item{palette}{<\code{color}> The colour palette of the colour scale. Must be a vector of
 rgb\link{a} hex strings of length >= 2.}
 
-\item{na_color}{The color value for \code{NA} input values.}
+\item{na_color}{<\code{color}> The colour value for \code{NA} input values.}
 
-\item{tick_format}{A function taking a vector of ticks returning formatted ticks.}
+\item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
 
-\item{legend}{Indicate whether the legend should be displayed for this scale.}
+\item{legend}{<\code{logical}> Indicate whether the legend should be displayed for this scale.}
 
-\item{range}{The output range of the numeric scale. Must be be a numeric vector of
+\item{range}{<\code{numeric}> The output range of the numeric scale. Must be be a numeric vector of
 length >= 2.}
 
-\item{na_value}{The output value for \code{NA} input values.}
+\item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
 Creates a quantile scale. Number of quantiles is defined by the length of
 \code{palette} or \code{range}.
-As the quantiles are computed from input data, quantile scales
-are incompatible with layers that load data from a url. (e.g \code{mvt_layer}).
+}
+\note{
+As the quantiles are computed from input data, quantile scales are incompatible with
+layers that load data from a url (e.g \code{mvt_layer}). If quantiles for remote data are
+known, a quantile scale can be constructed manually with \code{\link[=scale_threshold]{scale_threshold()}}.
 }
 \seealso{
 Other scales: 

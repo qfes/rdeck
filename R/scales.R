@@ -65,7 +65,7 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
 #' Creates a continuous power scale. Similar to a [scale_linear()] except that an exponential
 #' transform is applied to each input.
 #' @name scale_power
-#' @param exponent The power exponent.
+#' @param exponent <`number`> The power exponent.
 #' @inheritParams scale_props
 #' @family scales
 #' @export
@@ -132,9 +132,9 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
 #'
 #' Creates a continuous log scale. Similar to a [scale_linear()] except that an logarithmic
 #' transform is applied to each input.
-#' @note undefined behaviour if limits crosses 0.
+#' @note undefined behaviour if `limits` crosses 0.
 #' @name scale_log
-#' @param base The log base.
+#' @param base <`number`> The log base.
 #' @inheritParams scale_props
 #' @family scales
 #' @export
@@ -199,10 +199,10 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
 
 #' Scale threshold
 #'
-#' Creates a discrete threshold scale. Threshold scale is similar to `scale_quantize()`, except
+#' Creates a discrete threshold scale. Threshold scale is similar to [scale_quantize()], except
 #' that threshold values can be arbitrary.
 #' @name scale_threshold
-#' @param breaks The threshold breaks of the scale. Must be `length(palette) - 1`
+#' @param breaks <`numeric`> The threshold breaks of the scale. Must be `length(palette) - 1`
 #' or `length(range) - 1`, such that each `break` defines boundary between between a
 #' pair of a `palette` or `range` entries.
 #' @inheritParams scale_props
@@ -265,8 +265,12 @@ scale_threshold <- function(col, range = 0:1, na_value = 0,
 #'
 #' Creates a quantile scale. Number of quantiles is defined by the length of
 #' `palette` or `range`.
-#' As the quantiles are computed from input data, quantile scales
-#' are incompatible with layers that load data from a url. (e.g `mvt_layer`).
+#'
+#' @note
+#' As the quantiles are computed from input data, quantile scales are incompatible with
+#' layers that load data from a url (e.g `mvt_layer`). If quantiles for remote data are
+#' known, a quantile scale can be constructed manually with [scale_threshold()].
+#'
 #' @name scale_quantile
 #' @inheritParams scale_props
 #' @family scales
@@ -318,11 +322,11 @@ scale_quantile <- function(col, range = 1:5, na_value = 0, legend = FALSE) {
 #'
 #' Creates a categorical scale.
 #' @name scale_category
-#' @param levels The category levels. If NULL, will be populated from input data.
-#' The order of the levels is determined by `levels()` for factors & `unique()` otherwise.
-#' Length of `levels` must equal `palette` or `range`, such that each category level is
-#' assigned a `color` or `range` value.
-#' @param unmapped_color The color representing unmapped levels.
+#' @param levels <`factor` | `character` | `logical`> The category levels. If NULL, will be
+#' populated from input data. The order of the levels is determined by `levels()` for factors
+#' & `unique()` otherwise. Length of `levels` must equal `palette` or `range`, such that each
+#' category level is assigned a `color` or `range` value.
+#' @param unmapped_color <[`color`]> The colour representing unmapped levels.
 #' @inheritParams scale_props
 #' @family scales
 #' @export
@@ -350,7 +354,7 @@ scale_color_category <- function(col, palette, unmapped_color = "#000000", level
 }
 
 #' @name scale_category
-#' @param unmapped_value The value representing unmapped levels.
+#' @param unmapped_value <`number`> The value representing unmapped levels.
 #' @export
 scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, legend = FALSE) {
   col <- rlang::enquo(col)
@@ -437,24 +441,24 @@ scale <- function(scale, ...) {
 #' @title scale_props
 #' @name scale_props
 #' @rdname _scale_props
-#' @param col The name of the column containing data to be scaled. Can be either
-#' a named column (non-standard evaluation), or an expression evaluating a string.
-#' @param palette The color palette of the color scale. Must be a vector of
+#' @param col <`name` | `string`> The name of the column containing data to be scaled.
+#' Can be either a named column (non-standard evaluation), or an expression evaluating a string.
+#' @param palette <`color`> The colour palette of the colour scale. Must be a vector of
 #' rgb[a] hex strings of length >= 2.
-#' @param range The output range of the numeric scale. Must be be a numeric vector of
+#' @param range <`numeric`> The output range of the numeric scale. Must be be a numeric vector of
 #' length >= 2.
-#' @param na_color The color value for `NA` input values.
-#' @param na_value The output value for `NA` input values.
-#' @param limits The limits of the scale's input. If not null, must be a numeric vector
-#' of length 2, representing `c(min, max)`. Values outside the range of `limits` will be
-#' constrained to the limits of the scale.
-#' @param breaks The breaks of the scale, allowing to define a piecewise scale. If not
-#' null, must be `length(palette) - 2` or `length(range) - 2`, such that each `break`
+#' @param na_color <`color`> The colour value for `NA` input values.
+#' @param na_value <`number`> The output value for `NA` input values.
+#' @param limits <`c(min, max)`> The limits of the scale's input. If not null, must be a
+#' numeric vector of length 2, representing `c(min, max)`. Values outside the range of
+#' `limits` will be clamped to the limits of the scale.
+#' @param breaks <`numeric`> The breaks of the scale, allowing to define a piecewise scale.
+#' If not null, must be `length(palette) - 2` or `length(range) - 2`, such that each `break`
 #' is mapped to a `palette` or `range` entry.
-#' @param n_ticks The number of ticks to display on the legend. Includes the domain
+#' @param n_ticks <`number`> The number of ticks to display on the legend. Includes the domain
 #' of the scale.
-#' @param tick_format A function taking a vector of ticks returning formatted ticks.
-#' @param legend Indicate whether the legend should be displayed for this scale.
+#' @param tick_format <`function`> A function taking a vector of ticks returning formatted ticks.
+#' @param legend <`logical`> Indicate whether the legend should be displayed for this scale.
 NULL
 
 #' Format number

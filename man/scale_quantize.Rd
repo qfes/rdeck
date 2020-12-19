@@ -17,26 +17,26 @@ scale_color_quantize(
 scale_quantize(col, range = 0:1, na_value = 0, limits = NULL, legend = FALSE)
 }
 \arguments{
-\item{col}{The name of the column containing data to be scaled. Can be either
-a named column (non-standard evaluation), or an expression evaluating a string.}
+\item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
+Can be either a named column (non-standard evaluation), or an expression evaluating a string.}
 
-\item{palette}{The color palette of the color scale. Must be a vector of
+\item{palette}{<\code{color}> The colour palette of the colour scale. Must be a vector of
 rgb\link{a} hex strings of length >= 2.}
 
-\item{na_color}{The color value for \code{NA} input values.}
+\item{na_color}{<\code{color}> The colour value for \code{NA} input values.}
 
-\item{limits}{The limits of the scale's input. If not null, must be a numeric vector
-of length 2, representing \code{c(min, max)}. Values outside the range of \code{limits} will be
-constrained to the limits of the scale.}
+\item{limits}{<\code{c(min, max)}> The limits of the scale's input. If not null, must be a
+numeric vector of length 2, representing \code{c(min, max)}. Values outside the range of
+\code{limits} will be clamped to the limits of the scale.}
 
-\item{tick_format}{A function taking a vector of ticks returning formatted ticks.}
+\item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
 
-\item{legend}{Indicate whether the legend should be displayed for this scale.}
+\item{legend}{<\code{logical}> Indicate whether the legend should be displayed for this scale.}
 
-\item{range}{The output range of the numeric scale. Must be be a numeric vector of
+\item{range}{<\code{numeric}> The output range of the numeric scale. Must be be a numeric vector of
 length >= 2.}
 
-\item{na_value}{The output value for \code{NA} input values.}
+\item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
 Creates a discrete quantize scale. A more restrictive version of \code{\link[=scale_threshold]{scale_threshold()}} in

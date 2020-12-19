@@ -28,42 +28,42 @@ scale_log(
 )
 }
 \arguments{
-\item{col}{The name of the column containing data to be scaled. Can be either
-a named column (non-standard evaluation), or an expression evaluating a string.}
+\item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
+Can be either a named column (non-standard evaluation), or an expression evaluating a string.}
 
-\item{palette}{The color palette of the color scale. Must be a vector of
+\item{palette}{<\code{color}> The colour palette of the colour scale. Must be a vector of
 rgb\link{a} hex strings of length >= 2.}
 
-\item{na_color}{The color value for \code{NA} input values.}
+\item{na_color}{<\code{color}> The colour value for \code{NA} input values.}
 
-\item{base}{The log base.}
+\item{base}{<\code{number}> The log base.}
 
-\item{limits}{The limits of the scale's input. If not null, must be a numeric vector
-of length 2, representing \code{c(min, max)}. Values outside the range of \code{limits} will be
-constrained to the limits of the scale.}
+\item{limits}{<\code{c(min, max)}> The limits of the scale's input. If not null, must be a
+numeric vector of length 2, representing \code{c(min, max)}. Values outside the range of
+\code{limits} will be clamped to the limits of the scale.}
 
-\item{breaks}{The breaks of the scale, allowing to define a piecewise scale. If not
-null, must be \code{length(palette) - 2} or \code{length(range) - 2}, such that each \code{break}
+\item{breaks}{<\code{numeric}> The breaks of the scale, allowing to define a piecewise scale.
+If not null, must be \code{length(palette) - 2} or \code{length(range) - 2}, such that each \code{break}
 is mapped to a \code{palette} or \code{range} entry.}
 
-\item{n_ticks}{The number of ticks to display on the legend. Includes the domain
+\item{n_ticks}{<\code{number}> The number of ticks to display on the legend. Includes the domain
 of the scale.}
 
-\item{tick_format}{A function taking a vector of ticks returning formatted ticks.}
+\item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
 
-\item{legend}{Indicate whether the legend should be displayed for this scale.}
+\item{legend}{<\code{logical}> Indicate whether the legend should be displayed for this scale.}
 
-\item{range}{The output range of the numeric scale. Must be be a numeric vector of
+\item{range}{<\code{numeric}> The output range of the numeric scale. Must be be a numeric vector of
 length >= 2.}
 
-\item{na_value}{The output value for \code{NA} input values.}
+\item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
 Creates a continuous log scale. Similar to a \code{\link[=scale_linear]{scale_linear()}} except that an logarithmic
 transform is applied to each input.
 }
 \note{
-undefined behaviour if limits crosses 0.
+undefined behaviour if \code{limits} crosses 0.
 }
 \seealso{
 Other scales: 

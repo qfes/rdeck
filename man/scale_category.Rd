@@ -23,27 +23,27 @@ scale_category(
 )
 }
 \arguments{
-\item{col}{The name of the column containing data to be scaled. Can be either
-a named column (non-standard evaluation), or an expression evaluating a string.}
+\item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
+Can be either a named column (non-standard evaluation), or an expression evaluating a string.}
 
-\item{palette}{The color palette of the color scale. Must be a vector of
+\item{palette}{<\code{color}> The colour palette of the colour scale. Must be a vector of
 rgb\link{a} hex strings of length >= 2.}
 
-\item{unmapped_color}{The color representing unmapped levels.}
+\item{unmapped_color}{<\code{\link{color}}> The colour representing unmapped levels.}
 
-\item{levels}{The category levels. If NULL, will be populated from input data.
-The order of the levels is determined by \code{levels()} for factors & \code{unique()} otherwise.
-Length of \code{levels} must equal \code{palette} or \code{range}, such that each category level is
-assigned a \code{color} or \code{range} value.}
+\item{levels}{<\code{factor} | \code{character} | \code{logical}> The category levels. If NULL, will be
+populated from input data. The order of the levels is determined by \code{levels()} for factors
+& \code{unique()} otherwise. Length of \code{levels} must equal \code{palette} or \code{range}, such that each
+category level is assigned a \code{color} or \code{range} value.}
 
-\item{tick_format}{A function taking a vector of ticks returning formatted ticks.}
+\item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
 
-\item{legend}{Indicate whether the legend should be displayed for this scale.}
+\item{legend}{<\code{logical}> Indicate whether the legend should be displayed for this scale.}
 
-\item{range}{The output range of the numeric scale. Must be be a numeric vector of
+\item{range}{<\code{numeric}> The output range of the numeric scale. Must be be a numeric vector of
 length >= 2.}
 
-\item{unmapped_value}{The value representing unmapped levels.}
+\item{unmapped_value}{<\code{number}> The value representing unmapped levels.}
 }
 \description{
 Creates a categorical scale.
