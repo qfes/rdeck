@@ -66,16 +66,18 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{image}{The image to display. Either a string interpreted as a URL or Data URL,
-or an array raster image.}
+\item{image}{<\code{string} | \code{array}> The image to display. Either a string interpreted as a
+URL or Data URL, or an array raster image.}
 
 \item{bounds}{<\code{bbox}> A sf::st_bbox() object with CRS \href{http://epsg.io/4326}{EPSG:4326}.}
 
-\item{desaturate}{number}
+\item{desaturate}{<\code{numeric}> The desaturation of the bitmap. Between \code{0} and \code{1}, \code{being}
+the original colour, \code{1} being greyscale.}
 
-\item{transparent_color}{color}
+\item{transparent_color}{<\code{\link{color}}> The colour to use for transparent pixels.}
 
-\item{tint_color}{color}
+\item{tint_color}{<\code{\link{color}}> The colour to tint the bitmap by. Alpha channel is ignored
+if supplied.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>

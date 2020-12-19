@@ -77,7 +77,9 @@ by \code{size_units}.}
 \code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{get_normal}{<\code{\link{accessor}}>}
+\item{get_normal}{<\code{\link{accessor}} | \code{numeric}> The normal of each object, in \code{c(nx, ny, nz)}.
+Accepts a length-3 numeric vector, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} 3-column matrix column.}
 
 \item{get_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.
 Accepts a single colour value, a colour scale, or a

@@ -158,3 +158,26 @@ validate_image.layer <- function(layer) {
     assert_type(layer$image, c("character", "array"))
   }
 }
+
+# validate get_normal
+validate_get_normal.layer <- function(layer) {
+  get_normal <- layer$get_normal
+  assert_type(get_normal, c("integer", "numeric", "accessor"))
+
+  if (inherits(get_normal, c("integer", "numeric"))) {
+    assert_length(get_normal, 3)
+    return()
+  }
+
+  data <- layer$data
+  if (inherits(data, "data.frame")) {
+    assert_col_exists(get_normal$col, data)
+    assert_type(data[[get_normal$col]], "matrix")
+    if (ncol(data[[get_normal$col]]) != 3) {
+      rlang::abort(
+        "get_normal must be a matrix of 3 columns",
+        "rdeck_error"
+      )
+    }
+  }
+}

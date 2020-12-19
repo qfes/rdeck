@@ -58,7 +58,9 @@ NULL
 #'
 #' @name point_cloud_layer
 #' @inherit layer_props
-#' @param get_normal <[`accessor`]>
+#' @param get_normal <[`accessor`] | `numeric`> The normal of each object, in `c(nx, ny, nz)`.
+#' Accepts a length-3 numeric vector, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) 3-column matrix column.
 #' @eval deckgl_docs("layers", "point-cloud-layer")
 #' @family core-layers
 #' @family layers
