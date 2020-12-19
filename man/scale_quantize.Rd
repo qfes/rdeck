@@ -18,7 +18,8 @@ scale_quantize(col, range = 0:1, na_value = 0, limits = NULL, legend = FALSE)
 }
 \arguments{
 \item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
-Can be either a named column (non-standard evaluation), or an expression evaluating a string.}
+Can be either a named column (non-standard evaluation), or an expression evaluating a string.
+Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{palette}{<\code{color}> The colour palette of the colour scale. Must be a vector of
 rgb\link{a} hex strings of length >= 2.}
