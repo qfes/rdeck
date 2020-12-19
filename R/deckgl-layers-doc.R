@@ -559,16 +559,16 @@ NULL
 #' See deck.gl [TileLayer](https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata).
 #' @param extent <`c(min_x, min_y, max_x, max_y)`> Tiles in this bounding box
 #'   will be rendered at `min_zoom`, when zoomed out below `min_zoom`.
-#' @param tile_size <`number`> A power of 2 that is the pixel dimensions of the tile.
-#' @param max_zoom <`number`> Tiles above this zoom level are not shown. Defaults to `NULL`.
-#' @param min_zoom <`number`> Tiles below this zoom level are not shown. Defaults to `0`.
-#' @param max_cache_size <`number`> Maximum number of tiles that can be cached. Defaults to
+#' @param tile_size <`numeric`> A power of 2 that is the pixel dimensions of the tile.
+#' @param max_zoom <`numeric`> Tiles above this zoom level are not shown. Defaults to `NULL`.
+#' @param min_zoom <`numeric`> Tiles below this zoom level are not shown. Defaults to `0`.
+#' @param max_cache_size <`numeric`> Maximum number of tiles that can be cached. Defaults to
 #' 5x the number of tiles in current viewport.
-#' @param max_cache_byte_size <`number`> Maximum memory used for caching tiles.
+#' @param max_cache_byte_size <`numeric`> Maximum memory used for caching tiles.
 #' @param refinement_strategy <`"best-available"` | `"no-overlap"` | `"never"`> How the tile
 #' layer refines visibility of tiles. Defaults to `"best-available"`.
 #' @param z_range <`c(min, max)`> Array representing the range of heights in the tile.
-#' @param max_requests <`number`> Maximum number of concurrent HTTP
+#' @param max_requests <`numeric`> Maximum number of concurrent HTTP
 #'   requests across all specified tile provider domains. If a negative number is
 #'   supplied no throttling occurs (HTTP/2 only).
 #' @param texture not yet supported.
