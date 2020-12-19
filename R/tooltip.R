@@ -42,7 +42,7 @@ eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
     # TRUE -> everything()
     tidy_expr <- if (rlang::is_true(expr)) rlang::expr(!!all_cols) else quo
     tidy_cols <- tidyselect::eval_select(tidy_expr, data) %>%
-        names()
+      names()
 
     # remove sfc cols
     is_sfc <- vapply(data, function(col) inherits(col, "sfc"), logical(1))

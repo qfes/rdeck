@@ -32,10 +32,10 @@ scale_log(
 Can be either a named column (non-standard evaluation), or an expression evaluating a string.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{palette}{<\code{color}> The colour palette of the colour scale. Must be a vector of
+\item{palette}{<\code{\link{color}}> The colour palette of the colour scale. Must be a vector of
 rgb\link{a} hex strings of length >= 2.}
 
-\item{na_color}{<\code{color}> The colour value for \code{NA} input values.}
+\item{na_color}{<\code{\link{color}}> The colour value for \code{NA} input values.}
 
 \item{base}{<\code{number}> The log base.}
 

@@ -31,7 +31,9 @@ NULL
 #' @param icon_mapping object
 #' @param billboard <`logical`> If `TRUE`, the text label always faces the camera, otherwise it
 #' faces up (z).
-#' @param alpha_cutoff number
+#' @param alpha_cutoff <`number`> Discard pixels whose opacity is below this threshold.
+#' A discarded pixel would create a "hole" in the icon that is not considered part of
+#' the object.
 #' @param get_icon <[`accessor`]>
 #' @param get_size <[`accessor`] | [`scale`] | `number`> The icon size of each text label,
 #' in units specified by `size_units`.
@@ -71,9 +73,9 @@ NULL
 #' @name scatterplot_layer
 #' @inherit layer_props
 #' @param radius_units <`"pixels"` | `"meters"`> The units of point radius.
-#' @param radius_scale number
-#' @param radius_min_pixels number
-#' @param radius_max_pixels number
+#' @param radius_scale <`number`> The radius multiplier for all points.
+#' @param radius_min_pixels <`number`> The minimum radius in pixels.
+#' @param radius_max_pixels <`number`> The maximum radius in pixels.
 #' @eval deckgl_docs("layers", "scatterplot-layer")
 #' @family core-layers
 #' @family layers
@@ -143,14 +145,22 @@ NULL
 #' @inherit layer_props
 #' @param billboard <`logical`> If `TRUE`, the text label always faces the camera, otherwise it
 #' faces up (z).
-#' @param background_color color
-#' @param font_family unknown
-#' @param font_weight unknown
-#' @param line_height number
-#' @param font_settings object
-#' @param word_break unknown
-#' @param max_width number
-#' @param get_text <[`accessor`]>
+#' @param background_color <[`color`]> The colour to use for the text background. The alpha
+#' channel is ignored. The alpha of the background matches the opacity of each object.
+#' @param font_family <`string`> Specifies a prioritised list of one or more font family names.
+#' See [font-family](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family).
+#' @param font_weight <`"normal"` | `"bold"` | `100:900`> The font weight. See
+#' [font-weight](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
+#' @param line_height <`number`> A unitless number that will be multiplied with `get_size`
+#' to set the line height.
+#' @param font_settings <[`font_settings`]> Advanced options for fine tuning the appearance
+#' and performance of the generated `font_atlas`.
+#' @param word_break <`"break-word"` | `"break-all"`> Requires a valid `max_width`.
+#' @param max_width <`number`> Used together with `word_break` for wrapping text. Specifies
+#' the width limit to break the text into multiple lines.
+#' @param get_text <[`accessor`]> The text value of each text label. Accepts a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) character column of
+#' labels.
 #' @param get_size <[`accessor`] | [`scale`] | `number`> The font size of each text label,
 #' in units specified by `size_units`.
 #' Accepts a single numeric value, a numeric scale, or a
@@ -158,8 +168,12 @@ NULL
 #' @param get_angle <[`accessor`] | `number`> The rotating angle of each icon in degrees.
 #' Accepts a single numeric value, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param get_text_anchor <[`accessor`]>
-#' @param get_alignment_baseline <[`accessor`]>
+#' @param get_text_anchor <[`accessor`] | `"start"` | `"middle"` | `"end"`> The text label
+#' anchor. May be a single value, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) character column.
+#' @param get_alignment_baseline <[`accessor`] | `"top"` | `"center"` | `"bottom"`> The text
+#' label alignment baseline. May be a single value, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) character column.
 #' @eval deckgl_docs("layers", "text-layer")
 #' @family core-layers
 #' @family layers
@@ -319,8 +333,8 @@ NULL
 #' @inherit layer_props
 #' @param elevation_data url
 #' @param mesh_max_error number
-#' @param bounds <`bbox`> A sf::st_bbox() object with CRS [EPSG:4326](http://epsg.io/4326). Must be supplied hen using
-#' non-tiled elevation data.
+#' @param bounds <`bbox`> A [`st_bbox`][sf::st_bbox] object with CRS
+#' [EPSG:4326](http://epsg.io/4326). Must be supplied when using non-tiled elevation data.
 #' @param color color
 #' @param elevation_decoder object
 #' @param worker_url string
@@ -429,7 +443,8 @@ NULL
 #' @param width_scale <`number`> The scaling multiplier for the width of each line.
 #' @param width_min_pixels <`number`> The minimum line width in pixels.
 #' @param width_max_pixels <`number`> The maximum line width in pixels.
-#' @param bounds <`bbox`> A sf::st_bbox() object with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param bounds  <`bbox`> A [`st_bbox`][sf::st_bbox] object with CRS
+#' [EPSG:4326](http://epsg.io/4326).
 #' @param billboard <`logical`> If `TRUE`, extrude the path in screen space (width always faces)
 #' the camera; if `FALSE`, the width always faces up (z).
 #' @param size_scale <`number`> The size multiplier.

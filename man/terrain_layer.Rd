@@ -112,8 +112,8 @@ supplied no throttling occurs (HTTP/2 only).}
 
 \item{mesh_max_error}{number}
 
-\item{bounds}{<\code{bbox}> A sf::st_bbox() object with CRS \href{http://epsg.io/4326}{EPSG:4326}. Must be supplied hen using
-non-tiled elevation data.}
+\item{bounds}{<\code{bbox}> A \code{\link[sf:st_bbox]{st_bbox}} object with CRS
+\href{http://epsg.io/4326}{EPSG:4326}. Must be supplied when using non-tiled elevation data.}
 
 \item{color}{color}
 

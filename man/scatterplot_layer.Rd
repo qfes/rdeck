@@ -78,11 +78,11 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{radius_units}{<\code{"pixels"} | \code{"meters"}> The units of point radius.}
 
-\item{radius_scale}{number}
+\item{radius_scale}{<\code{number}> The radius multiplier for all points.}
 
-\item{radius_min_pixels}{number}
+\item{radius_min_pixels}{<\code{number}> The minimum radius in pixels.}
 
-\item{radius_max_pixels}{number}
+\item{radius_max_pixels}{<\code{number}> The maximum radius in pixels.}
 
 \item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of line width.}
 

@@ -21,7 +21,6 @@
 <% } -%>
 <%# validate accessor -%>
 <% const col = `data[[${name}$col]]`; -%>
-assert_type(<%- name -%>, "accessor")
 data <- layer$data
 if (inherits(data, "data.frame")) {
   assert_col_exists(<%- name -%>$col, data)

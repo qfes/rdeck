@@ -93,21 +93,29 @@ faces up (z).}
 
 \item{size_max_pixels}{<\code{number}> The maximum size in pixels.}
 
-\item{background_color}{color}
+\item{background_color}{<\code{\link{color}}> The colour to use for the text background. The alpha
+channel is ignored. The alpha of the background matches the opacity of each object.}
 
-\item{font_family}{unknown}
+\item{font_family}{<\code{string}> Specifies a prioritised list of one or more font family names.
+See \href{https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}{font-family}.}
 
-\item{font_weight}{unknown}
+\item{font_weight}{<\code{"normal"} | \code{"bold"} | \code{100:900}> The font weight. See
+\href{https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight}{font-weight}}
 
-\item{line_height}{number}
+\item{line_height}{<\code{number}> A unitless number that will be multiplied with \code{get_size}
+to set the line height.}
 
-\item{font_settings}{object}
+\item{font_settings}{<\code{\link{font_settings}}> Advanced options for fine tuning the appearance
+and performance of the generated \code{font_atlas}.}
 
-\item{word_break}{unknown}
+\item{word_break}{<\code{"break-word"} | \code{"break-all"}> Requires a valid \code{max_width}.}
 
-\item{max_width}{number}
+\item{max_width}{<\code{number}> Used together with \code{word_break} for wrapping text. Specifies
+the width limit to break the text into multiple lines.}
 
-\item{get_text}{<\code{\link{accessor}}>}
+\item{get_text}{<\code{\link{accessor}}> The text value of each text label. Accepts a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column of
+labels.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, an
 \code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
@@ -126,9 +134,13 @@ Accepts a single numeric value, a numeric scale, or a
 Accepts a single numeric value, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{get_text_anchor}{<\code{\link{accessor}}>}
+\item{get_text_anchor}{<\code{\link{accessor}} | \code{"start"} | \code{"middle"} | \code{"end"}> The text label
+anchor. May be a single value, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column.}
 
-\item{get_alignment_baseline}{<\code{\link{accessor}}>}
+\item{get_alignment_baseline}{<\code{\link{accessor}} | \code{"top"} | \code{"center"} | \code{"bottom"}> The text
+label alignment baseline. May be a single value, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column.}
 
 \item{get_pixel_offset}{<\code{\link{accessor}} | \code{number}>}
 

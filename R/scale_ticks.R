@@ -47,7 +47,7 @@ ticks <- function(limits, length, tick_format) {
 
 format_ticks <- function(ticks, tick_format) {
   if (is.null(tick_format)) {
-     return(ticks)
+    return(ticks)
   }
 
   formatted_ticks <- tick_format(ticks)

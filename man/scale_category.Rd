@@ -27,7 +27,7 @@ scale_category(
 Can be either a named column (non-standard evaluation), or an expression evaluating a string.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{palette}{<\code{color}> The colour palette of the colour scale. Must be a vector of
+\item{palette}{<\code{\link{color}}> The colour palette of the colour scale. Must be a vector of
 rgb\link{a} hex strings of length >= 2.}
 
 \item{unmapped_color}{<\code{\link{color}}> The colour representing unmapped levels.}

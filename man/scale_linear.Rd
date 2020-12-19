@@ -30,10 +30,10 @@ scale_linear(
 Can be either a named column (non-standard evaluation), or an expression evaluating a string.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{palette}{<\code{color}> The colour palette of the colour scale. Must be a vector of
+\item{palette}{<\code{\link{color}}> The colour palette of the colour scale. Must be a vector of
 rgb\link{a} hex strings of length >= 2.}
 
-\item{na_color}{<\code{color}> The colour value for \code{NA} input values.}
+\item{na_color}{<\code{\link{color}}> The colour value for \code{NA} input values.}
 
 \item{limits}{<\code{c(min, max)}> The limits of the scale's input. If not null, must be a
 numeric vector of length 2, representing \code{c(min, max)}. Values outside the range of

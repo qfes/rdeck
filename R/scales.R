@@ -444,11 +444,11 @@ scale <- function(scale, ...) {
 #' @param col <`name` | `string`> The name of the column containing data to be scaled.
 #' Can be either a named column (non-standard evaluation), or an expression evaluating a string.
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
-#' @param palette <`color`> The colour palette of the colour scale. Must be a vector of
+#' @param palette <[`color`]> The colour palette of the colour scale. Must be a vector of
 #' rgb[a] hex strings of length >= 2.
 #' @param range <`numeric`> The output range of the numeric scale. Must be be a numeric vector of
 #' length >= 2.
-#' @param na_color <`color`> The colour value for `NA` input values.
+#' @param na_color <[`color`]> The colour value for `NA` input values.
 #' @param na_value <`number`> The output value for `NA` input values.
 #' @param limits <`c(min, max)`> The limits of the scale's input. If not null, must be a
 #' numeric vector of length 2, representing `c(min, max)`. Values outside the range of

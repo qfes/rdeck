@@ -69,7 +69,8 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{image}{<\code{string} | \code{array}> The image to display. Either a string interpreted as a
 URL or Data URL, or an array raster image.}
 
-\item{bounds}{<\code{bbox}> A sf::st_bbox() object with CRS \href{http://epsg.io/4326}{EPSG:4326}.}
+\item{bounds}{<\code{bbox}> A \code{\link[sf:st_bbox]{st_bbox}} object with CRS
+\href{http://epsg.io/4326}{EPSG:4326}.}
 
 \item{desaturate}{<\code{number}> The desaturation of the bitmap. Between \code{0} and \code{1}, \code{being}
 the original colour, \code{1} being greyscale.}

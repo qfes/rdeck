@@ -91,7 +91,9 @@ faces up (z).}
 
 \item{size_max_pixels}{<\code{number}> The maximum size in pixels.}
 
-\item{alpha_cutoff}{number}
+\item{alpha_cutoff}{<\code{number}> Discard pixels whose opacity is below this threshold.
+A discarded pixel would create a "hole" in the icon that is not considered part of
+the object.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, an
 \code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports

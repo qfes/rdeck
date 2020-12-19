@@ -181,3 +181,58 @@ validate_get_normal.layer <- function(layer) {
     }
   }
 }
+
+# validate font_weight
+validate_font_weight.layer <- function(layer) {
+  font_weight <- layer$font_weight
+  assert_type(font_weight, c("character", "integer", "numeric"))
+  assert_scalar(font_weight)
+  assert_in(font_weight, c("normal",  "bold", seq(100, 900, length.out = 9)))
+}
+
+# validate word_break
+validate_word_break.layer <- function(layer) {
+  word_break <- layer$word_break
+  assert_is_string(word_break)
+  assert_in(word_break, c("break-word", "break-all"))
+}
+
+# validate get_text_anchor
+validate_get_text_anchor.layer <- function(layer) {
+  get_text_anchor <- layer$get_text_anchor
+  assert_not_null(get_text_anchor)
+  assert_type(get_text_anchor, c("character", "accessor"))
+
+  if (!inherits(get_text_anchor, "accessor")) {
+    assert_is_string(get_text_anchor)
+    assert_in(get_text_anchor, c("start", "middle", "end"))
+    return()
+  }
+
+  data <- layer$data
+  if (inherits(data, "data.frame")) {
+    assert_col_exists(get_text_anchor$col, data)
+    assert_type(data[[get_text_anchor$col]], "character")
+    assert_in(data[[get_text_anchor$col]], c("start", "middle", "end"))
+  }
+}
+
+# validate get_alignment_baseline
+validate_get_alignment_baseline.layer <- function(layer) {
+  get_alignment_baseline <- layer$get_alignment_baseline
+  assert_not_null(get_alignment_baseline)
+  assert_type(get_alignment_baseline, c("character", "accessor"))
+
+  if (!inherits(get_alignment_baseline, "accessor")) {
+    assert_is_string(get_alignment_baseline)
+    assert_in(get_alignment_baseline, c("top", "center", "bottom"))
+    return()
+  }
+
+  data <- layer$data
+  if (inherits(data, "data.frame")) {
+    assert_col_exists(get_alignment_baseline$col, data)
+    assert_type(data[[get_alignment_baseline$col]], "character")
+    assert_in(data[[get_alignment_baseline$col]], c("top", "center", "bottom"))
+  }
+}
