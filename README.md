@@ -20,7 +20,8 @@
 ## Installation
 
 ```r
+# install latest release
 remotes::install_github("anthonynorth/rdeck@*release")
-# bleeding edge
+# or install development version
 remotes::install_github("anthonynorth/rdeck")
 ```

@@ -1,6 +1,17 @@
 url: https://anthonynorth.github.io/rdeck
 
-destination: docs
+template:
+  params:
+    docsearch:
+      api_key: API_KEY
+      index_name: rdeck
+
+articles:
+  - title: Get started
+    navbar: ~
+    contents:
+      - rdeck
+
 reference:
   - title: Map
     desc: Create Deck.GL map
@@ -64,4 +75,3 @@ reference:
       - mvt_url
       - format_number
       - sfc_point
-
