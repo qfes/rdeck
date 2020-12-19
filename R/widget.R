@@ -17,9 +17,6 @@
 #' @param initial_view_state `view_state`
 #'  The initial view state of the map. See [view_state()] for details.
 #'
-#' @param layers `list`
-#'  The list of deck.gl layers.
-#'
 #' @param controller `logical`
 #'  If `NULL` or `FALSE`, the map is not interactive.
 #'

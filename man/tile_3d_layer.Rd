@@ -21,7 +21,7 @@ add_tile_3d_layer(
   get_point_color = "#000000",
   point_size = 1,
   load_options = list(),
-  loader = list(id = "3d-tiles", name = "3D Tiles", version = "2.3.6", extensions =
+  loader = list(id = "3d-tiles", name = "3D Tiles", version = "2.3.7", extensions =
     c("cmpt", "pnts", "b3dm", "i3dm"), mimeTypes = c("application/octet-stream"), tests =
     c("cmpt", "pnts", "b3dm", "i3dm"), parse = NULL, options = list(`3d-tiles` =
     list(loadGLTF = TRUE, decodeQuantizedPositions = FALSE, isTileset = "auto", tile =
@@ -30,6 +30,8 @@ add_tile_3d_layer(
 )
 }
 \arguments{
+\item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
+
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
 Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
@@ -64,25 +66,39 @@ highlighted by \code{highlight_color}.}
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
 \code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
-highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
-resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
+highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
+or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_point_color}{array}
+\item{get_point_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{point_size}{number}
+\item{point_size}{<\code{numeric}> The radius of all points in units specified
+by \code{size_units}.}
 
 \item{load_options}{object}
 
 \item{loader}{object}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}.}
+the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
 Tile 3D Layer
 }
 \seealso{
 \url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/geo-layers/tile3d-layer.md}
+
+Other geo-layers: 
+\code{\link{great_circle_layer}},
+\code{\link{h3_cluster_layer}},
+\code{\link{h3_hexagon_layer}},
+\code{\link{mvt_layer}},
+\code{\link{s2_layer}},
+\code{\link{terrain_layer}},
+\code{\link{tile_layer}},
+\code{\link{trips_layer}}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -107,21 +123,12 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
 \code{\link{terrain_layer}},
 \code{\link{text_layer}},
-\code{\link{tile_layer}},
-\code{\link{trips_layer}}
-
-Other geo-layers: 
-\code{\link{great_circle_layer}},
-\code{\link{h3_cluster_layer}},
-\code{\link{h3_hexagon_layer}},
-\code{\link{mvt_layer}},
-\code{\link{s2_layer}},
-\code{\link{terrain_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
 }

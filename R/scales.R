@@ -2,7 +2,7 @@
 #'
 #' Creates a continuous linear scale.
 #' @name scale_linear
-#' @inheritParams scale
+#' @inheritParams scale_props
 #' @family scales
 #' @export
 scale_color_linear <- function(col, palette, na_color = "#000000",
@@ -62,11 +62,11 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
 
 #' Scale power
 #'
-#' Creates a continuous power scale. Similar to a `scale_linear` except that an exponential
+#' Creates a continuous power scale. Similar to a [scale_linear()] except that an exponential
 #' transform is applied to each input.
 #' @name scale_power
 #' @param exponent The power exponent.
-#' @inheritParams scale
+#' @inheritParams scale_props
 #' @family scales
 #' @export
 scale_color_power <- function(col, palette, na_color = "#000000", exponent = 0.5,
@@ -130,12 +130,12 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
 
 #' Scale log
 #'
-#' Creates a continuous log scale. Similar to a `scale_linear` except that an logarithmic
+#' Creates a continuous log scale. Similar to a [scale_linear()] except that an logarithmic
 #' transform is applied to each input.
 #' @note undefined behaviour if limits crosses 0.
 #' @name scale_log
 #' @param base The log base.
-#' @inheritParams scale
+#' @inheritParams scale_props
 #' @family scales
 #' @export
 scale_color_log <- function(col, palette, na_color = "#000000", base = 10,
@@ -205,7 +205,7 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
 #' @param breaks The threshold breaks of the scale. Must be `length(palette) - 1`
 #' or `length(range) - 1`, such that each `break` defines boundary between between a
 #' pair of a `palette` or `range` entries.
-#' @inheritParams scale
+#' @inheritParams scale_props
 #' @family scales
 #' @export
 scale_color_threshold <- function(col, palette, na_color = "#000000",
@@ -268,7 +268,7 @@ scale_threshold <- function(col, range = 0:1, na_value = 0,
 #' As the quantiles are computed from input data, quantile scales
 #' are incompatible with layers that load data from a url. (e.g `mvt_layer`).
 #' @name scale_quantile
-#' @inheritParams scale
+#' @inheritParams scale_props
 #' @family scales
 #' @export
 scale_color_quantile <- function(col, palette, na_color = "#000000",
@@ -323,7 +323,7 @@ scale_quantile <- function(col, range = 1:5, na_value = 0, legend = FALSE) {
 #' Length of `levels` must equal `palette` or `range`, such that each category level is
 #' assigned a `color` or `range` value.
 #' @param unmapped_color The color representing unmapped levels.
-#' @inheritParams scale
+#' @inheritParams scale_props
 #' @family scales
 #' @export
 scale_color_category <- function(col, palette, unmapped_color = "#000000", levels = NULL,
@@ -374,10 +374,10 @@ scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, 
 
 #' Scale quantize
 #'
-#' Creates a discrete quantize scale. A more restrictive version of `scale_threshold` in
+#' Creates a discrete quantize scale. A more restrictive version of [scale_threshold()] in
 #' that each `break` is uniformly spaced between `limits`.
 #' @name scale_quantize
-#' @inheritParams scale
+#' @inheritParams scale_props
 #' @family scales
 #' @export
 scale_color_quantize <- function(col, palette, na_color = "#000000",
@@ -434,9 +434,9 @@ scale <- function(scale, ...) {
   )
 }
 
-#' @title scale
-#' @name scale
-#' @rdname _scale
+#' @title scale_props
+#' @name scale_props
+#' @rdname _scale_props
 #' @param col The name of the column containing data to be scaled. Can be either
 #' a named column (non-standard evaluation), or an expression evaluating a string.
 #' @param palette The color palette of the color scale. Must be a vector of
@@ -457,10 +457,17 @@ scale <- function(scale, ...) {
 #' @param legend Indicate whether the legend should be displayed for this scale.
 NULL
 
-format_number <- function(tick) {
+#' Format number
+#'
+#' Format numeric and integer values.
+#' @name format_number
+#' @param tick a vector of tick values
+#' @param digits the number of digits to output
+#' @export
+format_number <- function(tick, digits = 2) {
   formatC(
     tick,
-    digits = 2,
+    digits = digits,
     format = "f",
     big.mark = ",",
     drop0trailing = is.integer(tick)

@@ -17,5 +17,5 @@ mvt_url(tileset_id)
 Make a mapbox vector tile url template
 }
 \seealso{
-add_mvt_layer
+mvt_layer
 }

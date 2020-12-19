@@ -46,6 +46,7 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param session the shiny session
 #' @inheritParams rdeck
 #' @examples
+#' \dontrun{
 #' library(shiny)
 #' library(dplyr)
 #' library(h3jsr)
@@ -107,6 +108,7 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' }
 #'
 #' app <- shinyApp(ui, server)
+#' }
 #' @export
 rdeck_proxy <- function(id,
                         session = shiny::getDefaultReactiveDomain(),

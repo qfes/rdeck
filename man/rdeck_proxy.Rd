@@ -59,6 +59,7 @@ may omit the \code{data} prop to avoid re-serialising unchanged data. All other 
 assume their defaults if omitted.
 }
 \examples{
+\dontrun{
 library(shiny)
 library(dplyr)
 library(h3jsr)
@@ -120,4 +121,5 @@ server <- function(input, output, session) {
 }
 
 app <- shinyApp(ui, server)
+}
 }

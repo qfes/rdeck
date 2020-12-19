@@ -41,7 +41,7 @@ to_json.layer <- function(obj) {
 
 to_json.rdeck_props <- camel_case
 to_json.view_state <- camel_case
-to_json.bbox <- as.vector
+to_json.bbox <- function(obj) as.vector(obj)
 
 to_json.accessor <- function(obj) {
   utils::modifyList(

@@ -59,7 +59,7 @@ length >= 2.}
 \item{na_value}{The output value for \code{NA} input values.}
 }
 \description{
-Creates a continuous power scale. Similar to a \code{scale_linear} except that an exponential
+Creates a continuous power scale. Similar to a \code{\link[=scale_linear]{scale_linear()}} except that an exponential
 transform is applied to each input.
 }
 \seealso{

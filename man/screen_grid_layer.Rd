@@ -30,6 +30,8 @@ add_screen_grid_layer(
 )
 }
 \arguments{
+\item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
+
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
 Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
@@ -64,33 +66,50 @@ highlighted by \code{highlight_color}.}
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
 \code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
-highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
-resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
+highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
+or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
 \item{cell_size_pixels}{number}
 
 \item{cell_margin_pixels}{number}
 
-\item{color_domain}{unknown}
+\item{color_domain}{<\code{numeric}> The colour scale domain, default is set to the range
+of aggregated weights in each bin.}
 
-\item{color_range}{array}
+\item{color_range}{<\code{\link{color}}> The colour palette.
+\code{color_domain} is divided into \code{length(color_range)} equal segments, each mapped to
+one color in \code{color_range}.}
 
-\item{get_position}{<\code{\link{accessor}}>}
+\item{get_position}{<\code{\link{accessor}}> The position geometry column, an
+\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{get_weight}{<\code{\link{accessor}}>}
+\item{get_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The weight of each object.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{gpu_aggregation}{<\code{logical}>}
+\item{gpu_aggregation}{<\code{logical}> If \code{TRUE}, aggregation is performed on GPU if supported.
+Requires \code{WebGL2}.}
 
-\item{aggregation}{unknown}
+\item{aggregation}{<\code{"SUM"} | \code{"MEAN"} | \code{"MIN"} | \code{"MAX"}> Defines the aggregation function.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}.}
+the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
 Screen Grid Layer
 }
 \seealso{
 \url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/aggregation-layers/screen-grid-layer.md}
+
+Other aggregation-layers: 
+\code{\link{contour_layer}},
+\code{\link{cpu_grid_layer}},
+\code{\link{gpu_grid_layer}},
+\code{\link{grid_layer}},
+\code{\link{heatmap_layer}},
+\code{\link{hexagon_layer}}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -115,6 +134,7 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
 \code{\link{terrain_layer}},
@@ -122,14 +142,6 @@ Other layers:
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
-
-Other aggregation-layers: 
-\code{\link{contour_layer}},
-\code{\link{cpu_grid_layer}},
-\code{\link{gpu_grid_layer}},
-\code{\link{grid_layer}},
-\code{\link{heatmap_layer}},
-\code{\link{hexagon_layer}}
 }
 \concept{aggregation-layers}
 \concept{layers}

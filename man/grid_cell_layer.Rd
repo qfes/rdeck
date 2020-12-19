@@ -29,7 +29,7 @@ add_grid_cell_layer(
   line_width_scale = 1,
   line_width_min_pixels = 0,
   line_width_max_pixels = 9007199254740991,
-  extruded = TRUE,
+  extruded = FALSE,
   wireframe = FALSE,
   filled = TRUE,
   stroked = FALSE,
@@ -44,6 +44,8 @@ add_grid_cell_layer(
 )
 }
 \arguments{
+\item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
+
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
 Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
@@ -78,61 +80,97 @@ highlighted by \code{highlight_color}.}
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
 \code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
-highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
-resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
+highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
+or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{disk_resolution}{number}
+\item{disk_resolution}{<\code{numeric}> The number of sides to render the disk as. The disk
+is a regular polygon that fits inside the given \code{radius}. A higher resolution will yield
+a smoother look close-up, but also need more resources to render.}
 
-\item{vertices}{unknown}
+\item{vertices}{\code{matrix} Replace the default geometry (regular polygon that fits inside the
+unit circle) with a custom one. The length of the array must be at least \code{disk_resolution}.
+Each vertex is a row \code{c(x, y)} that is the offset from the instance position, relative
+to the radius.}
 
-\item{radius}{number}
+\item{radius}{<\code{numeric}> The radius of the object in metres.}
 
-\item{angle}{number}
+\item{angle}{<\code{numeric}> The disk rotation, counter-clockwise in radians.}
 
-\item{offset}{array}
+\item{offset}{<\code{numeric}> The disk offset from the position, relative to the radius.}
 
-\item{coverage}{number}
+\item{coverage}{<\code{numeric}> Radius multiplier, between 0 - 1. The radius of each disk is
+calculated by \code{coverage * radius}.}
 
-\item{elevation_scale}{number}
+\item{elevation_scale}{<\code{numeric}> The elevation multiplier.}
 
-\item{line_width_units}{unknown}
+\item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of line width.}
 
-\item{line_width_scale}{number}
+\item{line_width_scale}{<\code{numeric}> The line width multiplier.}
 
-\item{line_width_min_pixels}{number}
+\item{line_width_min_pixels}{<\code{numeric}> The minimum line width in pixels.}
 
-\item{line_width_max_pixels}{number}
+\item{line_width_max_pixels}{<\code{numeric}> The maximum line width in pixels.}
 
-\item{extruded}{<\code{logical}>}
+\item{extruded}{<\code{logical}> If \code{TRUE}, extrude objects along the z-axis; if \code{FALSE}, all
+objects will be flat.}
 
-\item{wireframe}{<\code{logical}>}
+\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded = TRUE}, draw a line wireframe of the
+object. The outline will have horizontal lines closing the top and bottom polygons and
+vertical lines for each vertex of the polygon.}
 
-\item{filled}{<\code{logical}>}
+\item{filled}{<\code{logical}> If \code{TRUE}, draw the filled area of each point.}
 
-\item{stroked}{<\code{logical}>}
+\item{stroked}{<\code{logical}> If \code{TRUE}, draw an outline around each object.}
 
-\item{get_position}{<\code{\link{accessor}}>}
+\item{get_position}{<\code{\link{accessor}}> The position geometry column, an
+\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{get_fill_color}{<\code{\link{accessor}}>}
+\item{get_fill_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The fill colour of each object.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_line_color}{<\code{\link{accessor}}>}
+\item{get_line_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The line colour of each object.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_line_width}{<\code{\link{accessor}}>}
+\item{get_line_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The outline of the object
+in units specified by \code{line_width_units}.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{get_elevation}{<\code{\link{accessor}}>}
+\item{get_elevation}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The elevation to extrude each
+object in the z-axis. Height units are in metres.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
 \item{material}{<\code{logical}>}
 
-\item{cell_size}{number}
+\item{cell_size}{<\code{numeric}> The size of each cell in metres.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}.}
+the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
 Grid Cell Layer
 }
 \seealso{
 \url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/layers/grid-cell-layer.md}
+
+Other core-layers: 
+\code{\link{arc_layer}},
+\code{\link{bitmap_layer}},
+\code{\link{column_layer}},
+\code{\link{geojson_layer}},
+\code{\link{icon_layer}},
+\code{\link{line_layer}},
+\code{\link{path_layer}},
+\code{\link{point_cloud_layer}},
+\code{\link{polygon_layer}},
+\code{\link{scatterplot_layer}},
+\code{\link{solid_polygon_layer}},
+\code{\link{text_layer}}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -156,6 +194,7 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
@@ -165,4 +204,5 @@ Other layers:
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
 }
+\concept{core-layers}
 \concept{layers}

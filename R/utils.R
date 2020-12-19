@@ -7,7 +7,7 @@
 #' - `mapbox.mapbox-streets-v8`, or
 #' - `mapbox://mapbox.mapbox-streets-v8`
 #'
-#' @seealso add_mvt_layer
+#' @seealso mvt_layer
 #' @export
 mvt_url <- function(tileset_id) {
   mvt_endpoint <- "https://api.mapbox.com/v4"

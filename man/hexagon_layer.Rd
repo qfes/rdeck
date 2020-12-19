@@ -45,6 +45,8 @@ add_hexagon_layer(
 )
 }
 \arguments{
+\item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
+
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
 Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
@@ -79,63 +81,103 @@ highlighted by \code{highlight_color}.}
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
 \code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
-highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
-resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
+highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
+or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{color_domain}{unknown}
+\item{color_domain}{<\code{numeric}> The colour scale domain, default is set to the range
+of aggregated weights in each bin.}
 
-\item{color_range}{array}
+\item{color_range}{<\code{\link{color}}> The colour palette.
+\code{color_domain} is divided into \code{length(color_range)} equal segments, each mapped to
+one color in \code{color_range}.}
 
-\item{get_color_value}{unknown}
+\item{get_color_value}{<\code{\link[htmlwidgets:JS]{JS}}> After data objects are aggregated into bins,
+this accessor is called on each bin to get the value that its colour is based on. If supplied,
+this will override the effect of \code{get_color_weight} and \code{color_aggregation} props.
+See deck.gl docs for details.}
 
-\item{get_color_weight}{<\code{\link{accessor}}>}
+\item{get_color_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The weight of each object used
+to calculate the colour value for a bin.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{color_aggregation}{unknown}
+\item{color_aggregation}{<\code{"SUM"} | \code{"MEAN"} | \code{"MIN"} | \code{"MAX"}>  Operation used to
+aggregate data values/weights to calculate a bin's colour.}
 
-\item{lower_percentile}{number}
+\item{lower_percentile}{<\code{numeric}> Between \code{0} and \code{100}. Filter bins and re-calculate colour
+by \code{lower_percentile}. Cells with \code{value < lower_percentile} will be hidden.}
 
-\item{upper_percentile}{number}
+\item{upper_percentile}{<\code{numeric}> Between \code{0} and \code{100}. Filter bins and re-calculate colour
+by \code{upper_percentile}. Cells with \code{value < upper_percentile} will be hidden.}
 
-\item{color_scale_type}{unknown}
+\item{color_scale_type}{<\code{"quantize"} | \code{"linear"} | \code{"quantile"} | \code{"ordinal"}> The scaling
+function used to determine the colour of a the grid cell.}
 
-\item{elevation_domain}{unknown}
+\item{elevation_domain}{<\code{numeric}> The elevation scale input domain. Defaults to the range
+of the aggregated weights in each bin.}
 
-\item{elevation_range}{array}
+\item{elevation_range}{<\code{numeric}> The elevation scale output range.}
 
-\item{get_elevation_value}{unknown}
+\item{get_elevation_value}{<\code{\link[htmlwidgets:JS]{JS}}> After data objects are aggregated into
+bins, this accessor is called on each bin to get the value that its elevation is based on.
+If supplied, this will override the effect of \code{get_elevation_weight} and
+\code{elevation_aggregation} props.
+See deck.gl docs for details.}
 
-\item{get_elevation_weight}{<\code{\link{accessor}}>}
+\item{get_elevation_weight}{<\code{\link{accessor}} | \code{\link{scale}} | `numeric> The weight of each object used
+to calculate the elevation value for a bin.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{elevation_aggregation}{unknown}
+\item{elevation_aggregation}{<\code{"SUM"} | \code{"MEAN"} | \code{"MIN"} | \code{"MAX"}> Operation used to
+aggregate data values/weights to calculate a bin's elevation value.}
 
-\item{elevation_lower_percentile}{number}
+\item{elevation_lower_percentile}{<\code{numeric}> Between \code{0} and \code{100}. Filter bins and
+re-calculate elevation by \code{elevation_lower_percentile}.
+Cells with \code{value < elevation_lower_percentile} will be hidden.}
 
-\item{elevation_upper_percentile}{number}
+\item{elevation_upper_percentile}{<\code{numeric}> Between \code{0} and \code{100}. Filter bins and
+re-calculate elevation by \code{elevation_upper_percentile}.
+Cells with \code{value < elevation_upper_percentile} will be hidden.}
 
-\item{elevation_scale}{number}
+\item{elevation_scale}{<\code{numeric}> The elevation multiplier.}
 
-\item{elevation_scale_type}{unknown}
+\item{elevation_scale_type}{<\code{"quantize"} | \code{"linear"} | \code{"quantile"} | \code{"ordinal"}> The scaling
+function used to determine the elevation of a the grid cell.}
 
-\item{radius}{number}
+\item{radius}{<\code{numeric}> The radius of the hexagon bin in metres.}
 
-\item{coverage}{number}
+\item{coverage}{<\code{numeric}> Radius multiplier, between 0 - 1. The radius of each disk is
+calculated by \code{coverage * radius}.}
 
-\item{extruded}{<\code{logical}>}
+\item{extruded}{<\code{logical}> If \code{TRUE}, extrude objects along the z-axis; if \code{FALSE}, all
+objects will be flat.}
 
 \item{hexagon_aggregator}{function}
 
-\item{get_position}{<\code{\link{accessor}}>}
+\item{get_position}{<\code{\link{accessor}}> The position geometry column, an
+\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{material}{<\code{logical}>}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}.}
+the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
 Hexagon Layer
 }
 \seealso{
 \url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/aggregation-layers/hexagon-layer.md}
+
+Other aggregation-layers: 
+\code{\link{contour_layer}},
+\code{\link{cpu_grid_layer}},
+\code{\link{gpu_grid_layer}},
+\code{\link{grid_layer}},
+\code{\link{heatmap_layer}},
+\code{\link{screen_grid_layer}}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -159,6 +201,7 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
@@ -167,14 +210,6 @@ Other layers:
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
-
-Other aggregation-layers: 
-\code{\link{contour_layer}},
-\code{\link{cpu_grid_layer}},
-\code{\link{gpu_grid_layer}},
-\code{\link{grid_layer}},
-\code{\link{heatmap_layer}},
-\code{\link{screen_grid_layer}}
 }
 \concept{aggregation-layers}
 \concept{layers}

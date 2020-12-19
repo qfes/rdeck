@@ -33,6 +33,8 @@ add_simple_mesh_layer(
 )
 }
 \arguments{
+\item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
+
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
 Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
@@ -67,22 +69,28 @@ highlighted by \code{highlight_color}.}
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
 \code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
-highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
-resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
+highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
+or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
 \item{mesh}{object}
 
 \item{texture}{not yet supported.}
 
-\item{size_scale}{number}
+\item{size_scale}{<\code{numeric}> The size multiplier.}
 
-\item{wireframe}{<\code{logical}>}
+\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded = TRUE}, draw a line wireframe of the
+object. The outline will have horizontal lines closing the top and bottom polygons and
+vertical lines for each vertex of the polygon.}
 
 \item{material}{<\code{logical}>}
 
-\item{get_position}{<\code{\link{accessor}}>}
+\item{get_position}{<\code{\link{accessor}}> The position geometry column, an
+\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{get_color}{<\code{\link{accessor}}>}
+\item{get_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
 \item{get_orientation}{<\code{\link{accessor}}> not yet supported.}
 
@@ -93,13 +101,17 @@ resolving a column in \code{data}, or a \code{scale} to transform a column into 
 \item{get_transform_matrix}{<\code{\link{accessor}}> not yet supported.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}.}
+the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
 Simple Mesh Layer
 }
 \seealso{
 \url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/mesh-layers/simple-mesh-layer.md}
+
+Other mesh-layers: 
+\code{\link{scenegraph_layer}}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -124,6 +136,7 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{solid_polygon_layer}},
 \code{\link{terrain_layer}},
@@ -131,9 +144,6 @@ Other layers:
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
-
-Other mesh-layers: 
-\code{\link{scenegraph_layer}}
 }
 \concept{layers}
 \concept{mesh-layers}

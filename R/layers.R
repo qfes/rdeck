@@ -7,7 +7,7 @@ layer <- function(type, ...) {
 layer.default <- function(type, ...) {
   props <- c(
     list(type = type),
-    rlang:::dots_list(..., .ignore_empty = "all")
+    rlang::dots_list(..., .ignore_empty = "all")
   )
 
   structure(

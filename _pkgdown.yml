@@ -1,17 +1,65 @@
 destination: docs
 reference:
-  - title: RDeck
-    desc: Create deck.gl map
+  - title: Map
+    desc: Create Deck.GL map
     contents:
       - rdeck
-      - add_layer
-      - view_state
-  - title: Layers
-    desc: Create deck.gl layers
+      - rdeck_proxy
+      - rdeckOutput
+      - renderRdeck
+      - layers
+      - props
+  - title: Core layers
+    desc: Deck.GL core layers
     contents:
-      - ends_with("layer")
-      - -add_layer
+      - arc_layer
+      - bitmap_layer
+      - column_layer
+      - geojson_layer
+      - grid_cell_layer
+      - icon_layer
+      - line_layer
+      - path_layer
+      - point_cloud_layer
+      - polygon_layer
+      - scatterplot_layer
+      - solid_polygon_layer
+      - text_layer
+  - title: Aggregation layers
+    desc: Deck.GL aggregation layers
+    contents:
+      - contour_layer
+      - grid_layer
+      - gpu_grid_layer
+      - cpu_grid_layer
+      - hexagon_layer
+      - screen_grid_layer
+      - heatmap_layer
+  - title: Geo layers
+    desc: Deck.GL geo layers
+    contents:
+      - great_circle_layer
+      - h3_cluster_layer
+      - h3_hexagon_layer
+      - s2_layer
+      - tile_layer
+      - tile_3d_layer
+      - trips_layer
+      - terrain_layer
+      - mvt_layer
+  - title: Mesh layers
+    desc: Deck.GL mesh layers
+    contents:
+      - simple_mesh_layer
+      - scenegraph_layer
   - title: Scales
-    desc: Scale deck.gl accessors
+    desc: Translate data columns to visual properties.
     contents:
-      - starts_with("scale")
+      - matches("scale_")
+  - title: Other
+    contents:
+      - view_state
+      - mvt_url
+      - format_number
+      - sfc_point
+

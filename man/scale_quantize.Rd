@@ -39,7 +39,7 @@ length >= 2.}
 \item{na_value}{The output value for \code{NA} input values.}
 }
 \description{
-Creates a discrete quantize scale. A more restrictive version of \code{scale_threshold} in
+Creates a discrete quantize scale. A more restrictive version of \code{\link[=scale_threshold]{scale_threshold()}} in
 that each \code{break} is uniformly spaced between \code{limits}.
 }
 \seealso{

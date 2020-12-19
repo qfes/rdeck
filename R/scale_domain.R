@@ -39,7 +39,7 @@ scale_domain.scale_quantile <- function(scale, data = NULL) {
   n_breaks <- length(scale$palette %||% scale$range) - 1
   breaks <- seq(0, 1, length.out = n_breaks + 2)[seq_len(n_breaks) + 1]
 
-  quantile(col, probs = breaks, na.rm = TRUE, names = FALSE)
+  stats::quantile(col, probs = breaks, na.rm = TRUE, names = FALSE)
 }
 
 scale_domain.scale_category <- function(scale, data) {

@@ -20,11 +20,18 @@ const excludeProps = [
   "renderSubLayers",
   /* text layer */
   "characterSet",
+  /* grid layer */
+  "gridAggregator"
 ];
 
 function getProps(Layer) {
   // initialise _propTypes
   new Layer();
+
+  // extruded = false
+  if ("extruded" in Layer._propTypes) {
+    Layer._propTypes.extruded.value = false;
+  }
 
   // remove polygon from geo-layers
   if (/^S2|H3/.test(Layer.layerName)) {

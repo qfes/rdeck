@@ -34,6 +34,8 @@ add_arc_layer(
 )
 }
 \arguments{
+\item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
+
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
 Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
@@ -68,41 +70,42 @@ highlighted by \code{highlight_color}.}
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
 \code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
-highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
-resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
+highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
+or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
 \item{get_source_position}{<\code{\link{accessor}}> The source position geometry column, an
-\code{sfc_POINT} column with CRS EPSG:4326. Supports
-<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}>.}
+\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_target_position}{<\code{\link{accessor}}> The target position geometry column, an
-\code{sfc_POINT} column with CRS EPSG:4326. Supports
-<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}>.}
+\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_source_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of the
-\emph{source end} of the arc. Accepts a single colour value, a
-<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
-colours or a scale function.}
+\emph{source end} of the arc.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
 \item{get_target_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of the
-\emph{target end} of the arc. Accepts a single colour value, a
-<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
-colours or a scale function.}
+\emph{target end} of the arc.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
 \item{get_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The width of each object, in units
-specified by \code{width_scale}. May be a single value, a
-<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
-weights, or a scale function.}
+specified by \code{width_scale}.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
 \item{get_height}{<\code{\link{accessor}} | \code{\link{scale}} | \code{numeric}> The multiplier of layer of
-layer height. Mat be a single value, a
-<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
-heights, or a scale function. A value of 0 will make the layer flat.}
+layer height.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.
+A value of 0 will make the layer flat.}
 
 \item{get_tilt}{<\code{\link{accessor}} | \code{numeric}> Tilts the arcs by the specified number of
-degrees (between \code{c(-90, 90)}). May be a single value, or a
-<\href{https://dplyr.tidyverse.org/articles/programming.html}{\code{tidy-eval}}> column of
-tilt values.}
+degrees (between \code{c(-90, 90)}).
+Accepts a single numeric value or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
 \item{great_circle}{<\code{logical}> If \code{TRUE}, create the arc along the shortest path on the
 earth surface.}
@@ -116,13 +119,28 @@ earth surface.}
 \item{width_max_pixels}{<\code{numeric}> The maximum line width in pixels.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}.}
+the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
 Arc Layer
 }
 \seealso{
 \url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/layers/arc-layer.md}
+
+Other core-layers: 
+\code{\link{bitmap_layer}},
+\code{\link{column_layer}},
+\code{\link{geojson_layer}},
+\code{\link{grid_cell_layer}},
+\code{\link{icon_layer}},
+\code{\link{line_layer}},
+\code{\link{path_layer}},
+\code{\link{point_cloud_layer}},
+\code{\link{polygon_layer}},
+\code{\link{scatterplot_layer}},
+\code{\link{solid_polygon_layer}},
+\code{\link{text_layer}}
 
 Other layers: 
 \code{\link{bitmap_layer}},
@@ -146,6 +164,7 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
@@ -155,4 +174,5 @@ Other layers:
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
 }
+\concept{core-layers}
 \concept{layers}

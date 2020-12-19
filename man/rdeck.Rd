@@ -53,9 +53,6 @@ Height of the map}
 Element id for the map.}
 
 \item{...}{additional parameters to pass to the \code{Deck}.}
-
-\item{layers}{\code{list}
-The list of deck.gl layers.}
 }
 \description{
 Create a Deck.GL map.

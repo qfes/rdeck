@@ -41,6 +41,8 @@ add_terrain_layer(
 )
 }
 \arguments{
+\item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
+
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
 Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
@@ -75,28 +77,32 @@ highlighted by \code{highlight_color}.}
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
 \code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
-highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
-resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
+highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
+or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_tile_data}{function}
+\item{get_tile_data}{<\code{\link[htmlwidgets:JS]{JS}}> retrieves the data of each tile.
+See deck.gl \href{https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata}{TileLayer}.}
 
-\item{extent}{array}
+\item{extent}{<\code{c(min_x, min_y, max_x, max_y)}> Tiles in this bounding box
+will be rendered at \code{min_zoom}, when zoomed out below \code{min_zoom}.}
 
-\item{tile_size}{number}
+\item{tile_size}{<\code{number}> A power of 2 that is the pixel dimensions of the tile.}
 
-\item{max_zoom}{unknown}
+\item{max_zoom}{<\code{number}> Tiles above this zoom level are not shown. Defaults to \code{NULL}.}
 
-\item{min_zoom}{number}
+\item{min_zoom}{<\code{number}> Tiles below this zoom level are not shown. Defaults to \code{0}.}
 
-\item{max_cache_size}{unknown}
+\item{max_cache_size}{<\code{number}> Maximum number of tiles that can be cached. Defaults to
+5x the number of tiles in current viewport.}
 
-\item{max_cache_byte_size}{unknown}
+\item{max_cache_byte_size}{<\code{number}> Maximum memory used for caching tiles.}
 
-\item{refinement_strategy}{unknown}
+\item{refinement_strategy}{<\code{"best-available"} | \code{"no-overlap"} | \code{"never"}> How the tile
+layer refines visibility of tiles. Defaults to \code{"best-available"}.}
 
-\item{z_range}{unknown}
+\item{z_range}{<\code{c(min, max)}> Array representing the range of heights in the tile.}
 
-\item{max_requests}{<number> The maximiun number of concurrent HTTP
+\item{max_requests}{<\code{number}> Maximum number of concurrent HTTP
 requests across all specified tile provider domains. If a negative number is
 supplied no throttling occurs (HTTP/2 only).}
 
@@ -106,7 +112,8 @@ supplied no throttling occurs (HTTP/2 only).}
 
 \item{mesh_max_error}{number}
 
-\item{bounds}{array}
+\item{bounds}{<\code{bbox}> A sf::st_bbox() object with CRS \href{http://epsg.io/4326}{EPSG:4326}. Must be supplied hen using
+non-tiled elevation data.}
 
 \item{color}{color}
 
@@ -114,18 +121,31 @@ supplied no throttling occurs (HTTP/2 only).}
 
 \item{worker_url}{string}
 
-\item{wireframe}{<\code{logical}>}
+\item{wireframe}{<\code{logical}> If \code{TRUE} and \code{extruded = TRUE}, draw a line wireframe of the
+object. The outline will have horizontal lines closing the top and bottom polygons and
+vertical lines for each vertex of the polygon.}
 
 \item{material}{<\code{logical}>}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}.}
+the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
 Terrain Layer
 }
 \seealso{
 \url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/geo-layers/terrain-layer.md}
+
+Other geo-layers: 
+\code{\link{great_circle_layer}},
+\code{\link{h3_cluster_layer}},
+\code{\link{h3_hexagon_layer}},
+\code{\link{mvt_layer}},
+\code{\link{s2_layer}},
+\code{\link{tile_3d_layer}},
+\code{\link{tile_layer}},
+\code{\link{trips_layer}}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -150,20 +170,11 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
 \code{\link{text_layer}},
-\code{\link{tile_3d_layer}},
-\code{\link{tile_layer}},
-\code{\link{trips_layer}}
-
-Other geo-layers: 
-\code{\link{great_circle_layer}},
-\code{\link{h3_cluster_layer}},
-\code{\link{h3_hexagon_layer}},
-\code{\link{mvt_layer}},
-\code{\link{s2_layer}},
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}

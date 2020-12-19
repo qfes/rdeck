@@ -28,6 +28,8 @@ add_point_cloud_layer(
 )
 }
 \arguments{
+\item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
+
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
 Layers will raise a warning when dots are used, warning class \code{rdeck_dots_nonempty}.}
@@ -62,29 +64,50 @@ highlighted by \code{highlight_color}.}
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
 \code{pickable} are enabled, \code{highlight_color} determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
-highlight all objects in the layer. Per-object highlighting is achieved with an \code{accessor}
-resolving a column in \code{data}, or a \code{scale} to transform a column into a colour.}
+highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
+or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{size_units}{unknown}
+\item{size_units}{<\code{"pixels"} | \code{"meters"}> The units of the size specified by
+\code{get_size}.}
 
-\item{point_size}{number}
+\item{point_size}{<\code{numeric}> The radius of all points in units specified
+by \code{size_units}.}
 
-\item{get_position}{<\code{\link{accessor}}>}
+\item{get_position}{<\code{\link{accessor}}> The position geometry column, an
+\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_normal}{<\code{\link{accessor}}>}
 
-\item{get_color}{<\code{\link{accessor}}>}
+\item{get_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
 \item{material}{<\code{logical}>}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable = TRUE}.}
+the layer tooltip, if \code{pickable = TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
 Point Cloud Layer
 }
 \seealso{
 \url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/layers/point-cloud-layer.md}
+
+Other core-layers: 
+\code{\link{arc_layer}},
+\code{\link{bitmap_layer}},
+\code{\link{column_layer}},
+\code{\link{geojson_layer}},
+\code{\link{grid_cell_layer}},
+\code{\link{icon_layer}},
+\code{\link{line_layer}},
+\code{\link{path_layer}},
+\code{\link{polygon_layer}},
+\code{\link{scatterplot_layer}},
+\code{\link{solid_polygon_layer}},
+\code{\link{text_layer}}
 
 Other layers: 
 \code{\link{arc_layer}},
@@ -108,6 +131,7 @@ Other layers:
 \code{\link{polygon_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
+\code{\link{scenegraph_layer}},
 \code{\link{screen_grid_layer}},
 \code{\link{simple_mesh_layer}},
 \code{\link{solid_polygon_layer}},
@@ -117,4 +141,5 @@ Other layers:
 \code{\link{tile_layer}},
 \code{\link{trips_layer}}
 }
+\concept{core-layers}
 \concept{layers}
