@@ -81,7 +81,7 @@ const Continuous = ({ range, domain, ticks }: AccessorScaleContinuous<Color>) =>
 
   return (
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
-      <svg y={4}>
+      <svg y={5}>
         <defs>
           <linearGradient id={id} x2={0} y2={1}>
             {colors.map((color, index) => (
@@ -112,7 +112,7 @@ const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
 
   return (
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
-      <svg y={4}>
+      <svg y={5}>
         {colors.map((color, index) => (
           <rect key={index} width={20} height={TICK_HEIGHT} y={index * TICK_HEIGHT} fill={color} />
         ))}
