@@ -34,6 +34,7 @@
     "@typescript-eslint/parser": "^4.10.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
+    "babel-plugin-inline-webgl-constants": "1.0.0",
     "babel-plugin-version-inline": "^1.0.0",
     "browserslist-config-google": "^2.0.0",
     "css-loader": "^5.0.1",

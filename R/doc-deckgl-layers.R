@@ -409,6 +409,13 @@ NULL
 #' updatable layers in a shiny application.
 #' @param name <`string`> Identifies the layer on tooltips and legends. It does
 #' not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.
+#' @param blending_mode <`"normal"` | `"additive"` | `"subtractive"`> Sets the blending mode.
+#' Blending modes:
+#' - `normal`: Normal blending doesn't alter colours of overlapping objects.
+#' - `additive`: Additive blending adds colours of overlapping objects. Useful for highlighting
+#' dot density on dark maps.
+#' - `subtractive`: Subtractive blending darkens overlapping objects. Useful for highlighting
+#' dot density on light maps.
 #' @param tooltip <[`tooltip`]> Defines the columns (and their order) that will be displayed in
 #' the layer tooltip, if `pickable == TRUE`. Supports <[`tidy-select`][dplyr::dplyr_tidy_select]>
 #' if a `data` is a `data.frame`. `sfc` columns are always removed.

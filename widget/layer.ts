@@ -6,6 +6,7 @@ import { FeatureCollection } from "geojson";
 import { parseColor } from "./color";
 import { AccessorScale, accessorScale, isAccessorScale } from "./scale";
 import { accessor, Accessor, isAccessor } from "./accessor";
+import { blendingParameters } from "./blending";
 
 type LayerData = string | DataFrame | FeatureCollection;
 type Entry<T> = [string, T];
@@ -14,6 +15,7 @@ export interface LayerProps extends Omit<DeckLayerProps<any>, "data"> {
   type: string;
   name: string;
   data: LayerData | null;
+  blendingMode: BlendingMode;
   tooltip: TooltipInfo | null;
 }
 
@@ -22,7 +24,7 @@ export class Layer {
   props: LayerProps;
   scales: AccessorScale<any>[];
 
-  constructor({ type, ...props }: LayerProps) {
+  constructor({ type, blendingMode, ...props }: LayerProps) {
     const entries = Object.entries(props);
     const colors = getColors(entries);
     const accessors = getAccessors(entries);
@@ -33,6 +35,7 @@ export class Layer {
       ...colors,
       ...accessors.map(([name, value]) => [name, value.getData]),
       ["updateTriggers", getUpdateTriggers(accessors)],
+      ["parameters", getParameters(props.parameters, blendingMode)],
     ]);
 
     this.scales = accessors
@@ -96,4 +99,11 @@ function getUpdateTriggers(entries: Entry<Accessor | AccessorScale<any>>[]) {
 
   const propTriggers = entries.map(([name, accessor]) => [name, scaleProps(accessor)]);
   return Object.fromEntries(propTriggers);
+}
+
+function getParameters(parameters: any, blendingMode: BlendingMode) {
+  return {
+    ...parameters,
+    ...blendingParameters(blendingMode),
+  };
 }

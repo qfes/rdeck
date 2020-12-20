@@ -21,6 +21,7 @@ add_<%- name -%> <- function(rdeck,
                             <% for (const p of props) { -%>
                               <%- p.name -%> = <%- p.value ?? "NULL" -%>,
                             <% } -%>
+                            blending_mode = "normal",
                             tooltip = FALSE) {
     check_dots(...)
     <% const geom = props.find(p => /^get_(path|polygon|position)$/i.test(p.name)); -%>
@@ -47,6 +48,7 @@ add_<%- name -%> <- function(rdeck,
             -%>
             <%- p.name -%> = <%- value ?? "NULL" -%>,
         <% } -%>
+        blending_mode = blending_mode,
         tooltip = eval_tooltip(rlang::enquo(tooltip), data)
     )
     # validate layer props

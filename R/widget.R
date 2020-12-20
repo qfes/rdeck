@@ -3,6 +3,7 @@
 #' Create a Deck.GL map.
 #'
 #' @name rdeck
+#' @inheritParams layer_props
 #' @param mapbox_api_access_token `character`
 #'  The api access token to use mapbox tiles.
 #'
@@ -25,7 +26,6 @@
 #'
 #' @param use_device_pixels `logical` | `numeric`
 #'  Controls the resolution of drawing buffer used for rendering.
-#'
 #' @param width `numeric`
 #'  Width of the map
 #'
@@ -51,6 +51,7 @@ rdeck <- function(mapbox_api_access_token = NULL,
                   controller = TRUE,
                   picking_radius = 0,
                   use_device_pixels = TRUE,
+                  blending_mode = "normal",
                   width = NULL,
                   height = NULL,
                   elementId = NULL,
@@ -67,6 +68,7 @@ rdeck <- function(mapbox_api_access_token = NULL,
     controller = controller,
     picking_radius = picking_radius,
     use_device_pixels = use_device_pixels,
+    blending_mode = blending_mode,
     ...
   )
 
@@ -149,6 +151,7 @@ rdeck_props <- function(mapbox_api_access_token = NULL,
                         controller = NULL,
                         picking_radius = NULL,
                         use_device_pixels = NULL,
+                        blending_mode = NULL,
                         ...) {
   check_dots(...)
   structure(
@@ -160,7 +163,8 @@ rdeck_props <- function(mapbox_api_access_token = NULL,
         initial_view_state = initial_view_state,
         controller = controller,
         picking_radius = picking_radius,
-        use_device_pixels = use_device_pixels
+        use_device_pixels = use_device_pixels,
+        blending_mode = blending_mode
       ),
       rlang::dots_list(...)
     ),

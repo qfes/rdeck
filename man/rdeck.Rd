@@ -13,6 +13,7 @@ rdeck(
   controller = TRUE,
   picking_radius = 0,
   use_device_pixels = TRUE,
+  blending_mode = "normal",
   width = NULL,
   height = NULL,
   elementId = NULL,
@@ -42,6 +43,16 @@ Extra pixels around the pointer to include while picking.}
 
 \item{use_device_pixels}{\code{logical} | \code{numeric}
 Controls the resolution of drawing buffer used for rendering.}
+
+\item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
+Blending modes:
+\itemize{
+\item \code{normal}: Normal blending doesn't alter colours of overlapping objects.
+\item \code{additive}: Additive blending adds colours of overlapping objects. Useful for highlighting
+dot density on dark maps.
+\item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
+dot density on light maps.
+}}
 
 \item{width}{\code{numeric}
 Width of the map}

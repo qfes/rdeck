@@ -7,6 +7,7 @@ declare global {
   type Bounds = [number, number, number, number];
   type Color = [number, number, number, number];
   type DataType = "table" | "object" | "geojson";
+  type BlendingMode = "normal" | "additive" | "subtractive";
 
   interface DataFrame {
     length: number;

@@ -119,6 +119,7 @@ rdeck_proxy <- function(id,
                         controller = NULL,
                         picking_radius = NULL,
                         use_device_pixels = NULL,
+                        blending_mode = NULL,
                         ...) {
   assert_is_string(id)
   assert_type(session, "ShinySession")
@@ -138,6 +139,7 @@ rdeck_proxy <- function(id,
     controller = controller,
     picking_radius = picking_radius,
     use_device_pixels = use_device_pixels,
+    blending_mode = blending_mode,
     ...
   ) %>%
     discard_null()

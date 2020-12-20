@@ -28,6 +28,7 @@ add_arc_layer <- function(rdeck,
                           width_scale = 1,
                           width_min_pixels = 0,
                           width_max_pixels = 9007199254740991,
+                          blending_mode = "normal",
                           tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -56,6 +57,7 @@ add_arc_layer <- function(rdeck,
     width_scale = width_scale,
     width_min_pixels = width_min_pixels,
     width_max_pixels = width_max_pixels,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -103,6 +105,7 @@ add_bitmap_layer <- function(rdeck,
                              desaturate = 0,
                              transparent_color = "#00000000",
                              tint_color = "#ffffff",
+                             blending_mode = "normal",
                              tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -124,6 +127,7 @@ add_bitmap_layer <- function(rdeck,
     desaturate = desaturate,
     transparent_color = transparent_color,
     tint_color = tint_color,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -173,6 +177,7 @@ add_icon_layer <- function(rdeck,
                            get_size = 1,
                            get_angle = 0,
                            get_pixel_offset = c(0, 0),
+                           blending_mode = "normal",
                            tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -208,6 +213,7 @@ add_icon_layer <- function(rdeck,
     get_size = accessor_scale(rlang::enquo(get_size), data),
     get_angle = accessor(rlang::enquo(get_angle), data),
     get_pixel_offset = accessor(rlang::enquo(get_pixel_offset), data),
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -260,6 +266,7 @@ add_line_layer <- function(rdeck,
                            width_scale = 1,
                            width_min_pixels = 0,
                            width_max_pixels = 9007199254740991,
+                           blending_mode = "normal",
                            tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -284,6 +291,7 @@ add_line_layer <- function(rdeck,
     width_scale = width_scale,
     width_min_pixels = width_min_pixels,
     width_max_pixels = width_max_pixels,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -328,6 +336,7 @@ add_point_cloud_layer <- function(rdeck,
                                   get_normal = c(0, 0, 1),
                                   get_color = "#000000ff",
                                   material = TRUE,
+                                  blending_mode = "normal",
                                   tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -355,6 +364,7 @@ add_point_cloud_layer <- function(rdeck,
     get_normal = accessor(rlang::enquo(get_normal), data),
     get_color = accessor_scale(rlang::enquo(get_color), data),
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -406,6 +416,7 @@ add_scatterplot_layer <- function(rdeck,
                                   get_fill_color = "#000000ff",
                                   get_line_color = "#000000ff",
                                   get_line_width = 1,
+                                  blending_mode = "normal",
                                   tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -442,6 +453,7 @@ add_scatterplot_layer <- function(rdeck,
     get_fill_color = accessor_scale(rlang::enquo(get_fill_color), data),
     get_line_color = accessor_scale(rlang::enquo(get_line_color), data),
     get_line_width = accessor_scale(rlang::enquo(get_line_width), data),
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -509,6 +521,7 @@ add_grid_cell_layer <- function(rdeck,
                                 get_elevation = 1000,
                                 material = TRUE,
                                 cell_size = 1000,
+                                blending_mode = "normal",
                                 tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -552,6 +565,7 @@ add_grid_cell_layer <- function(rdeck,
     get_elevation = accessor_scale(rlang::enquo(get_elevation), data),
     material = material,
     cell_size = cell_size,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -625,6 +639,7 @@ add_column_layer <- function(rdeck,
                              get_line_width = 1,
                              get_elevation = 1000,
                              material = TRUE,
+                             blending_mode = "normal",
                              tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -667,6 +682,7 @@ add_column_layer <- function(rdeck,
     get_line_width = accessor_scale(rlang::enquo(get_line_width), data),
     get_elevation = accessor_scale(rlang::enquo(get_elevation), data),
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -728,6 +744,7 @@ add_path_layer <- function(rdeck,
                            get_path = path,
                            get_color = "#000000ff",
                            get_width = 1,
+                           blending_mode = "normal",
                            tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -759,6 +776,7 @@ add_path_layer <- function(rdeck,
     get_path = accessor(rlang::enquo(get_path), data),
     get_color = accessor_scale(rlang::enquo(get_color), data),
     get_width = accessor_scale(rlang::enquo(get_width), data),
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -816,6 +834,7 @@ add_polygon_layer <- function(rdeck,
                               get_line_width = 1,
                               get_elevation = 1000,
                               material = TRUE,
+                              blending_mode = "normal",
                               tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -854,6 +873,7 @@ add_polygon_layer <- function(rdeck,
     get_line_width = accessor_scale(rlang::enquo(get_line_width), data),
     get_elevation = accessor_scale(rlang::enquo(get_elevation), data),
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -910,6 +930,7 @@ add_solid_polygon_layer <- function(rdeck,
                                     get_fill_color = "#000000ff",
                                     get_line_color = "#000000ff",
                                     material = TRUE,
+                                    blending_mode = "normal",
                                     tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -940,6 +961,7 @@ add_solid_polygon_layer <- function(rdeck,
     get_fill_color = accessor_scale(rlang::enquo(get_fill_color), data),
     get_line_color = accessor_scale(rlang::enquo(get_line_color), data),
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1000,6 +1022,7 @@ add_geojson_layer <- function(rdeck,
                               get_line_width = 1,
                               get_elevation = 1000,
                               material = TRUE,
+                              blending_mode = "normal",
                               tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -1037,6 +1060,7 @@ add_geojson_layer <- function(rdeck,
     get_line_width = accessor_scale(rlang::enquo(get_line_width), data),
     get_elevation = accessor_scale(rlang::enquo(get_elevation), data),
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1108,6 +1132,7 @@ add_text_layer <- function(rdeck,
                            get_text_anchor = "middle",
                            get_alignment_baseline = "center",
                            get_pixel_offset = c(0, 0),
+                           blending_mode = "normal",
                            tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -1149,6 +1174,7 @@ add_text_layer <- function(rdeck,
     get_text_anchor = accessor(rlang::enquo(get_text_anchor), data),
     get_alignment_baseline = accessor(rlang::enquo(get_alignment_baseline), data),
     get_pixel_offset = accessor(rlang::enquo(get_pixel_offset), data),
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1207,6 +1233,7 @@ add_screen_grid_layer <- function(rdeck,
                                   get_weight = 1,
                                   gpu_aggregation = TRUE,
                                   aggregation = "SUM",
+                                  blending_mode = "normal",
                                   tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -1236,6 +1263,7 @@ add_screen_grid_layer <- function(rdeck,
     get_weight = accessor_scale(rlang::enquo(get_weight), data),
     gpu_aggregation = gpu_aggregation,
     aggregation = aggregation,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1296,6 +1324,7 @@ add_cpu_grid_layer <- function(rdeck,
                                get_position = position,
                                extruded = FALSE,
                                material = TRUE,
+                               blending_mode = "normal",
                                tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -1339,6 +1368,7 @@ add_cpu_grid_layer <- function(rdeck,
     get_position = accessor(rlang::enquo(get_position), data),
     extruded = extruded,
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1414,6 +1444,7 @@ add_hexagon_layer <- function(rdeck,
                               hexagon_aggregator = NULL,
                               get_position = position,
                               material = TRUE,
+                              blending_mode = "normal",
                               tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -1458,6 +1489,7 @@ add_hexagon_layer <- function(rdeck,
     hexagon_aggregator = hexagon_aggregator,
     get_position = accessor(rlang::enquo(get_position), data),
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1518,6 +1550,7 @@ add_contour_layer <- function(rdeck,
                               aggregation = "SUM",
                               contours = c(list(threshold = 1)),
                               z_offset = 0.005,
+                              blending_mode = "normal",
                               tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -1546,6 +1579,7 @@ add_contour_layer <- function(rdeck,
     aggregation = aggregation,
     contours = contours,
     z_offset = z_offset,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1606,6 +1640,7 @@ add_grid_layer <- function(rdeck,
                            elevation_upper_percentile = 100,
                            elevation_scale_type = "linear",
                            gpu_aggregation = FALSE,
+                           blending_mode = "normal",
                            tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -1650,6 +1685,7 @@ add_grid_layer <- function(rdeck,
     elevation_upper_percentile = elevation_upper_percentile,
     elevation_scale_type = elevation_scale_type,
     gpu_aggregation = gpu_aggregation,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1717,6 +1753,7 @@ add_gpu_grid_layer <- function(rdeck,
                                get_position = position,
                                extruded = FALSE,
                                material = TRUE,
+                               blending_mode = "normal",
                                tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -1752,6 +1789,7 @@ add_gpu_grid_layer <- function(rdeck,
     get_position = accessor(rlang::enquo(get_position), data),
     extruded = extruded,
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1803,6 +1841,7 @@ add_heatmap_layer <- function(rdeck,
                               color_range = c("#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#f03b20", "#bd0026"),
                               threshold = 0.05,
                               color_domain = NULL,
+                              blending_mode = "normal",
                               tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -1831,6 +1870,7 @@ add_heatmap_layer <- function(rdeck,
     color_range = color_range,
     threshold = threshold,
     color_domain = color_domain,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1880,6 +1920,7 @@ add_great_circle_layer <- function(rdeck,
                                    width_scale = 1,
                                    width_min_pixels = 0,
                                    width_max_pixels = 9007199254740991,
+                                   blending_mode = "normal",
                                    tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -1908,6 +1949,7 @@ add_great_circle_layer <- function(rdeck,
     width_scale = width_scale,
     width_min_pixels = width_min_pixels,
     width_max_pixels = width_max_pixels,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -1967,6 +2009,7 @@ add_s2_layer <- function(rdeck,
                          get_line_width = 1,
                          get_elevation = 1000,
                          material = TRUE,
+                         blending_mode = "normal",
                          tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -2000,6 +2043,7 @@ add_s2_layer <- function(rdeck,
     get_line_width = accessor_scale(rlang::enquo(get_line_width), data),
     get_elevation = accessor_scale(rlang::enquo(get_elevation), data),
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -2064,6 +2108,7 @@ add_h3_cluster_layer <- function(rdeck,
                                  get_line_width = 1,
                                  get_elevation = 1000,
                                  material = TRUE,
+                                 blending_mode = "normal",
                                  tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -2097,6 +2142,7 @@ add_h3_cluster_layer <- function(rdeck,
     get_line_width = accessor_scale(rlang::enquo(get_line_width), data),
     get_elevation = accessor_scale(rlang::enquo(get_elevation), data),
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -2164,6 +2210,7 @@ add_h3_hexagon_layer <- function(rdeck,
                                  coverage = 1,
                                  center_hexagon = NULL,
                                  get_hexagon = hexagon,
+                                 blending_mode = "normal",
                                  tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -2200,6 +2247,7 @@ add_h3_hexagon_layer <- function(rdeck,
     coverage = coverage,
     center_hexagon = center_hexagon,
     get_hexagon = accessor(rlang::enquo(get_hexagon), data),
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -2260,6 +2308,7 @@ add_tile_layer <- function(rdeck,
                            refinement_strategy = "best-available",
                            z_range = NULL,
                            max_requests = 6,
+                           blending_mode = "normal",
                            tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -2286,6 +2335,7 @@ add_tile_layer <- function(rdeck,
     refinement_strategy = refinement_strategy,
     z_range = z_range,
     max_requests = max_requests,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -2339,6 +2389,7 @@ add_trips_layer <- function(rdeck,
                             trail_length = 120,
                             current_time = 0,
                             get_timestamps = NULL,
+                            blending_mode = "normal",
                             tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -2373,6 +2424,7 @@ add_trips_layer <- function(rdeck,
     trail_length = trail_length,
     current_time = current_time,
     get_timestamps = accessor(rlang::enquo(get_timestamps), data),
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -2436,6 +2488,7 @@ add_tile_3d_layer <- function(rdeck,
                                   assetGltfUpAxis = NULL
                                 ))
                               ),
+                              blending_mode = "normal",
                               tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -2456,6 +2509,7 @@ add_tile_3d_layer <- function(rdeck,
     point_size = point_size,
     load_options = load_options,
     loader = loader,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -2514,6 +2568,7 @@ add_terrain_layer <- function(rdeck,
                               worker_url = NULL,
                               wireframe = FALSE,
                               material = TRUE,
+                              blending_mode = "normal",
                               tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -2549,6 +2604,7 @@ add_terrain_layer <- function(rdeck,
     worker_url = worker_url,
     wireframe = wireframe,
     material = material,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -2631,6 +2687,7 @@ add_mvt_layer <- function(rdeck,
                           max_requests = 6,
                           unique_id_property = "",
                           highlighted_feature_id = NULL,
+                          blending_mode = "normal",
                           tooltip = FALSE) {
   check_dots(...)
   # construct layer object
@@ -2680,6 +2737,7 @@ add_mvt_layer <- function(rdeck,
     max_requests = max_requests,
     unique_id_property = unique_id_property,
     highlighted_feature_id = highlighted_feature_id,
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -2754,6 +2812,7 @@ add_simple_mesh_layer <- function(rdeck,
                                   get_scale = c(1, 1, 1),
                                   get_translation = c(0, 0, 0),
                                   get_transform_matrix = NULL,
+                                  blending_mode = "normal",
                                   tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -2786,6 +2845,7 @@ add_simple_mesh_layer <- function(rdeck,
     get_scale = accessor(rlang::enquo(get_scale), data),
     get_translation = accessor(rlang::enquo(get_translation), data),
     get_transform_matrix = accessor(rlang::enquo(get_transform_matrix), data),
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props
@@ -2839,6 +2899,7 @@ add_scenegraph_layer <- function(rdeck,
                                  get_scale = c(1, 1, 1),
                                  get_translation = c(0, 0, 0),
                                  get_transform_matrix = NULL,
+                                 blending_mode = "normal",
                                  tooltip = FALSE) {
   check_dots(...)
   # auto-resolve geometry
@@ -2872,6 +2933,7 @@ add_scenegraph_layer <- function(rdeck,
     get_scale = accessor(rlang::enquo(get_scale), data),
     get_translation = accessor(rlang::enquo(get_translation), data),
     get_transform_matrix = accessor(rlang::enquo(get_transform_matrix), data),
+    blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
   # validate layer props

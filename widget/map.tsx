@@ -3,9 +3,10 @@ import { DeckGL, DeckGLProps } from "@deck.gl/react";
 import { Layer as DeckLayer, MapView, PickInfo } from "@deck.gl/core";
 import { StaticMap, StaticMapProps } from "react-map-gl";
 import Tooltip from "./tooltip";
+import { blendingParameters } from "./blending";
 
 type MapProps = {
-  props: DeckGLProps & StaticMapProps;
+  props: DeckGLProps & StaticMapProps & { blendingMode: BlendingMode };
   layers: DeckLayer<any, any>[];
 };
 
@@ -13,11 +14,29 @@ export function Map({ props, layers }: MapProps) {
   const deckgl = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
-  const { mapboxApiAccessToken, mapStyle, mapOptions, controller, ...deckProps } = props;
+  const {
+    mapboxApiAccessToken,
+    mapStyle,
+    mapOptions,
+    controller,
+    parameters,
+    blendingMode,
+    ...deckProps
+  } = props;
+  const _parameters = {
+    ...parameters,
+    ...blendingParameters(blendingMode),
+  };
 
   return (
     <Fragment>
-      <DeckGL ref={deckgl} {...deckProps} layers={layers} onHover={handleHover}>
+      <DeckGL
+        ref={deckgl}
+        {...deckProps}
+        parameters={_parameters}
+        layers={layers}
+        onHover={handleHover}
+      >
         {mapStyle && (
           <MapView id="map" controller={controller} repeat={true}>
             {/* @ts-ignore */}
