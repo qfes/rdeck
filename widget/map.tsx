@@ -37,12 +37,10 @@ export function Map({ props, layers }: MapProps) {
         layers={layers}
         onHover={handleHover}
       >
-        {mapStyle && (
-          <MapView id="map" controller={controller} repeat={true}>
-            {/* @ts-ignore */}
-            <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />
-          </MapView>
-        )}
+        <MapView id="map" controller={controller} repeat={true}>
+          {/* @ts-ignore */}
+          {mapStyle && <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />}
+        </MapView>
       </DeckGL>
       <Tooltip info={info} />
     </Fragment>
