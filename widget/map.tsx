@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { Fragment, useCallback, useRef, useState } from "react";
 import { DeckGL, DeckGLProps } from "@deck.gl/react";
 import { Layer as DeckLayer, MapView, PickInfo } from "@deck.gl/core";
 import { StaticMap, StaticMapProps } from "react-map-gl";
@@ -16,15 +16,17 @@ export function Map({ props, layers }: MapProps) {
   const { mapboxApiAccessToken, mapStyle, mapOptions, controller, ...deckProps } = props;
 
   return (
-    <DeckGL ref={deckgl} {...deckProps} layers={layers} onHover={handleHover}>
-      {mapStyle && (
-        <MapView id="map" controller={controller} repeat={true}>
-          {/* @ts-ignore */}
-          <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />
-        </MapView>
-      )}
+    <Fragment>
+      <DeckGL ref={deckgl} {...deckProps} layers={layers} onHover={handleHover}>
+        {mapStyle && (
+          <MapView id="map" controller={controller} repeat={true}>
+            {/* @ts-ignore */}
+            <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />
+          </MapView>
+        )}
+      </DeckGL>
       <Tooltip info={info} />
-    </DeckGL>
+    </Fragment>
   );
 }
 
