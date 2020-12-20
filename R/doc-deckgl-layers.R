@@ -204,9 +204,6 @@ NULL
 #' @name hexagon_layer
 #' @inherit layer_props
 #' @param radius <`number`> The radius of the hexagon bin in metres.
-#' @param hexagon_aggregator <[`JS`][htmlwidgets::JS]> Hexagon aggregator function. Defaults
-#' to `d3-hexbin`.
-#' See deck.gl [hexagonAggregator](https://deck.gl/docs/api-reference/aggregation-layers/hexagon-layer#hexagonaggregator).
 #' @eval deckgl_docs("aggregation-layers", "hexagon-layer")
 #' @family aggregation-layers
 #' @family layers

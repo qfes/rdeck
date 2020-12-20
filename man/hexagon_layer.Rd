@@ -38,7 +38,6 @@ add_hexagon_layer(
   radius = 1000,
   coverage = 1,
   extruded = FALSE,
-  hexagon_aggregator = NULL,
   get_position = position,
   material = TRUE,
   blending_mode = "normal",
@@ -153,10 +152,6 @@ calculated by \code{coverage * radius}.}
 
 \item{extruded}{<\code{logical}> If \code{TRUE}, extrude objects along the z-axis; if \code{FALSE}, all
 objects will be flat.}
-
-\item{hexagon_aggregator}{<\code{\link[htmlwidgets:JS]{JS}}> Hexagon aggregator function. Defaults
-to \code{d3-hexbin}.
-See deck.gl \href{https://deck.gl/docs/api-reference/aggregation-layers/hexagon-layer#hexagonaggregator}{hexagonAggregator}.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, an
 \code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
