@@ -20,7 +20,7 @@ Imports:
     shiny,
     snakecase,
     png,
-    stylebox,
+    stylebox (>= 0.1.0),
     rlang,
     tidyselect,
     urltools,
@@ -37,4 +37,5 @@ Suggests:
     roxyglobals (>= 0.2.1)
 VignetteBuilder: knitr
 Remotes:
-    anthonynorth/roxyglobals
+    anthonynorth/roxyglobals,
+    anthonynorth/stylebox
