@@ -34,6 +34,7 @@ export class Layer {
       ...entries,
       ...colors,
       ...accessors.map(([name, value]) => [name, value.getData]),
+      ...getWeightProps(entries),
       ["updateTriggers", getUpdateTriggers(accessors)],
       ["parameters", getParameters(props.parameters, blendingMode)],
     ]);
@@ -106,4 +107,12 @@ function getParameters(parameters: any, blendingMode: BlendingMode) {
     ...parameters,
     ...blendingParameters(blendingMode),
   };
+}
+
+// getColorWeight & getElevationWeight must be functions
+function getWeightProps(entries: Entry<any>[]) {
+  return entries
+    .filter(([name]) => name === "getColorWeight" || name === "getElevationWeight")
+    .filter(([, value]) => value !== null && typeof value !== "function" && !isAccessor(value))
+    .map(([name, value]) => [name, (x: any) => value]);
 }

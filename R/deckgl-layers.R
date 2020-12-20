@@ -1456,7 +1456,6 @@ add_hexagon_layer <- function(rdeck,
                               radius = 1000,
                               coverage = 1,
                               extruded = FALSE,
-                              hexagon_aggregator = NULL,
                               get_position = position,
                               material = TRUE,
                               blending_mode = "normal",
@@ -1501,7 +1500,6 @@ add_hexagon_layer <- function(rdeck,
     radius = radius,
     coverage = coverage,
     extruded = extruded,
-    hexagon_aggregator = hexagon_aggregator,
     get_position = accessor(rlang::enquo(get_position), data),
     material = material,
     blending_mode = blending_mode,
@@ -1536,7 +1534,6 @@ add_hexagon_layer <- function(rdeck,
   validate_radius(hexagon_layer)
   validate_coverage(hexagon_layer)
   validate_extruded(hexagon_layer)
-  validate_hexagon_aggregator(hexagon_layer)
   validate_get_position(hexagon_layer)
   validate_material(hexagon_layer)
   validate_blending_mode(hexagon_layer)

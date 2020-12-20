@@ -20,8 +20,9 @@ const excludeProps = [
   "renderSubLayers",
   /* text layer */
   "characterSet",
-  /* grid layer */
-  "gridAggregator"
+  /* aggregation functions */
+  "gridAggregator",
+  "hexagonAggregator"
 ];
 
 function getProps(Layer) {

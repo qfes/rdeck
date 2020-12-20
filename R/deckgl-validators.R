@@ -1173,17 +1173,6 @@ validate_great_circle.default <- function(layer) {
   assert_type(great_circle, "logical")
 }
 
-# validate hexagon_aggregator
-validate_hexagon_aggregator <- function(layer) {
-  UseMethod("validate_hexagon_aggregator")
-}
-validate_hexagon_aggregator.default <- function(layer) {
-  hexagon_aggregator <- layer$hexagon_aggregator
-  if (is.null(hexagon_aggregator)) {
-    return()
-  }
-}
-
 # validate high_precision
 validate_high_precision <- function(layer) {
   UseMethod("validate_high_precision")

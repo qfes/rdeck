@@ -63,7 +63,9 @@ function defaultValue({ name, type, value }) {
         const entries = Object.entries(value);
         /* escape name */
         const sep = entries.length > 1 ? ",\n" : ", ";
-        const items = entries.map(([k, v]) => quoteName(k) + " = " + (format(v) ?? "NULL")).join(sep);
+        const items = entries
+          .map(([k, v]) => quoteName(k) + " = " + (format(v) ?? "NULL"))
+          .join(sep);
         return `list(${items})`;
       }
       default:
