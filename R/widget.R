@@ -41,7 +41,7 @@
 #'
 #' @export
 rdeck <- function(mapbox_api_access_token = NULL,
-                  map_style = "mapbox://styles/mapbox/dark-v10",
+                  map_style = mapbox_dark(),
                   theme = "kepler",
                   initial_bounds = NULL,
                   initial_view_state = view_state(
