@@ -7,5 +7,5 @@ package-lock.json -diff
 inst/htmlwidgets/*.js linguist-generated
 inst/htmlwidgets/*.css linguist-generated
 
-man/* linguist-generated
+man/* linguist-documentation
 scripts/* linguist-detectable

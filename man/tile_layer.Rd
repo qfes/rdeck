@@ -46,9 +46,9 @@ updatable layers in a shiny application.}
 \item{name}{<\code{string}> Identifies the layer on tooltips and legends. It does
 not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.}
 
-\item{data}{<\code{data.frame} | \code{sf} | \code{string}> The layer's data. Data frames will contain all
-columns that are referenced by the layer's accessors. Strings will be interpreted as a URL and
-data will be retrieved dynamically in the browser.}
+\item{data}{<\code{data.frame} | \code{\link[sf:sf]{sf}} | \code{string}> The layer's data. Data frames and
+sf objects will contain all columns that are referenced by the layer's accessors. Strings
+will be interpreted as a URL and data will be retrieved dynamically in the browser.}
 
 \item{visible}{<\code{logical}> Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.}
@@ -109,7 +109,7 @@ dot density on light maps.
 }}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable == TRUE}. Supports <\link[dplyr:dplyr_tidy_select]{tidy-select}>
+the layer tooltip, if \code{pickable == TRUE}. Supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 if a \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
