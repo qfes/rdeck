@@ -414,8 +414,9 @@ NULL
 #' - `subtractive`: Subtractive blending darkens overlapping objects. Useful for highlighting
 #' dot density on light maps.
 #' @param tooltip <[`tooltip`]> Defines the columns (and their order) that will be displayed in
-#' the layer tooltip, if `pickable == TRUE`. Supports <[`tidy-select`][dplyr::dplyr_tidy_select()]>
-#' if a `data` is a `data.frame`. `sfc` columns are always removed.
+#' the layer tooltip, if `pickable == TRUE`.
+#' Supports [tidy-select](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html) if a
+#' `data` is a `data.frame`. `sfc` columns are always removed.
 #' @param data <`data.frame` | [`sf`][sf::sf] | `string`> The layer's data. Data frames and
 #' sf objects will contain all columns that are referenced by the layer's accessors. Strings
 #' will be interpreted as a URL and data will be retrieved dynamically in the browser.
