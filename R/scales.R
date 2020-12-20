@@ -37,7 +37,7 @@ scale_color_linear <- function(col, palette, na_color = "#000000",
 #' @name scale_linear
 #' @export
 scale_linear <- function(col, range = 0:1, na_value = 0,
-                         limits = NULL, breaks = NULL, legend = FALSE) {
+                         limits = NULL, breaks = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -103,7 +103,7 @@ scale_color_power <- function(col, palette, na_color = "#000000", exponent = 0.5
 #' @name scale_power
 #' @export
 scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
-                        limits = NULL, breaks = NULL, legend = FALSE) {
+                        limits = NULL, breaks = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -172,7 +172,7 @@ scale_color_log <- function(col, palette, na_color = "#000000", base = 10,
 #' @name scale_log
 #' @export
 scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
-                      limits = NULL, breaks = NULL, legend = FALSE) {
+                      limits = NULL, breaks = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -239,7 +239,7 @@ scale_color_threshold <- function(col, palette, na_color = "#000000",
 #' @export
 scale_threshold <- function(col, range = 0:1, na_value = 0,
                             limits = NULL, breaks = 0.5,
-                            tick_format = format_number, legend = FALSE) {
+                            tick_format = format_number, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -299,7 +299,7 @@ scale_color_quantile <- function(col, palette, na_color = "#000000",
 
 #' @name scale_quantile
 #' @export
-scale_quantile <- function(col, range = 1:5, na_value = 0, legend = FALSE) {
+scale_quantile <- function(col, range = 1:5, na_value = 0, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -356,7 +356,7 @@ scale_color_category <- function(col, palette, unmapped_color = "#000000", level
 #' @name scale_category
 #' @param unmapped_value <`number`> The value representing unmapped levels.
 #' @export
-scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, legend = FALSE) {
+scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -410,7 +410,7 @@ scale_color_quantize <- function(col, palette, na_color = "#000000",
 
 #' @name scale_quantize
 #' @export
-scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, legend = FALSE) {
+scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 

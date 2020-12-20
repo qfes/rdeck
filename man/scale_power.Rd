@@ -24,7 +24,7 @@ scale_power(
   exponent = 0.5,
   limits = NULL,
   breaks = NULL,
-  legend = FALSE
+  legend = TRUE
 )
 }
 \arguments{

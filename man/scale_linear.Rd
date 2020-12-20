@@ -22,7 +22,7 @@ scale_linear(
   na_value = 0,
   limits = NULL,
   breaks = NULL,
-  legend = FALSE
+  legend = TRUE
 )
 }
 \arguments{

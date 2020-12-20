@@ -22,7 +22,7 @@ scale_threshold(
   limits = NULL,
   breaks = 0.5,
   tick_format = format_number,
-  legend = FALSE
+  legend = TRUE
 )
 }
 \arguments{

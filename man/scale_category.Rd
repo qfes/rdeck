@@ -19,7 +19,7 @@ scale_category(
   range = 0:1,
   unmapped_value = 0,
   levels = NULL,
-  legend = FALSE
+  legend = TRUE
 )
 }
 \arguments{

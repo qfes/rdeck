@@ -24,7 +24,7 @@ scale_log(
   base = 10,
   limits = NULL,
   breaks = NULL,
-  legend = FALSE
+  legend = TRUE
 )
 }
 \arguments{

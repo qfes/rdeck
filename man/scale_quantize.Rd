@@ -14,7 +14,7 @@ scale_color_quantize(
   legend = TRUE
 )
 
-scale_quantize(col, range = 0:1, na_value = 0, limits = NULL, legend = FALSE)
+scale_quantize(col, range = 0:1, na_value = 0, limits = NULL, legend = TRUE)
 }
 \arguments{
 \item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.

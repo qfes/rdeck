@@ -13,7 +13,7 @@ scale_color_quantile(
   legend = TRUE
 )
 
-scale_quantile(col, range = 1:5, na_value = 0, legend = FALSE)
+scale_quantile(col, range = 1:5, na_value = 0, legend = TRUE)
 }
 \arguments{
 \item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
