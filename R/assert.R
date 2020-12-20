@@ -161,7 +161,7 @@ assert_crs <- function(obj, crs = sf::st_crs(4326), name = NULL) {
   quo <- rlang::enquo(obj)
   value <- rlang::eval_tidy(quo)
 
-  if (!sf::st_crs(value)$input == crs$input) {
+  if (sf::st_crs(value) != crs) {
     name <- name %||% rlang::quo_text(quo)
     rlang::abort(
       paste0(name, " crs must equal ", crs$input),
