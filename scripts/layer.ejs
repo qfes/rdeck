@@ -55,6 +55,7 @@ add_<%- name -%> <- function(rdeck,
     <% for (const p of props) { -%>
       validate_<%- p.name -%>(<%- name -%>)
     <% } -%>
+    validate_blending_mode(<%- name -%>)
     # add layer to map
     add_layer(rdeck, <%- name -%>)
 }

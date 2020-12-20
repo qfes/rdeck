@@ -81,6 +81,7 @@ add_arc_layer <- function(rdeck,
   validate_width_scale(arc_layer)
   validate_width_min_pixels(arc_layer)
   validate_width_max_pixels(arc_layer)
+  validate_blending_mode(arc_layer)
   # add layer to map
   add_layer(rdeck, arc_layer)
 }
@@ -144,6 +145,7 @@ add_bitmap_layer <- function(rdeck,
   validate_desaturate(bitmap_layer)
   validate_transparent_color(bitmap_layer)
   validate_tint_color(bitmap_layer)
+  validate_blending_mode(bitmap_layer)
   # add layer to map
   add_layer(rdeck, bitmap_layer)
 }
@@ -239,6 +241,7 @@ add_icon_layer <- function(rdeck,
   validate_get_size(icon_layer)
   validate_get_angle(icon_layer)
   validate_get_pixel_offset(icon_layer)
+  validate_blending_mode(icon_layer)
   # add layer to map
   add_layer(rdeck, icon_layer)
 }
@@ -311,6 +314,7 @@ add_line_layer <- function(rdeck,
   validate_width_scale(line_layer)
   validate_width_min_pixels(line_layer)
   validate_width_max_pixels(line_layer)
+  validate_blending_mode(line_layer)
   # add layer to map
   add_layer(rdeck, line_layer)
 }
@@ -382,6 +386,7 @@ add_point_cloud_layer <- function(rdeck,
   validate_get_normal(point_cloud_layer)
   validate_get_color(point_cloud_layer)
   validate_material(point_cloud_layer)
+  validate_blending_mode(point_cloud_layer)
   # add layer to map
   add_layer(rdeck, point_cloud_layer)
 }
@@ -480,6 +485,7 @@ add_scatterplot_layer <- function(rdeck,
   validate_get_fill_color(scatterplot_layer)
   validate_get_line_color(scatterplot_layer)
   validate_get_line_width(scatterplot_layer)
+  validate_blending_mode(scatterplot_layer)
   # add layer to map
   add_layer(rdeck, scatterplot_layer)
 }
@@ -599,6 +605,7 @@ add_grid_cell_layer <- function(rdeck,
   validate_get_elevation(grid_cell_layer)
   validate_material(grid_cell_layer)
   validate_cell_size(grid_cell_layer)
+  validate_blending_mode(grid_cell_layer)
   # add layer to map
   add_layer(rdeck, grid_cell_layer)
 }
@@ -715,6 +722,7 @@ add_column_layer <- function(rdeck,
   validate_get_line_width(column_layer)
   validate_get_elevation(column_layer)
   validate_material(column_layer)
+  validate_blending_mode(column_layer)
   # add layer to map
   add_layer(rdeck, column_layer)
 }
@@ -798,6 +806,7 @@ add_path_layer <- function(rdeck,
   validate_get_path(path_layer)
   validate_get_color(path_layer)
   validate_get_width(path_layer)
+  validate_blending_mode(path_layer)
   # add layer to map
   add_layer(rdeck, path_layer)
 }
@@ -902,6 +911,7 @@ add_polygon_layer <- function(rdeck,
   validate_get_line_width(polygon_layer)
   validate_get_elevation(polygon_layer)
   validate_material(polygon_layer)
+  validate_blending_mode(polygon_layer)
   # add layer to map
   add_layer(rdeck, polygon_layer)
 }
@@ -982,6 +992,7 @@ add_solid_polygon_layer <- function(rdeck,
   validate_get_fill_color(solid_polygon_layer)
   validate_get_line_color(solid_polygon_layer)
   validate_material(solid_polygon_layer)
+  validate_blending_mode(solid_polygon_layer)
   # add layer to map
   add_layer(rdeck, solid_polygon_layer)
 }
@@ -1093,6 +1104,7 @@ add_geojson_layer <- function(rdeck,
   validate_get_line_width(geojson_layer)
   validate_get_elevation(geojson_layer)
   validate_material(geojson_layer)
+  validate_blending_mode(geojson_layer)
   # add layer to map
   add_layer(rdeck, geojson_layer)
 }
@@ -1206,6 +1218,7 @@ add_text_layer <- function(rdeck,
   validate_get_text_anchor(text_layer)
   validate_get_alignment_baseline(text_layer)
   validate_get_pixel_offset(text_layer)
+  validate_blending_mode(text_layer)
   # add layer to map
   add_layer(rdeck, text_layer)
 }
@@ -1283,6 +1296,7 @@ add_screen_grid_layer <- function(rdeck,
   validate_get_weight(screen_grid_layer)
   validate_gpu_aggregation(screen_grid_layer)
   validate_aggregation(screen_grid_layer)
+  validate_blending_mode(screen_grid_layer)
   # add layer to map
   add_layer(rdeck, screen_grid_layer)
 }
@@ -1402,6 +1416,7 @@ add_cpu_grid_layer <- function(rdeck,
   validate_get_position(cpu_grid_layer)
   validate_extruded(cpu_grid_layer)
   validate_material(cpu_grid_layer)
+  validate_blending_mode(cpu_grid_layer)
   # add layer to map
   add_layer(rdeck, cpu_grid_layer)
 }
@@ -1524,6 +1539,7 @@ add_hexagon_layer <- function(rdeck,
   validate_hexagon_aggregator(hexagon_layer)
   validate_get_position(hexagon_layer)
   validate_material(hexagon_layer)
+  validate_blending_mode(hexagon_layer)
   # add layer to map
   add_layer(rdeck, hexagon_layer)
 }
@@ -1598,6 +1614,7 @@ add_contour_layer <- function(rdeck,
   validate_aggregation(contour_layer)
   validate_contours(contour_layer)
   validate_z_offset(contour_layer)
+  validate_blending_mode(contour_layer)
   # add layer to map
   add_layer(rdeck, contour_layer)
 }
@@ -1720,6 +1737,7 @@ add_grid_layer <- function(rdeck,
   validate_elevation_upper_percentile(grid_layer)
   validate_elevation_scale_type(grid_layer)
   validate_gpu_aggregation(grid_layer)
+  validate_blending_mode(grid_layer)
   # add layer to map
   add_layer(rdeck, grid_layer)
 }
@@ -1815,6 +1833,7 @@ add_gpu_grid_layer <- function(rdeck,
   validate_get_position(gpu_grid_layer)
   validate_extruded(gpu_grid_layer)
   validate_material(gpu_grid_layer)
+  validate_blending_mode(gpu_grid_layer)
   # add layer to map
   add_layer(rdeck, gpu_grid_layer)
 }
@@ -1889,6 +1908,7 @@ add_heatmap_layer <- function(rdeck,
   validate_color_range(heatmap_layer)
   validate_threshold(heatmap_layer)
   validate_color_domain(heatmap_layer)
+  validate_blending_mode(heatmap_layer)
   # add layer to map
   add_layer(rdeck, heatmap_layer)
 }
@@ -1973,6 +1993,7 @@ add_great_circle_layer <- function(rdeck,
   validate_width_scale(great_circle_layer)
   validate_width_min_pixels(great_circle_layer)
   validate_width_max_pixels(great_circle_layer)
+  validate_blending_mode(great_circle_layer)
   # add layer to map
   add_layer(rdeck, great_circle_layer)
 }
@@ -2072,6 +2093,7 @@ add_s2_layer <- function(rdeck,
   validate_get_line_width(s2_layer)
   validate_get_elevation(s2_layer)
   validate_material(s2_layer)
+  validate_blending_mode(s2_layer)
   # add layer to map
   add_layer(rdeck, s2_layer)
 }
@@ -2171,6 +2193,7 @@ add_h3_cluster_layer <- function(rdeck,
   validate_get_line_width(h3_cluster_layer)
   validate_get_elevation(h3_cluster_layer)
   validate_material(h3_cluster_layer)
+  validate_blending_mode(h3_cluster_layer)
   # add layer to map
   add_layer(rdeck, h3_cluster_layer)
 }
@@ -2279,6 +2302,7 @@ add_h3_hexagon_layer <- function(rdeck,
   validate_coverage(h3_hexagon_layer)
   validate_center_hexagon(h3_hexagon_layer)
   validate_get_hexagon(h3_hexagon_layer)
+  validate_blending_mode(h3_hexagon_layer)
   # add layer to map
   add_layer(rdeck, h3_hexagon_layer)
 }
@@ -2357,6 +2381,7 @@ add_tile_layer <- function(rdeck,
   validate_refinement_strategy(tile_layer)
   validate_z_range(tile_layer)
   validate_max_requests(tile_layer)
+  validate_blending_mode(tile_layer)
   # add layer to map
   add_layer(rdeck, tile_layer)
 }
@@ -2449,6 +2474,7 @@ add_trips_layer <- function(rdeck,
   validate_trail_length(trips_layer)
   validate_current_time(trips_layer)
   validate_get_timestamps(trips_layer)
+  validate_blending_mode(trips_layer)
   # add layer to map
   add_layer(rdeck, trips_layer)
 }
@@ -2525,6 +2551,7 @@ add_tile_3d_layer <- function(rdeck,
   validate_point_size(tile_3d_layer)
   validate_load_options(tile_3d_layer)
   validate_loader(tile_3d_layer)
+  validate_blending_mode(tile_3d_layer)
   # add layer to map
   add_layer(rdeck, tile_3d_layer)
 }
@@ -2635,6 +2662,7 @@ add_terrain_layer <- function(rdeck,
   validate_worker_url(terrain_layer)
   validate_wireframe(terrain_layer)
   validate_material(terrain_layer)
+  validate_blending_mode(terrain_layer)
   # add layer to map
   add_layer(rdeck, terrain_layer)
 }
@@ -2782,6 +2810,7 @@ add_mvt_layer <- function(rdeck,
   validate_max_requests(mvt_layer)
   validate_unique_id_property(mvt_layer)
   validate_highlighted_feature_id(mvt_layer)
+  validate_blending_mode(mvt_layer)
   # add layer to map
   add_layer(rdeck, mvt_layer)
 }
@@ -2868,6 +2897,7 @@ add_simple_mesh_layer <- function(rdeck,
   validate_get_scale(simple_mesh_layer)
   validate_get_translation(simple_mesh_layer)
   validate_get_transform_matrix(simple_mesh_layer)
+  validate_blending_mode(simple_mesh_layer)
   # add layer to map
   add_layer(rdeck, simple_mesh_layer)
 }
@@ -2957,6 +2987,7 @@ add_scenegraph_layer <- function(rdeck,
   validate_get_scale(scenegraph_layer)
   validate_get_translation(scenegraph_layer)
   validate_get_transform_matrix(scenegraph_layer)
+  validate_blending_mode(scenegraph_layer)
   # add layer to map
   add_layer(rdeck, scenegraph_layer)
 }

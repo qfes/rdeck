@@ -236,3 +236,9 @@ validate_get_alignment_baseline.layer <- function(layer) {
     assert_in(data[[get_alignment_baseline$col]], c("top", "center", "bottom"))
   }
 }
+
+# validate blending_mode
+validate_blending_mode <- function(layer) {
+  assert_is_string(layer$blending_mode, "blending_mode")
+  assert_in(layer$blending_mode, c("normal", "additive", "subtractive"), "blending_mode")
+}
