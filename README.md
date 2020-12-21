@@ -38,5 +38,10 @@ Some notable differences:
 * Extensive validation of layer properties in R is preferred, rather than throwing errors in the browser.
 * `{ggplot2}` style `scale_` functions that perform common layer data transformations and automatically generate legends with appropriate untransformed tick marks.
   - e.g. `scale_color_power`, `scale_color_log` etc.
+* Automatic creation of tooltips
+* Choice of Light or dark themes for tooltips and legends.
+* Auto-generated interface from JS source
+  - every deck.gl layer is supported to some degree
+  - every layer property is a snake_case version of the camelCase of it's deck.gl counterpart.
 * Users can orchestrate browser-side map layer updates with Shiny, allowing for extremely performant reactivity.
   - Traditional Shiny interactivity using whole datasets is also possible, and is slightly slower than `{mapdeck}` at present.
