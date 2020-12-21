@@ -25,3 +25,17 @@ remotes::install_github("anthonynorth/rdeck@*release")
 # or install development version
 remotes::install_github("anthonynorth/rdeck")
 ```
+
+## Similar work
+
+`{rdeck}` draws much inspiration from [`{mapdeck}`](https://github.com/SymbolixAU/mapdeck/). `{rdeck}`'s design choices make it convenient for use in static reports, and certain Shiny usecases that are highly performant.
+
+Some notable differences:
+
+* HTML reports made with `{rdeck}` are typically an order of magnitude smaller in file size than `{mapdeck}`. This due to column-major data storage, and automatic filtering of data that is not used in the map.
+* Tidy evaluation is supported for column specifications.
+* Extensive validation of layer properties in R is preferred, rather than throwing errors in the browser.
+* `{ggplot2}` style `scale_` functions that perform common layer data transformations and automatically generate legends with appropriate untransformed tick marks.
+  - e.g. `scale_color_power`, `scale_color_log` etc.
+* Users can orchestrate browser-side map layer updates with Shiny, allowing for extremely performant reactivity.
+  - Traditional Shiny interactivity using whole datasets is also possible, and is slightly slower than `{mapdeck}` at present.
