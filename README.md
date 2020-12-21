@@ -32,7 +32,8 @@ remotes::install_github("anthonynorth/rdeck")
 
 Some notable differences:
 
-* HTML reports made with `{rdeck}` are typically an order of magnitude smaller in file size than `{mapdeck}`. This due to column-major data storage, and automatic filtering of data that is not used in the map.
+* `{rmarkdown}` HTML reports made with `{rdeck}` are typically an order of magnitude smaller in file size than `{mapdeck}`.  
+  - Thanks to column-major data storage, and automatic filtering of data that is not used in the map.
 * Tidy evaluation is supported for column specifications.
 * Extensive validation of layer properties in R is preferred, rather than throwing errors in the browser.
 * `{ggplot2}` style `scale_` functions that perform common layer data transformations and automatically generate legends with appropriate untransformed tick marks.
