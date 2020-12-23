@@ -4,6 +4,41 @@
 \alias{scale}
 \title{Prop Type: Scale}
 \description{
-Prop Type: Scale
+Scales transform input data into visual representations, predominantly colours:
+\code{fill}, \code{line}, \code{highlight} and sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}.
+
+Transformations are performed in client-side javascript, thus scales have very minimal
+file-size overhead; what you pay for this the source data being \emph{scaled}, not the scale
+itself. Additional scales referring the same column only \emph{pay} for that column once.
+Adding fields being \emph{scaled} to the tooltips have minimal overhead also, as this
+data is already required for the scale.
+
+Data retrieved in the browser dynamically can also be scaled. The R interface for scaling
+dynamic data is identical to scaling \code{data.frame} columns, but there is no R-validation for
+this (i.e. your scale can refer a non-existent column, which will error in javascript, but
+not in R).
 }
+\section{Legend}{
+Scales can optionally produce a colour or numeric legend in the client. Numeric legends give
+context for which visual field is being scaled and by what column; colour legends additionally
+provide a colour scale and \emph{untransformed} ticks (i.e. you will see the ticks in the original
+representation, not the transformed representation).
+
+Legend ticks can be formatted with a format function. This function can completely replace the
+input ticks if you wish; the only constraint is the return value is a character vector of the
+same length as the number of \emph{unformatted ticks}.
+}
+
+\section{Available scales}{
+\itemize{
+\item \code{\link{scale_linear}}
+\item \code{\link{scale_power}}
+\item \code{\link{scale_log}}
+\item \code{\link{scale_quantize}}
+\item \code{\link{scale_quantile}}
+\item \code{\link{scale_threshold}}
+\item \code{\link{scale_category}}
+}
+}
+
 \keyword{internal}

@@ -66,8 +66,11 @@ reference:
       - simple_mesh_layer
       - scenegraph_layer
   - title: Scales
-    desc: Translate data columns to visual properties.
+    desc: >
+      Translate data columns to visual properties, predominantly colours: fill, line, highlight
+      and sizes: radius, elevation, width, height.
     contents:
+      - scale
       - matches("scale_")
   - title: Other
     contents:

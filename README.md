@@ -1,7 +1,8 @@
 <p align="right">
   <a href="https://github.com/anthonynorth/rdeck/releases/latest">
-    <img src="https://img.shields.io/github/v/release/anthonynorth/rdeck?sort=semver" alt="release">
+    <img src="https://img.shields.io/github/v/release/anthonynorth/rdeck?include_prereleases&logo=github&sort=semver" alt="release" />
   </a>
+  <img src="https://img.shields.io/github/r-package/v/anthonynorth/rdeck?label=latest&logo=r" alt="latest" />
   <a href="https://github.com/visgl/deck.gl">
     <img src="https://img.shields.io/github/package-json/dependency-version/anthonynorth/rdeck/deck.gl" alt="deck.gl" />
   </a>
