@@ -70,9 +70,7 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_point_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.
-Accepts a single colour value, a colour scale, or a
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+\item{get_point_color}{<\code{\link{color}}> The colour of each object.}
 
 \item{point_size}{<\code{number}> The radius of all points in units specified
 by \code{size_units}.}

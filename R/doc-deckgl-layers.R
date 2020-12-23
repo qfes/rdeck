@@ -334,9 +334,7 @@ NULL
 #'
 #' @name tile_3d_layer
 #' @inherit layer_props
-#' @param get_point_color <[`accessor`] | [`scale`] | [`color`]> The colour of each object.
-#' Accepts a single colour value, a colour scale, or a
-#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
+#' @param get_point_color <[`color`]> The colour of each object.
 #' @param load_options object
 #' @param loader object
 #' @eval deckgl_docs("geo-layers", "tile3d-layer")
