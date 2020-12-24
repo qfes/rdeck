@@ -61,6 +61,13 @@ NULL
 #' input ticks if you wish; the only constraint is the return value is a character vector of the
 #' same length as the number of _unformatted ticks_.
 #'
+#' Legends are [kepler.gl](https://kepler.gl) inspired.
+#' \if{html}{\out{
+#'   <div class="text-center">
+#'     <img src="https://user-images.githubusercontent.com/391385/103058278-7b1d1000-45ed-11eb-86d2-7ab594bb32de.png" />
+#'   </div>
+#' }}
+#'
 #' # Available scales
 #' - [`scale_linear`]
 #' - [`scale_power`]
@@ -76,6 +83,38 @@ NULL
 
 #' Prop Type: Tooltip
 #'
+#' @description
+#' If `pickable == TRUE`, tooltip defines which columns will be displayed when an object
+#' is _hovered_. The tooltip will be displayed as a transposed table (1 row per column) and
+#' is styled according to the [`rdeck`] `theme`. The tooltip layout is inspired by
+#' [kepler.gl](https://kepler.gl).
+#'
+#' \if{html}{\out{
+#'   <div class="text-center">
+#'     <img src="https://user-images.githubusercontent.com/391385/103058202-57f26080-45ed-11eb-9131-f09585c1b894.png" />
+#'   </div>
+#' }}
+#'
+#' Tooltips support different arguments depending on the value of `data`, but the following
+#' arguments are always supported:
+#' - `NULL` | `NA` | `FALSE` -> no tooltip
+#' - `TRUE` -> all columns (except `sfc` columns)
+#'
+#' # Data inherits `data.frame`
+#' When `data` is a `data.frame`, tooltip supports
+#' [tidy-select](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html) (renaming isn't
+#' supported). Expressions such as `c(foo, bar)`, `everything()`, `matches("foo")`, `-unwanted`,
+#' `1:6` etc. are supported.
+#'
+#' All columns referenced in tooltip must exist.
+#'
+#' # Data is a `string` or `NULL`
+#' For cases where data is absent (tooltip wouldn't be displayed anyway), or dynamically loaded
+#' in the client, tooltips may take a character vector of column names, or a `c()` expression
+#' of bare names (e.g. `c(foo, bar)`).
+#'
+#' No validation on these columns is possible in this case.
+#'
 #' @name tooltip
 #' @keywords internal
 NULL
@@ -83,7 +122,7 @@ NULL
 #' Prop Type: Color
 #'
 #' Colours are represented by `RGB` or `RGBA` hex strings.
-#' Example: `#663399ff` \if{html}{\out{#' <img width="20" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2NIM575HwAEZwIytoDTwwAAAABJRU5ErkJggg==" />}}
+#' Example: `#663399ff` \if{html}{\out{<img width="20" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2NIM575HwAEZwIytoDTwwAAAABJRU5ErkJggg==" />}}
 #'
 #' @name color
 #' @keywords internal

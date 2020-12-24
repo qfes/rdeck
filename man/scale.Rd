@@ -31,6 +31,13 @@ provide a colour scale and \emph{untransformed} ticks.
 Legend ticks can be formatted with a format function. This function can completely replace the
 input ticks if you wish; the only constraint is the return value is a character vector of the
 same length as the number of \emph{unformatted ticks}.
+
+Legends are \href{https://kepler.gl}{kepler.gl} inspired.
+\if{html}{\out{
+  <div class="text-center">
+    <img src="https://user-images.githubusercontent.com/391385/103058278-7b1d1000-45ed-11eb-86d2-7ab594bb32de.png" />
+  </div>
+}}
 }
 
 \section{Available scales}{

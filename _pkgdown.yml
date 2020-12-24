@@ -72,6 +72,13 @@ reference:
     contents:
       - scale
       - matches("scale_")
+  - title: Prop Types
+    desc: Description and usage for accessors, scales, tooltips and colours
+    contents:
+      - accessor
+      - scale
+      - tooltip
+      - color
   - title: Other
     contents:
       - view_state

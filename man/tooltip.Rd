@@ -4,8 +4,39 @@
 \alias{tooltip}
 \title{Prop Type: Tooltip}
 \description{
-Prop Type: Tooltip
+If \code{pickable == TRUE}, tooltip defines which columns will be displayed when an object
+is \emph{hovered}. The tooltip will be displayed as a transposed table (1 row per column) and
+is styled according to the \code{\link{rdeck}} \code{theme}. The tooltip layout is inspired by
+\href{https://kepler.gl}{kepler.gl}.
 
-Prop Type: Tooltip
+\if{html}{\out{
+  <div class="text-center">
+    <img src="https://user-images.githubusercontent.com/391385/103058202-57f26080-45ed-11eb-9131-f09585c1b894.png" />
+  </div>
+}}
+
+Tooltips support different arguments depending on the value of \code{data}, but the following
+arguments are always supported:
+\itemize{
+\item \code{NULL} | \code{NA} | \code{FALSE} -> no tooltip
+\item \code{TRUE} -> all columns (except \code{sfc} columns)
 }
+}
+\section{Data inherits \code{data.frame}}{
+When \code{data} is a \code{data.frame}, tooltip supports
+\href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} (renaming isn't
+supported). Expressions such as \code{c(foo, bar)}, \code{everything()}, \code{matches("foo")}, \code{-unwanted},
+\code{1:6} etc. are supported.
+
+All columns referenced in tooltip must exist.
+}
+
+\section{Data is a \code{string} or \code{NULL}}{
+For cases where data is absent (tooltip wouldn't be displayed anyway), or dynamically loaded
+in the client, tooltips may take a character vector of column names, or a \code{c()} expression
+of bare names (e.g. \code{c(foo, bar)}).
+
+No validation on these columns is possible in this case.
+}
+
 \keyword{internal}

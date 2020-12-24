@@ -5,6 +5,6 @@
 \title{Prop Type: Color}
 \description{
 Colours are represented by \code{RGB} or \code{RGBA} hex strings.
-Example: \verb{#663399ff} \if{html}{\out{#' <img width="20" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2NIM575HwAEZwIytoDTwwAAAABJRU5ErkJggg==" />}}
+Example: \verb{#663399ff} \if{html}{\out{<img width="20" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2NIM575HwAEZwIytoDTwwAAAABJRU5ErkJggg==" />}}
 }
 \keyword{internal}
