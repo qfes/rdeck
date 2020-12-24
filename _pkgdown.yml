@@ -70,7 +70,6 @@ reference:
       Translate data columns to visual properties, predominantly colours: fill, line, highlight
       and sizes: radius, elevation, width, height.
     contents:
-      - scale
       - matches("scale_")
   - title: Prop Types
     desc: Description and usage for accessors, scales, tooltips and colours
