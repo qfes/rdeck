@@ -7,8 +7,13 @@
 Scales transform input data into visual representations, predominantly colours:
 \code{fill}, \code{line}, \code{highlight} and sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}.
 
+Columns referenced by a scale support string literals and
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} expressions. Columns
+may be bare names (\code{my_col}), string literals (\code{"my_col"}), or unquoted expressions
+(\code{!!my_var} or \code{{{my_var}}}).
+
 Transformations are performed in client-side javascript, thus scales have very minimal
-file-size overhead; what you pay for this the source data being \emph{scaled}, not the scale
+file-size overhead; what you pay for is the source data being \emph{scaled}, not the scale
 itself. Additional scales referring the same column only \emph{pay} for that column once.
 Adding fields being \emph{scaled} to the tooltips have minimal overhead also, as this
 data is already required for the scale.
@@ -21,8 +26,7 @@ not in R).
 \section{Legend}{
 Scales can optionally produce a colour or numeric legend in the client. Numeric legends give
 context for which visual field is being scaled and by what column; colour legends additionally
-provide a colour scale and \emph{untransformed} ticks (i.e. you will see the ticks in the original
-representation, not the transformed representation).
+provide a colour scale and \emph{untransformed} ticks.
 
 Legend ticks can be formatted with a format function. This function can completely replace the
 input ticks if you wish; the only constraint is the return value is a character vector of the
