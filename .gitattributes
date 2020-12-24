@@ -4,8 +4,15 @@ inst/htmlwidgets/*.js -diff
 inst/htmlwidgets/*.css -diff
 package-lock.json -diff
 
+# generated
 inst/htmlwidgets/*.js linguist-generated
 inst/htmlwidgets/*.css linguist-generated
+R/deckgl-layers.R linguist-generated
+R/deckgl-validators.R linguist-generated
 
+# docs
+docs/* linguist-documentation
 man/* linguist-documentation
-scripts/* linguist-detectable
+
+# ejs
+*.ejs linguist-language=EJS
