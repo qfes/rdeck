@@ -3,7 +3,7 @@ url: https://anthonynorth.github.io/rdeck
 template:
   params:
     docsearch:
-      api_key: API_KEY
+      api_key: 3ca320790448947a263a14839534e41e
       index_name: rdeck
 
 articles:
