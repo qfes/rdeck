@@ -1,4 +1,5 @@
-import React, { useMemo } from "react";
+import React from "react";
+import { ScaleLinear, ScaleLogarithmic, ScalePower } from "d3-scale";
 import {
   AccessorScale,
   AccessorScaleCategory,
@@ -70,26 +71,20 @@ function Scale(scale: AccessorScale<number | Color>) {
   );
 }
 
-const Continuous = ({ range, domain, ticks }: AccessorScaleContinuous<Color>) => {
-  const id = useId("gradient");
-  const colors = range.map(rgba);
+const Continuous = ({ ticks, scaleData }: AccessorScaleContinuous<Color>) => {
   const lines = ticks.map((_, index) => index).slice(1, -1);
-  const domainSize = domain[domain.length - 1] - domain[0];
-
   const gradientHeight = TICK_HEIGHT * (ticks.length - 1);
   const height = gradientHeight + TICK_FONT_SIZE + 1;
 
   return (
     <svg className={styles.colorScale} height={height} shapeRendering="crispEdges">
       <svg y={5}>
-        <defs>
-          <linearGradient id={id} x2={0} y2={1}>
-            {colors.map((color, index) => (
-              <stop key={index} offset={index / colors.length} stopColor={color} />
-            ))}
-          </linearGradient>
-        </defs>
-        <rect width={20} height={gradientHeight} fill={`url(#${id})`} />
+        <image
+          width={20}
+          height={gradientHeight}
+          href={getColorGradient(scaleData)}
+          preserveAspectRatio="none"
+        />
         {lines.map((index) => (
           <line
             key={index}
@@ -156,13 +151,22 @@ function Ticks({ ticks, x = 28, y = 0 }: TicksProps) {
   );
 }
 
-const useId = (prefix: string) => {
-  return useMemo(() => {
-    return `${prefix}-${counter()}`;
-  }, [prefix]);
-};
+type ScaleContinuous<T> = ScaleLinear<T, T> | ScalePower<T, T> | ScaleLogarithmic<T, T>;
 
-const counter = (() => {
-  let count = 0;
-  return () => count++;
-})();
+function getColorGradient(scale: ScaleContinuous<Color>, n = 200): string {
+  const length = scale.range().length;
+  const range: any = [...Array(length).keys()].map((x) => x / (length - 1));
+  const invert = scale.copy().range(range).invert;
+
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+  canvas.width = 1;
+  canvas.height = n;
+
+  for (let i = 0; i < n; i++) {
+    context!.fillStyle = rgba(scale(invert(i / n)));
+    context!.fillRect(0, i, 1, 1);
+  }
+
+  return canvas.toDataURL();
+}
