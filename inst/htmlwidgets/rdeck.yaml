@@ -12,12 +12,12 @@ dependencies:
     script: react.js
     all_files: false
   - name: deck.gl
-    version: 8.3.11
+    version: 8.3.13
     src: htmlwidgets
     script: deck.gl.js
     all_files: false
   - name: mapbox-gl
-    version: 2.0.0
+    version: 2.0.1
     src: htmlwidgets
     script: mapbox-gl.js
     all_files: false
