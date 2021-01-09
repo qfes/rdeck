@@ -85,7 +85,7 @@ const Continuous = ({ range, domain, ticks }: AccessorScaleContinuous<Color>) =>
         <defs>
           <linearGradient id={id} x2={0} y2={1}>
             {colors.map((color, index) => (
-              <stop key={index} offset={domain[index] / domainSize} stopColor={color} />
+              <stop key={index} offset={index / colors.length} stopColor={color} />
             ))}
           </linearGradient>
         </defs>
