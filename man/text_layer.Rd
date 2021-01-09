@@ -106,7 +106,7 @@ See \href{https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}{font-fam
 \item{line_height}{<\code{number}> A unitless number that will be multiplied with \code{get_size}
 to set the line height.}
 
-\item{font_settings}{<\code{\link{font_settings}}> Advanced options for fine tuning the appearance
+\item{font_settings}{<\code{font_settings}> Advanced options for fine tuning the appearance
 and performance of the generated \code{font_atlas}.}
 
 \item{word_break}{<\code{"break-word"} | \code{"break-all"}> Requires a valid \code{max_width}.}
@@ -164,7 +164,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Text Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/layers/text-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/layers/text-layer.md}
 
 Other core-layers: 
 \code{\link{arc_layer}},

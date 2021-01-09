@@ -168,7 +168,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Grid Cell Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/layers/grid-cell-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/layers/grid-cell-layer.md}
 
 Other core-layers: 
 \code{\link{arc_layer}},

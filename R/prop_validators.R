@@ -95,8 +95,8 @@ validate_radius_units.layer <- function(layer) {
 }
 
 assert_aggregation <- function(value, name) {
-  assert_is_string(value, string)
-  assert_in(value, c("SUM", "MEAN", "MIN", "MAX"))
+  assert_is_string(value, name)
+  assert_in(value, c("SUM", "MEAN", "MIN", "MAX"), name)
 }
 
 # validate aggregation

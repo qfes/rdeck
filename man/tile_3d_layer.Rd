@@ -21,7 +21,7 @@ add_tile_3d_layer(
   get_point_color = "#000000",
   point_size = 1,
   load_options = list(),
-  loader = list(id = "3d-tiles", name = "3D Tiles", version = "2.3.7", extensions =
+  loader = list(id = "3d-tiles", name = "3D Tiles", version = "2.3.8", extensions =
     c("cmpt", "pnts", "b3dm", "i3dm"), mimeTypes = c("application/octet-stream"), tests =
     c("cmpt", "pnts", "b3dm", "i3dm"), parse = NULL, options = list(`3d-tiles` =
     list(loadGLTF = TRUE, decodeQuantizedPositions = FALSE, isTileset = "auto", tile =
@@ -98,7 +98,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Tile 3D Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/geo-layers/tile3d-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/geo-layers/tile3d-layer.md}
 
 Other geo-layers: 
 \code{\link{great_circle_layer}},

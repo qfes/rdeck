@@ -153,7 +153,7 @@ NULL
 #' [font-weight](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
 #' @param line_height <`number`> A unitless number that will be multiplied with `get_size`
 #' to set the line height.
-#' @param font_settings <[`font_settings`]> Advanced options for fine tuning the appearance
+#' @param font_settings <`font_settings`> Advanced options for fine tuning the appearance
 #' and performance of the generated `font_atlas`.
 #' @param word_break <`"break-word"` | `"break-all"`> Requires a valid `max_width`.
 #' @param max_width <`number`> Used together with `word_break` for wrapping text. Specifies
@@ -617,7 +617,7 @@ NULL
 NULL
 
 deckgl_docs <- function(module, name) {
-  version <- "v8.3.11"
+  version <- "v8.3.13"
   url <- file.path(
     "https://github.com/visgl/deck.gl/blob",
     version,

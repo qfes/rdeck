@@ -113,7 +113,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Screen Grid Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.11/docs/api-reference/aggregation-layers/screen-grid-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/aggregation-layers/screen-grid-layer.md}
 
 Other aggregation-layers: 
 \code{\link{contour_layer}},
