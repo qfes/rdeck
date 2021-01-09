@@ -27,28 +27,28 @@
 ## Installation
 
 ```r
-# install latest release
-remotes::install_github("anthonynorth/rdeck@*release")
-# or install development version
+# install development version
 remotes::install_github("anthonynorth/rdeck")
 ```
 
 ## Similar work
 
-`{rdeck}` draws much inspiration from [`{mapdeck}`](https://github.com/SymbolixAU/mapdeck/). `{rdeck}`'s design choices make it convenient for use in static reports, and certain Shiny usecases that are highly performant.
+`{rdeck}` draws much inspiration from [`kepler.gl`](https://github.com/keplergl/kepler.gl) and 
+[`{mapdeck}`](https://github.com/SymbolixAU/mapdeck). `{rdeck}`'s design choices make it convenient 
+for use in static reports, and certain Shiny usecases that are highly performant.
 
-Some notable differences:
+Some notable differences to `{mapdeck}`:
 
 * `{rmarkdown}` HTML reports made with `{rdeck}` are typically an order of magnitude smaller in file size than `{mapdeck}`.  
   - Thanks to column-major data storage, and automatic filtering of data that is not used in the map.
 * Tidy evaluation is supported for column specifications.
 * Extensive validation of layer properties in R is preferred, rather than throwing errors in the browser.
-* `{ggplot2}` style `scale_` functions that perform common layer data transformations and automatically generate legends with appropriate untransformed tick marks.
+* `{ggplot2}` style `scale_` functions that perform common layer data transformations and automatically generate [legends](https://anthonynorth.github.io/rdeck/reference/scale.html#legend) with appropriate untransformed tick marks.
   - e.g. `scale_color_power`, `scale_color_log` etc.
-* Automatic creation of tooltips
-* Choice of Light or dark themes for tooltips and legends.
+* Automatic creation of formatted [tooltips](https://anthonynorth.github.io/rdeck/reference/tooltip.html)
+* Choice of light or dark themes for tooltips and legends.
 * Auto-generated interface from JS source
   - every deck.gl layer is supported to some degree
-  - every layer property is a snake_case version of the camelCase of it's deck.gl counterpart.
+  - every layer property is a snake_case version of the camelCase deck.gl counterpart.
 * Users can orchestrate browser-side map layer updates with Shiny, allowing for extremely performant reactivity.
   - Traditional Shiny interactivity using whole datasets is also possible, and is slightly slower than `{mapdeck}` at present.
