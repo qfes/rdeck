@@ -3,7 +3,7 @@ scale_ticks <- function(scale) {
 }
 
 scale_ticks.scale_linear <- function(scale) {
-  ticks(scale$limits, scale$n_ticks) %>%
+  ticks(scale$n_ticks, scale$limits, scale$breaks) %>%
     format_ticks(scale$tick_format)
 }
 
@@ -11,7 +11,7 @@ scale_ticks.scale_power <- function(scale) {
   trans <- function(x) x^scale$exponent
   invert <- function(x) x^(1 / scale$exponent)
 
-  ticks(trans(scale$limits), scale$n_ticks) %>%
+  ticks(scale$n_ticks, trans(scale$limits), trans(scale$breaks)) %>%
     invert() %>%
     format_ticks(scale$tick_format)
 }
@@ -20,7 +20,7 @@ scale_ticks.scale_log <- function(scale) {
   trans <- function(x) log(x, scale$base)
   invert <- function(x) scale$base^x
 
-  ticks(trans(scale$limits), scale$n_ticks) %>%
+  ticks(scale$n_ticks, trans(scale$limits), trans(scale$breaks)) %>%
     invert() %>%
     format_ticks(scale$tick_format)
 }
@@ -33,7 +33,7 @@ scale_ticks.scale_threshold <- function(scale) {
 scale_ticks.scale_quantile <- scale_ticks.scale_threshold
 
 scale_ticks.scale_quantize <- function(scale) {
-  ticks(scale$domain, length(scale$palette %||% scale$range) + 1) %>%
+  ticks(length(scale$palette %||% scale$range) + 1, scale$domain) %>%
     format_ticks(scale$tick_format)
 }
 
@@ -41,8 +41,12 @@ scale_ticks.scale_category <- function(scale) {
   format_ticks(scale$domain, scale$tick_format)
 }
 
-ticks <- function(limits, length, tick_format) {
-  seq(limits[1], limits[2], length.out = as.integer(length))
+ticks <- function(length, limits, breaks = NULL) {
+  if (is.null(breaks)) {
+    seq(limits[1], limits[2], length.out = as.integer(length))
+  } else {
+    stats::approx(c(limits[1], breaks, limits[2]), n = length)$y
+  }
 }
 
 format_ticks <- function(ticks, tick_format) {

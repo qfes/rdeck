@@ -7,7 +7,7 @@
 #' @export
 scale_color_linear <- function(col, palette, na_color = "#000000",
                                limits = NULL, breaks = NULL,
-                               n_ticks = 6, tick_format = format_number, legend = TRUE) {
+                               n_ticks = NULL, tick_format = format_number, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -18,7 +18,7 @@ scale_color_linear <- function(col, palette, na_color = "#000000",
     na_color = na_color,
     limits = limits,
     breaks = breaks,
-    n_ticks = n_ticks,
+    n_ticks = n_ticks %||% ifelse(is.null(breaks), 6, length(breaks) + 2),
     tick_format = tick_format,
     legend = legend
   )
@@ -71,7 +71,7 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
 #' @export
 scale_color_power <- function(col, palette, na_color = "#000000", exponent = 0.5,
                               limits = NULL, breaks = NULL,
-                              n_ticks = 6, tick_format = format_number, legend = TRUE) {
+                              n_ticks = NULL, tick_format = format_number, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -83,7 +83,7 @@ scale_color_power <- function(col, palette, na_color = "#000000", exponent = 0.5
     exponent = exponent,
     limits = limits,
     breaks = breaks,
-    n_ticks = n_ticks,
+    n_ticks = n_ticks %||% ifelse(is.null(breaks), 6, length(breaks) + 2),
     tick_format = tick_format,
     legend = legend
   )
@@ -140,7 +140,7 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
 #' @export
 scale_color_log <- function(col, palette, na_color = "#000000", base = 10,
                             limits = NULL, breaks = NULL,
-                            n_ticks = 6, tick_format = format_number, legend = TRUE) {
+                            n_ticks = NULL, tick_format = format_number, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -152,7 +152,7 @@ scale_color_log <- function(col, palette, na_color = "#000000", base = 10,
     base = base,
     limits = limits,
     breaks = breaks,
-    n_ticks = n_ticks,
+    n_ticks = n_ticks %||% ifelse(is.null(breaks), 6, length(breaks) + 2),
     tick_format = tick_format,
     legend = legend
   )
@@ -456,8 +456,14 @@ scale <- function(scale, ...) {
 #' @param breaks <`numeric`> The breaks of the scale, allowing to define a piecewise scale.
 #' If not null, must be `length(palette) - 2` or `length(range) - 2`, such that each `break`
 #' is mapped to a `palette` or `range` entry.
+#'
+#' Each break will be present on the legend for colour scales.
 #' @param n_ticks <`number`> The number of ticks to display on the legend. Includes the domain
-#' of the scale.
+#' of the scale. If `breaks` is not `NULL`, each break must map to a tick and gaps between
+#' breaks must have the same number of ticks; i.e. `n_ticks` must be
+#' `2 + length(breaks) + x * (length(breaks) + 1)`, where `x` is any positive integer.
+#'
+#' Defaults to `2 + length(breaks)` when `breaks` is not `NULL`; `6` otherwise.
 #' @param tick_format <`function`> A function taking a vector of ticks returning formatted ticks.
 #' @param legend <`logical`> Indicate whether the legend should be displayed for this scale.
 NULL

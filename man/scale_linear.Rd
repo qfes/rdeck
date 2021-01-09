@@ -11,7 +11,7 @@ scale_color_linear(
   na_color = "#000000",
   limits = NULL,
   breaks = NULL,
-  n_ticks = 6,
+  n_ticks = NULL,
   tick_format = format_number,
   legend = TRUE
 )
@@ -41,10 +41,16 @@ numeric vector of length 2, representing \code{c(min, max)}. Values outside the 
 
 \item{breaks}{<\code{numeric}> The breaks of the scale, allowing to define a piecewise scale.
 If not null, must be \code{length(palette) - 2} or \code{length(range) - 2}, such that each \code{break}
-is mapped to a \code{palette} or \code{range} entry.}
+is mapped to a \code{palette} or \code{range} entry.
+
+Each break will be present on the legend for colour scales.}
 
 \item{n_ticks}{<\code{number}> The number of ticks to display on the legend. Includes the domain
-of the scale.}
+of the scale. If \code{breaks} is not \code{NULL}, each break must map to a tick and gaps between
+breaks must have the same number of ticks; i.e. \code{n_ticks} must be
+\code{2 + length(breaks) + x * (length(breaks) + 1)}, where \code{x} is any positive integer.
+
+Defaults to \code{2 + length(breaks)} when \code{breaks} is not \code{NULL}; \code{6} otherwise.}
 
 \item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
 

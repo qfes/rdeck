@@ -153,10 +153,24 @@ validate_base <- function(scale) {
 
 # validate n_ticks
 validate_n_ticks <- function(scale) {
-  assert_not_null(scale$n_ticks, "n_ticks")
-  assert_type(scale$n_ticks, c("integer", "numeric"), "n_ticks")
-  assert_scalar(scale$n_ticks, "n_ticks")
-  assert_range(scale$n_ticks, min = 2, name = "n_ticks")
+  n_ticks <- scale$n_ticks
+  breaks <- scale$breaks
+  assert_not_null(n_ticks)
+  assert_type(n_ticks, c("integer", "numeric"))
+  assert_scalar(n_ticks)
+  assert_range(n_ticks, min = 2)
+
+  n_breaks <- length(scale$breaks)
+  if (!is.null(scale$breaks)) {
+    is_valid <- ((n_ticks - 2 - n_breaks) / (n_breaks + 1)) %% 1 == 0
+    if (!is_valid) {
+      rlang::abort(
+        "n_ticks must be `2 + length(breaks) + x * (length(breaks) + 1)`,
+        where x is any positive integer",
+        "rdeck_error"
+      )
+    }
+  }
 }
 
 # validate tick_format
