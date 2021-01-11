@@ -69,5 +69,5 @@ Element id for the map.}
 Create a Deck.GL map.
 }
 \seealso{
-\url{https://github.com/uber/deck.gl/blob/master/docs/api-reference/deck.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/core/deck.md}
 }
