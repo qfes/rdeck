@@ -3,6 +3,10 @@ on:
     branches:
       - main
       - master
+    paths:
+      - "_pkgdown.yml"
+      - "man/**"
+      - "vignettes/**"
 
 name: pkgdown
 
