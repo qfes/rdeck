@@ -28,7 +28,7 @@ add_text_layer(
   font_weight = "normal",
   line_height = 1,
   font_settings = list(),
-  word_break = "word-break",
+  word_break = "break-word",
   max_width = -1,
   get_text = text,
   get_position = position,

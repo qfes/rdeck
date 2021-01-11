@@ -4,10 +4,10 @@
 \alias{tooltip}
 \title{Prop Type: Tooltip}
 \description{
-If \code{pickable == TRUE}, tooltip defines which columns will be displayed when an object
-is \emph{hovered}. The tooltip will be displayed as a transposed table (1 row per column) and
-is styled according to the \code{\link{rdeck}} \code{theme}. The tooltip layout is inspired by
-\href{https://kepler.gl}{kepler.gl}.
+If \code{pickable == TRUE}, tooltip defines which columns (and their order) will be displayed
+when an object is \emph{hovered}. The tooltip will be displayed as a transposed table (1 row
+per column) and is styled according to the \code{\link{rdeck}} \code{theme}. The tooltip layout is inspired
+by \href{https://kepler.gl}{kepler.gl}.
 
 \if{html}{\out{
   <div class="text-center">

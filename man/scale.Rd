@@ -13,9 +13,9 @@ may be bare names (\code{my_col}), string literals (\code{"my_col"}), or unquote
 (\code{!!my_var} or \code{{{my_var}}}).
 
 Transformations are performed in client-side javascript, thus scales have very minimal
-file-size overhead; what you pay for is the source data being \emph{scaled}, not the scale
+file-size overhead; what you \emph{pay} for is the source data being scaled, not the scale
 itself. Additional scales referring the same column only \emph{pay} for that column once.
-Adding fields being \emph{scaled} to the tooltips have minimal overhead also, as this
+Adding fields being scaled to the tooltips have minimal overhead also, as this
 data is already required for the scale.
 
 Data retrieved in the browser dynamically can also be scaled. The R interface for scaling
