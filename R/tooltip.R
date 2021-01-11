@@ -61,7 +61,8 @@ eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
   if (rlang::is_call(expr) && rlang::call_name(expr) == "c") {
     cols <- rlang::call_args(expr) %>%
       lapply(function(arg) rlang::as_name(arg)) %>%
-      unlist()
+      unlist() %>%
+      unname()
 
     return(tooltip(cols, data, data_type))
   }

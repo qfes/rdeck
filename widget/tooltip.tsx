@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { PickInfo } from "deck.gl";
+import { PickInfo } from "@deck.gl/core";
 import styles from "./tooltip.css";
 import { ObjectInfo } from "./accessor";
 
@@ -18,7 +18,6 @@ const Tooltip = ({ info }: TooltipProps) => {
   const data = getData(info.object, { index, data: layer.props.data as any });
   const names = tooltip!.cols === true ? Object.keys(data) : tooltip!.cols;
 
-  // TODO: do something sensible with array properties
   return (
     <div className={styles.tooltip} style={{ transform: `translate(${x}px, ${y}px)` }}>
       <div className={styles.layerName}>{name}</div>
@@ -27,7 +26,7 @@ const Tooltip = ({ info }: TooltipProps) => {
           {names.map((name) => (
             <tr key={name}>
               <td className={styles.fieldName}>{name}</td>
-              <td className={styles.fieldValue}>{String(data[name])}</td>
+              <td className={styles.fieldValue}>{String(data[name] ?? null)}</td>
             </tr>
           ))}
         </tbody>
@@ -38,7 +37,7 @@ const Tooltip = ({ info }: TooltipProps) => {
 
 export default memo(Tooltip);
 
-type Info = Omit<ObjectInfo<DataFrame>, "target">;
+type Info = Omit<ObjectInfo<DataFrame, any>, "target">;
 type DataFn = (object: Record<string, any>, info: Info) => Record<string, any>;
 
 function accessorFn(dataType: DataType): DataFn {
@@ -51,7 +50,7 @@ function accessorFn(dataType: DataType): DataFn {
     case "object":
       return (object) => object;
     case "geojson":
-      return (object) => object.properties;
+      return (object) => object.properties ?? {};
     default:
       throw TypeError(`${dataType} not supported`);
   }
