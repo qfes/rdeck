@@ -1,14 +1,25 @@
-# For help debugging build failures open an issue on the RStudio community with the 'github-actions' tag.
-# https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
       - master
+    paths:
+      - R/**
+      - man/**
+      - vignettes/**
+      - DESCRIPTION
+      - NAMESPACE
   pull_request:
     branches:
       - main
       - master
+    paths:
+      - R/**
+      - man/**
+      - vignettes/**
+      - DESCRIPTION
+      - NAMESPACE
 
 name: R-CMD-check
 

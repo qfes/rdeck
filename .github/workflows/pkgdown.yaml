@@ -1,12 +1,13 @@
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
       - master
     paths:
-      - "_pkgdown.yml"
-      - "man/**"
-      - "vignettes/**"
+      - _pkgdown.yml
+      - man/**
+      - vignettes/**
 
 name: pkgdown
 
