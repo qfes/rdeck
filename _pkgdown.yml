@@ -80,6 +80,7 @@ reference:
       - color
   - title: Other
     contents:
+      - mapbox_access_token
       - view_state
       - mvt_url
       - format_number

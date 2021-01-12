@@ -31,6 +31,12 @@
 remotes::install_github("anthonynorth/rdeck")
 ```
 
+## Mapbox access token
+A [Mapbox account](https://account.mapbox.com/auth/signup) and 
+[mapbox access token](https://docs.mapbox.com/help/glossary/access-token) 
+is required for Mapbox basemaps, with or without the Mapbox data service. 
+See <https://anthonynorth.github.io/rdeck/reference/mapbox_access_token.html> for usage.
+
 ## Similar work
 
 `{rdeck}` draws much inspiration from [`kepler.gl`](https://github.com/keplergl/kepler.gl) and 

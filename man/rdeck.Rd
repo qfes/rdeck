@@ -5,7 +5,6 @@
 \title{RDeck}
 \usage{
 rdeck(
-  mapbox_api_access_token = NULL,
   map_style = mapbox_dark(),
   theme = "kepler",
   initial_bounds = NULL,
@@ -21,28 +20,33 @@ rdeck(
 )
 }
 \arguments{
-\item{mapbox_api_access_token}{\code{character}
-The api access token to use mapbox tiles.}
+\item{map_style}{<\code{string}> The mapbox basemap style url.
+See \url{https://docs.mapbox.com/api/maps/#mapbox-styles}}
 
-\item{map_style}{\code{character}
-A mapbox style url. \url{https://docs.mapbox.com/api/maps/#mapbox-styles}}
+\item{theme}{<\code{"kepler"} | \code{"light"}> The widget theme which alters the style of the
+legend and tooltips.}
 
-\item{theme}{The widget theme. Either "kepler" or "light".}
-
-\item{initial_bounds}{\code{sf::st_bbox} | \code{sf::sf} | \code{sf::sfc} | \code{sf::sfg}
+\item{initial_bounds}{<\code{\link[sf:st_bbox]{st_bbox}} | \code{\link[sf:sf]{sf}} | \code{\link[sf:sfc]{sfc}}>
 The initial bounds of the map; overwrites \code{initial_view_state}.}
 
-\item{initial_view_state}{\code{view_state}
-The initial view state of the map. See \code{\link[=view_state]{view_state()}} for details.}
+\item{initial_view_state}{<\code{\link{view_state}}> Defines the map position, zoom, bearing and pitch.}
 
-\item{controller}{\code{logical}
-If \code{NULL} or \code{FALSE}, the map is not interactive.}
+\item{controller}{<\code{logical}> If \code{NULL} or \code{FALSE}, the map is not interactive.}
 
-\item{picking_radius}{\code{numeric}
-Extra pixels around the pointer to include while picking.}
+\item{picking_radius}{<\code{number}> Extra pixels around the pointer to include while picking;
+useful when rendering objects that are difficult to hover, e.g. thin lines, small points, etc.}
 
-\item{use_device_pixels}{\code{logical} | \code{numeric}
-Controls the resolution of drawing buffer used for rendering.}
+\item{use_device_pixels}{<\code{logical} | \code{number}> Controls the resolution of drawing buffer used
+for rendering.
+\itemize{
+\item \code{TRUE}: Resolution is defined by \code{window.devicePixelRatio}. On Retina/HD displays, this
+resolution is usually twice as big as \verb{CSS pixels} resolution.
+\item \code{FALSE}: \verb{CSS pixels} resolution is used for rendering.
+\item \code{number}: Custom ratio (drawing buffer resolution to \verb{CSS pixel}) to determine drawing
+buffer size. A value less than \code{1} uses resolution smaller than \verb{CSS pixels}, improving
+rendering performance at the expense of image quality; a value greater than \code{1} improves
+image quality at the expense of rendering performance.
+}}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:
@@ -54,19 +58,19 @@ dot density on dark maps.
 dot density on light maps.
 }}
 
-\item{width}{\code{numeric}
-Width of the map}
+\item{width}{<\code{number}> The width of the map canvas.}
 
-\item{height}{\code{numeric}
-Height of the map}
+\item{height}{<\code{number}> The height of the map canvas.}
 
-\item{elementId}{\code{character}
-Element id for the map.}
+\item{elementId}{<\code{string}> The map element id. Not used in shiny applications.}
 
-\item{...}{additional parameters to pass to the \code{Deck}.}
+\item{...}{Additional parameters that will be forwarded to deck.gl javascript without
+validation nor processing. All dots must be named and will be \code{camelCased} when serialised.
+A warning is raised when dots are used, warning class \code{rdeck_dots_nonempty}.}
 }
 \description{
-Create a Deck.GL map.
+Create a Deck.GL map. Rendering the mapbox basemap requires a mapbox account and
+\href{[mapbox_access_token]}{mapbox access token}.
 }
 \seealso{
 \url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/core/deck.md}

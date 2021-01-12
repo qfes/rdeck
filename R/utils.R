@@ -31,3 +31,14 @@ pick <- function(obj, names) {
 
   obj_filtered
 }
+
+omit <- function(obj, names) {
+  obj_filtered <- obj[!base::names(obj) %in% names]
+  class(obj_filtered) <- class(obj)
+
+  obj_filtered
+}
+
+paste_line <- function(...) {
+  paste(c(...), collapse = "\n")
+}

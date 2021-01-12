@@ -30,6 +30,7 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 #' RDeck proxy
 #'
+#' @description
 #' Creates an [rdeck()] interface for asynchronous updates of a pre-rendered rdeck map
 #' in Shiny apps.
 #'
@@ -42,8 +43,8 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' may omit the `data` prop to avoid re-serialising unchanged data. All other props will
 #' assume their defaults if omitted.
 #' @name rdeck_proxy
-#' @param id the map id
-#' @param session the shiny session
+#' @param id <`string`> The map id
+#' @param session <`ShinySession`> The shiny session
 #' @inheritParams rdeck
 #' @examples
 #' \dontrun{
