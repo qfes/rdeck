@@ -11,8 +11,8 @@ R/deckgl-layers.R linguist-generated
 R/deckgl-validators.R linguist-generated
 
 # docs
-docs/* linguist-documentation
+vignettes/* linguist-documentation
 man/* linguist-documentation
 
 # ejs
-*.ejs linguist-language=EJS
+*.ejs -linguist-detectable
