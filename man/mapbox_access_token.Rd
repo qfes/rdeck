@@ -19,7 +19,7 @@ The mapbox token is read from the following locations (in order):
 \itemize{
 \item \code{getOption("rdeck.mapbox_access_token")}
 \item \code{Sys.getenv("MAPBOX_ACCESS_TOKEN")}
-\item `Sys.getenv("MAPBOX_TOKEN")
+\item \code{Sys.getenv("MAPBOX_TOKEN")}
 }
 }
 \seealso{

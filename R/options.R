@@ -12,7 +12,7 @@
 #' The mapbox token is read from the following locations (in order):
 #' - `getOption("rdeck.mapbox_access_token")`
 #' - `Sys.getenv("MAPBOX_ACCESS_TOKEN")`
-#' - `Sys.getenv("MAPBOX_TOKEN")
+#' - `Sys.getenv("MAPBOX_TOKEN")`
 #'
 #' @name mapbox_access_token
 #' @seealso <https://docs.mapbox.com/help/glossary/access-token>
