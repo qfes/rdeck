@@ -8,7 +8,7 @@ import { Legend } from "./legend";
 import styles from "./app.css";
 
 export interface AppProps {
-  props: DeckProps & StaticMapProps & { initialBounds?: Bounds };
+  props: DeckProps & StaticMapProps & { initialBounds?: Bounds; blendingMode: BlendingMode };
   layers: LayerProps[];
   theme: "kepler" | "light";
   width: number;
@@ -26,10 +26,7 @@ export function App({ props, layers, theme = "kepler", width, height }: AppProps
 
   return (
     <div className={className}>
-      <Map
-        props={{ ...deckglProps, initialViewState: _initialViewState }}
-        layers={_layers.map((layer) => layer.renderLayer())}
-      />
+      <Map props={{ ...deckglProps, initialViewState: _initialViewState }} layers={_layers} />
       <Legend layers={_layers.map((layer) => layer.renderLegend()).reverse()} />
     </div>
   );

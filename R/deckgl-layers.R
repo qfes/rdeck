@@ -2409,8 +2409,9 @@ add_trips_layer <- function(rdeck,
                             get_color = "#000000ff",
                             get_width = 1,
                             trail_length = 120,
-                            current_time = 0,
-                            get_timestamps = NULL,
+                            get_timestamps = timestamps,
+                            loop_length = 1800,
+                            animation_speed = 30,
                             blending_mode = "normal",
                             tooltip = FALSE) {
   check_dots(...)
@@ -2444,8 +2445,9 @@ add_trips_layer <- function(rdeck,
     get_color = accessor_scale(rlang::enquo(get_color), data),
     get_width = accessor_scale(rlang::enquo(get_width), data),
     trail_length = trail_length,
-    current_time = current_time,
     get_timestamps = accessor(rlang::enquo(get_timestamps), data),
+    loop_length = loop_length,
+    animation_speed = animation_speed,
     blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
@@ -2469,8 +2471,9 @@ add_trips_layer <- function(rdeck,
   validate_get_color(trips_layer)
   validate_get_width(trips_layer)
   validate_trail_length(trips_layer)
-  validate_current_time(trips_layer)
   validate_get_timestamps(trips_layer)
+  validate_loop_length(trips_layer)
+  validate_animation_speed(trips_layer)
   validate_blending_mode(trips_layer)
   # add layer to map
   add_layer(rdeck, trips_layer)

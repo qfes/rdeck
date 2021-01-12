@@ -33,6 +33,18 @@ validate_angle.default <- function(layer) {
   assert_finite(angle)
 }
 
+# validate animation_speed
+validate_animation_speed <- function(layer) {
+  UseMethod("validate_animation_speed")
+}
+validate_animation_speed.default <- function(layer) {
+  animation_speed <- layer$animation_speed
+  assert_not_null(animation_speed)
+  assert_type(animation_speed, c("integer", "numeric"))
+  assert_finite(animation_speed)
+  assert_range(animation_speed, 0, NULL)
+}
+
 # validate auto_highlight
 validate_auto_highlight <- function(layer) {
   UseMethod("validate_auto_highlight")
@@ -200,18 +212,6 @@ validate_coverage.default <- function(layer) {
   assert_type(coverage, c("integer", "numeric"))
   assert_finite(coverage)
   assert_range(coverage, 0, 1)
-}
-
-# validate current_time
-validate_current_time <- function(layer) {
-  UseMethod("validate_current_time")
-}
-validate_current_time.default <- function(layer) {
-  current_time <- layer$current_time
-  assert_not_null(current_time)
-  assert_type(current_time, c("integer", "numeric"))
-  assert_finite(current_time)
-  assert_range(current_time, 0, NULL)
 }
 
 # validate data
@@ -1056,9 +1056,7 @@ validate_get_timestamps <- function(layer) {
 }
 validate_get_timestamps.default <- function(layer) {
   get_timestamps <- layer$get_timestamps
-  if (is.null(get_timestamps)) {
-    return()
-  }
+  assert_not_null(get_timestamps)
   data <- layer$data
   if (inherits(data, "data.frame")) {
     assert_col_exists(get_timestamps$col, data)
@@ -1351,6 +1349,18 @@ validate_loader <- function(layer) {
 validate_loader.default <- function(layer) {
   loader <- layer$loader
   assert_not_null(loader)
+}
+
+# validate loop_length
+validate_loop_length <- function(layer) {
+  UseMethod("validate_loop_length")
+}
+validate_loop_length.default <- function(layer) {
+  loop_length <- layer$loop_length
+  assert_not_null(loop_length)
+  assert_type(loop_length, c("integer", "numeric"))
+  assert_finite(loop_length)
+  assert_range(loop_length, 0, NULL)
 }
 
 # validate lower_percentile

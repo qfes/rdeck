@@ -46,7 +46,7 @@ function accessorFn(dataType: DataType): DataFn {
       return (object, { index, data }) => {
         const entries = Object.entries(data.frame).map(([name, value]) => [name, value[index]]);
         return Object.fromEntries(entries);
-      }
+      };
     case "object":
       return (object) => object;
     case "geojson":

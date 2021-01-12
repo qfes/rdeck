@@ -322,9 +322,15 @@ NULL
 #'
 #' @name trips_layer
 #' @inherit layer_props
-#' @param trail_length number
-#' @param current_time number
-#' @param get_timestamps <[`accessor`]>
+#' @param trail_length <`number`> The number of seconds for a path to completely fade out.
+#' @param get_timestamps <[`accessor`]> The timestamps for each _trip_. For each trip,
+#' each timestamp corresponds to a position in the linestring returned by `get_path`,
+#' representing the time at which that position was visited.
+#'
+#' Accepts a [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html)
+#' list column of numbers.
+#' @param loop_length <`number`> The number of seconds to complete an animation loop.
+#' @param animation_speed <`number`> The animation speed multiplier.
 #' @eval deckgl_docs("geo-layers", "trips-layer")
 #' @family geo-layers
 #' @family layers

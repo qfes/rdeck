@@ -1,13 +1,14 @@
-import React, { Fragment, useCallback, useRef, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { DeckGL, DeckGLProps } from "@deck.gl/react";
-import { Layer as DeckLayer, MapView, PickInfo } from "@deck.gl/core";
+import { MapView, PickInfo } from "@deck.gl/core";
 import { StaticMap, StaticMapProps } from "react-map-gl";
+import { Layer } from "./layer";
 import Tooltip from "./tooltip";
 import { blendingParameters } from "./blending";
 
-type MapProps = {
+export type MapProps = {
   props: DeckGLProps & StaticMapProps & { blendingMode: BlendingMode };
-  layers: DeckLayer<any, any>[];
+  layers: Layer[];
 };
 
 export function Map({ props, layers }: MapProps) {
@@ -28,13 +29,18 @@ export function Map({ props, layers }: MapProps) {
     ...blendingParameters(blendingMode),
   };
 
+  const [_layers, setLayers] = useState(() => layers.map((layer) => layer.renderLayer()));
+  const animating = layers.filter((layer) => layer.type === "TripsLayer").length !== 0;
+
+  useAnimation(animating, () => setLayers(layers.map((layer) => layer.renderLayer())));
+
   return (
     <Fragment>
       <DeckGL
         ref={deckgl}
         {...deckProps}
         parameters={_parameters}
-        layers={layers}
+        layers={_layers}
         onHover={handleHover}
       >
         <MapView id="map" controller={controller} repeat={true}>
@@ -58,4 +64,21 @@ const useHover = () => {
   }, []);
 
   return [state, handleHover] as [PickInfo<any> | null, (info: PickInfo<any>) => void];
+};
+
+const useAnimation = (enabled: boolean, onFrame: () => void) => {
+  const animation = useRef<number>(0);
+
+  const animate = () => {
+    onFrame();
+    animation.current = window.requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    if (enabled) {
+      animation.current = window.requestAnimationFrame(animate);
+      return () => window.cancelAnimationFrame(animation.current);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled]);
 };

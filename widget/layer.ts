@@ -19,6 +19,12 @@ export interface LayerProps extends Omit<DeckLayerProps<any>, "data"> {
   tooltip: TooltipInfo | null;
 }
 
+interface TripsLayerProps extends LayerProps {
+  currentTime: number;
+  loopLength: number;
+  animationSpeed: number;
+}
+
 export class Layer {
   type: string;
   props: LayerProps;
@@ -56,6 +62,14 @@ export class Layer {
   }
 
   renderLayer(): DeckLayer<any, any> {
+    // animate trips layer
+    if (this.type === "TripsLayer") {
+      const props = this.props as TripsLayerProps;
+      const { loopLength, animationSpeed } = props;
+      const animationTime = loopLength / animationSpeed;
+      const ratioComplete = ((Date.now() / 1000) % animationTime) / animationTime;
+      props.currentTime = ratioComplete * loopLength;
+    }
     // @ts-ignore
     return new deck[this.type](this.props);
   }

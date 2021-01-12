@@ -58,16 +58,16 @@ function accessorFn({ col, dataType }: Accessor, name: string): AccessorFn<any, 
   }
 
   if (name.endsWith("Color")) {
-      switch (dataType) {
-        case "table":
-          return tableColor(col);
-        case "object":
-          return objectColor(col);
-        case "geojson":
-          return geojsonColor(col);
-        default:
-          throw TypeError(`${dataType} not supported`);
-      }
+    switch (dataType) {
+      case "table":
+        return tableColor(col);
+      case "object":
+        return objectColor(col);
+      case "geojson":
+        return geojsonColor(col);
+      default:
+        throw TypeError(`${dataType} not supported`);
+    }
   }
 
   switch (dataType) {

@@ -29,8 +29,9 @@ add_trips_layer(
   get_color = "#000000ff",
   get_width = 1,
   trail_length = 120,
-  current_time = 0,
-  get_timestamps = NULL,
+  get_timestamps = timestamps,
+  loop_length = 1800,
+  animation_speed = 30,
   blending_mode = "normal",
   tooltip = FALSE
 )
@@ -105,11 +106,18 @@ specified by \code{width_scale}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{trail_length}{number}
+\item{trail_length}{<\code{number}> The number of seconds for a path to completely fade out.}
 
-\item{current_time}{number}
+\item{get_timestamps}{<\code{\link{accessor}}> The timestamps for each \emph{trip}. For each trip,
+each timestamp corresponds to a position in the linestring returned by \code{get_path},
+representing the time at which that position was visited.
 
-\item{get_timestamps}{<\code{\link{accessor}}>}
+Accepts a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}
+list column of numbers.}
+
+\item{loop_length}{<\code{number}> The number of seconds to complete an animation loop.}
+
+\item{animation_speed}{<\code{number}> The animation speed multiplier.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:

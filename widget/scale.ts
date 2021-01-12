@@ -90,13 +90,12 @@ export function isColorScale(obj: AccessorScale<number | Color>): obj is Accesso
 }
 
 export function isContinuousScale<T>(obj: AccessorScale<T>): obj is AccessorScaleContinuous<T> {
-  return obj.scale === "linear" || obj.scale === "power" || obj.scale === "log"
+  return obj.scale === "linear" || obj.scale === "power" || obj.scale === "log";
 }
 
 export function isDiscreteScale<T>(obj: AccessorScale<T>): obj is AccessorScaleDiscrete<T> {
   return obj.scale === "threshold" || obj.scale === "quantile" || obj.scale === "quantize";
 }
-
 
 export function accessorScale(
   obj: AccessorScale<number | Color>,

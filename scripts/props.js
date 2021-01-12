@@ -46,6 +46,17 @@ function getProps(Layer) {
     Layer._propTypes.wordBreak.value = "break-word";
   }
 
+  // trips layer
+  if (Layer === deck.TripsLayer) {
+    delete Layer._propTypes.currentTime;
+    Layer._propTypes.getTimestamps.value = function(object) { return object.timestamps; }
+    Layer._propTypes = {
+      ...Layer._propTypes,
+      loopLength: { name: "loopLength", type: "number", value: 1800, min: 0 },
+      animationSpeed: { name: "animationSpeed", type: "number", value: 30, min: 0 },
+    };
+  }
+
   // mvt layer should inherit geojson
   if (Layer === deck.MVTLayer) {
     new deck.GeoJsonLayer({});
