@@ -1,7 +1,7 @@
 #' RDeck
 #'
 #' Create a Deck.GL map. Rendering the mapbox basemap requires a mapbox account and
-#' [mapbox access token]([mapbox_access_token]).
+#' [mapbox access token](mapbox_access_token).
 #'
 #' @name rdeck
 #' @inheritParams layer_props

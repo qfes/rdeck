@@ -1,6 +1,6 @@
 /**
  * Generates the deck.gl layer prop validators
- * All validator functions are written to ./R/deckgl-validate.R
+ * All validator functions are written to ./R/deckgl-validators.R
  */
 
 const fs = require("fs/promises");
