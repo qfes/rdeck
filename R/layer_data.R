@@ -39,7 +39,7 @@ layer_df <- function(data) {
       round_sfc()
   })
 
-  lapply(cols, I)
+  lapply(cols, function(col) unname(I(col)))
 }
 
 round_sfc <- function(sfc, digits = 6L) {
