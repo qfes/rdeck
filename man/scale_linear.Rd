@@ -62,7 +62,8 @@ length >= 2.}
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
-Creates a continuous linear scale.
+Creates a continuous linear scale. The colour palette (or range) is linearly interpolated
+between \code{limits} (or between \code{limits} and between \code{breaks} for piecewise scales).
 }
 \seealso{
 Other scales: 

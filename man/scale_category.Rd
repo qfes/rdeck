@@ -32,10 +32,10 @@ rgb\link{a} hex strings of length >= 2.}
 
 \item{unmapped_color}{<\code{\link{color}}> The colour representing unmapped levels.}
 
-\item{levels}{<\code{factor} | \code{character} | \code{logical}> The category levels. If NULL, will be
+\item{levels}{<\code{factor} | \code{character} | \code{logical}> The category levels. If \code{NULL}, will be
 populated from input data. The order of the levels is determined by \code{levels()} for factors
 & \code{unique()} otherwise. Length of \code{levels} must equal \code{palette} or \code{range}, such that each
-category level is assigned a \code{color} or \code{range} value.}
+category level is assigned a colour or range value.}
 
 \item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
 
@@ -47,7 +47,9 @@ length >= 2.}
 \item{unmapped_value}{<\code{number}> The value representing unmapped levels.}
 }
 \description{
-Creates a categorical scale.
+Creates a categorical scale. Categorical scales map input values defined in the set of
+\code{levels} to colours (or values). Input values not in the set of \code{levels} are assigned
+\code{unmapped_color} (or \code{unmapped_value}).
 }
 \seealso{
 Other scales: 

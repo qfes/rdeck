@@ -66,8 +66,16 @@ length >= 2.}
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
-Creates a continuous power scale. Similar to a \code{\link[=scale_linear]{scale_linear()}} except that an exponential
-transform is applied to each input.
+Creates a continuous power scale. Power scales are similar to a \code{\link{scale_linear}}, except
+that an exponential transform is applied to each input prior to calculating the output
+colour or number.
+
+Power scales can be useful in transforming positively skewed data. A square-root or
+cube-root scale can be helpful in dealing with right-skewed data.
+
+A square-root scale can be defined with \code{scale_power(exponent = 0.5, ...)} (the default). A
+square-root scale is a good choice for scaling the radius of point data, as the \code{area} of
+each point will be effectively linear in the data.
 }
 \seealso{
 Other scales: 

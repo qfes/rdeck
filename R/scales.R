@@ -1,6 +1,8 @@
 #' Scale linear
 #'
-#' Creates a continuous linear scale.
+#' Creates a continuous linear scale. The colour palette (or range) is linearly interpolated
+#' between `limits` (or between `limits` and between `breaks` for piecewise scales).
+#'
 #' @name scale_linear
 #' @inheritParams scale_props
 #' @family scales
@@ -62,8 +64,18 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
 
 #' Scale power
 #'
-#' Creates a continuous power scale. Similar to a [scale_linear()] except that an exponential
-#' transform is applied to each input.
+#' @description
+#' Creates a continuous power scale. Power scales are similar to a [`scale_linear`], except
+#' that an exponential transform is applied to each input prior to calculating the output
+#' colour or number.
+#'
+#' Power scales can be useful in transforming positively skewed data. A square-root or
+#' cube-root scale can be helpful in dealing with right-skewed data.
+#'
+#' A square-root scale can be defined with `scale_power(exponent = 0.5, ...)` (the default). A
+#' square-root scale is a good choice for scaling the radius of point data, as the `area` of
+#' each point will be effectively linear in the data.
+#'
 #' @name scale_power
 #' @param exponent <`number`> The power exponent.
 #' @inheritParams scale_props
@@ -130,11 +142,18 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
 
 #' Scale log
 #'
-#' Creates a continuous log scale. Similar to a [scale_linear()] except that an logarithmic
-#' transform is applied to each input.
-#' @note undefined behaviour if `limits` crosses 0.
+#' @description
+#' Creates a continuous log scale. Log scales are similar to a [`scale_linear`], except
+#' that a logarithmic transform is applied to each input prior to calculating the output
+#' colour or number.
+#'
+#' Log scales can be useful in transforming positively skewed data.
+#'
+#' @note
+#' Undefined behaviour if `limits` crosses 0. `limits` must be strictly positive or negative.
+#'
 #' @name scale_log
-#' @param base <`number`> The log base.
+#' @param base <`number`> The log base. The log base must be a strictly positive value != 1.
 #' @inheritParams scale_props
 #' @family scales
 #' @export
@@ -199,12 +218,22 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
 
 #' Scale threshold
 #'
-#' Creates a discrete threshold scale. Threshold scale is similar to [scale_quantize()], except
-#' that threshold values can be arbitrary.
+#' @description
+#' Creates a discrete threshold scale. Threshold scales slice the input data into
+#' `length(palette)` (or `length(range)`) bins, with each bin being assigned a colour
+#' (or number) associated with that bin.
+#'
+#' Threshold scales are similar [`scale_quantize`], except that threshold break values can be
+#' any sequence of numbers, provided that they are in increasing order and within the bounds
+#' of limits.
+#'
 #' @name scale_threshold
 #' @param breaks <`numeric`> The threshold breaks of the scale. Must be `length(palette) - 1`
 #' or `length(range) - 1`, such that each `break` defines boundary between between a
 #' pair of a `palette` or `range` entries.
+#'
+#' Breaks must be in increasing order, within the bounds of `limits`. Each break will be
+#' present on the legend for colour scales.
 #' @inheritParams scale_props
 #' @family scales
 #' @export
@@ -263,13 +292,22 @@ scale_threshold <- function(col, range = 0:1, na_value = 0,
 
 #' Scale quantile
 #'
-#' Creates a quantile scale. Number of quantiles is defined by the length of
-#' `palette` or `range`.
+#' @description
+#' Creates a quantile scale. The number of quantiles is defined by the length of
+#' `palette` or `range`. For example, a quantile scale with 5 colours will have quantile
+#' breaks at: `c(0.2, 0.4, 0.6, 0.8)`.
+#'
+#' Quantile scale legend ticks will be quantile values at each quantile break (including
+#' limits), not the quantile probabilities at each break. You may override this with
+#' `tick_format`.
+#'
+#' Example:
+#' `tick_format = function(x) format_number(seq(0, 1, length.out = length(x)))`.
 #'
 #' @note
 #' As the quantiles are computed from input data, quantile scales are incompatible with
 #' layers that load data from a url (e.g `mvt_layer`). If quantiles for remote data are
-#' known, a quantile scale can be constructed manually with [scale_threshold()].
+#' known, a quantile scale can be constructed manually with [`scale_threshold`].
 #'
 #' @name scale_quantile
 #' @inheritParams scale_props
@@ -320,12 +358,15 @@ scale_quantile <- function(col, range = 1:5, na_value = 0, legend = TRUE) {
 
 #' Scale category
 #'
-#' Creates a categorical scale.
+#' Creates a categorical scale. Categorical scales map input values defined in the set of
+#' `levels` to colours (or values). Input values not in the set of `levels` are assigned
+#' `unmapped_color` (or `unmapped_value`).
+#'
 #' @name scale_category
-#' @param levels <`factor` | `character` | `logical`> The category levels. If NULL, will be
+#' @param levels <`factor` | `character` | `logical`> The category levels. If `NULL`, will be
 #' populated from input data. The order of the levels is determined by `levels()` for factors
 #' & `unique()` otherwise. Length of `levels` must equal `palette` or `range`, such that each
-#' category level is assigned a `color` or `range` value.
+#' category level is assigned a colour or range value.
 #' @param unmapped_color <[`color`]> The colour representing unmapped levels.
 #' @inheritParams scale_props
 #' @family scales
@@ -378,8 +419,14 @@ scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, 
 
 #' Scale quantize
 #'
-#' Creates a discrete quantize scale. A more restrictive version of [scale_threshold()] in
-#' that each `break` is uniformly spaced between `limits`.
+#' @description
+#' Creates a discrete quantize scale. Quantize scales are a special case of [`scale_threshold`]
+#' in that each threshold break is uniformly spaced between limits.
+#'
+#' Similar to [`scale_threshold`], quantize scales slice input data into `length(palette)`
+#' (or `length(range)`) equally spaced bins, with each bin being assigned a colour (or number)
+#' associated with that bin.
+#'
 #' @name scale_quantize
 #' @inheritParams scale_props
 #' @family scales

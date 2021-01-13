@@ -41,7 +41,10 @@ numeric vector of length 2, representing \code{c(min, max)}. Values outside the 
 
 \item{breaks}{<\code{numeric}> The threshold breaks of the scale. Must be \code{length(palette) - 1}
 or \code{length(range) - 1}, such that each \code{break} defines boundary between between a
-pair of a \code{palette} or \code{range} entries.}
+pair of a \code{palette} or \code{range} entries.
+
+Breaks must be in increasing order, within the bounds of \code{limits}. Each break will be
+present on the legend for colour scales.}
 
 \item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
 
@@ -53,8 +56,13 @@ length >= 2.}
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
-Creates a discrete threshold scale. Threshold scale is similar to \code{\link[=scale_quantize]{scale_quantize()}}, except
-that threshold values can be arbitrary.
+Creates a discrete threshold scale. Threshold scales slice the input data into
+\code{length(palette)} (or \code{length(range)}) bins, with each bin being assigned a colour
+(or number) associated with that bin.
+
+Threshold scales are similar \code{\link{scale_quantize}}, except that threshold break values can be
+any sequence of numbers, provided that they are in increasing order and within the bounds
+of limits.
 }
 \seealso{
 Other scales: 

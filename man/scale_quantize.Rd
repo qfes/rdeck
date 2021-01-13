@@ -40,8 +40,12 @@ length >= 2.}
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
-Creates a discrete quantize scale. A more restrictive version of \code{\link[=scale_threshold]{scale_threshold()}} in
-that each \code{break} is uniformly spaced between \code{limits}.
+Creates a discrete quantize scale. Quantize scales are a special case of \code{\link{scale_threshold}}
+in that each threshold break is uniformly spaced between limits.
+
+Similar to \code{\link{scale_threshold}}, quantize scales slice input data into \code{length(palette)}
+(or \code{length(range)}) equally spaced bins, with each bin being assigned a colour (or number)
+associated with that bin.
 }
 \seealso{
 Other scales: 

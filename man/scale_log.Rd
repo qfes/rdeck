@@ -37,7 +37,7 @@ rgb\link{a} hex strings of length >= 2.}
 
 \item{na_color}{<\code{\link{color}}> The colour value for \code{NA} input values.}
 
-\item{base}{<\code{number}> The log base.}
+\item{base}{<\code{number}> The log base. The log base must be a strictly positive value != 1.}
 
 \item{limits}{<\code{c(min, max)}> The limits of the scale's input. If not null, must be a
 numeric vector of length 2, representing \code{c(min, max)}. Values outside the range of
@@ -66,11 +66,14 @@ length >= 2.}
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
-Creates a continuous log scale. Similar to a \code{\link[=scale_linear]{scale_linear()}} except that an logarithmic
-transform is applied to each input.
+Creates a continuous log scale. Log scales are similar to a \code{\link{scale_linear}}, except
+that a logarithmic transform is applied to each input prior to calculating the output
+colour or number.
+
+Log scales can be useful in transforming positively skewed data.
 }
 \note{
-undefined behaviour if \code{limits} crosses 0.
+Undefined behaviour if \code{limits} crosses 0. \code{limits} must be strictly positive or negative.
 }
 \seealso{
 Other scales: 

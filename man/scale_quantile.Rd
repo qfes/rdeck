@@ -35,13 +35,21 @@ length >= 2.}
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
-Creates a quantile scale. Number of quantiles is defined by the length of
-\code{palette} or \code{range}.
+Creates a quantile scale. The number of quantiles is defined by the length of
+\code{palette} or \code{range}. For example, a quantile scale with 5 colours will have quantile
+breaks at: \code{c(0.2, 0.4, 0.6, 0.8)}.
+
+Quantile scale legend ticks will be quantile values at each quantile break (including
+limits), not the quantile probabilities at each break. You may override this with
+\code{tick_format}.
+
+Example:
+\code{tick_format = function(x) format_number(seq(0, 1, length.out = length(x)))}.
 }
 \note{
 As the quantiles are computed from input data, quantile scales are incompatible with
 layers that load data from a url (e.g \code{mvt_layer}). If quantiles for remote data are
-known, a quantile scale can be constructed manually with \code{\link[=scale_threshold]{scale_threshold()}}.
+known, a quantile scale can be constructed manually with \code{\link{scale_threshold}}.
 }
 \seealso{
 Other scales: 
