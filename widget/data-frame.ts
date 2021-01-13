@@ -5,7 +5,7 @@ type GeometryInfo = {
   type: GeometryType;
 }
 
-export function isDatraFrame(data: LayerData): data is DataFrame {
+export function isDataFrame(data: LayerData): data is DataFrame {
   return data !== null && typeof data === "object" && "frame" in data;
 }
 
@@ -25,16 +25,17 @@ function flatten(data: DataFrame, { name, type }: GeometryInfo): DataFrame {
   // keys of non-geometry cols
   const keys = Object.keys(data.frame).filter((key) => key !== name);
   // geometry column
-  const geometry = oldFrame[name];
+  const geometries = oldFrame[name];
   const isMultiGeometry = isMultiGeometryFn(type);
   const copyValue = (key: string, index: number) => newFrame[key].push(oldFrame[key][index]);
 
   for (let index = 0; index < data.length; index++) {
-    if (isMultiGeometry(geometry[index])) {
+    const geometry = geometries[index];
+    if (isMultiGeometry(geometry)) {
       // split the multi-geometry
-      newFrame[name].push(...geometry[index]);
+      newFrame[name].push(...geometry);
       // repeat other columns for each geometry in multi-geometry
-      for (let rep = 0; rep < geometry[index].length; rep++) {
+      for (let rep = 0; rep < geometry.length; rep++) {
         for (const key of keys) {
           copyValue(key, index);
         }

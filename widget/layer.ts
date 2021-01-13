@@ -7,7 +7,7 @@ import { parseColor } from "./color";
 import { AccessorScale, accessorScale, isAccessorScale } from "./scale";
 import { accessor, Accessor, isAccessor } from "./accessor";
 import { blendingParameters } from "./blending";
-import { flattenGeometries as flattenGeometries, isDatraFrame } from "./data-frame";
+import { flattenGeometries, isDataFrame } from "./data-frame";
 
 type LayerData = string | DataFrame | FeatureCollection;
 type Entry<T> = [string, T];
@@ -51,7 +51,7 @@ export class Layer {
       .map(([, value]) => value as AccessorScale<number | Color>);
 
     // flatten geometries
-    if (isDatraFrame(props.data)) {
+    if (isDataFrame(props.data)) {
       this.props.data = flattenGeometries(props.data);
     }
 
@@ -134,5 +134,5 @@ function getWeightProps(entries: Entry<any>[]) {
   return entries
     .filter(([name]) => name === "getColorWeight" || name === "getElevationWeight")
     .filter(([, value]) => value !== null && typeof value !== "function" && !isAccessor(value))
-    .map(([name, value]) => [name, (x: any) => value]);
+    .map(([name, value]) => [name, () => value]);
 }
