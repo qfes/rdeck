@@ -11,8 +11,17 @@ declare global {
 
   interface DataFrame {
     length: number;
+    geometry: Record<string, GeometryType>;
     frame: Record<string, any[]>;
   }
+
+  type GeometryType =
+    | "POINT"
+    | "LINESTRING"
+    | "POLYGON"
+    | "MULTIPOINT"
+    | "MULTILINESTRING"
+    | "MULTIPOLYGON";
 
   type LayerData = DataFrame | Record<string, any> | FeatureCollection | string | null;
 

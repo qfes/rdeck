@@ -29,27 +29,27 @@ assert_geom <- function(layer, name, sfc_type) {
 
 # validate get_path
 validate_get_path.layer <- function(layer) {
-  assert_geom(layer, "get_path", "sfc_LINESTRING")
+  assert_geom(layer, "get_path", c("sfc_LINESTRING", "sfc_MULTILINESTRING"))
 }
 
 # validate get_polygon
 validate_get_polygon.layer <- function(layer) {
-  assert_geom(layer, "get_polygon", "sfc_POLYGON")
+  assert_geom(layer, "get_polygon", c("sfc_POLYGON", "sfc_MULTIPOLYGON"))
 }
 
 # validate get_position
 validate_get_position.layer <- function(layer) {
-  assert_geom(layer, "get_position", "sfc_POINT")
+  assert_geom(layer, "get_position", c("sfc_POINT", "sfc_MULTIPOINT"))
 }
 
 # validate get_source_position
 validate_get_source_position.layer <- function(layer) {
-  assert_geom(layer, "get_source_position", "sfc_POINT")
+  assert_geom(layer, "get_source_position", c("sfc_POINT", "sfc_MULTIPOINT"))
 }
 
 # validate get_target_position
 validate_get_target_position.layer <- function(layer) {
-  assert_geom(layer, "get_target_position", "sfc_POINT")
+  assert_geom(layer, "get_target_position", c("sfc_POINT", "sfc_MULTIPOINT"))
 }
 
 # validate position_format

@@ -85,9 +85,9 @@ vertical lines for each vertex of the polygon.}
 
 \item{material}{<\code{logical}>}
 
-\item{get_position}{<\code{\link{accessor}}> The position geometry column, an
-\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
+\item{get_position}{<\code{\link{accessor}}> The position geometry column, either a \code{sfc_POINT} or
+a \code{sfc_MULTIPOINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.
 Accepts a single colour value, a colour scale, or a

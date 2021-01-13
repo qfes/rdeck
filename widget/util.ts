@@ -1,7 +1,3 @@
-export function isObject(value: any) {
-  return value != null && typeof value === "object" && !Array.isArray(value);
-}
-
 export function properCase(camelCase: string) {
   return camelCase.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase());
 }
@@ -28,7 +24,9 @@ export function getElementDimensions(el: HTMLElement): [number, number] {
   const { width, height } = getComputedStyle(el);
   const node = document.createElement("div");
   Object.assign(node.style, {
-    width, height, display: "hidden"
+    width,
+    height,
+    display: "hidden",
   });
 
   visible.appendChild(node);

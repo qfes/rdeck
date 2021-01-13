@@ -7,6 +7,7 @@ import { parseColor } from "./color";
 import { AccessorScale, accessorScale, isAccessorScale } from "./scale";
 import { accessor, Accessor, isAccessor } from "./accessor";
 import { blendingParameters } from "./blending";
+import { flattenGeometries as flattenGeometries, isDatraFrame } from "./data-frame";
 
 type LayerData = string | DataFrame | FeatureCollection;
 type Entry<T> = [string, T];
@@ -30,7 +31,7 @@ export class Layer {
   props: LayerProps;
   scales: AccessorScale<any>[];
 
-  constructor({ type, blendingMode, ...props }: LayerProps) {
+  constructor({ type, ...props }: LayerProps) {
     const entries = Object.entries(props);
     const colors = getColors(entries);
     const accessors = getAccessors(entries);
@@ -42,12 +43,17 @@ export class Layer {
       ...accessors.map(([name, value]) => [name, value.getData]),
       ...getWeightProps(entries),
       ["updateTriggers", getUpdateTriggers(accessors)],
-      ["parameters", getParameters(props.parameters, blendingMode)],
+      ["parameters", getParameters(props.parameters, props.blendingMode)],
     ]);
 
     this.scales = accessors
       .filter(([, value]) => isAccessorScale(value))
       .map(([, value]) => value as AccessorScale<number | Color>);
+
+    // flatten geometries
+    if (isDatraFrame(props.data)) {
+      this.props.data = flattenGeometries(props.data);
+    }
 
     // load font
     if (type === "TextLayer" && "fonts" in document) {

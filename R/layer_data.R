@@ -9,13 +9,14 @@ layer_data.default <- function(layer) {
 
   data <- subset_data(layer)
 
-  # FIXME: this is not the right place
-  if (inherits(data, "sf")) {
-    data <- split_geometry(data)
-  }
+  # # FIXME: this is not the right place
+  # if (inherits(data, "sf")) {
+  #   data <- split_geometry(data)
+  # }
 
   list(
     length = nrow(data),
+    geometry = geometry_types(data),
     frame = layer_df(data)
   )
 }
@@ -80,4 +81,9 @@ get_colnames <- function(layer) {
     vapply(function(accessor) accessor$col, character(1), USE.NAMES = FALSE)
 
   unique(c(accessor_cols, tooltip_cols))
+}
+
+geometry_types <- function(data) {
+  sfc_cols <- Filter(function(col) inherits(col, "sfc"), data)
+  lapply(sfc_cols, sf::st_geometry_type, by_geometry = FALSE)
 }

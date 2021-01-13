@@ -81,9 +81,9 @@ of aggregated weights in each bin.}
 \code{color_domain} is divided into \code{length(color_range)} equal segments, each mapped to
 one color in \code{color_range}.}
 
-\item{get_position}{<\code{\link{accessor}}> The position geometry column, an
-\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
+\item{get_position}{<\code{\link{accessor}}> The position geometry column, either a \code{sfc_POINT} or
+a \code{sfc_MULTIPOINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The weight of each object.
 Accepts a single numeric value, a numeric scale, or a

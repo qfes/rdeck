@@ -104,9 +104,9 @@ vertical lines for each vertex of the polygon.}
 
 \item{line_miter_limit}{number}
 
-\item{get_polygon}{<\code{\link{accessor}}> The polygon geometry column, an
-\code{sfc_POLYGON} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
+\item{get_polygon}{<\code{\link{accessor}}> The polygon geometry column, either a \code{sfc_POLYGON}
+or a \code{sfc_MULTIPOLYGON} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_fill_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The fill colour of each object.
 Accepts a single colour value, a colour scale, or a

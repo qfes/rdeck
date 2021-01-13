@@ -439,12 +439,12 @@ NULL
 #' highlighted object. If a single colour value is supplied, that colour will be used to
 #' highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 #' or a [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
-#' @param get_source_position <[`accessor`]> The source position geometry column, an
-#' `sfc_POINT` column with CRS [EPSG:4326](http://epsg.io/4326). Supports
-#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
-#' @param get_target_position <[`accessor`]> The target position geometry column, an
-#' `sfc_POINT` column with CRS [EPSG:4326](http://epsg.io/4326). Supports
-#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
+#' @param get_source_position <[`accessor`]> The source position geometry column, either a
+#' `sfc_POINT` or a `sfc_MULTIPOINT` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
+#' @param get_target_position <[`accessor`]> The target position geometry column, either a
+#' `sfc_POINT` or a `sfc_MULTIPOINT` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param get_source_color <[`accessor`] | [`scale`] | [`color`]> The colour of the
 #' _source end_ of the arc.
 #' Accepts a single colour value, a colour scale, or a
@@ -481,9 +481,9 @@ NULL
 #' `get_size`.
 #' @param size_min_pixels <`number`> The minimum size in pixels.
 #' @param size_max_pixels <`number`> The maximum size in pixels.
-#' @param get_position <[`accessor`]> The position geometry column, an
-#' `sfc_POINT` column with CRS [EPSG:4326](http://epsg.io/4326). Supports
-#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
+#' @param get_position <[`accessor`]> The position geometry column, either a `sfc_POINT` or
+#' a `sfc_MULTIPOINT` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param get_color <[`accessor`] | [`scale`] | [`color`]> The colour of each object.
 #' Accepts a single colour value, a colour scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
@@ -538,14 +538,14 @@ NULL
 #' joints.
 #' @param miter_limit <`number`> The maximum extent of a joint in ratio to the stroke width.
 #' Only applicable if `rounded == FALSE`.
-#' @param get_path <[`accessor`]> The path geometry column, an
-#' `sfc_LINESTRING` column with CRS [EPSG:4326](http://epsg.io/4326). Supports
-#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
+#' @param get_path <[`accessor`]> The path geometry column, either a `sfc_LINESTRING` or
+#' a `sfc_MULTILINESTRING` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param line_joint_rounded <`logical`>
 #' @param line_miter_limit number
-#' @param get_polygon <[`accessor`]> The polygon geometry column, an
-#' `sfc_POLYGON` column with CRS [EPSG:4326](http://epsg.io/4326). Supports
-#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
+#' @param get_polygon <[`accessor`]> The polygon geometry column, either a `sfc_POLYGON`
+#' or a `sfc_MULTIPOLYGON` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param point_radius_units <`"pixels"` | `"meters"`> The units of point radius.
 #' @param point_radius_scale <`number`> The radius multiplier for all points.
 #' @param point_radius_min_pixels <`number`> The minimum radius in pixels.

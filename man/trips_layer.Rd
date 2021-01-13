@@ -93,9 +93,9 @@ Only applicable if \code{rounded == FALSE}.}
 \item{billboard}{<\code{logical}> If \code{TRUE}, extrude the path in screen space (width always faces)
 the camera; if \code{FALSE}, the width always faces up (z).}
 
-\item{get_path}{<\code{\link{accessor}}> The path geometry column, an
-\code{sfc_LINESTRING} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
+\item{get_path}{<\code{\link{accessor}}> The path geometry column, either a \code{sfc_LINESTRING} or
+a \code{sfc_MULTILINESTRING} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.
 Accepts a single colour value, a colour scale, or a

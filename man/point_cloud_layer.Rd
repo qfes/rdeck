@@ -74,9 +74,9 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{point_size}{<\code{number}> The radius of all points in units specified
 by \code{size_units}.}
 
-\item{get_position}{<\code{\link{accessor}}> The position geometry column, an
-\code{sfc_POINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}. Supports
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
+\item{get_position}{<\code{\link{accessor}}> The position geometry column, either a \code{sfc_POINT} or
+a \code{sfc_MULTIPOINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_normal}{<\code{\link{accessor}} | \code{numeric}> The normal of each object, in \code{c(nx, ny, nz)}.
 Accepts a length-3 numeric vector, or a
