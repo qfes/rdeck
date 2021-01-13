@@ -27,7 +27,14 @@ function flatten(data: DataFrame, { name, type }: GeometryInfo): DataFrame {
   // geometry column
   const geometries = oldFrame[name];
   const isMultiGeometry = isMultiGeometryFn(type);
-  const copyValue = (key: string, index: number) => newFrame[key].push(oldFrame[key][index]);
+  const copyValues = (index: number) => {
+    for (const key of keys) {
+      newFrame[key].push(oldFrame[key][index]);
+    }
+  };
+
+  // original data indices
+  const indices = [];
 
   for (let index = 0; index < data.length; index++) {
     const geometry = geometries[index];
@@ -36,24 +43,23 @@ function flatten(data: DataFrame, { name, type }: GeometryInfo): DataFrame {
       newFrame[name].push(...geometry);
       // repeat other columns for each geometry in multi-geometry
       for (let rep = 0; rep < geometry.length; rep++) {
-        for (const key of keys) {
-          copyValue(key, index);
-        }
+        copyValues(index);
+        indices.push(data.indices?.[index] ?? index);
       }
     } else {
-      copyValue(name, index);
-      for (const key of keys) {
-        copyValue(key, index);
-      }
+      newFrame[name].push(geometry);
+      copyValues(index);
+      indices.push(data.indices?.[index] ?? index);
     }
   }
 
   return {
+    length: newFrame[name].length,
     geometry: {
       ...data.geometry,
       [name]: type.replace("MULTI", "") as GeometryType
     },
-    length: newFrame[name].length,
+    indices,
     frame: newFrame,
   };
 }

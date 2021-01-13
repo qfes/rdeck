@@ -12,6 +12,7 @@ declare global {
   interface DataFrame {
     length: number;
     geometry: Record<string, GeometryType>;
+    indices?: number[];
     frame: Record<string, any[]>;
   }
 

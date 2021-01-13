@@ -136,3 +136,12 @@ function getWeightProps(entries: Entry<any>[]) {
     .filter(([, value]) => value !== null && typeof value !== "function" && !isAccessor(value))
     .map(([name, value]) => [name, () => value]);
 }
+
+// multi-geometry highlighting
+const _encodePickingColor = DeckLayer.prototype.encodePickingColor;
+DeckLayer.prototype.encodePickingColor = function encodePickingColor(i: number, target = []) {
+  const data = this.props.data;
+  return isDataFrame(data) && Array.isArray(data.indices)
+    ? _encodePickingColor(data.indices[i], target)
+    : _encodePickingColor(i, target);
+};
