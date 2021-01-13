@@ -1,5 +1,5 @@
-import { PickInfo } from "deck.gl";
-import { Feature } from "geojson";
+import type { PickInfo } from "deck.gl";
+import type { Feature } from "geojson";
 import { parseColor } from "./color";
 
 export type AccessorFn<In, Out> = (object: In, info: ObjectInfo<In, Out>) => Out;

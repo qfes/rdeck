@@ -12,8 +12,8 @@ import {
   ScaleThreshold,
   scaleThreshold,
 } from "d3-scale";
-import { PickInfo } from "deck.gl";
-import { Feature } from "geojson";
+import type { PickInfo } from "deck.gl";
+import type { Feature } from "geojson";
 import { Accessor, AccessorFn, isAccessor } from "./accessor";
 import { parseColor } from "./color";
 

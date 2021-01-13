@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { App } from "./app";
-import { LayerProps } from "./layer";
+import type { LayerProps } from "./layer";
 import { getElementDimensions } from "./util";
 
 const binding: HTMLWidgets.Binding = {

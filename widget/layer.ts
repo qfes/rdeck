@@ -1,7 +1,6 @@
 import * as deck from "./deck-bundle";
-import { Layer as DeckLayer, LayerProps as DeckLayerProps } from "@deck.gl/core";
-import { TextLayerProps } from "@deck.gl/layers/text-layer/text-layer";
-import { FeatureCollection } from "geojson";
+import type { Layer as DeckLayer, LayerProps as DeckLayerProps } from "@deck.gl/core";
+import type { FeatureCollection } from "geojson";
 
 import { parseColor } from "./color";
 import { AccessorScale, accessorScale, isAccessorScale } from "./scale";
@@ -58,9 +57,8 @@ export class Layer {
 
     // load font
     if (type === "TextLayer" && "fonts" in document) {
-      const _props = props as TextLayerProps<any>;
       // @ts-ignore
-      document.fonts.load(`16px ${_props.fontFamily}`);
+      document.fonts.load(`16px ${props.fontFamily}`);
     }
   }
 
