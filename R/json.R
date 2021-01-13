@@ -60,7 +60,12 @@ to_json.accessor <- function(obj) {
 
 to_json.accessor_scale <- function(obj) {
   # prevent simplification
+  names_ <- names(obj)
   obj$domain <- I(obj$domain)
+  if ("palette" %in% names_) obj$palette <- I(obj$palette)
+  if ("range" %in% names_) obj$range <- I(obj$range)
+  if ("ticks" %in% names_) obj$ticks <- I(obj$ticks)
+
   # get unknown value
   obj$unknown <- obj$na_color %||% obj$na_value %||% obj$unmapped_color %||% obj$unmapped_value
 
