@@ -61,13 +61,13 @@ export class Layer {
     return new Layer(props);
   }
 
-  renderLayer(): DeckLayer<any, any> {
+  renderLayer(time?: number): DeckLayer<any, any> {
     // animate trips layer
-    if (this.type === "TripsLayer") {
+    if (this.type === "TripsLayer" && time !== undefined) {
       const props = this.props as TripsLayerProps;
       const { loopLength, animationSpeed } = props;
       const animationTime = loopLength / animationSpeed;
-      const ratioComplete = ((Date.now() / 1000) % animationTime) / animationTime;
+      const ratioComplete = ((time / 1000) % animationTime) / animationTime;
       props.currentTime = ratioComplete * loopLength;
     }
     // @ts-ignore

@@ -32,7 +32,7 @@ export function Map({ props, layers }: MapProps) {
   const [_layers, setLayers] = useState(() => layers.map((layer) => layer.renderLayer()));
   const animating = layers.filter((layer) => layer.type === "TripsLayer").length !== 0;
 
-  useAnimation(animating, () => setLayers(layers.map((layer) => layer.renderLayer())));
+  useAnimation(animating, (time) => setLayers(layers.map((layer) => layer.renderLayer(time))));
 
   return (
     <Fragment>
@@ -66,11 +66,12 @@ const useHover = () => {
   return [state, handleHover] as [PickInfo<any> | null, (info: PickInfo<any>) => void];
 };
 
-const useAnimation = (enabled: boolean, onFrame: () => void) => {
+const useAnimation = (enabled: boolean, onFrame: (time: number) => void) => {
   const animation = useRef<number>(0);
+  const startTime = useRef<number>(Date.now());
 
   const animate = () => {
-    onFrame();
+    onFrame(Date.now() - startTime.current);
     animation.current = window.requestAnimationFrame(animate);
   };
 
