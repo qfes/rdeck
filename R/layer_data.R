@@ -9,11 +9,6 @@ layer_data.default <- function(layer) {
 
   data <- subset_data(layer)
 
-  # # FIXME: this is not the right place
-  # if (inherits(data, "sf")) {
-  #   data <- split_geometry(data)
-  # }
-
   list(
     length = nrow(data),
     geometry = geometry_types(data),
