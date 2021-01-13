@@ -29,7 +29,10 @@ scale_domain.scale_log <- function(scale, data = NULL) {
     invert()
 }
 
-scale_domain.scale_threshold <- function(scale, data) scale$breaks
+scale_domain.scale_threshold <- function(scale, data) {
+  assert_breaks(scale$limits, scale$breaks)
+  scale$breaks
+}
 
 scale_domain.scale_quantile <- function(scale, data = NULL) {
   assert_type(data, "data.frame")
@@ -61,12 +64,15 @@ domain <- function(limits, breaks = NULL, length) {
     return(seq(limits[1], limits[2], length.out = length))
   }
 
+  assert_breaks(limits, breaks)
+  c(limits[1], breaks, limits[2])
+}
+
+assert_breaks <- function(limits, breaks) {
   if (any(breaks < limits[1]) | any(breaks > limits[2])) {
     rlang::abort(
       "breaks must fall within the range of limits",
       "rdeck_error"
     )
   }
-
-  c(limits[1], breaks, limits[2])
 }
