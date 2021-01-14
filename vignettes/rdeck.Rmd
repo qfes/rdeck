@@ -12,8 +12,110 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+# disable token
+options(rdeck.mapbox_access_token = "<no-token>")
 ```
 
 ```{r setup}
 library(rdeck)
+library(dplyr)
+library(sf)
+library(RcppSimdJson)
+```
+
+# Non-MapboxGl basemap
+
+```{r basemap}
+# non-mapboxgl basemap
+add_basemap <- function(rdeck, land_color = "#2f2f2f", water_color = "#242424") {
+  countries <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
+  world <- st_bbox(c(xmin = -180, ymin = -90, xmax = 180, ymax = 90), crs = 4326) %>%
+    st_as_sfc() %>%
+    st_sf()
+
+  rdeck %>%
+    add_polygon_layer(
+      name = "water",
+      data = world,
+      get_fill_color = {{ water_color }}
+    ) %>%
+    add_geojson_layer(
+      name = "countries",
+      data = countries,
+      get_fill_color = {{ land_color }}
+    )
+}
+```
+
+# Scatterplot layer
+
+```{r manhattan-data}
+url <- "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/scatterplot/manhattan.json"
+manhattan_people <- fload(url) %>%
+  as_tibble(.name_repair = ~ c("lon", "lat", "gender")) %>%
+  mutate(position = sfc_point(lon, lat))
+
+manhattan_people
+```
+
+```{r scatterplot-map}
+rdeck(
+  # disable basemap
+  map_style = NULL,
+  initial_bounds = st_bbox(manhattan_people$position),
+  picking_radius = 2
+) %>%
+  add_basemap() %>%
+  add_scatterplot_layer(
+    name = "manhattan_people",
+    data = manhattan_people,
+    get_position = position,
+    get_fill_color = scale_color_category(
+      col = gender,
+      palette = c("#0080ff", "#ff0080"),
+      # replace gender labels
+      tick_format = function(ticks) c("male", "female")
+    ),
+    radius_scale = 30,
+    radius_min_pixels = 0.25,
+    # highlight dot density
+    blending_mode = "additive",
+    # interactivity
+    pickable = TRUE,
+    auto_highlight = TRUE,
+    # per-gender highlight colour
+    highlight_color = scale_color_category(
+      col = gender,
+      palette = c("#0054a8", "#a80054"),
+      legend = FALSE
+    ),
+    tooltip = gender
+  )
+```
+
+# Heatmap layer
+
+```{r heatmap}
+url <- "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/screen-grid/uber-pickup-locations.json"
+uber_pickup_locations <- fload(uber_pickup_locations_url) %>%
+  as_tibble(.name_repair = ~ c("lon", "lat", "weight")) %>%
+  mutate(position = sfc_point(lon, lat))
+
+rdeck(
+  # disable basemap
+  map_style = NULL,
+  initial_view_state = view_state(
+    center = c(-74, 40.73),
+    zoom = 10
+  )
+) %>%
+  add_basemap() %>%
+  add_heatmap_layer(
+    name = "uber_pickup_locations",
+    data = uber_pickup_locations,
+    get_position = position,
+    get_weight = weight,
+    radius_pixels = 30
+  )
 ```
