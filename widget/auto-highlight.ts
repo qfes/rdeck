@@ -19,24 +19,13 @@ function overrideEncodePickingColor(Layer: LayerType) {
     let { data } = this.props;
 
     // multi-geometry
-    return isDataFrame(data) && Array.isArray(data.indices)
-      ? _encodePickingColor.call(this, data.indices[i], target)
-      : _encodePickingColor.call(this, i, target);
-  };
-}
-
-function overrideGetPickingInfo(Layer: LayerType) {
-  const _getPickingInfo = Layer.prototype.getPickingInfo;
-  Layer.prototype.getPickingInfo = function getPickingInfo(params) {
-    let info = _getPickingInfo.call(this, params);
-    let { data } = this.props;
-
-    // multi-geometry
     if (isDataFrame(data) && Array.isArray(data.indices)) {
-      info.index = data.indices.indexOf(info.index);
+      const group = data.indices[i];
+      // encode index at first instance of group
+      return _encodePickingColor.call(this, data.indices.indexOf(group), target);
     }
 
-    return info;
+    return _encodePickingColor.call(this, i, target);
   };
 }
 
@@ -51,4 +40,3 @@ const Layers = [
 ] as LayerType[];
 
 Layers.forEach((Layer) => overrideEncodePickingColor(Layer));
-Layers.forEach((Layer) => overrideGetPickingInfo(Layer));
