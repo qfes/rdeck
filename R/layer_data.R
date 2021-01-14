@@ -43,6 +43,10 @@ round_sfc <- function(sfc, digits = 6L) {
 }
 
 layer_data.GeoJsonLayer <- function(layer) {
+  if (!inherits(layer$data, "data.frame")) {
+    return(layer$data)
+  }
+
   data <- subset_data(layer)
   geojsonsf::sf_geojson(data, digits = 6L, simplify = FALSE)
 }
