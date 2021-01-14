@@ -10,6 +10,7 @@ scale_color_category(
   palette,
   unmapped_color = "#000000",
   levels = NULL,
+  unmapped_tick = NULL,
   tick_format = NULL,
   legend = TRUE
 )
@@ -36,6 +37,9 @@ rgb\link{a} hex strings of length >= 2.}
 populated from input data. The order of the levels is determined by \code{levels()} for factors
 & \code{unique()} otherwise. Length of \code{levels} must equal \code{palette} or \code{range}, such that each
 category level is assigned a colour or range value.}
+
+\item{unmapped_tick}{<\code{string}> The tick label of the unmapped category. If not \code{NULL} and
+\code{legend == TRUE}, the unmapped category will appear at the bottom of the legend.}
 
 \item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
 
