@@ -74,8 +74,8 @@ Power scales can be useful in transforming positively skewed data. A square-root
 cube-root scale can be helpful in dealing with right-skewed data.
 
 A square-root scale can be defined with \code{scale_power(exponent = 0.5, ...)} (the default). A
-square-root scale is a good choice for scaling the radius of point data, as the \code{area} of
-each point will be effectively linear in the data.
+square-root scale is a good choice for scaling the radius of point data, as this would result
+in a linear scale for the \code{area} of each point.
 }
 \seealso{
 Other scales: 
