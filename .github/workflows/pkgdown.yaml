@@ -5,6 +5,7 @@ on:
       - main
       - master
     paths:
+      - DESCRIPTION
       - _pkgdown.yml
       - man/**
       - vignettes/**
