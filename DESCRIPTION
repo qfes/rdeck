@@ -36,7 +36,8 @@ Suggests:
     rmarkdown,
     roxyglobals (>= 0.2.1),
     dplyr,
-    RcppSimdJson
+    RcppSimdJson,
+    viridis
 VignetteBuilder: knitr
 Remotes:
     anthonynorth/roxyglobals,
