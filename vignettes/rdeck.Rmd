@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  out.width = "100%"
 )
 
 # disable token
@@ -102,13 +103,16 @@ uber_pickup_locations <- fload(url) %>%
   as_tibble(.name_repair = ~ c("lon", "lat", "weight")) %>%
   mutate(position = sfc_point(lon, lat))
 
+
+manhattan <- st_bbox(
+  c(xmin = -74.027975, ymin = 40.698608, xmax = -73.897478, ymax = 40.879367),
+  crs = 4326
+)
+
 rdeck(
   # disable basemap
   map_style = NULL,
-  initial_view_state = view_state(
-    center = c(-74, 40.73),
-    zoom = 10
-  )
+  initial_bounds = manhattan
 ) %>%
   add_basemap() %>%
   add_heatmap_layer(
