@@ -110,6 +110,7 @@ export function accessorScale(
   const scaleData = scaleFn(obj) as any;
   const getData: AccessorFn<any, any> =
     name === "highlightColor" ? highlightFn(obj, scaleData) : accessorFn(obj, scaleData);
+
   return {
     ...obj,
     name,
