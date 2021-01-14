@@ -35,7 +35,7 @@ remotes::install_github("anthonynorth/rdeck")
 A [Mapbox account](https://account.mapbox.com/auth/signup) and 
 [mapbox access token](https://docs.mapbox.com/help/glossary/access-token) 
 is required for Mapbox basemaps, with or without the Mapbox data service. 
-See <https://anthonynorth.github.io/rdeck/reference/mapbox_access_token.html> for usage.
+See [`mapbox_access_token`](https://anthonynorth.github.io/rdeck/reference/mapbox_access_token.html) for usage.
 
 ## Similar work
 
