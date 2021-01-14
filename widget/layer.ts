@@ -36,6 +36,8 @@ export class Layer {
     const colors = getColors(entries);
     const accessors = getAccessors(entries);
 
+    debugger;
+
     this.type = type;
     this.props = Object.fromEntries([
       ...entries,

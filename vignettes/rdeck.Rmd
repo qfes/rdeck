@@ -22,6 +22,8 @@ options(rdeck.mapbox_access_token = "<no-token>")
 library(rdeck)
 library(dplyr)
 library(sf)
+library(viridis)
+# loading deck.gl example data
 library(RcppSimdJson)
 ```
 
@@ -74,7 +76,7 @@ rdeck(
     get_position = position,
     get_fill_color = scale_color_category(
       col = gender,
-      palette = c("#0080ff", "#ff0080"),
+      palette = c("#3f51b5", "#e91e63"),
       # replace gender labels
       tick_format = function(ticks) c("male", "female")
     ),
@@ -88,10 +90,157 @@ rdeck(
     # per-gender highlight colour
     highlight_color = scale_color_category(
       col = gender,
-      palette = c("#0054a8", "#a80054"),
+      palette = c("#9fa8da", "#f48fb1"),
       legend = FALSE
     ),
     tooltip = gender
+  )
+```
+
+## Group all points by gender
+
+```{r manhattan-data-multipoint}
+manhattan_people_multipoint <- manhattan_people %>%
+  group_by(gender) %>%
+  summarise(
+    position = st_union(position),
+    count = n(),
+    .groups = "drop"
+  )
+
+manhattan_people_multipoint
+```
+
+```{r scatterplot-map-2}
+rdeck(
+  # disable basemap
+  map_style = NULL,
+  initial_bounds = st_bbox(manhattan_people_multipoint$position),
+  picking_radius = 2
+) %>%
+  add_basemap() %>%
+  add_scatterplot_layer(
+    name = "manhattan_people_multipoint",
+    data = manhattan_people_multipoint,
+    get_position = position,
+    get_fill_color = scale_color_category(
+      col = gender,
+      palette = c("#3f51b5", "#e91e63"),
+      # replace gender labels
+      tick_format = function(ticks) c("male", "female")
+    ),
+    radius_scale = 30,
+    radius_min_pixels = 0.25,
+    # highlight dot density
+    blending_mode = "additive",
+    # interactivity
+    pickable = TRUE,
+    auto_highlight = TRUE,
+    # per-gender highlight colour
+    highlight_color = scale_color_category(
+      col = gender,
+      palette = c("#9fa8da", "#f48fb1"),
+      legend = FALSE
+    ),
+    tooltip = everything()
+  )
+```
+
+## Scale radius by gender attribute
+
+```{r scatterplot-map-3}
+rdeck(
+  # disable basemap
+  map_style = NULL,
+  initial_bounds = st_bbox(manhattan_people_multipoint$position),
+  picking_radius = 2
+) %>%
+  add_basemap() %>%
+  add_scatterplot_layer(
+    name = "manhattan_people_multipoint",
+    data = manhattan_people_multipoint,
+    get_position = position,
+    get_fill_color = scale_color_category(
+      col = gender,
+      palette = c("#3f51b5", "#e91e63"),
+      # replace gender labels
+      tick_format = function(ticks) c("male", "female")
+    ),
+    # radius = sqrt(gender) * radius_scale
+    get_radius = scale_linear(
+      col = gender,
+      range = sqrt(1:2)
+    ),
+    radius_scale = 30,
+    radius_min_pixels = 0.25,
+    # highlight dot density
+    blending_mode = "additive",
+    # interactivity
+    pickable = TRUE,
+    auto_highlight = TRUE,
+    # per-gender highlight colour
+    highlight_color = scale_color_category(
+      col = gender,
+      palette = c("#9fa8da", "#f48fb1"),
+      legend = FALSE
+    ),
+    tooltip = everything()
+  )
+```
+
+## Create a _high-level_ layer abstraction
+
+```{r manhattan-people-layer}
+add_manhattan_people_layer <- function(rdeck, manhattan_data,
+fill_palette, highlight_palette, get_radius) {
+  rdeck %>%
+    add_scatterplot_layer(
+      name = "manhattan_people",
+      data = manhattan_data,
+      get_position = position,
+      get_fill_color = scale_color_category(
+        col = gender,
+        palette = fill_palette,
+        # replace gender labels
+        tick_format = function(ticks) c("male", "female")
+      ),
+      # radius = sqrt(gender) * radius_scale
+      get_radius = {{get_radius}},
+      radius_scale = 30,
+      radius_min_pixels = 0.25,
+      # highlight dot density
+      blending_mode = "additive",
+      # interactivity
+      pickable = TRUE,
+      auto_highlight = TRUE,
+      # per-gender highlight colour
+      highlight_color = scale_color_category(
+        col = gender,
+        palette = highlight_palette,
+        legend = FALSE
+      ),
+      tooltip = everything()
+    )
+}
+```
+
+```{r scatterplot-map-4}
+rdeck(
+  # disable basemap
+  map_style = NULL,
+  initial_bounds = st_bbox(manhattan_people_multipoint$position),
+  picking_radius = 2
+) %>%
+  add_basemap() %>%
+  add_manhattan_people_layer(
+    manhattan_data = manhattan_people_multipoint,
+    fill_palette = cividis(2, alpha = 0.7, direction = -1),
+    highlight_palette = cividis(2, direction = -1),
+    get_radius = scale_category(
+      col = gender,
+      levels = c(1, 2),
+      range = c(1, sqrt(3))
+    )
   )
 ```
 
@@ -119,7 +268,6 @@ rdeck(
     name = "uber_pickup_locations",
     data = uber_pickup_locations,
     get_position = position,
-    get_weight = weight,
-    radius_pixels = 30
+    get_weight = weight
   )
 ```
