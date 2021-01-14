@@ -179,3 +179,10 @@ validate_tick_format <- function(scale) {
     assert_type(scale$tick_format, "function", "tick_format")
   }
 }
+
+# validate unmapped_tick
+validate_unmapped_tick <- function(scale) {
+  if (!is.null(scale$unmapped_tick)) {
+    assert_is_string(scale$unmapped_tick, "unmapped_tick")
+  }
+}

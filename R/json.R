@@ -68,13 +68,15 @@ to_json.accessor_scale <- function(obj) {
 
   # get unknown value
   obj$unknown <- obj$na_color %||% obj$na_value %||% obj$unmapped_color %||% obj$unmapped_value
+  if ("unmapped_tick" %in% names_) obj$unknown_tick <- obj$unmapped_tick
 
   keep <- c(
     "col", "data_type",
     "scale", "domain", "range",
     "palette", "unknown",
     "exponent", "base",
-    "ticks", "legend"
+    "ticks", "unknown_tick",
+    "legend"
   )
   obj <- pick(obj, keep)
 

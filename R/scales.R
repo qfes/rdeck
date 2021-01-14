@@ -368,11 +368,13 @@ scale_quantile <- function(col, range = 1:5, na_value = 0, legend = TRUE) {
 #' & `unique()` otherwise. Length of `levels` must equal `palette` or `range`, such that each
 #' category level is assigned a colour or range value.
 #' @param unmapped_color <[`color`]> The colour representing unmapped levels.
+#' @param unmapped_tick <`string`> The tick label of the unmapped category. If not `NULL` and
+#' `legend == TRUE`, the unmapped category will appear at the bottom of the legend.
 #' @inheritParams scale_props
 #' @family scales
 #' @export
 scale_color_category <- function(col, palette, unmapped_color = "#000000", levels = NULL,
-                                 tick_format = NULL, legend = TRUE) {
+                                 unmapped_tick = NULL, tick_format = NULL, legend = TRUE) {
   col <- rlang::enquo(col)
   assert_quo_is_sym(col, "col")
 
@@ -382,12 +384,14 @@ scale_color_category <- function(col, palette, unmapped_color = "#000000", level
     palette = palette,
     unmapped_color = unmapped_color,
     levels = base::levels(levels) %||% unique(levels),
+    unmapped_tick = unmapped_tick,
     tick_format = tick_format,
     legend = legend
   )
 
   validate_palette(category_scale)
   validate_unmapped_color(category_scale)
+  validate_unmapped_tick(category_scale)
   validate_tick_format(category_scale)
   validate_legend(category_scale)
 

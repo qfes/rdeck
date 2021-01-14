@@ -95,7 +95,7 @@ const Continuous = ({ ticks, scaleData }: AccessorScaleContinuous<Color>) => {
           />
         ))}
       </svg>
-      <Ticks {...{ ticks }} y={-2} />
+      <Ticks ticks={ticks} y={-2} />
     </svg>
   );
 };
@@ -112,14 +112,16 @@ const Discrete = ({ ticks, range }: AccessorScaleDiscrete<Color>) => {
           <rect key={index} width={20} height={TICK_HEIGHT} y={index * TICK_HEIGHT} fill={color} />
         ))}
       </svg>
-      <Ticks {...{ ticks }} y={-2} />
+      <Ticks ticks={ticks} y={-2} />
     </svg>
   );
 };
 
-function Category({ ticks, range }: AccessorScaleCategory<Color>) {
-  const colors = range.map(rgba);
-  const height = TICK_HEIGHT * ticks.length;
+function Category({ ticks, range, unknownTick, unknown }: AccessorScaleCategory<Color>) {
+  const _range = unknownTick ? [...range, unknown] : range;
+  const _ticks = unknownTick ? [...ticks, unknownTick] : ticks;
+  const colors = _range.map(rgba);
+  const height = TICK_HEIGHT * _ticks.length;
 
   return (
     <svg className={styles.colorScale} height={height}>
@@ -127,8 +129,9 @@ function Category({ ticks, range }: AccessorScaleCategory<Color>) {
         {colors.map((color, index) => (
           <rect key={index} width={20} height={14} y={1 + index * TICK_HEIGHT} fill={color} />
         ))}
+
       </svg>
-      <Ticks {...{ ticks }} />
+      <Ticks ticks={_ticks} />
     </svg>
   );
 }

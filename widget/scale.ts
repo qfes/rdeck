@@ -59,6 +59,7 @@ export type AccessorScaleQuantile<Range> = AccessorScaleBase<Range> & {
 export type AccessorScaleCategory<Range> = AccessorScaleBase<Range> & {
   scale: "category";
   domain: string[];
+  unknownTick: string | null;
   scaleData: ScaleOrdinal<string, Range>;
 };
 
