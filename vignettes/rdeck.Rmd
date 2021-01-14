@@ -98,7 +98,7 @@ rdeck(
 
 ```{r heatmap}
 url <- "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/screen-grid/uber-pickup-locations.json"
-uber_pickup_locations <- fload(uber_pickup_locations_url) %>%
+uber_pickup_locations <- fload(url) %>%
   as_tibble(.name_repair = ~ c("lon", "lat", "weight")) %>%
   mutate(position = sfc_point(lon, lat))
 

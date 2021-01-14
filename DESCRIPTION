@@ -34,7 +34,9 @@ RoxygenNote: 7.1.1
 Suggests:
     knitr,
     rmarkdown,
-    roxyglobals (>= 0.2.1)
+    roxyglobals (>= 0.2.1),
+    dplyr,
+    RcppSimdJson
 VignetteBuilder: knitr
 Remotes:
     anthonynorth/roxyglobals,
