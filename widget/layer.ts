@@ -7,7 +7,7 @@ import { AccessorScale, accessorScale, isAccessorScale } from "./scale";
 import { accessor, Accessor, isAccessor } from "./accessor";
 import { blendingParameters } from "./blending";
 import { flattenGeometries, isDataFrame } from "./data-frame";
-import "./auto-highlight";
+import { MultiHighlightExtension } from "./multi-highlight-extension";
 
 type LayerData = string | DataFrame | FeatureCollection;
 type Entry<T> = [string, T];
@@ -36,10 +36,8 @@ export class Layer {
     const colors = getColors(entries);
     const accessors = getAccessors(entries);
 
-    debugger;
-
     this.type = type;
-    this.props = Object.fromEntries([
+    const _props = Object.fromEntries([
       ...entries,
       ...colors,
       ...accessors.map(([name, value]) => [name, value.getData]),
@@ -48,14 +46,17 @@ export class Layer {
       ["parameters", getParameters(props.parameters, props.blendingMode)],
     ]);
 
+    // multi-geometry highlight
+    if (isDataFrame(_props.data)) {
+      _props.data = flattenGeometries(_props.data);
+      _props.extensions = [new MultiHighlightExtension(), ...(_props.extensions ?? [])];
+    }
+
+    this.props = _props;
+
     this.scales = accessors
       .filter(([, value]) => isAccessorScale(value))
       .map(([, value]) => value as AccessorScale<number | Color>);
-
-    // flatten geometries
-    if (isDataFrame(props.data)) {
-      this.props.data = flattenGeometries(props.data);
-    }
 
     // load font
     if (type === "TextLayer" && "fonts" in document) {
@@ -78,7 +79,7 @@ export class Layer {
       props.currentTime = ratioComplete * loopLength;
     }
     // @ts-ignore
-    return new deck[this.type](this.props);
+    return new deck[this.type]({ ...this.props });
   }
 
   renderLegend() {

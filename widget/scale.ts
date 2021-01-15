@@ -12,9 +12,9 @@ import {
   ScaleThreshold,
   scaleThreshold,
 } from "d3-scale";
-import type { PickInfo } from "deck.gl";
+import type { PickInfo, AccessorFn } from "@deck.gl/core";
 import type { Feature } from "geojson";
-import { Accessor, AccessorFn, isAccessor } from "./accessor";
+import { Accessor, isAccessor } from "./accessor";
 import { parseColor } from "./color";
 
 type ScaleFn = (data: any) => number | Color;

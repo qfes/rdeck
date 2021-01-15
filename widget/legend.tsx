@@ -1,5 +1,5 @@
 import React from "react";
-import { ScaleLinear, ScaleLogarithmic, ScalePower } from "d3-scale";
+import type { ScaleLinear, ScaleLogarithmic, ScalePower } from "d3-scale";
 import {
   AccessorScale,
   AccessorScaleCategory,

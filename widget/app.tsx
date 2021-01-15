@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { DeckProps, InitialViewStateProps } from "deck.gl";
+import type { DeckProps, InitialViewStateProps } from "@deck.gl/core";
 import { StaticMapProps, WebMercatorViewport } from "react-map-gl";
 
 import { Layer, LayerProps } from "./layer";

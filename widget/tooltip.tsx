@@ -1,6 +1,5 @@
 import React, { memo } from "react";
-import type { PickInfo } from "@deck.gl/core";
-import type { ObjectInfo } from "./accessor";
+import type { PickInfo, ObjectInfo } from "@deck.gl/core";
 import styles from "./tooltip.css";
 
 export interface TooltipProps {
