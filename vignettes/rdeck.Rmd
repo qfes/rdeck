@@ -39,6 +39,9 @@ library(RcppSimdJson)
 
 # Non-MapboxGl basemap
 
+The mapbox base maps require a mapbox account and access token. To avoid sharing an access token,
+these examples replace the usual mapbox base maps with a crude geojson countries outline.
+
 ```{r basemap}
 # non-mapboxgl basemap
 add_basemap <- function(rdeck, land_color = "#2f2f2f", water_color = "#242424") {
@@ -198,11 +201,11 @@ rdeck(
   )
 ```
 
-## Create a _high-level_ layer abstraction
+## Creating a layer abstraction
 
 ```{r manhattan-people-layer}
 add_manhattan_people_layer <- function(rdeck, manhattan_data,
-fill_palette, highlight_palette, get_radius) {
+                                       fill_palette, highlight_palette, get_radius) {
   rdeck %>%
     add_scatterplot_layer(
       name = "manhattan_people",
@@ -215,7 +218,7 @@ fill_palette, highlight_palette, get_radius) {
         tick_format = function(ticks) c("male", "female")
       ),
       # radius = sqrt(gender) * radius_scale
-      get_radius = {{get_radius}},
+      get_radius = {{ get_radius }},
       radius_scale = 30,
       radius_min_pixels = 0.25,
       # highlight dot density
