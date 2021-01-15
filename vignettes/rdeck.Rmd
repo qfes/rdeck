@@ -18,6 +18,16 @@ knitr::opts_chunk$set(
 options(rdeck.mapbox_access_token = "<no-token>")
 ```
 
+`{rdeck}` lets you use R to describe interactive WebGL maps built with Uber's
+[deck.gl](https://deck.gl) framework and [mapbox](https://www.mapbox.com/)
+base maps.
+
+These maps can smoothly render data interactively on a much larger scale than html/svg
+frameworks like Leaflet. Visually appealing 3D and lighting effects are also possible, thanks
+to WebGL rendering.
+
+Some basic examples follow:
+
 ```{r setup}
 library(rdeck)
 library(dplyr)
