@@ -147,7 +147,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Terrain Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/geo-layers/terrain-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.14/docs/api-reference/geo-layers/terrain-layer.md}
 
 Other geo-layers: 
 \code{\link{great_circle_layer}},

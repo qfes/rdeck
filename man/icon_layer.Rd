@@ -136,7 +136,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Icon Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/layers/icon-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.14/docs/api-reference/layers/icon-layer.md}
 
 Other core-layers: 
 \code{\link{arc_layer}},

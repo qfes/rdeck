@@ -121,7 +121,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Scenegraph Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/mesh-layers/scenegraph-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.14/docs/api-reference/mesh-layers/scenegraph-layer.md}
 
 Other mesh-layers: 
 \code{\link{simple_mesh_layer}}

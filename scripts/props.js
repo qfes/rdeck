@@ -43,7 +43,6 @@ function getProps(Layer) {
   // default text layer font
   if (Layer === deck.TextLayer) {
     Layer._propTypes.fontFamily.value = "Roboto, Helvetica, Arial, san-serif";
-    Layer._propTypes.wordBreak.value = "break-word";
   }
 
   // trips layer

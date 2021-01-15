@@ -73,5 +73,5 @@ Create a Deck.GL map. Rendering the mapbox basemap requires a mapbox account and
 \href{mapbox_access_token}{mapbox access token}.
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.13/docs/api-reference/core/deck.md}
+\url{https://github.com/visgl/deck.gl/blob/v8.3.14/docs/api-reference/core/deck.md}
 }
