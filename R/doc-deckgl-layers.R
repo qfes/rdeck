@@ -13,11 +13,6 @@ NULL
 #' @inherit layer_props
 #' @param image <`string` | `array`> The image to display. Either a string interpreted as a
 #' URL or Data URL, or an array raster image.
-#' @param desaturate <`number`> The desaturation of the bitmap. Between `0` and `1`, `being`
-#' the original colour, `1` being greyscale.
-#' @param transparent_color <[`color`]> The colour to use for transparent pixels.
-#' @param tint_color <[`color`]> The colour to tint the bitmap by. Alpha channel is ignored
-#' if supplied.
 #' @eval deckgl_docs("layers", "bitmap-layer")
 #' @family core-layers
 #' @family layers
@@ -133,7 +128,9 @@ NULL
 #'
 #' @name geojson_layer
 #' @inheritParams layer_props
-#' @param data sf
+#' @param data <[`sf`][sf::sf] | `string`> The layer's data. Data frames and
+#' sf objects will contain all columns that are referenced by the layer's accessors. Strings
+#' will be interpreted as a URL to geojson data that will be retrieved dynamically in the browser.
 #' @eval deckgl_docs("layers", "geojson-layer")
 #' @family core-layers
 #' @family layers
@@ -313,6 +310,12 @@ NULL
 #'
 #' @name tile_layer
 #' @inherit layer_props
+#' @param data <`character`> A character vector of raster tile url templates.
+#' Substrings `"{x}"`, `"{y}"`, `"{z}"` will be replaced with a tile's actual index on
+#' request.
+#'
+#' If multiple url templates are supplied, each endpoint must return the same data for the
+#' same tile index.
 #' @eval deckgl_docs("geo-layers", "tile-layer")
 #' @family geo-layers
 #' @family layers
@@ -368,6 +371,12 @@ NULL
 #'
 #' @name mvt_layer
 #' @inherit layer_props
+#' @param data <`character`> A character vector of mapbox vector tile url templates.
+#' Substrings `"{x}"`, `"{y}"`, `"{z}"` will be replaced with a tile's actual index on
+#' request.
+#'
+#' If multiple url templates are supplied, each endpoint must return the same data for the
+#' same tile index.
 #' @param unique_id_property string
 #' @param highlighted_feature_id unknown
 #' @eval deckgl_docs("geo-layers", "mvt-layer")
@@ -550,6 +559,11 @@ NULL
 #' @param point_radius_scale <`number`> The radius multiplier for all points.
 #' @param point_radius_min_pixels <`number`> The minimum radius in pixels.
 #' @param point_radius_max_pixels <`number`> The maximum radius in pixels.
+#' @param desaturate <`number`> The desaturation of the bitmap. Between `0` and `1`, `being`
+#' the original colour, `1` being greyscale.
+#' @param transparent_color <[`color`]> The colour to use for transparent pixels.
+#' @param tint_color <[`color`]> The colour to tint the bitmap by. Alpha channel is ignored
+#' if supplied.
 #' @param color_domain <`number`> The colour scale domain, default is set to the range
 #' of aggregated weights in each bin.
 #' @param color_range <[`color`]> The colour palette.

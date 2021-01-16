@@ -57,7 +57,9 @@ updatable layers in a shiny application.}
 \item{name}{<\code{string}> Identifies the layer on tooltips and legends. It does
 not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.}
 
-\item{data}{sf}
+\item{data}{<\code{\link[sf:sf]{sf}} | \code{string}> The layer's data. Data frames and
+sf objects will contain all columns that are referenced by the layer's accessors. Strings
+will be interpreted as a URL to geojson data that will be retrieved dynamically in the browser.}
 
 \item{visible}{<\code{logical}> Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.}

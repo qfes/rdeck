@@ -49,9 +49,12 @@ updatable layers in a shiny application.}
 \item{name}{<\code{string}> Identifies the layer on tooltips and legends. It does
 not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.}
 
-\item{data}{<\code{data.frame} | \code{\link[sf:sf]{sf}} | \code{string}> The layer's data. Data frames and
-sf objects will contain all columns that are referenced by the layer's accessors. Strings
-will be interpreted as a URL and data will be retrieved dynamically in the browser.}
+\item{data}{<\code{character}> A character vector of raster tile url templates.
+Substrings \code{"{x}"}, \code{"{y}"}, \code{"{z}"} will be replaced with a tile's actual index on
+request.
+
+If multiple url templates are supplied, each endpoint must return the same data for the
+same tile index.}
 
 \item{visible}{<\code{logical}> Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.}
@@ -100,6 +103,14 @@ layer refines visibility of tiles. Defaults to \code{"best-available"}.}
 \item{max_requests}{<\code{number}> Maximum number of concurrent HTTP
 requests across all specified tile provider domains. If a negative number is
 supplied no throttling occurs (HTTP/2 only).}
+
+\item{desaturate}{<\code{number}> The desaturation of the bitmap. Between \code{0} and \code{1}, \code{being}
+the original colour, \code{1} being greyscale.}
+
+\item{transparent_color}{<\code{\link{color}}> The colour to use for transparent pixels.}
+
+\item{tint_color}{<\code{\link{color}}> The colour to tint the bitmap by. Alpha channel is ignored
+if supplied.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:
