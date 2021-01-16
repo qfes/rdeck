@@ -2329,6 +2329,9 @@ add_tile_layer <- function(rdeck,
                            refinement_strategy = "best-available",
                            z_range = NULL,
                            max_requests = 6,
+                           desaturate = 0,
+                           transparent_color = "#00000000",
+                           tint_color = "#ffffff",
                            blending_mode = "normal",
                            tooltip = FALSE) {
   check_dots(...)
@@ -2356,6 +2359,9 @@ add_tile_layer <- function(rdeck,
     refinement_strategy = refinement_strategy,
     z_range = z_range,
     max_requests = max_requests,
+    desaturate = desaturate,
+    transparent_color = transparent_color,
+    tint_color = tint_color,
     blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
@@ -2378,6 +2384,9 @@ add_tile_layer <- function(rdeck,
   validate_refinement_strategy(tile_layer)
   validate_z_range(tile_layer)
   validate_max_requests(tile_layer)
+  validate_desaturate(tile_layer)
+  validate_transparent_color(tile_layer)
+  validate_tint_color(tile_layer)
   validate_blending_mode(tile_layer)
   # add layer to map
   add_layer(rdeck, tile_layer)
@@ -2682,6 +2691,21 @@ add_mvt_layer <- function(rdeck,
                           color_format = "RGBA",
                           auto_highlight = FALSE,
                           highlight_color = "#00008080",
+                          get_tile_data = NULL,
+                          extent = NULL,
+                          tile_size = 512,
+                          max_zoom = NULL,
+                          min_zoom = 0,
+                          max_cache_size = NULL,
+                          max_cache_byte_size = NULL,
+                          refinement_strategy = "best-available",
+                          z_range = NULL,
+                          max_requests = 6,
+                          desaturate = 0,
+                          transparent_color = "#00000000",
+                          tint_color = "#ffffff",
+                          unique_id_property = "",
+                          highlighted_feature_id = NULL,
                           stroked = TRUE,
                           filled = TRUE,
                           extruded = FALSE,
@@ -2703,18 +2727,6 @@ add_mvt_layer <- function(rdeck,
                           get_line_width = 1,
                           get_elevation = 1000,
                           material = TRUE,
-                          get_tile_data = NULL,
-                          extent = NULL,
-                          tile_size = 512,
-                          max_zoom = NULL,
-                          min_zoom = 0,
-                          max_cache_size = NULL,
-                          max_cache_byte_size = NULL,
-                          refinement_strategy = "best-available",
-                          z_range = NULL,
-                          max_requests = 6,
-                          unique_id_property = "",
-                          highlighted_feature_id = NULL,
                           blending_mode = "normal",
                           tooltip = FALSE) {
   check_dots(...)
@@ -2732,6 +2744,21 @@ add_mvt_layer <- function(rdeck,
     color_format = color_format,
     auto_highlight = auto_highlight,
     highlight_color = accessor_scale(rlang::enquo(highlight_color), data),
+    get_tile_data = get_tile_data,
+    extent = extent,
+    tile_size = tile_size,
+    max_zoom = max_zoom,
+    min_zoom = min_zoom,
+    max_cache_size = max_cache_size,
+    max_cache_byte_size = max_cache_byte_size,
+    refinement_strategy = refinement_strategy,
+    z_range = z_range,
+    max_requests = max_requests,
+    desaturate = desaturate,
+    transparent_color = transparent_color,
+    tint_color = tint_color,
+    unique_id_property = unique_id_property,
+    highlighted_feature_id = highlighted_feature_id,
     stroked = stroked,
     filled = filled,
     extruded = extruded,
@@ -2753,18 +2780,6 @@ add_mvt_layer <- function(rdeck,
     get_line_width = accessor_scale(rlang::enquo(get_line_width), data),
     get_elevation = accessor_scale(rlang::enquo(get_elevation), data),
     material = material,
-    get_tile_data = get_tile_data,
-    extent = extent,
-    tile_size = tile_size,
-    max_zoom = max_zoom,
-    min_zoom = min_zoom,
-    max_cache_size = max_cache_size,
-    max_cache_byte_size = max_cache_byte_size,
-    refinement_strategy = refinement_strategy,
-    z_range = z_range,
-    max_requests = max_requests,
-    unique_id_property = unique_id_property,
-    highlighted_feature_id = highlighted_feature_id,
     blending_mode = blending_mode,
     tooltip = eval_tooltip(rlang::enquo(tooltip), data)
   )
@@ -2777,6 +2792,21 @@ add_mvt_layer <- function(rdeck,
   validate_color_format(mvt_layer)
   validate_auto_highlight(mvt_layer)
   validate_highlight_color(mvt_layer)
+  validate_get_tile_data(mvt_layer)
+  validate_extent(mvt_layer)
+  validate_tile_size(mvt_layer)
+  validate_max_zoom(mvt_layer)
+  validate_min_zoom(mvt_layer)
+  validate_max_cache_size(mvt_layer)
+  validate_max_cache_byte_size(mvt_layer)
+  validate_refinement_strategy(mvt_layer)
+  validate_z_range(mvt_layer)
+  validate_max_requests(mvt_layer)
+  validate_desaturate(mvt_layer)
+  validate_transparent_color(mvt_layer)
+  validate_tint_color(mvt_layer)
+  validate_unique_id_property(mvt_layer)
+  validate_highlighted_feature_id(mvt_layer)
   validate_stroked(mvt_layer)
   validate_filled(mvt_layer)
   validate_extruded(mvt_layer)
@@ -2798,18 +2828,6 @@ add_mvt_layer <- function(rdeck,
   validate_get_line_width(mvt_layer)
   validate_get_elevation(mvt_layer)
   validate_material(mvt_layer)
-  validate_get_tile_data(mvt_layer)
-  validate_extent(mvt_layer)
-  validate_tile_size(mvt_layer)
-  validate_max_zoom(mvt_layer)
-  validate_min_zoom(mvt_layer)
-  validate_max_cache_size(mvt_layer)
-  validate_max_cache_byte_size(mvt_layer)
-  validate_refinement_strategy(mvt_layer)
-  validate_z_range(mvt_layer)
-  validate_max_requests(mvt_layer)
-  validate_unique_id_property(mvt_layer)
-  validate_highlighted_feature_id(mvt_layer)
   validate_blending_mode(mvt_layer)
   # add layer to map
   add_layer(rdeck, mvt_layer)

@@ -1,5 +1,7 @@
 import * as deck from "./deck-bundle";
 import type { Layer as DeckLayer, LayerProps as DeckLayerProps } from "@deck.gl/core";
+import type { TileLayerProps } from "@deck.gl/geo-layers/tile-layer/tile-layer";
+import type { BitmapLayerProps } from "@deck.gl/layers";
 import type { FeatureCollection } from "geojson";
 
 import { parseColor } from "./color";
@@ -50,6 +52,26 @@ export class Layer {
     if (isDataFrame(_props.data)) {
       _props.data = flattenGeometries(_props.data);
       _props.extensions = [new MultiHighlightExtension(), ...(_props.extensions ?? [])];
+    }
+
+    // tile-layer
+    type TileProps = TileLayerProps<any> & BitmapLayerProps<any> & { tile: any };
+    if (type === "TileLayer") {
+      _props.renderSubLayers = (props: TileProps) => {
+        const {
+          bbox: { west, south, east, north },
+          x,
+          y,
+          z,
+        } = props.tile;
+
+        return new deck.BitmapLayer({
+          ...props,
+          data: [{ z, x, y }],
+          image: props.data,
+          bounds: [west, south, east, north],
+        });
+      };
     }
 
     this.props = _props;

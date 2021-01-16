@@ -59,12 +59,26 @@ function getProps(Layer) {
   // mvt layer should inherit geojson
   if (Layer === deck.MVTLayer) {
     new deck.GeoJsonLayer({});
+    // @ts-ignore
+    const inherited = deck.GeoJsonLayer._propTypes;
 
     // include geojson props
     Layer._propTypes = {
-      // @ts-ignore
-      ...deck.GeoJsonLayer._propTypes,
       ...Layer._propTypes,
+      ...inherited
+    };
+  }
+
+  // tile layer should inherit bitmap
+  if (Layer === deck.TileLayer) {
+    // @ts-ignore
+    new deck.BitmapLayer({});
+    // @ts-ignore
+    const { image, bounds, ...inherited } = deck.BitmapLayer._propTypes;
+
+    Layer._propTypes = {
+      ...Layer._propTypes,
+      ...inherited,
     };
   }
 
