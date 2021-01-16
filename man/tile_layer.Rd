@@ -28,6 +28,9 @@ add_tile_layer(
   refinement_strategy = "best-available",
   z_range = NULL,
   max_requests = 6,
+  desaturate = 0,
+  transparent_color = "#00000000",
+  tint_color = "#ffffff",
   blending_mode = "normal",
   tooltip = FALSE
 )

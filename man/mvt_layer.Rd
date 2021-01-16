@@ -18,6 +18,21 @@ add_mvt_layer(
   color_format = "RGBA",
   auto_highlight = FALSE,
   highlight_color = "#00008080",
+  get_tile_data = NULL,
+  extent = NULL,
+  tile_size = 512,
+  max_zoom = NULL,
+  min_zoom = 0,
+  max_cache_size = NULL,
+  max_cache_byte_size = NULL,
+  refinement_strategy = "best-available",
+  z_range = NULL,
+  max_requests = 6,
+  desaturate = 0,
+  transparent_color = "#00000000",
+  tint_color = "#ffffff",
+  unique_id_property = "",
+  highlighted_feature_id = NULL,
   stroked = TRUE,
   filled = TRUE,
   extruded = FALSE,
@@ -39,18 +54,6 @@ add_mvt_layer(
   get_line_width = 1,
   get_elevation = 1000,
   material = TRUE,
-  get_tile_data = NULL,
-  extent = NULL,
-  tile_size = 512,
-  max_zoom = NULL,
-  min_zoom = 0,
-  max_cache_size = NULL,
-  max_cache_byte_size = NULL,
-  refinement_strategy = "best-available",
-  z_range = NULL,
-  max_requests = 6,
-  unique_id_property = "",
-  highlighted_feature_id = NULL,
   blending_mode = "normal",
   tooltip = FALSE
 )
@@ -94,6 +97,36 @@ highlighted by \code{highlight_color}.}
 highlighted object. If a single colour value is supplied, that colour will be used to
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+
+\item{get_tile_data}{<\code{\link[htmlwidgets:JS]{JS}}> retrieves the data of each tile.
+See deck.gl \href{https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata}{getTileData}.}
+
+\item{extent}{<\code{c(min_x, min_y, max_x, max_y)}> Tiles in this bounding box
+will be rendered at \code{min_zoom}, when zoomed out below \code{min_zoom}.}
+
+\item{tile_size}{<\code{number}> A power of 2 that is the pixel dimensions of the tile.}
+
+\item{max_zoom}{<\code{number}> Tiles above this zoom level are not shown. Defaults to \code{NULL}.}
+
+\item{min_zoom}{<\code{number}> Tiles below this zoom level are not shown. Defaults to \code{0}.}
+
+\item{max_cache_size}{<\code{number}> Maximum number of tiles that can be cached. Defaults to
+5x the number of tiles in current viewport.}
+
+\item{max_cache_byte_size}{<\code{number}> Maximum memory used for caching tiles.}
+
+\item{refinement_strategy}{<\code{"best-available"} | \code{"no-overlap"} | \code{"never"}> How the tile
+layer refines visibility of tiles. Defaults to \code{"best-available"}.}
+
+\item{z_range}{<\code{c(min, max)}> Array representing the range of heights in the tile.}
+
+\item{max_requests}{<\code{number}> Maximum number of concurrent HTTP
+requests across all specified tile provider domains. If a negative number is
+supplied no throttling occurs (HTTP/2 only).}
+
+\item{unique_id_property}{string}
+
+\item{highlighted_feature_id}{unknown}
 
 \item{stroked}{<\code{logical}> If \code{TRUE}, draw an outline around each object.}
 
@@ -152,36 +185,6 @@ Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
 \item{material}{<\code{logical}>}
-
-\item{get_tile_data}{<\code{\link[htmlwidgets:JS]{JS}}> retrieves the data of each tile.
-See deck.gl \href{https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata}{getTileData}.}
-
-\item{extent}{<\code{c(min_x, min_y, max_x, max_y)}> Tiles in this bounding box
-will be rendered at \code{min_zoom}, when zoomed out below \code{min_zoom}.}
-
-\item{tile_size}{<\code{number}> A power of 2 that is the pixel dimensions of the tile.}
-
-\item{max_zoom}{<\code{number}> Tiles above this zoom level are not shown. Defaults to \code{NULL}.}
-
-\item{min_zoom}{<\code{number}> Tiles below this zoom level are not shown. Defaults to \code{0}.}
-
-\item{max_cache_size}{<\code{number}> Maximum number of tiles that can be cached. Defaults to
-5x the number of tiles in current viewport.}
-
-\item{max_cache_byte_size}{<\code{number}> Maximum memory used for caching tiles.}
-
-\item{refinement_strategy}{<\code{"best-available"} | \code{"no-overlap"} | \code{"never"}> How the tile
-layer refines visibility of tiles. Defaults to \code{"best-available"}.}
-
-\item{z_range}{<\code{c(min, max)}> Array representing the range of heights in the tile.}
-
-\item{max_requests}{<\code{number}> Maximum number of concurrent HTTP
-requests across all specified tile provider domains. If a negative number is
-supplied no throttling occurs (HTTP/2 only).}
-
-\item{unique_id_property}{string}
-
-\item{highlighted_feature_id}{unknown}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:
