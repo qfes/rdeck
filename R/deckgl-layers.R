@@ -2701,9 +2701,6 @@ add_mvt_layer <- function(rdeck,
                           refinement_strategy = "best-available",
                           z_range = NULL,
                           max_requests = 6,
-                          desaturate = 0,
-                          transparent_color = "#00000000",
-                          tint_color = "#ffffff",
                           unique_id_property = "",
                           highlighted_feature_id = NULL,
                           stroked = TRUE,
@@ -2754,9 +2751,6 @@ add_mvt_layer <- function(rdeck,
     refinement_strategy = refinement_strategy,
     z_range = z_range,
     max_requests = max_requests,
-    desaturate = desaturate,
-    transparent_color = transparent_color,
-    tint_color = tint_color,
     unique_id_property = unique_id_property,
     highlighted_feature_id = highlighted_feature_id,
     stroked = stroked,
@@ -2802,9 +2796,6 @@ add_mvt_layer <- function(rdeck,
   validate_refinement_strategy(mvt_layer)
   validate_z_range(mvt_layer)
   validate_max_requests(mvt_layer)
-  validate_desaturate(mvt_layer)
-  validate_transparent_color(mvt_layer)
-  validate_tint_color(mvt_layer)
   validate_unique_id_property(mvt_layer)
   validate_highlighted_feature_id(mvt_layer)
   validate_stroked(mvt_layer)

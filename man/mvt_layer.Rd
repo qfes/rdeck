@@ -28,9 +28,6 @@ add_mvt_layer(
   refinement_strategy = "best-available",
   z_range = NULL,
   max_requests = 6,
-  desaturate = 0,
-  transparent_color = "#00000000",
-  tint_color = "#ffffff",
   unique_id_property = "",
   highlighted_feature_id = NULL,
   stroked = TRUE,
@@ -126,14 +123,6 @@ layer refines visibility of tiles. Defaults to \code{"best-available"}.}
 \item{max_requests}{<\code{number}> Maximum number of concurrent HTTP
 requests across all specified tile provider domains. If a negative number is
 supplied no throttling occurs (HTTP/2 only).}
-
-\item{desaturate}{<\code{number}> The desaturation of the bitmap. Between \code{0} and \code{1}, \code{being}
-the original colour, \code{1} being greyscale.}
-
-\item{transparent_color}{<\code{\link{color}}> The colour to use for transparent pixels.}
-
-\item{tint_color}{<\code{\link{color}}> The colour to tint the bitmap by. Alpha channel is ignored
-if supplied.}
 
 \item{unique_id_property}{string}
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-foreign-prop-types */
 const deck = require("deck.gl");
 
 /* exclude props from function signatures */
@@ -28,29 +29,30 @@ const excludeProps = [
 function getProps(Layer) {
   // initialise _propTypes
   new Layer();
+  Layer.propTypes = { ...Layer._propTypes };
 
   // extruded = false
-  if ("extruded" in Layer._propTypes) {
-    Layer._propTypes.extruded.value = false;
+  if ("extruded" in Layer.propTypes) {
+    Layer.propTypes.extruded.value = false;
   }
 
   // remove polygon from geo-layers
   if (/^S2|H3/.test(Layer.layerName)) {
     // we don't need this
-    delete Layer._propTypes.getPolygon;
+    delete Layer.propTypes.getPolygon;
   }
 
   // default text layer font
   if (Layer === deck.TextLayer) {
-    Layer._propTypes.fontFamily.value = "Roboto, Helvetica, Arial, san-serif";
+    Layer.propTypes.fontFamily.value = "Roboto, Helvetica, Arial, san-serif";
   }
 
   // trips layer
   if (Layer === deck.TripsLayer) {
-    delete Layer._propTypes.currentTime;
-    Layer._propTypes.getTimestamps.value = function(object) { return object.timestamps; }
-    Layer._propTypes = {
-      ...Layer._propTypes,
+    delete Layer.propTypes.currentTime;
+    Layer.propTypes.getTimestamps.value = function(object) { return object.timestamps; }
+    Layer.propTypes = {
+      ...Layer.propTypes,
       loopLength: { name: "loopLength", type: "number", value: 1800, min: 0 },
       animationSpeed: { name: "animationSpeed", type: "number", value: 30, min: 0 },
     };
@@ -60,11 +62,11 @@ function getProps(Layer) {
   if (Layer === deck.MVTLayer) {
     new deck.GeoJsonLayer({});
     // @ts-ignore
-    const inherited = deck.GeoJsonLayer._propTypes;
+    const inherited = deck.GeoJsonLayer.propTypes;
 
     // include geojson props
-    Layer._propTypes = {
-      ...Layer._propTypes,
+    Layer.propTypes = {
+      ...Layer.propTypes,
       ...inherited
     };
   }
@@ -74,15 +76,15 @@ function getProps(Layer) {
     // @ts-ignore
     new deck.BitmapLayer({});
     // @ts-ignore
-    const { image, bounds, ...inherited } = deck.BitmapLayer._propTypes;
+    const { image, bounds, ...inherited } = deck.BitmapLayer.propTypes;
 
-    Layer._propTypes = {
-      ...Layer._propTypes,
+    Layer.propTypes = {
+      ...Layer.propTypes,
       ...inherited,
     };
   }
 
-  return Object.values(Layer._propTypes)
+  return Object.values(Layer.propTypes)
     .filter((propType) => !excludeProps.includes(propType.name))
     .filter((propType) => !/^(_|on)/.test(propType.name))
     .map((propType) => ({
