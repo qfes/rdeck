@@ -13,9 +13,6 @@ knitr::opts_chunk$set(
   comment = "#>",
   out.width = "100%"
 )
-
-# disable token
-options(rdeck.mapbox_access_token = "<no-token>")
 ```
 
 `{rdeck}` lets you use R to describe interactive WebGL maps built with Uber's
@@ -26,9 +23,27 @@ These maps can smoothly render data interactively on a much larger scale than ht
 frameworks like Leaflet. Visually appealing 3D and lighting effects are also possible, thanks
 to WebGL rendering.
 
-Some basic examples follow:
+`{rdeck}` maps consist of a basemap (requires a mapbox account) and 0 or more layers.
+Basemaps are defined via the `rdeck(map_style)` parameter, which is any valid mapbox style
+identifier, e.g. `"mapbox://styles/mapbox/dark-v10"`.  The basemap can be disabled with
+`rdeck(map_style = NULL)`.
 
-```{r setup}
+Layers are added to an `{rdeck}` map by calling one of the _add layer_ methods on an rdeck
+instance. e.g. `rdeck() %>% add_scatterplot_layer()`. The order in which layers are added
+determines their z-index; each layer added to the map will appear _on top_ of all previously
+added maps.
+
+Every layer can be created with their defaults, however layers without data are almost useless
+as they will be empty. All layer arguments (other than `rdeck`) must be named.
+
+Some examples follow.
+
+# Packages
+
+These packages are required for the following examples. With exception of `RcppSimdJson`, these
+packages will be frequently used in creating `{rdeck}` maps.
+
+```{r packages}
 library(rdeck)
 library(dplyr)
 library(sf)
@@ -37,64 +52,70 @@ library(viridis)
 library(RcppSimdJson)
 ```
 
-# Non-MapboxGl basemap
-
-The mapbox base maps require a mapbox account and access token. To avoid sharing an access token,
-these examples replace the usual mapbox base maps with a crude geojson countries outline.
-
-```{r basemap}
-# non-mapboxgl basemap
-add_basemap <- function(rdeck, land_color = "#2f2f2f", water_color = "#242424") {
-  countries <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
-  world <- st_bbox(c(xmin = -180, ymin = -90, xmax = 180, ymax = 90), crs = 4326) %>%
-    st_as_sfc() %>%
-    st_sf()
-
-  rdeck %>%
-    add_polygon_layer(
-      name = "water",
-      data = world,
-      get_fill_color = {{ water_color }}
-    ) %>%
-    add_geojson_layer(
-      name = "countries",
-      data = countries,
-      get_fill_color = {{ land_color }}
-    )
-}
-```
-
 # Scatterplot layer
 
+In this example, we create a simple scatterplot layer using the [manhattan example data](https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/scatterplot/manhattan.json)
+from deck.gl. This data can be used directly from the URL, however this is not typical usage of
+`{rdeck}`, so first we'll load this data into a data frame.
+
 ```{r manhattan-data}
-url <- "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/scatterplot/manhattan.json"
-manhattan_people <- fload(url) %>%
+url <- file.path(
+  "https://raw.githubusercontent.com/visgl/deck.gl-data/master",
+  "examples/scatterplot/manhattan.json",
+  fsep = "/"
+)
+manhattan_data <- fload(url) %>%
   as_tibble(.name_repair = ~ c("lon", "lat", "gender")) %>%
   mutate(position = sfc_point(lon, lat))
-
-manhattan_people
 ```
+
+The manhattan data we have loaded. Our scatterplot layer will make use of the `position` column
+to define the centre of each rendered point, and the `gender` column to change the point
+colours and sizes. `lon` and `lat` aren't used in any of the layer parameters, so they won't
+be serialised.
+
+```{r echo=FALSE}
+manhattan_data
+```
+
+## Scatterplot
+Here we create a simple scatterplot map with a dark vector basemap and `cividis()` colour scale
+for the scatterplot layer.
+
+The scatterplot points are _scaled_ by the gender categories found in the data (which in this
+dataset are `1` and `2`); this colour scale generates a categorical legend.
+
+Point density is highlighted with `additive` blending, making dense areas appear brighter.
+
+All points have the same radius of `30 metres`, with a minimum of `0.5 pixels` (to prevent them
+from disappearing at low zooms).
+
+Hovered points will become brighter (keeping a similar colour scale as fill colour) and will
+render a tooltip containing the gender category from the data.
 
 ```{r scatterplot-map}
 rdeck(
-  # disable basemap
-  map_style = NULL,
-  initial_bounds = st_bbox(manhattan_people$position),
+  map_style = mapbox_dark(),
+  # set the bounds of the map to include all of the manhattan data
+  initial_bounds = st_bbox(manhattan_data$position),
+  # add a 2 pixel buffer to each point, making it easier to hover
   picking_radius = 2
 ) %>%
-  add_basemap() %>%
   add_scatterplot_layer(
     name = "manhattan_people",
-    data = manhattan_people,
+    data = manhattan_data,
+    # the coloumn in manhattan_data which contains the location of each point
     get_position = position,
+    # a categorical colour scale, using the gender column and a cividis colour palette
     get_fill_color = scale_color_category(
       col = gender,
-      palette = c("#3f51b5", "#e91e63"),
+      palette = cividis(2),
       # replace gender labels
       tick_format = function(ticks) c("male", "female")
     ),
+    # the radius of each point (default 1 metre) is scaled by 30
     radius_scale = 30,
-    radius_min_pixels = 0.25,
+    radius_min_pixels = 0.5,
     # highlight dot density
     blending_mode = "additive",
     # interactivity
@@ -103,47 +124,60 @@ rdeck(
     # per-gender highlight colour
     highlight_color = scale_color_category(
       col = gender,
-      palette = c("#9fa8da", "#f48fb1"),
+      palette = c("#0060e6", "#fff399"),
       legend = FALSE
     ),
     tooltip = gender
   )
 ```
 
-## Group all points by gender
+## Grouping points
 
-```{r manhattan-data-multipoint}
-manhattan_people_multipoint <- manhattan_people %>%
+In the following example, we group all points by gender so that we can highlight all points of
+a given gender at once.
+
+```{r manhattan-data-grouped}
+manhattan_data_grouped <- manhattan_data %>%
   group_by(gender) %>%
   summarise(
     position = st_union(position),
     count = n(),
     .groups = "drop"
   )
-
-manhattan_people_multipoint
 ```
 
-```{r scatterplot-map-2}
+Our grouped data:
+
+```{r echo=FALSE}
+manhattan_data_grouped
+```
+
+The following map is almost identical to the previous map, we have replaced the `data` parameter
+and the tooltip (to include the new column, `count`)
+
+```{r scatterplot-map-grouped}
 rdeck(
-  # disable basemap
-  map_style = NULL,
-  initial_bounds = st_bbox(manhattan_people_multipoint$position),
+  map_style = mapbox_dark(),
+  # set the bounds of the map to include all of the manhattan data
+  initial_bounds = st_bbox(manhattan_data_grouped$position),
+  # add a 2 pixel buffer to each point, making it easier to hover
   picking_radius = 2
 ) %>%
-  add_basemap() %>%
   add_scatterplot_layer(
-    name = "manhattan_people_multipoint",
-    data = manhattan_people_multipoint,
+    name = "manhattan_people",
+    data = manhattan_data_grouped,
+    # the coloumn in manhattan_data which contains the location of each point
     get_position = position,
+    # a categorical colour scale, using the gender column and a cividis colour palette
     get_fill_color = scale_color_category(
       col = gender,
-      palette = c("#3f51b5", "#e91e63"),
+      palette = cividis(2),
       # replace gender labels
       tick_format = function(ticks) c("male", "female")
     ),
+    # the radius of each point (default 1 metre) is scaled by 30
     radius_scale = 30,
-    radius_min_pixels = 0.25,
+    radius_min_pixels = 0.5,
     # highlight dot density
     blending_mode = "additive",
     # interactivity
@@ -152,40 +186,47 @@ rdeck(
     # per-gender highlight colour
     highlight_color = scale_color_category(
       col = gender,
-      palette = c("#9fa8da", "#f48fb1"),
+      palette = c("#0060e6", "#fff399"),
       legend = FALSE
     ),
     tooltip = everything()
   )
 ```
 
-## Scale radius by gender attribute
+## Scaling additional parameters
 
-```{r scatterplot-map-3}
+We are able to scale many parameters on each layer. In the following example, we additionally scale
+the radius by the count of `gender`.
+
+```{r scatterplot-map-grouped-2}
 rdeck(
-  # disable basemap
-  map_style = NULL,
-  initial_bounds = st_bbox(manhattan_people_multipoint$position),
+  map_style = mapbox_dark(),
+  # set the bounds of the map to include all of the manhattan data
+  initial_bounds = st_bbox(manhattan_data_grouped$position),
+  # add a 2 pixel buffer to each point, making it easier to hover
   picking_radius = 2
 ) %>%
-  add_basemap() %>%
   add_scatterplot_layer(
-    name = "manhattan_people_multipoint",
-    data = manhattan_people_multipoint,
+    name = "manhattan_people",
+    data = manhattan_data_grouped,
+    # the coloumn in manhattan_data which contains the location of each point
     get_position = position,
+    # a categorical colour scale, using the gender column and a cividis colour palette
     get_fill_color = scale_color_category(
       col = gender,
-      palette = c("#3f51b5", "#e91e63"),
+      palette = cividis(2),
       # replace gender labels
       tick_format = function(ticks) c("male", "female")
     ),
-    # radius = sqrt(gender) * radius_scale
+    # we only have 2 groups, so this scale is equivalent to a categorical scale with the
+    # same parameters
     get_radius = scale_linear(
-      col = gender,
+      col = count,
       range = sqrt(1:2)
     ),
+    # the radius of each point is scaled by 30
     radius_scale = 30,
-    radius_min_pixels = 0.25,
+    radius_min_pixels = 0.5,
     # highlight dot density
     blending_mode = "additive",
     # interactivity
@@ -194,18 +235,30 @@ rdeck(
     # per-gender highlight colour
     highlight_color = scale_color_category(
       col = gender,
-      palette = c("#9fa8da", "#f48fb1"),
+      palette = c("#0060e6", "#fff399"),
       legend = FALSE
     ),
     tooltip = everything()
   )
 ```
 
-## Creating a layer abstraction
+## High-level layers
 
-```{r manhattan-people-layer}
-add_manhattan_people_layer <- function(rdeck, manhattan_data,
-                                       fill_palette, highlight_palette, get_radius) {
+This example code is repetitive, copy-pasta that will inevitably result in maintenance problems
+(as well as increased developer effort).
+
+Generally when creating maps, we will encapsulate the creation of one or more layers in a function.
+Similar to creating functions to encapsulate tidy-methods, the use of curly-curly is needed here
+for any parameters that accept an `accessor` parameter.
+
+The only rule in creating a layer function is that it _must_ return the map to make it chainable.
+
+In the following example, we parameterise the data, fill palette, highlight palette, and
+`get_radius` (which will require curl-curly) for our original scatterplot layer.
+
+```{r layer-function}
+add_manhattan_layer <- function(rdeck, manhattan_data,
+                                fill_palette, highlight_palette, get_radius) {
   rdeck %>%
     add_scatterplot_layer(
       name = "manhattan_people",
@@ -214,19 +267,15 @@ add_manhattan_people_layer <- function(rdeck, manhattan_data,
       get_fill_color = scale_color_category(
         col = gender,
         palette = fill_palette,
-        # replace gender labels
         tick_format = function(ticks) c("male", "female")
       ),
-      # radius = sqrt(gender) * radius_scale
+      # we need curly-curly for get_radius
       get_radius = {{ get_radius }},
       radius_scale = 30,
-      radius_min_pixels = 0.25,
-      # highlight dot density
+      radius_min_pixels = 0.5,
       blending_mode = "additive",
-      # interactivity
       pickable = TRUE,
       auto_highlight = TRUE,
-      # per-gender highlight colour
       highlight_color = scale_color_category(
         col = gender,
         palette = highlight_palette,
@@ -237,50 +286,26 @@ add_manhattan_people_layer <- function(rdeck, manhattan_data,
 }
 ```
 
-```{r scatterplot-map-4}
+Usage of our new function is like adding any other layer, just now that it is opinionated and
+isn't limited to adding a single layer.
+
+```{r layer-function-usage}
 rdeck(
-  # disable basemap
-  map_style = NULL,
-  initial_bounds = st_bbox(manhattan_people_multipoint$position),
+  map_style = mapbox_dark(),
+  # set the bounds of the map to include all of the manhattan data
+  initial_bounds = st_bbox(manhattan_data$position),
+  # add a 2 pixel buffer to each point, making it easier to hover
   picking_radius = 2
 ) %>%
-  add_basemap() %>%
-  add_manhattan_people_layer(
-    manhattan_data = manhattan_people_multipoint,
+  add_manhattan_layer(
+    manhattan_data = manhattan_data_grouped,
+    # swapping the gender colours
     fill_palette = cividis(2, alpha = 0.7, direction = -1),
     highlight_palette = cividis(2, direction = -1),
     get_radius = scale_category(
       col = gender,
-      levels = c(1, 2),
+      levels = c(2, 1),
       range = c(1, sqrt(3))
     )
-  )
-```
-
-# Heatmap layer
-
-```{r heatmap}
-url <- "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/screen-grid/uber-pickup-locations.json"
-uber_pickup_locations <- fload(url) %>%
-  as_tibble(.name_repair = ~ c("lon", "lat", "weight")) %>%
-  mutate(position = sfc_point(lon, lat))
-
-
-manhattan <- st_bbox(
-  c(xmin = -74.027975, ymin = 40.698608, xmax = -73.897478, ymax = 40.879367),
-  crs = 4326
-)
-
-rdeck(
-  # disable basemap
-  map_style = NULL,
-  initial_bounds = manhattan
-) %>%
-  add_basemap() %>%
-  add_heatmap_layer(
-    name = "uber_pickup_locations",
-    data = uber_pickup_locations,
-    get_position = position,
-    get_weight = weight
   )
 ```
