@@ -66,12 +66,15 @@ url <- file.path(
   fsep = "/"
 )
 manhattan_data <- fload(url) %>%
-  as_tibble(.name_repair = ~ c("lon", "lat", "gender")) %>%
-  mutate(position = sfc_point(lon, lat))
+  as_tibble(.name_repair = ~ c("lon", "lat", "species")) %>%
+  mutate(
+    position = sfc_point(lon, lat),
+    species_name = if_else(species == 1, "dog", "cat")
+  )
 ```
 
 The manhattan data we have loaded. Our scatterplot layer will make use of the `position` column
-to define the centre of each rendered point, and the `gender` column to change the point
+to define the centre of each rendered point, and the `species` column to change the point
 colours and sizes. `lon` and `lat` aren't used in any of the layer parameters, so they won't
 be serialised.
 
@@ -84,8 +87,8 @@ manhattan_data
 Here we create a simple scatterplot map with a dark vector basemap and `cividis()` colour scale
 for the scatterplot layer.
 
-The scatterplot points are _scaled_ by the gender categories found in the data (which in this
-dataset are `1` and `2`); this colour scale generates a categorical legend.
+The scatterplot points are _scaled_ by the `species` categories found in the data (which in this
+dataset are `dog` and `cat`); this colour scale generates a categorical legend.
 
 Point density is highlighted with `additive` blending, making dense areas appear brighter.
 
@@ -93,7 +96,7 @@ All points have the same radius of `30 metres`, with a minimum of `0.5 pixels` (
 from disappearing at low zooms).
 
 Hovered points will become brighter (keeping a similar colour scale as fill colour) and will
-render a tooltip containing the gender category from the data.
+render a tooltip containing the `species` category from the data.
 
 ```{r scatterplot-map}
 rdeck(
@@ -104,16 +107,14 @@ rdeck(
   picking_radius = 2
 ) %>%
   add_scatterplot_layer(
-    name = "manhattan_people",
+    name = "manhattan_animals",
     data = manhattan_data,
     # the coloumn in manhattan_data which contains the location of each point
     get_position = position,
-    # a categorical colour scale, using the gender column and a cividis colour palette
+    # a categorical colour scale, using the species column and a cividis colour palette
     get_fill_color = scale_color_category(
-      col = gender,
-      palette = cividis(2),
-      # replace gender labels
-      tick_format = function(ticks) c("male", "female")
+      col = species,
+      palette = cividis(2)
     ),
     # the radius of each point (default 1 metre) is scaled by 30
     radius_scale = 30,
@@ -123,24 +124,24 @@ rdeck(
     # interactivity
     pickable = TRUE,
     auto_highlight = TRUE,
-    # per-gender highlight colour
+    # per-species highlight colour
     highlight_color = scale_color_category(
-      col = gender,
+      col = species,
       palette = c("#0060e6", "#fff399"),
       legend = FALSE
     ),
-    tooltip = gender
+    tooltip = c(species, species_name)
   )
 ```
 
 # Grouping points
 
-In the following example, we group all points by gender so that we can highlight all points of
-a given gender at once.
+In the following example, we group all points by `species_name` so that we can highlight all points of
+a given species at once.
 
 ```{r manhattan-data-grouped}
 manhattan_data_grouped <- manhattan_data %>%
-  group_by(gender) %>%
+  group_by(species_name) %>%
   summarise(
     position = st_union(position),
     count = n(),
@@ -154,8 +155,8 @@ Our grouped data:
 manhattan_data_grouped
 ```
 
-The following map is almost identical to the previous map, we have replaced the `data` parameter
-and the tooltip (to include the new column, `count`)
+The following map is almost identical to the previous map, we have replaced the `data` parameter,
+the scales to use the `species_name` and the `tooltip` to include the new column, `count`.
 
 ```{r scatterplot-map-grouped}
 rdeck(
@@ -166,16 +167,14 @@ rdeck(
   picking_radius = 2
 ) %>%
   add_scatterplot_layer(
-    name = "manhattan_people",
+    name = "manhattan_animals",
     data = manhattan_data_grouped,
     # the coloumn in manhattan_data which contains the location of each point
     get_position = position,
-    # a categorical colour scale, using the gender column and a cividis colour palette
+    # a categorical colour scale, using the species column and a cividis colour palette
     get_fill_color = scale_color_category(
-      col = gender,
-      palette = cividis(2),
-      # replace gender labels
-      tick_format = function(ticks) c("male", "female")
+      col = species_name,
+      palette = cividis(2)
     ),
     # the radius of each point (default 1 metre) is scaled by 30
     radius_scale = 30,
@@ -185,9 +184,9 @@ rdeck(
     # interactivity
     pickable = TRUE,
     auto_highlight = TRUE,
-    # per-gender highlight colour
+    # per-species highlight colour
     highlight_color = scale_color_category(
-      col = gender,
+      col = species_name,
       palette = c("#0060e6", "#fff399"),
       legend = FALSE
     ),
@@ -198,7 +197,7 @@ rdeck(
 # Scaling additional parameters
 
 We are able to scale many parameters on each layer. In the following example, we additionally scale
-the radius by the count of `gender`.
+the radius by the count of `species_name`.
 
 ```{r scatterplot-map-grouped-2}
 rdeck(
@@ -209,16 +208,14 @@ rdeck(
   picking_radius = 2
 ) %>%
   add_scatterplot_layer(
-    name = "manhattan_people",
+    name = "manhattan_animals",
     data = manhattan_data_grouped,
     # the coloumn in manhattan_data which contains the location of each point
     get_position = position,
-    # a categorical colour scale, using the gender column and a cividis colour palette
+    # a categorical colour scale, using the species column and a cividis colour palette
     get_fill_color = scale_color_category(
-      col = gender,
-      palette = cividis(2),
-      # replace gender labels
-      tick_format = function(ticks) c("male", "female")
+      col = species_name,
+      palette = cividis(2)
     ),
     # we only have 2 groups, so this scale is equivalent to a categorical scale with the
     # same parameters
@@ -234,9 +231,9 @@ rdeck(
     # interactivity
     pickable = TRUE,
     auto_highlight = TRUE,
-    # per-gender highlight colour
+    # per-species highlight colour
     highlight_color = scale_color_category(
-      col = gender,
+      col = species_name,
       palette = c("#0060e6", "#fff399"),
       legend = FALSE
     ),
@@ -263,13 +260,12 @@ add_manhattan_layer <- function(rdeck, manhattan_data,
                                 fill_palette, highlight_palette, get_radius) {
   rdeck %>%
     add_scatterplot_layer(
-      name = "manhattan_people",
+      name = "manhattan_animals",
       data = manhattan_data,
       get_position = position,
       get_fill_color = scale_color_category(
-        col = gender,
-        palette = fill_palette,
-        tick_format = function(ticks) c("male", "female")
+        col = species_name,
+        palette = fill_palette
       ),
       # we need curly-curly for get_radius
       get_radius = {{ get_radius }},
@@ -279,7 +275,7 @@ add_manhattan_layer <- function(rdeck, manhattan_data,
       pickable = TRUE,
       auto_highlight = TRUE,
       highlight_color = scale_color_category(
-        col = gender,
+        col = species_name,
         palette = highlight_palette,
         legend = FALSE
       ),
@@ -301,12 +297,12 @@ rdeck(
 ) %>%
   add_manhattan_layer(
     manhattan_data = manhattan_data_grouped,
-    # swapping the gender colours
-    fill_palette = cividis(2, alpha = 0.7, direction = -1),
-    highlight_palette = cividis(2, direction = -1),
+    fill_palette = viridis(2, alpha = 0.7),
+    highlight_palette = viridis(2),
     get_radius = scale_category(
-      col = gender,
-      levels = c(2, 1),
+      col = species_name,
+      # swap the levels order, dogs are now bigger
+      levels = c("cat", "dog"),
       range = c(1, sqrt(3))
     )
   )
