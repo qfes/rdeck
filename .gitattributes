@@ -9,9 +9,9 @@ inst/htmlwidgets/*.js linguist-generated
 inst/htmlwidgets/*.css linguist-generated
 R/deckgl-layers.R linguist-generated
 R/deckgl-validators.R linguist-generated
+R/globals.R linguist-generated
 
 # docs
-vignettes/* linguist-documentation
 man/* linguist-documentation
 
 # ejs
