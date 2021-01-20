@@ -27,7 +27,9 @@
 ## Installation
 
 ```r
-# install development version
+# install latest release
+remotes::install_github("anthonynorth/rdeck@*release")
+# or install development version
 remotes::install_github("anthonynorth/rdeck")
 ```
 
