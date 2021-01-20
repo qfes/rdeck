@@ -43,7 +43,7 @@ Some examples follow.
 These packages are required for the following examples. With exception of `RcppSimdJson`, these
 packages will be frequently used in creating `{rdeck}` maps.
 
-```{r packages}
+```{r packages, message=FALSE}
 library(rdeck)
 library(dplyr)
 library(sf)
@@ -52,11 +52,12 @@ library(viridis)
 library(RcppSimdJson)
 ```
 
-# Scatterplot layer
+# Loading example data
 
 In this example, we create a simple scatterplot layer using the [manhattan example data](https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/scatterplot/manhattan.json)
 from deck.gl. This data can be used directly from the URL, however this is not typical usage of
 `{rdeck}`, so first we'll load this data into a data frame.
+
 
 ```{r manhattan-data}
 url <- file.path(
@@ -78,7 +79,8 @@ be serialised.
 manhattan_data
 ```
 
-## Scatterplot
+# Scatterplot map
+
 Here we create a simple scatterplot map with a dark vector basemap and `cividis()` colour scale
 for the scatterplot layer.
 
@@ -131,7 +133,7 @@ rdeck(
   )
 ```
 
-## Grouping points
+# Grouping points
 
 In the following example, we group all points by gender so that we can highlight all points of
 a given gender at once.
@@ -193,7 +195,7 @@ rdeck(
   )
 ```
 
-## Scaling additional parameters
+# Scaling additional parameters
 
 We are able to scale many parameters on each layer. In the following example, we additionally scale
 the radius by the count of `gender`.
@@ -242,7 +244,7 @@ rdeck(
   )
 ```
 
-## High-level layers
+# High-level layers
 
 This example code is repetitive, copy-pasta that will inevitably result in maintenance problems
 (as well as increased developer effort).
