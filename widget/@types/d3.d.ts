@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import "d3-scale";
 
 declare module "d3-scale" {

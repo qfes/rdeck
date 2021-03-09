@@ -28,7 +28,7 @@ function templateData(propType) {
     ...propType,
     name: snakeCase(propType.name),
     min: propType.min ?? null,
-    max: propType.max ?? null
+    max: propType.max ?? null,
   };
 }
 

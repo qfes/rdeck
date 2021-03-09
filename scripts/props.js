@@ -23,7 +23,7 @@ const excludeProps = [
   "characterSet",
   /* aggregation functions */
   "gridAggregator",
-  "hexagonAggregator"
+  "hexagonAggregator",
 ];
 
 function getProps(Layer) {
@@ -50,7 +50,9 @@ function getProps(Layer) {
   // trips layer
   if (Layer === deck.TripsLayer) {
     delete Layer.propTypes.currentTime;
-    Layer.propTypes.getTimestamps.value = function(object) { return object.timestamps; }
+    Layer.propTypes.getTimestamps.value = function (object) {
+      return object.timestamps;
+    };
     Layer.propTypes = {
       ...Layer.propTypes,
       loopLength: { name: "loopLength", type: "number", value: 1800, min: 0 },
@@ -67,7 +69,7 @@ function getProps(Layer) {
     // include geojson props
     Layer.propTypes = {
       ...Layer.propTypes,
-      ...inherited
+      ...inherited,
     };
   }
 

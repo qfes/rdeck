@@ -10,7 +10,7 @@ const binding: HTMLWidgets.Binding = {
   factory(el, width, height) {
     // compute el dimensions if initially hidden
     if (width === 0 || height === 0) {
-      [width, height] = getElementDimensions(el)
+      [width, height] = getElementDimensions(el);
     }
     function render({ props, layers, theme }: RDeckProps) {
       ReactDOM.render(<App {...{ props, layers, theme, width, height }} />, el);

@@ -3,7 +3,7 @@ import type { Position } from "geojson";
 type GeometryInfo = {
   name: string;
   type: GeometryType;
-}
+};
 
 export function isDataFrame(data: LayerData): data is DataFrame {
   return data !== null && typeof data === "object" && "frame" in data;
@@ -57,7 +57,7 @@ function flatten(data: DataFrame, { name, type }: GeometryInfo): DataFrame {
     length: newFrame[name].length,
     geometry: {
       ...data.geometry,
-      [name]: type.replace("MULTI", "") as GeometryType
+      [name]: type.replace("MULTI", "") as GeometryType,
     },
     indices,
     frame: newFrame,
