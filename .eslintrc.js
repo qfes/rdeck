@@ -12,4 +12,7 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   plugins: ["@typescript-eslint"],
+  settings: {
+    polyfills: ["Object.fromEntries"],
+  },
 };
