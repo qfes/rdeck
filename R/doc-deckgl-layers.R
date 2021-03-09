@@ -637,7 +637,7 @@ NULL
 NULL
 
 deckgl_docs <- function(module, name) {
-  version <- "v8.3.14"
+  version <- "8.4-release"
   url <- file.path(
     "https://github.com/visgl/deck.gl/blob",
     version,

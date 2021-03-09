@@ -109,7 +109,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Contour Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.14/docs/api-reference/aggregation-layers/contour-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/aggregation-layers/contour-layer.md}
 
 Other aggregation-layers: 
 \code{\link{cpu_grid_layer}},

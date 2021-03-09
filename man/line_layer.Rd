@@ -114,7 +114,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Line Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.14/docs/api-reference/layers/line-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/layers/line-layer.md}
 
 Other core-layers: 
 \code{\link{arc_layer}},

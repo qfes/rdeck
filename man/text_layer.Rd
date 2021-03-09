@@ -164,7 +164,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Text Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.14/docs/api-reference/layers/text-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/layers/text-layer.md}
 
 Other core-layers: 
 \code{\link{arc_layer}},

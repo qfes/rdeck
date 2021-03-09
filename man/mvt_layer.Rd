@@ -205,7 +205,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 MVT Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/v8.3.14/docs/api-reference/geo-layers/mvt-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/geo-layers/mvt-layer.md}
 
 Other geo-layers: 
 \code{\link{great_circle_layer}},
