@@ -1,4 +1,5 @@
 inst/
 man/
-node_modules/
+docs/
 R/
+node_modules/
