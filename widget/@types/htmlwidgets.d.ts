@@ -1,5 +1,3 @@
-import { AppProps } from "../app";
-
 /* exposed global */
 export as namespace HTMLWidgets;
 
