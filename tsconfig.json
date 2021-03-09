@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2018",
     "module": "esnext",
-    "jsx": "react",
-    "noEmit": true,
+    "lib": ["dom", "es2019"],
+    "jsx": "react-jsx",
+    "sourceMap": true,
     "strict": true,
+    "moduleResolution": "node",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowUmdGlobalAccess": true
+    "allowUmdGlobalAccess": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

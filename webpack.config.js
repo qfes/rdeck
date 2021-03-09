@@ -1,7 +1,9 @@
 const { resolve } = require("path");
+const { DefinePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const { version } = require("./package.json");
 
 module.exports = (env, { mode }) => {
   process.env.NODE_ENV = mode;
@@ -16,7 +18,7 @@ module.exports = (env, { mode }) => {
       libraryTarget: "umd",
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".js", "jsx", ".json"],
+      extensions: [".ts", ".tsx", ".js", "jsx"],
       mainFields: ["esnext", "browser", "module", "main"],
     },
     module: {
@@ -24,7 +26,7 @@ module.exports = (env, { mode }) => {
         {
           test: /\.(ts|js)x?$/,
           exclude: /node_modules/,
-          loader: "babel-loader",
+          loader: "ts-loader",
         },
         {
           test: /\.css$/,
@@ -36,7 +38,7 @@ module.exports = (env, { mode }) => {
                 importLoaders: 1,
                 modules: {
                   exportGlobals: true,
-                  exportLocalsConvention: "camelCase"
+                  exportLocalsConvention: "camelCase",
                 },
               },
             },
@@ -45,8 +47,10 @@ module.exports = (env, { mode }) => {
         },
       ],
     },
-    // externals,
-    plugins: [new MiniCssExtractPlugin({ filename: "[name].css" })],
+    plugins: [
+      new DefinePlugin({ __VERSION__: JSON.stringify(version) }),
+      new MiniCssExtractPlugin({ filename: "[name].css" }),
+    ],
     devtool: mode === "development" && "inline-source-map",
     optimization: {
       minimize: mode === "production",
