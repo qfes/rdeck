@@ -1,8 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+declare module "deck.gl" {
+  // @ts-ignore
+  export * from "@danmarshall/deckgl-typings/deck.gl";
+}
+
 declare module "@deck.gl/core" {
   export { DeckProps, PickInfo, InitialViewStateProps } from "@deck.gl/core/lib/deck";
-  export { LayerProps } from "@deck.gl/core/lib/layer";
-
   import { LayerProps } from "@deck.gl/core/lib/layer";
+  export { LayerProps };
+
   import { DeckProps } from "@deck.gl/core/lib/deck";
   type deckProps = "id" | "width" | "height" | "controller" | "viewState";
 
@@ -35,10 +42,8 @@ declare module "@deck.gl/core" {
   }
 }
 
-declare module "@deck.gl/core/lib/deck" {
-  export interface PickInfo<D> {
-    picked: boolean | null;
-  }
+declare module "@deck.gl/geo-layers" {
+  export { TileLayerProps } from "@deck.gl/geo-layers/tile-layer/tile-layer";
 }
 
 declare module "@deck.gl/core/lib/layer" {

@@ -1,9 +1,10 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import "mapbox-gl";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { PickInfo, MapView } from "@deck.gl/core";
 import { DeckGL, DeckGLProps } from "@deck.gl/react";
-import { MapView, PickInfo } from "@deck.gl/core";
 import { StaticMap, StaticMapProps } from "react-map-gl";
 import { Layer } from "./layer";
-import Tooltip from "./tooltip";
+import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
 
 export type MapProps = {

@@ -1,7 +1,7 @@
 import * as deck from "./deck-bundle";
 import type { Layer as DeckLayer, LayerProps as DeckLayerProps } from "@deck.gl/core";
-import type { TileLayerProps } from "@deck.gl/geo-layers/tile-layer/tile-layer";
 import type { BitmapLayerProps } from "@deck.gl/layers";
+import type { TileLayerProps } from "@deck.gl/geo-layers";
 import type { FeatureCollection } from "geojson";
 
 import { parseColor } from "./color";

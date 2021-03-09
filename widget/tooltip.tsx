@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import type { PickInfo, ObjectInfo } from "@deck.gl/core";
 import styles from "./tooltip.css";
 
@@ -6,7 +6,7 @@ export interface TooltipProps {
   info: PickInfo<any> | null;
 }
 
-const Tooltip = ({ info }: TooltipProps) => {
+const _Tooltip = ({ info }: TooltipProps) => {
   if (info == null) return null;
 
   const { index, layer, x, y } = info;
@@ -34,7 +34,7 @@ const Tooltip = ({ info }: TooltipProps) => {
   );
 };
 
-export default memo(Tooltip);
+export const Tooltip = memo(_Tooltip);
 
 type Info = Omit<ObjectInfo<DataFrame, any>, "target">;
 type DataFn = (object: Record<string, any>, info: Info) => Record<string, any>;

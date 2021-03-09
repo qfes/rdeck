@@ -1,4 +1,3 @@
-import React from "react";
 import type { ScaleLinear, ScaleLogarithmic, ScalePower } from "d3-scale";
 import {
   AccessorScale,
@@ -129,7 +128,6 @@ function Category({ ticks, range, unknownTick, unknown }: AccessorScaleCategory<
         {colors.map((color, index) => (
           <rect key={index} width={20} height={14} y={1 + index * TICK_HEIGHT} fill={color} />
         ))}
-
       </svg>
       <Ticks ticks={_ticks} />
     </svg>
