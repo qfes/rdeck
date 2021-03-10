@@ -30,10 +30,12 @@ export function Map({ props, layers }: MapProps) {
     ...blendingParameters(blendingMode),
   };
 
-  const [_layers, setLayers] = useState(() => layers.map((layer) => layer.renderLayer()));
+  // layer animation loop
+  const [time, setTime] = useState(0);
   const animating = layers.filter((layer) => layer.type === "TripsLayer").length !== 0;
+  useAnimation(animating, (time) => setTime(time));
 
-  useAnimation(animating, (time) => setLayers(layers.map((layer) => layer.renderLayer(time))));
+  const _layers = layers.map((layer) => layer.renderLayer(time));
 
   return (
     <Fragment>
