@@ -11,20 +11,20 @@ const binding: HTMLWidgets.Binding = {
     if (width === 0 || height === 0) {
       [width, height] = getElementDimensions(el);
     }
-    function render({ props, layers, theme }: RDeckProps) {
-      ReactDOM.render(<App {...{ props, layers, theme, width, height }} />, el);
+    function render(props: RDeckProps) {
+      ReactDOM.render(<App {...{ ...props, width, height }} />, el);
     }
 
     return {
-      renderValue({ props, layers, theme }) {
-        render({ props, layers, theme });
+      renderValue({ props, layers, theme, lazyLoad }) {
+        render({ props, layers, theme, lazyLoad });
 
         /* TODO: move to app.tsx */
         if (HTMLWidgets.shinyMode) {
           /* update layer */
           Shiny.addCustomMessageHandler(`${el.id}:layer`, (layer: LayerProps) => {
             layers = mergeLayers(layers, layer);
-            render({ props, layers, theme });
+            render({ props, layers, theme, lazyLoad });
           });
 
           /* update map */
@@ -32,7 +32,7 @@ const binding: HTMLWidgets.Binding = {
             props = { ...props, ...data.props };
             theme = data.theme;
 
-            render({ props, layers, theme });
+            render({ props, layers, theme, lazyLoad });
           });
         }
       },

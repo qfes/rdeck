@@ -15,6 +15,7 @@ rdeck_proxy(
   picking_radius = NULL,
   use_device_pixels = NULL,
   blending_mode = NULL,
+  lazy_load = NULL,
   ...
 )
 }
@@ -60,6 +61,10 @@ dot density on dark maps.
 \item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.
 }}
+
+\item{lazy_load}{<\code{boolean}> If \code{TRUE}, maps will be rendered when they are scrolled into
+view and destroyed when they are scrolled out of view. If \code{FALSE}, maps will be rendered
+when the page loads.}
 
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.

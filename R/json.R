@@ -24,8 +24,6 @@ to_json.list <- function(obj) {
   obj_json
 }
 
-to_json.rdeck <- to_json.list
-
 camel_case <- function(obj) {
   obj_names <- names(obj)
   names(obj) <- to_camel_case(names(obj))
@@ -46,6 +44,8 @@ to_json.layer <- function(obj) {
   camel_case(obj)
 }
 
+to_json.rdeck <- to_json.list
+to_json.rdeck_data <- camel_case
 to_json.rdeck_props <- camel_case
 to_json.view_state <- camel_case
 to_json.bbox <- function(obj) as.vector(obj)

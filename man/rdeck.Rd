@@ -13,6 +13,7 @@ rdeck(
   picking_radius = 0,
   use_device_pixels = TRUE,
   blending_mode = "normal",
+  lazy_load = FALSE,
   width = NULL,
   height = NULL,
   elementId = NULL,
@@ -57,6 +58,10 @@ dot density on dark maps.
 \item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.
 }}
+
+\item{lazy_load}{<\code{boolean}> If \code{TRUE}, maps will be rendered when they are scrolled into
+view and destroyed when they are scrolled out of view. If \code{FALSE}, maps will be rendered
+when the page loads.}
 
 \item{width}{<\code{number}> The width of the map canvas.}
 

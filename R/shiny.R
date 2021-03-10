@@ -121,6 +121,7 @@ rdeck_proxy <- function(id,
                         picking_radius = NULL,
                         use_device_pixels = NULL,
                         blending_mode = NULL,
+                        lazy_load = NULL,
                         ...) {
   assert_is_string(id)
   assert_type(session, "ShinySession")
@@ -146,7 +147,15 @@ rdeck_proxy <- function(id,
     discard_null()
 
   if (length(props) != 0) {
-    send_msg(rdeck, "deck", to_json(list(theme = theme, props = props)))
+    data <- structure(
+      list(
+        props = props,
+        theme = theme,
+        lazy_load = lazy_load
+      ),
+      class = "rdeck_data"
+    )
+    send_msg(rdeck, "deck", to_json(data))
   }
 
   rdeck

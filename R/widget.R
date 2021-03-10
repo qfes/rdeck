@@ -24,6 +24,9 @@
 #' buffer size. A value less than `1` uses resolution smaller than `CSS pixels`, improving
 #' rendering performance at the expense of image quality; a value greater than `1` improves
 #' image quality at the expense of rendering performance.
+#' @param lazy_load <`boolean`> If `TRUE`, maps will be rendered when they are scrolled into
+#' view and destroyed when they are scrolled out of view. If `FALSE`, maps will be rendered
+#' when the page loads.
 #' @param width <`number`> The width of the map canvas.
 #' @param height <`number`> The height of the map canvas.
 #' @param elementId <`string`> The map element id. Not used in shiny applications.
@@ -41,6 +44,7 @@ rdeck <- function(map_style = mapbox_dark(),
                   picking_radius = 0,
                   use_device_pixels = TRUE,
                   blending_mode = "normal",
+                  lazy_load = FALSE,
                   width = NULL,
                   height = NULL,
                   elementId = NULL,
@@ -61,10 +65,14 @@ rdeck <- function(map_style = mapbox_dark(),
     blending_mode = blending_mode
   )
 
-  x <- list(
-    props = props,
-    layers = list(),
-    theme = theme
+  x <- structure(
+    list(
+      props = props,
+      layers = list(),
+      theme = theme,
+      lazy_load = lazy_load
+    ),
+    class = "rdeck_data"
   )
 
   # create widget
