@@ -12,31 +12,37 @@ export const binding: HTMLWidgets.Binding = {
       [width, height] = getElementDimensions(el);
     }
 
-    return new RDeckWidget(el, width, height);
+    return new Widget(el, width, height);
   },
 };
 
 type LayersVisibility = Record<string, boolean>;
 
-class RDeckWidget implements HTMLWidgets.Widget {
+export class Widget implements HTMLWidgets.Widget {
+  #el: HTMLElement;
+  #width: number;
+  #height: number;
   props: DeckProps = { blendingMode: "normal" };
   layers: LayerProps[] = [];
   theme: "kepler" | "light" = "kepler";
   lazyLoad: boolean = false;
 
-  constructor(private readonly el: HTMLElement, private width: number, private height: number) {
+  constructor(el: HTMLElement, width: number, height: number) {
+    this.#el = el;
+    this.#width = width;
+    this.#height = height;
     if (HTMLWidgets.shinyMode) {
       // update layers
       Shiny.addCustomMessageHandler(`${el.id}:layer`, (layer: LayerProps) => {
         const _layer = this.layers.find((x) => x.id === layer.id);
         if (!_layer) {
           this.layers = [...this.layers, layer];
-          return this.render();
+          return this.#render();
         }
 
         const merged = { ..._layer, ...layer, data: layer.data ?? _layer.data };
         this.layers = this.layers.map((x) => (x === _layer ? merged : x));
-        this.render();
+        this.#render();
       });
 
       // update map
@@ -44,18 +50,17 @@ class RDeckWidget implements HTMLWidgets.Widget {
         this.props = { ...this.props, ...props };
         this.theme = theme ?? this.theme;
         this.lazyLoad = lazyLoad ?? this.lazyLoad;
-        this.render();
+        this.#render();
       });
     }
   }
 
   renderValue({ props, layers, theme, lazyLoad }: AppProps) {
-    this.props = Object.freeze(props);
-    // @ts-ignore
-    this.layers = Object.freeze(layers);
+    this.props = props;
+    this.layers = layers;
     this.theme = theme;
     this.lazyLoad = lazyLoad;
-    this.render();
+    this.#render();
   }
 
   // deck.gl handles resize automatically
@@ -67,13 +72,35 @@ class RDeckWidget implements HTMLWidgets.Widget {
    */
   setLayersVisibility(visibility: LayersVisibility) {
     this.layers = this.layers.map((x) => ({ ...x, visible: visibility[x.name] ?? true }));
-    this.render();
+    this.#render();
   }
 
-  private render() {
-    const { props, layers, theme, lazyLoad, width, height } = this;
-    ReactDOM.render(<App {...{ props, layers, theme, lazyLoad, width, height }} />, this.el);
-  }
+  #render = () => {
+    const { props, layers, theme, lazyLoad } = this;
+    const width = this.#width;
+    const height = this.#height;
+    ReactDOM.render(<App {...{ props, layers, theme, lazyLoad, width, height }} />, this.#el);
+  };
+}
+
+type WidgetContainer = HTMLElement & { htmlwidget_data_init_result: Widget };
+
+/**
+ * Get an rdeck widget instance
+ * @param id the widget id
+ * @returns {Widget}
+ */
+export function getWidget(id: string) {
+  const element = document.getElementById(id) as WidgetContainer;
+  return element?.htmlwidget_data_init_result;
+}
+
+/**
+ * Get all rdeck widget instances
+ */
+export function getWidgets() {
+  const elements = [...document.querySelectorAll(".rdeck.html-widget")] as WidgetContainer[];
+  return elements.map((x) => x.htmlwidget_data_init_result).filter((x) => x instanceof Widget);
 }
 
 /* register widget */
