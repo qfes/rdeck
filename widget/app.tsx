@@ -8,8 +8,9 @@ import { Map } from "./map";
 import { Legend } from "./legend";
 import styles from "./app.css";
 
-type DeckProps = DeckGLProps &
+export type DeckProps = DeckGLProps &
   StaticMapProps & { initialBounds?: Bounds; blendingMode: BlendingMode };
+
 export interface AppProps {
   props: DeckProps;
   layers: LayerProps[];
