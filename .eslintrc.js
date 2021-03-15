@@ -15,4 +15,7 @@ module.exports = {
   settings: {
     polyfills: ["Object.fromEntries"],
   },
+  rules: {
+    "prettier/prettier": "warn"
+  }
 };
