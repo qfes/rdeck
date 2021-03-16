@@ -17,8 +17,9 @@ export const binding: HTMLWidgets.Binding = {
 };
 
 type LayersVisibility = Record<string, boolean>;
+type WidgetProps = Pick<AppProps, "props" | "layers" | "theme" | "lazyLoad">;
 
-export class Widget implements HTMLWidgets.Widget {
+export class Widget implements HTMLWidgets.Widget, WidgetProps {
   #el: HTMLElement;
   #width: number;
   #height: number;
@@ -55,7 +56,7 @@ export class Widget implements HTMLWidgets.Widget {
     }
   }
 
-  renderValue({ props, layers, theme, lazyLoad }: AppProps) {
+  renderValue({ props, layers, theme, lazyLoad }: WidgetProps) {
     this.props = props;
     this.layers = layers;
     this.theme = theme;
@@ -67,10 +68,17 @@ export class Widget implements HTMLWidgets.Widget {
   resize(width: number, height: number) {}
 
   /**
+   * Get widget id
+   */
+  get id() {
+    return this.#el.id;
+  }
+
+  /**
    * Set layers' visibility. Layers not included in visibility are unaltered.
    * @param visibility the layers visibility
    */
-  setLayersVisibility(visibility: LayersVisibility) {
+  setLayerVisibility(visibility: LayersVisibility) {
     this.layers = this.layers.map((x) =>
       x.name in visibility ? { ...x, visible: visibility[x.name] } : x
     );
@@ -89,11 +97,11 @@ export class Widget implements HTMLWidgets.Widget {
 type WidgetContainer = HTMLElement & { htmlwidget_data_init_result: Widget };
 
 /**
- * Get an rdeck widget instance
+ * Get an rdeck widget instance by id
  * @param id the widget id
  * @returns {Widget}
  */
-export function getWidget(id: string) {
+export function getWidgetById(id: string) {
   const element = document.getElementById(id) as WidgetContainer;
   return element?.htmlwidget_data_init_result;
 }

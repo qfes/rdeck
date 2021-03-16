@@ -29,7 +29,7 @@
 #' when the page loads.
 #' @param width <`number`> The width of the map canvas.
 #' @param height <`number`> The height of the map canvas.
-#' @param elementId <`string`> The map element id. Not used in shiny applications.
+#' @param id <`string`> The map element id. Not used in shiny applications.
 #' @seealso <https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/core/deck.md>
 #'
 #' @export
@@ -47,7 +47,7 @@ rdeck <- function(map_style = mapbox_dark(),
                   lazy_load = FALSE,
                   width = NULL,
                   height = NULL,
-                  elementId = NULL,
+                  id = NULL,
                   ...) {
   check_dots_access_token(...)
   dots <- rlang::dots_list(...)
@@ -87,7 +87,7 @@ rdeck <- function(map_style = mapbox_dark(),
       padding = 0,
       browser.fill = TRUE,
     ),
-    elementId = elementId,
+    elementId = id,
     preRenderHook = function(rdeck) to_json(rdeck)
   )
 }
