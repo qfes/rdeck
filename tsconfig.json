@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es2018",
     "module": "esnext",
-    "lib": ["dom", "es2018", "es2019.Object"],
+    "lib": ["dom", "dom.iterable", "es2018", "es2019.Object"],
     "jsx": "react-jsx",
     "sourceMap": true,
     "strict": true,
