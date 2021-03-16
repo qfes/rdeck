@@ -67,11 +67,14 @@ export class Widget implements HTMLWidgets.Widget {
   resize(width: number, height: number) {}
 
   /**
-   * Set layers' visibility
-   * @param visibility the new layer visibility
+   * Set layers' visibility. Layers not included in visibility are unaltered.
+   * @param visibility the layers visibility
    */
   setLayersVisibility(visibility: LayersVisibility) {
-    this.layers = this.layers.map((x) => ({ ...x, visible: visibility[x.name] ?? true }));
+    this.layers = this.layers.map((x) =>
+      x.name in visibility ? { ...x, visible: visibility[x.name] } : x
+    );
+
     this.#render();
   }
 
