@@ -37,31 +37,36 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
       Shiny.addCustomMessageHandler(`${el.id}:layer`, (layer: LayerProps) => {
         const _layer = this.layers.find((x) => x.id === layer.id);
         if (!_layer) {
-          this.layers = [...this.layers, layer];
-          return this.#render();
+          return this.renderValue({ layers: [...this.layers, layer] });
         }
 
         const merged = { ..._layer, ...layer, data: layer.data ?? _layer.data };
-        this.layers = this.layers.map((x) => (x === _layer ? merged : x));
-        this.#render();
+        const layers = this.layers.map((x) => (x === _layer ? merged : x));
+        this.renderValue({ layers });
       });
 
       // update map
       Shiny.addCustomMessageHandler(`${el.id}:deck`, ({ props, theme, lazyLoad }: RDeckProps) => {
-        this.props = { ...this.props, ...props };
-        this.theme = theme ?? this.theme;
-        this.lazyLoad = lazyLoad ?? this.lazyLoad;
-        this.#render();
+        this.renderValue({
+          props: { ...this.props, ...props },
+          theme: theme,
+          lazyLoad: lazyLoad,
+        });
       });
     }
   }
 
-  renderValue({ props, layers, theme, lazyLoad }: WidgetProps) {
-    this.props = props;
-    this.layers = layers;
-    this.theme = theme;
-    this.lazyLoad = lazyLoad;
-    this.#render();
+  renderValue({ props, layers, theme, lazyLoad }: Partial<WidgetProps>) {
+    // merge in new props with existing state
+    const _props = {
+      props: props ?? this.props,
+      layers: layers ?? this.layers,
+      theme: theme ?? this.theme,
+      lazyLoad: lazyLoad ?? this.lazyLoad,
+    };
+    Object.assign(this, _props);
+
+    ReactDOM.render(<App {..._props} width={this.#width} height={this.#height} />, this.#el);
   }
 
   // deck.gl handles resize automatically
@@ -79,19 +84,12 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
    * @param visibility the layers visibility
    */
   setLayerVisibility(visibility: LayersVisibility) {
-    this.layers = this.layers.map((x) =>
+    const layers = this.layers.map((x) =>
       x.name in visibility ? { ...x, visible: visibility[x.name] } : x
     );
 
-    this.#render();
+    this.renderValue({ layers });
   }
-
-  #render = () => {
-    const { props, layers, theme, lazyLoad } = this;
-    const width = this.#width;
-    const height = this.#height;
-    ReactDOM.render(<App {...{ props, layers, theme, lazyLoad, width, height }} />, this.#el);
-  };
 }
 
 type WidgetContainer = HTMLElement & { htmlwidget_data_init_result: Widget };
