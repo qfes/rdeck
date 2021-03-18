@@ -4,7 +4,7 @@
   --muted-color: hsl(218, 11%, 47%);
   --hover-color: hsl(219, 12%, 77%);
   --background-color: hsl(225, 14%, 16%);
-  --hover-background-color: hsl(225, 14%, 22%);
+  --hover-background-color: hsl(225, 14%, 20%);
 }
 
 :global(.light) {
