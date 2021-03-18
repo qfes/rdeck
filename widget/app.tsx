@@ -45,6 +45,9 @@ export function App({
         <Map props={{ ...deckglProps, initialViewState: _initialViewState }} layers={_layers} />
       )}
       <Legend layers={_layers.map((layer) => layer.renderLegend()).reverse()} />
+      <div className={styles.controlContainer} style={{ top: 10, right: 10 }}>
+        <Legend layers={_layers.map((layer) => layer.renderLegend()).reverse()} />
+      </div>
     </div>
   );
 }
