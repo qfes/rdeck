@@ -1,34 +1,19 @@
+@import "theme.css";
+
 .legend {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  @mixin shadow;
+  @mixin control;
   max-height: calc(100% - 20px);
   overflow-y: auto;
   width: 180px;
-  user-select: none;
-
-  border-radius: 1px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  border-radius: 1px;
-
-  color: var(--color);
-  background-color: var(--background-color);
 }
 
 :global(.kepler) .legend {
-  --focus-color: hsl(0, 0%, 94%);
-  --color: hsl(219, 12%, 67%);
-  --muted-color: hsl(218, 11%, 47%);
-  --background-color: hsl(225, 14%, 16%);
-  --border-color: hsl(217, 13%, 26%);
+  --separator-color: hsl(217, 13%, 26%);
 }
 
 :global(.light) .legend {
-  --focus-color: hsl(0, 0%, 3%);
-  --color: hsl(0, 2%, 15%);
-  --muted-color: hsl(0, 2%, 52%);
-  --background-color: hsl(0, 0%, 98%);
-  --border-color: hsl(5, 0%, 85%);
+  --separator-color: hsl(5, 0%, 85%);
 }
 
 .layer {
@@ -36,11 +21,10 @@
 }
 
 .layer + .layer {
-  border-top: 1px var(--border-color) solid;
+  border-top: 1px var(--separator-color) solid;
 }
 
 .layer-name {
-  font-size: 12px;
   margin-bottom: 2px;
   color: var(--focus-color);
 }

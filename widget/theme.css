@@ -1,0 +1,28 @@
+:global(.kepler) {
+  --focus-color: hsl(0, 0%, 94%);
+  --color: hsl(219, 12%, 67%);
+  --muted-color: hsl(218, 11%, 47%);
+  --hover-color: hsl(219, 12%, 77%);
+  --background-color: hsl(225, 14%, 16%);
+  --hover-background-color: hsl(225, 14%, 22%);
+}
+
+:global(.light) {
+  --focus-color: hsl(0, 0%, 10%);
+  --color: hsl(0, 2%, 20%);
+  --muted-color: hsl(0, 2%, 50%);
+  --background-color: hsl(0, 0%, 98%);
+  --hover-background-color: hsl(0, 0%, 93%);
+}
+
+@define-mixin shadow {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@define-mixin control {
+  user-select: none;
+  border-radius: 1px;
+  font-size: 12px;
+  color: var(--color);
+  background-color: var(--background-color);
+}
