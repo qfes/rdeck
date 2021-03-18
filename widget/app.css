@@ -11,3 +11,11 @@
 :global(.rdeck) :is(*, *:before, *:after) {
   box-sizing: inherit;
 }
+
+:global(.rdeck.kepler) {
+  background-color: hsl(30, 2%, 20%);
+}
+
+:global(.rdeck.light) {
+  background-color: hsl(60, 10%, 96%);
+}
