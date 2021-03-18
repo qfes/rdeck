@@ -1,6 +1,8 @@
 module.exports = {
   plugins: {
-    "postcss-preset-env": {},
+    "postcss-import": {},
     "postcss-import-url": { modernBrowser: true },
+    "postcss-mixins": {},
+    "postcss-preset-env": {},
   },
 };
