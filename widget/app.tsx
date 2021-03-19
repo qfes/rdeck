@@ -41,7 +41,7 @@ export function App({
   // visibility map
   const visibility: Record<string, boolean> = {};
   if (layerSelector) {
-    for (const layer of layers) {
+    for (const layer of layers.reverse()) {
       if (layer.visibilityToggle) {
         visibility[layer.name] ||= layer.visible ?? true;
       }
