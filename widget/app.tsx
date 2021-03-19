@@ -6,6 +6,7 @@ import { StaticMapProps, WebMercatorViewport } from "react-map-gl";
 import { Layer, LayerProps } from "./layer";
 import { Map } from "./map";
 import { Legend } from "./legend";
+import { LayerSelector } from "./map-controls";
 import styles from "./app.css";
 
 export type DeckProps = DeckGLProps &
@@ -16,6 +17,8 @@ export interface AppProps {
   layers: LayerProps[];
   theme: "kepler" | "light";
   lazyLoad: boolean;
+  layerSelector: boolean;
+  onLayerVisibilityChange: (visibility: Record<string, boolean>) => void;
   width: number;
   height: number;
 }
@@ -23,8 +26,10 @@ export interface AppProps {
 export function App({
   props,
   layers,
-  theme = "kepler",
-  lazyLoad = false,
+  theme,
+  lazyLoad,
+  layerSelector,
+  onLayerVisibilityChange,
   width,
   height,
 }: AppProps) {
@@ -33,6 +38,15 @@ export function App({
   // fit bounds
   const _initialViewState = useBounds(width, height, initialBounds, initialViewState);
   const _layers = layers.map(Layer.create);
+  // visibility map
+  const visibility: Record<string, boolean> = {};
+  if (layerSelector) {
+    for (const layer of layers) {
+      if (layer.visibilityToggle) {
+        visibility[layer.name] ||= layer.visible ?? true;
+      }
+    }
+  }
 
   const container = useRef<HTMLDivElement>(null);
   const inViewport = useInViewport(container, lazyLoad);
@@ -41,6 +55,11 @@ export function App({
 
   return (
     <div ref={container} className={className}>
+      <div className={styles.controlContainer} style={{ top: 20, left: 20 }}>
+        {layerSelector && (
+          <LayerSelector visibility={visibility} onChange={onLayerVisibilityChange} />
+        )}
+      </div>
       {shouldRender && (
         <Map props={{ ...deckglProps, initialViewState: _initialViewState }} layers={_layers} />
       )}

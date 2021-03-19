@@ -26,6 +26,7 @@ add_contour_layer(
   contours = c(list(threshold = 1)),
   z_offset = 0.005,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

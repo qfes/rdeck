@@ -27,6 +27,7 @@ add_screen_grid_layer(
   gpu_aggregation = TRUE,
   aggregation = "SUM",
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

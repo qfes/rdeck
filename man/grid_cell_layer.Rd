@@ -41,6 +41,7 @@ add_grid_cell_layer(
   material = TRUE,
   cell_size = 1000,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

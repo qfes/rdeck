@@ -41,6 +41,7 @@ add_hexagon_layer(
   get_position = position,
   material = TRUE,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

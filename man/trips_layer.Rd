@@ -33,6 +33,7 @@ add_trips_layer(
   loop_length = 1800,
   animation_speed = 30,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

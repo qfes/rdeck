@@ -1,25 +1,38 @@
 :global(.kepler) {
   --focus-color: hsl(0, 0%, 94%);
-  --color: hsl(219, 12%, 67%);
-  --muted-color: hsl(218, 11%, 47%);
-  --hover-color: hsl(219, 12%, 77%);
-  --background-color: hsl(225, 14%, 16%);
-  --hover-background-color: hsl(225, 14%, 20%);
+  --color: hsl(218, 8%, 70%);
+  --muted-color: hsl(218, 8%, 50%);
+  --background-color: hsl(225, 12%, 18%);
+  --hover-color: hsl(218, 8%, 90%);
+  --hover-background-color: hsl(225, 12%, 24%);
+  --active-color: hsl(218, 8%, 94%);
+  --active-background-color: hsl(225, 12%, 28%);
+  --hover-active-color: hsl(218, 8%, 94%);
+  --hover-active-background-color: hsl(225, 12%, 32%);
 }
 
 :global(.light) {
   --focus-color: hsl(0, 0%, 10%);
-  --color: hsl(0, 2%, 20%);
+  --color: hsl(0, 2%, 30%);
   --muted-color: hsl(0, 2%, 50%);
   --background-color: hsl(0, 0%, 98%);
-  --hover-background-color: hsl(0, 0%, 93%);
+  --hover-color: hsl(0, 2%, 15%);
+  --hover-background-color: hsl(0, 0%, 92%);
+  --active-color: hsl(0, 2%, 10%);
+  --active-background-color: hsl(0, 0%, 82%);
+  --hover-active-color: hsl(0, 2%, 10%);
+  --hover-active-background-color: hsl(0, 0%, 75%);
 }
 
 @define-mixin shadow {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-@define-mixin control {
+@define-mixin transition {
+  transition: all 100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@define-mixin map-widget {
   user-select: none;
   border-radius: 1px;
   font-size: 12px;

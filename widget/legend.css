@@ -2,7 +2,7 @@
 
 .legend {
   @mixin shadow;
-  @mixin control;
+  @mixin map-widget;
   max-height: calc(100% - 20px);
   overflow-y: auto;
   width: 180px;

@@ -24,6 +24,9 @@
 #' buffer size. A value less than `1` uses resolution smaller than `CSS pixels`, improving
 #' rendering performance at the expense of image quality; a value greater than `1` improves
 #' image quality at the expense of rendering performance.
+#' @param layer_selector <`boolean`> If `TRUE`, the layer selector control will be enabled
+#' and layers with `visibility_toggle = TRUE` may be toggled. If `FALSE`, the layer selector control
+#' won't be rendered.
 #' @param lazy_load <`boolean`> If `TRUE`, maps will be rendered when they are scrolled into
 #' view and destroyed when they are scrolled out of view. If `FALSE`, maps will be rendered
 #' when the page loads.
@@ -44,6 +47,7 @@ rdeck <- function(map_style = mapbox_dark(),
                   picking_radius = 0,
                   use_device_pixels = TRUE,
                   blending_mode = "normal",
+                  layer_selector = FALSE,
                   lazy_load = FALSE,
                   width = NULL,
                   height = NULL,
@@ -70,6 +74,7 @@ rdeck <- function(map_style = mapbox_dark(),
       props = props,
       layers = list(),
       theme = theme,
+      layer_selector = layer_selector,
       lazy_load = lazy_load
     ),
     class = "rdeck_data"

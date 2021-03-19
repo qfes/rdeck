@@ -39,6 +39,7 @@ add_text_layer(
   get_alignment_baseline = "center",
   get_pixel_offset = c(0, 0),
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

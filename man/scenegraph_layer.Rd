@@ -31,6 +31,7 @@ add_scenegraph_layer(
   get_translation = c(0, 0, 0),
   get_transform_matrix = NULL,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

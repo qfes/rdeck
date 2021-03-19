@@ -26,6 +26,7 @@ add_heatmap_layer(
   threshold = 0.05,
   color_domain = NULL,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

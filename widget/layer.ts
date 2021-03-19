@@ -19,6 +19,7 @@ export interface LayerProps extends Omit<DeckLayerProps<any>, "data"> {
   name: string;
   data: LayerData | null;
   blendingMode: BlendingMode;
+  visibilityToggle: boolean;
   tooltip: TooltipInfo | null;
 }
 

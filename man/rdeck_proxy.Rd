@@ -15,6 +15,7 @@ rdeck_proxy(
   picking_radius = NULL,
   use_device_pixels = NULL,
   blending_mode = NULL,
+  layer_selector = NULL,
   lazy_load = NULL,
   ...
 )
@@ -61,6 +62,10 @@ dot density on dark maps.
 \item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.
 }}
+
+\item{layer_selector}{<\code{boolean}> If \code{TRUE}, the layer selector control will be enabled
+and layers with \code{visibility_toggle = TRUE} may be toggled. If \code{FALSE}, the layer selector control
+won't be rendered.}
 
 \item{lazy_load}{<\code{boolean}> If \code{TRUE}, maps will be rendered when they are scrolled into
 view and destroyed when they are scrolled out of view. If \code{FALSE}, maps will be rendered
