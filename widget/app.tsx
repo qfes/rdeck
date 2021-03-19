@@ -39,14 +39,14 @@ export function App({
   const _initialViewState = useBounds(width, height, initialBounds, initialViewState);
   const _layers = layers.map(Layer.create);
   // visibility map
-  const visibility: Record<string, boolean> = {};
-  if (layerSelector) {
-    for (const layer of layers.reverse()) {
-      if (layer.visibilityToggle) {
-        visibility[layer.name] ||= layer.visible ?? true;
-      }
-    }
-  }
+  type Visibility = Record<string, boolean>;
+  const visibility = layers
+    .filter((x) => x.visibilityToggle)
+    .reverse()
+    .reduce<Visibility>((visibility, layer) => {
+      visibility[layer.name] ||= layer.visible ?? true;
+      return visibility;
+    }, {});
 
   const container = useRef<HTMLDivElement>(null);
   const inViewport = useInViewport(container, lazyLoad);
@@ -64,7 +64,12 @@ export function App({
         <Map props={{ ...deckglProps, initialViewState: _initialViewState }} layers={_layers} />
       )}
       <div className={styles.controlContainer} style={{ top: 10, right: 10 }}>
-        <Legend layers={_layers.map((layer) => layer.renderLegend()).reverse()} />
+        <Legend
+          layers={_layers
+            .filter((layer) => layer.props.visible)
+            .map((layer) => layer.renderLegend())
+            .reverse()}
+        />
       </div>
     </div>
   );
