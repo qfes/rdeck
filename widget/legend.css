@@ -8,14 +8,6 @@
   width: 180px;
 }
 
-:global(.kepler) .legend {
-  --separator-color: hsl(217, 13%, 26%);
-}
-
-:global(.light) .legend {
-  --separator-color: hsl(5, 0%, 85%);
-}
-
 .layer {
   padding: 10px 12px;
 }

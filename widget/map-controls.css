@@ -1,40 +1,63 @@
 @import "theme.css";
 
-.button {
+.control-button {
+  @mixin button;
+  @mixin map-widget;
   @mixin shadow;
   @mixin transition;
-  @mixin map-widget;
-  border: 0;
-  margin: 0;
-  outline: 0;
   padding: 5px;
-  cursor: pointer;
-  display: inline-flex;
-  position: relative;
-  align-items: center;
-
 }
 
-.button:hover {
+.control-button:hover {
   color: var(--hover-color);
   background-color: var(--hover-background-color);
 }
 
 svg.icon {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 
-.selector-panel {
+.panel {
   @mixin shadow;
   @mixin map-widget;
-  padding-top: 8px;
-  padding-bottom: 8px;
   margin-left: -7px;
-  max-width: 212px;
+  max-width: 224px;
   font-size: 12px;
 }
 
-.visibility-toggle {
+.panel-header {
+  @mixin transition;
+  color: var(--focus-color);
+}
+
+:global(.kepler) .panel-header {
+  background: var(--focus-background-color);
+}
+
+:global(.light) .panel-header {
+  box-shadow: inset 0 -1px 0 var(--separator-color);
+}
+
+.panel-header:hover {
+  background: var(--hover-focus-background-color);
+}
+
+.panel-button {
+  @mixin button;
+  padding: 5px 12px;
+  width: 100%;
+}
+
+.panel-button > .icon {
+  margin-right: 12px;
+}
+
+.panel-content {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.toggle {
   @mixin transition;
   padding: 2px 12px;
   cursor: pointer;
@@ -42,7 +65,7 @@ svg.icon {
   align-items: center;
 }
 
-.visibility-toggle:hover {
+.toggle:hover {
   color: var(--hover-color);
   background-color: var(--hover-background-color);
 }
@@ -51,19 +74,11 @@ svg.icon {
   color: var(--muted-color);
 }
 
-.open {
-  color: var(--active-color);
-  background-color: var(--active-background-color);
-}
-
-.open:hover {
-  color: var(--hover-active-color);
-  background-color: var(--hover-active-background-color);
-}
-
-.visibility-toggle > .label {
+.toggle > .label {
+  @mixin ellipsis;
   margin-left: 12px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+}
+
+.toggles-container > .toggle {
+  padding-left: 24px;
 }

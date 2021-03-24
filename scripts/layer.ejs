@@ -18,6 +18,7 @@ add_<%- name -%> <- function(rdeck,
                             ...,
                             id = NULL,
                             name = "<%- type -%>",
+                            group_name = NULL,
                             <% for (const p of props) { -%>
                               <%- p.name -%> = <%- p.value ?? "NULL" -%>,
                             <% } -%>
@@ -39,6 +40,7 @@ add_<%- name -%> <- function(rdeck,
         ...,
         id = id %||% uuid::UUIDgenerate(),
         name = name,
+        group_name = group_name,
         <% for (const p of props) { -%>
             <%
               const value = p.type === "accessor"

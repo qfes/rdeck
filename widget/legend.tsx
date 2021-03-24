@@ -8,6 +8,7 @@ import {
   isContinuousScale,
   isDiscreteScale,
 } from "./scale";
+import type { LegendInfo } from "./layer";
 import { rgba } from "./color";
 import { words } from "./util";
 import styles from "./legend.css";
@@ -16,7 +17,7 @@ const TICK_HEIGHT = 16;
 const TICK_FONT_SIZE = 10;
 
 export type LegendProps = {
-  layers: LegendLayerProps[];
+  layers: LegendInfo[];
 };
 
 export function Legend({ layers }: LegendProps) {
@@ -31,13 +32,7 @@ export function Legend({ layers }: LegendProps) {
   );
 }
 
-export type LegendLayerProps = {
-  id: string;
-  name: string;
-  scales: AccessorScale<number | Color>[];
-};
-
-function Layer({ name, scales }: LegendLayerProps) {
+function Layer({ name, scales }: LegendInfo) {
   if (scales.length === 0) return null;
 
   return (

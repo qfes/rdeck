@@ -103,12 +103,18 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
    * Set layers' visibility. Layers not included in visibility are unaltered.
    * @param visibility the layers visibility
    */
-  setLayerVisibility(visibility: LayersVisibility) {
-    const layers = this.layers.map((x) =>
-      x.visibilityToggle && x.name in visibility ? { ...x, visible: visibility[x.name] } : x
-    );
+  setLayerVisibility(layers: Pick<LayerProps, "name" | "groupName" | "visible">[]) {
+    const _layers = this.layers.map((layer) => {
+      if (!layer.visibilityToggle) return layer;
 
-    this.renderValue({ layers });
+      const _layer = layers.find(
+        (x) =>
+          x.name === layer.name && x.groupName === layer.groupName && x.visible !== layer.visible
+      );
+      return _layer ? { ...layer, visible: _layer.visible } : layer;
+    });
+
+    this.renderValue({ layers: _layers });
   }
 }
 
