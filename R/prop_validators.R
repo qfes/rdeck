@@ -27,6 +27,27 @@ assert_geom <- function(layer, name, sfc_type) {
   }
 }
 
+# validate id
+validate_id <- function(layer) {
+  assert_is_string(layer$id, "id")
+}
+
+# validate name
+validate_name <- function(layer) {
+  name <- layer$name
+  if (!is.null(name)) {
+    assert_is_string(name)
+  }
+}
+
+# validate group_name
+validate_group_name <- function(layer) {
+  group_name <- layer$group_name
+  if (!is.null(group_name)) {
+    assert_is_string(group_name)
+  }
+}
+
 # validate get_path
 validate_get_path.layer <- function(layer) {
   assert_geom(layer, "get_path", c("sfc_LINESTRING", "sfc_MULTILINESTRING"))
@@ -241,4 +262,11 @@ validate_get_alignment_baseline.layer <- function(layer) {
 validate_blending_mode <- function(layer) {
   assert_is_string(layer$blending_mode, "blending_mode")
   assert_in(layer$blending_mode, c("normal", "additive", "subtractive"), "blending_mode")
+}
+
+# validate visibility_toggle
+validate_visibility_toggle <- function(layer) {
+  visibility_toggle <- layer$visibility_toggle
+  assert_type(visibility_toggle, "logical")
+  assert_scalar(visibility_toggle)
 }

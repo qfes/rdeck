@@ -52,13 +52,18 @@ add_<%- name -%> <- function(rdeck,
             <%- p.name -%> = <%- value ?? "NULL" -%>,
         <% } -%>
         blending_mode = blending_mode,
+        visibility_toggle = visibility_toggle,
         tooltip = eval_tooltip(rlang::enquo(tooltip), data)
     )
     # validate layer props
+    validate_id(<%- name -%>)
+    validate_name(<%- name -%>)
+    validate_group_name(<%- name -%>)
     <% for (const p of props) { -%>
       validate_<%- p.name -%>(<%- name -%>)
     <% } -%>
     validate_blending_mode(<%- name -%>)
+    validate_visibility_toggle(<%- name -%>)
     # add layer to map
     add_layer(rdeck, <%- name -%>)
 }
