@@ -377,8 +377,15 @@ NULL
 #'
 #' If multiple url templates are supplied, each endpoint must return the same data for the
 #' same tile index.
-#' @param unique_id_property string
-#' @param highlighted_feature_id unknown
+#' @param unique_id_property <`string`> Used for highlighting features across tiles. Features
+#' on separate tiles are deemed to be _the same feature_ by the supplied property name. If
+#' no value is supplied, the feature id will be used.
+#' @param highlighted_feature_id <`number` | `string`> When provided, a feature with ID
+#' corresponding to the supplied value with be highlighted with `highlight_color`.
+#' @param binary <`boolean`> Improves rendering performance by removing the tile serialisation
+#' and deserialisation between worker and main thread.
+#'
+#' Caveat: Polygons and multi-polygons with holes will be rendered as solid polygons.
 #' @eval deckgl_docs("geo-layers", "mvt-layer")
 #' @family geo-layers
 #' @family layers
@@ -450,6 +457,7 @@ NULL
 #' highlighted object. If a single colour value is supplied, that colour will be used to
 #' highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 #' or a [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
+#' @param wrap_longitude <`boolean`> Normalises geometry longitudes.
 #' @param get_source_position <[`accessor`]> The source position geometry column, either a
 #' `sfc_POINT` or a `sfc_MULTIPOINT` column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).

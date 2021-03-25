@@ -16,7 +16,8 @@ const excludeProps = [
   "parameters",
   "uniforms",
   "updateTriggers",
-  "wrapLongitude",
+  "loaders",
+  "transitions",
   /* composite layer */
   "renderSubLayers",
   /* text layer */
