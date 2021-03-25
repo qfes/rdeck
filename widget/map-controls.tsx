@@ -68,7 +68,7 @@ type ToggleProps = {
 
 function Toggle({ name, visible, onChange }: ToggleProps) {
   const Icon = visible ? Visibility : visible === null ? VisibilityOutlined : VisibilityOff;
-  const className = visible ? styles.toggle : [styles.toggle, styles.notVisible].join(" ");
+  const className = visible ?? true ? styles.toggle : [styles.toggle, styles.notVisible].join(" ");
 
   return (
     <label className={className} title={name}>

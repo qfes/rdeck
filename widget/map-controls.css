@@ -30,12 +30,9 @@ svg.icon {
   color: var(--focus-color);
 }
 
-:global(.kepler) .panel-header {
+.panel-header {
   background: var(--focus-background-color);
-}
-
-:global(.light) .panel-header {
-  box-shadow: inset 0 -1px 0 var(--separator-color);
+  box-shadow: 0 1px 0 var(--separator-color);
 }
 
 .panel-header:hover {

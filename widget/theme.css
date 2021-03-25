@@ -12,13 +12,13 @@
 
 :global(.light) {
   --focus-color: hsl(0, 0%, 10%);
-  --focus-background-color: hsl(0, 0%, 85%);
+  --focus-background-color: var(--background-color);
   --color: hsl(0, 2%, 30%);
   --muted-color: hsl(0, 2%, 50%);
   --background-color: hsl(0, 0%, 98%);
   --hover-color: hsl(0, 2%, 15%);
   --hover-background-color: hsl(0, 0%, 91%);
-  --hover-focus-background-color: hsl(0, 0%, 79%);
+  --hover-focus-background-color: var(--hover-background-color);
   --separator-color: hsl(5, 0%, 85%);
 }
 
