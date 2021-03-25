@@ -121,6 +121,7 @@ rdeck_proxy <- function(id,
                         picking_radius = NULL,
                         use_device_pixels = NULL,
                         blending_mode = NULL,
+                        layer_selector = NULL,
                         lazy_load = NULL,
                         ...) {
   assert_is_string(id)
@@ -151,6 +152,7 @@ rdeck_proxy <- function(id,
       list(
         props = props,
         theme = theme,
+        layer_selector = layer_selector,
         lazy_load = lazy_load
       ),
       class = "rdeck_data"

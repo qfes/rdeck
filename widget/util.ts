@@ -35,3 +35,18 @@ export function getElementDimensions(el: HTMLElement): [number, number] {
 
   return dims;
 }
+
+export function groupBy<K, V>(list: V[], key: (x: V) => K): Map<K, V[]> {
+  const map = new Map<K, V[]>();
+
+  for (const item of list) {
+    const itemKey = key(item);
+    if (!map.has(itemKey)) {
+      map.set(itemKey, [item]);
+    } else {
+      map.get(itemKey)!.push(item);
+    }
+  }
+
+  return map;
+}

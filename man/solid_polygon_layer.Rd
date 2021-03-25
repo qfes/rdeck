@@ -28,6 +28,7 @@ add_solid_polygon_layer(
   get_line_color = "#000000ff",
   material = TRUE,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

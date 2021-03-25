@@ -33,6 +33,7 @@ add_gpu_grid_layer(
   extruded = FALSE,
   material = TRUE,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

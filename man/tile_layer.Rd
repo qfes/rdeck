@@ -32,6 +32,7 @@ add_tile_layer(
   transparent_color = "#00000000",
   tint_color = "#ffffff",
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

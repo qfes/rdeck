@@ -27,6 +27,7 @@ add_line_layer(
   width_min_pixels = 0,
   width_max_pixels = 9007199254740991,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

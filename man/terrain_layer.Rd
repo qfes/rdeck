@@ -38,6 +38,7 @@ add_terrain_layer(
   wireframe = FALSE,
   material = TRUE,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

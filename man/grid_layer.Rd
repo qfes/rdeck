@@ -42,6 +42,7 @@ add_grid_layer(
   elevation_scale_type = "linear",
   gpu_aggregation = FALSE,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

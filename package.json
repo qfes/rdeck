@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@danmarshall/deckgl-typings": "^4.6.1",
+    "@material-ui/icons": "^4.11.2",
     "@types/d3": "^6.3.0",
     "@types/geojson": "^7946.0.7",
     "@types/node": "^14.14.32",

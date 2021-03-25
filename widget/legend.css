@@ -2,18 +2,10 @@
 
 .legend {
   @mixin shadow;
-  @mixin control;
+  @mixin map-widget;
   max-height: calc(100% - 20px);
   overflow-y: auto;
   width: 180px;
-}
-
-:global(.kepler) .legend {
-  --separator-color: hsl(217, 13%, 26%);
-}
-
-:global(.light) .legend {
-  --separator-color: hsl(5, 0%, 85%);
 }
 
 .layer {

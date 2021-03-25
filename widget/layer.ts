@@ -14,11 +14,21 @@ import { MultiHighlightExtension } from "./multi-highlight-extension";
 type LayerData = string | DataFrame | FeatureCollection;
 type Entry<T> = [string, T];
 
+export type LegendInfo = Pick<LayerProps, "id" | "name"> & {
+  scales: AccessorScale<number | Color>[];
+};
+
+export type VisibilityInfo = Pick<LayerProps, "id" | "name" | "groupName"> & {
+  visible: boolean;
+};
+
 export interface LayerProps extends Omit<DeckLayerProps<any>, "data"> {
   type: string;
   name: string;
+  groupName: string | null;
   data: LayerData | null;
   blendingMode: BlendingMode;
+  visibilityToggle: boolean;
   tooltip: TooltipInfo | null;
 }
 
@@ -104,9 +114,18 @@ export class Layer {
     return new deck[this.type]({ ...this.props });
   }
 
-  renderLegend() {
+  renderLegend(): LegendInfo {
     const scales = this.scales.filter((scale) => scale.legend);
     return { id: this.props.id!, name: this.props.name, scales };
+  }
+
+  renderSelector(): VisibilityInfo {
+    return {
+      id: this.props.id!,
+      groupName: this.props.groupName,
+      name: this.props.name,
+      visible: this.props.visible ?? true,
+    };
   }
 }
 

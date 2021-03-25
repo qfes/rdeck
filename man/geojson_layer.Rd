@@ -40,6 +40,7 @@ add_geojson_layer(
   get_elevation = 1000,
   material = TRUE,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

@@ -29,6 +29,7 @@ add_path_layer(
   get_color = "#000000ff",
   get_width = 1,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

@@ -419,6 +419,8 @@ NULL
 #' updatable layers in a shiny application.
 #' @param name <`string`> Identifies the layer on tooltips and legends. It does
 #' not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.
+#' @param group_name <`string`> Defines the group that this layer belongs to. Currently only
+#' effective on the layer selector, if `visibility_toggle = TRUE`.
 #' @param blending_mode <`"normal"` | `"additive"` | `"subtractive"`> Sets the blending mode.
 #' Blending modes:
 #' - `normal`: Normal blending doesn't alter colours of overlapping objects.

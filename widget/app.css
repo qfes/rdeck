@@ -24,6 +24,7 @@
   position: absolute;
   z-index: 1;
   display: flex;
+  align-items: baseline;
   flex-direction: column;
   max-height: calc(100% - 20px);
 }

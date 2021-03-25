@@ -13,10 +13,11 @@ rdeck(
   picking_radius = 0,
   use_device_pixels = TRUE,
   blending_mode = "normal",
+  layer_selector = FALSE,
   lazy_load = FALSE,
   width = NULL,
   height = NULL,
-  elementId = NULL,
+  id = NULL,
   ...
 )
 }
@@ -59,6 +60,10 @@ dot density on dark maps.
 dot density on light maps.
 }}
 
+\item{layer_selector}{<\code{boolean}> If \code{TRUE}, the layer selector control will be enabled
+and layers with \code{visibility_toggle = TRUE} may be toggled. If \code{FALSE}, the layer selector control
+won't be rendered.}
+
 \item{lazy_load}{<\code{boolean}> If \code{TRUE}, maps will be rendered when they are scrolled into
 view and destroyed when they are scrolled out of view. If \code{FALSE}, maps will be rendered
 when the page loads.}
@@ -67,7 +72,7 @@ when the page loads.}
 
 \item{height}{<\code{number}> The height of the map canvas.}
 
-\item{elementId}{<\code{string}> The map element id. Not used in shiny applications.}
+\item{id}{<\code{string}> The map element id. Not used in shiny applications.}
 
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.

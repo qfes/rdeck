@@ -39,6 +39,7 @@ add_h3_hexagon_layer(
   center_hexagon = NULL,
   get_hexagon = hexagon,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

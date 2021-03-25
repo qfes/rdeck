@@ -3,9 +3,10 @@ import type { InitialViewStateProps } from "@deck.gl/core";
 import type { DeckGLProps } from "@deck.gl/react";
 import { StaticMapProps, WebMercatorViewport } from "react-map-gl";
 
-import { Layer, LayerProps } from "./layer";
+import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { Map } from "./map";
 import { Legend } from "./legend";
+import { LayerSelector } from "./map-controls";
 import styles from "./app.css";
 
 export type DeckProps = DeckGLProps &
@@ -16,6 +17,8 @@ export interface AppProps {
   layers: LayerProps[];
   theme: "kepler" | "light";
   lazyLoad: boolean;
+  layerSelector: boolean;
+  onLayerVisibilityChange: (layers: VisibilityInfo[]) => void;
   width: number;
   height: number;
 }
@@ -23,8 +26,10 @@ export interface AppProps {
 export function App({
   props,
   layers,
-  theme = "kepler",
-  lazyLoad = false,
+  theme,
+  lazyLoad,
+  layerSelector,
+  onLayerVisibilityChange,
   width,
   height,
 }: AppProps) {
@@ -41,11 +46,27 @@ export function App({
 
   return (
     <div ref={container} className={className}>
+      <div className={styles.controlContainer} style={{ top: 20, left: 20 }}>
+        {layerSelector && (
+          <LayerSelector
+            layers={_layers
+              .filter((layer) => layer.props.visibilityToggle)
+              .map((layer) => layer.renderSelector())
+              .reverse()}
+            onChange={onLayerVisibilityChange}
+          />
+        )}
+      </div>
       {shouldRender && (
         <Map props={{ ...deckglProps, initialViewState: _initialViewState }} layers={_layers} />
       )}
       <div className={styles.controlContainer} style={{ top: 10, right: 10 }}>
-        <Legend layers={_layers.map((layer) => layer.renderLegend()).reverse()} />
+        <Legend
+          layers={_layers
+            .filter((layer) => layer.props.visible)
+            .map((layer) => layer.renderLegend())
+            .reverse()}
+        />
       </div>
     </div>
   );

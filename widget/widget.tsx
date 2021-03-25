@@ -17,7 +17,7 @@ export const binding: HTMLWidgets.Binding = {
 };
 
 type LayersVisibility = Record<string, boolean>;
-type WidgetProps = Pick<AppProps, "props" | "layers" | "theme" | "lazyLoad">;
+type WidgetProps = Pick<AppProps, "props" | "layers" | "theme" | "layerSelector" | "lazyLoad">;
 
 export class Widget implements HTMLWidgets.Widget, WidgetProps {
   #el: HTMLElement;
@@ -26,6 +26,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
   props: DeckProps = { blendingMode: "normal" };
   layers: LayerProps[] = [];
   theme: "kepler" | "light" = "kepler";
+  layerSelector: boolean = true;
   lazyLoad: boolean = false;
 
   constructor(el: HTMLElement, width: number, height: number) {
@@ -40,7 +41,15 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
           return this.renderValue({ layers: [...this.layers, layer] });
         }
 
-        const merged = { ..._layer, ...layer, data: layer.data ?? _layer.data };
+        // if the layer selector is enabled and this layer supports visibilityToggle
+        // then ignore the visibility prop from shiny.
+        const visible =
+          this.layerSelector && _layer.visibilityToggle ? _layer.visible : layer.visible;
+
+        // if data is not supplied / is falsey from shiny, use existing
+        const data = layer.data ?? _layer.data;
+
+        const merged = { ..._layer, ...layer, visible, data };
         const layers = this.layers.map((x) => (x === _layer ? merged : x));
         this.renderValue({ layers });
       });
@@ -54,19 +63,30 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
         });
       });
     }
+
+    this.setLayerVisibility = this.setLayerVisibility.bind(this);
   }
 
-  renderValue({ props, layers, theme, lazyLoad }: Partial<WidgetProps>) {
+  renderValue({ props, layers, theme, layerSelector, lazyLoad }: Partial<WidgetProps>) {
     // merge in new props with existing state
     const _props = {
       props: props ?? this.props,
       layers: layers ?? this.layers,
       theme: theme ?? this.theme,
+      layerSelector: layerSelector ?? this.layerSelector,
       lazyLoad: lazyLoad ?? this.lazyLoad,
     };
     Object.assign(this, _props);
 
-    ReactDOM.render(<App {..._props} width={this.#width} height={this.#height} />, this.#el);
+    ReactDOM.render(
+      <App
+        {..._props}
+        onLayerVisibilityChange={this.setLayerVisibility}
+        width={this.#width}
+        height={this.#height}
+      />,
+      this.#el
+    );
   }
 
   // deck.gl handles resize automatically
@@ -83,12 +103,18 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
    * Set layers' visibility. Layers not included in visibility are unaltered.
    * @param visibility the layers visibility
    */
-  setLayerVisibility(visibility: LayersVisibility) {
-    const layers = this.layers.map((x) =>
-      x.name in visibility ? { ...x, visible: visibility[x.name] } : x
-    );
+  setLayerVisibility(layers: Pick<LayerProps, "name" | "groupName" | "visible">[]) {
+    const _layers = this.layers.map((layer) => {
+      if (!layer.visibilityToggle) return layer;
 
-    this.renderValue({ layers });
+      const _layer = layers.find(
+        (x) =>
+          x.name === layer.name && x.groupName === layer.groupName && x.visible !== layer.visible
+      );
+      return _layer ? { ...layer, visible: _layer.visible } : layer;
+    });
+
+    this.renderValue({ layers: _layers });
   }
 }
 

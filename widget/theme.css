@@ -1,25 +1,55 @@
 :global(.kepler) {
   --focus-color: hsl(0, 0%, 94%);
-  --color: hsl(219, 12%, 67%);
-  --muted-color: hsl(218, 11%, 47%);
-  --hover-color: hsl(219, 12%, 77%);
-  --background-color: hsl(225, 14%, 16%);
-  --hover-background-color: hsl(225, 14%, 20%);
+  --focus-background-color: hsl(225, 12%, 28%);
+  --color: hsl(218, 8%, 70%);
+  --muted-color: hsl(218, 8%, 50%);
+  --background-color: hsl(225, 12%, 18%);
+  --hover-color: hsl(218, 8%, 90%);
+  --hover-background-color: hsl(225, 12%, 24%);
+  --hover-focus-background-color: hsl(225, 12%, 32%);
+  --separator-color: hsl(217, 13%, 26%);
 }
 
 :global(.light) {
   --focus-color: hsl(0, 0%, 10%);
-  --color: hsl(0, 2%, 20%);
+  --focus-background-color: var(--background-color);
+  --color: hsl(0, 2%, 30%);
   --muted-color: hsl(0, 2%, 50%);
   --background-color: hsl(0, 0%, 98%);
-  --hover-background-color: hsl(0, 0%, 93%);
+  --hover-color: hsl(0, 2%, 15%);
+  --hover-background-color: hsl(0, 0%, 91%);
+  --hover-focus-background-color: var(--hover-background-color);
+  --separator-color: hsl(5, 0%, 85%);
 }
 
 @define-mixin shadow {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-@define-mixin control {
+@define-mixin transition {
+  transition: all 100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@define-mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@define-mixin button {
+  user-select: none;
+  border: 0;
+  margin: 0;
+  outline: 0;
+  cursor: pointer;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  color: inherit;
+  background: inherit;
+}
+
+@define-mixin map-widget {
   user-select: none;
   border-radius: 1px;
   font-size: 12px;

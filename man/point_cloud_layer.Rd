@@ -25,6 +25,7 @@ add_point_cloud_layer(
   get_color = "#000000ff",
   material = TRUE,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

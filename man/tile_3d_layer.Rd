@@ -27,6 +27,7 @@ add_tile_3d_layer(
     list(loadGLTF = TRUE, decodeQuantizedPositions = FALSE, isTileset = "auto", tile =
     NULL, tileset = NULL, assetGltfUpAxis = NULL))),
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

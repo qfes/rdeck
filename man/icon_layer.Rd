@@ -33,6 +33,7 @@ add_icon_layer(
   get_angle = 0,
   get_pixel_offset = c(0, 0),
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }

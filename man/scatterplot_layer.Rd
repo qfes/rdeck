@@ -34,6 +34,7 @@ add_scatterplot_layer(
   get_line_color = "#000000ff",
   get_line_width = 1,
   blending_mode = "normal",
+  visibility_toggle = TRUE,
   tooltip = FALSE
 )
 }
