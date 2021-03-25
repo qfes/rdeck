@@ -24,7 +24,7 @@ NULL
 #' @inherit layer_props
 #' @param icon_atlas object
 #' @param icon_mapping object
-#' @param billboard <`logical`> If `TRUE`, the text label always faces the camera, otherwise it
+#' @param billboard <`boolean`> If `TRUE`, the text label always faces the camera, otherwise it
 #' faces up (z).
 #' @param alpha_cutoff <`number`> Discard pixels whose opacity is below this threshold.
 #' A discarded pixel would create a "hole" in the icon that is not considered part of
@@ -140,7 +140,7 @@ NULL
 #'
 #' @name text_layer
 #' @inherit layer_props
-#' @param billboard <`logical`> If `TRUE`, the text label always faces the camera, otherwise it
+#' @param billboard <`boolean`> If `TRUE`, the text label always faces the camera, otherwise it
 #' faces up (z).
 #' @param background_color <[`color`]> The colour to use for the text background. The alpha
 #' channel is ignored. The alpha of the background matches the opacity of each object.
@@ -288,7 +288,7 @@ NULL
 #'
 #' @name h3_hexagon_layer
 #' @inherit layer_props
-#' @param high_precision <`logical`> If `TRUE`, draw each hexagon as a polygon using each
+#' @param high_precision <`boolean`> If `TRUE`, draw each hexagon as a polygon using each
 #' hexagon's true geometry. If `FALSE`, draw each hexagon with the same shape as
 #' `center_hexagon`. High precision trades rendering performance for geometry precision.
 #' High precision is required (forcibly enabled) when:
@@ -442,15 +442,15 @@ NULL
 #' @param data <`data.frame` | [`sf`][sf::sf] | `string`> The layer's data. Data frames and
 #' sf objects will contain all columns that are referenced by the layer's accessors. Strings
 #' will be interpreted as a URL and data will be retrieved dynamically in the browser.
-#' @param visible <`logical`> Determines whether the layer is visible or not; also determines
+#' @param visible <`boolean`> Determines whether the layer is visible or not; also determines
 #' whether any legend elements for the layer will be displayed.
-#' @param pickable <`logical`> Determines if the layer responds to pointer / touch events.
+#' @param pickable <`boolean`> Determines if the layer responds to pointer / touch events.
 #' @param opacity <`number`> Determines the layer's opacity.
 #' @param position_format <`"XY"` | `"XYZ"`> Determines whether each coordinate has two (XY)
 #' or three (XYZ) elements.
 #' @param color_format <`"RGB"` | `"RGBA"`> Determines whether the alpha channel of the colours
 #' will be ignored by accessors, making all colours opaque.
-#' @param auto_highlight <`logical`> When `TRUE`, the current object _hovered_ by the cursor is
+#' @param auto_highlight <`boolean`> When `TRUE`, the current object _hovered_ by the cursor is
 #' highlighted by `highlight_color`.
 #' @param highlight_color <[`accessor`] | [`scale`] | [`color`]> When `auto_highlight` and
 #' `pickable` are enabled, `highlight_color` determines the colour of the currently
@@ -485,7 +485,7 @@ NULL
 #' degrees (between `c(-90, 90)`).
 #' Accepts a single numeric value or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param great_circle <`logical`> If `TRUE`, create the arc along the shortest path on the
+#' @param great_circle <`boolean`> If `TRUE`, create the arc along the shortest path on the
 #' earth surface.
 #' @param width_units <`"pixels"` | `"meters"`> The units of the `line_width`.
 #' @param width_scale <`number`> The scaling multiplier for the width of each line.
@@ -493,7 +493,7 @@ NULL
 #' @param width_max_pixels <`number`> The maximum line width in pixels.
 #' @param bounds  <`bbox`> A [`st_bbox`][sf::st_bbox] object with CRS
 #' [EPSG:4326](http://epsg.io/4326).
-#' @param billboard <`logical`> If `TRUE`, extrude the path in screen space (width always faces)
+#' @param billboard <`boolean`> If `TRUE`, extrude the path in screen space (width always faces)
 #' the camera; if `FALSE`, the width always faces up (z).
 #' @param size_scale <`number`> The size multiplier.
 #' @param size_units <`"pixels"` | `"meters"`> The units of the size specified by
@@ -509,13 +509,13 @@ NULL
 #' @param get_pixel_offset <[`accessor`] | `number`>
 #' @param point_size <`number`> The radius of all points in units specified
 #' by `size_units`.
-#' @param material <`logical`>
+#' @param material <`boolean`>
 #' @param line_width_units <`"pixels"` | `"meters"`> The units of line width.
 #' @param line_width_scale <`number`> The line width multiplier.
 #' @param line_width_min_pixels <`number`> The minimum line width in pixels.
 #' @param line_width_max_pixels <`number`> The maximum line width in pixels.
-#' @param stroked <`logical`> If `TRUE`, draw an outline around each object.
-#' @param filled <`logical`> If `TRUE`, draw the filled area of each point.
+#' @param stroked <`boolean`> If `TRUE`, draw an outline around each object.
+#' @param filled <`boolean`> If `TRUE`, draw the filled area of each point.
 #' @param get_radius <[`accessor`] | [`scale`] | `number`> The radius of each point, in units
 #' specified by `radius_units`.
 #' Accepts a single numeric value, a numeric scale, or a
@@ -543,9 +543,9 @@ NULL
 #' @param coverage <`number`> Radius multiplier, between 0 - 1. The radius of each disk is
 #' calculated by `coverage * radius`.
 #' @param elevation_scale <`number`> The elevation multiplier.
-#' @param extruded <`logical`> If `TRUE`, extrude objects along the z-axis; if `FALSE`, all
+#' @param extruded <`boolean`> If `TRUE`, extrude objects along the z-axis; if `FALSE`, all
 #' objects will be flat.
-#' @param wireframe <`logical`> If `TRUE` and `extruded == TRUE`, draw a line wireframe of the
+#' @param wireframe <`boolean`> If `TRUE` and `extruded == TRUE`, draw a line wireframe of the
 #' object. The outline will have horizontal lines closing the top and bottom polygons and
 #' vertical lines for each vertex of the polygon.
 #' @param get_elevation <[`accessor`] | [`scale`] | `number`> The elevation to extrude each
@@ -553,14 +553,14 @@ NULL
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param cell_size <`number`> The size of each cell in metres.
-#' @param rounded <`logical`> The type of joint. If `TRUE`, draw round joints, else draw mitre
+#' @param rounded <`boolean`> The type of joint. If `TRUE`, draw round joints, else draw mitre
 #' joints.
 #' @param miter_limit <`number`> The maximum extent of a joint in ratio to the stroke width.
 #' Only applicable if `rounded == FALSE`.
 #' @param get_path <[`accessor`]> The path geometry column, either a `sfc_LINESTRING` or
 #' a `sfc_MULTILINESTRING` column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
-#' @param line_joint_rounded <`logical`>
+#' @param line_joint_rounded <`boolean`>
 #' @param line_miter_limit number
 #' @param get_polygon <[`accessor`]> The polygon geometry column, either a `sfc_POLYGON`
 #' or a `sfc_MULTIPOLYGON` column with CRS [EPSG:4326](http://epsg.io/4326).
@@ -582,7 +582,7 @@ NULL
 #' @param get_weight <[`accessor`] | [`scale`] | `number`> The weight of each object.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param gpu_aggregation <`logical`> If `TRUE`, aggregation is performed on GPU if supported.
+#' @param gpu_aggregation <`boolean`> If `TRUE`, aggregation is performed on GPU if supported.
 #' Requires `WebGL2`.
 #' @param aggregation <`"SUM"` | `"MEAN"` | `"MIN"` | `"MAX"`> Defines the aggregation function.
 #' @param get_color_value <[`JS`][htmlwidgets::JS]> After data objects are aggregated into bins,

@@ -10,10 +10,12 @@ add_heatmap_layer(
   ...,
   id = NULL,
   name = "HeatmapLayer",
+  group_name = NULL,
   data = NULL,
   visible = TRUE,
   pickable = FALSE,
   opacity = 1,
+  wrap_longitude = FALSE,
   position_format = "XYZ",
   color_format = "RGBA",
   auto_highlight = FALSE,
@@ -25,6 +27,7 @@ add_heatmap_layer(
   color_range = c("#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#f03b20", "#bd0026"),
   threshold = 0.05,
   color_domain = NULL,
+  aggregation = "SUM",
   blending_mode = "normal",
   visibility_toggle = TRUE,
   tooltip = FALSE
@@ -44,16 +47,21 @@ updatable layers in a shiny application.}
 \item{name}{<\code{string}> Identifies the layer on tooltips and legends. It does
 not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.}
 
+\item{group_name}{<\code{string}> Defines the group that this layer belongs to. Currently only
+effective on the layer selector, if \code{visibility_toggle = TRUE}.}
+
 \item{data}{<\code{data.frame} | \code{\link[sf:sf]{sf}} | \code{string}> The layer's data. Data frames and
 sf objects will contain all columns that are referenced by the layer's accessors. Strings
 will be interpreted as a URL and data will be retrieved dynamically in the browser.}
 
-\item{visible}{<\code{logical}> Determines whether the layer is visible or not; also determines
+\item{visible}{<\code{boolean}> Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.}
 
-\item{pickable}{<\code{logical}> Determines if the layer responds to pointer / touch events.}
+\item{pickable}{<\code{boolean}> Determines if the layer responds to pointer / touch events.}
 
 \item{opacity}{<\code{number}> Determines the layer's opacity.}
+
+\item{wrap_longitude}{<\code{boolean}> Normalises geometry longitudes.}
 
 \item{position_format}{<\code{"XY"} | \code{"XYZ"}> Determines whether each coordinate has two (XY)
 or three (XYZ) elements.}
@@ -61,7 +69,7 @@ or three (XYZ) elements.}
 \item{color_format}{<\code{"RGB"} | \code{"RGBA"}> Determines whether the alpha channel of the colours
 will be ignored by accessors, making all colours opaque.}
 
-\item{auto_highlight}{<\code{logical}> When \code{TRUE}, the current object \emph{hovered} by the cursor is
+\item{auto_highlight}{<\code{boolean}> When \code{TRUE}, the current object \emph{hovered} by the cursor is
 highlighted by \code{highlight_color}.}
 
 \item{highlight_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> When \code{auto_highlight} and
@@ -95,6 +103,8 @@ Ignored when \code{color_domain} is specified.}
 
 \item{color_domain}{<\code{number}> The colour scale domain, default is set to the range
 of aggregated weights in each bin.}
+
+\item{aggregation}{<\code{"SUM"} | \code{"MEAN"} | \code{"MIN"} | \code{"MAX"}> Defines the aggregation function.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:
