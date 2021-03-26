@@ -6,6 +6,7 @@ import { StaticMap, StaticMapProps } from "react-map-gl";
 import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
+import { _AggregationLayer } from "@deck.gl/aggregation-layers";
 
 export type MapProps = {
   props: DeckGLProps & StaticMapProps & { blendingMode: BlendingMode };
@@ -61,7 +62,9 @@ const useHover = () => {
 
   const handleHover = useCallback((info: PickInfo<any>) => {
     // not picked or no tooltip prop
-    if (!info.picked || !info.layer.props.tooltip) return setState(null);
+    if (!info.picked || !info.layer.props.tooltip || info.layer instanceof _AggregationLayer) {
+      return setState(null);
+    }
 
     setState(info);
   }, []);
