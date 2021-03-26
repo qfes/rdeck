@@ -258,6 +258,13 @@ validate_get_alignment_baseline.layer <- function(layer) {
   }
 }
 
+# validate refinement_strategy
+validate_refinement_strategy.layer <- function(layer) {
+  refinement_strategy <- layer$refinement_strategy
+  assert_is_string(refinement_strategy)
+  assert_in(refinement_strategy, c("best-available", "no-overlap", "never"))
+}
+
 # validate blending_mode
 validate_blending_mode <- function(layer) {
   assert_is_string(layer$blending_mode, "blending_mode")
