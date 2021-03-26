@@ -1,4 +1,3 @@
-import { memo } from "react";
 import type { PickInfo, ObjectInfo } from "@deck.gl/core";
 import styles from "./tooltip.css";
 
@@ -6,7 +5,7 @@ export interface TooltipProps {
   info: PickInfo<any> | null;
 }
 
-const _Tooltip = ({ info }: TooltipProps) => {
+export function Tooltip({ info }: TooltipProps) {
   if (info == null) return null;
 
   const { index, layer, x, y } = info;
@@ -32,9 +31,7 @@ const _Tooltip = ({ info }: TooltipProps) => {
       </table>
     </div>
   );
-};
-
-export const Tooltip = memo(_Tooltip);
+}
 
 type Info = Omit<ObjectInfo<DataFrame, any>, "target">;
 type DataFn = (object: Record<string, any>, info: Info) => Record<string, any>;
@@ -47,9 +44,9 @@ function accessorFn(dataType: DataType): DataFn {
         return Object.fromEntries(entries);
       };
     case "object":
-      return (object) => object;
+      return (object) => object ?? {};
     case "geojson":
-      return (object) => object.properties ?? {};
+      return (object) => object?.properties ?? {};
     default:
       throw TypeError(`${dataType} not supported`);
   }
