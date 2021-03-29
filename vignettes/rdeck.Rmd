@@ -31,7 +31,7 @@ identifier, e.g. `"mapbox://styles/mapbox/dark-v10"`.  The basemap can be disabl
 Layers are added to an `{rdeck}` map by calling one of the _add layer_ methods on an rdeck
 instance. e.g. `rdeck() %>% add_scatterplot_layer()`. The order in which layers are added
 determines their z-index; each layer added to the map will appear _on top_ of all previously
-added maps.
+added layers.
 
 Every layer can be created with their defaults, however layers without data are almost useless
 as they will be empty. All layer arguments (other than `rdeck`) must be named.
@@ -95,8 +95,8 @@ Point density is highlighted with `additive` blending, making dense areas appear
 All points have the same radius of `30 metres`, with a minimum of `0.5 pixels` (to prevent them
 from disappearing at low zooms).
 
-Hovered points will become brighter (keeping a similar colour scale as fill colour) and will
-render a tooltip containing the `species` category from the data.
+Hovered points will become brighter --- by using a similar colour scale as `get_fill_color` --- and
+will render a tooltip containing the `species` category from the data.
 
 ```{r scatterplot-map}
 rdeck(
@@ -243,17 +243,18 @@ rdeck(
 
 # High-level layers
 
-This example code is repetitive, copy-pasta that will inevitably result in maintenance problems
-(as well as increased developer effort).
+This example code is repetitive, copy-pasta that will inevitably result in maintenance problems,
+as well as increased developer effort.
 
 Generally when creating maps, we will encapsulate the creation of one or more layers in a function.
 Similar to creating functions to encapsulate tidy-methods, the use of curly-curly is needed here
 for any parameters that accept an `accessor` parameter.
 
-The only rule in creating a layer function is that it _must_ return the map to make it chainable.
+The only rule in creating a layer function is that the function takes an rdeck map as a parameter
+(typically first parameter) and that map must be returned; this makes the function chainable.
 
 In the following example, we parameterise the data, fill palette, highlight palette, and
-`get_radius` (which will require curl-curly) for our original scatterplot layer.
+_get radius_ (which will require curl-curly) for our original scatterplot layer.
 
 ```{r layer-function}
 add_manhattan_layer <- function(rdeck, manhattan_data,
