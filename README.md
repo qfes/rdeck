@@ -20,12 +20,15 @@
 <h1 align="center">
   rdeck
   <a href="https://anthonynorth.github.io/rdeck">
-    <img src="man/figures/logo.svg" align="right" height="139">
+    <img src="man/figures/logo.png" align="right" height="139">
   </a>
 </h1>
 <p align="center">
   <a href="https://github.com/visgl/deck.gl">deck.gl</a> widget for R. 
 </p>
+
+<!-- spacer -->
+<br /><br />
 
 [![documentation](https://user-images.githubusercontent.com/391385/102683609-fceff080-421d-11eb-9b97-2889c683f03f.png)](https://anthonynorth.github.io/rdeck)
 
