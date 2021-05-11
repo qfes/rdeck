@@ -16,7 +16,6 @@ export const binding: HTMLWidgets.Binding = {
   },
 };
 
-type LayersVisibility = Record<string, boolean>;
 type WidgetProps = Pick<AppProps, "props" | "layers" | "theme" | "layerSelector" | "lazyLoad">;
 
 export class Widget implements HTMLWidgets.Widget, WidgetProps {
@@ -90,12 +89,12 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
   }
 
   // deck.gl handles resize automatically
-  resize(width: number, height: number) {}
+  resize(width: number, height: number): void {}
 
   /**
    * Get widget id
    */
-  get id() {
+  get id(): string {
     return this.#el.id;
   }
 
@@ -103,7 +102,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
    * Set layers' visibility. Layers not included in visibility are unaltered.
    * @param visibility the layers visibility
    */
-  setLayerVisibility(layers: Pick<LayerProps, "name" | "groupName" | "visible">[]) {
+  setLayerVisibility(layers: Pick<LayerProps, "name" | "groupName" | "visible">[]): void {
     const _layers = this.layers.map((layer) => {
       if (!layer.visibilityToggle) return layer;
 
@@ -125,15 +124,15 @@ type WidgetContainer = HTMLElement & { htmlwidget_data_init_result: Widget };
  * @param id the widget id
  * @returns {Widget}
  */
-export function getWidgetById(id: string) {
-  const element = document.getElementById(id) as WidgetContainer;
-  return element?.htmlwidget_data_init_result;
+export function getWidgetById(id: string): Widget | null {
+  const element = document.getElementById(id) as WidgetContainer | null;
+  return element?.htmlwidget_data_init_result ?? null;
 }
 
 /**
  * Get all rdeck widget instances
  */
-export function getWidgets() {
+export function getWidgets(): Widget[] {
   const elements = [...document.querySelectorAll(".rdeck.html-widget")] as WidgetContainer[];
   return elements.map((x) => x.htmlwidget_data_init_result).filter((x) => x instanceof Widget);
 }
