@@ -16,6 +16,10 @@ export const binding: HTMLWidgets.Binding = {
   },
 };
 
+type LayerVisibilityProps = Pick<LayerProps, "groupName" | "visible"> & {
+  name: string | null;
+};
+
 type WidgetProps = Pick<AppProps, "props" | "layers" | "theme" | "layerSelector" | "lazyLoad">;
 
 export class Widget implements HTMLWidgets.Widget, WidgetProps {
@@ -102,14 +106,24 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
    * Set layers' visibility. Layers not included in visibility are unaltered.
    * @param visibility the layers visibility
    */
-  setLayerVisibility(layers: Pick<LayerProps, "name" | "groupName" | "visible">[]): void {
+  setLayerVisibility(layers: LayerVisibilityProps[]): void {
+    if (layers.length === 0) return;
+
+    const isMatch = (layerVisiblity: LayerVisibilityProps, layer: LayerProps) => {
+      const nameEqual = layerVisiblity.name === layer.name;
+      const groupEqual = layerVisiblity.groupName === layer.groupName;
+
+      return (
+        (nameEqual && groupEqual) ||
+        // all layers in a group
+        (layerVisiblity.name == null && layerVisiblity.groupName != null && groupEqual)
+      );
+    };
+
     const _layers = this.layers.map((layer) => {
       if (!layer.visibilityToggle) return layer;
 
-      const _layer = layers.find(
-        (x) =>
-          x.name === layer.name && x.groupName === layer.groupName && x.visible !== layer.visible
-      );
+      const _layer = layers.find((x) => isMatch(x, layer) && x.visible !== layer.visible);
       return _layer ? { ...layer, visible: _layer.visible } : layer;
     });
 
