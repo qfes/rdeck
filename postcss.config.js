@@ -1,7 +1,7 @@
 module.exports = {
   plugins: {
     "postcss-import": {},
-    "postcss-import-url": { modernBrowser: true },
+    "postcss-url": { url: "rebase" },
     "postcss-mixins": {},
     "postcss-preset-env": {},
   },
