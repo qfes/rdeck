@@ -5,7 +5,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const { version } = require("./package.json");
 
-const DependenciesPlugin = require("./scripts/generate-dependencies");
+const DependenciesPlugin = require("./scripts/dependencies-webpack-plugin");
 
 module.exports = (env, { mode }) => {
   process.env.NODE_ENV = mode;
