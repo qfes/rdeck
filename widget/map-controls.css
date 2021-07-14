@@ -23,6 +23,9 @@ svg.icon {
   margin-left: -7px;
   max-width: 224px;
   font-size: 12px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .panel-header {
@@ -52,6 +55,7 @@ svg.icon {
 .panel-content {
   padding-top: 8px;
   padding-bottom: 8px;
+  overflow-y: auto;
 }
 
 .toggle {

@@ -8,6 +8,7 @@ import { Map } from "./map";
 import { Legend } from "./legend";
 import { LayerSelector } from "./map-controls";
 import styles from "./app.css";
+import { classNames } from "./util";
 
 export type DeckProps = DeckGLProps &
   StaticMapProps & { initialBounds?: Bounds; blendingMode: BlendingMode };
@@ -42,11 +43,10 @@ export function App({
   const container = useRef<HTMLDivElement>(null);
   const inViewport = useInViewport(container, lazyLoad);
   const shouldRender = !lazyLoad || inViewport;
-  const className = [styles.rdeck, theme].join(" ");
 
   return (
-    <div ref={container} className={className}>
-      <div className={styles.controlContainer} style={{ top: 20, left: 20 }}>
+    <div ref={container} className={classNames(styles.rdeck, theme)}>
+      <div className={classNames(styles.controlContainer, styles.left)}>
         {layerSelector && (
           <LayerSelector
             layers={_layers
@@ -60,7 +60,7 @@ export function App({
       {shouldRender && (
         <Map props={{ ...deckglProps, initialViewState: _initialViewState }} layers={_layers} />
       )}
-      <div className={styles.controlContainer} style={{ top: 10, right: 10 }}>
+      <div className={classNames(styles.controlContainer, styles.right)}>
         <Legend
           layers={_layers
             .filter((layer) => layer.props.visible)

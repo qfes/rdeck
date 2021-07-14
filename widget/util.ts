@@ -50,3 +50,7 @@ export function groupBy<K, V>(list: V[], key: (x: V) => K): Map<K, V[]> {
 
   return map;
 }
+
+export function classNames(...classNames: string[]): string {
+  return classNames.join(" ");
+}
