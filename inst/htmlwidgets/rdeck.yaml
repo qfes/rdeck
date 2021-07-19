@@ -9,8 +9,8 @@ dependencies:
       - vendor/loaders.gl.js
       - vendor/luma.gl.js
       - vendor/core-js.js
-      - vendor/material-ui.js
       - vendor/math.gl.js
+      - vendor/material-ui.js
       - vendor/react-map-gl.js
       - vendor/babel.js
       - vendor/probe.gl.js
