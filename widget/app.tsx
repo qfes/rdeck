@@ -6,9 +6,9 @@ import { StaticMapProps, WebMercatorViewport } from "react-map-gl";
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { Map } from "./map";
 import { Legend } from "./legend";
-import { LayerSelector } from "./map-controls";
 import styles from "./app.css";
 import { classNames } from "./util";
+import { LayerSelector } from "./layer-selector";
 
 export type DeckProps = DeckGLProps &
   StaticMapProps & { initialBounds?: Bounds; blendingMode: BlendingMode };
@@ -53,7 +53,7 @@ export function App({
               .filter((layer) => layer.props.visibilityToggle)
               .map((layer) => layer.renderSelector())
               .reverse()}
-            onChange={onLayerVisibilityChange}
+            onVisibilityChange={onLayerVisibilityChange}
           />
         )}
       </div>
