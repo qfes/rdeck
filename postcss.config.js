@@ -4,6 +4,10 @@ module.exports = {
     require("postcss-import"),
     require("postcss-url"),
     require("postcss-mixins"),
-    require("postcss-preset-env"),
+    require("postcss-preset-env")({
+      features: {
+        "nesting-rules": true,
+      },
+    }),
   ],
 };
