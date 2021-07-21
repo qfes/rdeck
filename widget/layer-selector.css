@@ -62,6 +62,8 @@
   position: relative;
   padding: 3px 16px 3px 12px;
   cursor: pointer;
+  font-weight: inherit;
+  margin: initial;
 
   @nest .group-container > & {
     padding-left: 22px;

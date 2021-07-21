@@ -4,12 +4,14 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  line-height: initial;
   font-family: "Roboto", sans-serif;
   position: relative;
 }
 
 :global(.rdeck) :is(*, *:before, *:after) {
   box-sizing: inherit;
+  line-height: inherit;
 }
 
 :global(.rdeck.kepler) {
