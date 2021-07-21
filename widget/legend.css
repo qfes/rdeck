@@ -16,12 +16,13 @@
 }
 
 .layer-name {
-  margin-bottom: 2px;
+  @mixin ellipsis;
+  margin-bottom: 4px;
   color: var(--focus-color);
 }
 
 .scale {
-  font-size: 11px;
+  font-size: 12.5px;
 }
 
 .scale + .scale {
@@ -33,16 +34,19 @@
   color: var(--muted-color);
 }
 
+.field-name {
+  @mixin ellipsis;
+}
+
 .color-scale {
   margin-top: 6px;
-  font-size: 9px;
   width: 100%;
   overflow-y: visible;
 }
 
 .tick {
   fill: var(--color);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .line {

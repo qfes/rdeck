@@ -14,7 +14,7 @@ import { words } from "./util";
 import styles from "./legend.css";
 
 const TICK_HEIGHT = 16;
-const TICK_FONT_SIZE = 10;
+const TICK_FONT_SIZE = 11;
 
 export type LegendProps = {
   layers: LegendInfo[];
@@ -37,7 +37,9 @@ function Layer({ name, scales }: LegendInfo) {
 
   return (
     <div className={styles.layer}>
-      <div className={styles.layerName}>{name}</div>
+      <div className={styles.layerName} title={name}>
+        {name}
+      </div>
       {scales.map((scale) => (
         <Scale key={scale.name} {...scale} />
       ))}
@@ -55,7 +57,9 @@ function Scale(scale: AccessorScale<number | Color>) {
     <div className={styles.scale}>
       <div className={styles.scaleName}>{scaleName}</div>
       <span className={styles.scaleBy}>by </span>
-      <span className={styles.fieldName}>{scale.col}</span>
+      <span className={styles.fieldName} title={scale.col}>
+        {scale.col}
+      </span>
       {isColor && isContinuous && <Continuous {...(scale as AccessorScaleContinuous<Color>)} />}
       {isColor && isDiscrete && <Discrete {...(scale as AccessorScaleDiscrete<Color>)} />}
       {isColor && scale.scale === "category" && (

@@ -52,7 +52,7 @@
 @define-mixin map-widget {
   user-select: none;
   border-radius: 1px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--color);
   background-color: var(--background-color);
 }
