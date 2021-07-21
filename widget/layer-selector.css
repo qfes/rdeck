@@ -37,6 +37,8 @@
     @mixin button;
     padding: 5px 12px;
     width: 100%;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
 
     & > .text {
       margin-left: 12px;
