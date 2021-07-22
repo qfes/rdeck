@@ -57,27 +57,27 @@
 }
 
 :global(.rdeck.kepler) ::-webkit-scrollbar-thumb {
-  background-color: hsla(218, 8%, 50%, 0.3);
+  background-color: hsla(218, 8%, 40%, 0.3);
 }
 
 :global(.rdeck.kepler) ::-webkit-scrollbar-thumb:hover {
-  background-color: hsla(218, 8%, 40%, 0.6);
+  background-color: hsla(218, 8%, 50%, 0.35);
 }
 
 :global(.rdeck.kepler) ::-webkit-scrollbar-thumb:active {
-  background-color: hsla(218, 8%, 70%, 0.4);
+  background-color: hsla(218, 8%, 60%, 0.4);
 }
 
 :global(.rdeck.light) ::-webkit-scrollbar-thumb {
-  background-color: hsla(0, 2%, 50%, 0.3);
+  background-color: hsla(0, 2%, 40%, 0.3);
 }
 
 :global(.rdeck.light) ::-webkit-scrollbar-thumb:hover {
-  background-color: hsla(0, 2%, 70%, 0.6);
+  background-color: hsla(0, 2%, 30%, 0.35);
 }
 
 :global(.rdeck.light) ::-webkit-scrollbar-thumb:active {
-  background-color: hsla(0, 2%, 40%, 0.4);
+  background-color: hsla(0, 2%, 20%, 0.4);
 }
 
 :global(.rdeck) ::-webkit-scrollbar-track:vertical {
