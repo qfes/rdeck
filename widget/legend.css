@@ -16,9 +16,9 @@
 }
 
 .layer-name {
-  @mixin ellipsis;
   margin-bottom: 4px;
   color: var(--focus-color);
+  white-space: pre-line;
 }
 
 .scale {
@@ -35,7 +35,8 @@
 }
 
 .field-name {
-  @mixin ellipsis;
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 .color-scale {

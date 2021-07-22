@@ -27,6 +27,7 @@
     color: var(--focus-color);
     background: var(--focus-background-color);
     box-shadow: 0 1px 0 var(--separator-color);
+    white-space: pre-line;
 
     &:hover {
       background: var(--hover-focus-background-color);
@@ -83,9 +84,9 @@
   }
 
   & > .text {
-    @mixin ellipsis;
     font-size: 12.5px;
     margin-left: 12px;
+    white-space: pre-line;
   }
 }
 
