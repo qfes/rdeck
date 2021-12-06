@@ -85,8 +85,11 @@ same tile index.}
 
 \item{visible}{<\code{boolean}> Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.
-When \code{NULL}, the previous value will be used on layer updates (i.e. in shiny), defaulting
-to \code{TRUE} if creating a new layer.}
+When \code{visble = NULL}:
+\itemize{
+\item on update, use current state in the browser
+\item on add, layer is visible
+}}
 
 \item{pickable}{<\code{boolean}> Determines if the layer responds to pointer / touch events.}
 
