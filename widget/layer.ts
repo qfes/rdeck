@@ -54,6 +54,7 @@ export class Layer {
       ...colors,
       ...accessors.map(([name, value]) => [name, value.getData]),
       ...getWeightProps(entries),
+      ["visible", props.visible ?? true],
       ["updateTriggers", getUpdateTriggers(accessors)],
       ["parameters", getParameters(props.parameters, props.blendingMode)],
     ]);
