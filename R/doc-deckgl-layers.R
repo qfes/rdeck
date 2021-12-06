@@ -444,6 +444,8 @@ NULL
 #' will be interpreted as a URL and data will be retrieved dynamically in the browser.
 #' @param visible <`boolean`> Determines whether the layer is visible or not; also determines
 #' whether any legend elements for the layer will be displayed.
+#' When `NULL`, the previous value will be used on layer updates (i.e. in shiny), defaulting
+#' to `TRUE` if creating a new layer.
 #' @param pickable <`boolean`> Determines if the layer responds to pointer / touch events.
 #' @param opacity <`number`> Determines the layer's opacity.
 #' @param position_format <`"XY"` | `"XYZ"`> Determines whether each coordinate has two (XY)

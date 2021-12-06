@@ -37,6 +37,11 @@ function getProps(Layer) {
     Layer.propTypes.extruded.value = false;
   }
 
+  // visible optional
+  if ("visible" in Layer.propTypes) {
+    Layer.propTypes.visible.optional = true;
+  }
+
   // remove polygon from geo-layers
   if (/^S2|H3/.test(Layer.layerName)) {
     // we don't need this

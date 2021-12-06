@@ -41,6 +41,11 @@ to_json.layer <- function(obj) {
     obj$image <- paste0("data:image/png;base64,", b64_image)
   }
 
+  # remove visible if null
+  if (is.null(obj$visible)) {
+    obj$visible <- NULL
+  }
+
   camel_case(obj)
 }
 

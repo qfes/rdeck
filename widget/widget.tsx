@@ -44,10 +44,8 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
           return this.renderValue({ layers: [...this.layers, layer] });
         }
 
-        // if the layer selector is enabled and this layer supports visibilityToggle
-        // then ignore the visibility prop from shiny.
-        const visible =
-          this.layerSelector && _layer.visibilityToggle ? _layer.visible : layer.visible;
+        // if visible is null, use existing
+        const visible = layer.visible ?? _layer.visible;
 
         // if data is not supplied / is falsey from shiny, use existing
         const data = layer.data ?? _layer.data;
