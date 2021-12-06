@@ -81,6 +81,7 @@ reference:
   - title: Other
     contents:
       - mapbox_access_token
+      - set_layer_visibility
       - view_state
       - mvt_url
       - format_number

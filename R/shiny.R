@@ -170,6 +170,34 @@ add_layer.rdeck_proxy <- function(rdeck, layer) {
   rdeck
 }
 
+#' Set layer visibility
+#'
+#' Sets a layer's visibility and whether it is _selectable_ in the layer selector.
+#' Setting either `visible` or `visibility_toggle` as `NULL` will have no change
+#' in the browser.
+#' @name set_layer_visibility
+#' @param rdeck <`rdeck_proxy`> the rdeck proxy object
+#' @inheritParams layer_props
+#'
+#' @export
+set_layer_visibility <- function(rdeck, id, visible = NULL, visibility_toggle = NULL) {
+  assert_type(rdeck, "rdeck_proxy")
+  props <- list(id = id, visible = visible, visibility_toggle = visibility_toggle)
+  layer <- structure(
+    discard_null(props),
+    class = "layer"
+  )
+
+  validate_id(layer)
+  validate_visible(layer)
+  if (!is.null(visibility_toggle)) {
+    validate_visibility_toggle(layer)
+  }
+
+  send_msg(rdeck, "layer", to_json(layer))
+  rdeck
+}
+
 send_msg <- function(rdeck, name, data) {
   assert_type(rdeck, "rdeck_proxy")
   assert_is_string(name)
