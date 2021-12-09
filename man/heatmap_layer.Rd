@@ -28,6 +28,8 @@ add_heatmap_layer(
   threshold = 0.05,
   color_domain = NULL,
   aggregation = "SUM",
+  weights_texture_size = 2048,
+  debounce_timeout = 500,
   blending_mode = "normal",
   visibility_toggle = TRUE,
   tooltip = FALSE
@@ -110,6 +112,12 @@ Ignored when \code{color_domain} is specified.}
 of aggregated weights in each bin.}
 
 \item{aggregation}{<\code{"SUM"} | \code{"MEAN"} | \code{"MIN"} | \code{"MAX"}> Defines the aggregation function.}
+
+\item{weights_texture_size}{<\code{number}> The size of the weight texture. Smaller texture
+sizes can improve rendering performance, but lead to visible pixelation.}
+
+\item{debounce_timeout}{<\code{number}> Debounce interval (milliseconds) for triggering
+aggregation.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:

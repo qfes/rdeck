@@ -20,6 +20,8 @@ const excludeProps = [
   "transitions",
   /* composite layer */
   "renderSubLayers",
+  /* geojson layer */
+  "textCharacterSet",
   /* text layer */
   "characterSet",
   /* aggregation functions */

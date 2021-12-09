@@ -24,7 +24,7 @@ NULL
 #' @inherit layer_props
 #' @param icon_atlas object
 #' @param icon_mapping object
-#' @param billboard <`boolean`> If `TRUE`, the text label always faces the camera, otherwise it
+#' @param billboard <`boolean`> If `TRUE`, the icon always faces the camera, otherwise it
 #' faces up (z).
 #' @param alpha_cutoff <`number`> Discard pixels whose opacity is below this threshold.
 #' A discarded pixel would create a "hole" in the icon that is not considered part of
@@ -46,6 +46,8 @@ NULL
 #'
 #' @name line_layer
 #' @inherit layer_props
+#' @param billboard <`boolean`> If `TRUE`, extrude the path in screen space (width always faces)
+#' the camera; if `FALSE`, the width always faces up (z).
 #' @eval deckgl_docs("layers", "line-layer")
 #' @family core-layers
 #' @family layers
@@ -67,7 +69,6 @@ NULL
 #'
 #' @name scatterplot_layer
 #' @inherit layer_props
-#' @param radius_units <`"pixels"` | `"meters"`> The units of point radius.
 #' @param radius_scale <`number`> The radius multiplier for all points.
 #' @param radius_min_pixels <`number`> The minimum radius in pixels.
 #' @param radius_max_pixels <`number`> The maximum radius in pixels.
@@ -249,6 +250,10 @@ NULL
 #' @param threshold <`number`> Larger threshold values creates smoother boundaries of colour
 #' _blobs_, while making pixels with low weight values more transparent.
 #' Ignored when `color_domain` is specified.
+#' @param weights_texture_size <`number`> The size of the weight texture. Smaller texture
+#' sizes can improve rendering performance, but lead to visible pixelation.
+#' @param debounce_timeout <`number`> Debounce interval (milliseconds) for triggering
+#' aggregation.
 #' @eval deckgl_docs("aggregation-layers", "heatmap-layer")
 #' @family aggregation-layers
 #' @family layers
@@ -490,14 +495,17 @@ NULL
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param great_circle <`boolean`> If `TRUE`, create the arc along the shortest path on the
 #' earth surface.
+#' @param radius_units <`"pixels"` | `"meters"`> The units of point radius.
 #' @param width_units <`"pixels"` | `"meters"`> The units of the `line_width`.
 #' @param width_scale <`number`> The scaling multiplier for the width of each line.
 #' @param width_min_pixels <`number`> The minimum line width in pixels.
 #' @param width_max_pixels <`number`> The maximum line width in pixels.
 #' @param bounds  <`bbox`> A [`st_bbox`][sf::st_bbox] object with CRS
 #' [EPSG:4326](http://epsg.io/4326).
-#' @param billboard <`boolean`> If `TRUE`, extrude the path in screen space (width always faces)
-#' the camera; if `FALSE`, the width always faces up (z).
+#' @param billboard <`boolean`> If `TRUE`, the object always faces the camera;
+#' if `FALSE`, it faces up always faces up (z).
+#' @param antialiasing <`boolean`> If `TRUE`, objects are rendered with smoothed
+#' edges.
 #' @param size_scale <`number`> The size multiplier.
 #' @param size_units <`"pixels"` | `"meters"`> The units of the size specified by
 #' `get_size`.
@@ -563,11 +571,19 @@ NULL
 #' @param get_path <[`accessor`]> The path geometry column, either a `sfc_LINESTRING` or
 #' a `sfc_MULTILINESTRING` column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
+#' @param cap_rounded <`boolean`> If `TRUE`, draw round caps; else draw square caps.
+#' @param joint_rounded <`boolean`> If `TRUE`, draw round joints; else draw square joints.
 #' @param line_joint_rounded <`boolean`>
 #' @param line_miter_limit number
 #' @param get_polygon <[`accessor`]> The polygon geometry column, either a `sfc_POLYGON`
 #' or a `sfc_MULTIPOLYGON` column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
+#' @param point_type <`"circle"`|`"icon"`|`"text"`> Determines how to render point
+#' and multipoint features.
+#' @param get_point_radius <[`accessor`] | [`scale`] | `number`> The radius of each point, in units
+#' specified by `radius_units`.
+#' Accepts a single numeric value, a numeric scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param point_radius_units <`"pixels"` | `"meters"`> The units of point radius.
 #' @param point_radius_scale <`number`> The radius multiplier for all points.
 #' @param point_radius_min_pixels <`number`> The minimum radius in pixels.
@@ -642,6 +658,7 @@ NULL
 #' @param max_requests <`number`> Maximum number of concurrent HTTP
 #'   requests across all specified tile provider domains. If a negative number is
 #'   supplied no throttling occurs (HTTP/2 only).
+#' @param zoom_offset <`int`> The offset changes the zoom level at which the tiles are fetched.
 #' @param texture not yet supported.
 #' @param get_orientation <[`accessor`]> not yet supported.
 #' @param get_scale <[`accessor`]> not yet supported.

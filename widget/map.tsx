@@ -43,6 +43,7 @@ export function Map({ props, layers }: MapProps) {
   return (
     <Fragment>
       <DeckGL
+        // @ts-ignore
         ref={deckgl}
         {...deckProps}
         parameters={_parameters}
@@ -50,7 +51,6 @@ export function Map({ props, layers }: MapProps) {
         onHover={handleHover}
       >
         <MapView id="map" controller={controller} repeat={true}>
-          {/* @ts-ignore */}
           {mapStyle && <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />}
         </MapView>
       </DeckGL>

@@ -265,6 +265,18 @@ validate_refinement_strategy.layer <- function(layer) {
   assert_in(refinement_strategy, c("best-available", "no-overlap", "never"))
 }
 
+# validate high_precision
+validate_high_precision.layer <- function(layer) {
+  high_precision <- layer$high_precision
+  assert_in(high_precision, c(TRUE, FALSE, "auto"))
+}
+
+# validate point_type
+validate_point_type.layer <- function(layer) {
+  point_type <- layer$point_type
+  assert_in(point_type, c("circle", "icon", "text"))
+}
+
 # validate blending_mode
 validate_blending_mode <- function(layer) {
   assert_is_string(layer$blending_mode, "blending_mode")

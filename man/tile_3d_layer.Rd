@@ -22,11 +22,11 @@ add_tile_3d_layer(
   highlight_color = "#00008080",
   get_point_color = "#000000ff",
   point_size = 1,
-  loader = list(id = "3d-tiles", name = "3D Tiles", version = "2.3.13", extensions =
-    c("cmpt", "pnts", "b3dm", "i3dm"), mimeTypes = c("application/octet-stream"), tests =
-    c("cmpt", "pnts", "b3dm", "i3dm"), parse = NULL, options = list(`3d-tiles` =
-    list(loadGLTF = TRUE, decodeQuantizedPositions = FALSE, isTileset = "auto", tile =
-    NULL, tileset = NULL, assetGltfUpAxis = NULL))),
+  loader = list(id = "3d-tiles", name = "3D Tiles", module = "3d-tiles", version =
+    "3.1.0", extensions = c("cmpt", "pnts", "b3dm", "i3dm"), mimeTypes =
+    c("application/octet-stream"), tests = c("cmpt", "pnts", "b3dm", "i3dm"), parse =
+    NULL, options = list(`3d-tiles` = list(loadGLTF = TRUE, decodeQuantizedPositions =
+    FALSE, isTileset = "auto", assetGltfUpAxis = NULL))),
   blending_mode = "normal",
   visibility_toggle = TRUE,
   tooltip = FALSE

@@ -27,6 +27,7 @@ add_column_layer(
   offset = c(0, 0),
   coverage = 1,
   elevation_scale = 1,
+  radius_units = "meters",
   line_width_units = "meters",
   line_width_scale = 1,
   line_width_min_pixels = 0,
@@ -115,6 +116,8 @@ to the radius.}
 calculated by \code{coverage * radius}.}
 
 \item{elevation_scale}{<\code{number}> The elevation multiplier.}
+
+\item{radius_units}{<\code{"pixels"} | \code{"meters"}> The units of point radius.}
 
 \item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of outline width.
 Applied when \code{extruded == FALSE} and \code{stroked == TRUE}.}

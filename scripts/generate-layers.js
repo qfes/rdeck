@@ -37,7 +37,7 @@ function defaultValue({ name, type, value }) {
   }
 
   if (type === "accessor" && typeof value === "function") {
-    const [match] = /(?<=return\s+).*(?=;)/.exec(value.toString());
+    const [match] = /(?<=(return|=>)\s*)[^;]+/.exec(value.toString());
     return snakeCase(match.split(".").pop());
   }
 

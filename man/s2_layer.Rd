@@ -20,7 +20,6 @@ add_s2_layer(
   color_format = "RGBA",
   auto_highlight = FALSE,
   highlight_color = "#00008080",
-  get_s2_token = token,
   stroked = TRUE,
   filled = TRUE,
   extruded = FALSE,
@@ -37,6 +36,7 @@ add_s2_layer(
   get_line_width = 1,
   get_elevation = 1000,
   material = TRUE,
+  get_s2_token = token,
   blending_mode = "normal",
   visibility_toggle = TRUE,
   tooltip = FALSE
@@ -92,9 +92,6 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_s2_token}{<\code{\link{accessor}}> The S2 hex token for each S2 cell. Accepts a
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column.}
-
 \item{stroked}{<\code{boolean}> If \code{TRUE}, draw an outline around each object.}
 
 \item{filled}{<\code{boolean}> If \code{TRUE}, draw the filled area of each point.}
@@ -139,6 +136,9 @@ Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
 \item{material}{<\code{boolean}>}
+
+\item{get_s2_token}{<\code{\link{accessor}}> The S2 hex token for each S2 cell. Accepts a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:

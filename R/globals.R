@@ -14,6 +14,8 @@ utils::globalVariables(c(
   "path", # <add_path_layer>
   "polygon", # <add_polygon_layer>
   "polygon", # <add_solid_polygon_layer>
+  "icon", # <add_geojson_layer>
+  "text", # <add_geojson_layer>
   "text", # <add_text_layer>
   "position", # <add_text_layer>
   "position", # <add_screen_grid_layer>
@@ -30,6 +32,8 @@ utils::globalVariables(c(
   "hexagon", # <add_h3_hexagon_layer>
   "path", # <add_trips_layer>
   "timestamps", # <add_trips_layer>
+  "icon", # <add_mvt_layer>
+  "text", # <add_mvt_layer>
   "position", # <add_simple_mesh_layer>
   "position", # <add_scenegraph_layer>
   NULL

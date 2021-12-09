@@ -23,9 +23,11 @@ layer.GeoJsonLayer <- function(type,
                                highlight_color,
                                get_line_color,
                                get_fill_color,
-                               get_radius,
+                               get_point_radius,
                                get_line_width,
                                get_elevation,
+                               get_text,
+                               get_icon,
                                tooltip) {
   if (inherits(highlight_color, "accessor")) {
     highlight_color$data_type <- "geojson"
@@ -36,14 +38,20 @@ layer.GeoJsonLayer <- function(type,
   if (inherits(get_fill_color, "accessor")) {
     get_fill_color$data_type <- "geojson"
   }
-  if (inherits(get_radius, "accessor")) {
-    get_radius$data_type <- "geojson"
+  if (inherits(get_point_radius, "accessor")) {
+    get_point_radius$data_type <- "geojson"
   }
   if (inherits(get_line_width, "accessor")) {
     get_line_width$data_type <- "geojson"
   }
   if (inherits(get_elevation, "accessor")) {
     get_elevation$data_type <- "geojson"
+  }
+  if (inherits(get_text, "accessor")) {
+    get_text$data_type <- "geojson"
+  }
+  if (inherits(get_icon, "accessor")) {
+    get_icon$data_type <- "geojson"
   }
   if (inherits(tooltip, "tooltip")) {
     tooltip$data_type <- "geojson"

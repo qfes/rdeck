@@ -30,8 +30,9 @@ add_terrain_layer(
   refinement_strategy = "best-available",
   z_range = NULL,
   max_requests = 6,
-  elevation_data = "",
-  texture = "",
+  zoom_offset = 0,
+  elevation_data = NULL,
+  texture = NULL,
   mesh_max_error = 4,
   bounds = NULL,
   color = c(255, 255, 255),
@@ -119,6 +120,8 @@ layer refines visibility of tiles. Defaults to \code{"best-available"}.}
 \item{max_requests}{<\code{number}> Maximum number of concurrent HTTP
 requests across all specified tile provider domains. If a negative number is
 supplied no throttling occurs (HTTP/2 only).}
+
+\item{zoom_offset}{<\code{int}> The offset changes the zoom level at which the tiles are fetched.}
 
 \item{elevation_data}{url}
 

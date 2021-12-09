@@ -95,7 +95,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{size_scale}{<\code{number}> The size multiplier.}
 
-\item{billboard}{<\code{boolean}> If \code{TRUE}, the text label always faces the camera, otherwise it
+\item{billboard}{<\code{boolean}> If \code{TRUE}, the icon always faces the camera, otherwise it
 faces up (z).}
 
 \item{size_units}{<\code{"pixels"} | \code{"meters"}> The units of the size specified by

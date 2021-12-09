@@ -20,27 +20,70 @@ add_geojson_layer(
   color_format = "RGBA",
   auto_highlight = FALSE,
   highlight_color = "#00008080",
-  stroked = TRUE,
   filled = TRUE,
+  stroked = TRUE,
+  line_width_max_pixels = 9007199254740991,
+  line_width_min_pixels = 0,
+  line_width_scale = 1,
+  line_width_units = "meters",
+  point_radius_max_pixels = 9007199254740991,
+  point_radius_min_pixels = 0,
+  point_radius_scale = 1,
+  point_radius_units = "meters",
+  point_antialiasing = TRUE,
+  point_billboard = FALSE,
+  get_fill_color = "#000000ff",
+  get_line_color = "#000000ff",
+  get_line_width = 1,
+  get_point_radius = 1,
+  icon_atlas = NULL,
+  icon_mapping = list(),
+  icon_size_max_pixels = 9007199254740991,
+  icon_size_min_pixels = 0,
+  icon_size_scale = 1,
+  icon_size_units = "pixels",
+  icon_alpha_cutoff = 0.05,
+  icon_billboard = TRUE,
+  get_icon = icon,
+  get_icon_angle = 0,
+  get_icon_color = "#000000ff",
+  get_icon_pixel_offset = c(0, 0),
+  get_icon_size = 1,
+  text_size_max_pixels = 9007199254740991,
+  text_size_min_pixels = 0,
+  text_size_scale = 1,
+  text_size_units = "pixels",
+  text_background = FALSE,
+  text_background_padding = c(0, 0, 0, 0),
+  text_font_family = "Monaco, monospace",
+  text_font_weight = "normal",
+  text_line_height = 1,
+  text_max_width = -1,
+  text_outline_color = "#000000ff",
+  text_outline_width = 0,
+  text_word_break = "break-word",
+  text_billboard = TRUE,
+  text_font_settings = list(),
+  get_text = text,
+  get_text_angle = 0,
+  get_text_color = "#000000ff",
+  get_text_pixel_offset = c(0, 0),
+  get_text_size = 32,
+  get_text_anchor = "middle",
+  get_text_alignment_baseline = "center",
+  get_text_background_color = "#ffffffff",
+  get_text_border_color = "#000000ff",
+  get_text_border_width = 0,
+  line_joint_rounded = FALSE,
+  line_cap_rounded = FALSE,
+  line_miter_limit = 4,
+  line_billboard = FALSE,
   extruded = FALSE,
   wireframe = FALSE,
-  line_width_units = "meters",
-  line_width_scale = 1,
-  line_width_min_pixels = 0,
-  line_width_max_pixels = 9007199254740991,
-  line_joint_rounded = FALSE,
-  line_miter_limit = 4,
   elevation_scale = 1,
-  point_radius_units = "meters",
-  point_radius_scale = 1,
-  point_radius_min_pixels = 0,
-  point_radius_max_pixels = 9007199254740991,
-  get_line_color = "#000000ff",
-  get_fill_color = "#000000ff",
-  get_radius = 1,
-  get_line_width = 1,
-  get_elevation = 1000,
   material = TRUE,
+  get_elevation = 1000,
+  point_type = "circle",
   blending_mode = "normal",
   visibility_toggle = TRUE,
   tooltip = FALSE
@@ -96,9 +139,47 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
+\item{filled}{<\code{boolean}> If \code{TRUE}, draw the filled area of each point.}
+
 \item{stroked}{<\code{boolean}> If \code{TRUE}, draw an outline around each object.}
 
-\item{filled}{<\code{boolean}> If \code{TRUE}, draw the filled area of each point.}
+\item{line_width_max_pixels}{<\code{number}> The maximum line width in pixels.}
+
+\item{line_width_min_pixels}{<\code{number}> The minimum line width in pixels.}
+
+\item{line_width_scale}{<\code{number}> The line width multiplier.}
+
+\item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of line width.}
+
+\item{point_radius_max_pixels}{<\code{number}> The maximum radius in pixels.}
+
+\item{point_radius_min_pixels}{<\code{number}> The minimum radius in pixels.}
+
+\item{point_radius_scale}{<\code{number}> The radius multiplier for all points.}
+
+\item{point_radius_units}{<\code{"pixels"} | \code{"meters"}> The units of point radius.}
+
+\item{get_fill_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The fill colour of each object.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+
+\item{get_line_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The line colour of each object.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+
+\item{get_line_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The outline of the object
+in units specified by \code{line_width_units}.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+
+\item{get_point_radius}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The radius of each point, in units
+specified by \code{radius_units}.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+
+\item{line_joint_rounded}{<\code{boolean}>}
+
+\item{line_miter_limit}{number}
 
 \item{extruded}{<\code{boolean}> If \code{TRUE}, extrude objects along the z-axis; if \code{FALSE}, all
 objects will be flat.}
@@ -107,52 +188,17 @@ objects will be flat.}
 object. The outline will have horizontal lines closing the top and bottom polygons and
 vertical lines for each vertex of the polygon.}
 
-\item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of line width.}
-
-\item{line_width_scale}{<\code{number}> The line width multiplier.}
-
-\item{line_width_min_pixels}{<\code{number}> The minimum line width in pixels.}
-
-\item{line_width_max_pixels}{<\code{number}> The maximum line width in pixels.}
-
-\item{line_joint_rounded}{<\code{boolean}>}
-
-\item{line_miter_limit}{number}
-
 \item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
-\item{point_radius_units}{<\code{"pixels"} | \code{"meters"}> The units of point radius.}
-
-\item{point_radius_scale}{<\code{number}> The radius multiplier for all points.}
-
-\item{point_radius_min_pixels}{<\code{number}> The minimum radius in pixels.}
-
-\item{point_radius_max_pixels}{<\code{number}> The maximum radius in pixels.}
-
-\item{get_line_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The line colour of each object.
-Accepts a single colour value, a colour scale, or a
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
-
-\item{get_fill_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The fill colour of each object.
-Accepts a single colour value, a colour scale, or a
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
-
-\item{get_radius}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The radius of each point, in units
-specified by \code{radius_units}.
-Accepts a single numeric value, a numeric scale, or a
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
-
-\item{get_line_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The outline of the object
-in units specified by \code{line_width_units}.
-Accepts a single numeric value, a numeric scale, or a
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+\item{material}{<\code{boolean}>}
 
 \item{get_elevation}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The elevation to extrude each
 object in the z-axis. Height units are in metres.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{material}{<\code{boolean}>}
+\item{point_type}{<\code{"circle"}|\code{"icon"}|\code{"text"}> Determines how to render point
+and multipoint features.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:

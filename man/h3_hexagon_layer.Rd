@@ -36,7 +36,7 @@ add_h3_hexagon_layer(
   get_line_width = 1,
   get_elevation = 1000,
   material = TRUE,
-  high_precision = FALSE,
+  high_precision = "auto",
   coverage = 1,
   center_hexagon = NULL,
   get_hexagon = hexagon,

@@ -16,24 +16,25 @@ dependencies:
       - vendor/probe.gl.js
       - vendor/d3-format.js
       - vendor/d3-interpolate.js
-      - vendor/mjolnir.js.js
       - vendor/d3-scale.js
-      - vendor/gl-matrix.js
+      - vendor/mjolnir.js.js
       - vendor/d3-array.js
+      - vendor/gl-matrix.js
       - vendor/react.js
       - vendor/prop-types.js
       - vendor/hoist-non-react-statics.js
-      - vendor/mapbox.js
+      - vendor/d3-color.js
       - vendor/scheduler.js
       - vendor/react-dom.js
       - vendor/d3-hexbin.js
-      - vendor/d3-color.js
+      - vendor/internmap.js
       - vendor/viewport-mercator-project.js
       - vendor/resize-observer-polyfill.js
       - vendor/pbf.js
       - vendor/object-assign.js
       - vendor/mapbox-gl.js
       - vendor/long.js
+      - vendor/ktx-parse.js
       - vendor/jss.js
       - vendor/jss-plugin-vendor-prefixer.js
       - vendor/jss-plugin-rule-value-function.js
@@ -50,3 +51,4 @@ dependencies:
       - vendor/earcut.js
       - vendor/css-vendor.js
       - vendor/clsx.js
+      - vendor/mapbox.js

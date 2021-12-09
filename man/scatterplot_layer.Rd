@@ -30,6 +30,8 @@ add_scatterplot_layer(
   line_width_max_pixels = 9007199254740991,
   stroked = FALSE,
   filled = TRUE,
+  billboard = FALSE,
+  antialiasing = TRUE,
   get_position = position,
   get_radius = 1,
   get_fill_color = "#000000ff",
@@ -109,6 +111,12 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{stroked}{<\code{boolean}> If \code{TRUE}, draw an outline around each object.}
 
 \item{filled}{<\code{boolean}> If \code{TRUE}, draw the filled area of each point.}
+
+\item{billboard}{<\code{boolean}> If \code{TRUE}, the object always faces the camera;
+if \code{FALSE}, it faces up always faces up (z).}
+
+\item{antialiasing}{<\code{boolean}> If \code{TRUE}, objects are rendered with smoothed
+edges.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, either a \code{sfc_POINT} or
 a \code{sfc_MULTIPOINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.

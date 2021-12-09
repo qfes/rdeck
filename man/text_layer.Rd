@@ -25,10 +25,16 @@ add_text_layer(
   size_units = "pixels",
   size_min_pixels = 0,
   size_max_pixels = 9007199254740991,
-  background_color = NULL,
+  background = FALSE,
+  get_background_color = "#ffffffff",
+  get_border_color = "#000000ff",
+  get_border_width = 0,
+  background_padding = c(0, 0, 0, 0),
   font_family = "Roboto, Helvetica, Arial, san-serif",
   font_weight = "normal",
   line_height = 1,
+  outline_width = 0,
+  outline_color = "#000000ff",
   font_settings = list(),
   word_break = "break-word",
   max_width = -1,
@@ -107,9 +113,6 @@ faces up (z).}
 
 \item{size_max_pixels}{<\code{number}> The maximum size in pixels.}
 
-\item{background_color}{<\code{\link{color}}> The colour to use for the text background. The alpha
-channel is ignored. The alpha of the background matches the opacity of each object.}
-
 \item{font_family}{<\code{string}> Specifies a prioritised list of one or more font family names.
 See \href{https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}{font-family}.}
 
@@ -172,6 +175,9 @@ dot density on light maps.
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
 \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+
+\item{background_color}{<\code{\link{color}}> The colour to use for the text background. The alpha
+channel is ignored. The alpha of the background matches the opacity of each object.}
 }
 \description{
 Text Layer
