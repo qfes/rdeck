@@ -36,7 +36,9 @@ export function Map({ props, layers }: MapProps) {
   const animating = layers.filter((layer) => layer.type === "TripsLayer").length !== 0;
   useAnimation(animating, (time) => setTime(time));
 
-  const _layers = layers.map((layer) => layer.renderLayer(time));
+  const _layers = layers
+    .filter((layer) => layer.type != null)
+    .map((layer) => layer.renderLayer(time));
 
   return (
     <Fragment>
