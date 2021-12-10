@@ -78,15 +78,15 @@ function isMultiGeometryFn(type: GeometryType) {
 }
 
 function isMultiPoint(geometry: Position | Position[]): geometry is Position[] {
-  return Array.isArray(geometry[0]);
+  return Array.isArray(geometry?.[0]);
 }
 
 function isMultiLineString(geometry: Position[] | Position[][]): geometry is Position[][] {
-  return Array.isArray(geometry[0][0]);
+  return Array.isArray(geometry?.[0]?.[0]);
 }
 
 function isMultiPolygon(geometry: Position[][] | Position[][][]): geometry is Position[][][] {
-  return Array.isArray(geometry[0][0][0]);
+  return Array.isArray(geometry?.[0]?.[0]?.[0]);
 }
 
 function getMultiGeometry(data: DataFrame): GeometryInfo[] {

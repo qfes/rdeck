@@ -23,16 +23,35 @@ export class MultiHighlightExtension extends LayerExtension {
 
     if (attributeManager) {
       attributeManager.addInstanced({
-        instancePickingColors: {
+        pickingColors: {
           type: GL.UNSIGNED_BYTE,
           size: 3,
-          accessor: (_, { index, data, target }) =>
-            layer.encodePickingColor(
-              isDataFrame(data) && Array.isArray(data.indices)
-                ? data.indices.indexOf(data.indices[index])
-                : index,
-              target
-            ),
+          accessor: (object, { index, data, target }) => {
+            // data is a dataframe, with flattened geometries?
+            if (isDataFrame(data) && Array.isArray(data.indices)) {
+              return layer.encodePickingColor(data.indices.indexOf(data.indices[index]), target);
+            }
+
+            // sub-layer, where parent data is a dataframe with flattened geometries?
+            const parentData = object?.__source?.parent?.props.data;
+            if (isDataFrame(parentData) && Array.isArray(parentData.indices)) {
+              return layer.encodePickingColor(
+                parentData.indices.indexOf(parentData.indices[object.__source.index]),
+                target
+              );
+            }
+
+            // default
+            return layer.encodePickingColor(object?.__source.index ?? index, target);
+          },
+          shaderAttributes: {
+            pickingColors: {
+              divisor: 0,
+            },
+            instancePickingColors: {
+              divisor: 1,
+            },
+          },
         },
       });
     }

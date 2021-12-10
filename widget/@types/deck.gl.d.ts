@@ -39,6 +39,7 @@ declare module "@deck.gl/core" {
     size: number;
     accessor?: AccessorFn<any, any>;
     update?: (attribute: any, numInstances: any) => void;
+    shaderAttributes?: Record<string, any>;
   }
 }
 
