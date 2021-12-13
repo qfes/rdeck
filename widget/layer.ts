@@ -4,12 +4,13 @@ import type { BitmapLayerProps } from "@deck.gl/layers";
 import type { TileLayerProps } from "@deck.gl/geo-layers";
 import type { FeatureCollection } from "geojson";
 
-import { parseColor } from "./color";
-import { AccessorScale, accessorScale, isAccessorScale } from "./scale";
-import { accessor, Accessor, isAccessor } from "./accessor";
+import { parseColor as _parseColor } from "./color";
+import { AccessorScale, accessorScale as _accessorScale, isAccessorScale } from "./scale";
+import { accessor as _accessor, Accessor, isAccessor } from "./accessor";
 import { blendingParameters } from "./blending";
-import { flattenGeometries, isDataFrame } from "./data-frame";
+import { flattenGeometries as _flattenGeometries, isDataFrame } from "./data-frame";
 import { MultiHighlightExtension } from "./multi-highlight-extension";
+import { memoize } from "./util";
 
 type LayerData = string | DataFrame | FeatureCollection;
 type Entry<T> = [string, T];
@@ -37,6 +38,12 @@ interface TripsLayerProps extends LayerProps {
   loopLength: number;
   animationSpeed: number;
 }
+
+// performance optimisation: avoid shallow prop changes
+const flattenGeometries = memoize(_flattenGeometries);
+const parseColor = memoize(_parseColor);
+const accessor = memoize(_accessor);
+const accessorScale = memoize(_accessorScale);
 
 export class Layer {
   type: string;
