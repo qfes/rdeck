@@ -56,3 +56,12 @@ type Nullable<T> = T | null;
 export function classNames(...classNames: Nullable<string>[]): string {
   return classNames.filter((x) => x != null).join(" ");
 }
+
+export function debounce<T extends (...args: any[]) => any>(fn: T, wait: number = 0) {
+  let timeout: number;
+
+  return (...args: any[]) => {
+    window.clearTimeout(timeout);
+    timeout = window.setTimeout(() => fn(...args), wait);
+  };
+}

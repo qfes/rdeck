@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import { App, AppProps, DeckProps } from "./app";
 import type { LayerProps } from "./layer";
-import { getElementDimensions } from "./util";
+import { debounce, getElementDimensions } from "./util";
 
 export const binding: HTMLWidgets.Binding = {
   name: "rdeck",
@@ -37,22 +37,27 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     this.#width = width;
     this.#height = height;
     if (HTMLWidgets.shinyMode) {
+      const debouncedRender = debounce((props = {}) => this.renderValue(props), 50);
+
       // update layers
       Shiny.addCustomMessageHandler(`${el.id}:layer`, (layer: LayerProps) => {
         const _layer = this.layers.find((x) => x.id === layer.id);
-        if (!_layer) {
-          return this.renderValue({ layers: [...this.layers, layer] });
-        }
+        const merged = {
+          ..._layer,
+          ...layer,
+          // if visible is null, use existing
+          visible: layer.visible ?? _layer?.visible,
+          // if data is not supplied / is falsey from shiny, use existing
+          data: layer.data ?? _layer?.data ?? null,
+        };
 
-        // if visible is null, use existing
-        const visible = layer.visible ?? _layer.visible;
+        // upsert
+        this.layers =
+          _layer == null
+            ? [...this.layers, merged]
+            : this.layers.map((x) => (x === _layer ? merged : x));
 
-        // if data is not supplied / is falsey from shiny, use existing
-        const data = layer.data ?? _layer.data;
-
-        const merged = { ..._layer, ...layer, visible, data };
-        const layers = this.layers.map((x) => (x === _layer ? merged : x));
-        this.renderValue({ layers });
+        debouncedRender({ layers: this.layers });
       });
 
       // update map
