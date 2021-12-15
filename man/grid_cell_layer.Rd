@@ -118,9 +118,9 @@ calculated by \code{coverage * radius}.}
 
 \item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
-\item{radius_units}{<\code{"pixels"} | \code{"meters"}> The units of point radius.}
+\item{radius_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of point radius.}
 
-\item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of line width.}
+\item{line_width_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of line width.}
 
 \item{line_width_scale}{<\code{number}> The line width multiplier.}
 

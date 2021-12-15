@@ -100,7 +100,7 @@ specified by \code{width_scale}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{width_units}{<\code{"pixels"} | \code{"meters"}> The units of the \code{line_width}.}
+\item{width_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of the \code{line_width}.}
 
 \item{width_scale}{<\code{number}> The scaling multiplier for the width of each line.}
 

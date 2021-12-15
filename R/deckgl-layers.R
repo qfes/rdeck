@@ -1218,6 +1218,8 @@ add_geojson_layer <- function(rdeck,
                               visibility_toggle = TRUE,
                               tooltip = FALSE) {
   check_dots(...)
+  draw_text <- !is.null(point_type) && grepl("text", point_type)
+  draw_icon <- !is.null(point_type) && grepl("icon", point_type)
   # construct layer object
   geojson_layer <- layer(
     type = "GeoJsonLayer",
@@ -1258,7 +1260,7 @@ add_geojson_layer <- function(rdeck,
     icon_size_units = icon_size_units,
     icon_alpha_cutoff = icon_alpha_cutoff,
     icon_billboard = icon_billboard,
-    get_icon = if (point_type == "icon") accessor(rlang::enquo(get_icon), data),
+    get_icon = if (draw_icon) accessor(rlang::enquo(get_icon), data),
     get_icon_angle = accessor(rlang::enquo(get_icon_angle), data),
     get_icon_color = accessor_scale(rlang::enquo(get_icon_color), data),
     get_icon_pixel_offset = accessor(rlang::enquo(get_icon_pixel_offset), data),
@@ -1278,7 +1280,7 @@ add_geojson_layer <- function(rdeck,
     text_word_break = text_word_break,
     text_billboard = text_billboard,
     text_font_settings = text_font_settings,
-    get_text = if (point_type == "text") accessor(rlang::enquo(get_text), data),
+    get_text = if (draw_text) accessor(rlang::enquo(get_text), data),
     get_text_angle = accessor(rlang::enquo(get_text_angle), data),
     get_text_color = accessor_scale(rlang::enquo(get_text_color), data),
     get_text_pixel_offset = accessor(rlang::enquo(get_text_pixel_offset), data),
@@ -1339,7 +1341,7 @@ add_geojson_layer <- function(rdeck,
   validate_icon_size_units(geojson_layer)
   validate_icon_alpha_cutoff(geojson_layer)
   validate_icon_billboard(geojson_layer)
-  if (point_type == "icon") validate_get_icon(geojson_layer)
+  if (draw_icon) validate_get_icon(geojson_layer)
   validate_get_icon_angle(geojson_layer)
   validate_get_icon_color(geojson_layer)
   validate_get_icon_pixel_offset(geojson_layer)
@@ -1359,7 +1361,7 @@ add_geojson_layer <- function(rdeck,
   validate_text_word_break(geojson_layer)
   validate_text_billboard(geojson_layer)
   validate_text_font_settings(geojson_layer)
-  if (point_type == "text") validate_get_text(geojson_layer)
+  if (draw_text) validate_get_text(geojson_layer)
   validate_get_text_angle(geojson_layer)
   validate_get_text_color(geojson_layer)
   validate_get_text_pixel_offset(geojson_layer)
@@ -3262,6 +3264,8 @@ add_mvt_layer <- function(rdeck,
                           visibility_toggle = TRUE,
                           tooltip = FALSE) {
   check_dots(...)
+  draw_text <- !is.null(point_type) && grepl("text", point_type)
+  draw_icon <- !is.null(point_type) && grepl("icon", point_type)
   # construct layer object
   mvt_layer <- layer(
     type = "MVTLayer",
@@ -3316,7 +3320,7 @@ add_mvt_layer <- function(rdeck,
     icon_size_units = icon_size_units,
     icon_alpha_cutoff = icon_alpha_cutoff,
     icon_billboard = icon_billboard,
-    get_icon = if (point_type == "icon") accessor(rlang::enquo(get_icon), data),
+    get_icon = if (draw_icon) accessor(rlang::enquo(get_icon), data),
     get_icon_angle = accessor(rlang::enquo(get_icon_angle), data),
     get_icon_color = accessor_scale(rlang::enquo(get_icon_color), data),
     get_icon_pixel_offset = accessor(rlang::enquo(get_icon_pixel_offset), data),
@@ -3336,7 +3340,7 @@ add_mvt_layer <- function(rdeck,
     text_word_break = text_word_break,
     text_billboard = text_billboard,
     text_font_settings = text_font_settings,
-    get_text = if (point_type == "text") accessor(rlang::enquo(get_text), data),
+    get_text = if (draw_text) accessor(rlang::enquo(get_text), data),
     get_text_angle = accessor(rlang::enquo(get_text_angle), data),
     get_text_color = accessor_scale(rlang::enquo(get_text_color), data),
     get_text_pixel_offset = accessor(rlang::enquo(get_text_pixel_offset), data),
@@ -3411,7 +3415,7 @@ add_mvt_layer <- function(rdeck,
   validate_icon_size_units(mvt_layer)
   validate_icon_alpha_cutoff(mvt_layer)
   validate_icon_billboard(mvt_layer)
-  if (point_type == "icon") validate_get_icon(mvt_layer)
+  if (draw_icon) validate_get_icon(mvt_layer)
   validate_get_icon_angle(mvt_layer)
   validate_get_icon_color(mvt_layer)
   validate_get_icon_pixel_offset(mvt_layer)
@@ -3431,7 +3435,7 @@ add_mvt_layer <- function(rdeck,
   validate_text_word_break(mvt_layer)
   validate_text_billboard(mvt_layer)
   validate_text_font_settings(mvt_layer)
-  if (point_type == "text") validate_get_text(mvt_layer)
+  if (draw_text) validate_get_text(mvt_layer)
   validate_get_text_angle(mvt_layer)
   validate_get_text_color(mvt_layer)
   validate_get_text_pixel_offset(mvt_layer)

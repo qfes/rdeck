@@ -91,7 +91,7 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{width_units}{<\code{"pixels"} | \code{"meters"}> The units of the \code{line_width}.}
+\item{width_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of the \code{line_width}.}
 
 \item{width_scale}{<\code{number}> The scaling multiplier for the width of each line.}
 

@@ -106,7 +106,7 @@ faces up (z).}
 
 \item{size_scale}{<\code{number}> The size multiplier.}
 
-\item{size_units}{<\code{"pixels"} | \code{"meters"}> The units of the size specified by
+\item{size_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of the size specified by
 \code{get_size}.}
 
 \item{size_min_pixels}{<\code{number}> The minimum size in pixels.}

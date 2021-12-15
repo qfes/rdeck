@@ -87,7 +87,7 @@ validate_color_format.layer <- function(layer) {
 
 assert_units <- function(value, name) {
   assert_is_string(value, name)
-  assert_in(value, c("pixels", "meters"), name)
+  assert_in(value, c("pixels", "common", "meters"), name)
 }
 
 # validate width_units
@@ -273,8 +273,19 @@ validate_high_precision.layer <- function(layer) {
 
 # validate point_type
 validate_point_type.layer <- function(layer) {
+  # build vector of all point type combinations
+  types <- c("circle", "icon", "text")
+  grid <- expand.grid(z = types, y = types, x = types) %>%
+    subset(x != y & x != z & y != z) %>%
+    transform(
+      pair = paste(x, y, sep = "+"),
+      triple = paste(x, y, z, sep = "+")
+    )
+
+  all_types <- c(types, unique(grid$pair), grid$triple)
+
   point_type <- layer$point_type
-  assert_in(point_type, c("circle", "icon", "text"))
+  assert_in(point_type, all_types)
 }
 
 # validate blending_mode

@@ -91,7 +91,7 @@ NULL
 #' @name column_layer
 #' @inherit layer_props
 #' @param radius <`number`> The radius of the column in metres.
-#' @param line_width_units <`"pixels"` | `"meters"`> The units of outline width.
+#' @param line_width_units <`"pixels"` | `"common"` | `"meters"`> The units of outline width.
 #' Applied when `extruded == FALSE` and `stroked == TRUE`.
 #' @eval deckgl_docs("layers", "column-layer")
 #' @family core-layers
@@ -495,8 +495,8 @@ NULL
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param great_circle <`boolean`> If `TRUE`, create the arc along the shortest path on the
 #' earth surface.
-#' @param radius_units <`"pixels"` | `"meters"`> The units of point radius.
-#' @param width_units <`"pixels"` | `"meters"`> The units of the `line_width`.
+#' @param radius_units <`"pixels"` | `"common"` | `"meters"`> The units of point radius.
+#' @param width_units <`"pixels"` | `"common"` | `"meters"`> The units of the `line_width`.
 #' @param width_scale <`number`> The scaling multiplier for the width of each line.
 #' @param width_min_pixels <`number`> The minimum line width in pixels.
 #' @param width_max_pixels <`number`> The maximum line width in pixels.
@@ -507,7 +507,7 @@ NULL
 #' @param antialiasing <`boolean`> If `TRUE`, objects are rendered with smoothed
 #' edges.
 #' @param size_scale <`number`> The size multiplier.
-#' @param size_units <`"pixels"` | `"meters"`> The units of the size specified by
+#' @param size_units <`"pixels"` | `"common"` | `"meters"`> The units of the size specified by
 #' `get_size`.
 #' @param size_min_pixels <`number`> The minimum size in pixels.
 #' @param size_max_pixels <`number`> The maximum size in pixels.
@@ -521,7 +521,7 @@ NULL
 #' @param point_size <`number`> The radius of all points in units specified
 #' by `size_units`.
 #' @param material <`boolean`>
-#' @param line_width_units <`"pixels"` | `"meters"`> The units of line width.
+#' @param line_width_units <`"pixels"` | `"common"` | `"meters"`> The units of line width.
 #' @param line_width_scale <`number`> The line width multiplier.
 #' @param line_width_min_pixels <`number`> The minimum line width in pixels.
 #' @param line_width_max_pixels <`number`> The maximum line width in pixels.
@@ -578,13 +578,18 @@ NULL
 #' @param get_polygon <[`accessor`]> The polygon geometry column, either a `sfc_POLYGON`
 #' or a `sfc_MULTIPOLYGON` column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
-#' @param point_type <`"circle"`|`"icon"`|`"text"`> Determines how to render point
-#' and multipoint features.
+#' @param point_type <`"circle"`|`"icon"`|`"text"`|combination>
+#' Determines how to render point and multipoint features. May be one of:
+#' - `"circle"`
+#' - `"icon"`
+#' - `"text"`
+#'
+#' Or a combination, separated by `"+"`, e.g. `"circle+text"`.
 #' @param get_point_radius <[`accessor`] | [`scale`] | `number`> The radius of each point, in units
 #' specified by `radius_units`.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param point_radius_units <`"pixels"` | `"meters"`> The units of point radius.
+#' @param point_radius_units <`"pixels"` | `"common"` | `"meters"`> The units of point radius.
 #' @param point_radius_scale <`number`> The radius multiplier for all points.
 #' @param point_radius_min_pixels <`number`> The minimum radius in pixels.
 #' @param point_radius_max_pixels <`number`> The maximum radius in pixels.

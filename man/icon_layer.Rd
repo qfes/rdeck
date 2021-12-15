@@ -98,7 +98,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{billboard}{<\code{boolean}> If \code{TRUE}, the icon always faces the camera, otherwise it
 faces up (z).}
 
-\item{size_units}{<\code{"pixels"} | \code{"meters"}> The units of the size specified by
+\item{size_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of the size specified by
 \code{get_size}.}
 
 \item{size_min_pixels}{<\code{number}> The minimum size in pixels.}

@@ -149,7 +149,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{line_width_scale}{<\code{number}> The line width multiplier.}
 
-\item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of line width.}
+\item{line_width_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of line width.}
 
 \item{point_radius_max_pixels}{<\code{number}> The maximum radius in pixels.}
 
@@ -157,7 +157,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{point_radius_scale}{<\code{number}> The radius multiplier for all points.}
 
-\item{point_radius_units}{<\code{"pixels"} | \code{"meters"}> The units of point radius.}
+\item{point_radius_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of point radius.}
 
 \item{get_fill_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The fill colour of each object.
 Accepts a single colour value, a colour scale, or a
@@ -197,8 +197,15 @@ object in the z-axis. Height units are in metres.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{point_type}{<\code{"circle"}|\code{"icon"}|\code{"text"}> Determines how to render point
-and multipoint features.}
+\item{point_type}{<\code{"circle"}|\code{"icon"}|\code{"text"}|combination>
+Determines how to render point and multipoint features. May be one of:
+\itemize{
+\item \code{"circle"}
+\item \code{"icon"}
+\item \code{"text"}
+}
+
+Or a combination, separated by \code{"+"}, e.g. \code{"circle+text"}.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:

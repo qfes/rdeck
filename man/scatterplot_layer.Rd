@@ -92,7 +92,7 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{radius_units}{<\code{"pixels"} | \code{"meters"}> The units of point radius.}
+\item{radius_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of point radius.}
 
 \item{radius_scale}{<\code{number}> The radius multiplier for all points.}
 
@@ -100,7 +100,7 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{radius_max_pixels}{<\code{number}> The maximum radius in pixels.}
 
-\item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of line width.}
+\item{line_width_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of line width.}
 
 \item{line_width_scale}{<\code{number}> The line width multiplier.}
 

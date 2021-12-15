@@ -124,7 +124,7 @@ Accepts a single numeric value or a
 \item{great_circle}{<\code{boolean}> If \code{TRUE}, create the arc along the shortest path on the
 earth surface.}
 
-\item{width_units}{<\code{"pixels"} | \code{"meters"}> The units of the \code{line_width}.}
+\item{width_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of the \code{line_width}.}
 
 \item{width_scale}{<\code{number}> The scaling multiplier for the width of each line.}
 

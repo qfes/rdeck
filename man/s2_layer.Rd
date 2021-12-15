@@ -105,7 +105,7 @@ objects will be flat.}
 object. The outline will have horizontal lines closing the top and bottom polygons and
 vertical lines for each vertex of the polygon.}
 
-\item{line_width_units}{<\code{"pixels"} | \code{"meters"}> The units of line width.}
+\item{line_width_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of line width.}
 
 \item{line_width_scale}{<\code{number}> The line width multiplier.}
 
