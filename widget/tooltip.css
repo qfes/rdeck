@@ -46,6 +46,7 @@
 .field-value {
   font-size: 11px;
   line-height: 1.3;
+  padding: 0;
 }
 
 .field-name {
