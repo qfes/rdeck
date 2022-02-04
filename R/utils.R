@@ -42,3 +42,11 @@ omit <- function(obj, names) {
 paste_line <- function(...) {
   paste(c(...), collapse = "\n")
 }
+
+# extension of sign, where 0 is treated as positive
+sign0 <- function(x) (x >= 0L) - (x < 0L)
+
+# are a and b approximately equal?
+isapprox <- function(a, b, tol = sqrt(.Machine$double.eps) / 2) {
+  abs(a - b) < abs(tol)
+}
