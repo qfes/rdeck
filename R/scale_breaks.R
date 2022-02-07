@@ -165,7 +165,7 @@ breaks_log <- function(n = 10, base = exp(1)) {
       tidyassert::assert_equal(
         sign(min(breaks)),
         sign(max(breaks)),
-        "range must to contain, nor cross 0"
+        "range must not contain, nor cross 0"
       )
     }
 

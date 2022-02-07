@@ -25,7 +25,7 @@ power_trans <- function(exponent = 0.5) {
 #'
 #' Applies a log transform on the input: `y = log(abs(x), b)`, where:
 #' - `x` is the input vector
-#' - `k` is the exponent
+#' - `b` is the log base
 #'
 #' @details
 #' If `x` is negative, the result is multiplied by -1.

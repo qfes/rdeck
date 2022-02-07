@@ -47,6 +47,6 @@ paste_line <- function(...) {
 sign0 <- function(x) (x >= 0L) - (x < 0L)
 
 # are a and b approximately equal?
-isapprox <- function(a, b, tol = sqrt(.Machine$double.eps) / 2) {
+isapprox <- function(a, b, tol = sqrt(.Machine$double.eps)) {
   abs(a - b) < abs(tol)
 }
