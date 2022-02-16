@@ -59,3 +59,11 @@ test_that("log_trans inverse throws if domain crosses 0", {
   expect_error(trans$inverse(trans$transform(0:5)), NA)
   expect_error(trans$inverse(trans$transform(-5:5)), class = "assert_error")
 })
+
+test_that("symlog_trans is invertible", {
+  trans <- symlog_trans()
+  expect_equal(
+    trans$inverse(trans$transform(-1e2:1e2)),
+    -1e2:1e2
+  )
+})
