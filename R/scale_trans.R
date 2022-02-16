@@ -11,7 +11,10 @@
 #' @family transform
 #' @export
 power_trans <- function(exponent = 0.5) {
-  force(exponent)
+  tidyassert::assert(
+    rlang::is_scalar_double(exponent) ||
+    rlang::is_scalar_integer(exponent)
+  )
 
   scales::trans_new(
     paste0("power-", exponent),
