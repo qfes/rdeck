@@ -13,18 +13,15 @@ log_trans(base = exp(1))
 Applies a log transform on the input: \code{y = log(abs(x), b)}, where:
 \itemize{
 \item \code{x} is the input vector
-\item \code{k} is the exponent
+\item \code{b} is the log base
 }
 }
 \details{
 If \code{x} is negative, the result is multiplied by -1.
 
-This transform assumes -- but doesn't enforce -- that the input range
-doesn't cross zero. Transforming an input that crosses 0 will give predictable
-output, but its inverse will not, due to unsigned 0 (i.e. -1 * log(1) == log(1)).
-
-For inverse, the sign for input zeros will be assumed negative if there any negative
-input, else positive.
+This transform requires that the input range doesn't cross zero. Transforming an input
+that crosses 0 will succeed and give predictable output, but its inverse will not, due
+to unsigned 0 (i.e. -1 * log(1) == log(1)).
 }
 \seealso{
 Other transform: 
