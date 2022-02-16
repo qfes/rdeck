@@ -39,9 +39,11 @@ Suggests:
     roxyglobals (>= 0.2.1),
     dplyr,
     RcppSimdJson,
-    viridis
+    viridis,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Remotes:
     anthonynorth/roxyglobals,
     anthonynorth/stylebox,
     qfes/tidyassert
+Config/testthat/edition: 3
