@@ -4,7 +4,9 @@
 #' - `x` is the input vector
 #' - `k` is the exponent
 #'
+#' @details
 #' If `x` is negative, the result is multiplied by -1.
+#'
 #' @name power_trans
 #' @param exponent <`number`> The power exponent
 #'
@@ -72,10 +74,8 @@ log_trans <- function(base = exp(1)) {
 #' Applies a log1p transform: `y = log1p(abs(x))`, where:
 #' - `x` is the input vector
 #'
-#' @details
-#' If `x` is negative, the result is multiplied by -1.
-#'
 #' @name symlog_trans
+#' @inherit power_trans details
 #'
 #' @family transform
 #' @export
