@@ -134,7 +134,7 @@ breaks_power <- function(n = 10, exponent = 0.5) {
 #'
 #' @details
 #' Input range must be finite and either be strictly negative or strictly positive;
-#' it must not cross, nor include 0. This is a hard limitation of `d3-scale`.
+#' it must not cross, nor include 0.
 #'
 #' If input range is non-finite, an empty vector is returned.
 #'
@@ -154,22 +154,16 @@ breaks_power <- function(n = 10, exponent = 0.5) {
 #' @family breaks
 #' @export
 breaks_log <- function(n = 10, base = exp(1)) {
-  trans <- log_trans(base)
-  breaks_fn <- breaks_trans(n, trans)
+  breaks_fn <- breaks_trans(n, log_trans(base))
   n_default <- n
 
   function(x, n = n_default) {
-    breaks <- breaks_fn(x, n)
+    tidyassert::assert(
+      min(x, na.rm = TRUE) > 0 | max(x, na.rm = TRUE) < 0,
+      "range must not contain, nor cross 0"
+    )
 
-    if (length(breaks) != 0) {
-      tidyassert::assert_equal(
-        sign(min(breaks)),
-        sign(max(breaks)),
-        "range must not contain, nor cross 0"
-      )
-    }
-
-    breaks
+    breaks_fn(x, n)
   }
 }
 
