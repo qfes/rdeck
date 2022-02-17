@@ -2,6 +2,7 @@
 % Please edit documentation in R/scale_breaks.R
 \name{breaks_manual}
 \alias{breaks_manual}
+\alias{manual_breaks}
 \title{Breaks manual}
 \usage{
 breaks_manual(thresholds = 0.5)

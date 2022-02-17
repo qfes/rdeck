@@ -2,6 +2,7 @@
 % Please edit documentation in R/scale_breaks.R
 \name{breaks_power}
 \alias{breaks_power}
+\alias{power_breaks}
 \title{Breaks power}
 \usage{
 breaks_power(n = 10, exponent = 0.5)

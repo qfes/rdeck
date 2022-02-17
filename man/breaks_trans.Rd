@@ -2,6 +2,7 @@
 % Please edit documentation in R/scale_breaks.R
 \name{breaks_trans}
 \alias{breaks_trans}
+\alias{trans_breaks}
 \title{Breaks trans}
 \usage{
 breaks_trans(n = 10, trans)

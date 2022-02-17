@@ -2,6 +2,7 @@
 % Please edit documentation in R/scale_breaks.R
 \name{breaks_symlog}
 \alias{breaks_symlog}
+\alias{symlog_breaks}
 \title{Breaks symlog}
 \usage{
 breaks_symlog(n = 10)

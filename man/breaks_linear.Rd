@@ -2,6 +2,7 @@
 % Please edit documentation in R/scale_breaks.R
 \name{breaks_linear}
 \alias{breaks_linear}
+\alias{linear_breaks}
 \title{Breaks linear}
 \usage{
 breaks_linear(n = 10)

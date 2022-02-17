@@ -2,6 +2,7 @@
 % Please edit documentation in R/scale_breaks.R
 \name{breaks_log}
 \alias{breaks_log}
+\alias{log_breaks}
 \title{Breaks log}
 \usage{
 breaks_log(n = 10, base = exp(1))
@@ -17,7 +18,7 @@ Generate a breaks vector of size \code{n} with log \link{log_trans} spaced break
 }
 \details{
 Input range must be finite and either be strictly negative or strictly positive;
-it must not cross, nor include 0. This is a hard limitation of \code{d3-scale}.
+it must not cross, nor include 0.
 
 If input range is non-finite, an empty vector is returned.
 }

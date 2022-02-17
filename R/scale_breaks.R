@@ -41,6 +41,12 @@ breaks_manual <- function(thresholds = 0.5) {
 }
 
 
+#' @rdname breaks_manual
+#' @usage NULL
+#' @export
+manual_breaks <- breaks_manual
+
+
 #' Breaks trans
 #'
 #' Generate a breaks vector of size `n` with evenly spaced breaks in `trans` domain.
@@ -89,6 +95,12 @@ breaks_trans <- function(n = 10, trans) {
 }
 
 
+#' @rdname breaks_trans
+#' @usage NULL
+#' @export
+trans_breaks <- breaks_trans
+
+
 #' Breaks linear
 #'
 #' Generate a breaks vector of size `n` with linearly spaced breaks.
@@ -105,7 +117,15 @@ breaks_trans <- function(n = 10, trans) {
 #'
 #' @family breaks
 #' @export
-breaks_linear <- function(n = 10) breaks_trans(n, scales::identity_trans())
+breaks_linear <- function(n = 10) {
+  breaks_trans(n, scales::identity_trans())
+}
+
+
+#' @rdname breaks_linear
+#' @usage NULL
+#' @export
+linear_breaks <- breaks_linear
 
 
 #' Breaks power
@@ -123,9 +143,14 @@ breaks_linear <- function(n = 10) breaks_trans(n, scales::identity_trans())
 #' @family breaks
 #' @export
 breaks_power <- function(n = 10, exponent = 0.5) {
-  trans <- power_trans(exponent)
-  breaks_trans(n, trans)
+  breaks_trans(n, power_trans(exponent))
 }
+
+
+#' @rdname breaks_power
+#' @usage NULL
+#' @export
+power_breaks <- breaks_power
 
 
 #' Breaks log
@@ -168,6 +193,12 @@ breaks_log <- function(n = 10, base = exp(1)) {
 }
 
 
+#' @rdname breaks_log
+#' @usage NULL
+#' @export
+log_breaks <- breaks_log
+
+
 #' Breaks symlog
 #'
 #' Generate a breaks vector of size `n` with log1p [symlog_trans] spaced breaks.
@@ -182,6 +213,11 @@ breaks_log <- function(n = 10, base = exp(1)) {
 #' @family breaks
 #' @export
 breaks_symlog <- function(n = 10) {
-  trans <- symlog_trans()
-  breaks_trans(n, trans)
+  breaks_trans(n, symlog_trans())
 }
+
+
+#' @rdname breaks_symlog
+#' @usage NULL
+#' @export
+symlog_breaks <- breaks_symlog
