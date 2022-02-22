@@ -50,3 +50,6 @@ sign0 <- function(x) (x >= 0L) - (x < 0L)
 isapprox <- function(a, b, tol = sqrt(.Machine$double.eps)) {
   abs(a - b) < abs(tol)
 }
+
+# levels of categorical data
+get_levels <- function(x) if (is.factor(x)) levels(x) else unique(x)

@@ -29,10 +29,7 @@ color_categories.character <- function(palette) {
 }
 
 color_categories.function <- function(palette) {
-  get_levels <- function(x) if (is.factor(x)) levels(x) else unique(x)
-  rescale <- function(x, levels) {
-    scales::rescale(match(x, levels))
-  }
+  rescale <- function(x, levels) scales::rescale(match(x, levels))
 
   # function is a ramp built with scales::colour_ramp
   if (isTRUE(attr(palette, "safe_palette_func"))) {
