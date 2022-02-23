@@ -4,6 +4,7 @@ number_gradient <- function(seq) {
 }
 
 number_gradient.numeric <- function(seq) {
+  tidyassert::assert(is.finite(seq))
   stats::approxfun(scales::rescale(seq_along(seq)), seq)
 }
 
@@ -13,10 +14,14 @@ number_gradient.integer <- number_gradient.numeric
 number_categories <- function(seq) UseMethod("number_categories")
 
 number_categories.numeric <- function(seq) {
-  ramp <- number_gradient.numeric(seq)
+  seq_pal <- scales::manual_pal(seq)
 
   function(x) {
     levels <- get_levels(x)
+    values <- seq_pal(length(levels))
+    ramp <- number_gradient(values[!is.na(values)])
     ramp(scales::rescale(match(x, levels)))
   }
 }
+
+number_categories.integer <- number_categories.numeric
