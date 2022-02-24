@@ -106,7 +106,7 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
     get_range = number_gradient(range),
     na_value = na_value,
     limits = continuous_range(limits),
-    get_breaks = as_breaks(breaks) %||% breaks_linear(10),
+    get_breaks = as_breaks(breaks) %||% breaks_linear(length(range)),
     legend = legend
   )
 }
@@ -165,7 +165,7 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
     get_range = number_gradient(range),
     na_value = na_value,
     limits = continuous_range(limits),
-    get_breaks = as_breaks(breaks) %||% breaks_power(10, exponent),
+    get_breaks = as_breaks(breaks) %||% breaks_power(length(range), exponent),
     legend = legend
   )
 }
@@ -222,7 +222,7 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
     get_range = number_gradient(range),
     na_value = na_value,
     limits = continuous_range(limits),
-    get_breaks = as_breaks(breaks) %||% breaks_log(10, base),
+    get_breaks = as_breaks(breaks) %||% breaks_log(length(range), base),
     legend = legend
   )
 }
@@ -331,7 +331,7 @@ scale_color_quantile <- function(col, palette = scales::viridis_pal(), na_color 
 
 #' @name scale_quantile
 #' @export
-scale_quantile <- function(col, range = 1:5, na_value = 0,
+scale_quantile <- function(col, range = 0:1, na_value = 0,
                            probs = seq.int(0, 1, 0.25), data = NULL,
                            legend = TRUE) {
   rlang::check_required(col)
