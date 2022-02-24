@@ -80,7 +80,7 @@ breaks_trans <- function(n = 10, trans) {
   function(x, n = n_default) {
     tidyassert::assert_is_scalar_integerish(n)
 
-    rng <- scales::train_continuous(x)
+    rng <- scales::train_continuous(x, c(-Inf, Inf))
     if (any(!is.finite(rng))) {
       return(numeric())
     }
@@ -184,7 +184,7 @@ breaks_log <- function(n = 10, base = exp(1)) {
 
   function(x, n = n_default) {
     tidyassert::assert(
-      min(x, na.rm = TRUE) > 0 | max(x, na.rm = TRUE) < 0,
+      suppressWarnings(min(x, na.rm = TRUE) > 0 | max(x, na.rm = TRUE) < 0),
       "range must not contain, nor cross 0"
     )
 
@@ -243,5 +243,6 @@ quantile_breaks <- function(probs) {
 # coerce breaks into a breaks function
 as_breaks <- function(breaks) UseMethod("as_breaks")
 as_breaks.NULL <- function(breaks) NULL
+as_breaks.function <- function(breaks) breaks
 as_breaks.integer <- function(breaks) breaks_manual(breaks)
 as_breaks.numeric <- function(breaks) breaks_manual(breaks)

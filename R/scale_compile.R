@@ -39,6 +39,8 @@ compile.scale_color_threshold <- function(object, ...) {
   domain <- object$get_breaks(limits)
   # d3 threshold domain excludes limits
   domain <- domain[-c(1, length(domain))]
+  if (length(domain) == 0) rlang::warn("domain is empty, scale will be constant")
+
   ramp <- seq.int(0, 1, length.out = length(domain) + 1)
 
   purrr::list_modify(
@@ -57,6 +59,8 @@ compile.scale_numeric_threshold <- function(object, ...) {
   domain <- object$get_breaks(limits)
   # d3 threshold domain excludes limits
   domain <- domain[-c(1, length(domain))]
+  if (length(domain) == 0) rlang::warn("domain is empty, scale will be constant")
+
   ramp <- seq.int(0, 1, length.out = length(domain) + 1)
 
   purrr::list_modify(
