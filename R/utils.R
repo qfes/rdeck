@@ -51,5 +51,8 @@ isapprox <- function(a, b, tol = sqrt(.Machine$double.eps)) {
   abs(a - b) < abs(tol)
 }
 
-# levels of categorical data
-get_levels <- function(x) if (is.factor(x)) levels(x) else unique(x)
+# add class
+add_class <- function(obj, new_class, pos = 1L) {
+  class(obj) <- append(class(obj), new_class, pos - 1L)
+  obj
+}

@@ -1,494 +1,3 @@
-#' Scale linear
-#'
-#' Creates a continuous linear scale. The colour palette (or range) is linearly interpolated
-#' between `limits` (or between `limits` and between `breaks` for piecewise scales).
-#'
-#' @name scale_linear
-#' @inheritParams scale_props
-#' @family scales
-#' @export
-scale_color_linear <- function(col, palette, na_color = "#000000",
-                               limits = NULL, breaks = NULL,
-                               n_ticks = NULL, tick_format = format_number, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  linear_scale <- scale(
-    "linear",
-    col = rlang::as_name(col),
-    palette = palette,
-    na_color = na_color,
-    limits = limits,
-    breaks = breaks,
-    n_ticks = n_ticks %||% ifelse(is.null(breaks), 6, length(breaks) + 2),
-    tick_format = tick_format,
-    legend = legend
-  )
-
-  validate_palette(linear_scale)
-  validate_na_color(linear_scale)
-  validate_limits(linear_scale)
-  validate_breaks(linear_scale)
-  validate_n_ticks(linear_scale)
-  validate_tick_format(linear_scale)
-  validate_legend(linear_scale)
-
-  linear_scale
-}
-
-#' @name scale_linear
-#' @export
-scale_linear <- function(col, range = 0:1, na_value = 0,
-                         limits = NULL, breaks = NULL, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  linear_scale <- scale(
-    "linear",
-    col = rlang::as_name(col),
-    range = range,
-    na_value = na_value,
-    limits = limits,
-    breaks = breaks,
-    legend = legend
-  )
-
-  validate_range(linear_scale)
-  validate_na_value(linear_scale)
-  validate_limits(linear_scale)
-  validate_breaks(linear_scale)
-  validate_legend(linear_scale)
-
-  linear_scale
-}
-
-#' Scale power
-#'
-#' @description
-#' Creates a continuous power scale. Power scales are similar to a [`scale_linear`], except
-#' that an exponential transform is applied to each input prior to calculating the output
-#' colour or number.
-#'
-#' Power scales can be useful in transforming positively skewed data. A square-root or
-#' cube-root scale can be helpful in dealing with right-skewed data.
-#'
-#' A square-root scale can be defined with `scale_power(exponent = 0.5, ...)` (the default). A
-#' square-root scale is a good choice for scaling the radius of point data, as this would result
-#' in a linear scale for the `area` of each point.
-#'
-#' @name scale_power
-#' @param exponent <`number`> The power exponent.
-#' @inheritParams scale_props
-#' @family scales
-#' @export
-scale_color_power <- function(col, palette, na_color = "#000000", exponent = 0.5,
-                              limits = NULL, breaks = NULL,
-                              n_ticks = NULL, tick_format = format_number, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  power_scale <- scale(
-    "power",
-    col = rlang::as_name(col),
-    palette = palette,
-    na_color = na_color,
-    exponent = exponent,
-    limits = limits,
-    breaks = breaks,
-    n_ticks = n_ticks %||% ifelse(is.null(breaks), 6, length(breaks) + 2),
-    tick_format = tick_format,
-    legend = legend
-  )
-
-  validate_palette(power_scale)
-  validate_na_color(power_scale)
-  validate_exponent(power_scale)
-  validate_limits(power_scale)
-  validate_breaks(power_scale)
-  validate_n_ticks(power_scale)
-  validate_tick_format(power_scale)
-  validate_legend(power_scale)
-
-  power_scale
-}
-
-#' @name scale_power
-#' @export
-scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
-                        limits = NULL, breaks = NULL, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  power_scale <- scale(
-    "power",
-    col = rlang::as_name(col),
-    range = range,
-    na_value = na_value,
-    exponent = exponent,
-    limits = limits,
-    breaks = breaks,
-    legend = legend
-  )
-
-  validate_range(power_scale)
-  validate_na_value(power_scale)
-  validate_exponent(power_scale)
-  validate_limits(power_scale)
-  validate_breaks(power_scale)
-  validate_legend(power_scale)
-
-  power_scale
-}
-
-#' Scale log
-#'
-#' @description
-#' Creates a continuous log scale. Log scales are similar to a [`scale_linear`], except
-#' that a logarithmic transform is applied to each input prior to calculating the output
-#' colour or number.
-#'
-#' Log scales can be useful in transforming positively skewed data.
-#'
-#' @note
-#' Undefined behaviour if `limits` crosses 0. `limits` must be strictly positive or negative.
-#'
-#' @name scale_log
-#' @param base <`number`> The log base. The log base must be a strictly positive value != 1.
-#' @inheritParams scale_props
-#' @family scales
-#' @export
-scale_color_log <- function(col, palette, na_color = "#000000", base = 10,
-                            limits = NULL, breaks = NULL,
-                            n_ticks = NULL, tick_format = format_number, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  log_scale <- scale(
-    "log",
-    col = rlang::as_name(col),
-    palette = palette,
-    na_color = na_color,
-    base = base,
-    limits = limits,
-    breaks = breaks,
-    n_ticks = n_ticks %||% ifelse(is.null(breaks), 6, length(breaks) + 2),
-    tick_format = tick_format,
-    legend = legend
-  )
-
-  validate_palette(log_scale)
-  validate_na_color(log_scale)
-  validate_base(log_scale)
-  validate_limits(log_scale)
-  validate_breaks(log_scale)
-  validate_n_ticks(log_scale)
-  validate_tick_format(log_scale)
-  validate_legend(log_scale)
-
-  log_scale
-}
-
-#' @name scale_log
-#' @export
-scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
-                      limits = NULL, breaks = NULL, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  log_scale <- scale(
-    "log",
-    col = rlang::as_name(col),
-    range = range,
-    na_value = na_value,
-    base = base,
-    limits = limits,
-    breaks = breaks,
-    legend = legend
-  )
-
-  validate_range(log_scale)
-  validate_na_value(log_scale)
-  validate_base(log_scale)
-  validate_limits(log_scale)
-  validate_breaks(log_scale)
-  validate_legend(log_scale)
-
-  log_scale
-}
-
-#' Scale threshold
-#'
-#' @description
-#' Creates a discrete threshold scale. Threshold scales slice the input data into
-#' `length(palette)` (or `length(range)`) bins, with each bin being assigned a colour
-#' (or number) associated with that bin.
-#'
-#' Threshold scales are similar [`scale_quantize`], except that threshold break values can be
-#' any sequence of numbers, provided that they are in increasing order and within the bounds
-#' of limits.
-#'
-#' @name scale_threshold
-#' @param breaks <`numeric`> The threshold breaks of the scale. Must be `length(palette) - 1`
-#' or `length(range) - 1`, such that each `break` defines boundary between between a
-#' pair of a `palette` or `range` entries.
-#'
-#' Breaks must be in increasing order, within the bounds of `limits`. Each break will be
-#' present on the legend for colour scales.
-#' @inheritParams scale_props
-#' @family scales
-#' @export
-scale_color_threshold <- function(col, palette, na_color = "#000000",
-                                  limits = NULL, breaks = 0.5,
-                                  tick_format = format_number, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  threshold_scale <- scale(
-    "threshold",
-    col = rlang::as_name(col),
-    palette = palette,
-    na_color = na_color,
-    limits = limits,
-    breaks = breaks,
-    tick_format = tick_format,
-    legend = legend
-  )
-
-  validate_palette(threshold_scale)
-  validate_na_color(threshold_scale)
-  validate_limits(threshold_scale)
-  validate_breaks(threshold_scale)
-  validate_tick_format(threshold_scale)
-  validate_legend(threshold_scale)
-
-  threshold_scale
-}
-
-#' @name scale_threshold
-#' @export
-scale_threshold <- function(col, range = 0:1, na_value = 0,
-                            limits = NULL, breaks = 0.5,
-                            tick_format = format_number, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  threshold_scale <- scale(
-    "threshold",
-    col = rlang::as_name(col),
-    range = range,
-    na_value = na_value,
-    breaks = breaks,
-    legend = legend
-  )
-
-  validate_range(threshold_scale)
-  validate_na_value(threshold_scale)
-  validate_limits(threshold_scale)
-  validate_breaks(threshold_scale)
-  validate_legend(threshold_scale)
-
-  threshold_scale
-}
-
-#' Scale quantile
-#'
-#' @description
-#' Creates a quantile scale. The number of quantiles is defined by the length of
-#' `palette` or `range`. For example, a quantile scale with 5 colours will have quantile
-#' breaks at: `c(0.2, 0.4, 0.6, 0.8)`.
-#'
-#' Quantile scale legend ticks will be quantile values at each quantile break (including
-#' limits), not the quantile probabilities at each break. You may override this with
-#' `tick_format`.
-#'
-#' Example:
-#' `tick_format = function(x) format_number(seq(0, 1, length.out = length(x)))`.
-#'
-#' @note
-#' As the quantiles are computed from input data, quantile scales are incompatible with
-#' layers that load data from a url (e.g `mvt_layer`). If quantiles for remote data are
-#' known, a quantile scale can be constructed manually with [`scale_threshold`].
-#'
-#' @name scale_quantile
-#' @inheritParams scale_props
-#' @family scales
-#' @export
-scale_color_quantile <- function(col, palette, na_color = "#000000",
-                                 tick_format = format_number, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  quantile_scale <- scale(
-    "quantile",
-    col = rlang::as_name(col),
-    palette = palette,
-    na_color = na_color,
-    tick_format = tick_format,
-    legend = legend
-  )
-
-  validate_palette(quantile_scale)
-  validate_na_color(quantile_scale)
-  validate_tick_format(quantile_scale)
-  validate_legend(quantile_scale)
-
-  quantile_scale
-}
-
-#' @name scale_quantile
-#' @export
-scale_quantile <- function(col, range = 1:5, na_value = 0, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  quantile_scale <- scale(
-    "quantile",
-    col = rlang::as_name(col),
-    range = range,
-    na_value = na_value,
-    legend = legend
-  )
-
-  validate_range(quantile_scale)
-  validate_na_value(quantile_scale)
-  validate_legend(quantile_scale)
-
-  quantile_scale
-}
-
-#' Scale category
-#'
-#' Creates a categorical scale. Categorical scales map input values defined in the set of
-#' `levels` to colours (or values). Input values not in the set of `levels` are assigned
-#' `unmapped_color` (or `unmapped_value`).
-#'
-#' @name scale_category
-#' @param levels <`factor` | `character` | `logical`> The category levels. If `NULL`, will be
-#' populated from input data. The order of the levels is determined by `levels()` for factors
-#' & `unique()` otherwise. Length of `levels` must equal `palette` or `range`, such that each
-#' category level is assigned a colour or range value.
-#' @param unmapped_color <[`color`]> The colour representing unmapped levels.
-#' @param unmapped_tick <`string`> The tick label of the unmapped category. If not `NULL` and
-#' `legend == TRUE`, the unmapped category will appear at the bottom of the legend.
-#' @inheritParams scale_props
-#' @family scales
-#' @export
-scale_color_category <- function(col, palette, unmapped_color = "#000000", levels = NULL,
-                                 unmapped_tick = NULL, tick_format = NULL, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  category_scale <- scale(
-    "category",
-    col = rlang::as_name(col),
-    palette = palette,
-    unmapped_color = unmapped_color,
-    levels = base::levels(levels) %||% unique(levels),
-    unmapped_tick = unmapped_tick,
-    tick_format = tick_format,
-    legend = legend
-  )
-
-  validate_palette(category_scale)
-  validate_unmapped_color(category_scale)
-  validate_unmapped_tick(category_scale)
-  validate_tick_format(category_scale)
-  validate_legend(category_scale)
-
-  category_scale
-}
-
-#' @name scale_category
-#' @param unmapped_value <`number`> The value representing unmapped levels.
-#' @export
-scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  category_scale <- scale(
-    "category",
-    col = rlang::as_name(col),
-    range = range,
-    unmapped_value = unmapped_value,
-    levels = base::levels(levels) %||% unique(levels),
-    legend = legend
-  )
-
-  validate_range(category_scale)
-  validate_unmapped_value(category_scale)
-  validate_legend(category_scale)
-
-  category_scale
-}
-
-#' Scale quantize
-#'
-#' @description
-#' Creates a discrete quantize scale. Quantize scales are a special case of [`scale_threshold`]
-#' in that each threshold break is uniformly spaced between limits.
-#'
-#' Similar to [`scale_threshold`], quantize scales slice input data into `length(palette)`
-#' (or `length(range)`) equally spaced bins, with each bin being assigned a colour (or number)
-#' associated with that bin.
-#'
-#' @name scale_quantize
-#' @inheritParams scale_props
-#' @family scales
-#' @export
-scale_color_quantize <- function(col, palette, na_color = "#000000",
-                                 limits = NULL, tick_format = format_number, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  quantize_scale <- scale(
-    "quantize",
-    col = rlang::as_name(col),
-    palette = palette,
-    na_color = na_color,
-    limits = limits,
-    tick_format = tick_format,
-    legend = legend
-  )
-
-  validate_palette(quantize_scale)
-  validate_na_color(quantize_scale)
-  validate_limits(quantize_scale)
-  validate_tick_format(quantize_scale)
-  validate_legend(quantize_scale)
-
-  quantize_scale
-}
-
-#' @name scale_quantize
-#' @export
-scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, legend = TRUE) {
-  col <- rlang::enquo(col)
-  assert_quo_is_sym(col, "col")
-
-  quantize_scale <- scale(
-    "quantize",
-    col = rlang::as_name(col),
-    range = range,
-    na_value = na_value,
-    limits = limits,
-    legend = legend
-  )
-
-  validate_range(quantize_scale)
-  validate_na_value(quantize_scale)
-  validate_limits(quantize_scale)
-  validate_legend(quantize_scale)
-
-  quantize_scale
-}
-
-scale <- function(scale, ...) {
-  structure(
-    c(list(scale = scale), rlang::dots_list(...)),
-    class = c(paste0("scale_", scale), "scale")
-  )
-}
-
 #' @title scale_props
 #' @name scale_props
 #' @rdname _scale_props
@@ -518,6 +27,435 @@ scale <- function(scale, ...) {
 #' @param tick_format <`function`> A function taking a vector of ticks returning formatted ticks.
 #' @param legend <`logical`> Indicate whether the legend should be displayed for this scale.
 NULL
+
+
+# construct a scale object
+scale <- function(scale_type, ..., trans = scales::identity_trans(), legend) {
+  rlang::check_required(scale_type)
+  tidyassert::assert(scales::is.trans(trans))
+  tidyassert::assert_is_scalar_logical(legend)
+
+  structure(
+    rlang::dots_list(
+      scale_type,
+      trans,
+      legend,
+      ...,
+      .named = TRUE
+    ),
+    class = "scale"
+  )
+}
+
+scale_color <- function(scale_type, ..., na_color, tick_format) {
+  tidyassert::assert(is.null(tick_format) || is.function(tick_format))
+  assert_is_rgba(na_color)
+  tick_format = tick_format %||% function(x) x
+
+  cls <- c(paste0("scale_color_", scale_type), "scale_color")
+  add_class(scale(scale_type, ..., na_color, tick_format), cls)
+}
+
+scale_numeric <- function(scale_type, ..., na_value) {
+  tidyassert::assert_is_scalar_numeric(na_value)
+
+  cls <- c(paste0("scale_numeric_", scale_type), "scale_numeric")
+  add_class(scale(scale_type, ..., na_value), cls)
+}
+
+
+#' Scale linear
+#'
+#' Creates a continuous linear scale. The colour palette (or range) is linearly interpolated
+#' between `limits` (or between `limits` and between `breaks` for piecewise scales).
+#'
+#' @name scale_linear
+#' @inheritParams scale_props
+#' @family scales
+#' @export
+scale_color_linear <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
+                               limits = NULL, breaks = NULL,
+                               n_ticks = NULL, tick_format = format_number, legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_color(
+    "linear",
+    trans = scales::identity_trans(),
+    col = rlang::ensym(col),
+    get_palette = color_gradient(palette),
+    na_color = na_color,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks) %||% breaks_linear(10),
+    get_ticks = breaks_linear(n_ticks %||% 6),
+    tick_format = tick_format,
+    legend = legend
+  )
+}
+
+
+#' @name scale_linear
+#' @export
+scale_linear <- function(col, range = 0:1, na_value = 0,
+                         limits = NULL, breaks = NULL, legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_numeric(
+    "linear",
+    trans = scales::identity_trans(),
+    col = rlang::ensym(col),
+    get_range = number_gradient(range),
+    na_value = na_value,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks) %||% breaks_linear(10),
+    legend = legend
+  )
+}
+
+
+#' Scale power
+#'
+#' @description
+#' Creates a continuous power scale. Power scales are similar to a [`scale_linear`], except
+#' that an exponential transform is applied to each input prior to calculating the output
+#' colour or number.
+#'
+#' Power scales can be useful in transforming positively skewed data. A square-root or
+#' cube-root scale can be helpful in dealing with right-skewed data.
+#'
+#' A square-root scale can be defined with `scale_power(exponent = 0.5, ...)` (the default). A
+#' square-root scale is a good choice for scaling the radius of point data, as this would result
+#' in a linear scale for the `area` of each point.
+#'
+#' @name scale_power
+#' @param exponent <`number`> The power exponent.
+#' @inheritParams scale_props
+#' @family scales
+#' @export
+scale_color_power <- function(col, palette = scales::viridis_pal(), na_color = "#000000", exponent = 0.5,
+                              limits = NULL, breaks = NULL,
+                              n_ticks = 6, tick_format = format_number, legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_color(
+    "power",
+    trans = power_trans(exponent),
+    exponent = exponent,
+    col = rlang::ensym(col),
+    get_palette = color_gradient(palette),
+    na_color = na_color,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks) %||% breaks_power(10, exponent),
+    get_ticks = breaks_power(n_ticks %||% 6, exponent),
+    tick_format = tick_format,
+    legend = legend
+  )
+}
+
+#' @name scale_power
+#' @export
+scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
+                        limits = NULL, breaks = NULL, legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_numeric(
+    "power",
+    trans = power_trans(exponent),
+    exponent = exponent,
+    col = rlang::ensym(col),
+    get_range = number_gradient(range),
+    na_value = na_value,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks) %||% breaks_power(10, exponent),
+    legend = legend
+  )
+}
+
+
+#' Scale log
+#'
+#' @description
+#' Creates a continuous log scale. Log scales are similar to a [`scale_linear`], except
+#' that a logarithmic transform is applied to each input prior to calculating the output
+#' colour or number.
+#'
+#' Log scales can be useful in transforming positively skewed data.
+#'
+#' @note
+#' Undefined behaviour if `limits` crosses 0. `limits` must be strictly positive or negative.
+#'
+#' @name scale_log
+#' @param base <`number`> The log base. The log base must be a strictly positive value != 1.
+#' @inheritParams scale_props
+#' @family scales
+#' @export
+scale_color_log <- function(col, palette = scales::viridis_pal(), na_color = "#000000", base = 10,
+                            limits = NULL, breaks = NULL,
+                            n_ticks = NULL, tick_format = format_number, legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_color(
+    "log",
+    trans = log_trans(base),
+    base = base,
+    col = rlang::ensym(col),
+    get_palette = color_gradient(palette),
+    na_color = na_color,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks) %||% breaks_log(10, base),
+    get_ticks = breaks_log(n_ticks %||% 6, base),
+    tick_format = tick_format,
+    legend = legend
+  )
+}
+
+#' @name scale_log
+#' @export
+scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
+                      limits = NULL, breaks = NULL, legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_numeric(
+    "log",
+    trans = log_trans(base),
+    base = base,
+    col = rlang::ensym(col),
+    get_range = number_gradient(range),
+    na_value = na_value,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks) %||% breaks_log(10, base),
+    legend = legend
+  )
+}
+
+
+#' Scale threshold
+#'
+#' @description
+#' Creates a discrete threshold scale. Threshold scales slice the input data into
+#' `length(palette)` (or `length(range)`) bins, with each bin being assigned a colour
+#' (or number) associated with that bin.
+#'
+#' Threshold scales are similar [`scale_quantize`], except that threshold break values can be
+#' any sequence of numbers, provided that they are in increasing order and within the bounds
+#' of limits.
+#'
+#' @name scale_threshold
+#' @param breaks <`numeric`> The threshold breaks of the scale. Must be `length(palette) - 1`
+#' or `length(range) - 1`, such that each `break` defines boundary between between a
+#' pair of a `palette` or `range` entries.
+#'
+#' Breaks must be in increasing order, within the bounds of `limits`. Each break will be
+#' present on the legend for colour scales.
+#' @inheritParams scale_props
+#' @family scales
+#' @export
+scale_color_threshold <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
+                                  limits = NULL, breaks = 0.5,
+                                  tick_format = format_number, legend = TRUE) {
+  rlang::check_required(col)
+  tidyassert::assert_not_null(breaks)
+
+  scale_color(
+    "threshold",
+    col = rlang::ensym(col),
+    get_palette = color_gradient(palette),
+    na_color = na_color,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks),
+    get_ticks = as_breaks(breaks),
+    tick_format = tick_format,
+    legend = legend
+  )
+}
+
+#' @name scale_threshold
+#' @export
+scale_threshold <- function(col, range = 0:1, na_value = 0,
+                            limits = NULL, breaks = 0.5,
+                            tick_format = format_number, legend = TRUE) {
+  rlang::check_required(col)
+  tidyassert::assert_not_null(breaks)
+
+  scale_numeric(
+    "threshold",
+    col = rlang::ensym(col),
+    get_range = number_gradient(range),
+    na_value = na_value,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks),
+    legend = legend
+  )
+}
+
+#' Scale quantile
+#'
+#' @description
+#' Creates a quantile scale. The number of quantiles is defined by the length of
+#' `palette` or `range`. For example, a quantile scale with 5 colours will have quantile
+#' breaks at: `c(0.2, 0.4, 0.6, 0.8)`.
+#'
+#' Quantile scale legend ticks will be quantile values at each quantile break (including
+#' limits), not the quantile probabilities at each break. You may override this with
+#' `tick_format`.
+#'
+#' Example:
+#' `tick_format = function(x) format_number(seq(0, 1, length.out = length(x)))`.
+#'
+#' @note
+#' As the quantiles are computed from input data, quantile scales are incompatible with
+#' layers that load data from a url (e.g `mvt_layer`). If quantiles for remote data are
+#' known, a quantile scale can be constructed manually with [`scale_threshold`].
+#'
+#' @name scale_quantile
+#' @inheritParams scale_props
+#' @family scales
+#' @export
+scale_color_quantile <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
+                                 probs = seq.int(0, 1, 0.25), data = NULL,
+                                 tick_format = format_number, legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_color(
+    "quantile",
+    col = rlang::ensym(col),
+    get_palette = color_gradient(palette),
+    na_color = na_color,
+    data = continuous_identity_range(data),
+    get_breaks = quantile_breaks(probs),
+    get_ticks = quantile_breaks(probs),
+    tick_format = tick_format,
+    legend = legend
+  )
+}
+
+
+#' @name scale_quantile
+#' @export
+scale_quantile <- function(col, range = 1:5, na_value = 0,
+                           probs = seq.int(0, 1, 0.25), data = NULL,
+                           legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_numeric(
+    "quantile",
+    col = rlang::ensym(col),
+    get_range = number_gradient(range),
+    na_value = na_value,
+    data = continuous_identity_range(data),
+    get_breaks = quantile_breaks(probs),
+    legend = legend
+  )
+}
+
+
+#' Scale category
+#'
+#' Creates a categorical scale. Categorical scales map input values defined in the set of
+#' `levels` to colours (or values). Input values not in the set of `levels` are assigned
+#' `unmapped_color` (or `unmapped_value`).
+#'
+#' @name scale_category
+#' @param levels <`factor` | `character` | `logical`> The category levels. If `NULL`, will be
+#' populated from input data. The order of the levels is determined by `levels()` for factors
+#' & `unique()` otherwise. Length of `levels` must equal `palette` or `range`, such that each
+#' category level is assigned a colour or range value.
+#' @param unmapped_color <[`color`]> The colour representing unmapped levels.
+#' @param unmapped_tick <`string`> The tick label of the unmapped category. If not `NULL` and
+#' `legend == TRUE`, the unmapped category will appear at the bottom of the legend.
+#' @inheritParams scale_props
+#' @family scales
+#' @export
+scale_color_category <- function(col, palette = scales::brewer_pal("div"), unmapped_color = "#000000",
+                                 levels = NULL, unmapped_tick = NULL,
+                                 tick_format = NULL, legend = TRUE) {
+  rlang::check_required(col)
+  assert_is_rgba(unmapped_color)
+  tidyassert::assert(is.null(unmapped_tick) || rlang::is_string(unmapped_tick))
+  tidyassert::assert(is.null(tick_format) || is.function(tick_format))
+
+  category_scale <- scale(
+    "category",
+    col = rlang::ensym(col),
+    get_palette = color_categories(palette),
+    unmapped_color = unmapped_color,
+    levels = discrete_range(levels),
+    tick_format = tick_format %||% function(x) x,
+    legend = legend
+  )
+
+  add_class(category_scale, c("scale_color_category", "scale_color"))
+}
+
+#' @name scale_category
+#' @param unmapped_value <`number`> The value representing unmapped levels.
+#' @export
+scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, legend = TRUE) {
+  rlang::check_required(col)
+  tidyassert::assert_is_scalar_numeric(unmapped_value)
+
+  category_scale <- scale(
+    "category",
+    col = rlang::ensym(col),
+    get_range = number_categories(range),
+    unmapped_value = unmapped_value,
+    levels = discrete_range(levels),
+    legend = legend
+  )
+
+  add_class(category_scale, c("scale_numeric_category", "scale_numeric"))
+}
+
+
+#' Scale quantize
+#'
+#' @description
+#' Creates a discrete quantize scale. Quantize scales are a special case of [`scale_threshold`]
+#' in that each threshold break is uniformly spaced between limits.
+#'
+#' Similar to [`scale_threshold`], quantize scales slice input data into `length(palette)`
+#' (or `length(range)`) equally spaced bins, with each bin being assigned a colour (or number)
+#' associated with that bin.
+#'
+#' @name scale_quantize
+#' @inheritParams scale_props
+#' @family scales
+#' @export
+scale_color_quantize <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
+                                 limits = NULL, n_breaks = 6,
+                                 tick_format = format_number, legend = TRUE) {
+  rlang::check_required(col)
+  tidyassert::assert_is_scalar_integerish(n_breaks)
+
+  scale_color(
+    "quantize",
+    col = rlang::ensym(col),
+    get_palette = color_gradient(palette),
+    na_color = na_color,
+    limits = continuous_range(limits),
+    get_breaks = breaks_linear(n_breaks),
+    get_ticks = breaks_linear(n_breaks),
+    tick_format = tick_format,
+    legend = legend
+  )
+}
+
+#' @name scale_quantize
+#' @export
+scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, n_breaks = 6, legend = TRUE) {
+  rlang::check_required(col)
+  tidyassert::assert_is_scalar_integerish(n_breaks)
+
+  scale_numeric(
+    "quantize",
+    col = rlang::ensym(col),
+    get_range = number_gradient(range),
+    na_value = na_value,
+    limits = continuous_range(limits),
+    get_breaks = breaks_linear(n_breaks),
+    legend = legend
+  )
+}
+
 
 #' Format number
 #'

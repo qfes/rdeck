@@ -221,3 +221,27 @@ breaks_symlog <- function(n = 10) {
 #' @usage NULL
 #' @export
 symlog_breaks <- breaks_symlog
+
+
+# Generate a breaks vector for the given probs
+quantile_breaks <- function(probs) {
+  tidyassert::assert_is_numeric(probs)
+  tidyassert::assert(probs >= 0 & probs <= 1 & !is.unsorted(probs))
+  # ensure
+  probs <- unique(c(0, probs, 1))
+
+  function(x) {
+    if (any(!is.finite(x))) {
+      return(numeric())
+    }
+
+    stats::quantile(x, probs = probs, names = FALSE)
+  }
+}
+
+
+# coerce breaks into a breaks function
+as_breaks <- function(breaks) UseMethod("as_breaks")
+as_breaks.NULL <- function(breaks) NULL
+as_breaks.integer <- function(breaks) breaks_manual(breaks)
+as_breaks.numeric <- function(breaks) breaks_manual(breaks)

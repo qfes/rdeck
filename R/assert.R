@@ -103,6 +103,15 @@ assert_rgba <- function(obj, name = NULL) {
   }
 }
 
+assert_is_rgba <- function(obj) {
+  is_color <- function(obj) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", obj, ignore.case = TRUE)
+
+  tidyassert::assert(
+    is_color(obj),
+    error_message = paste0("`", substitute(obj), "`", " must be an rgb[a] vector")
+  )
+}
+
 assert_in <- function(obj, values, name = NULL) {
   quo <- rlang::enquo(obj)
   value <- rlang::eval_tidy(quo)
