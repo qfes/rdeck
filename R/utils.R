@@ -61,3 +61,10 @@ select <- function(lst, ...) {
   pos <- tidyselect::eval_select(rlang::expr(c(...)), unclass(lst))
   rlang::set_names(lst[pos], names(pos))
 }
+
+rename <- function(lst, ...) {
+  pos <- tidyselect::eval_rename(rlang::expr(c(...)), unclass(lst))
+  names(lst)[pos] <- names(pos)
+
+  lst
+}
