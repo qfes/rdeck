@@ -27,7 +27,9 @@ Imports:
     uuid,
     tidyassert (>= 0.3.0),
     scales,
-    R6
+    R6,
+    generics,
+    purrr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(

@@ -56,3 +56,8 @@ add_class <- function(obj, new_class, pos = 1L) {
   class(obj) <- append(class(obj), new_class, pos - 1L)
   obj
 }
+
+select <- function(lst, ...) {
+  pos <- tidyselect::eval_select(rlang::expr(c(...)), unclass(lst))
+  rlang::set_names(lst[pos], names(pos))
+}
