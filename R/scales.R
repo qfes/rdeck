@@ -50,7 +50,7 @@ scale <- function(scale_type, ..., trans = scales::identity_trans(), legend) {
 scale_color <- function(scale_type, ..., na_color, tick_format) {
   tidyassert::assert(is.null(tick_format) || is.function(tick_format))
   assert_is_rgba(na_color)
-  tick_format = tick_format %||% function(x) x
+  tick_format <- tick_format %||% function(x) x
 
   cls <- c(paste0("scale_color_", scale_type), "scale_color")
   add_class(scale(scale_type, ..., na_color, tick_format), cls)
