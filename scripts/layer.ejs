@@ -26,14 +26,6 @@ add_<%- name -%> <- function(rdeck,
                             visibility_toggle = TRUE,
                             tooltip = FALSE) {
     check_dots(...)
-    <% const geom = props.find(p => /^get_(path|polygon|position)$/i.test(p.name)); -%>
-    <% if (geom) { -%>
-        # auto-resolve geometry
-        if (inherits(data, "sf")) {
-            <%- geom.name -%> <- as.name(attr(data, "sf_column"))
-            position_format <- get_position_format(data)
-        }
-    <% } -%>
     # construct layer object
     <%- name -%> <- layer(
         type = "<%- type -%>",

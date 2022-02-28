@@ -207,11 +207,6 @@ add_icon_layer <- function(rdeck,
                            visibility_toggle = TRUE,
                            tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   icon_layer <- layer(
     type = "IconLayer",
@@ -390,11 +385,6 @@ add_point_cloud_layer <- function(rdeck,
                                   visibility_toggle = TRUE,
                                   tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   point_cloud_layer <- layer(
     type = "PointCloudLayer",
@@ -484,11 +474,6 @@ add_scatterplot_layer <- function(rdeck,
                                   visibility_toggle = TRUE,
                                   tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   scatterplot_layer <- layer(
     type = "ScatterplotLayer",
@@ -606,11 +591,6 @@ add_grid_cell_layer <- function(rdeck,
                                 visibility_toggle = TRUE,
                                 tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   grid_cell_layer <- layer(
     type = "GridCellLayer",
@@ -739,11 +719,6 @@ add_column_layer <- function(rdeck,
                              visibility_toggle = TRUE,
                              tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   column_layer <- layer(
     type = "ColumnLayer",
@@ -859,11 +834,6 @@ add_path_layer <- function(rdeck,
                            visibility_toggle = TRUE,
                            tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_path <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   path_layer <- layer(
     type = "PathLayer",
@@ -963,11 +933,6 @@ add_polygon_layer <- function(rdeck,
                               visibility_toggle = TRUE,
                               tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_polygon <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   polygon_layer <- layer(
     type = "PolygonLayer",
@@ -1071,11 +1036,6 @@ add_solid_polygon_layer <- function(rdeck,
                                     visibility_toggle = TRUE,
                                     tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_polygon <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   solid_polygon_layer <- layer(
     type = "SolidPolygonLayer",
@@ -1434,11 +1394,6 @@ add_text_layer <- function(rdeck,
                            visibility_toggle = TRUE,
                            tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   text_layer <- layer(
     type = "TextLayer",
@@ -1559,11 +1514,6 @@ add_screen_grid_layer <- function(rdeck,
                                   visibility_toggle = TRUE,
                                   tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   screen_grid_layer <- layer(
     type = "ScreenGridLayer",
@@ -1662,11 +1612,6 @@ add_cpu_grid_layer <- function(rdeck,
                                visibility_toggle = TRUE,
                                tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   cpu_grid_layer <- layer(
     type = "CPUGridLayer",
@@ -1793,11 +1738,6 @@ add_hexagon_layer <- function(rdeck,
                               visibility_toggle = TRUE,
                               tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   hexagon_layer <- layer(
     type = "HexagonLayer",
@@ -1909,11 +1849,6 @@ add_contour_layer <- function(rdeck,
                               visibility_toggle = TRUE,
                               tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   contour_layer <- layer(
     type = "ContourLayer",
@@ -2011,11 +1946,6 @@ add_grid_layer <- function(rdeck,
                            visibility_toggle = TRUE,
                            tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   grid_layer <- layer(
     type = "GridLayer",
@@ -2136,11 +2066,6 @@ add_gpu_grid_layer <- function(rdeck,
                                visibility_toggle = TRUE,
                                tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   gpu_grid_layer <- layer(
     type = "GPUGridLayer",
@@ -2239,11 +2164,6 @@ add_heatmap_layer <- function(rdeck,
                               visibility_toggle = TRUE,
                               tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   heatmap_layer <- layer(
     type = "HeatmapLayer",
@@ -2880,11 +2800,6 @@ add_trips_layer <- function(rdeck,
                             visibility_toggle = TRUE,
                             tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_path <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   trips_layer <- layer(
     type = "TripsLayer",
@@ -3493,11 +3408,6 @@ add_simple_mesh_layer <- function(rdeck,
                                   visibility_toggle = TRUE,
                                   tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   simple_mesh_layer <- layer(
     type = "SimpleMeshLayer",
@@ -3592,11 +3502,6 @@ add_scenegraph_layer <- function(rdeck,
                                  visibility_toggle = TRUE,
                                  tooltip = FALSE) {
   check_dots(...)
-  # auto-resolve geometry
-  if (inherits(data, "sf")) {
-    get_position <- as.name(attr(data, "sf_column"))
-    position_format <- get_position_format(data)
-  }
   # construct layer object
   scenegraph_layer <- layer(
     type = "ScenegraphLayer",

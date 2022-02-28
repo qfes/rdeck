@@ -38,3 +38,12 @@ sfc_point <- function(x, y, z = NULL, crs = 4326) {
   ) %>%
     sf::st_geometry()
 }
+
+
+#' SF Column
+#'
+#' Defines a flag that indicates the active geometry column of an sf object
+#' should be used in a layer's geometry [accessor()].
+#' @name sf_column
+#' @export
+sf_column <- function() structure(list(), class = "sf_column")
