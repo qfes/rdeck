@@ -19,7 +19,7 @@ assert_geom <- function(layer, name, sfc_type) {
   assert_type(prop, "accessor", name)
 
   data <- layer$data
-  if (inherits(data, "data.frame")) {
+  if (inherits(data, "data.frame") && nrow(data) != 0) {
     col_expr <- paste0("data[[", name, "$col]]")
     assert_col_exists(prop$col, data)
     assert_type(data[[prop$col]], sfc_type, col_expr)
