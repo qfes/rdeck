@@ -11,19 +11,25 @@
 #' @keywords internal
 #' @noRd
 accessor <- function(quo, data = NULL, data_type = NULL) {
-  assert_type(quo, "quosure")
-  if (!is.null(data_type)) {
-    assert_in(data_type, c("table", "object", "geojson"))
+  tidyassert::assert(rlang::is_quosure(quo))
+  tidyassert::assert(is.null(data_type) || data_type %in% c("table", "object", "geojson"))
+
+  expr <- if (!rlang::quo_is_symbol(quo)) rlang::eval_tidy(quo)
+
+  # simple expression? return it
+  if (!rlang::quo_is_symbol(quo) && !inherits(expr, "sf_column")) {
+    return(expr)
   }
 
-  if (!rlang::quo_is_symbol(quo)) {
-    return(rlang::eval_tidy(quo))
-  }
+  tidyassert::assert(
+    inherits(data, "sf") || !inherits(expr, "sf_column"),
+    "{.fn sf_column} requires {.cls sf} datatset",
+    print_expr = substitute(inherits(data, "sf") || !inherits(quo, "sf_column"))
+  )
 
-  col <- rlang::as_name(quo)
-  if (inherits(data, "data.frame")) {
-    assert_col_exists(col, data)
-  }
+  # sf_column() ? pull col from sf object
+  col <- if (inherits(expr, "sf_column")) attr(data, "sf_column") else rlang::as_name(quo)
+  if (inherits(data, "data.frame")) assert_col_exists(col, data)
 
   structure(
     list(
