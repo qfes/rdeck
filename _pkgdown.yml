@@ -23,6 +23,7 @@ reference:
       - renderRdeck
       - layers
       - props
+
   - title: Core layers
     desc: Deck.GL core layers
     contents:
@@ -39,6 +40,7 @@ reference:
       - scatterplot_layer
       - solid_polygon_layer
       - text_layer
+
   - title: Aggregation layers
     desc: Deck.GL aggregation layers
     contents:
@@ -49,6 +51,7 @@ reference:
       - hexagon_layer
       - screen_grid_layer
       - heatmap_layer
+
   - title: Geo layers
     desc: Deck.GL geo layers
     contents:
@@ -61,28 +64,34 @@ reference:
       - trips_layer
       - terrain_layer
       - mvt_layer
+
   - title: Mesh layers
     desc: Deck.GL mesh layers
     contents:
       - simple_mesh_layer
       - scenegraph_layer
+
   - title: Scales
     desc: >
       Translate data columns to visual properties, predominantly colours: fill, line, highlight
       and sizes: radius, elevation, width, height.
     contents:
       - matches("scale_")
+
   - title: Transformations
     desc: >
       Functions for scale transformations and their inverses
     contents:
-      - ends_with("_trans")
-      - -breaks_trans
+      - power_trans
+      - log_trans
+      - symlog_trans
+
   - title: Breaks
     desc: >
       Functions for defining scale breaks
     contents:
       - starts_with("breaks_")
+
   - title: Prop Types
     desc: Description and usage for accessors, scales, tooltips and colours
     contents:
@@ -90,6 +99,7 @@ reference:
       - scale
       - tooltip
       - color
+
   - title: Other
     contents:
       - mapbox_access_token
