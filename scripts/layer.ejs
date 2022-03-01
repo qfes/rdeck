@@ -34,13 +34,7 @@ add_<%- name -%> <- function(rdeck,
         name = name,
         group_name = group_name,
         <% for (const p of props) { -%>
-            <%
-              const value = p.type === "accessor"
-                ? p.scalable
-                  ? `accessor_scale(rlang::enquo(${p.name}), data)`
-                  : `accessor(rlang::enquo(${p.name}), data)`
-                : p.name;
-            -%>
+            <% const value = p.type === "accessor" ? `accessor(rlang::enquo(${p.name}), data)` : p.name; -%>
             <%- p.name -%> = <%- value ?? "NULL" -%>,
         <% } -%>
         blending_mode = blending_mode,

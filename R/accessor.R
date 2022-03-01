@@ -11,25 +11,29 @@
 #' @keywords internal
 #' @noRd
 accessor <- function(quo, data = NULL, data_type = NULL) {
-  tidyassert::assert(rlang::is_quosure(quo))
-  tidyassert::assert(is.null(data_type) || data_type %in% c("table", "object", "geojson"))
+  # dispatch off the quosure expression
+  expr <- if (!rlang::quo_is_symbol(quo)) rlang::eval_tidy(quo) else rlang::quo_get_expr(quo)
+  UseMethod("accessor", expr)
+}
 
-  expr <- if (!rlang::quo_is_symbol(quo)) rlang::eval_tidy(quo)
+accessor.default <- function(quo, data = NULL, data_type = NULL) {
+  rlang::eval_tidy(quo)
+}
 
-  # simple expression? return it
-  if (!rlang::quo_is_symbol(quo) && !inherits(expr, "sf_column")) {
-    return(expr)
-  }
+accessor.name <- function(quo, data = NULL, data_type = NULL) {
+  col <- rlang::as_name(quo)
 
+  # does column exist?
   tidyassert::assert(
-    inherits(data, "sf") || !inherits(expr, "sf_column"),
-    "{.fn sf_column} requires {.cls sf} datatset",
-    print_expr = substitute(inherits(data, "sf") || !inherits(quo, "sf_column"))
+    !inherits(data, "data.frame") || rlang::has_name(data, col),
+    "Column {.col {col}} doesn't exist",
+    print_expr = substitute(!inherits(data, "data.frame") || rlang::has_name(data, quo)),
+    col = substitute(col)
   )
 
-  # sf_column() ? pull col from sf object
-  col <- if (inherits(expr, "sf_column")) attr(data, "sf_column") else rlang::as_name(quo)
-  if (inherits(data, "data.frame")) assert_col_exists(col, data)
+  if (!is.null(data_type)) {
+    tidyassert::assert(data_type %in% c("table", "object", "geojson"))
+  }
 
   structure(
     list(
@@ -40,58 +44,52 @@ accessor <- function(quo, data = NULL, data_type = NULL) {
   )
 }
 
-#' Accessor Scale
-#'
-#' @name accessor_scale
-#' @inheritParams accessor
-#'
-#' @keywords internal
-#' @noRd
-accessor_scale <- function(quo, data = NULL, data_type = NULL) {
-  assert_type(quo, "quosure")
-  if (!is.null(data_type)) {
-    assert_in(data_type, c("table", "object", "geojson"))
-  }
-
-  # is quo a scale object or scale call
-  expr <- if (rlang::quo_is_call(quo)) rlang::eval_tidy(quo) else rlang::get_expr(quo)
-  if (!inherits(expr, "scale")) {
-    return(accessor(quo, data, data_type))
-  }
-
-  scale_expr <- rlang::eval_tidy(quo)
-  col_name <- as.name(scale_expr$col)
-
-  accessor_ <- accessor(rlang::new_quosure(col_name), data, data_type)
-
-  # create accessor
-  scale <- structure(
-    utils::modifyList(
-      accessor_,
-      scale_expr,
-      keep.null = TRUE
-    ),
-    class = c(class(scale_expr), "accessor_scale", class(accessor_))
+accessor.sf_column <- function(quo, data = NULL, data_type = NULL) {
+  # sf_column only applicable to sf objects
+  tidyassert::assert(
+    inherits(data, "sf"),
+    "{.fn sf_column} requires {.cls sf} datatset",
+    print_expr = substitute(inherits(data, "sf") || !inherits(quo, "sf_column"))
   )
 
-  # scale col references a vector of the correct type
-  validate_col(scale, data)
+  col <- attr(data, "sf_column")
+  # does sf_column exist?
 
-  # scale limits
-  if (rlang::has_name(scale, "limits") && !inherits(data, "data.frame")) {
-    assert_not_null(scale$limits)
+  tidyassert::assert(
+    rlang::has_name(data, col),
+    "Column {.col {sf_column}} doesn't exist",
+    sf_column = substitute(attr(data, "sf_column"))
+  )
+
+  new_quo <- rlang::as_quosure(col, rlang::quo_get_env(quo))
+  accessor.name(new_quo, data, data_type)
+}
+
+accessor.scale <- function(quo, data = NULL, data_type = NULL) {
+  scale <- rlang::eval_tidy(quo)
+
+  # does column exist?
+  tidyassert::assert(
+    !inherits(data, "data.frame") || rlang::has_name(data, scale$col),
+    "Column {.col {col}} doesn't exist",
+    print_expr = substitute(!inherits(data, "data.frame") || rlang::has_name(data, quo$col)),
+    col = substitute(scale$col)
+  )
+
+  # train scale limits / levels / data
+  scale_limits <- scale$limits %||% scale$levels %||% scale$data
+  if (!is.null(data) && !is.null(scale_limits)) {
+    scale_limits$train(data[[scale$col]])
   }
 
-  if (!inherits(scale, "scale_category") && is.null(scale$limits)) {
-    scale$limits <- scale$limits %||% range(data[[scale$col]], na.rm = TRUE)
-  }
-
-  # scale domain & ticks
-  scale$domain <- scale_domain(scale, data)
-  if (rlang::has_name(scale, "palette")) {
-    scale$ticks <- scale_ticks(scale)
-  }
-  scale
+  add_class(
+    purrr::list_modify(
+      scale,
+      data_type = data_type %||% resolve_data_type(data)
+    ),
+    c("accessor_scale", "accessor"),
+    Inf
+  )
 }
 
 resolve_data_type <- function(data = NULL) {

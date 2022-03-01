@@ -30,7 +30,7 @@ NULL
 
 
 # construct a scale object
-scale <- function(scale_type, ..., trans = scales::identity_trans(), legend) {
+scale <- function(scale_type, ..., col, trans = scales::identity_trans(), legend) {
   rlang::check_required(scale_type)
   tidyassert::assert(scales::is.trans(trans))
   tidyassert::assert_is_scalar_logical(legend)
@@ -39,6 +39,7 @@ scale <- function(scale_type, ..., trans = scales::identity_trans(), legend) {
     rlang::dots_list(
       scale_type,
       trans,
+      col = rlang::as_name(col),
       legend,
       ...,
       .named = TRUE
