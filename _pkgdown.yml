@@ -1,6 +1,7 @@
 url: https://anthonynorth.github.io/rdeck
 
 template:
+  bootstrap: 5
   params:
     docsearch:
       api_key: 3ca320790448947a263a14839534e41e
@@ -71,6 +72,17 @@ reference:
       and sizes: radius, elevation, width, height.
     contents:
       - matches("scale_")
+  - title: Transformations
+    desc: >
+      Functions for scale transformations and their inverses
+    contents:
+      - ends_with("_trans")
+      - -breaks_trans
+  - title: Breaks
+    desc: >
+      Functions for defining scale breaks
+    contents:
+      - starts_with("breaks_")
   - title: Prop Types
     desc: Description and usage for accessors, scales, tooltips and colours
     contents:
@@ -86,3 +98,4 @@ reference:
       - mvt_url
       - format_number
       - sfc_point
+      - sf_column
