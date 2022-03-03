@@ -53,8 +53,8 @@ accessor.sf_column <- function(quo, data = NULL, data_type = NULL) {
   )
 
   col <- attr(data, "sf_column")
-  # does sf_column exist?
 
+  # does sf_column exist?
   tidyassert::assert(
     rlang::has_name(data, col),
     "Column {.col {sf_column}} doesn't exist",
@@ -78,7 +78,7 @@ accessor.scale <- function(quo, data = NULL, data_type = NULL) {
 
   # train scale limits / levels / data
   scale_limits <- scale$limits %||% scale$levels %||% scale$data
-  if (!is.null(data) && !is.null(scale_limits)) {
+  if (inherits(data, "data.frame") && !is.null(scale_limits)) {
     scale_limits$train(data[[scale$col]])
   }
 

@@ -64,7 +64,6 @@ compile.scale_numeric_threshold <- function(object, ...) {
   ramp <- seq.int(0, 1, length.out = length(domain) + 1)
 
   purrr::list_modify(
-    select(object, where(is.atomic)),
     col = rlang::as_name(object$col),
     domain = domain,
     range = object$get_range(ramp)
@@ -100,7 +99,6 @@ compile.scale_color_category <- function(object, ...) {
 
   purrr::list_modify(
     select(object, where(is.atomic)),
-    col = rlang::as_name(object$col),
     domain = domain,
     palette = object$get_palette(domain),
     ticks = object$tick_format(domain)
@@ -115,7 +113,6 @@ compile.scale_numeric_category <- function(object, ...) {
   purrr::list_modify(
     select(object, where(is.atomic)),
     col = rlang::as_name(object$col),
-    domain = domain,
     range = object$get_range(domain)
   )
 }
@@ -145,7 +142,6 @@ compile.scale_numeric_quantize <- function(object, ...) {
 
   purrr::list_modify(
     select(object, where(is.atomic)),
-    col = rlang::as_name(object$col),
     domain = domain,
     range = object$get_range(ramp)
   )

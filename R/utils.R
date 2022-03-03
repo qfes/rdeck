@@ -71,3 +71,6 @@ rename <- function(lst, ...) {
 
   lst
 }
+
+# expects arg be embraced
+enstring <- function(arg) rlang::as_name(rlang::ensym(arg))

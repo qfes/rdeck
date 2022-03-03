@@ -30,7 +30,7 @@ NULL
 
 
 # construct a scale object
-scale <- function(scale_type, ..., col, trans = scales::identity_trans(), legend) {
+scale <- function(scale_type, ..., trans = scales::identity_trans(), legend) {
   rlang::check_required(scale_type)
   tidyassert::assert(scales::is.trans(trans))
   tidyassert::assert_is_scalar_logical(legend)
@@ -39,7 +39,6 @@ scale <- function(scale_type, ..., col, trans = scales::identity_trans(), legend
     rlang::dots_list(
       scale_type,
       trans,
-      col = rlang::as_name(col),
       legend,
       ...,
       .named = TRUE
@@ -82,7 +81,7 @@ scale_color_linear <- function(col, palette = scales::viridis_pal(), na_color = 
   scale_color(
     "linear",
     trans = scales::identity_trans(),
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_palette = color_gradient(palette),
     na_color = na_color,
     limits = continuous_range(limits),
@@ -103,7 +102,7 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
   scale_numeric(
     "linear",
     trans = scales::identity_trans(),
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_range = number_gradient(range),
     na_value = na_value,
     limits = continuous_range(limits),
@@ -141,7 +140,7 @@ scale_color_power <- function(col, palette = scales::viridis_pal(), na_color = "
     "power",
     trans = power_trans(exponent),
     exponent = exponent,
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_palette = color_gradient(palette),
     na_color = na_color,
     limits = continuous_range(limits),
@@ -162,7 +161,7 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
     "power",
     trans = power_trans(exponent),
     exponent = exponent,
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_range = number_gradient(range),
     na_value = na_value,
     limits = continuous_range(limits),
@@ -198,7 +197,7 @@ scale_color_log <- function(col, palette = scales::viridis_pal(), na_color = "#0
     "log",
     trans = log_trans(base),
     base = base,
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_palette = color_gradient(palette),
     na_color = na_color,
     limits = continuous_range(limits),
@@ -219,7 +218,7 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
     "log",
     trans = log_trans(base),
     base = base,
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_range = number_gradient(range),
     na_value = na_value,
     limits = continuous_range(limits),
@@ -258,7 +257,7 @@ scale_color_threshold <- function(col, palette = scales::viridis_pal(), na_color
 
   scale_color(
     "threshold",
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_palette = color_gradient(palette),
     na_color = na_color,
     limits = continuous_range(limits),
@@ -279,7 +278,7 @@ scale_threshold <- function(col, range = 0:1, na_value = 0,
 
   scale_numeric(
     "threshold",
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_range = number_gradient(range),
     na_value = na_value,
     limits = continuous_range(limits),
@@ -318,7 +317,7 @@ scale_color_quantile <- function(col, palette = scales::viridis_pal(), na_color 
 
   scale_color(
     "quantile",
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_palette = color_gradient(palette),
     na_color = na_color,
     data = continuous_identity_range(data),
@@ -339,7 +338,7 @@ scale_quantile <- function(col, range = 0:1, na_value = 0,
 
   scale_numeric(
     "quantile",
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_range = number_gradient(range),
     na_value = na_value,
     data = continuous_identity_range(data),
@@ -376,7 +375,7 @@ scale_color_category <- function(col, palette = scales::brewer_pal("div"), unmap
 
   category_scale <- scale(
     "category",
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_palette = color_categories(palette),
     unmapped_color = unmapped_color,
     levels = discrete_range(levels),
@@ -396,7 +395,7 @@ scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, 
 
   category_scale <- scale(
     "category",
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_range = number_categories(range),
     unmapped_value = unmapped_value,
     levels = discrete_range(levels),
@@ -429,7 +428,7 @@ scale_color_quantize <- function(col, palette = scales::viridis_pal(), na_color 
 
   scale_color(
     "quantize",
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_palette = color_gradient(palette),
     na_color = na_color,
     limits = continuous_range(limits),
@@ -448,7 +447,7 @@ scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, n_brea
 
   scale_numeric(
     "quantize",
-    col = rlang::ensym(col),
+    col = enstring({{ col }}),
     get_range = number_gradient(range),
     na_value = na_value,
     limits = continuous_range(limits),
