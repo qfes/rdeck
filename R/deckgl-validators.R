@@ -9,8 +9,8 @@ validate_aggregation.default <- function(layer) {
   aggregation <- layer$aggregation
   tidyassert::assert(!is.null(aggregation))
   tidyassert::assert(
-    is.character(aggregation) && length(aggregation) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(aggregation) && length(aggregation) == 1 && aggregation %in% c("SUM", "MEAN", "MIN", "MAX"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"SUM\", \"MEAN\", \"MIN\", \"MAX\")"),
     name = "aggregation"
   )
 }
@@ -149,8 +149,8 @@ validate_blending_mode.default <- function(layer) {
   blending_mode <- layer$blending_mode
   tidyassert::assert(!is.null(blending_mode))
   tidyassert::assert(
-    is.character(blending_mode) && length(blending_mode) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(blending_mode) && length(blending_mode) == 1 && blending_mode %in% c("normal", "additive", "subtractive"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"normal\", \"additive\", \"subtractive\")"),
     name = "blending_mode"
   )
 }
@@ -253,8 +253,8 @@ validate_color_aggregation.default <- function(layer) {
   color_aggregation <- layer$color_aggregation
   tidyassert::assert(!is.null(color_aggregation))
   tidyassert::assert(
-    is.character(color_aggregation) && length(color_aggregation) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(color_aggregation) && length(color_aggregation) == 1 && color_aggregation %in% c("SUM", "MEAN", "MIN", "MAX"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"SUM\", \"MEAN\", \"MIN\", \"MAX\")"),
     name = "color_aggregation"
   )
 }
@@ -278,8 +278,8 @@ validate_color_format.default <- function(layer) {
   color_format <- layer$color_format
   tidyassert::assert(!is.null(color_format))
   tidyassert::assert(
-    is.character(color_format) && length(color_format) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(color_format) && length(color_format) == 1 && color_format %in% c("RGB", "RGBA"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"RGB\", \"RGBA\")"),
     name = "color_format"
   )
 }
@@ -306,8 +306,8 @@ validate_color_scale_type.default <- function(layer) {
   color_scale_type <- layer$color_scale_type
   tidyassert::assert(!is.null(color_scale_type))
   tidyassert::assert(
-    is.character(color_scale_type) && length(color_scale_type) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(color_scale_type) && length(color_scale_type) == 1 && color_scale_type %in% c("quantize", "linear", "quantile", "ordinal"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"quantize\", \"linear\", \"quantile\", \"ordinal\")"),
     name = "color_scale_type"
   )
 }
@@ -394,8 +394,8 @@ validate_elevation_aggregation.default <- function(layer) {
   elevation_aggregation <- layer$elevation_aggregation
   tidyassert::assert(!is.null(elevation_aggregation))
   tidyassert::assert(
-    is.character(elevation_aggregation) && length(elevation_aggregation) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(elevation_aggregation) && length(elevation_aggregation) == 1 && elevation_aggregation %in% c("SUM", "MEAN", "MIN", "MAX"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"SUM\", \"MEAN\", \"MIN\", \"MAX\")"),
     name = "elevation_aggregation"
   )
 }
@@ -477,8 +477,8 @@ validate_elevation_scale_type.default <- function(layer) {
   elevation_scale_type <- layer$elevation_scale_type
   tidyassert::assert(!is.null(elevation_scale_type))
   tidyassert::assert(
-    is.character(elevation_scale_type) && length(elevation_scale_type) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(elevation_scale_type) && length(elevation_scale_type) == 1 && elevation_scale_type %in% c("quantize", "linear", "quantile", "ordinal"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"quantize\", \"linear\", \"quantile\", \"ordinal\")"),
     name = "elevation_scale_type"
   )
 }
@@ -581,8 +581,8 @@ validate_font_weight.default <- function(layer) {
   font_weight <- layer$font_weight
   tidyassert::assert(!is.null(font_weight))
   tidyassert::assert(
-    is.character(font_weight) && length(font_weight) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(font_weight) && length(font_weight) == 1 && font_weight %in% c("normal", "bold", 100, 200, 300, 400, 500, 600, 700, 800, 900),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"normal\", \"bold\", 100, 200, 300, 400, 500, 600, 700, 800, 900)"),
     name = "font_weight"
   )
 }
@@ -595,16 +595,16 @@ validate_get_alignment_baseline.default <- function(layer) {
   get_alignment_baseline <- layer$get_alignment_baseline
   tidyassert::assert(!is.null(get_alignment_baseline))
   tidyassert::assert(
-    is_accessor(get_alignment_baseline) || is.character(get_alignment_baseline) && length(get_alignment_baseline) == 1,
-    c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls string}"),
+    is_accessor(get_alignment_baseline) || is.character(get_alignment_baseline) && length(get_alignment_baseline) == 1 && get_alignment_baseline %in% c("top", "center", "bottom"),
+    c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls string} where {.arg values} in c(\"top\", \"center\", \"bottom\")"),
     name = "get_alignment_baseline"
   )
   if (inherits(layer$data, "data.frame") && is_accessor(get_alignment_baseline)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_alignment_baseline$col, data)]]
     tidyassert::assert(
-      is.character(accessor_data),
-      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls string} vector"),
+      is.character(accessor_data) && accessor_data %in% c("top", "center", "bottom"),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls string} vector where {.arg values} in c(\"top\", \"center\", \"bottom\")"),
       name = "get_alignment_baseline",
       col = substitute(get_alignment_baseline$col)
     )
@@ -1369,16 +1369,16 @@ validate_get_text_alignment_baseline.default <- function(layer) {
   get_text_alignment_baseline <- layer$get_text_alignment_baseline
   tidyassert::assert(!is.null(get_text_alignment_baseline))
   tidyassert::assert(
-    is_accessor(get_text_alignment_baseline) || is.character(get_text_alignment_baseline) && length(get_text_alignment_baseline) == 1,
-    c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls string}"),
+    is_accessor(get_text_alignment_baseline) || is.character(get_text_alignment_baseline) && length(get_text_alignment_baseline) == 1 && get_text_alignment_baseline %in% c("top", "center", "bottom"),
+    c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls string} where {.arg values} in c(\"top\", \"center\", \"bottom\")"),
     name = "get_text_alignment_baseline"
   )
   if (inherits(layer$data, "data.frame") && is_accessor(get_text_alignment_baseline)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_alignment_baseline$col, data)]]
     tidyassert::assert(
-      is.character(accessor_data),
-      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls string} vector"),
+      is.character(accessor_data) && accessor_data %in% c("top", "center", "bottom"),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls string} vector where {.arg values} in c(\"top\", \"center\", \"bottom\")"),
       name = "get_text_alignment_baseline",
       col = substitute(get_text_alignment_baseline$col)
     )
@@ -1393,16 +1393,16 @@ validate_get_text_anchor.default <- function(layer) {
   get_text_anchor <- layer$get_text_anchor
   tidyassert::assert(!is.null(get_text_anchor))
   tidyassert::assert(
-    is_accessor(get_text_anchor) || is.character(get_text_anchor) && length(get_text_anchor) == 1,
-    c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls string}"),
+    is_accessor(get_text_anchor) || is.character(get_text_anchor) && length(get_text_anchor) == 1 && get_text_anchor %in% c("start", "middle", "end"),
+    c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls string} where {.arg values} in c(\"start\", \"middle\", \"end\")"),
     name = "get_text_anchor"
   )
   if (inherits(layer$data, "data.frame") && is_accessor(get_text_anchor)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_anchor$col, data)]]
     tidyassert::assert(
-      is.character(accessor_data),
-      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls string} vector"),
+      is.character(accessor_data) && accessor_data %in% c("start", "middle", "end"),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls string} vector where {.arg values} in c(\"start\", \"middle\", \"end\")"),
       name = "get_text_anchor",
       col = substitute(get_text_anchor$col)
     )
@@ -1586,16 +1586,16 @@ validate_get_tilt.default <- function(layer) {
   get_tilt <- layer$get_tilt
   tidyassert::assert(!is.null(get_tilt))
   tidyassert::assert(
-    is_accessor(get_tilt) || is.numeric(get_tilt) && is.finite(get_tilt) && length(get_tilt) == 1,
-    c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
+    is_accessor(get_tilt) || is.numeric(get_tilt) && is.finite(get_tilt) && length(get_tilt) == 1 && min(get_tilt) >= -90 && max(get_tilt) <= 90,
+    c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric} where -90 <= {.arg values} <= 90"),
     name = "get_tilt"
   )
   if (inherits(layer$data, "data.frame") && is_accessor(get_tilt)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_tilt$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
-      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
+      is.numeric(accessor_data) && is.finite(accessor_data) && min(accessor_data) >= -90 && max(accessor_data) <= 90,
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector where -90 <= {.arg values} <= 90"),
       name = "get_tilt",
       col = substitute(get_tilt$col)
     )
@@ -1744,8 +1744,8 @@ validate_high_precision.default <- function(layer) {
   high_precision <- layer$high_precision
   tidyassert::assert(!is.null(high_precision))
   tidyassert::assert(
-    is.character(high_precision) && length(high_precision) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(high_precision) && length(high_precision) == 1 && high_precision %in% c(TRUE, FALSE, "auto"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(TRUE, FALSE, \"auto\")"),
     name = "high_precision"
   )
 }
@@ -1879,8 +1879,8 @@ validate_icon_size_units.default <- function(layer) {
   icon_size_units <- layer$icon_size_units
   tidyassert::assert(!is.null(icon_size_units))
   tidyassert::assert(
-    is.character(icon_size_units) && length(icon_size_units) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(icon_size_units) && length(icon_size_units) == 1 && icon_size_units %in% c("common", "meters", "pixels"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"common\", \"meters\", \"pixels\")"),
     name = "icon_size_units"
   )
 }
@@ -2056,8 +2056,8 @@ validate_line_width_units.default <- function(layer) {
   line_width_units <- layer$line_width_units
   tidyassert::assert(!is.null(line_width_units))
   tidyassert::assert(
-    is.character(line_width_units) && length(line_width_units) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(line_width_units) && length(line_width_units) == 1 && line_width_units %in% c("common", "meters", "pixels"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"common\", \"meters\", \"pixels\")"),
     name = "line_width_units"
   )
 }
@@ -2383,8 +2383,8 @@ validate_point_radius_units.default <- function(layer) {
   point_radius_units <- layer$point_radius_units
   tidyassert::assert(!is.null(point_radius_units))
   tidyassert::assert(
-    is.character(point_radius_units) && length(point_radius_units) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(point_radius_units) && length(point_radius_units) == 1 && point_radius_units %in% c("common", "meters", "pixels"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"common\", \"meters\", \"pixels\")"),
     name = "point_radius_units"
   )
 }
@@ -2425,8 +2425,8 @@ validate_position_format.default <- function(layer) {
   position_format <- layer$position_format
   tidyassert::assert(!is.null(position_format))
   tidyassert::assert(
-    is.character(position_format) && length(position_format) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(position_format) && length(position_format) == 1 && position_format %in% c("XY", "XYZ"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"XY\", \"XYZ\")"),
     name = "position_format"
   )
 }
@@ -2509,8 +2509,8 @@ validate_radius_units.default <- function(layer) {
   radius_units <- layer$radius_units
   tidyassert::assert(!is.null(radius_units))
   tidyassert::assert(
-    is.character(radius_units) && length(radius_units) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(radius_units) && length(radius_units) == 1 && radius_units %in% c("common", "meters", "pixels"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"common\", \"meters\", \"pixels\")"),
     name = "radius_units"
   )
 }
@@ -2523,8 +2523,8 @@ validate_refinement_strategy.default <- function(layer) {
   refinement_strategy <- layer$refinement_strategy
   tidyassert::assert(!is.null(refinement_strategy))
   tidyassert::assert(
-    is.character(refinement_strategy) && length(refinement_strategy) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(refinement_strategy) && length(refinement_strategy) == 1 && refinement_strategy %in% c("best-available", "no-overlap", "never"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"best-available\", \"no-overlap\", \"never\")"),
     name = "refinement_strategy"
   )
 }
@@ -2588,8 +2588,8 @@ validate_size_units.default <- function(layer) {
   size_units <- layer$size_units
   tidyassert::assert(!is.null(size_units))
   tidyassert::assert(
-    is.character(size_units) && length(size_units) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(size_units) && length(size_units) == 1 && size_units %in% c("common", "meters", "pixels"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"common\", \"meters\", \"pixels\")"),
     name = "size_units"
   )
 }
@@ -2681,8 +2681,8 @@ validate_text_font_weight.default <- function(layer) {
   text_font_weight <- layer$text_font_weight
   tidyassert::assert(!is.null(text_font_weight))
   tidyassert::assert(
-    is.character(text_font_weight) && length(text_font_weight) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(text_font_weight) && length(text_font_weight) == 1 && text_font_weight %in% c("normal", "bold", 100, 200, 300, 400, 500, 600, 700, 800, 900),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"normal\", \"bold\", 100, 200, 300, 400, 500, 600, 700, 800, 900)"),
     name = "text_font_weight"
   )
 }
@@ -2793,8 +2793,8 @@ validate_text_size_units.default <- function(layer) {
   text_size_units <- layer$text_size_units
   tidyassert::assert(!is.null(text_size_units))
   tidyassert::assert(
-    is.character(text_size_units) && length(text_size_units) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(text_size_units) && length(text_size_units) == 1 && text_size_units %in% c("common", "meters", "pixels"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"common\", \"meters\", \"pixels\")"),
     name = "text_size_units"
   )
 }
@@ -2807,8 +2807,8 @@ validate_text_word_break.default <- function(layer) {
   text_word_break <- layer$text_word_break
   tidyassert::assert(!is.null(text_word_break))
   tidyassert::assert(
-    is.character(text_word_break) && length(text_word_break) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(text_word_break) && length(text_word_break) == 1 && text_word_break %in% c("break-word", "break-all"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"break-word\", \"break-all\")"),
     name = "text_word_break"
   )
 }
@@ -3036,8 +3036,8 @@ validate_width_units.default <- function(layer) {
   width_units <- layer$width_units
   tidyassert::assert(!is.null(width_units))
   tidyassert::assert(
-    is.character(width_units) && length(width_units) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(width_units) && length(width_units) == 1 && width_units %in% c("common", "meters", "pixels"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"common\", \"meters\", \"pixels\")"),
     name = "width_units"
   )
 }
@@ -3064,8 +3064,8 @@ validate_word_break.default <- function(layer) {
   word_break <- layer$word_break
   tidyassert::assert(!is.null(word_break))
   tidyassert::assert(
-    is.character(word_break) && length(word_break) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    is.character(word_break) && length(word_break) == 1 && word_break %in% c("break-word", "break-all"),
+    c("x" = "{.arg {name}} must be a scalar {.cls string} where {.arg values} in c(\"break-word\", \"break-all\")"),
     name = "word_break"
   )
 }
