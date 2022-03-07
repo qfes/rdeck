@@ -1,5 +1,7 @@
 /* eslint-disable react/forbid-foreign-prop-types */
 const deck = require("deck.gl");
+const aggregationLayers = require("@deck.gl/aggregation-layers");
+const rdeckPropTypes = require("./rdeck-prop-types.json");
 
 /* exclude props from function signatures */
 const excludeProps = [
@@ -33,6 +35,30 @@ function getProps(Layer) {
   // initialise _propTypes
   new Layer();
   Layer.propTypes = { ...Layer._propTypes };
+
+  // id, name, groupName appear first
+  Layer.propTypes = {
+    ...Object.fromEntries(
+      rdeckPropTypes
+        .filter((p) => ["id", "name", "groupName"].includes(p.name))
+        .map((p) => [p.name, p])
+    ),
+    ...Layer.propTypes,
+  };
+
+  // merge in custom rdeck propTypes
+  rdeckPropTypes.forEach((propType) => {
+    if (propType.name === "name") propType.value = Layer.layerName;
+    Layer.propTypes[propType.name] = {
+      ...Layer.propTypes[propType.name],
+      ...propType,
+    };
+  });
+
+  // no tooltip for arregation layers
+  if (Object.values(aggregationLayers).includes(Layer)) {
+    delete Layer.propTypes.tooltip;
+  }
 
   // extruded = false
   if ("extruded" in Layer.propTypes) {
@@ -121,8 +147,9 @@ function getValue({ value }) {
 
 function getValueType(propType) {
   const value = getValue(propType);
+  const isSimpleType = ["boolean", "string", "color", "number"].includes(propType.type);
 
-  if (value == null) return null;
+  if (value == null) return isSimpleType ? propType.type : null;
   if (propType.name === "data") return "data";
   if (Array.isArray(value) && /(color|colorRange)$/i.test(propType.name)) return "color";
   return Array.isArray(value) ? "array" : typeof value;

@@ -2,54 +2,65 @@
   template for generating a function to add deck.gl layers to a map.
   data is expected with the following form:
   data = {
-    type: "H3HexagonLayer",
-    name: "h3_hexagon_layer",
-    props: [{
-      name: "get_hexagon",
-      default: "hexagon",
-      type: "accessor"
-    }]
+    layer: {
+      type: "H3HexagonLayer",
+      name: "h3_hexagon_layer",
+      props: [{
+        name: "get_hexagon",
+        default: "hexagon",
+        type: "accessor"
+      }]
+    }
   }
 -%>
-#' @name <%- name %>
+#' @name <%- layer.name %>
 #' @autoglobal
 #' @export
-add_<%- name -%> <- function(rdeck,
-                            ...,
-                            id = NULL,
-                            name = "<%- type -%>",
-                            group_name = NULL,
-                            <% for (const p of props) { -%>
-                              <%- p.name -%> = <%- p.value ?? "NULL" -%>,
-                            <% } -%>
-                            blending_mode = "normal",
-                            visibility_toggle = TRUE,
-                            tooltip = FALSE) {
-    check_dots(...)
-    # construct layer object
-    <%- name -%> <- layer(
-        type = "<%- type -%>",
-        ...,
-        id = id %||% uuid::UUIDgenerate(),
-        name = name,
-        group_name = group_name,
-        <% for (const p of props) { -%>
-            <% const value = p.type === "accessor" ? `accessor(rlang::enquo(${p.name}), data)` : p.name; -%>
-            <%- p.name -%> = <%- value ?? "NULL" -%>,
-        <% } -%>
-        blending_mode = blending_mode,
-        visibility_toggle = visibility_toggle,
-        tooltip = eval_tooltip(rlang::enquo(tooltip), data)
-    )
-    # validate layer props
-    validate_id(<%- name -%>)
-    validate_name(<%- name -%>)
-    validate_group_name(<%- name -%>)
-    <% for (const p of props) { -%>
-      validate_<%- p.name -%>(<%- name -%>)
-    <% } -%>
-    validate_blending_mode(<%- name -%>)
-    validate_visibility_toggle(<%- name -%>)
-    # add layer to map
-    add_layer(rdeck, <%- name -%>)
+add_<%- layer.name -%> <- function(rdeck,
+                                   ...,
+                                   <%-
+                                     layer.props
+                                       .map((p) => `${p.name} = ${p.value ?? "NULL"}`)
+                                       .join(",\n");
+                                   -%>) {
+  rlang::check_required(rdeck)
+  check_dots(...)
+
+  <%# diffuse accessors %>
+  <%-
+    layer.props
+      .filter((p) => p.type === "accessor" || p.name === "tooltip")
+      .map((p) => `${p.name} <- rlang::enquo(${p.name})`)
+      .join("\n");
+  %>
+
+  <%# construct layer object %>
+  <% const dataType = layer.dataType != null ? JSON.stringify(layer.dataType) : "NULL" -%>
+  <%- layer.name -%> <- rlang::try_fetch(
+    layer(
+      type = "<%- layer.typeName -%>",
+      ...,
+      <%-
+        layer.props
+          .map((p) => {
+            if (p.type === "accessor") return `${p.name} = accessor(${p.name}, data, ${dataType})`;
+            if (p.name === "tooltip") return `${p.name} = eval_tooltip(${p.name}, data, ${dataType})`;
+
+            return `${p.name} = ${p.name}`;
+          })
+          .join(",\n")
+      %>
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create <%- layer.name -%>",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
+  )
+  <%# validate params %>
+  <%- layer.props.map((p) => `validate_${p.name}(${layer.name})`).join("\n"); %>
+  <%# add layer %>
+  add_layer(rdeck, <%- layer.name %>)
 }

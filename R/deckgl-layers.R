@@ -6,7 +6,7 @@
 #' @export
 add_arc_layer <- function(rdeck,
                           ...,
-                          id = NULL,
+                          id = uuid::UUIDgenerate(),
                           name = "ArcLayer",
                           group_name = NULL,
                           data = NULL,
@@ -32,41 +32,61 @@ add_arc_layer <- function(rdeck,
                           width_max_pixels = 9007199254740991,
                           blending_mode = "normal",
                           visibility_toggle = TRUE,
-                          tooltip = FALSE) {
+                          tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  arc_layer <- layer(
-    type = "ArcLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    get_source_position = accessor(rlang::enquo(get_source_position), data),
-    get_target_position = accessor(rlang::enquo(get_target_position), data),
-    get_source_color = accessor(rlang::enquo(get_source_color), data),
-    get_target_color = accessor(rlang::enquo(get_target_color), data),
-    get_width = accessor(rlang::enquo(get_width), data),
-    get_height = accessor(rlang::enquo(get_height), data),
-    get_tilt = accessor(rlang::enquo(get_tilt), data),
-    great_circle = great_circle,
-    width_units = width_units,
-    width_scale = width_scale,
-    width_min_pixels = width_min_pixels,
-    width_max_pixels = width_max_pixels,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_source_position <- rlang::enquo(get_source_position)
+  get_target_position <- rlang::enquo(get_target_position)
+  get_source_color <- rlang::enquo(get_source_color)
+  get_target_color <- rlang::enquo(get_target_color)
+  get_width <- rlang::enquo(get_width)
+  get_height <- rlang::enquo(get_height)
+  get_tilt <- rlang::enquo(get_tilt)
+  tooltip <- rlang::enquo(tooltip)
+
+  arc_layer <- rlang::try_fetch(
+    layer(
+      type = "ArcLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      get_source_position = accessor(get_source_position, data, NULL),
+      get_target_position = accessor(get_target_position, data, NULL),
+      get_source_color = accessor(get_source_color, data, NULL),
+      get_target_color = accessor(get_target_color, data, NULL),
+      get_width = accessor(get_width, data, NULL),
+      get_height = accessor(get_height, data, NULL),
+      get_tilt = accessor(get_tilt, data, NULL),
+      great_circle = great_circle,
+      width_units = width_units,
+      width_scale = width_scale,
+      width_min_pixels = width_min_pixels,
+      width_max_pixels = width_max_pixels,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create arc_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(arc_layer)
   validate_name(arc_layer)
   validate_group_name(arc_layer)
@@ -93,7 +113,8 @@ add_arc_layer <- function(rdeck,
   validate_width_max_pixels(arc_layer)
   validate_blending_mode(arc_layer)
   validate_visibility_toggle(arc_layer)
-  # add layer to map
+  validate_tooltip(arc_layer)
+
   add_layer(rdeck, arc_layer)
 }
 
@@ -102,7 +123,7 @@ add_arc_layer <- function(rdeck,
 #' @export
 add_bitmap_layer <- function(rdeck,
                              ...,
-                             id = NULL,
+                             id = uuid::UUIDgenerate(),
                              name = "BitmapLayer",
                              group_name = NULL,
                              data = NULL,
@@ -121,34 +142,47 @@ add_bitmap_layer <- function(rdeck,
                              tint_color = "#ffffff",
                              blending_mode = "normal",
                              visibility_toggle = TRUE,
-                             tooltip = FALSE) {
+                             tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  bitmap_layer <- layer(
-    type = "BitmapLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    image = image,
-    bounds = bounds,
-    desaturate = desaturate,
-    transparent_color = transparent_color,
-    tint_color = tint_color,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  tooltip <- rlang::enquo(tooltip)
+
+  bitmap_layer <- rlang::try_fetch(
+    layer(
+      type = "BitmapLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      image = image,
+      bounds = bounds,
+      desaturate = desaturate,
+      transparent_color = transparent_color,
+      tint_color = tint_color,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create bitmap_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(bitmap_layer)
   validate_name(bitmap_layer)
   validate_group_name(bitmap_layer)
@@ -168,7 +202,8 @@ add_bitmap_layer <- function(rdeck,
   validate_tint_color(bitmap_layer)
   validate_blending_mode(bitmap_layer)
   validate_visibility_toggle(bitmap_layer)
-  # add layer to map
+  validate_tooltip(bitmap_layer)
+
   add_layer(rdeck, bitmap_layer)
 }
 
@@ -177,7 +212,7 @@ add_bitmap_layer <- function(rdeck,
 #' @export
 add_icon_layer <- function(rdeck,
                            ...,
-                           id = NULL,
+                           id = uuid::UUIDgenerate(),
                            name = "IconLayer",
                            group_name = NULL,
                            data = NULL,
@@ -205,43 +240,62 @@ add_icon_layer <- function(rdeck,
                            get_pixel_offset = c(0, 0),
                            blending_mode = "normal",
                            visibility_toggle = TRUE,
-                           tooltip = FALSE) {
+                           tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  icon_layer <- layer(
-    type = "IconLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    icon_atlas = icon_atlas,
-    icon_mapping = icon_mapping,
-    size_scale = size_scale,
-    billboard = billboard,
-    size_units = size_units,
-    size_min_pixels = size_min_pixels,
-    size_max_pixels = size_max_pixels,
-    alpha_cutoff = alpha_cutoff,
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_icon = accessor(rlang::enquo(get_icon), data),
-    get_color = accessor(rlang::enquo(get_color), data),
-    get_size = accessor(rlang::enquo(get_size), data),
-    get_angle = accessor(rlang::enquo(get_angle), data),
-    get_pixel_offset = accessor(rlang::enquo(get_pixel_offset), data),
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_icon <- rlang::enquo(get_icon)
+  get_color <- rlang::enquo(get_color)
+  get_size <- rlang::enquo(get_size)
+  get_angle <- rlang::enquo(get_angle)
+  get_pixel_offset <- rlang::enquo(get_pixel_offset)
+  tooltip <- rlang::enquo(tooltip)
+
+  icon_layer <- rlang::try_fetch(
+    layer(
+      type = "IconLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      icon_atlas = icon_atlas,
+      icon_mapping = icon_mapping,
+      size_scale = size_scale,
+      billboard = billboard,
+      size_units = size_units,
+      size_min_pixels = size_min_pixels,
+      size_max_pixels = size_max_pixels,
+      alpha_cutoff = alpha_cutoff,
+      get_position = accessor(get_position, data, NULL),
+      get_icon = accessor(get_icon, data, NULL),
+      get_color = accessor(get_color, data, NULL),
+      get_size = accessor(get_size, data, NULL),
+      get_angle = accessor(get_angle, data, NULL),
+      get_pixel_offset = accessor(get_pixel_offset, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create icon_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(icon_layer)
   validate_name(icon_layer)
   validate_group_name(icon_layer)
@@ -270,7 +324,8 @@ add_icon_layer <- function(rdeck,
   validate_get_pixel_offset(icon_layer)
   validate_blending_mode(icon_layer)
   validate_visibility_toggle(icon_layer)
-  # add layer to map
+  validate_tooltip(icon_layer)
+
   add_layer(rdeck, icon_layer)
 }
 
@@ -279,7 +334,7 @@ add_icon_layer <- function(rdeck,
 #' @export
 add_line_layer <- function(rdeck,
                            ...,
-                           id = NULL,
+                           id = uuid::UUIDgenerate(),
                            name = "LineLayer",
                            group_name = NULL,
                            data = NULL,
@@ -301,37 +356,54 @@ add_line_layer <- function(rdeck,
                            width_max_pixels = 9007199254740991,
                            blending_mode = "normal",
                            visibility_toggle = TRUE,
-                           tooltip = FALSE) {
+                           tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  line_layer <- layer(
-    type = "LineLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    get_source_position = accessor(rlang::enquo(get_source_position), data),
-    get_target_position = accessor(rlang::enquo(get_target_position), data),
-    get_color = accessor(rlang::enquo(get_color), data),
-    get_width = accessor(rlang::enquo(get_width), data),
-    width_units = width_units,
-    width_scale = width_scale,
-    width_min_pixels = width_min_pixels,
-    width_max_pixels = width_max_pixels,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_source_position <- rlang::enquo(get_source_position)
+  get_target_position <- rlang::enquo(get_target_position)
+  get_color <- rlang::enquo(get_color)
+  get_width <- rlang::enquo(get_width)
+  tooltip <- rlang::enquo(tooltip)
+
+  line_layer <- rlang::try_fetch(
+    layer(
+      type = "LineLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      get_source_position = accessor(get_source_position, data, NULL),
+      get_target_position = accessor(get_target_position, data, NULL),
+      get_color = accessor(get_color, data, NULL),
+      get_width = accessor(get_width, data, NULL),
+      width_units = width_units,
+      width_scale = width_scale,
+      width_min_pixels = width_min_pixels,
+      width_max_pixels = width_max_pixels,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create line_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(line_layer)
   validate_name(line_layer)
   validate_group_name(line_layer)
@@ -354,7 +426,8 @@ add_line_layer <- function(rdeck,
   validate_width_max_pixels(line_layer)
   validate_blending_mode(line_layer)
   validate_visibility_toggle(line_layer)
-  # add layer to map
+  validate_tooltip(line_layer)
+
   add_layer(rdeck, line_layer)
 }
 
@@ -363,7 +436,7 @@ add_line_layer <- function(rdeck,
 #' @export
 add_point_cloud_layer <- function(rdeck,
                                   ...,
-                                  id = NULL,
+                                  id = uuid::UUIDgenerate(),
                                   name = "PointCloudLayer",
                                   group_name = NULL,
                                   data = NULL,
@@ -383,35 +456,51 @@ add_point_cloud_layer <- function(rdeck,
                                   material = TRUE,
                                   blending_mode = "normal",
                                   visibility_toggle = TRUE,
-                                  tooltip = FALSE) {
+                                  tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  point_cloud_layer <- layer(
-    type = "PointCloudLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    size_units = size_units,
-    point_size = point_size,
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_normal = accessor(rlang::enquo(get_normal), data),
-    get_color = accessor(rlang::enquo(get_color), data),
-    material = material,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_normal <- rlang::enquo(get_normal)
+  get_color <- rlang::enquo(get_color)
+  tooltip <- rlang::enquo(tooltip)
+
+  point_cloud_layer <- rlang::try_fetch(
+    layer(
+      type = "PointCloudLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      size_units = size_units,
+      point_size = point_size,
+      get_position = accessor(get_position, data, NULL),
+      get_normal = accessor(get_normal, data, NULL),
+      get_color = accessor(get_color, data, NULL),
+      material = material,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create point_cloud_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(point_cloud_layer)
   validate_name(point_cloud_layer)
   validate_group_name(point_cloud_layer)
@@ -432,7 +521,8 @@ add_point_cloud_layer <- function(rdeck,
   validate_material(point_cloud_layer)
   validate_blending_mode(point_cloud_layer)
   validate_visibility_toggle(point_cloud_layer)
-  # add layer to map
+  validate_tooltip(point_cloud_layer)
+
   add_layer(rdeck, point_cloud_layer)
 }
 
@@ -441,7 +531,7 @@ add_point_cloud_layer <- function(rdeck,
 #' @export
 add_scatterplot_layer <- function(rdeck,
                                   ...,
-                                  id = NULL,
+                                  id = uuid::UUIDgenerate(),
                                   name = "ScatterplotLayer",
                                   group_name = NULL,
                                   data = NULL,
@@ -472,46 +562,64 @@ add_scatterplot_layer <- function(rdeck,
                                   get_line_width = 1,
                                   blending_mode = "normal",
                                   visibility_toggle = TRUE,
-                                  tooltip = FALSE) {
+                                  tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  scatterplot_layer <- layer(
-    type = "ScatterplotLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    radius_units = radius_units,
-    radius_scale = radius_scale,
-    radius_min_pixels = radius_min_pixels,
-    radius_max_pixels = radius_max_pixels,
-    line_width_units = line_width_units,
-    line_width_scale = line_width_scale,
-    line_width_min_pixels = line_width_min_pixels,
-    line_width_max_pixels = line_width_max_pixels,
-    stroked = stroked,
-    filled = filled,
-    billboard = billboard,
-    antialiasing = antialiasing,
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_radius = accessor(rlang::enquo(get_radius), data),
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    get_line_width = accessor(rlang::enquo(get_line_width), data),
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_radius <- rlang::enquo(get_radius)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  get_line_width <- rlang::enquo(get_line_width)
+  tooltip <- rlang::enquo(tooltip)
+
+  scatterplot_layer <- rlang::try_fetch(
+    layer(
+      type = "ScatterplotLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      radius_units = radius_units,
+      radius_scale = radius_scale,
+      radius_min_pixels = radius_min_pixels,
+      radius_max_pixels = radius_max_pixels,
+      line_width_units = line_width_units,
+      line_width_scale = line_width_scale,
+      line_width_min_pixels = line_width_min_pixels,
+      line_width_max_pixels = line_width_max_pixels,
+      stroked = stroked,
+      filled = filled,
+      billboard = billboard,
+      antialiasing = antialiasing,
+      get_position = accessor(get_position, data, NULL),
+      get_radius = accessor(get_radius, data, NULL),
+      get_fill_color = accessor(get_fill_color, data, NULL),
+      get_line_color = accessor(get_line_color, data, NULL),
+      get_line_width = accessor(get_line_width, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create scatterplot_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(scatterplot_layer)
   validate_name(scatterplot_layer)
   validate_group_name(scatterplot_layer)
@@ -543,7 +651,8 @@ add_scatterplot_layer <- function(rdeck,
   validate_get_line_width(scatterplot_layer)
   validate_blending_mode(scatterplot_layer)
   validate_visibility_toggle(scatterplot_layer)
-  # add layer to map
+  validate_tooltip(scatterplot_layer)
+
   add_layer(rdeck, scatterplot_layer)
 }
 
@@ -552,7 +661,7 @@ add_scatterplot_layer <- function(rdeck,
 #' @export
 add_grid_cell_layer <- function(rdeck,
                                 ...,
-                                id = NULL,
+                                id = uuid::UUIDgenerate(),
                                 name = "GridCellLayer",
                                 group_name = NULL,
                                 data = NULL,
@@ -589,52 +698,70 @@ add_grid_cell_layer <- function(rdeck,
                                 cell_size = 1000,
                                 blending_mode = "normal",
                                 visibility_toggle = TRUE,
-                                tooltip = FALSE) {
+                                tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  grid_cell_layer <- layer(
-    type = "GridCellLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    disk_resolution = disk_resolution,
-    vertices = vertices,
-    radius = radius,
-    angle = angle,
-    offset = offset,
-    coverage = coverage,
-    elevation_scale = elevation_scale,
-    radius_units = radius_units,
-    line_width_units = line_width_units,
-    line_width_scale = line_width_scale,
-    line_width_min_pixels = line_width_min_pixels,
-    line_width_max_pixels = line_width_max_pixels,
-    extruded = extruded,
-    wireframe = wireframe,
-    filled = filled,
-    stroked = stroked,
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    get_line_width = accessor(rlang::enquo(get_line_width), data),
-    get_elevation = accessor(rlang::enquo(get_elevation), data),
-    material = material,
-    cell_size = cell_size,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  get_line_width <- rlang::enquo(get_line_width)
+  get_elevation <- rlang::enquo(get_elevation)
+  tooltip <- rlang::enquo(tooltip)
+
+  grid_cell_layer <- rlang::try_fetch(
+    layer(
+      type = "GridCellLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      disk_resolution = disk_resolution,
+      vertices = vertices,
+      radius = radius,
+      angle = angle,
+      offset = offset,
+      coverage = coverage,
+      elevation_scale = elevation_scale,
+      radius_units = radius_units,
+      line_width_units = line_width_units,
+      line_width_scale = line_width_scale,
+      line_width_min_pixels = line_width_min_pixels,
+      line_width_max_pixels = line_width_max_pixels,
+      extruded = extruded,
+      wireframe = wireframe,
+      filled = filled,
+      stroked = stroked,
+      get_position = accessor(get_position, data, NULL),
+      get_fill_color = accessor(get_fill_color, data, NULL),
+      get_line_color = accessor(get_line_color, data, NULL),
+      get_line_width = accessor(get_line_width, data, NULL),
+      get_elevation = accessor(get_elevation, data, NULL),
+      material = material,
+      cell_size = cell_size,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create grid_cell_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(grid_cell_layer)
   validate_name(grid_cell_layer)
   validate_group_name(grid_cell_layer)
@@ -672,7 +799,8 @@ add_grid_cell_layer <- function(rdeck,
   validate_cell_size(grid_cell_layer)
   validate_blending_mode(grid_cell_layer)
   validate_visibility_toggle(grid_cell_layer)
-  # add layer to map
+  validate_tooltip(grid_cell_layer)
+
   add_layer(rdeck, grid_cell_layer)
 }
 
@@ -681,7 +809,7 @@ add_grid_cell_layer <- function(rdeck,
 #' @export
 add_column_layer <- function(rdeck,
                              ...,
-                             id = NULL,
+                             id = uuid::UUIDgenerate(),
                              name = "ColumnLayer",
                              group_name = NULL,
                              data = NULL,
@@ -717,51 +845,69 @@ add_column_layer <- function(rdeck,
                              material = TRUE,
                              blending_mode = "normal",
                              visibility_toggle = TRUE,
-                             tooltip = FALSE) {
+                             tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  column_layer <- layer(
-    type = "ColumnLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    disk_resolution = disk_resolution,
-    vertices = vertices,
-    radius = radius,
-    angle = angle,
-    offset = offset,
-    coverage = coverage,
-    elevation_scale = elevation_scale,
-    radius_units = radius_units,
-    line_width_units = line_width_units,
-    line_width_scale = line_width_scale,
-    line_width_min_pixels = line_width_min_pixels,
-    line_width_max_pixels = line_width_max_pixels,
-    extruded = extruded,
-    wireframe = wireframe,
-    filled = filled,
-    stroked = stroked,
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    get_line_width = accessor(rlang::enquo(get_line_width), data),
-    get_elevation = accessor(rlang::enquo(get_elevation), data),
-    material = material,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  get_line_width <- rlang::enquo(get_line_width)
+  get_elevation <- rlang::enquo(get_elevation)
+  tooltip <- rlang::enquo(tooltip)
+
+  column_layer <- rlang::try_fetch(
+    layer(
+      type = "ColumnLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      disk_resolution = disk_resolution,
+      vertices = vertices,
+      radius = radius,
+      angle = angle,
+      offset = offset,
+      coverage = coverage,
+      elevation_scale = elevation_scale,
+      radius_units = radius_units,
+      line_width_units = line_width_units,
+      line_width_scale = line_width_scale,
+      line_width_min_pixels = line_width_min_pixels,
+      line_width_max_pixels = line_width_max_pixels,
+      extruded = extruded,
+      wireframe = wireframe,
+      filled = filled,
+      stroked = stroked,
+      get_position = accessor(get_position, data, NULL),
+      get_fill_color = accessor(get_fill_color, data, NULL),
+      get_line_color = accessor(get_line_color, data, NULL),
+      get_line_width = accessor(get_line_width, data, NULL),
+      get_elevation = accessor(get_elevation, data, NULL),
+      material = material,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create column_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(column_layer)
   validate_name(column_layer)
   validate_group_name(column_layer)
@@ -798,7 +944,8 @@ add_column_layer <- function(rdeck,
   validate_material(column_layer)
   validate_blending_mode(column_layer)
   validate_visibility_toggle(column_layer)
-  # add layer to map
+  validate_tooltip(column_layer)
+
   add_layer(rdeck, column_layer)
 }
 
@@ -807,7 +954,7 @@ add_column_layer <- function(rdeck,
 #' @export
 add_path_layer <- function(rdeck,
                            ...,
-                           id = NULL,
+                           id = uuid::UUIDgenerate(),
                            name = "PathLayer",
                            group_name = NULL,
                            data = NULL,
@@ -832,40 +979,56 @@ add_path_layer <- function(rdeck,
                            get_width = 1,
                            blending_mode = "normal",
                            visibility_toggle = TRUE,
-                           tooltip = FALSE) {
+                           tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  path_layer <- layer(
-    type = "PathLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    width_units = width_units,
-    width_scale = width_scale,
-    width_min_pixels = width_min_pixels,
-    width_max_pixels = width_max_pixels,
-    joint_rounded = joint_rounded,
-    cap_rounded = cap_rounded,
-    miter_limit = miter_limit,
-    billboard = billboard,
-    get_path = accessor(rlang::enquo(get_path), data),
-    get_color = accessor(rlang::enquo(get_color), data),
-    get_width = accessor(rlang::enquo(get_width), data),
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_path <- rlang::enquo(get_path)
+  get_color <- rlang::enquo(get_color)
+  get_width <- rlang::enquo(get_width)
+  tooltip <- rlang::enquo(tooltip)
+
+  path_layer <- rlang::try_fetch(
+    layer(
+      type = "PathLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      width_units = width_units,
+      width_scale = width_scale,
+      width_min_pixels = width_min_pixels,
+      width_max_pixels = width_max_pixels,
+      joint_rounded = joint_rounded,
+      cap_rounded = cap_rounded,
+      miter_limit = miter_limit,
+      billboard = billboard,
+      get_path = accessor(get_path, data, NULL),
+      get_color = accessor(get_color, data, NULL),
+      get_width = accessor(get_width, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create path_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(path_layer)
   validate_name(path_layer)
   validate_group_name(path_layer)
@@ -891,7 +1054,8 @@ add_path_layer <- function(rdeck,
   validate_get_width(path_layer)
   validate_blending_mode(path_layer)
   validate_visibility_toggle(path_layer)
-  # add layer to map
+  validate_tooltip(path_layer)
+
   add_layer(rdeck, path_layer)
 }
 
@@ -900,7 +1064,7 @@ add_path_layer <- function(rdeck,
 #' @export
 add_polygon_layer <- function(rdeck,
                               ...,
-                              id = NULL,
+                              id = uuid::UUIDgenerate(),
                               name = "PolygonLayer",
                               group_name = NULL,
                               data = NULL,
@@ -931,46 +1095,64 @@ add_polygon_layer <- function(rdeck,
                               material = TRUE,
                               blending_mode = "normal",
                               visibility_toggle = TRUE,
-                              tooltip = FALSE) {
+                              tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  polygon_layer <- layer(
-    type = "PolygonLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    stroked = stroked,
-    filled = filled,
-    extruded = extruded,
-    elevation_scale = elevation_scale,
-    wireframe = wireframe,
-    line_width_units = line_width_units,
-    line_width_scale = line_width_scale,
-    line_width_min_pixels = line_width_min_pixels,
-    line_width_max_pixels = line_width_max_pixels,
-    line_joint_rounded = line_joint_rounded,
-    line_miter_limit = line_miter_limit,
-    get_polygon = accessor(rlang::enquo(get_polygon), data),
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    get_line_width = accessor(rlang::enquo(get_line_width), data),
-    get_elevation = accessor(rlang::enquo(get_elevation), data),
-    material = material,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_polygon <- rlang::enquo(get_polygon)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  get_line_width <- rlang::enquo(get_line_width)
+  get_elevation <- rlang::enquo(get_elevation)
+  tooltip <- rlang::enquo(tooltip)
+
+  polygon_layer <- rlang::try_fetch(
+    layer(
+      type = "PolygonLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      stroked = stroked,
+      filled = filled,
+      extruded = extruded,
+      elevation_scale = elevation_scale,
+      wireframe = wireframe,
+      line_width_units = line_width_units,
+      line_width_scale = line_width_scale,
+      line_width_min_pixels = line_width_min_pixels,
+      line_width_max_pixels = line_width_max_pixels,
+      line_joint_rounded = line_joint_rounded,
+      line_miter_limit = line_miter_limit,
+      get_polygon = accessor(get_polygon, data, NULL),
+      get_fill_color = accessor(get_fill_color, data, NULL),
+      get_line_color = accessor(get_line_color, data, NULL),
+      get_line_width = accessor(get_line_width, data, NULL),
+      get_elevation = accessor(get_elevation, data, NULL),
+      material = material,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create polygon_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(polygon_layer)
   validate_name(polygon_layer)
   validate_group_name(polygon_layer)
@@ -1002,7 +1184,8 @@ add_polygon_layer <- function(rdeck,
   validate_material(polygon_layer)
   validate_blending_mode(polygon_layer)
   validate_visibility_toggle(polygon_layer)
-  # add layer to map
+  validate_tooltip(polygon_layer)
+
   add_layer(rdeck, polygon_layer)
 }
 
@@ -1011,7 +1194,7 @@ add_polygon_layer <- function(rdeck,
 #' @export
 add_solid_polygon_layer <- function(rdeck,
                                     ...,
-                                    id = NULL,
+                                    id = uuid::UUIDgenerate(),
                                     name = "SolidPolygonLayer",
                                     group_name = NULL,
                                     data = NULL,
@@ -1034,38 +1217,55 @@ add_solid_polygon_layer <- function(rdeck,
                                     material = TRUE,
                                     blending_mode = "normal",
                                     visibility_toggle = TRUE,
-                                    tooltip = FALSE) {
+                                    tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  solid_polygon_layer <- layer(
-    type = "SolidPolygonLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    filled = filled,
-    extruded = extruded,
-    wireframe = wireframe,
-    elevation_scale = elevation_scale,
-    get_polygon = accessor(rlang::enquo(get_polygon), data),
-    get_elevation = accessor(rlang::enquo(get_elevation), data),
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    material = material,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_polygon <- rlang::enquo(get_polygon)
+  get_elevation <- rlang::enquo(get_elevation)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  tooltip <- rlang::enquo(tooltip)
+
+  solid_polygon_layer <- rlang::try_fetch(
+    layer(
+      type = "SolidPolygonLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      filled = filled,
+      extruded = extruded,
+      wireframe = wireframe,
+      elevation_scale = elevation_scale,
+      get_polygon = accessor(get_polygon, data, NULL),
+      get_elevation = accessor(get_elevation, data, NULL),
+      get_fill_color = accessor(get_fill_color, data, NULL),
+      get_line_color = accessor(get_line_color, data, NULL),
+      material = material,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create solid_polygon_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(solid_polygon_layer)
   validate_name(solid_polygon_layer)
   validate_group_name(solid_polygon_layer)
@@ -1089,7 +1289,8 @@ add_solid_polygon_layer <- function(rdeck,
   validate_material(solid_polygon_layer)
   validate_blending_mode(solid_polygon_layer)
   validate_visibility_toggle(solid_polygon_layer)
-  # add layer to map
+  validate_tooltip(solid_polygon_layer)
+
   add_layer(rdeck, solid_polygon_layer)
 }
 
@@ -1098,7 +1299,7 @@ add_solid_polygon_layer <- function(rdeck,
 #' @export
 add_geojson_layer <- function(rdeck,
                               ...,
-                              id = NULL,
+                              id = uuid::UUIDgenerate(),
                               name = "GeoJsonLayer",
                               group_name = NULL,
                               data = NULL,
@@ -1176,95 +1377,126 @@ add_geojson_layer <- function(rdeck,
                               point_type = "circle",
                               blending_mode = "normal",
                               visibility_toggle = TRUE,
-                              tooltip = FALSE) {
+                              tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  draw_text <- !is.null(point_type) && grepl("text", point_type)
-  draw_icon <- !is.null(point_type) && grepl("icon", point_type)
-  # construct layer object
-  geojson_layer <- layer(
-    type = "GeoJsonLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    filled = filled,
-    stroked = stroked,
-    line_width_max_pixels = line_width_max_pixels,
-    line_width_min_pixels = line_width_min_pixels,
-    line_width_scale = line_width_scale,
-    line_width_units = line_width_units,
-    point_radius_max_pixels = point_radius_max_pixels,
-    point_radius_min_pixels = point_radius_min_pixels,
-    point_radius_scale = point_radius_scale,
-    point_radius_units = point_radius_units,
-    point_antialiasing = point_antialiasing,
-    point_billboard = point_billboard,
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    get_line_width = accessor(rlang::enquo(get_line_width), data),
-    get_point_radius = accessor(rlang::enquo(get_point_radius), data),
-    icon_atlas = icon_atlas,
-    icon_mapping = icon_mapping,
-    icon_size_max_pixels = icon_size_max_pixels,
-    icon_size_min_pixels = icon_size_min_pixels,
-    icon_size_scale = icon_size_scale,
-    icon_size_units = icon_size_units,
-    icon_alpha_cutoff = icon_alpha_cutoff,
-    icon_billboard = icon_billboard,
-    get_icon = if (draw_icon) accessor(rlang::enquo(get_icon), data),
-    get_icon_angle = accessor(rlang::enquo(get_icon_angle), data),
-    get_icon_color = accessor(rlang::enquo(get_icon_color), data),
-    get_icon_pixel_offset = accessor(rlang::enquo(get_icon_pixel_offset), data),
-    get_icon_size = accessor(rlang::enquo(get_icon_size), data),
-    text_size_max_pixels = text_size_max_pixels,
-    text_size_min_pixels = text_size_min_pixels,
-    text_size_scale = text_size_scale,
-    text_size_units = text_size_units,
-    text_background = text_background,
-    text_background_padding = text_background_padding,
-    text_font_family = text_font_family,
-    text_font_weight = text_font_weight,
-    text_line_height = text_line_height,
-    text_max_width = text_max_width,
-    text_outline_color = text_outline_color,
-    text_outline_width = text_outline_width,
-    text_word_break = text_word_break,
-    text_billboard = text_billboard,
-    text_font_settings = text_font_settings,
-    get_text = if (draw_text) accessor(rlang::enquo(get_text), data),
-    get_text_angle = accessor(rlang::enquo(get_text_angle), data),
-    get_text_color = accessor(rlang::enquo(get_text_color), data),
-    get_text_pixel_offset = accessor(rlang::enquo(get_text_pixel_offset), data),
-    get_text_size = accessor(rlang::enquo(get_text_size), data),
-    get_text_anchor = accessor(rlang::enquo(get_text_anchor), data),
-    get_text_alignment_baseline = accessor(rlang::enquo(get_text_alignment_baseline), data),
-    get_text_background_color = accessor(rlang::enquo(get_text_background_color), data),
-    get_text_border_color = accessor(rlang::enquo(get_text_border_color), data),
-    get_text_border_width = accessor(rlang::enquo(get_text_border_width), data),
-    line_joint_rounded = line_joint_rounded,
-    line_cap_rounded = line_cap_rounded,
-    line_miter_limit = line_miter_limit,
-    line_billboard = line_billboard,
-    extruded = extruded,
-    wireframe = wireframe,
-    elevation_scale = elevation_scale,
-    material = material,
-    get_elevation = accessor(rlang::enquo(get_elevation), data),
-    point_type = point_type,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  get_line_width <- rlang::enquo(get_line_width)
+  get_point_radius <- rlang::enquo(get_point_radius)
+  get_icon <- rlang::enquo(get_icon)
+  get_icon_angle <- rlang::enquo(get_icon_angle)
+  get_icon_color <- rlang::enquo(get_icon_color)
+  get_icon_pixel_offset <- rlang::enquo(get_icon_pixel_offset)
+  get_icon_size <- rlang::enquo(get_icon_size)
+  get_text <- rlang::enquo(get_text)
+  get_text_angle <- rlang::enquo(get_text_angle)
+  get_text_color <- rlang::enquo(get_text_color)
+  get_text_pixel_offset <- rlang::enquo(get_text_pixel_offset)
+  get_text_size <- rlang::enquo(get_text_size)
+  get_text_anchor <- rlang::enquo(get_text_anchor)
+  get_text_alignment_baseline <- rlang::enquo(get_text_alignment_baseline)
+  get_text_background_color <- rlang::enquo(get_text_background_color)
+  get_text_border_color <- rlang::enquo(get_text_border_color)
+  get_text_border_width <- rlang::enquo(get_text_border_width)
+  get_elevation <- rlang::enquo(get_elevation)
+  tooltip <- rlang::enquo(tooltip)
+
+  geojson_layer <- rlang::try_fetch(
+    layer(
+      type = "GeoJsonLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, "geojson"),
+      filled = filled,
+      stroked = stroked,
+      line_width_max_pixels = line_width_max_pixels,
+      line_width_min_pixels = line_width_min_pixels,
+      line_width_scale = line_width_scale,
+      line_width_units = line_width_units,
+      point_radius_max_pixels = point_radius_max_pixels,
+      point_radius_min_pixels = point_radius_min_pixels,
+      point_radius_scale = point_radius_scale,
+      point_radius_units = point_radius_units,
+      point_antialiasing = point_antialiasing,
+      point_billboard = point_billboard,
+      get_fill_color = accessor(get_fill_color, data, "geojson"),
+      get_line_color = accessor(get_line_color, data, "geojson"),
+      get_line_width = accessor(get_line_width, data, "geojson"),
+      get_point_radius = accessor(get_point_radius, data, "geojson"),
+      icon_atlas = icon_atlas,
+      icon_mapping = icon_mapping,
+      icon_size_max_pixels = icon_size_max_pixels,
+      icon_size_min_pixels = icon_size_min_pixels,
+      icon_size_scale = icon_size_scale,
+      icon_size_units = icon_size_units,
+      icon_alpha_cutoff = icon_alpha_cutoff,
+      icon_billboard = icon_billboard,
+      get_icon = accessor(get_icon, data, "geojson"),
+      get_icon_angle = accessor(get_icon_angle, data, "geojson"),
+      get_icon_color = accessor(get_icon_color, data, "geojson"),
+      get_icon_pixel_offset = accessor(get_icon_pixel_offset, data, "geojson"),
+      get_icon_size = accessor(get_icon_size, data, "geojson"),
+      text_size_max_pixels = text_size_max_pixels,
+      text_size_min_pixels = text_size_min_pixels,
+      text_size_scale = text_size_scale,
+      text_size_units = text_size_units,
+      text_background = text_background,
+      text_background_padding = text_background_padding,
+      text_font_family = text_font_family,
+      text_font_weight = text_font_weight,
+      text_line_height = text_line_height,
+      text_max_width = text_max_width,
+      text_outline_color = text_outline_color,
+      text_outline_width = text_outline_width,
+      text_word_break = text_word_break,
+      text_billboard = text_billboard,
+      text_font_settings = text_font_settings,
+      get_text = accessor(get_text, data, "geojson"),
+      get_text_angle = accessor(get_text_angle, data, "geojson"),
+      get_text_color = accessor(get_text_color, data, "geojson"),
+      get_text_pixel_offset = accessor(get_text_pixel_offset, data, "geojson"),
+      get_text_size = accessor(get_text_size, data, "geojson"),
+      get_text_anchor = accessor(get_text_anchor, data, "geojson"),
+      get_text_alignment_baseline = accessor(get_text_alignment_baseline, data, "geojson"),
+      get_text_background_color = accessor(get_text_background_color, data, "geojson"),
+      get_text_border_color = accessor(get_text_border_color, data, "geojson"),
+      get_text_border_width = accessor(get_text_border_width, data, "geojson"),
+      line_joint_rounded = line_joint_rounded,
+      line_cap_rounded = line_cap_rounded,
+      line_miter_limit = line_miter_limit,
+      line_billboard = line_billboard,
+      extruded = extruded,
+      wireframe = wireframe,
+      elevation_scale = elevation_scale,
+      material = material,
+      get_elevation = accessor(get_elevation, data, "geojson"),
+      point_type = point_type,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, "geojson")
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create geojson_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(geojson_layer)
   validate_name(geojson_layer)
   validate_group_name(geojson_layer)
@@ -1301,7 +1533,7 @@ add_geojson_layer <- function(rdeck,
   validate_icon_size_units(geojson_layer)
   validate_icon_alpha_cutoff(geojson_layer)
   validate_icon_billboard(geojson_layer)
-  if (draw_icon) validate_get_icon(geojson_layer)
+  validate_get_icon(geojson_layer)
   validate_get_icon_angle(geojson_layer)
   validate_get_icon_color(geojson_layer)
   validate_get_icon_pixel_offset(geojson_layer)
@@ -1321,7 +1553,7 @@ add_geojson_layer <- function(rdeck,
   validate_text_word_break(geojson_layer)
   validate_text_billboard(geojson_layer)
   validate_text_font_settings(geojson_layer)
-  if (draw_text) validate_get_text(geojson_layer)
+  validate_get_text(geojson_layer)
   validate_get_text_angle(geojson_layer)
   validate_get_text_color(geojson_layer)
   validate_get_text_pixel_offset(geojson_layer)
@@ -1343,7 +1575,8 @@ add_geojson_layer <- function(rdeck,
   validate_point_type(geojson_layer)
   validate_blending_mode(geojson_layer)
   validate_visibility_toggle(geojson_layer)
-  # add layer to map
+  validate_tooltip(geojson_layer)
+
   add_layer(rdeck, geojson_layer)
 }
 
@@ -1352,7 +1585,7 @@ add_geojson_layer <- function(rdeck,
 #' @export
 add_text_layer <- function(rdeck,
                            ...,
-                           id = NULL,
+                           id = uuid::UUIDgenerate(),
                            name = "TextLayer",
                            group_name = NULL,
                            data = NULL,
@@ -1392,55 +1625,79 @@ add_text_layer <- function(rdeck,
                            get_pixel_offset = c(0, 0),
                            blending_mode = "normal",
                            visibility_toggle = TRUE,
-                           tooltip = FALSE) {
+                           tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  text_layer <- layer(
-    type = "TextLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    billboard = billboard,
-    size_scale = size_scale,
-    size_units = size_units,
-    size_min_pixels = size_min_pixels,
-    size_max_pixels = size_max_pixels,
-    background = background,
-    get_background_color = accessor(rlang::enquo(get_background_color), data),
-    get_border_color = accessor(rlang::enquo(get_border_color), data),
-    get_border_width = accessor(rlang::enquo(get_border_width), data),
-    background_padding = background_padding,
-    font_family = font_family,
-    font_weight = font_weight,
-    line_height = line_height,
-    outline_width = outline_width,
-    outline_color = outline_color,
-    font_settings = font_settings,
-    word_break = word_break,
-    max_width = max_width,
-    get_text = accessor(rlang::enquo(get_text), data),
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_color = accessor(rlang::enquo(get_color), data),
-    get_size = accessor(rlang::enquo(get_size), data),
-    get_angle = accessor(rlang::enquo(get_angle), data),
-    get_text_anchor = accessor(rlang::enquo(get_text_anchor), data),
-    get_alignment_baseline = accessor(rlang::enquo(get_alignment_baseline), data),
-    get_pixel_offset = accessor(rlang::enquo(get_pixel_offset), data),
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_background_color <- rlang::enquo(get_background_color)
+  get_border_color <- rlang::enquo(get_border_color)
+  get_border_width <- rlang::enquo(get_border_width)
+  get_text <- rlang::enquo(get_text)
+  get_position <- rlang::enquo(get_position)
+  get_color <- rlang::enquo(get_color)
+  get_size <- rlang::enquo(get_size)
+  get_angle <- rlang::enquo(get_angle)
+  get_text_anchor <- rlang::enquo(get_text_anchor)
+  get_alignment_baseline <- rlang::enquo(get_alignment_baseline)
+  get_pixel_offset <- rlang::enquo(get_pixel_offset)
+  tooltip <- rlang::enquo(tooltip)
+
+  text_layer <- rlang::try_fetch(
+    layer(
+      type = "TextLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      billboard = billboard,
+      size_scale = size_scale,
+      size_units = size_units,
+      size_min_pixels = size_min_pixels,
+      size_max_pixels = size_max_pixels,
+      background = background,
+      get_background_color = accessor(get_background_color, data, NULL),
+      get_border_color = accessor(get_border_color, data, NULL),
+      get_border_width = accessor(get_border_width, data, NULL),
+      background_padding = background_padding,
+      font_family = font_family,
+      font_weight = font_weight,
+      line_height = line_height,
+      outline_width = outline_width,
+      outline_color = outline_color,
+      font_settings = font_settings,
+      word_break = word_break,
+      max_width = max_width,
+      get_text = accessor(get_text, data, NULL),
+      get_position = accessor(get_position, data, NULL),
+      get_color = accessor(get_color, data, NULL),
+      get_size = accessor(get_size, data, NULL),
+      get_angle = accessor(get_angle, data, NULL),
+      get_text_anchor = accessor(get_text_anchor, data, NULL),
+      get_alignment_baseline = accessor(get_alignment_baseline, data, NULL),
+      get_pixel_offset = accessor(get_pixel_offset, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create text_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(text_layer)
   validate_name(text_layer)
   validate_group_name(text_layer)
@@ -1481,7 +1738,8 @@ add_text_layer <- function(rdeck,
   validate_get_pixel_offset(text_layer)
   validate_blending_mode(text_layer)
   validate_visibility_toggle(text_layer)
-  # add layer to map
+  validate_tooltip(text_layer)
+
   add_layer(rdeck, text_layer)
 }
 
@@ -1490,7 +1748,7 @@ add_text_layer <- function(rdeck,
 #' @export
 add_screen_grid_layer <- function(rdeck,
                                   ...,
-                                  id = NULL,
+                                  id = uuid::UUIDgenerate(),
                                   name = "ScreenGridLayer",
                                   group_name = NULL,
                                   data = NULL,
@@ -1511,38 +1769,50 @@ add_screen_grid_layer <- function(rdeck,
                                   gpu_aggregation = TRUE,
                                   aggregation = "SUM",
                                   blending_mode = "normal",
-                                  visibility_toggle = TRUE,
-                                  tooltip = FALSE) {
+                                  visibility_toggle = TRUE) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  screen_grid_layer <- layer(
-    type = "ScreenGridLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    cell_size_pixels = cell_size_pixels,
-    cell_margin_pixels = cell_margin_pixels,
-    color_domain = color_domain,
-    color_range = color_range,
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_weight = accessor(rlang::enquo(get_weight), data),
-    gpu_aggregation = gpu_aggregation,
-    aggregation = aggregation,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_weight <- rlang::enquo(get_weight)
+
+  screen_grid_layer <- rlang::try_fetch(
+    layer(
+      type = "ScreenGridLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      cell_size_pixels = cell_size_pixels,
+      cell_margin_pixels = cell_margin_pixels,
+      color_domain = color_domain,
+      color_range = color_range,
+      get_position = accessor(get_position, data, NULL),
+      get_weight = accessor(get_weight, data, NULL),
+      gpu_aggregation = gpu_aggregation,
+      aggregation = aggregation,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create screen_grid_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(screen_grid_layer)
   validate_name(screen_grid_layer)
   validate_group_name(screen_grid_layer)
@@ -1565,7 +1835,7 @@ add_screen_grid_layer <- function(rdeck,
   validate_aggregation(screen_grid_layer)
   validate_blending_mode(screen_grid_layer)
   validate_visibility_toggle(screen_grid_layer)
-  # add layer to map
+
   add_layer(rdeck, screen_grid_layer)
 }
 
@@ -1574,7 +1844,7 @@ add_screen_grid_layer <- function(rdeck,
 #' @export
 add_cpu_grid_layer <- function(rdeck,
                                ...,
-                               id = NULL,
+                               id = uuid::UUIDgenerate(),
                                name = "CPUGridLayer",
                                group_name = NULL,
                                data = NULL,
@@ -1609,52 +1879,65 @@ add_cpu_grid_layer <- function(rdeck,
                                extruded = FALSE,
                                material = TRUE,
                                blending_mode = "normal",
-                               visibility_toggle = TRUE,
-                               tooltip = FALSE) {
+                               visibility_toggle = TRUE) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  cpu_grid_layer <- layer(
-    type = "CPUGridLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    color_domain = color_domain,
-    color_range = color_range,
-    get_color_value = get_color_value,
-    get_color_weight = accessor(rlang::enquo(get_color_weight), data),
-    color_aggregation = color_aggregation,
-    lower_percentile = lower_percentile,
-    upper_percentile = upper_percentile,
-    color_scale_type = color_scale_type,
-    elevation_domain = elevation_domain,
-    elevation_range = elevation_range,
-    get_elevation_value = get_elevation_value,
-    get_elevation_weight = accessor(rlang::enquo(get_elevation_weight), data),
-    elevation_aggregation = elevation_aggregation,
-    elevation_lower_percentile = elevation_lower_percentile,
-    elevation_upper_percentile = elevation_upper_percentile,
-    elevation_scale = elevation_scale,
-    elevation_scale_type = elevation_scale_type,
-    cell_size = cell_size,
-    coverage = coverage,
-    get_position = accessor(rlang::enquo(get_position), data),
-    extruded = extruded,
-    material = material,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_color_weight <- rlang::enquo(get_color_weight)
+  get_elevation_weight <- rlang::enquo(get_elevation_weight)
+  get_position <- rlang::enquo(get_position)
+
+  cpu_grid_layer <- rlang::try_fetch(
+    layer(
+      type = "CPUGridLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      color_domain = color_domain,
+      color_range = color_range,
+      get_color_value = get_color_value,
+      get_color_weight = accessor(get_color_weight, data, NULL),
+      color_aggregation = color_aggregation,
+      lower_percentile = lower_percentile,
+      upper_percentile = upper_percentile,
+      color_scale_type = color_scale_type,
+      elevation_domain = elevation_domain,
+      elevation_range = elevation_range,
+      get_elevation_value = get_elevation_value,
+      get_elevation_weight = accessor(get_elevation_weight, data, NULL),
+      elevation_aggregation = elevation_aggregation,
+      elevation_lower_percentile = elevation_lower_percentile,
+      elevation_upper_percentile = elevation_upper_percentile,
+      elevation_scale = elevation_scale,
+      elevation_scale_type = elevation_scale_type,
+      cell_size = cell_size,
+      coverage = coverage,
+      get_position = accessor(get_position, data, NULL),
+      extruded = extruded,
+      material = material,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create cpu_grid_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(cpu_grid_layer)
   validate_name(cpu_grid_layer)
   validate_group_name(cpu_grid_layer)
@@ -1691,7 +1974,7 @@ add_cpu_grid_layer <- function(rdeck,
   validate_material(cpu_grid_layer)
   validate_blending_mode(cpu_grid_layer)
   validate_visibility_toggle(cpu_grid_layer)
-  # add layer to map
+
   add_layer(rdeck, cpu_grid_layer)
 }
 
@@ -1700,7 +1983,7 @@ add_cpu_grid_layer <- function(rdeck,
 #' @export
 add_hexagon_layer <- function(rdeck,
                               ...,
-                              id = NULL,
+                              id = uuid::UUIDgenerate(),
                               name = "HexagonLayer",
                               group_name = NULL,
                               data = NULL,
@@ -1735,52 +2018,65 @@ add_hexagon_layer <- function(rdeck,
                               get_position = position,
                               material = TRUE,
                               blending_mode = "normal",
-                              visibility_toggle = TRUE,
-                              tooltip = FALSE) {
+                              visibility_toggle = TRUE) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  hexagon_layer <- layer(
-    type = "HexagonLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    color_domain = color_domain,
-    color_range = color_range,
-    get_color_value = get_color_value,
-    get_color_weight = accessor(rlang::enquo(get_color_weight), data),
-    color_aggregation = color_aggregation,
-    lower_percentile = lower_percentile,
-    upper_percentile = upper_percentile,
-    color_scale_type = color_scale_type,
-    elevation_domain = elevation_domain,
-    elevation_range = elevation_range,
-    get_elevation_value = get_elevation_value,
-    get_elevation_weight = accessor(rlang::enquo(get_elevation_weight), data),
-    elevation_aggregation = elevation_aggregation,
-    elevation_lower_percentile = elevation_lower_percentile,
-    elevation_upper_percentile = elevation_upper_percentile,
-    elevation_scale = elevation_scale,
-    elevation_scale_type = elevation_scale_type,
-    radius = radius,
-    coverage = coverage,
-    extruded = extruded,
-    get_position = accessor(rlang::enquo(get_position), data),
-    material = material,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_color_weight <- rlang::enquo(get_color_weight)
+  get_elevation_weight <- rlang::enquo(get_elevation_weight)
+  get_position <- rlang::enquo(get_position)
+
+  hexagon_layer <- rlang::try_fetch(
+    layer(
+      type = "HexagonLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      color_domain = color_domain,
+      color_range = color_range,
+      get_color_value = get_color_value,
+      get_color_weight = accessor(get_color_weight, data, NULL),
+      color_aggregation = color_aggregation,
+      lower_percentile = lower_percentile,
+      upper_percentile = upper_percentile,
+      color_scale_type = color_scale_type,
+      elevation_domain = elevation_domain,
+      elevation_range = elevation_range,
+      get_elevation_value = get_elevation_value,
+      get_elevation_weight = accessor(get_elevation_weight, data, NULL),
+      elevation_aggregation = elevation_aggregation,
+      elevation_lower_percentile = elevation_lower_percentile,
+      elevation_upper_percentile = elevation_upper_percentile,
+      elevation_scale = elevation_scale,
+      elevation_scale_type = elevation_scale_type,
+      radius = radius,
+      coverage = coverage,
+      extruded = extruded,
+      get_position = accessor(get_position, data, NULL),
+      material = material,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create hexagon_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(hexagon_layer)
   validate_name(hexagon_layer)
   validate_group_name(hexagon_layer)
@@ -1817,7 +2113,7 @@ add_hexagon_layer <- function(rdeck,
   validate_material(hexagon_layer)
   validate_blending_mode(hexagon_layer)
   validate_visibility_toggle(hexagon_layer)
-  # add layer to map
+
   add_layer(rdeck, hexagon_layer)
 }
 
@@ -1826,7 +2122,7 @@ add_hexagon_layer <- function(rdeck,
 #' @export
 add_contour_layer <- function(rdeck,
                               ...,
-                              id = NULL,
+                              id = uuid::UUIDgenerate(),
                               name = "ContourLayer",
                               group_name = NULL,
                               data = NULL,
@@ -1846,37 +2142,49 @@ add_contour_layer <- function(rdeck,
                               contours = c(list(threshold = 1)),
                               z_offset = 0.005,
                               blending_mode = "normal",
-                              visibility_toggle = TRUE,
-                              tooltip = FALSE) {
+                              visibility_toggle = TRUE) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  contour_layer <- layer(
-    type = "ContourLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    cell_size = cell_size,
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_weight = accessor(rlang::enquo(get_weight), data),
-    gpu_aggregation = gpu_aggregation,
-    aggregation = aggregation,
-    contours = contours,
-    z_offset = z_offset,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_weight <- rlang::enquo(get_weight)
+
+  contour_layer <- rlang::try_fetch(
+    layer(
+      type = "ContourLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      cell_size = cell_size,
+      get_position = accessor(get_position, data, NULL),
+      get_weight = accessor(get_weight, data, NULL),
+      gpu_aggregation = gpu_aggregation,
+      aggregation = aggregation,
+      contours = contours,
+      z_offset = z_offset,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create contour_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(contour_layer)
   validate_name(contour_layer)
   validate_group_name(contour_layer)
@@ -1898,7 +2206,7 @@ add_contour_layer <- function(rdeck,
   validate_z_offset(contour_layer)
   validate_blending_mode(contour_layer)
   validate_visibility_toggle(contour_layer)
-  # add layer to map
+
   add_layer(rdeck, contour_layer)
 }
 
@@ -1907,7 +2215,7 @@ add_contour_layer <- function(rdeck,
 #' @export
 add_grid_layer <- function(rdeck,
                            ...,
-                           id = NULL,
+                           id = uuid::UUIDgenerate(),
                            name = "GridLayer",
                            group_name = NULL,
                            data = NULL,
@@ -1943,53 +2251,66 @@ add_grid_layer <- function(rdeck,
                            elevation_scale_type = "linear",
                            gpu_aggregation = FALSE,
                            blending_mode = "normal",
-                           visibility_toggle = TRUE,
-                           tooltip = FALSE) {
+                           visibility_toggle = TRUE) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  grid_layer <- layer(
-    type = "GridLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    color_domain = color_domain,
-    color_range = color_range,
-    get_color_weight = accessor(rlang::enquo(get_color_weight), data),
-    color_aggregation = color_aggregation,
-    elevation_domain = elevation_domain,
-    elevation_range = elevation_range,
-    get_elevation_weight = accessor(rlang::enquo(get_elevation_weight), data),
-    elevation_aggregation = elevation_aggregation,
-    elevation_scale = elevation_scale,
-    cell_size = cell_size,
-    coverage = coverage,
-    get_position = accessor(rlang::enquo(get_position), data),
-    extruded = extruded,
-    material = material,
-    get_color_value = get_color_value,
-    lower_percentile = lower_percentile,
-    upper_percentile = upper_percentile,
-    color_scale_type = color_scale_type,
-    get_elevation_value = get_elevation_value,
-    elevation_lower_percentile = elevation_lower_percentile,
-    elevation_upper_percentile = elevation_upper_percentile,
-    elevation_scale_type = elevation_scale_type,
-    gpu_aggregation = gpu_aggregation,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_color_weight <- rlang::enquo(get_color_weight)
+  get_elevation_weight <- rlang::enquo(get_elevation_weight)
+  get_position <- rlang::enquo(get_position)
+
+  grid_layer <- rlang::try_fetch(
+    layer(
+      type = "GridLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      color_domain = color_domain,
+      color_range = color_range,
+      get_color_weight = accessor(get_color_weight, data, NULL),
+      color_aggregation = color_aggregation,
+      elevation_domain = elevation_domain,
+      elevation_range = elevation_range,
+      get_elevation_weight = accessor(get_elevation_weight, data, NULL),
+      elevation_aggregation = elevation_aggregation,
+      elevation_scale = elevation_scale,
+      cell_size = cell_size,
+      coverage = coverage,
+      get_position = accessor(get_position, data, NULL),
+      extruded = extruded,
+      material = material,
+      get_color_value = get_color_value,
+      lower_percentile = lower_percentile,
+      upper_percentile = upper_percentile,
+      color_scale_type = color_scale_type,
+      get_elevation_value = get_elevation_value,
+      elevation_lower_percentile = elevation_lower_percentile,
+      elevation_upper_percentile = elevation_upper_percentile,
+      elevation_scale_type = elevation_scale_type,
+      gpu_aggregation = gpu_aggregation,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create grid_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(grid_layer)
   validate_name(grid_layer)
   validate_group_name(grid_layer)
@@ -2027,7 +2348,7 @@ add_grid_layer <- function(rdeck,
   validate_gpu_aggregation(grid_layer)
   validate_blending_mode(grid_layer)
   validate_visibility_toggle(grid_layer)
-  # add layer to map
+
   add_layer(rdeck, grid_layer)
 }
 
@@ -2036,7 +2357,7 @@ add_grid_layer <- function(rdeck,
 #' @export
 add_gpu_grid_layer <- function(rdeck,
                                ...,
-                               id = NULL,
+                               id = uuid::UUIDgenerate(),
                                name = "GPUGridLayer",
                                group_name = NULL,
                                data = NULL,
@@ -2063,44 +2384,57 @@ add_gpu_grid_layer <- function(rdeck,
                                extruded = FALSE,
                                material = TRUE,
                                blending_mode = "normal",
-                               visibility_toggle = TRUE,
-                               tooltip = FALSE) {
+                               visibility_toggle = TRUE) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  gpu_grid_layer <- layer(
-    type = "GPUGridLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    color_domain = color_domain,
-    color_range = color_range,
-    get_color_weight = accessor(rlang::enquo(get_color_weight), data),
-    color_aggregation = color_aggregation,
-    elevation_domain = elevation_domain,
-    elevation_range = elevation_range,
-    get_elevation_weight = accessor(rlang::enquo(get_elevation_weight), data),
-    elevation_aggregation = elevation_aggregation,
-    elevation_scale = elevation_scale,
-    cell_size = cell_size,
-    coverage = coverage,
-    get_position = accessor(rlang::enquo(get_position), data),
-    extruded = extruded,
-    material = material,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_color_weight <- rlang::enquo(get_color_weight)
+  get_elevation_weight <- rlang::enquo(get_elevation_weight)
+  get_position <- rlang::enquo(get_position)
+
+  gpu_grid_layer <- rlang::try_fetch(
+    layer(
+      type = "GPUGridLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      color_domain = color_domain,
+      color_range = color_range,
+      get_color_weight = accessor(get_color_weight, data, NULL),
+      color_aggregation = color_aggregation,
+      elevation_domain = elevation_domain,
+      elevation_range = elevation_range,
+      get_elevation_weight = accessor(get_elevation_weight, data, NULL),
+      elevation_aggregation = elevation_aggregation,
+      elevation_scale = elevation_scale,
+      cell_size = cell_size,
+      coverage = coverage,
+      get_position = accessor(get_position, data, NULL),
+      extruded = extruded,
+      material = material,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create gpu_grid_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(gpu_grid_layer)
   validate_name(gpu_grid_layer)
   validate_group_name(gpu_grid_layer)
@@ -2129,7 +2463,7 @@ add_gpu_grid_layer <- function(rdeck,
   validate_material(gpu_grid_layer)
   validate_blending_mode(gpu_grid_layer)
   validate_visibility_toggle(gpu_grid_layer)
-  # add layer to map
+
   add_layer(rdeck, gpu_grid_layer)
 }
 
@@ -2138,7 +2472,7 @@ add_gpu_grid_layer <- function(rdeck,
 #' @export
 add_heatmap_layer <- function(rdeck,
                               ...,
-                              id = NULL,
+                              id = uuid::UUIDgenerate(),
                               name = "HeatmapLayer",
                               group_name = NULL,
                               data = NULL,
@@ -2161,40 +2495,52 @@ add_heatmap_layer <- function(rdeck,
                               weights_texture_size = 2048,
                               debounce_timeout = 500,
                               blending_mode = "normal",
-                              visibility_toggle = TRUE,
-                              tooltip = FALSE) {
+                              visibility_toggle = TRUE) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  heatmap_layer <- layer(
-    type = "HeatmapLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_weight = accessor(rlang::enquo(get_weight), data),
-    intensity = intensity,
-    radius_pixels = radius_pixels,
-    color_range = color_range,
-    threshold = threshold,
-    color_domain = color_domain,
-    aggregation = aggregation,
-    weights_texture_size = weights_texture_size,
-    debounce_timeout = debounce_timeout,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_weight <- rlang::enquo(get_weight)
+
+  heatmap_layer <- rlang::try_fetch(
+    layer(
+      type = "HeatmapLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      get_position = accessor(get_position, data, NULL),
+      get_weight = accessor(get_weight, data, NULL),
+      intensity = intensity,
+      radius_pixels = radius_pixels,
+      color_range = color_range,
+      threshold = threshold,
+      color_domain = color_domain,
+      aggregation = aggregation,
+      weights_texture_size = weights_texture_size,
+      debounce_timeout = debounce_timeout,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create heatmap_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(heatmap_layer)
   validate_name(heatmap_layer)
   validate_group_name(heatmap_layer)
@@ -2219,7 +2565,7 @@ add_heatmap_layer <- function(rdeck,
   validate_debounce_timeout(heatmap_layer)
   validate_blending_mode(heatmap_layer)
   validate_visibility_toggle(heatmap_layer)
-  # add layer to map
+
   add_layer(rdeck, heatmap_layer)
 }
 
@@ -2228,7 +2574,7 @@ add_heatmap_layer <- function(rdeck,
 #' @export
 add_great_circle_layer <- function(rdeck,
                                    ...,
-                                   id = NULL,
+                                   id = uuid::UUIDgenerate(),
                                    name = "GreatCircleLayer",
                                    group_name = NULL,
                                    data = NULL,
@@ -2254,41 +2600,61 @@ add_great_circle_layer <- function(rdeck,
                                    width_max_pixels = 9007199254740991,
                                    blending_mode = "normal",
                                    visibility_toggle = TRUE,
-                                   tooltip = FALSE) {
+                                   tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  great_circle_layer <- layer(
-    type = "GreatCircleLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    get_source_position = accessor(rlang::enquo(get_source_position), data),
-    get_target_position = accessor(rlang::enquo(get_target_position), data),
-    get_source_color = accessor(rlang::enquo(get_source_color), data),
-    get_target_color = accessor(rlang::enquo(get_target_color), data),
-    get_width = accessor(rlang::enquo(get_width), data),
-    get_height = accessor(rlang::enquo(get_height), data),
-    get_tilt = accessor(rlang::enquo(get_tilt), data),
-    great_circle = great_circle,
-    width_units = width_units,
-    width_scale = width_scale,
-    width_min_pixels = width_min_pixels,
-    width_max_pixels = width_max_pixels,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_source_position <- rlang::enquo(get_source_position)
+  get_target_position <- rlang::enquo(get_target_position)
+  get_source_color <- rlang::enquo(get_source_color)
+  get_target_color <- rlang::enquo(get_target_color)
+  get_width <- rlang::enquo(get_width)
+  get_height <- rlang::enquo(get_height)
+  get_tilt <- rlang::enquo(get_tilt)
+  tooltip <- rlang::enquo(tooltip)
+
+  great_circle_layer <- rlang::try_fetch(
+    layer(
+      type = "GreatCircleLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      get_source_position = accessor(get_source_position, data, NULL),
+      get_target_position = accessor(get_target_position, data, NULL),
+      get_source_color = accessor(get_source_color, data, NULL),
+      get_target_color = accessor(get_target_color, data, NULL),
+      get_width = accessor(get_width, data, NULL),
+      get_height = accessor(get_height, data, NULL),
+      get_tilt = accessor(get_tilt, data, NULL),
+      great_circle = great_circle,
+      width_units = width_units,
+      width_scale = width_scale,
+      width_min_pixels = width_min_pixels,
+      width_max_pixels = width_max_pixels,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create great_circle_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(great_circle_layer)
   validate_name(great_circle_layer)
   validate_group_name(great_circle_layer)
@@ -2315,7 +2681,8 @@ add_great_circle_layer <- function(rdeck,
   validate_width_max_pixels(great_circle_layer)
   validate_blending_mode(great_circle_layer)
   validate_visibility_toggle(great_circle_layer)
-  # add layer to map
+  validate_tooltip(great_circle_layer)
+
   add_layer(rdeck, great_circle_layer)
 }
 
@@ -2324,7 +2691,7 @@ add_great_circle_layer <- function(rdeck,
 #' @export
 add_s2_layer <- function(rdeck,
                          ...,
-                         id = NULL,
+                         id = uuid::UUIDgenerate(),
                          name = "S2Layer",
                          group_name = NULL,
                          data = NULL,
@@ -2355,46 +2722,64 @@ add_s2_layer <- function(rdeck,
                          get_s2_token = token,
                          blending_mode = "normal",
                          visibility_toggle = TRUE,
-                         tooltip = FALSE) {
+                         tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  s2_layer <- layer(
-    type = "S2Layer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    stroked = stroked,
-    filled = filled,
-    extruded = extruded,
-    elevation_scale = elevation_scale,
-    wireframe = wireframe,
-    line_width_units = line_width_units,
-    line_width_scale = line_width_scale,
-    line_width_min_pixels = line_width_min_pixels,
-    line_width_max_pixels = line_width_max_pixels,
-    line_joint_rounded = line_joint_rounded,
-    line_miter_limit = line_miter_limit,
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    get_line_width = accessor(rlang::enquo(get_line_width), data),
-    get_elevation = accessor(rlang::enquo(get_elevation), data),
-    material = material,
-    get_s2_token = accessor(rlang::enquo(get_s2_token), data),
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  get_line_width <- rlang::enquo(get_line_width)
+  get_elevation <- rlang::enquo(get_elevation)
+  get_s2_token <- rlang::enquo(get_s2_token)
+  tooltip <- rlang::enquo(tooltip)
+
+  s2_layer <- rlang::try_fetch(
+    layer(
+      type = "S2Layer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      stroked = stroked,
+      filled = filled,
+      extruded = extruded,
+      elevation_scale = elevation_scale,
+      wireframe = wireframe,
+      line_width_units = line_width_units,
+      line_width_scale = line_width_scale,
+      line_width_min_pixels = line_width_min_pixels,
+      line_width_max_pixels = line_width_max_pixels,
+      line_joint_rounded = line_joint_rounded,
+      line_miter_limit = line_miter_limit,
+      get_fill_color = accessor(get_fill_color, data, NULL),
+      get_line_color = accessor(get_line_color, data, NULL),
+      get_line_width = accessor(get_line_width, data, NULL),
+      get_elevation = accessor(get_elevation, data, NULL),
+      material = material,
+      get_s2_token = accessor(get_s2_token, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create s2_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(s2_layer)
   validate_name(s2_layer)
   validate_group_name(s2_layer)
@@ -2426,7 +2811,8 @@ add_s2_layer <- function(rdeck,
   validate_get_s2_token(s2_layer)
   validate_blending_mode(s2_layer)
   validate_visibility_toggle(s2_layer)
-  # add layer to map
+  validate_tooltip(s2_layer)
+
   add_layer(rdeck, s2_layer)
 }
 
@@ -2435,7 +2821,7 @@ add_s2_layer <- function(rdeck,
 #' @export
 add_h3_cluster_layer <- function(rdeck,
                                  ...,
-                                 id = NULL,
+                                 id = uuid::UUIDgenerate(),
                                  name = "H3ClusterLayer",
                                  group_name = NULL,
                                  data = NULL,
@@ -2466,46 +2852,64 @@ add_h3_cluster_layer <- function(rdeck,
                                  get_hexagons = hexagons,
                                  blending_mode = "normal",
                                  visibility_toggle = TRUE,
-                                 tooltip = FALSE) {
+                                 tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  h3_cluster_layer <- layer(
-    type = "H3ClusterLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    stroked = stroked,
-    filled = filled,
-    extruded = extruded,
-    elevation_scale = elevation_scale,
-    wireframe = wireframe,
-    line_width_units = line_width_units,
-    line_width_scale = line_width_scale,
-    line_width_min_pixels = line_width_min_pixels,
-    line_width_max_pixels = line_width_max_pixels,
-    line_joint_rounded = line_joint_rounded,
-    line_miter_limit = line_miter_limit,
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    get_line_width = accessor(rlang::enquo(get_line_width), data),
-    get_elevation = accessor(rlang::enquo(get_elevation), data),
-    material = material,
-    get_hexagons = accessor(rlang::enquo(get_hexagons), data),
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  get_line_width <- rlang::enquo(get_line_width)
+  get_elevation <- rlang::enquo(get_elevation)
+  get_hexagons <- rlang::enquo(get_hexagons)
+  tooltip <- rlang::enquo(tooltip)
+
+  h3_cluster_layer <- rlang::try_fetch(
+    layer(
+      type = "H3ClusterLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      stroked = stroked,
+      filled = filled,
+      extruded = extruded,
+      elevation_scale = elevation_scale,
+      wireframe = wireframe,
+      line_width_units = line_width_units,
+      line_width_scale = line_width_scale,
+      line_width_min_pixels = line_width_min_pixels,
+      line_width_max_pixels = line_width_max_pixels,
+      line_joint_rounded = line_joint_rounded,
+      line_miter_limit = line_miter_limit,
+      get_fill_color = accessor(get_fill_color, data, NULL),
+      get_line_color = accessor(get_line_color, data, NULL),
+      get_line_width = accessor(get_line_width, data, NULL),
+      get_elevation = accessor(get_elevation, data, NULL),
+      material = material,
+      get_hexagons = accessor(get_hexagons, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create h3_cluster_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(h3_cluster_layer)
   validate_name(h3_cluster_layer)
   validate_group_name(h3_cluster_layer)
@@ -2537,7 +2941,8 @@ add_h3_cluster_layer <- function(rdeck,
   validate_get_hexagons(h3_cluster_layer)
   validate_blending_mode(h3_cluster_layer)
   validate_visibility_toggle(h3_cluster_layer)
-  # add layer to map
+  validate_tooltip(h3_cluster_layer)
+
   add_layer(rdeck, h3_cluster_layer)
 }
 
@@ -2546,7 +2951,7 @@ add_h3_cluster_layer <- function(rdeck,
 #' @export
 add_h3_hexagon_layer <- function(rdeck,
                                  ...,
-                                 id = NULL,
+                                 id = uuid::UUIDgenerate(),
                                  name = "H3HexagonLayer",
                                  group_name = NULL,
                                  data = NULL,
@@ -2580,49 +2985,67 @@ add_h3_hexagon_layer <- function(rdeck,
                                  get_hexagon = hexagon,
                                  blending_mode = "normal",
                                  visibility_toggle = TRUE,
-                                 tooltip = FALSE) {
+                                 tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  h3_hexagon_layer <- layer(
-    type = "H3HexagonLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    stroked = stroked,
-    filled = filled,
-    extruded = extruded,
-    elevation_scale = elevation_scale,
-    wireframe = wireframe,
-    line_width_units = line_width_units,
-    line_width_scale = line_width_scale,
-    line_width_min_pixels = line_width_min_pixels,
-    line_width_max_pixels = line_width_max_pixels,
-    line_joint_rounded = line_joint_rounded,
-    line_miter_limit = line_miter_limit,
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    get_line_width = accessor(rlang::enquo(get_line_width), data),
-    get_elevation = accessor(rlang::enquo(get_elevation), data),
-    material = material,
-    high_precision = high_precision,
-    coverage = coverage,
-    center_hexagon = center_hexagon,
-    get_hexagon = accessor(rlang::enquo(get_hexagon), data),
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  get_line_width <- rlang::enquo(get_line_width)
+  get_elevation <- rlang::enquo(get_elevation)
+  get_hexagon <- rlang::enquo(get_hexagon)
+  tooltip <- rlang::enquo(tooltip)
+
+  h3_hexagon_layer <- rlang::try_fetch(
+    layer(
+      type = "H3HexagonLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      stroked = stroked,
+      filled = filled,
+      extruded = extruded,
+      elevation_scale = elevation_scale,
+      wireframe = wireframe,
+      line_width_units = line_width_units,
+      line_width_scale = line_width_scale,
+      line_width_min_pixels = line_width_min_pixels,
+      line_width_max_pixels = line_width_max_pixels,
+      line_joint_rounded = line_joint_rounded,
+      line_miter_limit = line_miter_limit,
+      get_fill_color = accessor(get_fill_color, data, NULL),
+      get_line_color = accessor(get_line_color, data, NULL),
+      get_line_width = accessor(get_line_width, data, NULL),
+      get_elevation = accessor(get_elevation, data, NULL),
+      material = material,
+      high_precision = high_precision,
+      coverage = coverage,
+      center_hexagon = center_hexagon,
+      get_hexagon = accessor(get_hexagon, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create h3_hexagon_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(h3_hexagon_layer)
   validate_name(h3_hexagon_layer)
   validate_group_name(h3_hexagon_layer)
@@ -2657,7 +3080,8 @@ add_h3_hexagon_layer <- function(rdeck,
   validate_get_hexagon(h3_hexagon_layer)
   validate_blending_mode(h3_hexagon_layer)
   validate_visibility_toggle(h3_hexagon_layer)
-  # add layer to map
+  validate_tooltip(h3_hexagon_layer)
+
   add_layer(rdeck, h3_hexagon_layer)
 }
 
@@ -2666,8 +3090,8 @@ add_h3_hexagon_layer <- function(rdeck,
 #' @export
 add_tile_layer <- function(rdeck,
                            ...,
-                           id = NULL,
-                           name = "TileLayer",
+                           id = uuid::UUIDgenerate(),
+                           name = "BitmapLayer",
                            group_name = NULL,
                            data = NULL,
                            visible = TRUE,
@@ -2689,48 +3113,61 @@ add_tile_layer <- function(rdeck,
                            z_range = NULL,
                            max_requests = 6,
                            zoom_offset = 0,
-                           desaturate = 0,
-                           transparent_color = "#00000000",
-                           tint_color = "#ffffff",
                            blending_mode = "normal",
                            visibility_toggle = TRUE,
-                           tooltip = FALSE) {
+                           tooltip = NULL,
+                           desaturate = 0,
+                           transparent_color = "#00000000",
+                           tint_color = "#ffffff") {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  tile_layer <- layer(
-    type = "TileLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    get_tile_data = get_tile_data,
-    extent = extent,
-    tile_size = tile_size,
-    max_zoom = max_zoom,
-    min_zoom = min_zoom,
-    max_cache_size = max_cache_size,
-    max_cache_byte_size = max_cache_byte_size,
-    refinement_strategy = refinement_strategy,
-    z_range = z_range,
-    max_requests = max_requests,
-    zoom_offset = zoom_offset,
-    desaturate = desaturate,
-    transparent_color = transparent_color,
-    tint_color = tint_color,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  tooltip <- rlang::enquo(tooltip)
+
+  tile_layer <- rlang::try_fetch(
+    layer(
+      type = "TileLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      get_tile_data = get_tile_data,
+      extent = extent,
+      tile_size = tile_size,
+      max_zoom = max_zoom,
+      min_zoom = min_zoom,
+      max_cache_size = max_cache_size,
+      max_cache_byte_size = max_cache_byte_size,
+      refinement_strategy = refinement_strategy,
+      z_range = z_range,
+      max_requests = max_requests,
+      zoom_offset = zoom_offset,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL),
+      desaturate = desaturate,
+      transparent_color = transparent_color,
+      tint_color = tint_color
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create tile_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(tile_layer)
   validate_name(tile_layer)
   validate_group_name(tile_layer)
@@ -2754,12 +3191,13 @@ add_tile_layer <- function(rdeck,
   validate_z_range(tile_layer)
   validate_max_requests(tile_layer)
   validate_zoom_offset(tile_layer)
+  validate_blending_mode(tile_layer)
+  validate_visibility_toggle(tile_layer)
+  validate_tooltip(tile_layer)
   validate_desaturate(tile_layer)
   validate_transparent_color(tile_layer)
   validate_tint_color(tile_layer)
-  validate_blending_mode(tile_layer)
-  validate_visibility_toggle(tile_layer)
-  # add layer to map
+
   add_layer(rdeck, tile_layer)
 }
 
@@ -2768,7 +3206,7 @@ add_tile_layer <- function(rdeck,
 #' @export
 add_trips_layer <- function(rdeck,
                             ...,
-                            id = NULL,
+                            id = uuid::UUIDgenerate(),
                             name = "TripsLayer",
                             group_name = NULL,
                             data = NULL,
@@ -2794,49 +3232,66 @@ add_trips_layer <- function(rdeck,
                             fade_trail = TRUE,
                             trail_length = 120,
                             get_timestamps = timestamps,
-                            loop_length = 1800,
-                            animation_speed = 30,
                             blending_mode = "normal",
                             visibility_toggle = TRUE,
-                            tooltip = FALSE) {
+                            tooltip = NULL,
+                            loop_length = 1800,
+                            animation_speed = 30) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  trips_layer <- layer(
-    type = "TripsLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    width_units = width_units,
-    width_scale = width_scale,
-    width_min_pixels = width_min_pixels,
-    width_max_pixels = width_max_pixels,
-    joint_rounded = joint_rounded,
-    cap_rounded = cap_rounded,
-    miter_limit = miter_limit,
-    billboard = billboard,
-    get_path = accessor(rlang::enquo(get_path), data),
-    get_color = accessor(rlang::enquo(get_color), data),
-    get_width = accessor(rlang::enquo(get_width), data),
-    fade_trail = fade_trail,
-    trail_length = trail_length,
-    get_timestamps = accessor(rlang::enquo(get_timestamps), data),
-    loop_length = loop_length,
-    animation_speed = animation_speed,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_path <- rlang::enquo(get_path)
+  get_color <- rlang::enquo(get_color)
+  get_width <- rlang::enquo(get_width)
+  get_timestamps <- rlang::enquo(get_timestamps)
+  tooltip <- rlang::enquo(tooltip)
+
+  trips_layer <- rlang::try_fetch(
+    layer(
+      type = "TripsLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      width_units = width_units,
+      width_scale = width_scale,
+      width_min_pixels = width_min_pixels,
+      width_max_pixels = width_max_pixels,
+      joint_rounded = joint_rounded,
+      cap_rounded = cap_rounded,
+      miter_limit = miter_limit,
+      billboard = billboard,
+      get_path = accessor(get_path, data, NULL),
+      get_color = accessor(get_color, data, NULL),
+      get_width = accessor(get_width, data, NULL),
+      fade_trail = fade_trail,
+      trail_length = trail_length,
+      get_timestamps = accessor(get_timestamps, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL),
+      loop_length = loop_length,
+      animation_speed = animation_speed
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create trips_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(trips_layer)
   validate_name(trips_layer)
   validate_group_name(trips_layer)
@@ -2863,11 +3318,12 @@ add_trips_layer <- function(rdeck,
   validate_fade_trail(trips_layer)
   validate_trail_length(trips_layer)
   validate_get_timestamps(trips_layer)
-  validate_loop_length(trips_layer)
-  validate_animation_speed(trips_layer)
   validate_blending_mode(trips_layer)
   validate_visibility_toggle(trips_layer)
-  # add layer to map
+  validate_tooltip(trips_layer)
+  validate_loop_length(trips_layer)
+  validate_animation_speed(trips_layer)
+
   add_layer(rdeck, trips_layer)
 }
 
@@ -2876,7 +3332,7 @@ add_trips_layer <- function(rdeck,
 #' @export
 add_tile_3d_layer <- function(rdeck,
                               ...,
-                              id = NULL,
+                              id = uuid::UUIDgenerate(),
                               name = "Tile3DLayer",
                               group_name = NULL,
                               data = NULL,
@@ -2908,32 +3364,46 @@ add_tile_3d_layer <- function(rdeck,
                               ),
                               blending_mode = "normal",
                               visibility_toggle = TRUE,
-                              tooltip = FALSE) {
+                              tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  tile_3d_layer <- layer(
-    type = "Tile3DLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    get_point_color = accessor(rlang::enquo(get_point_color), data),
-    point_size = point_size,
-    loader = loader,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_point_color <- rlang::enquo(get_point_color)
+  tooltip <- rlang::enquo(tooltip)
+
+  tile_3d_layer <- rlang::try_fetch(
+    layer(
+      type = "Tile3DLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      get_point_color = accessor(get_point_color, data, NULL),
+      point_size = point_size,
+      loader = loader,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create tile_3d_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(tile_3d_layer)
   validate_name(tile_3d_layer)
   validate_group_name(tile_3d_layer)
@@ -2951,7 +3421,8 @@ add_tile_3d_layer <- function(rdeck,
   validate_loader(tile_3d_layer)
   validate_blending_mode(tile_3d_layer)
   validate_visibility_toggle(tile_3d_layer)
-  # add layer to map
+  validate_tooltip(tile_3d_layer)
+
   add_layer(rdeck, tile_3d_layer)
 }
 
@@ -2960,7 +3431,7 @@ add_tile_3d_layer <- function(rdeck,
 #' @export
 add_terrain_layer <- function(rdeck,
                               ...,
-                              id = NULL,
+                              id = uuid::UUIDgenerate(),
                               name = "TerrainLayer",
                               group_name = NULL,
                               data = NULL,
@@ -2999,49 +3470,62 @@ add_terrain_layer <- function(rdeck,
                               material = TRUE,
                               blending_mode = "normal",
                               visibility_toggle = TRUE,
-                              tooltip = FALSE) {
+                              tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  terrain_layer <- layer(
-    type = "TerrainLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    get_tile_data = get_tile_data,
-    extent = extent,
-    tile_size = tile_size,
-    max_zoom = max_zoom,
-    min_zoom = min_zoom,
-    max_cache_size = max_cache_size,
-    max_cache_byte_size = max_cache_byte_size,
-    refinement_strategy = refinement_strategy,
-    z_range = z_range,
-    max_requests = max_requests,
-    zoom_offset = zoom_offset,
-    elevation_data = elevation_data,
-    texture = texture,
-    mesh_max_error = mesh_max_error,
-    bounds = bounds,
-    color = color,
-    elevation_decoder = elevation_decoder,
-    worker_url = worker_url,
-    wireframe = wireframe,
-    material = material,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  tooltip <- rlang::enquo(tooltip)
+
+  terrain_layer <- rlang::try_fetch(
+    layer(
+      type = "TerrainLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      get_tile_data = get_tile_data,
+      extent = extent,
+      tile_size = tile_size,
+      max_zoom = max_zoom,
+      min_zoom = min_zoom,
+      max_cache_size = max_cache_size,
+      max_cache_byte_size = max_cache_byte_size,
+      refinement_strategy = refinement_strategy,
+      z_range = z_range,
+      max_requests = max_requests,
+      zoom_offset = zoom_offset,
+      elevation_data = elevation_data,
+      texture = texture,
+      mesh_max_error = mesh_max_error,
+      bounds = bounds,
+      color = color,
+      elevation_decoder = elevation_decoder,
+      worker_url = worker_url,
+      wireframe = wireframe,
+      material = material,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create terrain_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(terrain_layer)
   validate_name(terrain_layer)
   validate_group_name(terrain_layer)
@@ -3076,7 +3560,8 @@ add_terrain_layer <- function(rdeck,
   validate_material(terrain_layer)
   validate_blending_mode(terrain_layer)
   validate_visibility_toggle(terrain_layer)
-  # add layer to map
+  validate_tooltip(terrain_layer)
+
   add_layer(rdeck, terrain_layer)
 }
 
@@ -3085,8 +3570,8 @@ add_terrain_layer <- function(rdeck,
 #' @export
 add_mvt_layer <- function(rdeck,
                           ...,
-                          id = NULL,
-                          name = "MVTLayer",
+                          id = uuid::UUIDgenerate(),
+                          name = "GeoJsonLayer",
                           group_name = NULL,
                           data = NULL,
                           visible = TRUE,
@@ -3111,6 +3596,9 @@ add_mvt_layer <- function(rdeck,
                           unique_id_property = "",
                           highlighted_feature_id = NULL,
                           binary = TRUE,
+                          blending_mode = "normal",
+                          visibility_toggle = TRUE,
+                          tooltip = NULL,
                           filled = TRUE,
                           stroked = TRUE,
                           line_width_max_pixels = 9007199254740991,
@@ -3174,112 +3662,140 @@ add_mvt_layer <- function(rdeck,
                           elevation_scale = 1,
                           material = TRUE,
                           get_elevation = 1000,
-                          point_type = "circle",
-                          blending_mode = "normal",
-                          visibility_toggle = TRUE,
-                          tooltip = FALSE) {
+                          point_type = "circle") {
+  rlang::check_required(rdeck)
   check_dots(...)
-  draw_text <- !is.null(point_type) && grepl("text", point_type)
-  draw_icon <- !is.null(point_type) && grepl("icon", point_type)
-  # construct layer object
-  mvt_layer <- layer(
-    type = "MVTLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    get_tile_data = get_tile_data,
-    extent = extent,
-    tile_size = tile_size,
-    max_zoom = max_zoom,
-    min_zoom = min_zoom,
-    max_cache_size = max_cache_size,
-    max_cache_byte_size = max_cache_byte_size,
-    refinement_strategy = refinement_strategy,
-    z_range = z_range,
-    max_requests = max_requests,
-    zoom_offset = zoom_offset,
-    unique_id_property = unique_id_property,
-    highlighted_feature_id = highlighted_feature_id,
-    binary = binary,
-    filled = filled,
-    stroked = stroked,
-    line_width_max_pixels = line_width_max_pixels,
-    line_width_min_pixels = line_width_min_pixels,
-    line_width_scale = line_width_scale,
-    line_width_units = line_width_units,
-    point_radius_max_pixels = point_radius_max_pixels,
-    point_radius_min_pixels = point_radius_min_pixels,
-    point_radius_scale = point_radius_scale,
-    point_radius_units = point_radius_units,
-    point_antialiasing = point_antialiasing,
-    point_billboard = point_billboard,
-    get_fill_color = accessor(rlang::enquo(get_fill_color), data),
-    get_line_color = accessor(rlang::enquo(get_line_color), data),
-    get_line_width = accessor(rlang::enquo(get_line_width), data),
-    get_point_radius = accessor(rlang::enquo(get_point_radius), data),
-    icon_atlas = icon_atlas,
-    icon_mapping = icon_mapping,
-    icon_size_max_pixels = icon_size_max_pixels,
-    icon_size_min_pixels = icon_size_min_pixels,
-    icon_size_scale = icon_size_scale,
-    icon_size_units = icon_size_units,
-    icon_alpha_cutoff = icon_alpha_cutoff,
-    icon_billboard = icon_billboard,
-    get_icon = if (draw_icon) accessor(rlang::enquo(get_icon), data),
-    get_icon_angle = accessor(rlang::enquo(get_icon_angle), data),
-    get_icon_color = accessor(rlang::enquo(get_icon_color), data),
-    get_icon_pixel_offset = accessor(rlang::enquo(get_icon_pixel_offset), data),
-    get_icon_size = accessor(rlang::enquo(get_icon_size), data),
-    text_size_max_pixels = text_size_max_pixels,
-    text_size_min_pixels = text_size_min_pixels,
-    text_size_scale = text_size_scale,
-    text_size_units = text_size_units,
-    text_background = text_background,
-    text_background_padding = text_background_padding,
-    text_font_family = text_font_family,
-    text_font_weight = text_font_weight,
-    text_line_height = text_line_height,
-    text_max_width = text_max_width,
-    text_outline_color = text_outline_color,
-    text_outline_width = text_outline_width,
-    text_word_break = text_word_break,
-    text_billboard = text_billboard,
-    text_font_settings = text_font_settings,
-    get_text = if (draw_text) accessor(rlang::enquo(get_text), data),
-    get_text_angle = accessor(rlang::enquo(get_text_angle), data),
-    get_text_color = accessor(rlang::enquo(get_text_color), data),
-    get_text_pixel_offset = accessor(rlang::enquo(get_text_pixel_offset), data),
-    get_text_size = accessor(rlang::enquo(get_text_size), data),
-    get_text_anchor = accessor(rlang::enquo(get_text_anchor), data),
-    get_text_alignment_baseline = accessor(rlang::enquo(get_text_alignment_baseline), data),
-    get_text_background_color = accessor(rlang::enquo(get_text_background_color), data),
-    get_text_border_color = accessor(rlang::enquo(get_text_border_color), data),
-    get_text_border_width = accessor(rlang::enquo(get_text_border_width), data),
-    line_joint_rounded = line_joint_rounded,
-    line_cap_rounded = line_cap_rounded,
-    line_miter_limit = line_miter_limit,
-    line_billboard = line_billboard,
-    extruded = extruded,
-    wireframe = wireframe,
-    elevation_scale = elevation_scale,
-    material = material,
-    get_elevation = accessor(rlang::enquo(get_elevation), data),
-    point_type = point_type,
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  tooltip <- rlang::enquo(tooltip)
+  get_fill_color <- rlang::enquo(get_fill_color)
+  get_line_color <- rlang::enquo(get_line_color)
+  get_line_width <- rlang::enquo(get_line_width)
+  get_point_radius <- rlang::enquo(get_point_radius)
+  get_icon <- rlang::enquo(get_icon)
+  get_icon_angle <- rlang::enquo(get_icon_angle)
+  get_icon_color <- rlang::enquo(get_icon_color)
+  get_icon_pixel_offset <- rlang::enquo(get_icon_pixel_offset)
+  get_icon_size <- rlang::enquo(get_icon_size)
+  get_text <- rlang::enquo(get_text)
+  get_text_angle <- rlang::enquo(get_text_angle)
+  get_text_color <- rlang::enquo(get_text_color)
+  get_text_pixel_offset <- rlang::enquo(get_text_pixel_offset)
+  get_text_size <- rlang::enquo(get_text_size)
+  get_text_anchor <- rlang::enquo(get_text_anchor)
+  get_text_alignment_baseline <- rlang::enquo(get_text_alignment_baseline)
+  get_text_background_color <- rlang::enquo(get_text_background_color)
+  get_text_border_color <- rlang::enquo(get_text_border_color)
+  get_text_border_width <- rlang::enquo(get_text_border_width)
+  get_elevation <- rlang::enquo(get_elevation)
+
+  mvt_layer <- rlang::try_fetch(
+    layer(
+      type = "MVTLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, "geojson"),
+      get_tile_data = get_tile_data,
+      extent = extent,
+      tile_size = tile_size,
+      max_zoom = max_zoom,
+      min_zoom = min_zoom,
+      max_cache_size = max_cache_size,
+      max_cache_byte_size = max_cache_byte_size,
+      refinement_strategy = refinement_strategy,
+      z_range = z_range,
+      max_requests = max_requests,
+      zoom_offset = zoom_offset,
+      unique_id_property = unique_id_property,
+      highlighted_feature_id = highlighted_feature_id,
+      binary = binary,
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, "geojson"),
+      filled = filled,
+      stroked = stroked,
+      line_width_max_pixels = line_width_max_pixels,
+      line_width_min_pixels = line_width_min_pixels,
+      line_width_scale = line_width_scale,
+      line_width_units = line_width_units,
+      point_radius_max_pixels = point_radius_max_pixels,
+      point_radius_min_pixels = point_radius_min_pixels,
+      point_radius_scale = point_radius_scale,
+      point_radius_units = point_radius_units,
+      point_antialiasing = point_antialiasing,
+      point_billboard = point_billboard,
+      get_fill_color = accessor(get_fill_color, data, "geojson"),
+      get_line_color = accessor(get_line_color, data, "geojson"),
+      get_line_width = accessor(get_line_width, data, "geojson"),
+      get_point_radius = accessor(get_point_radius, data, "geojson"),
+      icon_atlas = icon_atlas,
+      icon_mapping = icon_mapping,
+      icon_size_max_pixels = icon_size_max_pixels,
+      icon_size_min_pixels = icon_size_min_pixels,
+      icon_size_scale = icon_size_scale,
+      icon_size_units = icon_size_units,
+      icon_alpha_cutoff = icon_alpha_cutoff,
+      icon_billboard = icon_billboard,
+      get_icon = accessor(get_icon, data, "geojson"),
+      get_icon_angle = accessor(get_icon_angle, data, "geojson"),
+      get_icon_color = accessor(get_icon_color, data, "geojson"),
+      get_icon_pixel_offset = accessor(get_icon_pixel_offset, data, "geojson"),
+      get_icon_size = accessor(get_icon_size, data, "geojson"),
+      text_size_max_pixels = text_size_max_pixels,
+      text_size_min_pixels = text_size_min_pixels,
+      text_size_scale = text_size_scale,
+      text_size_units = text_size_units,
+      text_background = text_background,
+      text_background_padding = text_background_padding,
+      text_font_family = text_font_family,
+      text_font_weight = text_font_weight,
+      text_line_height = text_line_height,
+      text_max_width = text_max_width,
+      text_outline_color = text_outline_color,
+      text_outline_width = text_outline_width,
+      text_word_break = text_word_break,
+      text_billboard = text_billboard,
+      text_font_settings = text_font_settings,
+      get_text = accessor(get_text, data, "geojson"),
+      get_text_angle = accessor(get_text_angle, data, "geojson"),
+      get_text_color = accessor(get_text_color, data, "geojson"),
+      get_text_pixel_offset = accessor(get_text_pixel_offset, data, "geojson"),
+      get_text_size = accessor(get_text_size, data, "geojson"),
+      get_text_anchor = accessor(get_text_anchor, data, "geojson"),
+      get_text_alignment_baseline = accessor(get_text_alignment_baseline, data, "geojson"),
+      get_text_background_color = accessor(get_text_background_color, data, "geojson"),
+      get_text_border_color = accessor(get_text_border_color, data, "geojson"),
+      get_text_border_width = accessor(get_text_border_width, data, "geojson"),
+      line_joint_rounded = line_joint_rounded,
+      line_cap_rounded = line_cap_rounded,
+      line_miter_limit = line_miter_limit,
+      line_billboard = line_billboard,
+      extruded = extruded,
+      wireframe = wireframe,
+      elevation_scale = elevation_scale,
+      material = material,
+      get_elevation = accessor(get_elevation, data, "geojson"),
+      point_type = point_type
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create mvt_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(mvt_layer)
   validate_name(mvt_layer)
   validate_group_name(mvt_layer)
@@ -3306,6 +3822,9 @@ add_mvt_layer <- function(rdeck,
   validate_unique_id_property(mvt_layer)
   validate_highlighted_feature_id(mvt_layer)
   validate_binary(mvt_layer)
+  validate_blending_mode(mvt_layer)
+  validate_visibility_toggle(mvt_layer)
+  validate_tooltip(mvt_layer)
   validate_filled(mvt_layer)
   validate_stroked(mvt_layer)
   validate_line_width_max_pixels(mvt_layer)
@@ -3330,7 +3849,7 @@ add_mvt_layer <- function(rdeck,
   validate_icon_size_units(mvt_layer)
   validate_icon_alpha_cutoff(mvt_layer)
   validate_icon_billboard(mvt_layer)
-  if (draw_icon) validate_get_icon(mvt_layer)
+  validate_get_icon(mvt_layer)
   validate_get_icon_angle(mvt_layer)
   validate_get_icon_color(mvt_layer)
   validate_get_icon_pixel_offset(mvt_layer)
@@ -3350,7 +3869,7 @@ add_mvt_layer <- function(rdeck,
   validate_text_word_break(mvt_layer)
   validate_text_billboard(mvt_layer)
   validate_text_font_settings(mvt_layer)
-  if (draw_text) validate_get_text(mvt_layer)
+  validate_get_text(mvt_layer)
   validate_get_text_angle(mvt_layer)
   validate_get_text_color(mvt_layer)
   validate_get_text_pixel_offset(mvt_layer)
@@ -3370,9 +3889,7 @@ add_mvt_layer <- function(rdeck,
   validate_material(mvt_layer)
   validate_get_elevation(mvt_layer)
   validate_point_type(mvt_layer)
-  validate_blending_mode(mvt_layer)
-  validate_visibility_toggle(mvt_layer)
-  # add layer to map
+
   add_layer(rdeck, mvt_layer)
 }
 
@@ -3381,7 +3898,7 @@ add_mvt_layer <- function(rdeck,
 #' @export
 add_simple_mesh_layer <- function(rdeck,
                                   ...,
-                                  id = NULL,
+                                  id = uuid::UUIDgenerate(),
                                   name = "SimpleMeshLayer",
                                   group_name = NULL,
                                   data = NULL,
@@ -3406,40 +3923,59 @@ add_simple_mesh_layer <- function(rdeck,
                                   get_transform_matrix = NULL,
                                   blending_mode = "normal",
                                   visibility_toggle = TRUE,
-                                  tooltip = FALSE) {
+                                  tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  simple_mesh_layer <- layer(
-    type = "SimpleMeshLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    mesh = mesh,
-    texture = texture,
-    size_scale = size_scale,
-    wireframe = wireframe,
-    material = material,
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_color = accessor(rlang::enquo(get_color), data),
-    get_orientation = accessor(rlang::enquo(get_orientation), data),
-    get_scale = accessor(rlang::enquo(get_scale), data),
-    get_translation = accessor(rlang::enquo(get_translation), data),
-    get_transform_matrix = accessor(rlang::enquo(get_transform_matrix), data),
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_color <- rlang::enquo(get_color)
+  get_orientation <- rlang::enquo(get_orientation)
+  get_scale <- rlang::enquo(get_scale)
+  get_translation <- rlang::enquo(get_translation)
+  get_transform_matrix <- rlang::enquo(get_transform_matrix)
+  tooltip <- rlang::enquo(tooltip)
+
+  simple_mesh_layer <- rlang::try_fetch(
+    layer(
+      type = "SimpleMeshLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      mesh = mesh,
+      texture = texture,
+      size_scale = size_scale,
+      wireframe = wireframe,
+      material = material,
+      get_position = accessor(get_position, data, NULL),
+      get_color = accessor(get_color, data, NULL),
+      get_orientation = accessor(get_orientation, data, NULL),
+      get_scale = accessor(get_scale, data, NULL),
+      get_translation = accessor(get_translation, data, NULL),
+      get_transform_matrix = accessor(get_transform_matrix, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create simple_mesh_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(simple_mesh_layer)
   validate_name(simple_mesh_layer)
   validate_group_name(simple_mesh_layer)
@@ -3465,7 +4001,8 @@ add_simple_mesh_layer <- function(rdeck,
   validate_get_transform_matrix(simple_mesh_layer)
   validate_blending_mode(simple_mesh_layer)
   validate_visibility_toggle(simple_mesh_layer)
-  # add layer to map
+  validate_tooltip(simple_mesh_layer)
+
   add_layer(rdeck, simple_mesh_layer)
 }
 
@@ -3474,7 +4011,7 @@ add_simple_mesh_layer <- function(rdeck,
 #' @export
 add_scenegraph_layer <- function(rdeck,
                                  ...,
-                                 id = NULL,
+                                 id = uuid::UUIDgenerate(),
                                  name = "ScenegraphLayer",
                                  group_name = NULL,
                                  data = NULL,
@@ -3500,41 +4037,60 @@ add_scenegraph_layer <- function(rdeck,
                                  get_transform_matrix = NULL,
                                  blending_mode = "normal",
                                  visibility_toggle = TRUE,
-                                 tooltip = FALSE) {
+                                 tooltip = NULL) {
+  rlang::check_required(rdeck)
   check_dots(...)
-  # construct layer object
-  scenegraph_layer <- layer(
-    type = "ScenegraphLayer",
-    ...,
-    id = id %||% uuid::UUIDgenerate(),
-    name = name,
-    group_name = group_name,
-    data = data,
-    visible = visible,
-    pickable = pickable,
-    opacity = opacity,
-    wrap_longitude = wrap_longitude,
-    position_format = position_format,
-    color_format = color_format,
-    auto_highlight = auto_highlight,
-    highlight_color = accessor(rlang::enquo(highlight_color), data),
-    scenegraph = scenegraph,
-    get_scene = get_scene,
-    get_animator = get_animator,
-    size_scale = size_scale,
-    size_min_pixels = size_min_pixels,
-    size_max_pixels = size_max_pixels,
-    get_position = accessor(rlang::enquo(get_position), data),
-    get_color = accessor(rlang::enquo(get_color), data),
-    get_orientation = accessor(rlang::enquo(get_orientation), data),
-    get_scale = accessor(rlang::enquo(get_scale), data),
-    get_translation = accessor(rlang::enquo(get_translation), data),
-    get_transform_matrix = accessor(rlang::enquo(get_transform_matrix), data),
-    blending_mode = blending_mode,
-    visibility_toggle = visibility_toggle,
-    tooltip = eval_tooltip(rlang::enquo(tooltip), data)
+
+  highlight_color <- rlang::enquo(highlight_color)
+  get_position <- rlang::enquo(get_position)
+  get_color <- rlang::enquo(get_color)
+  get_orientation <- rlang::enquo(get_orientation)
+  get_scale <- rlang::enquo(get_scale)
+  get_translation <- rlang::enquo(get_translation)
+  get_transform_matrix <- rlang::enquo(get_transform_matrix)
+  tooltip <- rlang::enquo(tooltip)
+
+  scenegraph_layer <- rlang::try_fetch(
+    layer(
+      type = "ScenegraphLayer",
+      ...,
+      id = id,
+      name = name,
+      group_name = group_name,
+      data = data,
+      visible = visible,
+      pickable = pickable,
+      opacity = opacity,
+      wrap_longitude = wrap_longitude,
+      position_format = position_format,
+      color_format = color_format,
+      auto_highlight = auto_highlight,
+      highlight_color = accessor(highlight_color, data, NULL),
+      scenegraph = scenegraph,
+      get_scene = get_scene,
+      get_animator = get_animator,
+      size_scale = size_scale,
+      size_min_pixels = size_min_pixels,
+      size_max_pixels = size_max_pixels,
+      get_position = accessor(get_position, data, NULL),
+      get_color = accessor(get_color, data, NULL),
+      get_orientation = accessor(get_orientation, data, NULL),
+      get_scale = accessor(get_scale, data, NULL),
+      get_translation = accessor(get_translation, data, NULL),
+      get_transform_matrix = accessor(get_transform_matrix, data, NULL),
+      blending_mode = blending_mode,
+      visibility_toggle = visibility_toggle,
+      tooltip = eval_tooltip(tooltip, data, NULL)
+    ),
+    error = function(err) {
+      rlang::abort(
+        "Failed to create scenegraph_layer",
+        class = "rdeck_error",
+        parent = err
+      )
+    }
   )
-  # validate layer props
+
   validate_id(scenegraph_layer)
   validate_name(scenegraph_layer)
   validate_group_name(scenegraph_layer)
@@ -3561,6 +4117,7 @@ add_scenegraph_layer <- function(rdeck,
   validate_get_transform_matrix(scenegraph_layer)
   validate_blending_mode(scenegraph_layer)
   validate_visibility_toggle(scenegraph_layer)
-  # add layer to map
+  validate_tooltip(scenegraph_layer)
+
   add_layer(rdeck, scenegraph_layer)
 }

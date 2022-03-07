@@ -73,7 +73,7 @@ get_colnames <- function(layer) {
   }
 
   accessors <- layer %>%
-    vapply(function(prop) inherits(prop, "accessor"), logical(1))
+    vapply(function(prop) inherits(prop, c("accessor", "scale")), logical(1))
 
   # all cols in accessor props
   accessor_cols <- layer[accessors] %>%

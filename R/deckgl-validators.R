@@ -141,6 +141,20 @@ validate_binary.default <- function(layer) {
   )
 }
 
+# validate blending_mode
+validate_blending_mode <- function(layer) {
+  UseMethod("validate_blending_mode")
+}
+validate_blending_mode.default <- function(layer) {
+  blending_mode <- layer$blending_mode
+  tidyassert::assert(!is.null(blending_mode))
+  tidyassert::assert(
+    is.character(blending_mode) && length(blending_mode) == 1,
+    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    name = "blending_mode"
+  )
+}
+
 # validate bounds
 validate_bounds <- function(layer) {
   UseMethod("validate_bounds")
@@ -585,7 +599,7 @@ validate_get_alignment_baseline.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls string}"),
     name = "get_alignment_baseline"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_alignment_baseline)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_alignment_baseline$col, data)]]
     tidyassert::assert(
@@ -609,7 +623,7 @@ validate_get_angle.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_angle"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_angle)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_angle$col, data)]]
     tidyassert::assert(
@@ -642,7 +656,7 @@ validate_get_background_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_background_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_background_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_background_color$col, data)]]
     tidyassert::assert(
@@ -666,7 +680,7 @@ validate_get_border_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_border_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_border_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_border_color$col, data)]]
     tidyassert::assert(
@@ -690,7 +704,7 @@ validate_get_border_width.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_border_width"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_border_width)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_border_width$col, data)]]
     tidyassert::assert(
@@ -714,7 +728,7 @@ validate_get_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_color$col, data)]]
     tidyassert::assert(
@@ -747,7 +761,7 @@ validate_get_color_weight.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_color_weight"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_color_weight)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_color_weight$col, data)]]
     tidyassert::assert(
@@ -771,7 +785,7 @@ validate_get_elevation.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_elevation"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_elevation)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_elevation$col, data)]]
     tidyassert::assert(
@@ -804,7 +818,7 @@ validate_get_elevation_weight.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_elevation_weight"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_elevation_weight)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_elevation_weight$col, data)]]
     tidyassert::assert(
@@ -828,7 +842,7 @@ validate_get_fill_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_fill_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_fill_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_fill_color$col, data)]]
     tidyassert::assert(
@@ -852,7 +866,7 @@ validate_get_height.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_height"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_height)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_height$col, data)]]
     tidyassert::assert(
@@ -918,7 +932,7 @@ validate_get_icon_angle.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_icon_angle"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_icon_angle)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_icon_angle$col, data)]]
     tidyassert::assert(
@@ -942,7 +956,7 @@ validate_get_icon_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_icon_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_icon_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_icon_color$col, data)]]
     tidyassert::assert(
@@ -980,7 +994,7 @@ validate_get_icon_size.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_icon_size"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_icon_size)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_icon_size$col, data)]]
     tidyassert::assert(
@@ -1004,7 +1018,7 @@ validate_get_line_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_line_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_line_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_line_color$col, data)]]
     tidyassert::assert(
@@ -1028,7 +1042,7 @@ validate_get_line_width.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_line_width"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_line_width)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_line_width$col, data)]]
     tidyassert::assert(
@@ -1108,7 +1122,7 @@ validate_get_point_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_point_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_point_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_point_color$col, data)]]
     tidyassert::assert(
@@ -1132,7 +1146,7 @@ validate_get_point_radius.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_point_radius"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_point_radius)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_point_radius$col, data)]]
     tidyassert::assert(
@@ -1184,7 +1198,7 @@ validate_get_radius.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_radius"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_radius)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_radius$col, data)]]
     tidyassert::assert(
@@ -1245,7 +1259,7 @@ validate_get_size.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_size"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_size)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_size$col, data)]]
     tidyassert::assert(
@@ -1269,7 +1283,7 @@ validate_get_source_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_source_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_source_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_source_color$col, data)]]
     tidyassert::assert(
@@ -1307,7 +1321,7 @@ validate_get_target_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_target_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_target_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_target_color$col, data)]]
     tidyassert::assert(
@@ -1359,7 +1373,7 @@ validate_get_text_alignment_baseline.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls string}"),
     name = "get_text_alignment_baseline"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text_alignment_baseline)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_alignment_baseline$col, data)]]
     tidyassert::assert(
@@ -1383,7 +1397,7 @@ validate_get_text_anchor.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls string}"),
     name = "get_text_anchor"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text_anchor)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_anchor$col, data)]]
     tidyassert::assert(
@@ -1407,7 +1421,7 @@ validate_get_text_angle.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_text_angle"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text_angle)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_angle$col, data)]]
     tidyassert::assert(
@@ -1431,7 +1445,7 @@ validate_get_text_background_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_text_background_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text_background_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_background_color$col, data)]]
     tidyassert::assert(
@@ -1455,7 +1469,7 @@ validate_get_text_border_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_text_border_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text_border_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_border_color$col, data)]]
     tidyassert::assert(
@@ -1479,7 +1493,7 @@ validate_get_text_border_width.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_text_border_width"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text_border_width)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_border_width$col, data)]]
     tidyassert::assert(
@@ -1503,7 +1517,7 @@ validate_get_text_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "get_text_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_color$col, data)]]
     tidyassert::assert(
@@ -1541,7 +1555,7 @@ validate_get_text_size.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_text_size"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text_size)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_size$col, data)]]
     tidyassert::assert(
@@ -1576,7 +1590,7 @@ validate_get_tilt.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_tilt"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_tilt)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_tilt$col, data)]]
     tidyassert::assert(
@@ -1642,7 +1656,7 @@ validate_get_weight.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_weight"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_weight)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_weight$col, data)]]
     tidyassert::assert(
@@ -1666,7 +1680,7 @@ validate_get_width.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_width"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(get_width)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_width$col, data)]]
     tidyassert::assert(
@@ -1706,6 +1720,22 @@ validate_great_circle.default <- function(layer) {
   )
 }
 
+# validate group_name
+validate_group_name <- function(layer) {
+  UseMethod("validate_group_name")
+}
+validate_group_name.default <- function(layer) {
+  group_name <- layer$group_name
+  if (is.null(group_name)) {
+    return()
+  }
+  tidyassert::assert(
+    is.character(group_name) && length(group_name) == 1,
+    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    name = "group_name"
+  )
+}
+
 # validate high_precision
 validate_high_precision <- function(layer) {
   UseMethod("validate_high_precision")
@@ -1732,7 +1762,7 @@ validate_highlight_color.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls color scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls rgba color}"),
     name = "highlight_color"
   )
-  if (inherits(layer$data, "data.frame")) {
+  if (inherits(layer$data, "data.frame") && is_accessor(highlight_color)) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(highlight_color$col, data)]]
     tidyassert::assert(
@@ -1852,6 +1882,20 @@ validate_icon_size_units.default <- function(layer) {
     is.character(icon_size_units) && length(icon_size_units) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls string}"),
     name = "icon_size_units"
+  )
+}
+
+# validate id
+validate_id <- function(layer) {
+  UseMethod("validate_id")
+}
+validate_id.default <- function(layer) {
+  id <- layer$id
+  tidyassert::assert(!is.null(id))
+  tidyassert::assert(
+    is.character(id) && length(id) == 1,
+    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    name = "id"
   )
 }
 
@@ -2172,6 +2216,22 @@ validate_miter_limit.default <- function(layer) {
     is.numeric(miter_limit) && is.finite(miter_limit) && length(miter_limit) == 1 && min(miter_limit) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "miter_limit"
+  )
+}
+
+# validate name
+validate_name <- function(layer) {
+  UseMethod("validate_name")
+}
+validate_name.default <- function(layer) {
+  name <- layer$name
+  if (is.null(name)) {
+    return()
+  }
+  tidyassert::assert(
+    is.character(name) && length(name) == 1,
+    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    name = "name"
   )
 }
 
@@ -2806,6 +2866,17 @@ validate_tint_color.default <- function(layer) {
   )
 }
 
+# validate tooltip
+validate_tooltip <- function(layer) {
+  UseMethod("validate_tooltip")
+}
+validate_tooltip.default <- function(layer) {
+  tooltip <- layer$tooltip
+  if (is.null(tooltip)) {
+    return()
+  }
+}
+
 # validate trail_length
 validate_trail_length <- function(layer) {
   UseMethod("validate_trail_length")
@@ -2869,6 +2940,20 @@ validate_vertices <- function(layer) {
 validate_vertices.default <- function(layer) {
   vertices <- layer$vertices
   tidyassert::assert(!is.null(vertices))
+}
+
+# validate visibility_toggle
+validate_visibility_toggle <- function(layer) {
+  UseMethod("validate_visibility_toggle")
+}
+validate_visibility_toggle.default <- function(layer) {
+  visibility_toggle <- layer$visibility_toggle
+  tidyassert::assert(!is.null(visibility_toggle))
+  tidyassert::assert(
+    is.logical(visibility_toggle) && length(visibility_toggle) == 1,
+    c("x" = "{.arg {name}} must be a scalar {.cls boolean}"),
+    name = "visibility_toggle"
+  )
 }
 
 # validate visible
@@ -2992,6 +3077,11 @@ validate_worker_url <- function(layer) {
 validate_worker_url.default <- function(layer) {
   worker_url <- layer$worker_url
   tidyassert::assert(!is.null(worker_url))
+  tidyassert::assert(
+    is.character(worker_url) && length(worker_url) == 1,
+    c("x" = "{.arg {name}} must be a scalar {.cls string}"),
+    name = "worker_url"
+  )
 }
 
 # validate wrap_longitude

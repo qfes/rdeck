@@ -82,13 +82,9 @@ accessor.scale <- function(quo, data = NULL, data_type = NULL) {
     scale_limits$train(data[[scale$col]])
   }
 
-  add_class(
-    purrr::list_modify(
-      scale,
-      data_type = data_type %||% resolve_data_type(data)
-    ),
-    c("accessor_scale", "accessor"),
-    Inf
+  purrr::list_modify(
+    scale,
+    data_type = data_type %||% resolve_data_type(data)
   )
 }
 
