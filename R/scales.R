@@ -63,6 +63,10 @@ scale_numeric <- function(scale_type, ..., na_value) {
   add_class(scale(scale_type, ..., na_value), cls)
 }
 
+is_scale <- function(object) inherits(object, "scale")
+is_color_scale <- function(object) is_scale(object) && inherits(object, "scale_color")
+is_numeric_scale <- function(object) is_scale(object) && inherits(object, "scale_numeric")
+
 
 #' Scale linear
 #'

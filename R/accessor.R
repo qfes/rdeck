@@ -92,6 +92,8 @@ accessor.scale <- function(quo, data = NULL, data_type = NULL) {
   )
 }
 
+is_accessor <- function(object) inherits(object, "accessor")
+
 resolve_data_type <- function(data = NULL) {
   ifelse(is.null(data) | inherits(data, "data.frame"), "table", "object")
 }

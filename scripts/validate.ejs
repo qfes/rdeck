@@ -2,32 +2,62 @@
   template for generating a function to validate a deck.gl layer prop.
   data is expected with the following form:
   data = {
-    name: "foo",
-    type: "number",
-    valueType: "number",
-    min: 0,
-    max: 100
-    optional: true
+    propType: {
+      name: "foo",
+      type: "number",
+      valueType: "number",
+      min: 0,
+      max: 100
+      optional: true
+    },
+    utils: {
+      typeCheck,
+      ...
+    ]
   }
 -%>
-<% const func = `validate_${name}`; -%>
-# validate <%- name %>
+<% const func = `validate_${propType.name}`; -%>
+# validate <%- propType.name %>
 <%- func -%> <- function(layer) {
   UseMethod("<%- func -%>")
 }
 
 <%- func -%>.default <- function(layer) {
-  <%- name -%> <- layer$<%- name -%>
+  <%- propType.name %> <- layer$<%- propType.name -%>
   <%# validate optional / required %>
-  <%- optional
-    ? `if (is.null(${name})) { return() }`
-    : `assert_not_null(${name})`
+  <%-
+    propType.optional
+      ? `if (is.null(${propType.name})) return()`
+      : `tidyassert::assert(!is.null(${propType.name}))`
   -%>
-  <%# accessors -%>
-  <% if (type === "accessor") { -%>
-    <%- include("./validate-accessor", {name, type: valueType, scalable, min, max}) -%>
-  <%# others -%>
-  <% } else { -%>
-    <%- include("./validate-type", {name, type, min, max}) -%>
+  <%# type validation %>
+  <% let { conditions, messages } = utils.typeCheck(propType); -%>
+  <%-
+    utils.formatAssertion(
+      conditions,
+      messages.length === 1
+        ? [`{.arg {name}} must be ` + messages[0]]
+        : [`{.arg {name}} must be one of the following`, ...messages],
+      `name = "${propType.name}"`
+    );
+  -%>
+  <%# accessor column validation %>
+  <% if (propType.type === "accessor" && ["boolean", "string", "color", "number"].includes(propType.valueType)) { -%>
+    if (inherits(layer$data, "data.frame")) {
+      <%
+        let columnName = `${propType.name}$col`;
+        let { conditions, messages } = utils.columnCheck(propType, "accessor_data");
+      -%>
+      data <- layer$data
+      accessor_data <- data[[tidyselect::eval_select(<%- columnName -%>, data)]]
+      <%-
+        utils.formatAssertion(
+          conditions,
+          [`Column {.col {col}} is invalid for accessor {.arg {name}}; it must be ` + messages[0]],
+          `name = "${propType.name}"`,
+          `col = substitute(${columnName})`
+        );
+      -%>
+    }
   <% } -%>
 }

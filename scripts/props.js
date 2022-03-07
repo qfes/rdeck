@@ -102,18 +102,17 @@ function getProps(Layer) {
       type: /get(Color|Elevation)Value/.test(propType.name) ? "unknown" : propType.type,
       value: getValue(propType),
       valueType: getValueType(propType),
-      scalable: getScalable(propType),
-      optional: getOptional(propType),
+      isScalable: getScalable(propType),
+      isOptional: getOptional(propType),
+      isScalar: getScalar(propType),
     }));
 }
 
 function getValue({ value }) {
-  if (typeof value !== "function") {
-    return value;
-  }
+  if (typeof value !== "function") return value;
 
+  // is accessor a function returning a constant?
   try {
-    // is accessor a function returning a constant?
     return value();
   } catch {
     return value;
@@ -122,10 +121,10 @@ function getValue({ value }) {
 
 function getValueType(propType) {
   const value = getValue(propType);
-  if (value == null) {
-    return null;
-  }
 
+  if (value == null) return null;
+  if (propType.name === "data") return "data";
+  if (Array.isArray(value) && /(color|colorRange)$/i.test(propType.name)) return "color";
   return Array.isArray(value) ? "array" : typeof value;
 }
 
@@ -140,6 +139,16 @@ function getOptional({ optional, value, type }) {
     type === "function" ||
     (Array.isArray(value) && value.length === 0)
   );
+}
+
+function getScalar(propType) {
+  const valueType = getValueType(propType);
+
+  if (valueType == null) return null;
+  if (["boolean", "string", "number"].includes(valueType)) return true;
+  if (valueType === "color") return !Array.isArray(valueType[0]);
+
+  return false;
 }
 
 module.exports = { getProps };
