@@ -70,6 +70,15 @@ function getProps(Layer) {
     Layer.propTypes.visible.optional = true;
   }
 
+  // tilt range
+  if ("getTilt" in Layer.propTypes) {
+    Layer.propTypes.getTilt = {
+      ...Layer.propTypes.getTilt,
+      min: -90,
+      max: 90,
+    };
+  }
+
   // remove polygon from geo-layers
   if (/^S2|H3/.test(Layer.layerName)) {
     // we don't need this
@@ -77,8 +86,12 @@ function getProps(Layer) {
   }
 
   // default text layer font
-  if (Layer === deck.TextLayer) {
+  if ("fontFamily" in Layer.propTypes) {
     Layer.propTypes.fontFamily.value = "Roboto, Helvetica, Arial, san-serif";
+  }
+
+  if ("textFontFamily" in Layer.propTypes) {
+    Layer.propTypes.textFontFamily.value = "Roboto, Helvetica, Arial, san-serif";
   }
 
   // trips layer
@@ -131,6 +144,7 @@ function getProps(Layer) {
       isScalable: getScalable(propType),
       isOptional: getOptional(propType),
       isScalar: getScalar(propType),
+      values: getValues(propType),
     }));
 }
 
@@ -149,8 +163,10 @@ function getValueType(propType) {
   const value = getValue(propType);
   const isSimpleType = ["boolean", "string", "color", "number"].includes(propType.type);
 
-  if (value == null) return isSimpleType ? propType.type : null;
   if (propType.name === "data") return "data";
+  // bool or char
+  if (propType.name === "highPrecisions") return null;
+  if (value == null) return isSimpleType ? propType.type : null;
   if (Array.isArray(value) && /(color|colorRange)$/i.test(propType.name)) return "color";
   return Array.isArray(value) ? "array" : typeof value;
 }
@@ -176,6 +192,25 @@ function getScalar(propType) {
   if (valueType === "color") return !Array.isArray(valueType[0]);
 
   return false;
+}
+
+function getValues(propType) {
+  if (propType.values != null)
+    return Array.isArray(propType.values) ? propType.values : [propType.values];
+
+  if (/units$/i.test(propType.name)) return ["common", "meters", "pixels"];
+  if (/textAnchor$/i.test(propType.name)) return ["start", "middle", "end"];
+  if (/alignmentBaseline$/i.test(propType.name)) return ["top", "center", "bottom"];
+  if (/wordBreak$/i.test(propType.name)) return ["break-word", "break-all"];
+  if (/fontWeight$/i.test(propType.name))
+    return ["normal", "bold", 100, 200, 300, 400, 500, 600, 700, 800, 900];
+
+  if (/aggregation$/i.test(propType.name) && propType.name !== "gpuAggregation")
+    return ["SUM", "MEAN", "MIN", "MAX"];
+  if (/scaleType$/i.test(propType.name)) return ["quantize", "linear", "quantile", "ordinal"];
+
+  if (/refinementStrategy$/i.test(propType.name)) return ["best-available", "no-overlap", "never"];
+  if (/highPrecision$/i.test(propType.name)) return [true, false, "auto"];
 }
 
 module.exports = { getProps };

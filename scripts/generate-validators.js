@@ -91,14 +91,28 @@ function booleanCheck({ name, valueType, isScalar }) {
 }
 
 // assertion parts for strings
-function stringCheck({ name, valueType, isScalar }) {
+function stringCheck({ name, valueType, isScalar, values }) {
   const conditions = [];
   const messages = [];
 
   if (valueType === "string") {
     conditions.push(flagCondition(name, "is.character"));
     if (isScalar) conditions.push(lengthCondition(name, 1));
-    messages.push(vectorMessage(valueType, isScalar));
+
+    let valuesMessage = null;
+
+    if (values != null) {
+      let valuesStr = values.map((x) =>
+        typeof x === "boolean" ? JSON.stringify(x).toUpperCase() : JSON.stringify(x)
+      );
+      valuesStr = "c(" + valuesStr.join(", ") + ")";
+      conditions.push(`${name} %in% ${valuesStr}`);
+      valuesMessage = `{.arg values} in ${valuesStr}`;
+    }
+
+    messages.push(
+      [vectorMessage(valueType, isScalar), valuesMessage].filter(notNull).join(" where ")
+    );
   }
 
   return { conditions, messages };
