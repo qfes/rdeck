@@ -1,3 +1,40 @@
+check_dots <- function(...) {
+  dots <- rlang::dots_list(...)
+  dots_names <- names(dots)
+
+  if (!all(nzchar(dots_names))) {
+    rlang::abort(
+      paste0("All dots must be named."),
+      class = "rdeck_dots_unnamed"
+    )
+  }
+
+  tidyassert::warn_if(
+    length(dots) != 0,
+    c(
+      "i" = "These dots are unrecognised arguments that will be forwarded to Deck.GL javascript:",
+      paste0("`", dots_names, "` -> `", to_camel_case(dots_names), "`")
+    )
+  )
+}
+
+check_dots_access_token <- function(...) {
+  dots <- rlang::dots_list(...)
+  dots_names <- names(dots)
+
+  var_names <- c("MAPBOX_ACCESS_TOKEN", "MAPBOX_TOKEN")
+  tidyassert::warn_if(
+    any(dots_names == "mapbox_api_access_token"),
+    c(
+      "i" = "mapbox_api_access_token should be supplied via one of:",
+      "`options(rdeck.mapbox_access_token)`",
+      paste0("environment variable `", var_names, " = <token>`"),
+      " " = "",
+      "i" = "see {.code ?mapbox_access_token}"
+    )
+  )
+}
+
 # validate data
 validate_data.layer <- function(layer) {
   data <- layer$data

@@ -39,10 +39,6 @@ omit <- function(obj, names) {
   obj_filtered
 }
 
-paste_line <- function(...) {
-  paste(c(...), collapse = "\n")
-}
-
 # extension of sign, where 0 is treated as positive
 sign0 <- function(x) (x >= 0L) - (x < 0L)
 
@@ -77,3 +73,6 @@ enstring <- function(arg) rlang::as_name(rlang::ensym(arg))
 
 # obj is an rgba hex colour vector
 is_rgba_color <- function(obj) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", obj, ignore.case = TRUE)
+
+# nullish coalesce, where length-0 is treated as null
+`%??%` <- function(a, b) if(length(a) == 0) b else a
