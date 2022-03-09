@@ -27,27 +27,6 @@ assert_geom <- function(layer, name, sfc_type) {
   }
 }
 
-# validate id
-validate_id <- function(layer) {
-  assert_is_string(layer$id, "id")
-}
-
-# validate name
-validate_name <- function(layer) {
-  name <- layer$name
-  if (!is.null(name)) {
-    assert_is_string(name)
-  }
-}
-
-# validate group_name
-validate_group_name <- function(layer) {
-  group_name <- layer$group_name
-  if (!is.null(group_name)) {
-    assert_is_string(group_name)
-  }
-}
-
 # validate get_path
 validate_get_path.layer <- function(layer) {
   assert_geom(layer, "get_path", c("sfc_LINESTRING", "sfc_MULTILINESTRING"))
@@ -80,29 +59,6 @@ validate_image.layer <- function(layer) {
   }
 }
 
-# validate get_normal
-validate_get_normal.layer <- function(layer) {
-  get_normal <- layer$get_normal
-  assert_type(get_normal, c("integer", "numeric", "accessor"))
-
-  if (inherits(get_normal, c("integer", "numeric"))) {
-    assert_length(get_normal, 3)
-    return()
-  }
-
-  data <- layer$data
-  if (inherits(data, "data.frame")) {
-    assert_col_exists(get_normal$col, data)
-    assert_type(data[[get_normal$col]], "matrix")
-    if (ncol(data[[get_normal$col]]) != 3) {
-      rlang::abort(
-        "get_normal must be a matrix of 3 columns",
-        "rdeck_error"
-      )
-    }
-  }
-}
-
 # validate point_type
 validate_point_type.layer <- function(layer) {
   # build vector of all point type combinations
@@ -120,15 +76,14 @@ validate_point_type.layer <- function(layer) {
   assert_in(point_type, all_types)
 }
 
-# validate blending_mode
-validate_blending_mode <- function(layer) {
-  assert_is_string(layer$blending_mode, "blending_mode")
-  assert_in(layer$blending_mode, c("normal", "additive", "subtractive"), "blending_mode")
-}
-
-# validate visibility_toggle
-validate_visibility_toggle <- function(layer) {
-  visibility_toggle <- layer$visibility_toggle
-  assert_type(visibility_toggle, "logical")
-  assert_scalar(visibility_toggle)
+# validate high_precision
+validate_high_precision.layer <- function(layer) {
+  high_precision <- layer$high_precision
+  tidyassert::assert(!is.null(high_precision))
+  tidyassert::assert(
+    (is.character(high_precision) && high_precision == "auto" ||
+    is.logical(high_precision) && high_precision %in% c(TRUE, FALSE)) && length(high_precision) == 1,
+    c("x" = "{.arg {name}} must be TRUE, FALSE, or \"auto\""),
+    name = "high_precision"
+  )
 }
