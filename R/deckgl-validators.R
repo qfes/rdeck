@@ -292,8 +292,8 @@ validate_color_range.default <- function(layer) {
   color_range <- layer$color_range
   tidyassert::assert(!is.null(color_range))
   tidyassert::assert(
-    is_rgba_color(color_range) && length(color_range) == 1,
-    c("x" = "{.arg {name}} must be a scalar {.cls rgba color}"),
+    is_rgba_color(color_range),
+    c("x" = "{.arg {name}} must be a {.cls rgba color} vector"),
     name = "color_range"
   )
 }

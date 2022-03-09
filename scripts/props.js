@@ -189,7 +189,7 @@ function getScalar(propType) {
 
   if (valueType == null) return null;
   if (["boolean", "string", "number"].includes(valueType)) return true;
-  if (valueType === "color") return !Array.isArray(valueType[0]);
+  if (valueType === "color") return !Array.isArray(propType.value[0]);
 
   return false;
 }
