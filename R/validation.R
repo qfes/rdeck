@@ -25,7 +25,7 @@ validate_geometry_accessor <- function(layer, name, sfc_type) {
   if (inherits(data, "data.frame") && nrow(data) != 0) {
     accessor_data <- data[[tidyselect::eval_select(prop$col, data)]]
     tidyassert::assert(
-      inherits(accessor_data, sfc_type) && sf::st_crs(accessor_data) && sf::st_crs(4326),
+      inherits(accessor_data, sfc_type) && sf::st_crs(accessor_data) == sf::st_crs(4326),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls {type}} vector, with crs 4326"),
       name = name,
       col = prop$col,
