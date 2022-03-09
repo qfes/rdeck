@@ -4,7 +4,7 @@ color_gradient <- function(palette) {
 }
 
 color_gradient.character <- function(palette) {
-  assert_rgba(palette)
+  tidyassert::assert(is_rgba_color(palette))
   color_gradient(function(n) palette)
 }
 
@@ -27,7 +27,7 @@ color_categories <- function(palette) {
 }
 
 color_categories.character <- function(palette) {
-  assert_rgba(palette)
+  tidyassert::assert(is_rgba_color(palette))
   color_categories(scales::manual_pal(palette))
 }
 

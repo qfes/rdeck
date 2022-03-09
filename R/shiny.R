@@ -124,8 +124,7 @@ rdeck_proxy <- function(id,
                         layer_selector = NULL,
                         lazy_load = NULL,
                         ...) {
-  assert_is_string(id)
-  assert_type(session, "ShinySession")
+  tidyassert::assert_is_string(id)
 
   rdeck <- structure(
     list(
@@ -164,7 +163,7 @@ rdeck_proxy <- function(id,
 }
 
 add_layer.rdeck_proxy <- function(rdeck, layer) {
-  assert_type(layer, "layer")
+  tidyassert::assert_inherits(layer, "layer")
 
   send_msg(rdeck, "layer", to_json(layer))
   rdeck
@@ -181,7 +180,7 @@ add_layer.rdeck_proxy <- function(rdeck, layer) {
 #'
 #' @export
 set_layer_visibility <- function(rdeck, id, visible = NULL, visibility_toggle = NULL) {
-  assert_type(rdeck, "rdeck_proxy")
+  tidyassert::assert_inherits(rdeck, "rdeck_proxy")
   props <- list(id = id, visible = visible, visibility_toggle = visibility_toggle)
   layer <- structure(
     discard_null(props),
@@ -199,8 +198,8 @@ set_layer_visibility <- function(rdeck, id, visible = NULL, visibility_toggle = 
 }
 
 send_msg <- function(rdeck, name, data) {
-  assert_type(rdeck, "rdeck_proxy")
-  assert_is_string(name)
+  tidyassert::assert_inherits(rdeck, "rdeck_proxy")
+  tidyassert::assert_is_string(name)
 
   session <- rdeck$session
   session$onFlushed(

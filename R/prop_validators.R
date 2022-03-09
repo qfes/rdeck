@@ -2,60 +2,67 @@
 validate_data.layer <- function(layer) {
   data <- layer$data
   if (!is.null(data)) {
-    assert_type(data, c("data.frame", "character"))
+    tidyassert::assert_inherits(data, c("data.frame", "character"))
   }
 }
 
 validate_data.GeoJsonLayer <- function(layer) {
   data <- layer$data
   if (!is.null(data)) {
-    assert_type(data, c("sf", "character"))
+    tidyassert::assert_inherits(data, c("sf", "character"))
   }
 }
 
-assert_geom <- function(layer, name, sfc_type) {
+validate_geometry_accessor <- function(layer, name, sfc_type) {
   prop <- layer[[name]]
-  assert_not_null(prop, name)
-  assert_type(prop, "accessor", name)
+  tidyassert::assert(
+    !is.null(prop) && inherits(prop, "accessor"),
+    "{.arg {name}} must be a {.cls column accessor}",
+    name = name
+  )
 
   data <- layer$data
   if (inherits(data, "data.frame") && nrow(data) != 0) {
-    col_expr <- paste0("data[[", name, "$col]]")
-    assert_col_exists(prop$col, data)
-    assert_type(data[[prop$col]], sfc_type, col_expr)
-    assert_crs(data[[prop$col]], name = col_expr)
+    accessor_data <- data[[tidyselect::eval_select(prop$col, data)]]
+    tidyassert::assert(
+      inherits(accessor_data, sfc_type) && sf::st_crs(accessor_data) && sf::st_crs(4326),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls {type}} vector, with crs 4326"),
+      name = name,
+      col = prop$col,
+      type = sfc_type
+    )
   }
 }
 
 # validate get_path
 validate_get_path.layer <- function(layer) {
-  assert_geom(layer, "get_path", c("sfc_LINESTRING", "sfc_MULTILINESTRING"))
+  validate_geometry_accessor(layer, "get_path", c("sfc_LINESTRING", "sfc_MULTILINESTRING"))
 }
 
 # validate get_polygon
 validate_get_polygon.layer <- function(layer) {
-  assert_geom(layer, "get_polygon", c("sfc_POLYGON", "sfc_MULTIPOLYGON"))
+  validate_geometry_accessor(layer, "get_polygon", c("sfc_POLYGON", "sfc_MULTIPOLYGON"))
 }
 
 # validate get_position
 validate_get_position.layer <- function(layer) {
-  assert_geom(layer, "get_position", c("sfc_POINT", "sfc_MULTIPOINT"))
+  validate_geometry_accessor(layer, "get_position", c("sfc_POINT", "sfc_MULTIPOINT"))
 }
 
 # validate get_source_position
 validate_get_source_position.layer <- function(layer) {
-  assert_geom(layer, "get_source_position", c("sfc_POINT", "sfc_MULTIPOINT"))
+  validate_geometry_accessor(layer, "get_source_position", c("sfc_POINT", "sfc_MULTIPOINT"))
 }
 
 # validate get_target_position
 validate_get_target_position.layer <- function(layer) {
-  assert_geom(layer, "get_target_position", c("sfc_POINT", "sfc_MULTIPOINT"))
+  validate_geometry_accessor(layer, "get_target_position", c("sfc_POINT", "sfc_MULTIPOINT"))
 }
 
 # validate image
 validate_image.layer <- function(layer) {
   if (!is.null(layer$image)) {
-    assert_type(layer$image, c("character", "array"))
+    tidyassert::assert_inherits(layer$image, c("character", "array"))
   }
 }
 
@@ -73,7 +80,11 @@ validate_point_type.layer <- function(layer) {
   all_types <- c(types, unique(grid$pair), grid$triple)
 
   point_type <- layer$point_type
-  assert_in(point_type, all_types)
+  tidyassert::assert(
+    rlang::is_string(point_type) && point_type %in% all_types,
+    c("x" = "{.arg point_type} must be one of {.val {types}}, or a combination joined by {.val +}"),
+    types = types
+  )
 }
 
 # validate high_precision
@@ -82,7 +93,7 @@ validate_high_precision.layer <- function(layer) {
   tidyassert::assert(!is.null(high_precision))
   tidyassert::assert(
     (is.character(high_precision) && high_precision == "auto" ||
-    is.logical(high_precision) && high_precision %in% c(TRUE, FALSE)) && length(high_precision) == 1,
+      is.logical(high_precision) && high_precision %in% c(TRUE, FALSE)) && length(high_precision) == 1,
     c("x" = "{.arg {name}} must be TRUE, FALSE, or \"auto\""),
     name = "high_precision"
   )
