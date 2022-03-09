@@ -84,7 +84,7 @@ function booleanCheck({ name, valueType, isScalar }) {
   if (valueType === "boolean") {
     conditions.push(flagCondition(name, "is.logical"));
     if (isScalar) conditions.push(lengthCondition(name, 1));
-    messages.push(vectorMessage(valueType, isScalar));
+    messages.push(vectorMessage("logical", isScalar));
   }
 
   return { conditions, messages };
@@ -111,7 +111,7 @@ function stringCheck({ name, valueType, isScalar, values }) {
     }
 
     messages.push(
-      [vectorMessage(valueType, isScalar), valuesMessage].filter(notNull).join(" where ")
+      [vectorMessage("character", isScalar), valuesMessage].filter(notNull).join(" where ")
     );
   }
 
@@ -166,7 +166,7 @@ function numberCheck({ name, valueType, min, max, isScalar }) {
 }
 
 // assertion parts for number arrays
-function arrayCheck({ name, valueType, value }, isList = false) {
+function arrayCheck({ name, valueType, value, length }, isList = false) {
   const conditions = [];
   const messages = [];
 
@@ -180,7 +180,21 @@ function arrayCheck({ name, valueType, value }, isList = false) {
       messages.push(objectMessage("list_of<numeric>"));
     } else {
       conditions.push(flagCondition(name, "is.numeric"), flagCondition(name, "is.finite"));
-      messages.push(vectorMessage(valueType, false));
+
+      // length condition
+      if (Array.isArray(length)) {
+        conditions.push(
+          [`length(${name})`, "%in%", "c(" + length.map((x) => JSON.stringify(x)) + ")"].join(" ")
+        );
+      } else if (length != null) {
+        conditions.push([`length(${name})`, "==", JSON.stringify(length)].join(" "));
+      }
+
+      messages.push(
+        length == null
+          ? vectorMessage("numeric", false)
+          : vectorMessage(`length-${JSON.stringify(length)} numeric`, false)
+      );
     }
   }
 

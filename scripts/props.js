@@ -145,6 +145,7 @@ function getProps(Layer) {
       isOptional: getOptional(propType),
       isScalar: getScalar(propType),
       values: getValues(propType),
+      length: getLength(propType),
     }));
 }
 
@@ -211,6 +212,20 @@ function getValues(propType) {
 
   if (/refinementStrategy$/i.test(propType.name)) return ["best-available", "no-overlap", "never"];
   if (/highPrecision$/i.test(propType.name)) return [true, false, "auto"];
+}
+
+function getLength(propType) {
+  const value = getValue(propType);
+  const valueType = getValueType(propType);
+
+  if (valueType !== "array" || "data".includes(propType.name)) return null;
+
+  if (/padding$/i.test(propType.name)) return [2, 4];
+  if (/domain$/i.test(propType.name)) return 2;
+  if (propType.name === "extent") return 4;
+
+  // use length of default
+  return Array.isArray(value) && value.length > 1 ? value.length : null;
 }
 
 module.exports = { getProps };
