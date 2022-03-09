@@ -53,7 +53,7 @@ layer_data.GeoJsonLayer <- function(layer) {
 
 subset_data <- function(layer) {
   colnames <- get_colnames(layer)
-  layer$data[colnames]
+  as.data.frame(layer$data)[colnames]
 }
 
 get_colnames <- function(layer) {
