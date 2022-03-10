@@ -49,7 +49,7 @@ scale <- function(scale_type, ..., trans = scales::identity_trans(), legend) {
 
 scale_color <- function(scale_type, ..., na_color, tick_format) {
   tidyassert::assert(is.null(tick_format) || is.function(tick_format))
-  assert_is_rgba(na_color)
+  tidyassert::assert(is_rgba_color(na_color))
   tick_format <- tick_format %||% function(x) x
 
   cls <- c(paste0("scale_color_", scale_type), "scale_color")
@@ -373,7 +373,7 @@ scale_color_category <- function(col, palette = scales::brewer_pal("div"), unmap
                                  levels = NULL, unmapped_tick = NULL,
                                  tick_format = NULL, legend = TRUE) {
   rlang::check_required(col)
-  assert_is_rgba(unmapped_color)
+  tidyassert::assert(is_rgba_color(unmapped_color))
   tidyassert::assert(is.null(unmapped_tick) || rlang::is_string(unmapped_tick))
   tidyassert::assert(is.null(tick_format) || is.function(tick_format))
 
