@@ -56,8 +56,13 @@ add_class <- function(obj, new_class, pos = 1L) {
   obj
 }
 
+# set class
 set_class <- `class<-`
 
+# vapply shorthands
+vapply_l <- function(x, fn, ..., named = TRUE) vapply(x, fn, logical(1), ..., USE.NAMES = named)
+
+# dplyr-like select for lists
 select <- function(lst, ...) {
   pos <- tidyselect::eval_select(rlang::expr(c(...)), unclass(lst), )
   lst_subset <- rlang::set_names(lst[pos], names(pos))
@@ -65,6 +70,7 @@ select <- function(lst, ...) {
   set_class(lst_subset, class(lst))
 }
 
+# dplyr-like rename for lists
 rename <- function(lst, ...) {
   pos <- tidyselect::eval_rename(rlang::expr(c(...)), unclass(lst))
   names(lst)[pos] <- names(pos)

@@ -171,6 +171,7 @@ function arrayCheck({ name, valueType, value, length }, isList = false) {
   const messages = [];
 
   if (valueType === "array" && typeof value[0] === "number") {
+    // used when checking an accessor column type
     if (isList) {
       conditions.push(
         flagCondition(name, "is.list"),
@@ -232,7 +233,7 @@ function columnCheck(propType, columnExpr) {
     stringCheck(columnType),
     colorCheck(columnType),
     numberCheck(columnType),
-    arrayCheck(columnType)
+    arrayCheck(columnType, true)
   );
 
   return {

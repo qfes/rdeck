@@ -42,7 +42,7 @@
     );
   -%>
   <%# accessor column validation %>
-  <% if (propType.type === "accessor" && ["boolean", "string", "color", "number"].includes(propType.valueType)) { -%>
+  <% if (propType.type === "accessor" && propType.valueType != null) { -%>
     if (inherits(layer$data, "data.frame") && is_accessor(<%- propType.name %>)) {
       <%
         let columnName = `${propType.name}$col`;

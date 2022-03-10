@@ -890,6 +890,10 @@ validate_get_hexagon.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_hexagon"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_hexagon)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_hexagon$col, data)]]
+  }
 }
 
 # validate get_hexagons
@@ -904,6 +908,10 @@ validate_get_hexagons.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_hexagons"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_hexagons)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_hexagons$col, data)]]
+  }
 }
 
 # validate get_icon
@@ -918,6 +926,10 @@ validate_get_icon.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_icon"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_icon)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_icon$col, data)]]
+  }
 }
 
 # validate get_icon_angle
@@ -980,6 +992,16 @@ validate_get_icon_pixel_offset.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-2 numeric} vector"),
     name = "get_icon_pixel_offset"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_icon_pixel_offset)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_icon_pixel_offset$col, data)]]
+    tidyassert::assert(
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<numeric>}"),
+      name = "get_icon_pixel_offset",
+      col = substitute(get_icon_pixel_offset$col)
+    )
+  }
 }
 
 # validate get_icon_size
@@ -1066,6 +1088,16 @@ validate_get_normal.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-3 numeric} vector"),
     name = "get_normal"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_normal)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_normal$col, data)]]
+    tidyassert::assert(
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<numeric>}"),
+      name = "get_normal",
+      col = substitute(get_normal$col)
+    )
+  }
 }
 
 # validate get_orientation
@@ -1080,6 +1112,16 @@ validate_get_orientation.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-3 numeric} vector"),
     name = "get_orientation"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_orientation)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_orientation$col, data)]]
+    tidyassert::assert(
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<numeric>}"),
+      name = "get_orientation",
+      col = substitute(get_orientation$col)
+    )
+  }
 }
 
 # validate get_path
@@ -1094,6 +1136,10 @@ validate_get_path.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_path"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_path)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_path$col, data)]]
+  }
 }
 
 # validate get_pixel_offset
@@ -1108,6 +1154,16 @@ validate_get_pixel_offset.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-2 numeric} vector"),
     name = "get_pixel_offset"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_pixel_offset)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_pixel_offset$col, data)]]
+    tidyassert::assert(
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<numeric>}"),
+      name = "get_pixel_offset",
+      col = substitute(get_pixel_offset$col)
+    )
+  }
 }
 
 # validate get_point_color
@@ -1170,6 +1226,10 @@ validate_get_polygon.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_polygon"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_polygon)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_polygon$col, data)]]
+  }
 }
 
 # validate get_position
@@ -1184,6 +1244,10 @@ validate_get_position.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_position"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_position)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_position$col, data)]]
+  }
 }
 
 # validate get_radius
@@ -1222,6 +1286,10 @@ validate_get_s2_token.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_s2_token"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_s2_token)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_s2_token$col, data)]]
+  }
 }
 
 # validate get_scale
@@ -1236,6 +1304,16 @@ validate_get_scale.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-3 numeric} vector"),
     name = "get_scale"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_scale)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_scale$col, data)]]
+    tidyassert::assert(
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<numeric>}"),
+      name = "get_scale",
+      col = substitute(get_scale$col)
+    )
+  }
 }
 
 # validate get_scene
@@ -1307,6 +1385,10 @@ validate_get_source_position.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_source_position"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_source_position)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_source_position$col, data)]]
+  }
 }
 
 # validate get_target_color
@@ -1345,6 +1427,10 @@ validate_get_target_position.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_target_position"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_target_position)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_target_position$col, data)]]
+  }
 }
 
 # validate get_text
@@ -1359,6 +1445,10 @@ validate_get_text.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_text"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_text$col, data)]]
+  }
 }
 
 # validate get_text_alignment_baseline
@@ -1541,6 +1631,16 @@ validate_get_text_pixel_offset.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-2 numeric} vector"),
     name = "get_text_pixel_offset"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_text_pixel_offset)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_text_pixel_offset$col, data)]]
+    tidyassert::assert(
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<numeric>}"),
+      name = "get_text_pixel_offset",
+      col = substitute(get_text_pixel_offset$col)
+    )
+  }
 }
 
 # validate get_text_size
@@ -1614,6 +1714,10 @@ validate_get_timestamps.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_timestamps"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_timestamps)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_timestamps$col, data)]]
+  }
 }
 
 # validate get_transform_matrix
@@ -1628,6 +1732,10 @@ validate_get_transform_matrix.default <- function(layer) {
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
     name = "get_transform_matrix"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_transform_matrix)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_transform_matrix$col, data)]]
+  }
 }
 
 # validate get_translation
@@ -1642,6 +1750,16 @@ validate_get_translation.default <- function(layer) {
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-3 numeric} vector"),
     name = "get_translation"
   )
+  if (inherits(layer$data, "data.frame") && is_accessor(get_translation)) {
+    data <- layer$data
+    accessor_data <- data[[tidyselect::eval_select(get_translation$col, data)]]
+    tidyassert::assert(
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))),
+      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<numeric>}"),
+      name = "get_translation",
+      col = substitute(get_translation$col)
+    )
+  }
 }
 
 # validate get_weight
