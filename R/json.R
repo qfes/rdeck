@@ -58,27 +58,44 @@ to_json.accessor <- function(obj) {
   )
 }
 
-to_json.accessor_scale <- function(obj) {
-  # prevent simplification
-  names_ <- names(obj)
-  obj$domain <- I(obj$domain)
-  if ("palette" %in% names_) obj$palette <- I(obj$palette)
-  if ("range" %in% names_) obj$range <- I(obj$range)
-  if ("ticks" %in% names_) obj$ticks <- I(obj$ticks)
-
-  # get unknown value
-  obj$unknown <- obj$na_color %||% obj$na_value %||% obj$unmapped_color %||% obj$unmapped_value
-  if ("unmapped_tick" %in% names_) obj$unknown_tick <- obj$unmapped_tick
-
-  keep <- c(
-    "col", "data_type",
-    "scale", "domain", "range",
-    "palette", "unknown",
-    "exponent", "base",
-    "ticks", "unknown_tick",
-    "legend"
+to_json.scale <- function(obj) {
+  compiled <- compile(obj)
+  compiled <- purrr::list_modify(
+    compiled,
+    type = jsonlite::unbox("accessor"),
+    scale_type = jsonlite::unbox(compiled$scale_type),
+    col = jsonlite::unbox(compiled$col),
+    data_type = jsonlite::unbox(compiled$data_type),
+    base = jsonlite::unbox(compiled$base),
+    exponent = jsonlite::unbox(compiled$exponent),
+    legend = jsonlite::unbox(compiled$legend),
   )
-  obj <- pick(obj, keep)
+
+  # FIXME: rename scale -> scaleType in typescript
+  compiled <- rename(compiled, scale = scale_type)
+
+  jsonlite::toJSON(
+    select(camel_case(compiled), -where(is.null)),
+    digits = 15,
+    use_signif = TRUE
+  )
+}
+
+to_json.scale_color <- function(obj) {
+  obj <- purrr::list_modify(
+    select(obj, -tidyselect::ends_with("_color"), -tidyselect::ends_with("_tick")),
+    unknown = jsonlite::unbox(obj$na_color %||% obj$unmapped_color),
+    unknown_tick = jsonlite::unbox(obj$unknown_tick %||% obj$unmapped_tick)
+  )
+
+  NextMethod()
+}
+
+to_json.scale_numeric <- function(obj) {
+  obj <- purrr::list_modify(
+    select(obj, -tidyselect::ends_with("_value")),
+    unknown = jsonlite::unbox(obj$na_value %||% obj$unmapped_value)
+  )
 
   NextMethod()
 }
