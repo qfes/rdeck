@@ -218,7 +218,7 @@ function getLength(propType) {
   const value = getValue(propType);
   const valueType = getValueType(propType);
 
-  if (valueType !== "array" || "data".includes(propType.name)) return null;
+  if (valueType !== "array" || ["data", "contours"].includes(propType.name)) return null;
 
   if (/padding$/i.test(propType.name)) return [2, 4];
   if (/domain$/i.test(propType.name)) return 2;
