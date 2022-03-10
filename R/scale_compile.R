@@ -8,7 +8,6 @@ compile.scale_color <- function(object, ...) {
 
   purrr::list_modify(
     select(object, where(is.atomic)),
-    col = rlang::as_name(object$col),
     domain = domain,
     palette = object$get_palette(ramp),
     ticks = object$get_ticks(limits) %>%
@@ -26,7 +25,6 @@ compile.scale_numeric <- function(object, ...) {
 
   purrr::list_modify(
     select(object, where(is.atomic)),
-    col = rlang::as_name(object$col),
     domain = domain,
     range = object$get_range(ramp)
   )
@@ -39,13 +37,12 @@ compile.scale_color_threshold <- function(object, ...) {
   domain <- object$get_breaks(limits)
   # d3 threshold domain excludes limits
   domain <- domain[-c(1, length(domain))]
-  if (length(domain) == 0) rlang::warn("domain is empty, scale will be constant")
+  tidyassert::warn_if(length(domain) == 0, "domain is empty, scale will be constant")
 
   ramp <- seq.int(0, 1, length.out = length(domain) + 1)
 
   purrr::list_modify(
     select(object, where(is.atomic)),
-    col = rlang::as_name(object$col),
     domain = domain,
     palette = object$get_palette(ramp),
     ticks = object$get_ticks(limits) %>%
@@ -59,12 +56,12 @@ compile.scale_numeric_threshold <- function(object, ...) {
   domain <- object$get_breaks(limits)
   # d3 threshold domain excludes limits
   domain <- domain[-c(1, length(domain))]
-  if (length(domain) == 0) rlang::warn("domain is empty, scale will be constant")
+  tidyassert::warn_if(length(domain) == 0, "domain is empty, scale will be constant")
 
   ramp <- seq.int(0, 1, length.out = length(domain) + 1)
 
   purrr::list_modify(
-    col = rlang::as_name(object$col),
+    select(object, where(is.atomic)),
     domain = domain,
     range = object$get_range(ramp)
   )
@@ -73,7 +70,7 @@ compile.scale_numeric_threshold <- function(object, ...) {
 
 #' @export
 compile.scale_color_quantile <- function(object, ...) {
-  tidyassert::assert_not_null(object$data$range)
+  tidyassert::assert_not_null(object$limits$range)
 
   purrr::list_modify(
     compile.scale_color_threshold(rename(object, limits = data)),
@@ -83,7 +80,7 @@ compile.scale_color_quantile <- function(object, ...) {
 
 #' @export
 compile.scale_numeric_quantile <- function(object, ...) {
-  tidyassert::assert_not_null(object$data$range)
+  tidyassert::assert_not_null(object$limits$range)
 
   purrr::list_modify(
     compile.scale_numeric_threshold(rename(object, limits = data)),
@@ -94,7 +91,7 @@ compile.scale_numeric_quantile <- function(object, ...) {
 
 #' @export
 compile.scale_color_category <- function(object, ...) {
-  tidyassert::assert_not_null(object$levels$range)
+  tidyassert::assert_not_null(object$limits$range)
   domain <- object$levels$range
 
   purrr::list_modify(
@@ -112,7 +109,7 @@ compile.scale_numeric_category <- function(object, ...) {
 
   purrr::list_modify(
     select(object, where(is.atomic)),
-    col = rlang::as_name(object$col),
+    domain = domain,
     range = object$get_range(domain)
   )
 }
@@ -126,7 +123,6 @@ compile.scale_color_quantize <- function(object, ...) {
 
   purrr::list_modify(
     select(object, where(is.atomic)),
-    col = rlang::as_name(object$col),
     domain = domain,
     palette = object$get_palette(ramp),
     ticks = object$get_ticks(domain) %>%
