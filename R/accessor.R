@@ -23,14 +23,6 @@ accessor.default <- function(quo, data = NULL, data_type = NULL) {
 accessor.name <- function(quo, data = NULL, data_type = NULL) {
   col <- rlang::as_name(quo)
 
-  # does column exist?
-  tidyassert::assert(
-    !inherits(data, "data.frame") || rlang::has_name(data, col),
-    "Column {.col {col}} doesn't exist",
-    print_expr = substitute(!inherits(data, "data.frame") || rlang::has_name(data, quo)),
-    col = substitute(col)
-  )
-
   if (!is.null(data_type)) {
     tidyassert::assert(data_type %in% c("table", "object", "geojson"))
   }
@@ -52,16 +44,7 @@ accessor.sf_column <- function(quo, data = NULL, data_type = NULL) {
     print_expr = substitute(inherits(data, "sf") || !inherits(quo, "sf_column"))
   )
 
-  col <- attr(data, "sf_column")
-
-  # does sf_column exist?
-  tidyassert::assert(
-    rlang::has_name(data, col),
-    "Column {.col {sf_column}} doesn't exist",
-    sf_column = substitute(attr(data, "sf_column"))
-  )
-
-  new_quo <- rlang::as_quosure(col, rlang::quo_get_env(quo))
+  new_quo <- rlang::as_quosure(attr(data, "sf_column"), rlang::quo_get_env(quo))
   accessor.name(new_quo, data, data_type)
 }
 
@@ -71,7 +54,7 @@ accessor.scale <- function(quo, data = NULL, data_type = NULL) {
   # does column exist?
   tidyassert::assert(
     !inherits(data, "data.frame") || rlang::has_name(data, scale$col),
-    "Column {.col {col}} doesn't exist",
+    "Scale column {.col {col}} doesn't exist",
     print_expr = substitute(!inherits(data, "data.frame") || rlang::has_name(data, quo$col)),
     col = substitute(scale$col)
   )
