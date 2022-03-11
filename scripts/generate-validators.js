@@ -171,6 +171,7 @@ function arrayCheck({ name, valueType, value, length }, isList = false) {
   const messages = [];
 
   if (valueType === "array" && typeof value[0] === "number") {
+    console.assert(length != null, `propType: ${name} must have a length.`);
     // used when checking an accessor column type
     if (isList) {
       conditions.push(
@@ -178,18 +179,25 @@ function arrayCheck({ name, valueType, value, length }, isList = false) {
         `all(vapply_l(${name}, function(x) is.numeric(x) && all(is.finite(x))))`
       );
 
-      messages.push(objectMessage("list_of<numeric>"));
+      // length condition
+      if (Array.isArray(length)) {
+        conditions.push(`all(lengths(${name}) %in% c(${length.map((x) => JSON.stringify(x))}))`);
+      } else {
+        conditions.push(`all(lengths(${name}) == ${JSON.stringify(length)})`);
+      }
+
+      messages.push(objectMessage(`list_of<length-${JSON.stringify(length)} numeric>`));
     } else {
       conditions.push(flagCondition(name, "is.numeric"), flagCondition(name, "is.finite"));
 
       // length condition
       if (Array.isArray(length)) {
-        conditions.push(
-          [`length(${name})`, "%in%", "c(" + length.map((x) => JSON.stringify(x)) + ")"].join(" ")
-        );
-      } else if (length != null) {
-        conditions.push([`length(${name})`, "==", JSON.stringify(length)].join(" "));
+        conditions.push(`length(${name}) %in% c(${length.map((x) => JSON.stringify(x))})`);
+      } else {
+        conditions.push(`length(${name}) == ${JSON.stringify(length)}`);
       }
+
+      if (length == null) console.log({ name, valueType, value, length });
 
       messages.push(
         length == null
