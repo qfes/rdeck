@@ -59,6 +59,9 @@ add_class <- function(obj, new_class, pos = 1L) {
 # set class
 set_class <- `class<-`
 
+# replace value
+set_value <- `[[<-`
+
 # vapply shorthands
 vapply_l <- function(x, fn, ..., named = TRUE) vapply(x, fn, logical(1), ..., USE.NAMES = named)
 vapply_c <- function(x, fn, ..., named = TRUE) vapply(x, fn, character(1), ..., USE.NAMES = named)
@@ -82,14 +85,14 @@ rename <- function(lst, ...) {
 # dplyr-like mutate for lists
 mutate <- function(lst, ...) {
   quos <- rlang::enquos(..., .named = TRUE, .ignore_empty = "all", .check_assign = TRUE)
-  quo_names <- rlang::names2(quos)
+  nms <- rlang::names2(quos)
 
-  for (i in seq_along(quos)) {
-    quo <- quos[[i]]
-    lst[[quo_names[i]]] <- rlang::eval_tidy(quo, lst)
-  }
-
-  lst
+  purrr::reduce2(
+    nms,
+    quos,
+    .init = lst,
+    function(lst, nm, quo) set_value(lst, nm, rlang::eval_tidy(quo, lst))
+  )
 }
 
 # expects arg be embraced
