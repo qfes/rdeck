@@ -61,6 +61,7 @@ set_class <- `class<-`
 
 # vapply shorthands
 vapply_l <- function(x, fn, ..., named = TRUE) vapply(x, fn, logical(1), ..., USE.NAMES = named)
+vapply_c <- function(x, fn, ..., named = TRUE) vapply(x, fn, character(1), ..., USE.NAMES = named)
 
 # dplyr-like select for lists
 select <- function(lst, ...) {
@@ -83,6 +84,10 @@ enstring <- function(arg) rlang::as_name(rlang::ensym(arg))
 
 # obj is an rgba hex colour vector
 is_rgba_color <- function(obj) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", obj, ignore.case = TRUE)
+
+is_js_eval <- function(obj) inherits(obj, "JS_EVAL")
+
+is_sfc <- function(obj) inherits(obj, "sfc")
 
 all_finite <- function(x) all(is.finite(x))
 

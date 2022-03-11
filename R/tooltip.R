@@ -83,3 +83,5 @@ tooltip <- function(cols, data = NULL, data_type = NULL) {
     class = "tooltip"
   )
 }
+
+is_tooltip <- function(object) inherits(object, "tooltip")
