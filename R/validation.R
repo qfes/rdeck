@@ -103,6 +103,18 @@ validate_image.layer <- function(layer) {
   }
 }
 
+validate_get_icon.MVTLayer <- function(layer) {
+  if (grepl("icon", layer$point_type, fixed = TRUE)) {
+    NextMethod()
+  }
+}
+
+validate_get_text.MVTLayer <- function(layer) {
+  if (grepl("text", layer$point_type, fixed = TRUE)) {
+    NextMethod()
+  }
+}
+
 # validate point_type
 validate_point_type.layer <- function(layer) {
   # build vector of all point type combinations
