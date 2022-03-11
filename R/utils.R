@@ -79,8 +79,25 @@ rename <- function(lst, ...) {
   lst
 }
 
+# dplyr-like mutate for lists
+mutate <- function(lst, ...) {
+  quos <- rlang::enquos(..., .named = TRUE, .ignore_empty = "all", .check_assign = TRUE)
+  quo_names <- rlang::names2(quos)
+
+  for (i in seq_along(quos)) {
+    quo <- quos[[i]]
+    lst[[quo_names[i]]] <- rlang::eval_tidy(quo, lst)
+  }
+
+  lst
+}
+
 # expects arg be embraced
 enstring <- function(arg) rlang::as_name(rlang::ensym(arg))
+
+ramp_n <- function(n) seq.int(0, 1, length.out = n)
+
+drop_ends <- function(x) x[-c(1, length(x))]
 
 # obj is an rgba hex colour vector
 is_rgba_color <- function(obj) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", obj, ignore.case = TRUE)

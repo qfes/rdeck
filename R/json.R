@@ -59,16 +59,19 @@ to_json.accessor <- function(obj) {
 }
 
 to_json.scale <- function(obj) {
-  compiled <- compile(obj)
-  compiled <- purrr::list_modify(
-    compiled,
+  compiled <- mutate(
+    compile(obj),
     type = jsonlite::unbox("accessor"),
-    scale_type = jsonlite::unbox(compiled$scale_type),
-    col = jsonlite::unbox(compiled$col),
-    data_type = jsonlite::unbox(compiled$data_type),
-    base = jsonlite::unbox(compiled$base),
-    exponent = jsonlite::unbox(compiled$exponent),
-    legend = jsonlite::unbox(compiled$legend),
+    scale_type = jsonlite::unbox(scale_type),
+    col = jsonlite::unbox(col),
+    data_type = jsonlite::unbox(data_type),
+    legend = jsonlite::unbox(legend),
+    unknown = jsonlite::unbox(unknown),
+
+    # may not exist
+    unknown_tick = if (scale_type == "category" && is_color_scale(obj)) jsonlite::unbox(unknown_tick),
+    base = if (scale_type == "log") jsonlite::unbox(base),
+    exponent = if (scale_type == "power") jsonlite::unbox(exponent)
   )
 
   # FIXME: rename scale -> scaleType in typescript
@@ -82,19 +85,23 @@ to_json.scale <- function(obj) {
 }
 
 to_json.scale_color <- function(obj) {
-  obj <- purrr::list_modify(
-    select(obj, -tidyselect::ends_with("_color"), -tidyselect::ends_with("_tick")),
-    unknown = jsonlite::unbox(obj$na_color %||% obj$unmapped_color),
-    unknown_tick = jsonlite::unbox(obj$unknown_tick %||% obj$unmapped_tick)
+  is_category <- obj$scale_type == "category"
+
+  obj <- rename(
+    obj,
+    unknown = ifelse(is_category, "unmapped_color", "na_color"),
+    unknown_tick = if (is_category) "unmapped_tick"
   )
 
   NextMethod()
 }
 
 to_json.scale_numeric <- function(obj) {
-  obj <- purrr::list_modify(
-    select(obj, -tidyselect::ends_with("_value")),
-    unknown = jsonlite::unbox(obj$na_value %||% obj$unmapped_value)
+  is_category <- obj$scale_type == "category"
+
+  obj <- rename(
+    obj,
+    unknown = ifelse(is_category, "unmapped_value", "na_value")
   )
 
   NextMethod()
