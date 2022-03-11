@@ -17,15 +17,11 @@
 #' @family breaks
 #' @export
 breaks_manual <- function(thresholds = 0.5) {
-  tidyassert::assert(is.numeric(thresholds))
-  tidyassert::assert(is.finite(thresholds))
-  tidyassert::assert(!is.unsorted(thresholds))
+  tidyassert::assert(is.numeric(thresholds) && all_finite(thresholds) && !is.unsorted(thresholds))
 
   thresholds_default <- thresholds
   function(x, thresholds = thresholds_default) {
-    tidyassert::assert(is.numeric(thresholds))
-    tidyassert::assert(is.finite(thresholds))
-    tidyassert::assert(!is.unsorted(thresholds))
+    tidyassert::assert(is.numeric(thresholds) && all_finite(thresholds) && !is.unsorted(thresholds))
 
     # rng can be reversed for infinte input
     rng <- sort(scales::train_continuous(x, c(-Inf, Inf)))
@@ -33,7 +29,7 @@ breaks_manual <- function(thresholds = 0.5) {
     # drop any thresholds outside or equal to range
     thresholds_clamped <- thresholds[
       thresholds > rng[1] & thresholds < rng[2] &
-      !isapprox(thresholds, rng[1]) & !isapprox(thresholds, rng[2])
+        !isapprox(thresholds, rng[1]) & !isapprox(thresholds, rng[2])
     ]
 
     c(rng[1], thresholds_clamped, rng[2])
@@ -134,7 +130,7 @@ linear_breaks <- breaks_linear
 #'
 #' @examples
 #' breaks_power(5)(-10:10)
-#' breaks_power(5, exponent = 1/3)(-1:1)
+#' breaks_power(5, exponent = 1 / 3)(-1:1)
 #'
 #' @name breaks_power
 #' @inherit breaks_linear
@@ -171,7 +167,7 @@ power_breaks <- breaks_power
 #' @examples
 #' breaks_log(5)(-10:-1)
 #' breaks_log(5)(1:10)
-#
+#'
 #' @name breaks_log
 #' @inherit breaks_linear
 #' @inheritParams log_trans
@@ -206,7 +202,7 @@ log_breaks <- breaks_log
 #' @examples
 #' breaks_symlog(5)(-10:10)
 #' breaks_symlog(5)(0:10)
-#
+#'
 #' @name breaks_symlog
 #' @inherit breaks_linear
 #'
@@ -225,8 +221,7 @@ symlog_breaks <- breaks_symlog
 
 # Generate a breaks vector for the given probs
 quantile_breaks <- function(probs) {
-  tidyassert::assert_is_numeric(probs)
-  tidyassert::assert(probs >= 0 & probs <= 1 & !is.unsorted(probs))
+  tidyassert::assert(is.numeric(probs) && min(probs) >= 0 && max(probs) <= 1 && !is.unsorted(probs))
   # ensure
   probs <- unique(c(0, probs, 1))
 

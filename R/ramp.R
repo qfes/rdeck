@@ -59,7 +59,7 @@ number_gradient <- function(seq) {
 }
 
 number_gradient.numeric <- function(seq) {
-  tidyassert::assert(is.finite(seq) && length(seq) >= 2)
+  tidyassert::assert(all_finite(seq) && length(seq) >= 2)
   stats::approxfun(scales::rescale(seq_along(seq)), seq)
 }
 
@@ -70,7 +70,7 @@ number_gradient.integer <- number_gradient.numeric
 number_categories <- function(seq) UseMethod("number_categories")
 
 number_categories.numeric <- function(seq) {
-  tidyassert::assert(is.finite(seq) && length(seq) >= 2)
+  tidyassert::assert(all_finite(seq) && length(seq) >= 2)
   seq_pal <- scales::manual_pal(seq)
 
   function(x) {
