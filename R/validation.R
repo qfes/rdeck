@@ -103,17 +103,21 @@ validate_image.layer <- function(layer) {
   }
 }
 
-validate_get_icon.MVTLayer <- function(layer) {
+validate_get_icon.GeoJsonLayer <- function(layer) {
   if (grepl("icon", layer$point_type, fixed = TRUE)) {
     NextMethod()
   }
 }
 
-validate_get_text.MVTLayer <- function(layer) {
+validate_get_icon.MVTLayer <- validate_get_icon.GeoJsonLayer
+
+validate_get_text.GeoJsonLayer <- function(layer) {
   if (grepl("text", layer$point_type, fixed = TRUE)) {
     NextMethod()
   }
 }
+
+validate_get_text.MVTLayer <- validate_get_text.GeoJsonLayer
 
 # validate point_type
 validate_point_type.layer <- function(layer) {
