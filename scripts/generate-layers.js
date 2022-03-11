@@ -27,15 +27,15 @@ function quoteName(key) {
  * @property {any} value
  * @param {PropType} prop
  */
-function defaultValue({ name, type, value }) {
+function defaultValue({ name, type, value, valueType }) {
   if (name === "id") return "uuid::UUIDgenerate()";
-
-  if (name.endsWith("Color") && Array.isArray(value)) {
-    return format(rgba2hex(value));
-  }
 
   if (name === "colorRange" && Array.isArray(value)) {
     return format(value.map(rgba2hex));
+  }
+
+  if (valueType === "color" && Array.isArray(value)) {
+    return format(rgba2hex(value));
   }
 
   if (type === "accessor" && typeof value === "function") {

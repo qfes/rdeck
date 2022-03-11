@@ -8,10 +8,14 @@
       valueType: "number",
       min: 0,
       max: 100
-      optional: true
+      isScalable: false,
+      isOptional: true,
+      isScalar: true,
+      length: null
     },
     utils: {
       typeCheck,
+      colCheck,
       ...
     ]
   }
@@ -26,7 +30,7 @@
   <%- propType.name %> <- layer$<%- propType.name -%>
   <%# validate optional / required %>
   <%-
-    propType.optional
+    propType.isOptional
       ? `if (is.null(${propType.name})) return()`
       : `tidyassert::assert(!is.null(${propType.name}))`
   -%>

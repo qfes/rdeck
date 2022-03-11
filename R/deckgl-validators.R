@@ -228,7 +228,9 @@ validate_center_hexagon <- function(layer) {
 }
 validate_center_hexagon.default <- function(layer) {
   center_hexagon <- layer$center_hexagon
-  tidyassert::assert(!is.null(center_hexagon))
+  if (is.null(center_hexagon)) {
+    return()
+  }
 }
 
 # validate color
@@ -341,7 +343,9 @@ validate_data <- function(layer) {
 }
 validate_data.default <- function(layer) {
   data <- layer$data
-  tidyassert::assert(!is.null(data))
+  if (is.null(data)) {
+    return()
+  }
 }
 
 # validate debounce_timeout
@@ -406,7 +410,9 @@ validate_elevation_data <- function(layer) {
 }
 validate_elevation_data.default <- function(layer) {
   elevation_data <- layer$elevation_data
-  tidyassert::assert(!is.null(elevation_data))
+  if (is.null(elevation_data)) {
+    return()
+  }
 }
 
 # validate elevation_decoder
@@ -424,7 +430,9 @@ validate_elevation_domain <- function(layer) {
 }
 validate_elevation_domain.default <- function(layer) {
   elevation_domain <- layer$elevation_domain
-  tidyassert::assert(!is.null(elevation_domain))
+  if (is.null(elevation_domain)) {
+    return()
+  }
 }
 
 # validate elevation_lower_percentile
@@ -641,7 +649,9 @@ validate_get_animator <- function(layer) {
 }
 validate_get_animator.default <- function(layer) {
   get_animator <- layer$get_animator
-  tidyassert::assert(!is.null(get_animator))
+  if (is.null(get_animator)) {
+    return()
+  }
 }
 
 # validate get_background_color
@@ -746,7 +756,9 @@ validate_get_color_value <- function(layer) {
 }
 validate_get_color_value.default <- function(layer) {
   get_color_value <- layer$get_color_value
-  tidyassert::assert(!is.null(get_color_value))
+  if (is.null(get_color_value)) {
+    return()
+  }
 }
 
 # validate get_color_weight
@@ -803,7 +815,9 @@ validate_get_elevation_value <- function(layer) {
 }
 validate_get_elevation_value.default <- function(layer) {
   get_elevation_value <- layer$get_elevation_value
-  tidyassert::assert(!is.null(get_elevation_value))
+  if (is.null(get_elevation_value)) {
+    return()
+  }
 }
 
 # validate get_elevation_weight
@@ -1322,7 +1336,9 @@ validate_get_scene <- function(layer) {
 }
 validate_get_scene.default <- function(layer) {
   get_scene <- layer$get_scene
-  tidyassert::assert(!is.null(get_scene))
+  if (is.null(get_scene)) {
+    return()
+  }
 }
 
 # validate get_size
@@ -1726,7 +1742,9 @@ validate_get_transform_matrix <- function(layer) {
 }
 validate_get_transform_matrix.default <- function(layer) {
   get_transform_matrix <- layer$get_transform_matrix
-  tidyassert::assert(!is.null(get_transform_matrix))
+  if (is.null(get_transform_matrix)) {
+    return()
+  }
   tidyassert::assert(
     is_accessor(get_transform_matrix),
     c("x" = "{.arg {name}} must be a {.cls column accessor}"),
@@ -1898,7 +1916,9 @@ validate_highlighted_feature_id <- function(layer) {
 }
 validate_highlighted_feature_id.default <- function(layer) {
   highlighted_feature_id <- layer$highlighted_feature_id
-  tidyassert::assert(!is.null(highlighted_feature_id))
+  if (is.null(highlighted_feature_id)) {
+    return()
+  }
 }
 
 # validate icon_alpha_cutoff
@@ -1921,7 +1941,9 @@ validate_icon_atlas <- function(layer) {
 }
 validate_icon_atlas.default <- function(layer) {
   icon_atlas <- layer$icon_atlas
-  tidyassert::assert(!is.null(icon_atlas))
+  if (is.null(icon_atlas)) {
+    return()
+  }
 }
 
 # validate icon_billboard
@@ -2009,7 +2031,9 @@ validate_id <- function(layer) {
 }
 validate_id.default <- function(layer) {
   id <- layer$id
-  tidyassert::assert(!is.null(id))
+  if (is.null(id)) {
+    return()
+  }
   tidyassert::assert(
     is.character(id) && length(id) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls character}"),
@@ -2023,7 +2047,9 @@ validate_image <- function(layer) {
 }
 validate_image.default <- function(layer) {
   image <- layer$image
-  tidyassert::assert(!is.null(image))
+  if (is.null(image)) {
+    return()
+  }
 }
 
 # validate intensity
@@ -2237,7 +2263,9 @@ validate_max_cache_byte_size <- function(layer) {
 }
 validate_max_cache_byte_size.default <- function(layer) {
   max_cache_byte_size <- layer$max_cache_byte_size
-  tidyassert::assert(!is.null(max_cache_byte_size))
+  if (is.null(max_cache_byte_size)) {
+    return()
+  }
 }
 
 # validate max_cache_size
@@ -2246,7 +2274,9 @@ validate_max_cache_size <- function(layer) {
 }
 validate_max_cache_size.default <- function(layer) {
   max_cache_size <- layer$max_cache_size
-  tidyassert::assert(!is.null(max_cache_size))
+  if (is.null(max_cache_size)) {
+    return()
+  }
 }
 
 # validate max_requests
@@ -2283,7 +2313,9 @@ validate_max_zoom <- function(layer) {
 }
 validate_max_zoom.default <- function(layer) {
   max_zoom <- layer$max_zoom
-  tidyassert::assert(!is.null(max_zoom))
+  if (is.null(max_zoom)) {
+    return()
+  }
 }
 
 # validate mesh
@@ -2292,7 +2324,9 @@ validate_mesh <- function(layer) {
 }
 validate_mesh.default <- function(layer) {
   mesh <- layer$mesh
-  tidyassert::assert(!is.null(mesh))
+  if (is.null(mesh)) {
+    return()
+  }
 }
 
 # validate mesh_max_error
@@ -2653,7 +2687,9 @@ validate_scenegraph <- function(layer) {
 }
 validate_scenegraph.default <- function(layer) {
   scenegraph <- layer$scenegraph
-  tidyassert::assert(!is.null(scenegraph))
+  if (is.null(scenegraph)) {
+    return()
+  }
 }
 
 # validate size_max_pixels
@@ -3057,7 +3093,9 @@ validate_vertices <- function(layer) {
 }
 validate_vertices.default <- function(layer) {
   vertices <- layer$vertices
-  tidyassert::assert(!is.null(vertices))
+  if (is.null(vertices)) {
+    return()
+  }
 }
 
 # validate visibility_toggle
@@ -3194,7 +3232,9 @@ validate_worker_url <- function(layer) {
 }
 validate_worker_url.default <- function(layer) {
   worker_url <- layer$worker_url
-  tidyassert::assert(!is.null(worker_url))
+  if (is.null(worker_url)) {
+    return()
+  }
   tidyassert::assert(
     is.character(worker_url) && length(worker_url) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls character}"),
@@ -3236,7 +3276,9 @@ validate_z_range <- function(layer) {
 }
 validate_z_range.default <- function(layer) {
   z_range <- layer$z_range
-  tidyassert::assert(!is.null(z_range))
+  if (is.null(z_range)) {
+    return()
+  }
 }
 
 # validate zoom_offset

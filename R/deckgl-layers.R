@@ -33,8 +33,10 @@ add_arc_layer <- function(rdeck,
                           blending_mode = "normal",
                           visibility_toggle = TRUE,
                           tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_source_position <- rlang::enquo(get_source_position)
@@ -46,7 +48,7 @@ add_arc_layer <- function(rdeck,
   get_tilt <- rlang::enquo(get_tilt)
   tooltip <- rlang::enquo(tooltip)
 
-  arc_layer <- rlang::try_fetch(
+  arc_layer <- with_layer_create_errors(
     layer(
       type = "ArcLayer",
       ...,
@@ -77,43 +79,38 @@ add_arc_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create arc_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(arc_layer)
-  validate_name(arc_layer)
-  validate_group_name(arc_layer)
-  validate_data(arc_layer)
-  validate_visible(arc_layer)
-  validate_pickable(arc_layer)
-  validate_opacity(arc_layer)
-  validate_wrap_longitude(arc_layer)
-  validate_position_format(arc_layer)
-  validate_color_format(arc_layer)
-  validate_auto_highlight(arc_layer)
-  validate_highlight_color(arc_layer)
-  validate_get_source_position(arc_layer)
-  validate_get_target_position(arc_layer)
-  validate_get_source_color(arc_layer)
-  validate_get_target_color(arc_layer)
-  validate_get_width(arc_layer)
-  validate_get_height(arc_layer)
-  validate_get_tilt(arc_layer)
-  validate_great_circle(arc_layer)
-  validate_width_units(arc_layer)
-  validate_width_scale(arc_layer)
-  validate_width_min_pixels(arc_layer)
-  validate_width_max_pixels(arc_layer)
-  validate_blending_mode(arc_layer)
-  validate_visibility_toggle(arc_layer)
-  validate_tooltip(arc_layer)
+  with_layer_create_errors({
+    validate_id(arc_layer)
+    validate_name(arc_layer)
+    validate_group_name(arc_layer)
+    validate_data(arc_layer)
+    validate_visible(arc_layer)
+    validate_pickable(arc_layer)
+    validate_opacity(arc_layer)
+    validate_wrap_longitude(arc_layer)
+    validate_position_format(arc_layer)
+    validate_color_format(arc_layer)
+    validate_auto_highlight(arc_layer)
+    validate_highlight_color(arc_layer)
+    validate_get_source_position(arc_layer)
+    validate_get_target_position(arc_layer)
+    validate_get_source_color(arc_layer)
+    validate_get_target_color(arc_layer)
+    validate_get_width(arc_layer)
+    validate_get_height(arc_layer)
+    validate_get_tilt(arc_layer)
+    validate_great_circle(arc_layer)
+    validate_width_units(arc_layer)
+    validate_width_scale(arc_layer)
+    validate_width_min_pixels(arc_layer)
+    validate_width_max_pixels(arc_layer)
+    validate_blending_mode(arc_layer)
+    validate_visibility_toggle(arc_layer)
+    validate_tooltip(arc_layer)
+  })
 
   add_layer(rdeck, arc_layer)
 }
@@ -143,13 +140,15 @@ add_bitmap_layer <- function(rdeck,
                              blending_mode = "normal",
                              visibility_toggle = TRUE,
                              tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   tooltip <- rlang::enquo(tooltip)
 
-  bitmap_layer <- rlang::try_fetch(
+  bitmap_layer <- with_layer_create_errors(
     layer(
       type = "BitmapLayer",
       ...,
@@ -173,36 +172,31 @@ add_bitmap_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create bitmap_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(bitmap_layer)
-  validate_name(bitmap_layer)
-  validate_group_name(bitmap_layer)
-  validate_data(bitmap_layer)
-  validate_visible(bitmap_layer)
-  validate_pickable(bitmap_layer)
-  validate_opacity(bitmap_layer)
-  validate_wrap_longitude(bitmap_layer)
-  validate_position_format(bitmap_layer)
-  validate_color_format(bitmap_layer)
-  validate_auto_highlight(bitmap_layer)
-  validate_highlight_color(bitmap_layer)
-  validate_image(bitmap_layer)
-  validate_bounds(bitmap_layer)
-  validate_desaturate(bitmap_layer)
-  validate_transparent_color(bitmap_layer)
-  validate_tint_color(bitmap_layer)
-  validate_blending_mode(bitmap_layer)
-  validate_visibility_toggle(bitmap_layer)
-  validate_tooltip(bitmap_layer)
+  with_layer_create_errors({
+    validate_id(bitmap_layer)
+    validate_name(bitmap_layer)
+    validate_group_name(bitmap_layer)
+    validate_data(bitmap_layer)
+    validate_visible(bitmap_layer)
+    validate_pickable(bitmap_layer)
+    validate_opacity(bitmap_layer)
+    validate_wrap_longitude(bitmap_layer)
+    validate_position_format(bitmap_layer)
+    validate_color_format(bitmap_layer)
+    validate_auto_highlight(bitmap_layer)
+    validate_highlight_color(bitmap_layer)
+    validate_image(bitmap_layer)
+    validate_bounds(bitmap_layer)
+    validate_desaturate(bitmap_layer)
+    validate_transparent_color(bitmap_layer)
+    validate_tint_color(bitmap_layer)
+    validate_blending_mode(bitmap_layer)
+    validate_visibility_toggle(bitmap_layer)
+    validate_tooltip(bitmap_layer)
+  })
 
   add_layer(rdeck, bitmap_layer)
 }
@@ -241,8 +235,10 @@ add_icon_layer <- function(rdeck,
                            blending_mode = "normal",
                            visibility_toggle = TRUE,
                            tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
@@ -253,7 +249,7 @@ add_icon_layer <- function(rdeck,
   get_pixel_offset <- rlang::enquo(get_pixel_offset)
   tooltip <- rlang::enquo(tooltip)
 
-  icon_layer <- rlang::try_fetch(
+  icon_layer <- with_layer_create_errors(
     layer(
       type = "IconLayer",
       ...,
@@ -286,45 +282,40 @@ add_icon_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create icon_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(icon_layer)
-  validate_name(icon_layer)
-  validate_group_name(icon_layer)
-  validate_data(icon_layer)
-  validate_visible(icon_layer)
-  validate_pickable(icon_layer)
-  validate_opacity(icon_layer)
-  validate_wrap_longitude(icon_layer)
-  validate_position_format(icon_layer)
-  validate_color_format(icon_layer)
-  validate_auto_highlight(icon_layer)
-  validate_highlight_color(icon_layer)
-  validate_icon_atlas(icon_layer)
-  validate_icon_mapping(icon_layer)
-  validate_size_scale(icon_layer)
-  validate_billboard(icon_layer)
-  validate_size_units(icon_layer)
-  validate_size_min_pixels(icon_layer)
-  validate_size_max_pixels(icon_layer)
-  validate_alpha_cutoff(icon_layer)
-  validate_get_position(icon_layer)
-  validate_get_icon(icon_layer)
-  validate_get_color(icon_layer)
-  validate_get_size(icon_layer)
-  validate_get_angle(icon_layer)
-  validate_get_pixel_offset(icon_layer)
-  validate_blending_mode(icon_layer)
-  validate_visibility_toggle(icon_layer)
-  validate_tooltip(icon_layer)
+  with_layer_create_errors({
+    validate_id(icon_layer)
+    validate_name(icon_layer)
+    validate_group_name(icon_layer)
+    validate_data(icon_layer)
+    validate_visible(icon_layer)
+    validate_pickable(icon_layer)
+    validate_opacity(icon_layer)
+    validate_wrap_longitude(icon_layer)
+    validate_position_format(icon_layer)
+    validate_color_format(icon_layer)
+    validate_auto_highlight(icon_layer)
+    validate_highlight_color(icon_layer)
+    validate_icon_atlas(icon_layer)
+    validate_icon_mapping(icon_layer)
+    validate_size_scale(icon_layer)
+    validate_billboard(icon_layer)
+    validate_size_units(icon_layer)
+    validate_size_min_pixels(icon_layer)
+    validate_size_max_pixels(icon_layer)
+    validate_alpha_cutoff(icon_layer)
+    validate_get_position(icon_layer)
+    validate_get_icon(icon_layer)
+    validate_get_color(icon_layer)
+    validate_get_size(icon_layer)
+    validate_get_angle(icon_layer)
+    validate_get_pixel_offset(icon_layer)
+    validate_blending_mode(icon_layer)
+    validate_visibility_toggle(icon_layer)
+    validate_tooltip(icon_layer)
+  })
 
   add_layer(rdeck, icon_layer)
 }
@@ -357,8 +348,10 @@ add_line_layer <- function(rdeck,
                            blending_mode = "normal",
                            visibility_toggle = TRUE,
                            tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_source_position <- rlang::enquo(get_source_position)
@@ -367,7 +360,7 @@ add_line_layer <- function(rdeck,
   get_width <- rlang::enquo(get_width)
   tooltip <- rlang::enquo(tooltip)
 
-  line_layer <- rlang::try_fetch(
+  line_layer <- with_layer_create_errors(
     layer(
       type = "LineLayer",
       ...,
@@ -394,39 +387,34 @@ add_line_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create line_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(line_layer)
-  validate_name(line_layer)
-  validate_group_name(line_layer)
-  validate_data(line_layer)
-  validate_visible(line_layer)
-  validate_pickable(line_layer)
-  validate_opacity(line_layer)
-  validate_wrap_longitude(line_layer)
-  validate_position_format(line_layer)
-  validate_color_format(line_layer)
-  validate_auto_highlight(line_layer)
-  validate_highlight_color(line_layer)
-  validate_get_source_position(line_layer)
-  validate_get_target_position(line_layer)
-  validate_get_color(line_layer)
-  validate_get_width(line_layer)
-  validate_width_units(line_layer)
-  validate_width_scale(line_layer)
-  validate_width_min_pixels(line_layer)
-  validate_width_max_pixels(line_layer)
-  validate_blending_mode(line_layer)
-  validate_visibility_toggle(line_layer)
-  validate_tooltip(line_layer)
+  with_layer_create_errors({
+    validate_id(line_layer)
+    validate_name(line_layer)
+    validate_group_name(line_layer)
+    validate_data(line_layer)
+    validate_visible(line_layer)
+    validate_pickable(line_layer)
+    validate_opacity(line_layer)
+    validate_wrap_longitude(line_layer)
+    validate_position_format(line_layer)
+    validate_color_format(line_layer)
+    validate_auto_highlight(line_layer)
+    validate_highlight_color(line_layer)
+    validate_get_source_position(line_layer)
+    validate_get_target_position(line_layer)
+    validate_get_color(line_layer)
+    validate_get_width(line_layer)
+    validate_width_units(line_layer)
+    validate_width_scale(line_layer)
+    validate_width_min_pixels(line_layer)
+    validate_width_max_pixels(line_layer)
+    validate_blending_mode(line_layer)
+    validate_visibility_toggle(line_layer)
+    validate_tooltip(line_layer)
+  })
 
   add_layer(rdeck, line_layer)
 }
@@ -457,8 +445,10 @@ add_point_cloud_layer <- function(rdeck,
                                   blending_mode = "normal",
                                   visibility_toggle = TRUE,
                                   tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
@@ -466,7 +456,7 @@ add_point_cloud_layer <- function(rdeck,
   get_color <- rlang::enquo(get_color)
   tooltip <- rlang::enquo(tooltip)
 
-  point_cloud_layer <- rlang::try_fetch(
+  point_cloud_layer <- with_layer_create_errors(
     layer(
       type = "PointCloudLayer",
       ...,
@@ -491,37 +481,32 @@ add_point_cloud_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create point_cloud_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(point_cloud_layer)
-  validate_name(point_cloud_layer)
-  validate_group_name(point_cloud_layer)
-  validate_data(point_cloud_layer)
-  validate_visible(point_cloud_layer)
-  validate_pickable(point_cloud_layer)
-  validate_opacity(point_cloud_layer)
-  validate_wrap_longitude(point_cloud_layer)
-  validate_position_format(point_cloud_layer)
-  validate_color_format(point_cloud_layer)
-  validate_auto_highlight(point_cloud_layer)
-  validate_highlight_color(point_cloud_layer)
-  validate_size_units(point_cloud_layer)
-  validate_point_size(point_cloud_layer)
-  validate_get_position(point_cloud_layer)
-  validate_get_normal(point_cloud_layer)
-  validate_get_color(point_cloud_layer)
-  validate_material(point_cloud_layer)
-  validate_blending_mode(point_cloud_layer)
-  validate_visibility_toggle(point_cloud_layer)
-  validate_tooltip(point_cloud_layer)
+  with_layer_create_errors({
+    validate_id(point_cloud_layer)
+    validate_name(point_cloud_layer)
+    validate_group_name(point_cloud_layer)
+    validate_data(point_cloud_layer)
+    validate_visible(point_cloud_layer)
+    validate_pickable(point_cloud_layer)
+    validate_opacity(point_cloud_layer)
+    validate_wrap_longitude(point_cloud_layer)
+    validate_position_format(point_cloud_layer)
+    validate_color_format(point_cloud_layer)
+    validate_auto_highlight(point_cloud_layer)
+    validate_highlight_color(point_cloud_layer)
+    validate_size_units(point_cloud_layer)
+    validate_point_size(point_cloud_layer)
+    validate_get_position(point_cloud_layer)
+    validate_get_normal(point_cloud_layer)
+    validate_get_color(point_cloud_layer)
+    validate_material(point_cloud_layer)
+    validate_blending_mode(point_cloud_layer)
+    validate_visibility_toggle(point_cloud_layer)
+    validate_tooltip(point_cloud_layer)
+  })
 
   add_layer(rdeck, point_cloud_layer)
 }
@@ -563,8 +548,10 @@ add_scatterplot_layer <- function(rdeck,
                                   blending_mode = "normal",
                                   visibility_toggle = TRUE,
                                   tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
@@ -574,7 +561,7 @@ add_scatterplot_layer <- function(rdeck,
   get_line_width <- rlang::enquo(get_line_width)
   tooltip <- rlang::enquo(tooltip)
 
-  scatterplot_layer <- rlang::try_fetch(
+  scatterplot_layer <- with_layer_create_errors(
     layer(
       type = "ScatterplotLayer",
       ...,
@@ -610,48 +597,43 @@ add_scatterplot_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create scatterplot_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(scatterplot_layer)
-  validate_name(scatterplot_layer)
-  validate_group_name(scatterplot_layer)
-  validate_data(scatterplot_layer)
-  validate_visible(scatterplot_layer)
-  validate_pickable(scatterplot_layer)
-  validate_opacity(scatterplot_layer)
-  validate_wrap_longitude(scatterplot_layer)
-  validate_position_format(scatterplot_layer)
-  validate_color_format(scatterplot_layer)
-  validate_auto_highlight(scatterplot_layer)
-  validate_highlight_color(scatterplot_layer)
-  validate_radius_units(scatterplot_layer)
-  validate_radius_scale(scatterplot_layer)
-  validate_radius_min_pixels(scatterplot_layer)
-  validate_radius_max_pixels(scatterplot_layer)
-  validate_line_width_units(scatterplot_layer)
-  validate_line_width_scale(scatterplot_layer)
-  validate_line_width_min_pixels(scatterplot_layer)
-  validate_line_width_max_pixels(scatterplot_layer)
-  validate_stroked(scatterplot_layer)
-  validate_filled(scatterplot_layer)
-  validate_billboard(scatterplot_layer)
-  validate_antialiasing(scatterplot_layer)
-  validate_get_position(scatterplot_layer)
-  validate_get_radius(scatterplot_layer)
-  validate_get_fill_color(scatterplot_layer)
-  validate_get_line_color(scatterplot_layer)
-  validate_get_line_width(scatterplot_layer)
-  validate_blending_mode(scatterplot_layer)
-  validate_visibility_toggle(scatterplot_layer)
-  validate_tooltip(scatterplot_layer)
+  with_layer_create_errors({
+    validate_id(scatterplot_layer)
+    validate_name(scatterplot_layer)
+    validate_group_name(scatterplot_layer)
+    validate_data(scatterplot_layer)
+    validate_visible(scatterplot_layer)
+    validate_pickable(scatterplot_layer)
+    validate_opacity(scatterplot_layer)
+    validate_wrap_longitude(scatterplot_layer)
+    validate_position_format(scatterplot_layer)
+    validate_color_format(scatterplot_layer)
+    validate_auto_highlight(scatterplot_layer)
+    validate_highlight_color(scatterplot_layer)
+    validate_radius_units(scatterplot_layer)
+    validate_radius_scale(scatterplot_layer)
+    validate_radius_min_pixels(scatterplot_layer)
+    validate_radius_max_pixels(scatterplot_layer)
+    validate_line_width_units(scatterplot_layer)
+    validate_line_width_scale(scatterplot_layer)
+    validate_line_width_min_pixels(scatterplot_layer)
+    validate_line_width_max_pixels(scatterplot_layer)
+    validate_stroked(scatterplot_layer)
+    validate_filled(scatterplot_layer)
+    validate_billboard(scatterplot_layer)
+    validate_antialiasing(scatterplot_layer)
+    validate_get_position(scatterplot_layer)
+    validate_get_radius(scatterplot_layer)
+    validate_get_fill_color(scatterplot_layer)
+    validate_get_line_color(scatterplot_layer)
+    validate_get_line_width(scatterplot_layer)
+    validate_blending_mode(scatterplot_layer)
+    validate_visibility_toggle(scatterplot_layer)
+    validate_tooltip(scatterplot_layer)
+  })
 
   add_layer(rdeck, scatterplot_layer)
 }
@@ -699,8 +681,10 @@ add_grid_cell_layer <- function(rdeck,
                                 blending_mode = "normal",
                                 visibility_toggle = TRUE,
                                 tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
@@ -710,7 +694,7 @@ add_grid_cell_layer <- function(rdeck,
   get_elevation <- rlang::enquo(get_elevation)
   tooltip <- rlang::enquo(tooltip)
 
-  grid_cell_layer <- rlang::try_fetch(
+  grid_cell_layer <- with_layer_create_errors(
     layer(
       type = "GridCellLayer",
       ...,
@@ -752,54 +736,49 @@ add_grid_cell_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create grid_cell_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(grid_cell_layer)
-  validate_name(grid_cell_layer)
-  validate_group_name(grid_cell_layer)
-  validate_data(grid_cell_layer)
-  validate_visible(grid_cell_layer)
-  validate_pickable(grid_cell_layer)
-  validate_opacity(grid_cell_layer)
-  validate_wrap_longitude(grid_cell_layer)
-  validate_position_format(grid_cell_layer)
-  validate_color_format(grid_cell_layer)
-  validate_auto_highlight(grid_cell_layer)
-  validate_highlight_color(grid_cell_layer)
-  validate_disk_resolution(grid_cell_layer)
-  validate_vertices(grid_cell_layer)
-  validate_radius(grid_cell_layer)
-  validate_angle(grid_cell_layer)
-  validate_offset(grid_cell_layer)
-  validate_coverage(grid_cell_layer)
-  validate_elevation_scale(grid_cell_layer)
-  validate_radius_units(grid_cell_layer)
-  validate_line_width_units(grid_cell_layer)
-  validate_line_width_scale(grid_cell_layer)
-  validate_line_width_min_pixels(grid_cell_layer)
-  validate_line_width_max_pixels(grid_cell_layer)
-  validate_extruded(grid_cell_layer)
-  validate_wireframe(grid_cell_layer)
-  validate_filled(grid_cell_layer)
-  validate_stroked(grid_cell_layer)
-  validate_get_position(grid_cell_layer)
-  validate_get_fill_color(grid_cell_layer)
-  validate_get_line_color(grid_cell_layer)
-  validate_get_line_width(grid_cell_layer)
-  validate_get_elevation(grid_cell_layer)
-  validate_material(grid_cell_layer)
-  validate_cell_size(grid_cell_layer)
-  validate_blending_mode(grid_cell_layer)
-  validate_visibility_toggle(grid_cell_layer)
-  validate_tooltip(grid_cell_layer)
+  with_layer_create_errors({
+    validate_id(grid_cell_layer)
+    validate_name(grid_cell_layer)
+    validate_group_name(grid_cell_layer)
+    validate_data(grid_cell_layer)
+    validate_visible(grid_cell_layer)
+    validate_pickable(grid_cell_layer)
+    validate_opacity(grid_cell_layer)
+    validate_wrap_longitude(grid_cell_layer)
+    validate_position_format(grid_cell_layer)
+    validate_color_format(grid_cell_layer)
+    validate_auto_highlight(grid_cell_layer)
+    validate_highlight_color(grid_cell_layer)
+    validate_disk_resolution(grid_cell_layer)
+    validate_vertices(grid_cell_layer)
+    validate_radius(grid_cell_layer)
+    validate_angle(grid_cell_layer)
+    validate_offset(grid_cell_layer)
+    validate_coverage(grid_cell_layer)
+    validate_elevation_scale(grid_cell_layer)
+    validate_radius_units(grid_cell_layer)
+    validate_line_width_units(grid_cell_layer)
+    validate_line_width_scale(grid_cell_layer)
+    validate_line_width_min_pixels(grid_cell_layer)
+    validate_line_width_max_pixels(grid_cell_layer)
+    validate_extruded(grid_cell_layer)
+    validate_wireframe(grid_cell_layer)
+    validate_filled(grid_cell_layer)
+    validate_stroked(grid_cell_layer)
+    validate_get_position(grid_cell_layer)
+    validate_get_fill_color(grid_cell_layer)
+    validate_get_line_color(grid_cell_layer)
+    validate_get_line_width(grid_cell_layer)
+    validate_get_elevation(grid_cell_layer)
+    validate_material(grid_cell_layer)
+    validate_cell_size(grid_cell_layer)
+    validate_blending_mode(grid_cell_layer)
+    validate_visibility_toggle(grid_cell_layer)
+    validate_tooltip(grid_cell_layer)
+  })
 
   add_layer(rdeck, grid_cell_layer)
 }
@@ -846,8 +825,10 @@ add_column_layer <- function(rdeck,
                              blending_mode = "normal",
                              visibility_toggle = TRUE,
                              tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
@@ -857,7 +838,7 @@ add_column_layer <- function(rdeck,
   get_elevation <- rlang::enquo(get_elevation)
   tooltip <- rlang::enquo(tooltip)
 
-  column_layer <- rlang::try_fetch(
+  column_layer <- with_layer_create_errors(
     layer(
       type = "ColumnLayer",
       ...,
@@ -898,53 +879,48 @@ add_column_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create column_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(column_layer)
-  validate_name(column_layer)
-  validate_group_name(column_layer)
-  validate_data(column_layer)
-  validate_visible(column_layer)
-  validate_pickable(column_layer)
-  validate_opacity(column_layer)
-  validate_wrap_longitude(column_layer)
-  validate_position_format(column_layer)
-  validate_color_format(column_layer)
-  validate_auto_highlight(column_layer)
-  validate_highlight_color(column_layer)
-  validate_disk_resolution(column_layer)
-  validate_vertices(column_layer)
-  validate_radius(column_layer)
-  validate_angle(column_layer)
-  validate_offset(column_layer)
-  validate_coverage(column_layer)
-  validate_elevation_scale(column_layer)
-  validate_radius_units(column_layer)
-  validate_line_width_units(column_layer)
-  validate_line_width_scale(column_layer)
-  validate_line_width_min_pixels(column_layer)
-  validate_line_width_max_pixels(column_layer)
-  validate_extruded(column_layer)
-  validate_wireframe(column_layer)
-  validate_filled(column_layer)
-  validate_stroked(column_layer)
-  validate_get_position(column_layer)
-  validate_get_fill_color(column_layer)
-  validate_get_line_color(column_layer)
-  validate_get_line_width(column_layer)
-  validate_get_elevation(column_layer)
-  validate_material(column_layer)
-  validate_blending_mode(column_layer)
-  validate_visibility_toggle(column_layer)
-  validate_tooltip(column_layer)
+  with_layer_create_errors({
+    validate_id(column_layer)
+    validate_name(column_layer)
+    validate_group_name(column_layer)
+    validate_data(column_layer)
+    validate_visible(column_layer)
+    validate_pickable(column_layer)
+    validate_opacity(column_layer)
+    validate_wrap_longitude(column_layer)
+    validate_position_format(column_layer)
+    validate_color_format(column_layer)
+    validate_auto_highlight(column_layer)
+    validate_highlight_color(column_layer)
+    validate_disk_resolution(column_layer)
+    validate_vertices(column_layer)
+    validate_radius(column_layer)
+    validate_angle(column_layer)
+    validate_offset(column_layer)
+    validate_coverage(column_layer)
+    validate_elevation_scale(column_layer)
+    validate_radius_units(column_layer)
+    validate_line_width_units(column_layer)
+    validate_line_width_scale(column_layer)
+    validate_line_width_min_pixels(column_layer)
+    validate_line_width_max_pixels(column_layer)
+    validate_extruded(column_layer)
+    validate_wireframe(column_layer)
+    validate_filled(column_layer)
+    validate_stroked(column_layer)
+    validate_get_position(column_layer)
+    validate_get_fill_color(column_layer)
+    validate_get_line_color(column_layer)
+    validate_get_line_width(column_layer)
+    validate_get_elevation(column_layer)
+    validate_material(column_layer)
+    validate_blending_mode(column_layer)
+    validate_visibility_toggle(column_layer)
+    validate_tooltip(column_layer)
+  })
 
   add_layer(rdeck, column_layer)
 }
@@ -980,8 +956,10 @@ add_path_layer <- function(rdeck,
                            blending_mode = "normal",
                            visibility_toggle = TRUE,
                            tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_path <- rlang::enquo(get_path)
@@ -989,7 +967,7 @@ add_path_layer <- function(rdeck,
   get_width <- rlang::enquo(get_width)
   tooltip <- rlang::enquo(tooltip)
 
-  path_layer <- rlang::try_fetch(
+  path_layer <- with_layer_create_errors(
     layer(
       type = "PathLayer",
       ...,
@@ -1019,42 +997,37 @@ add_path_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create path_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(path_layer)
-  validate_name(path_layer)
-  validate_group_name(path_layer)
-  validate_data(path_layer)
-  validate_visible(path_layer)
-  validate_pickable(path_layer)
-  validate_opacity(path_layer)
-  validate_wrap_longitude(path_layer)
-  validate_position_format(path_layer)
-  validate_color_format(path_layer)
-  validate_auto_highlight(path_layer)
-  validate_highlight_color(path_layer)
-  validate_width_units(path_layer)
-  validate_width_scale(path_layer)
-  validate_width_min_pixels(path_layer)
-  validate_width_max_pixels(path_layer)
-  validate_joint_rounded(path_layer)
-  validate_cap_rounded(path_layer)
-  validate_miter_limit(path_layer)
-  validate_billboard(path_layer)
-  validate_get_path(path_layer)
-  validate_get_color(path_layer)
-  validate_get_width(path_layer)
-  validate_blending_mode(path_layer)
-  validate_visibility_toggle(path_layer)
-  validate_tooltip(path_layer)
+  with_layer_create_errors({
+    validate_id(path_layer)
+    validate_name(path_layer)
+    validate_group_name(path_layer)
+    validate_data(path_layer)
+    validate_visible(path_layer)
+    validate_pickable(path_layer)
+    validate_opacity(path_layer)
+    validate_wrap_longitude(path_layer)
+    validate_position_format(path_layer)
+    validate_color_format(path_layer)
+    validate_auto_highlight(path_layer)
+    validate_highlight_color(path_layer)
+    validate_width_units(path_layer)
+    validate_width_scale(path_layer)
+    validate_width_min_pixels(path_layer)
+    validate_width_max_pixels(path_layer)
+    validate_joint_rounded(path_layer)
+    validate_cap_rounded(path_layer)
+    validate_miter_limit(path_layer)
+    validate_billboard(path_layer)
+    validate_get_path(path_layer)
+    validate_get_color(path_layer)
+    validate_get_width(path_layer)
+    validate_blending_mode(path_layer)
+    validate_visibility_toggle(path_layer)
+    validate_tooltip(path_layer)
+  })
 
   add_layer(rdeck, path_layer)
 }
@@ -1096,8 +1069,10 @@ add_polygon_layer <- function(rdeck,
                               blending_mode = "normal",
                               visibility_toggle = TRUE,
                               tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_polygon <- rlang::enquo(get_polygon)
@@ -1107,7 +1082,7 @@ add_polygon_layer <- function(rdeck,
   get_elevation <- rlang::enquo(get_elevation)
   tooltip <- rlang::enquo(tooltip)
 
-  polygon_layer <- rlang::try_fetch(
+  polygon_layer <- with_layer_create_errors(
     layer(
       type = "PolygonLayer",
       ...,
@@ -1143,48 +1118,43 @@ add_polygon_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create polygon_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(polygon_layer)
-  validate_name(polygon_layer)
-  validate_group_name(polygon_layer)
-  validate_data(polygon_layer)
-  validate_visible(polygon_layer)
-  validate_pickable(polygon_layer)
-  validate_opacity(polygon_layer)
-  validate_wrap_longitude(polygon_layer)
-  validate_position_format(polygon_layer)
-  validate_color_format(polygon_layer)
-  validate_auto_highlight(polygon_layer)
-  validate_highlight_color(polygon_layer)
-  validate_stroked(polygon_layer)
-  validate_filled(polygon_layer)
-  validate_extruded(polygon_layer)
-  validate_elevation_scale(polygon_layer)
-  validate_wireframe(polygon_layer)
-  validate_line_width_units(polygon_layer)
-  validate_line_width_scale(polygon_layer)
-  validate_line_width_min_pixels(polygon_layer)
-  validate_line_width_max_pixels(polygon_layer)
-  validate_line_joint_rounded(polygon_layer)
-  validate_line_miter_limit(polygon_layer)
-  validate_get_polygon(polygon_layer)
-  validate_get_fill_color(polygon_layer)
-  validate_get_line_color(polygon_layer)
-  validate_get_line_width(polygon_layer)
-  validate_get_elevation(polygon_layer)
-  validate_material(polygon_layer)
-  validate_blending_mode(polygon_layer)
-  validate_visibility_toggle(polygon_layer)
-  validate_tooltip(polygon_layer)
+  with_layer_create_errors({
+    validate_id(polygon_layer)
+    validate_name(polygon_layer)
+    validate_group_name(polygon_layer)
+    validate_data(polygon_layer)
+    validate_visible(polygon_layer)
+    validate_pickable(polygon_layer)
+    validate_opacity(polygon_layer)
+    validate_wrap_longitude(polygon_layer)
+    validate_position_format(polygon_layer)
+    validate_color_format(polygon_layer)
+    validate_auto_highlight(polygon_layer)
+    validate_highlight_color(polygon_layer)
+    validate_stroked(polygon_layer)
+    validate_filled(polygon_layer)
+    validate_extruded(polygon_layer)
+    validate_elevation_scale(polygon_layer)
+    validate_wireframe(polygon_layer)
+    validate_line_width_units(polygon_layer)
+    validate_line_width_scale(polygon_layer)
+    validate_line_width_min_pixels(polygon_layer)
+    validate_line_width_max_pixels(polygon_layer)
+    validate_line_joint_rounded(polygon_layer)
+    validate_line_miter_limit(polygon_layer)
+    validate_get_polygon(polygon_layer)
+    validate_get_fill_color(polygon_layer)
+    validate_get_line_color(polygon_layer)
+    validate_get_line_width(polygon_layer)
+    validate_get_elevation(polygon_layer)
+    validate_material(polygon_layer)
+    validate_blending_mode(polygon_layer)
+    validate_visibility_toggle(polygon_layer)
+    validate_tooltip(polygon_layer)
+  })
 
   add_layer(rdeck, polygon_layer)
 }
@@ -1218,8 +1188,10 @@ add_solid_polygon_layer <- function(rdeck,
                                     blending_mode = "normal",
                                     visibility_toggle = TRUE,
                                     tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_polygon <- rlang::enquo(get_polygon)
@@ -1228,7 +1200,7 @@ add_solid_polygon_layer <- function(rdeck,
   get_line_color <- rlang::enquo(get_line_color)
   tooltip <- rlang::enquo(tooltip)
 
-  solid_polygon_layer <- rlang::try_fetch(
+  solid_polygon_layer <- with_layer_create_errors(
     layer(
       type = "SolidPolygonLayer",
       ...,
@@ -1256,40 +1228,35 @@ add_solid_polygon_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create solid_polygon_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(solid_polygon_layer)
-  validate_name(solid_polygon_layer)
-  validate_group_name(solid_polygon_layer)
-  validate_data(solid_polygon_layer)
-  validate_visible(solid_polygon_layer)
-  validate_pickable(solid_polygon_layer)
-  validate_opacity(solid_polygon_layer)
-  validate_wrap_longitude(solid_polygon_layer)
-  validate_position_format(solid_polygon_layer)
-  validate_color_format(solid_polygon_layer)
-  validate_auto_highlight(solid_polygon_layer)
-  validate_highlight_color(solid_polygon_layer)
-  validate_filled(solid_polygon_layer)
-  validate_extruded(solid_polygon_layer)
-  validate_wireframe(solid_polygon_layer)
-  validate_elevation_scale(solid_polygon_layer)
-  validate_get_polygon(solid_polygon_layer)
-  validate_get_elevation(solid_polygon_layer)
-  validate_get_fill_color(solid_polygon_layer)
-  validate_get_line_color(solid_polygon_layer)
-  validate_material(solid_polygon_layer)
-  validate_blending_mode(solid_polygon_layer)
-  validate_visibility_toggle(solid_polygon_layer)
-  validate_tooltip(solid_polygon_layer)
+  with_layer_create_errors({
+    validate_id(solid_polygon_layer)
+    validate_name(solid_polygon_layer)
+    validate_group_name(solid_polygon_layer)
+    validate_data(solid_polygon_layer)
+    validate_visible(solid_polygon_layer)
+    validate_pickable(solid_polygon_layer)
+    validate_opacity(solid_polygon_layer)
+    validate_wrap_longitude(solid_polygon_layer)
+    validate_position_format(solid_polygon_layer)
+    validate_color_format(solid_polygon_layer)
+    validate_auto_highlight(solid_polygon_layer)
+    validate_highlight_color(solid_polygon_layer)
+    validate_filled(solid_polygon_layer)
+    validate_extruded(solid_polygon_layer)
+    validate_wireframe(solid_polygon_layer)
+    validate_elevation_scale(solid_polygon_layer)
+    validate_get_polygon(solid_polygon_layer)
+    validate_get_elevation(solid_polygon_layer)
+    validate_get_fill_color(solid_polygon_layer)
+    validate_get_line_color(solid_polygon_layer)
+    validate_material(solid_polygon_layer)
+    validate_blending_mode(solid_polygon_layer)
+    validate_visibility_toggle(solid_polygon_layer)
+    validate_tooltip(solid_polygon_layer)
+  })
 
   add_layer(rdeck, solid_polygon_layer)
 }
@@ -1378,8 +1345,10 @@ add_geojson_layer <- function(rdeck,
                               blending_mode = "normal",
                               visibility_toggle = TRUE,
                               tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_fill_color <- rlang::enquo(get_fill_color)
@@ -1404,7 +1373,7 @@ add_geojson_layer <- function(rdeck,
   get_elevation <- rlang::enquo(get_elevation)
   tooltip <- rlang::enquo(tooltip)
 
-  geojson_layer <- rlang::try_fetch(
+  geojson_layer <- with_layer_create_errors(
     layer(
       type = "GeoJsonLayer",
       ...,
@@ -1487,95 +1456,90 @@ add_geojson_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, "geojson")
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create geojson_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(geojson_layer)
-  validate_name(geojson_layer)
-  validate_group_name(geojson_layer)
-  validate_data(geojson_layer)
-  validate_visible(geojson_layer)
-  validate_pickable(geojson_layer)
-  validate_opacity(geojson_layer)
-  validate_wrap_longitude(geojson_layer)
-  validate_position_format(geojson_layer)
-  validate_color_format(geojson_layer)
-  validate_auto_highlight(geojson_layer)
-  validate_highlight_color(geojson_layer)
-  validate_filled(geojson_layer)
-  validate_stroked(geojson_layer)
-  validate_line_width_max_pixels(geojson_layer)
-  validate_line_width_min_pixels(geojson_layer)
-  validate_line_width_scale(geojson_layer)
-  validate_line_width_units(geojson_layer)
-  validate_point_radius_max_pixels(geojson_layer)
-  validate_point_radius_min_pixels(geojson_layer)
-  validate_point_radius_scale(geojson_layer)
-  validate_point_radius_units(geojson_layer)
-  validate_point_antialiasing(geojson_layer)
-  validate_point_billboard(geojson_layer)
-  validate_get_fill_color(geojson_layer)
-  validate_get_line_color(geojson_layer)
-  validate_get_line_width(geojson_layer)
-  validate_get_point_radius(geojson_layer)
-  validate_icon_atlas(geojson_layer)
-  validate_icon_mapping(geojson_layer)
-  validate_icon_size_max_pixels(geojson_layer)
-  validate_icon_size_min_pixels(geojson_layer)
-  validate_icon_size_scale(geojson_layer)
-  validate_icon_size_units(geojson_layer)
-  validate_icon_alpha_cutoff(geojson_layer)
-  validate_icon_billboard(geojson_layer)
-  validate_get_icon(geojson_layer)
-  validate_get_icon_angle(geojson_layer)
-  validate_get_icon_color(geojson_layer)
-  validate_get_icon_pixel_offset(geojson_layer)
-  validate_get_icon_size(geojson_layer)
-  validate_text_size_max_pixels(geojson_layer)
-  validate_text_size_min_pixels(geojson_layer)
-  validate_text_size_scale(geojson_layer)
-  validate_text_size_units(geojson_layer)
-  validate_text_background(geojson_layer)
-  validate_text_background_padding(geojson_layer)
-  validate_text_font_family(geojson_layer)
-  validate_text_font_weight(geojson_layer)
-  validate_text_line_height(geojson_layer)
-  validate_text_max_width(geojson_layer)
-  validate_text_outline_color(geojson_layer)
-  validate_text_outline_width(geojson_layer)
-  validate_text_word_break(geojson_layer)
-  validate_text_billboard(geojson_layer)
-  validate_text_font_settings(geojson_layer)
-  validate_get_text(geojson_layer)
-  validate_get_text_angle(geojson_layer)
-  validate_get_text_color(geojson_layer)
-  validate_get_text_pixel_offset(geojson_layer)
-  validate_get_text_size(geojson_layer)
-  validate_get_text_anchor(geojson_layer)
-  validate_get_text_alignment_baseline(geojson_layer)
-  validate_get_text_background_color(geojson_layer)
-  validate_get_text_border_color(geojson_layer)
-  validate_get_text_border_width(geojson_layer)
-  validate_line_joint_rounded(geojson_layer)
-  validate_line_cap_rounded(geojson_layer)
-  validate_line_miter_limit(geojson_layer)
-  validate_line_billboard(geojson_layer)
-  validate_extruded(geojson_layer)
-  validate_wireframe(geojson_layer)
-  validate_elevation_scale(geojson_layer)
-  validate_material(geojson_layer)
-  validate_get_elevation(geojson_layer)
-  validate_point_type(geojson_layer)
-  validate_blending_mode(geojson_layer)
-  validate_visibility_toggle(geojson_layer)
-  validate_tooltip(geojson_layer)
+  with_layer_create_errors({
+    validate_id(geojson_layer)
+    validate_name(geojson_layer)
+    validate_group_name(geojson_layer)
+    validate_data(geojson_layer)
+    validate_visible(geojson_layer)
+    validate_pickable(geojson_layer)
+    validate_opacity(geojson_layer)
+    validate_wrap_longitude(geojson_layer)
+    validate_position_format(geojson_layer)
+    validate_color_format(geojson_layer)
+    validate_auto_highlight(geojson_layer)
+    validate_highlight_color(geojson_layer)
+    validate_filled(geojson_layer)
+    validate_stroked(geojson_layer)
+    validate_line_width_max_pixels(geojson_layer)
+    validate_line_width_min_pixels(geojson_layer)
+    validate_line_width_scale(geojson_layer)
+    validate_line_width_units(geojson_layer)
+    validate_point_radius_max_pixels(geojson_layer)
+    validate_point_radius_min_pixels(geojson_layer)
+    validate_point_radius_scale(geojson_layer)
+    validate_point_radius_units(geojson_layer)
+    validate_point_antialiasing(geojson_layer)
+    validate_point_billboard(geojson_layer)
+    validate_get_fill_color(geojson_layer)
+    validate_get_line_color(geojson_layer)
+    validate_get_line_width(geojson_layer)
+    validate_get_point_radius(geojson_layer)
+    validate_icon_atlas(geojson_layer)
+    validate_icon_mapping(geojson_layer)
+    validate_icon_size_max_pixels(geojson_layer)
+    validate_icon_size_min_pixels(geojson_layer)
+    validate_icon_size_scale(geojson_layer)
+    validate_icon_size_units(geojson_layer)
+    validate_icon_alpha_cutoff(geojson_layer)
+    validate_icon_billboard(geojson_layer)
+    validate_get_icon(geojson_layer)
+    validate_get_icon_angle(geojson_layer)
+    validate_get_icon_color(geojson_layer)
+    validate_get_icon_pixel_offset(geojson_layer)
+    validate_get_icon_size(geojson_layer)
+    validate_text_size_max_pixels(geojson_layer)
+    validate_text_size_min_pixels(geojson_layer)
+    validate_text_size_scale(geojson_layer)
+    validate_text_size_units(geojson_layer)
+    validate_text_background(geojson_layer)
+    validate_text_background_padding(geojson_layer)
+    validate_text_font_family(geojson_layer)
+    validate_text_font_weight(geojson_layer)
+    validate_text_line_height(geojson_layer)
+    validate_text_max_width(geojson_layer)
+    validate_text_outline_color(geojson_layer)
+    validate_text_outline_width(geojson_layer)
+    validate_text_word_break(geojson_layer)
+    validate_text_billboard(geojson_layer)
+    validate_text_font_settings(geojson_layer)
+    validate_get_text(geojson_layer)
+    validate_get_text_angle(geojson_layer)
+    validate_get_text_color(geojson_layer)
+    validate_get_text_pixel_offset(geojson_layer)
+    validate_get_text_size(geojson_layer)
+    validate_get_text_anchor(geojson_layer)
+    validate_get_text_alignment_baseline(geojson_layer)
+    validate_get_text_background_color(geojson_layer)
+    validate_get_text_border_color(geojson_layer)
+    validate_get_text_border_width(geojson_layer)
+    validate_line_joint_rounded(geojson_layer)
+    validate_line_cap_rounded(geojson_layer)
+    validate_line_miter_limit(geojson_layer)
+    validate_line_billboard(geojson_layer)
+    validate_extruded(geojson_layer)
+    validate_wireframe(geojson_layer)
+    validate_elevation_scale(geojson_layer)
+    validate_material(geojson_layer)
+    validate_get_elevation(geojson_layer)
+    validate_point_type(geojson_layer)
+    validate_blending_mode(geojson_layer)
+    validate_visibility_toggle(geojson_layer)
+    validate_tooltip(geojson_layer)
+  })
 
   add_layer(rdeck, geojson_layer)
 }
@@ -1626,8 +1590,10 @@ add_text_layer <- function(rdeck,
                            blending_mode = "normal",
                            visibility_toggle = TRUE,
                            tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_background_color <- rlang::enquo(get_background_color)
@@ -1643,7 +1609,7 @@ add_text_layer <- function(rdeck,
   get_pixel_offset <- rlang::enquo(get_pixel_offset)
   tooltip <- rlang::enquo(tooltip)
 
-  text_layer <- rlang::try_fetch(
+  text_layer <- with_layer_create_errors(
     layer(
       type = "TextLayer",
       ...,
@@ -1688,57 +1654,52 @@ add_text_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create text_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(text_layer)
-  validate_name(text_layer)
-  validate_group_name(text_layer)
-  validate_data(text_layer)
-  validate_visible(text_layer)
-  validate_pickable(text_layer)
-  validate_opacity(text_layer)
-  validate_wrap_longitude(text_layer)
-  validate_position_format(text_layer)
-  validate_color_format(text_layer)
-  validate_auto_highlight(text_layer)
-  validate_highlight_color(text_layer)
-  validate_billboard(text_layer)
-  validate_size_scale(text_layer)
-  validate_size_units(text_layer)
-  validate_size_min_pixels(text_layer)
-  validate_size_max_pixels(text_layer)
-  validate_background(text_layer)
-  validate_get_background_color(text_layer)
-  validate_get_border_color(text_layer)
-  validate_get_border_width(text_layer)
-  validate_background_padding(text_layer)
-  validate_font_family(text_layer)
-  validate_font_weight(text_layer)
-  validate_line_height(text_layer)
-  validate_outline_width(text_layer)
-  validate_outline_color(text_layer)
-  validate_font_settings(text_layer)
-  validate_word_break(text_layer)
-  validate_max_width(text_layer)
-  validate_get_text(text_layer)
-  validate_get_position(text_layer)
-  validate_get_color(text_layer)
-  validate_get_size(text_layer)
-  validate_get_angle(text_layer)
-  validate_get_text_anchor(text_layer)
-  validate_get_alignment_baseline(text_layer)
-  validate_get_pixel_offset(text_layer)
-  validate_blending_mode(text_layer)
-  validate_visibility_toggle(text_layer)
-  validate_tooltip(text_layer)
+  with_layer_create_errors({
+    validate_id(text_layer)
+    validate_name(text_layer)
+    validate_group_name(text_layer)
+    validate_data(text_layer)
+    validate_visible(text_layer)
+    validate_pickable(text_layer)
+    validate_opacity(text_layer)
+    validate_wrap_longitude(text_layer)
+    validate_position_format(text_layer)
+    validate_color_format(text_layer)
+    validate_auto_highlight(text_layer)
+    validate_highlight_color(text_layer)
+    validate_billboard(text_layer)
+    validate_size_scale(text_layer)
+    validate_size_units(text_layer)
+    validate_size_min_pixels(text_layer)
+    validate_size_max_pixels(text_layer)
+    validate_background(text_layer)
+    validate_get_background_color(text_layer)
+    validate_get_border_color(text_layer)
+    validate_get_border_width(text_layer)
+    validate_background_padding(text_layer)
+    validate_font_family(text_layer)
+    validate_font_weight(text_layer)
+    validate_line_height(text_layer)
+    validate_outline_width(text_layer)
+    validate_outline_color(text_layer)
+    validate_font_settings(text_layer)
+    validate_word_break(text_layer)
+    validate_max_width(text_layer)
+    validate_get_text(text_layer)
+    validate_get_position(text_layer)
+    validate_get_color(text_layer)
+    validate_get_size(text_layer)
+    validate_get_angle(text_layer)
+    validate_get_text_anchor(text_layer)
+    validate_get_alignment_baseline(text_layer)
+    validate_get_pixel_offset(text_layer)
+    validate_blending_mode(text_layer)
+    validate_visibility_toggle(text_layer)
+    validate_tooltip(text_layer)
+  })
 
   add_layer(rdeck, text_layer)
 }
@@ -1770,14 +1731,16 @@ add_screen_grid_layer <- function(rdeck,
                                   aggregation = "SUM",
                                   blending_mode = "normal",
                                   visibility_toggle = TRUE) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
   get_weight <- rlang::enquo(get_weight)
 
-  screen_grid_layer <- rlang::try_fetch(
+  screen_grid_layer <- with_layer_create_errors(
     layer(
       type = "ScreenGridLayer",
       ...,
@@ -1803,38 +1766,33 @@ add_screen_grid_layer <- function(rdeck,
       aggregation = aggregation,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create screen_grid_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(screen_grid_layer)
-  validate_name(screen_grid_layer)
-  validate_group_name(screen_grid_layer)
-  validate_data(screen_grid_layer)
-  validate_visible(screen_grid_layer)
-  validate_pickable(screen_grid_layer)
-  validate_opacity(screen_grid_layer)
-  validate_wrap_longitude(screen_grid_layer)
-  validate_position_format(screen_grid_layer)
-  validate_color_format(screen_grid_layer)
-  validate_auto_highlight(screen_grid_layer)
-  validate_highlight_color(screen_grid_layer)
-  validate_cell_size_pixels(screen_grid_layer)
-  validate_cell_margin_pixels(screen_grid_layer)
-  validate_color_domain(screen_grid_layer)
-  validate_color_range(screen_grid_layer)
-  validate_get_position(screen_grid_layer)
-  validate_get_weight(screen_grid_layer)
-  validate_gpu_aggregation(screen_grid_layer)
-  validate_aggregation(screen_grid_layer)
-  validate_blending_mode(screen_grid_layer)
-  validate_visibility_toggle(screen_grid_layer)
+  with_layer_create_errors({
+    validate_id(screen_grid_layer)
+    validate_name(screen_grid_layer)
+    validate_group_name(screen_grid_layer)
+    validate_data(screen_grid_layer)
+    validate_visible(screen_grid_layer)
+    validate_pickable(screen_grid_layer)
+    validate_opacity(screen_grid_layer)
+    validate_wrap_longitude(screen_grid_layer)
+    validate_position_format(screen_grid_layer)
+    validate_color_format(screen_grid_layer)
+    validate_auto_highlight(screen_grid_layer)
+    validate_highlight_color(screen_grid_layer)
+    validate_cell_size_pixels(screen_grid_layer)
+    validate_cell_margin_pixels(screen_grid_layer)
+    validate_color_domain(screen_grid_layer)
+    validate_color_range(screen_grid_layer)
+    validate_get_position(screen_grid_layer)
+    validate_get_weight(screen_grid_layer)
+    validate_gpu_aggregation(screen_grid_layer)
+    validate_aggregation(screen_grid_layer)
+    validate_blending_mode(screen_grid_layer)
+    validate_visibility_toggle(screen_grid_layer)
+  })
 
   add_layer(rdeck, screen_grid_layer)
 }
@@ -1880,15 +1838,17 @@ add_cpu_grid_layer <- function(rdeck,
                                material = TRUE,
                                blending_mode = "normal",
                                visibility_toggle = TRUE) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_color_weight <- rlang::enquo(get_color_weight)
   get_elevation_weight <- rlang::enquo(get_elevation_weight)
   get_position <- rlang::enquo(get_position)
 
-  cpu_grid_layer <- rlang::try_fetch(
+  cpu_grid_layer <- with_layer_create_errors(
     layer(
       type = "CPUGridLayer",
       ...,
@@ -1928,52 +1888,47 @@ add_cpu_grid_layer <- function(rdeck,
       material = material,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create cpu_grid_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(cpu_grid_layer)
-  validate_name(cpu_grid_layer)
-  validate_group_name(cpu_grid_layer)
-  validate_data(cpu_grid_layer)
-  validate_visible(cpu_grid_layer)
-  validate_pickable(cpu_grid_layer)
-  validate_opacity(cpu_grid_layer)
-  validate_wrap_longitude(cpu_grid_layer)
-  validate_position_format(cpu_grid_layer)
-  validate_color_format(cpu_grid_layer)
-  validate_auto_highlight(cpu_grid_layer)
-  validate_highlight_color(cpu_grid_layer)
-  validate_color_domain(cpu_grid_layer)
-  validate_color_range(cpu_grid_layer)
-  validate_get_color_value(cpu_grid_layer)
-  validate_get_color_weight(cpu_grid_layer)
-  validate_color_aggregation(cpu_grid_layer)
-  validate_lower_percentile(cpu_grid_layer)
-  validate_upper_percentile(cpu_grid_layer)
-  validate_color_scale_type(cpu_grid_layer)
-  validate_elevation_domain(cpu_grid_layer)
-  validate_elevation_range(cpu_grid_layer)
-  validate_get_elevation_value(cpu_grid_layer)
-  validate_get_elevation_weight(cpu_grid_layer)
-  validate_elevation_aggregation(cpu_grid_layer)
-  validate_elevation_lower_percentile(cpu_grid_layer)
-  validate_elevation_upper_percentile(cpu_grid_layer)
-  validate_elevation_scale(cpu_grid_layer)
-  validate_elevation_scale_type(cpu_grid_layer)
-  validate_cell_size(cpu_grid_layer)
-  validate_coverage(cpu_grid_layer)
-  validate_get_position(cpu_grid_layer)
-  validate_extruded(cpu_grid_layer)
-  validate_material(cpu_grid_layer)
-  validate_blending_mode(cpu_grid_layer)
-  validate_visibility_toggle(cpu_grid_layer)
+  with_layer_create_errors({
+    validate_id(cpu_grid_layer)
+    validate_name(cpu_grid_layer)
+    validate_group_name(cpu_grid_layer)
+    validate_data(cpu_grid_layer)
+    validate_visible(cpu_grid_layer)
+    validate_pickable(cpu_grid_layer)
+    validate_opacity(cpu_grid_layer)
+    validate_wrap_longitude(cpu_grid_layer)
+    validate_position_format(cpu_grid_layer)
+    validate_color_format(cpu_grid_layer)
+    validate_auto_highlight(cpu_grid_layer)
+    validate_highlight_color(cpu_grid_layer)
+    validate_color_domain(cpu_grid_layer)
+    validate_color_range(cpu_grid_layer)
+    validate_get_color_value(cpu_grid_layer)
+    validate_get_color_weight(cpu_grid_layer)
+    validate_color_aggregation(cpu_grid_layer)
+    validate_lower_percentile(cpu_grid_layer)
+    validate_upper_percentile(cpu_grid_layer)
+    validate_color_scale_type(cpu_grid_layer)
+    validate_elevation_domain(cpu_grid_layer)
+    validate_elevation_range(cpu_grid_layer)
+    validate_get_elevation_value(cpu_grid_layer)
+    validate_get_elevation_weight(cpu_grid_layer)
+    validate_elevation_aggregation(cpu_grid_layer)
+    validate_elevation_lower_percentile(cpu_grid_layer)
+    validate_elevation_upper_percentile(cpu_grid_layer)
+    validate_elevation_scale(cpu_grid_layer)
+    validate_elevation_scale_type(cpu_grid_layer)
+    validate_cell_size(cpu_grid_layer)
+    validate_coverage(cpu_grid_layer)
+    validate_get_position(cpu_grid_layer)
+    validate_extruded(cpu_grid_layer)
+    validate_material(cpu_grid_layer)
+    validate_blending_mode(cpu_grid_layer)
+    validate_visibility_toggle(cpu_grid_layer)
+  })
 
   add_layer(rdeck, cpu_grid_layer)
 }
@@ -2019,15 +1974,17 @@ add_hexagon_layer <- function(rdeck,
                               material = TRUE,
                               blending_mode = "normal",
                               visibility_toggle = TRUE) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_color_weight <- rlang::enquo(get_color_weight)
   get_elevation_weight <- rlang::enquo(get_elevation_weight)
   get_position <- rlang::enquo(get_position)
 
-  hexagon_layer <- rlang::try_fetch(
+  hexagon_layer <- with_layer_create_errors(
     layer(
       type = "HexagonLayer",
       ...,
@@ -2067,52 +2024,47 @@ add_hexagon_layer <- function(rdeck,
       material = material,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create hexagon_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(hexagon_layer)
-  validate_name(hexagon_layer)
-  validate_group_name(hexagon_layer)
-  validate_data(hexagon_layer)
-  validate_visible(hexagon_layer)
-  validate_pickable(hexagon_layer)
-  validate_opacity(hexagon_layer)
-  validate_wrap_longitude(hexagon_layer)
-  validate_position_format(hexagon_layer)
-  validate_color_format(hexagon_layer)
-  validate_auto_highlight(hexagon_layer)
-  validate_highlight_color(hexagon_layer)
-  validate_color_domain(hexagon_layer)
-  validate_color_range(hexagon_layer)
-  validate_get_color_value(hexagon_layer)
-  validate_get_color_weight(hexagon_layer)
-  validate_color_aggregation(hexagon_layer)
-  validate_lower_percentile(hexagon_layer)
-  validate_upper_percentile(hexagon_layer)
-  validate_color_scale_type(hexagon_layer)
-  validate_elevation_domain(hexagon_layer)
-  validate_elevation_range(hexagon_layer)
-  validate_get_elevation_value(hexagon_layer)
-  validate_get_elevation_weight(hexagon_layer)
-  validate_elevation_aggregation(hexagon_layer)
-  validate_elevation_lower_percentile(hexagon_layer)
-  validate_elevation_upper_percentile(hexagon_layer)
-  validate_elevation_scale(hexagon_layer)
-  validate_elevation_scale_type(hexagon_layer)
-  validate_radius(hexagon_layer)
-  validate_coverage(hexagon_layer)
-  validate_extruded(hexagon_layer)
-  validate_get_position(hexagon_layer)
-  validate_material(hexagon_layer)
-  validate_blending_mode(hexagon_layer)
-  validate_visibility_toggle(hexagon_layer)
+  with_layer_create_errors({
+    validate_id(hexagon_layer)
+    validate_name(hexagon_layer)
+    validate_group_name(hexagon_layer)
+    validate_data(hexagon_layer)
+    validate_visible(hexagon_layer)
+    validate_pickable(hexagon_layer)
+    validate_opacity(hexagon_layer)
+    validate_wrap_longitude(hexagon_layer)
+    validate_position_format(hexagon_layer)
+    validate_color_format(hexagon_layer)
+    validate_auto_highlight(hexagon_layer)
+    validate_highlight_color(hexagon_layer)
+    validate_color_domain(hexagon_layer)
+    validate_color_range(hexagon_layer)
+    validate_get_color_value(hexagon_layer)
+    validate_get_color_weight(hexagon_layer)
+    validate_color_aggregation(hexagon_layer)
+    validate_lower_percentile(hexagon_layer)
+    validate_upper_percentile(hexagon_layer)
+    validate_color_scale_type(hexagon_layer)
+    validate_elevation_domain(hexagon_layer)
+    validate_elevation_range(hexagon_layer)
+    validate_get_elevation_value(hexagon_layer)
+    validate_get_elevation_weight(hexagon_layer)
+    validate_elevation_aggregation(hexagon_layer)
+    validate_elevation_lower_percentile(hexagon_layer)
+    validate_elevation_upper_percentile(hexagon_layer)
+    validate_elevation_scale(hexagon_layer)
+    validate_elevation_scale_type(hexagon_layer)
+    validate_radius(hexagon_layer)
+    validate_coverage(hexagon_layer)
+    validate_extruded(hexagon_layer)
+    validate_get_position(hexagon_layer)
+    validate_material(hexagon_layer)
+    validate_blending_mode(hexagon_layer)
+    validate_visibility_toggle(hexagon_layer)
+  })
 
   add_layer(rdeck, hexagon_layer)
 }
@@ -2143,14 +2095,16 @@ add_contour_layer <- function(rdeck,
                               z_offset = 0.005,
                               blending_mode = "normal",
                               visibility_toggle = TRUE) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
   get_weight <- rlang::enquo(get_weight)
 
-  contour_layer <- rlang::try_fetch(
+  contour_layer <- with_layer_create_errors(
     layer(
       type = "ContourLayer",
       ...,
@@ -2175,37 +2129,32 @@ add_contour_layer <- function(rdeck,
       z_offset = z_offset,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create contour_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(contour_layer)
-  validate_name(contour_layer)
-  validate_group_name(contour_layer)
-  validate_data(contour_layer)
-  validate_visible(contour_layer)
-  validate_pickable(contour_layer)
-  validate_opacity(contour_layer)
-  validate_wrap_longitude(contour_layer)
-  validate_position_format(contour_layer)
-  validate_color_format(contour_layer)
-  validate_auto_highlight(contour_layer)
-  validate_highlight_color(contour_layer)
-  validate_cell_size(contour_layer)
-  validate_get_position(contour_layer)
-  validate_get_weight(contour_layer)
-  validate_gpu_aggregation(contour_layer)
-  validate_aggregation(contour_layer)
-  validate_contours(contour_layer)
-  validate_z_offset(contour_layer)
-  validate_blending_mode(contour_layer)
-  validate_visibility_toggle(contour_layer)
+  with_layer_create_errors({
+    validate_id(contour_layer)
+    validate_name(contour_layer)
+    validate_group_name(contour_layer)
+    validate_data(contour_layer)
+    validate_visible(contour_layer)
+    validate_pickable(contour_layer)
+    validate_opacity(contour_layer)
+    validate_wrap_longitude(contour_layer)
+    validate_position_format(contour_layer)
+    validate_color_format(contour_layer)
+    validate_auto_highlight(contour_layer)
+    validate_highlight_color(contour_layer)
+    validate_cell_size(contour_layer)
+    validate_get_position(contour_layer)
+    validate_get_weight(contour_layer)
+    validate_gpu_aggregation(contour_layer)
+    validate_aggregation(contour_layer)
+    validate_contours(contour_layer)
+    validate_z_offset(contour_layer)
+    validate_blending_mode(contour_layer)
+    validate_visibility_toggle(contour_layer)
+  })
 
   add_layer(rdeck, contour_layer)
 }
@@ -2252,15 +2201,17 @@ add_grid_layer <- function(rdeck,
                            gpu_aggregation = FALSE,
                            blending_mode = "normal",
                            visibility_toggle = TRUE) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_color_weight <- rlang::enquo(get_color_weight)
   get_elevation_weight <- rlang::enquo(get_elevation_weight)
   get_position <- rlang::enquo(get_position)
 
-  grid_layer <- rlang::try_fetch(
+  grid_layer <- with_layer_create_errors(
     layer(
       type = "GridLayer",
       ...,
@@ -2301,53 +2252,48 @@ add_grid_layer <- function(rdeck,
       gpu_aggregation = gpu_aggregation,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create grid_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(grid_layer)
-  validate_name(grid_layer)
-  validate_group_name(grid_layer)
-  validate_data(grid_layer)
-  validate_visible(grid_layer)
-  validate_pickable(grid_layer)
-  validate_opacity(grid_layer)
-  validate_wrap_longitude(grid_layer)
-  validate_position_format(grid_layer)
-  validate_color_format(grid_layer)
-  validate_auto_highlight(grid_layer)
-  validate_highlight_color(grid_layer)
-  validate_color_domain(grid_layer)
-  validate_color_range(grid_layer)
-  validate_get_color_weight(grid_layer)
-  validate_color_aggregation(grid_layer)
-  validate_elevation_domain(grid_layer)
-  validate_elevation_range(grid_layer)
-  validate_get_elevation_weight(grid_layer)
-  validate_elevation_aggregation(grid_layer)
-  validate_elevation_scale(grid_layer)
-  validate_cell_size(grid_layer)
-  validate_coverage(grid_layer)
-  validate_get_position(grid_layer)
-  validate_extruded(grid_layer)
-  validate_material(grid_layer)
-  validate_get_color_value(grid_layer)
-  validate_lower_percentile(grid_layer)
-  validate_upper_percentile(grid_layer)
-  validate_color_scale_type(grid_layer)
-  validate_get_elevation_value(grid_layer)
-  validate_elevation_lower_percentile(grid_layer)
-  validate_elevation_upper_percentile(grid_layer)
-  validate_elevation_scale_type(grid_layer)
-  validate_gpu_aggregation(grid_layer)
-  validate_blending_mode(grid_layer)
-  validate_visibility_toggle(grid_layer)
+  with_layer_create_errors({
+    validate_id(grid_layer)
+    validate_name(grid_layer)
+    validate_group_name(grid_layer)
+    validate_data(grid_layer)
+    validate_visible(grid_layer)
+    validate_pickable(grid_layer)
+    validate_opacity(grid_layer)
+    validate_wrap_longitude(grid_layer)
+    validate_position_format(grid_layer)
+    validate_color_format(grid_layer)
+    validate_auto_highlight(grid_layer)
+    validate_highlight_color(grid_layer)
+    validate_color_domain(grid_layer)
+    validate_color_range(grid_layer)
+    validate_get_color_weight(grid_layer)
+    validate_color_aggregation(grid_layer)
+    validate_elevation_domain(grid_layer)
+    validate_elevation_range(grid_layer)
+    validate_get_elevation_weight(grid_layer)
+    validate_elevation_aggregation(grid_layer)
+    validate_elevation_scale(grid_layer)
+    validate_cell_size(grid_layer)
+    validate_coverage(grid_layer)
+    validate_get_position(grid_layer)
+    validate_extruded(grid_layer)
+    validate_material(grid_layer)
+    validate_get_color_value(grid_layer)
+    validate_lower_percentile(grid_layer)
+    validate_upper_percentile(grid_layer)
+    validate_color_scale_type(grid_layer)
+    validate_get_elevation_value(grid_layer)
+    validate_elevation_lower_percentile(grid_layer)
+    validate_elevation_upper_percentile(grid_layer)
+    validate_elevation_scale_type(grid_layer)
+    validate_gpu_aggregation(grid_layer)
+    validate_blending_mode(grid_layer)
+    validate_visibility_toggle(grid_layer)
+  })
 
   add_layer(rdeck, grid_layer)
 }
@@ -2385,15 +2331,17 @@ add_gpu_grid_layer <- function(rdeck,
                                material = TRUE,
                                blending_mode = "normal",
                                visibility_toggle = TRUE) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_color_weight <- rlang::enquo(get_color_weight)
   get_elevation_weight <- rlang::enquo(get_elevation_weight)
   get_position <- rlang::enquo(get_position)
 
-  gpu_grid_layer <- rlang::try_fetch(
+  gpu_grid_layer <- with_layer_create_errors(
     layer(
       type = "GPUGridLayer",
       ...,
@@ -2425,44 +2373,39 @@ add_gpu_grid_layer <- function(rdeck,
       material = material,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create gpu_grid_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(gpu_grid_layer)
-  validate_name(gpu_grid_layer)
-  validate_group_name(gpu_grid_layer)
-  validate_data(gpu_grid_layer)
-  validate_visible(gpu_grid_layer)
-  validate_pickable(gpu_grid_layer)
-  validate_opacity(gpu_grid_layer)
-  validate_wrap_longitude(gpu_grid_layer)
-  validate_position_format(gpu_grid_layer)
-  validate_color_format(gpu_grid_layer)
-  validate_auto_highlight(gpu_grid_layer)
-  validate_highlight_color(gpu_grid_layer)
-  validate_color_domain(gpu_grid_layer)
-  validate_color_range(gpu_grid_layer)
-  validate_get_color_weight(gpu_grid_layer)
-  validate_color_aggregation(gpu_grid_layer)
-  validate_elevation_domain(gpu_grid_layer)
-  validate_elevation_range(gpu_grid_layer)
-  validate_get_elevation_weight(gpu_grid_layer)
-  validate_elevation_aggregation(gpu_grid_layer)
-  validate_elevation_scale(gpu_grid_layer)
-  validate_cell_size(gpu_grid_layer)
-  validate_coverage(gpu_grid_layer)
-  validate_get_position(gpu_grid_layer)
-  validate_extruded(gpu_grid_layer)
-  validate_material(gpu_grid_layer)
-  validate_blending_mode(gpu_grid_layer)
-  validate_visibility_toggle(gpu_grid_layer)
+  with_layer_create_errors({
+    validate_id(gpu_grid_layer)
+    validate_name(gpu_grid_layer)
+    validate_group_name(gpu_grid_layer)
+    validate_data(gpu_grid_layer)
+    validate_visible(gpu_grid_layer)
+    validate_pickable(gpu_grid_layer)
+    validate_opacity(gpu_grid_layer)
+    validate_wrap_longitude(gpu_grid_layer)
+    validate_position_format(gpu_grid_layer)
+    validate_color_format(gpu_grid_layer)
+    validate_auto_highlight(gpu_grid_layer)
+    validate_highlight_color(gpu_grid_layer)
+    validate_color_domain(gpu_grid_layer)
+    validate_color_range(gpu_grid_layer)
+    validate_get_color_weight(gpu_grid_layer)
+    validate_color_aggregation(gpu_grid_layer)
+    validate_elevation_domain(gpu_grid_layer)
+    validate_elevation_range(gpu_grid_layer)
+    validate_get_elevation_weight(gpu_grid_layer)
+    validate_elevation_aggregation(gpu_grid_layer)
+    validate_elevation_scale(gpu_grid_layer)
+    validate_cell_size(gpu_grid_layer)
+    validate_coverage(gpu_grid_layer)
+    validate_get_position(gpu_grid_layer)
+    validate_extruded(gpu_grid_layer)
+    validate_material(gpu_grid_layer)
+    validate_blending_mode(gpu_grid_layer)
+    validate_visibility_toggle(gpu_grid_layer)
+  })
 
   add_layer(rdeck, gpu_grid_layer)
 }
@@ -2496,14 +2439,16 @@ add_heatmap_layer <- function(rdeck,
                               debounce_timeout = 500,
                               blending_mode = "normal",
                               visibility_toggle = TRUE) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
   get_weight <- rlang::enquo(get_weight)
 
-  heatmap_layer <- rlang::try_fetch(
+  heatmap_layer <- with_layer_create_errors(
     layer(
       type = "HeatmapLayer",
       ...,
@@ -2531,40 +2476,35 @@ add_heatmap_layer <- function(rdeck,
       debounce_timeout = debounce_timeout,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create heatmap_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(heatmap_layer)
-  validate_name(heatmap_layer)
-  validate_group_name(heatmap_layer)
-  validate_data(heatmap_layer)
-  validate_visible(heatmap_layer)
-  validate_pickable(heatmap_layer)
-  validate_opacity(heatmap_layer)
-  validate_wrap_longitude(heatmap_layer)
-  validate_position_format(heatmap_layer)
-  validate_color_format(heatmap_layer)
-  validate_auto_highlight(heatmap_layer)
-  validate_highlight_color(heatmap_layer)
-  validate_get_position(heatmap_layer)
-  validate_get_weight(heatmap_layer)
-  validate_intensity(heatmap_layer)
-  validate_radius_pixels(heatmap_layer)
-  validate_color_range(heatmap_layer)
-  validate_threshold(heatmap_layer)
-  validate_color_domain(heatmap_layer)
-  validate_aggregation(heatmap_layer)
-  validate_weights_texture_size(heatmap_layer)
-  validate_debounce_timeout(heatmap_layer)
-  validate_blending_mode(heatmap_layer)
-  validate_visibility_toggle(heatmap_layer)
+  with_layer_create_errors({
+    validate_id(heatmap_layer)
+    validate_name(heatmap_layer)
+    validate_group_name(heatmap_layer)
+    validate_data(heatmap_layer)
+    validate_visible(heatmap_layer)
+    validate_pickable(heatmap_layer)
+    validate_opacity(heatmap_layer)
+    validate_wrap_longitude(heatmap_layer)
+    validate_position_format(heatmap_layer)
+    validate_color_format(heatmap_layer)
+    validate_auto_highlight(heatmap_layer)
+    validate_highlight_color(heatmap_layer)
+    validate_get_position(heatmap_layer)
+    validate_get_weight(heatmap_layer)
+    validate_intensity(heatmap_layer)
+    validate_radius_pixels(heatmap_layer)
+    validate_color_range(heatmap_layer)
+    validate_threshold(heatmap_layer)
+    validate_color_domain(heatmap_layer)
+    validate_aggregation(heatmap_layer)
+    validate_weights_texture_size(heatmap_layer)
+    validate_debounce_timeout(heatmap_layer)
+    validate_blending_mode(heatmap_layer)
+    validate_visibility_toggle(heatmap_layer)
+  })
 
   add_layer(rdeck, heatmap_layer)
 }
@@ -2601,8 +2541,10 @@ add_great_circle_layer <- function(rdeck,
                                    blending_mode = "normal",
                                    visibility_toggle = TRUE,
                                    tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_source_position <- rlang::enquo(get_source_position)
@@ -2614,7 +2556,7 @@ add_great_circle_layer <- function(rdeck,
   get_tilt <- rlang::enquo(get_tilt)
   tooltip <- rlang::enquo(tooltip)
 
-  great_circle_layer <- rlang::try_fetch(
+  great_circle_layer <- with_layer_create_errors(
     layer(
       type = "GreatCircleLayer",
       ...,
@@ -2645,43 +2587,38 @@ add_great_circle_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create great_circle_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(great_circle_layer)
-  validate_name(great_circle_layer)
-  validate_group_name(great_circle_layer)
-  validate_data(great_circle_layer)
-  validate_visible(great_circle_layer)
-  validate_pickable(great_circle_layer)
-  validate_opacity(great_circle_layer)
-  validate_wrap_longitude(great_circle_layer)
-  validate_position_format(great_circle_layer)
-  validate_color_format(great_circle_layer)
-  validate_auto_highlight(great_circle_layer)
-  validate_highlight_color(great_circle_layer)
-  validate_get_source_position(great_circle_layer)
-  validate_get_target_position(great_circle_layer)
-  validate_get_source_color(great_circle_layer)
-  validate_get_target_color(great_circle_layer)
-  validate_get_width(great_circle_layer)
-  validate_get_height(great_circle_layer)
-  validate_get_tilt(great_circle_layer)
-  validate_great_circle(great_circle_layer)
-  validate_width_units(great_circle_layer)
-  validate_width_scale(great_circle_layer)
-  validate_width_min_pixels(great_circle_layer)
-  validate_width_max_pixels(great_circle_layer)
-  validate_blending_mode(great_circle_layer)
-  validate_visibility_toggle(great_circle_layer)
-  validate_tooltip(great_circle_layer)
+  with_layer_create_errors({
+    validate_id(great_circle_layer)
+    validate_name(great_circle_layer)
+    validate_group_name(great_circle_layer)
+    validate_data(great_circle_layer)
+    validate_visible(great_circle_layer)
+    validate_pickable(great_circle_layer)
+    validate_opacity(great_circle_layer)
+    validate_wrap_longitude(great_circle_layer)
+    validate_position_format(great_circle_layer)
+    validate_color_format(great_circle_layer)
+    validate_auto_highlight(great_circle_layer)
+    validate_highlight_color(great_circle_layer)
+    validate_get_source_position(great_circle_layer)
+    validate_get_target_position(great_circle_layer)
+    validate_get_source_color(great_circle_layer)
+    validate_get_target_color(great_circle_layer)
+    validate_get_width(great_circle_layer)
+    validate_get_height(great_circle_layer)
+    validate_get_tilt(great_circle_layer)
+    validate_great_circle(great_circle_layer)
+    validate_width_units(great_circle_layer)
+    validate_width_scale(great_circle_layer)
+    validate_width_min_pixels(great_circle_layer)
+    validate_width_max_pixels(great_circle_layer)
+    validate_blending_mode(great_circle_layer)
+    validate_visibility_toggle(great_circle_layer)
+    validate_tooltip(great_circle_layer)
+  })
 
   add_layer(rdeck, great_circle_layer)
 }
@@ -2723,8 +2660,10 @@ add_s2_layer <- function(rdeck,
                          blending_mode = "normal",
                          visibility_toggle = TRUE,
                          tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_fill_color <- rlang::enquo(get_fill_color)
@@ -2734,7 +2673,7 @@ add_s2_layer <- function(rdeck,
   get_s2_token <- rlang::enquo(get_s2_token)
   tooltip <- rlang::enquo(tooltip)
 
-  s2_layer <- rlang::try_fetch(
+  s2_layer <- with_layer_create_errors(
     layer(
       type = "S2Layer",
       ...,
@@ -2770,48 +2709,43 @@ add_s2_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create s2_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(s2_layer)
-  validate_name(s2_layer)
-  validate_group_name(s2_layer)
-  validate_data(s2_layer)
-  validate_visible(s2_layer)
-  validate_pickable(s2_layer)
-  validate_opacity(s2_layer)
-  validate_wrap_longitude(s2_layer)
-  validate_position_format(s2_layer)
-  validate_color_format(s2_layer)
-  validate_auto_highlight(s2_layer)
-  validate_highlight_color(s2_layer)
-  validate_stroked(s2_layer)
-  validate_filled(s2_layer)
-  validate_extruded(s2_layer)
-  validate_elevation_scale(s2_layer)
-  validate_wireframe(s2_layer)
-  validate_line_width_units(s2_layer)
-  validate_line_width_scale(s2_layer)
-  validate_line_width_min_pixels(s2_layer)
-  validate_line_width_max_pixels(s2_layer)
-  validate_line_joint_rounded(s2_layer)
-  validate_line_miter_limit(s2_layer)
-  validate_get_fill_color(s2_layer)
-  validate_get_line_color(s2_layer)
-  validate_get_line_width(s2_layer)
-  validate_get_elevation(s2_layer)
-  validate_material(s2_layer)
-  validate_get_s2_token(s2_layer)
-  validate_blending_mode(s2_layer)
-  validate_visibility_toggle(s2_layer)
-  validate_tooltip(s2_layer)
+  with_layer_create_errors({
+    validate_id(s2_layer)
+    validate_name(s2_layer)
+    validate_group_name(s2_layer)
+    validate_data(s2_layer)
+    validate_visible(s2_layer)
+    validate_pickable(s2_layer)
+    validate_opacity(s2_layer)
+    validate_wrap_longitude(s2_layer)
+    validate_position_format(s2_layer)
+    validate_color_format(s2_layer)
+    validate_auto_highlight(s2_layer)
+    validate_highlight_color(s2_layer)
+    validate_stroked(s2_layer)
+    validate_filled(s2_layer)
+    validate_extruded(s2_layer)
+    validate_elevation_scale(s2_layer)
+    validate_wireframe(s2_layer)
+    validate_line_width_units(s2_layer)
+    validate_line_width_scale(s2_layer)
+    validate_line_width_min_pixels(s2_layer)
+    validate_line_width_max_pixels(s2_layer)
+    validate_line_joint_rounded(s2_layer)
+    validate_line_miter_limit(s2_layer)
+    validate_get_fill_color(s2_layer)
+    validate_get_line_color(s2_layer)
+    validate_get_line_width(s2_layer)
+    validate_get_elevation(s2_layer)
+    validate_material(s2_layer)
+    validate_get_s2_token(s2_layer)
+    validate_blending_mode(s2_layer)
+    validate_visibility_toggle(s2_layer)
+    validate_tooltip(s2_layer)
+  })
 
   add_layer(rdeck, s2_layer)
 }
@@ -2853,8 +2787,10 @@ add_h3_cluster_layer <- function(rdeck,
                                  blending_mode = "normal",
                                  visibility_toggle = TRUE,
                                  tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_fill_color <- rlang::enquo(get_fill_color)
@@ -2864,7 +2800,7 @@ add_h3_cluster_layer <- function(rdeck,
   get_hexagons <- rlang::enquo(get_hexagons)
   tooltip <- rlang::enquo(tooltip)
 
-  h3_cluster_layer <- rlang::try_fetch(
+  h3_cluster_layer <- with_layer_create_errors(
     layer(
       type = "H3ClusterLayer",
       ...,
@@ -2900,48 +2836,43 @@ add_h3_cluster_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create h3_cluster_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(h3_cluster_layer)
-  validate_name(h3_cluster_layer)
-  validate_group_name(h3_cluster_layer)
-  validate_data(h3_cluster_layer)
-  validate_visible(h3_cluster_layer)
-  validate_pickable(h3_cluster_layer)
-  validate_opacity(h3_cluster_layer)
-  validate_wrap_longitude(h3_cluster_layer)
-  validate_position_format(h3_cluster_layer)
-  validate_color_format(h3_cluster_layer)
-  validate_auto_highlight(h3_cluster_layer)
-  validate_highlight_color(h3_cluster_layer)
-  validate_stroked(h3_cluster_layer)
-  validate_filled(h3_cluster_layer)
-  validate_extruded(h3_cluster_layer)
-  validate_elevation_scale(h3_cluster_layer)
-  validate_wireframe(h3_cluster_layer)
-  validate_line_width_units(h3_cluster_layer)
-  validate_line_width_scale(h3_cluster_layer)
-  validate_line_width_min_pixels(h3_cluster_layer)
-  validate_line_width_max_pixels(h3_cluster_layer)
-  validate_line_joint_rounded(h3_cluster_layer)
-  validate_line_miter_limit(h3_cluster_layer)
-  validate_get_fill_color(h3_cluster_layer)
-  validate_get_line_color(h3_cluster_layer)
-  validate_get_line_width(h3_cluster_layer)
-  validate_get_elevation(h3_cluster_layer)
-  validate_material(h3_cluster_layer)
-  validate_get_hexagons(h3_cluster_layer)
-  validate_blending_mode(h3_cluster_layer)
-  validate_visibility_toggle(h3_cluster_layer)
-  validate_tooltip(h3_cluster_layer)
+  with_layer_create_errors({
+    validate_id(h3_cluster_layer)
+    validate_name(h3_cluster_layer)
+    validate_group_name(h3_cluster_layer)
+    validate_data(h3_cluster_layer)
+    validate_visible(h3_cluster_layer)
+    validate_pickable(h3_cluster_layer)
+    validate_opacity(h3_cluster_layer)
+    validate_wrap_longitude(h3_cluster_layer)
+    validate_position_format(h3_cluster_layer)
+    validate_color_format(h3_cluster_layer)
+    validate_auto_highlight(h3_cluster_layer)
+    validate_highlight_color(h3_cluster_layer)
+    validate_stroked(h3_cluster_layer)
+    validate_filled(h3_cluster_layer)
+    validate_extruded(h3_cluster_layer)
+    validate_elevation_scale(h3_cluster_layer)
+    validate_wireframe(h3_cluster_layer)
+    validate_line_width_units(h3_cluster_layer)
+    validate_line_width_scale(h3_cluster_layer)
+    validate_line_width_min_pixels(h3_cluster_layer)
+    validate_line_width_max_pixels(h3_cluster_layer)
+    validate_line_joint_rounded(h3_cluster_layer)
+    validate_line_miter_limit(h3_cluster_layer)
+    validate_get_fill_color(h3_cluster_layer)
+    validate_get_line_color(h3_cluster_layer)
+    validate_get_line_width(h3_cluster_layer)
+    validate_get_elevation(h3_cluster_layer)
+    validate_material(h3_cluster_layer)
+    validate_get_hexagons(h3_cluster_layer)
+    validate_blending_mode(h3_cluster_layer)
+    validate_visibility_toggle(h3_cluster_layer)
+    validate_tooltip(h3_cluster_layer)
+  })
 
   add_layer(rdeck, h3_cluster_layer)
 }
@@ -2986,8 +2917,10 @@ add_h3_hexagon_layer <- function(rdeck,
                                  blending_mode = "normal",
                                  visibility_toggle = TRUE,
                                  tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_fill_color <- rlang::enquo(get_fill_color)
@@ -2997,7 +2930,7 @@ add_h3_hexagon_layer <- function(rdeck,
   get_hexagon <- rlang::enquo(get_hexagon)
   tooltip <- rlang::enquo(tooltip)
 
-  h3_hexagon_layer <- rlang::try_fetch(
+  h3_hexagon_layer <- with_layer_create_errors(
     layer(
       type = "H3HexagonLayer",
       ...,
@@ -3036,51 +2969,46 @@ add_h3_hexagon_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create h3_hexagon_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(h3_hexagon_layer)
-  validate_name(h3_hexagon_layer)
-  validate_group_name(h3_hexagon_layer)
-  validate_data(h3_hexagon_layer)
-  validate_visible(h3_hexagon_layer)
-  validate_pickable(h3_hexagon_layer)
-  validate_opacity(h3_hexagon_layer)
-  validate_wrap_longitude(h3_hexagon_layer)
-  validate_position_format(h3_hexagon_layer)
-  validate_color_format(h3_hexagon_layer)
-  validate_auto_highlight(h3_hexagon_layer)
-  validate_highlight_color(h3_hexagon_layer)
-  validate_stroked(h3_hexagon_layer)
-  validate_filled(h3_hexagon_layer)
-  validate_extruded(h3_hexagon_layer)
-  validate_elevation_scale(h3_hexagon_layer)
-  validate_wireframe(h3_hexagon_layer)
-  validate_line_width_units(h3_hexagon_layer)
-  validate_line_width_scale(h3_hexagon_layer)
-  validate_line_width_min_pixels(h3_hexagon_layer)
-  validate_line_width_max_pixels(h3_hexagon_layer)
-  validate_line_joint_rounded(h3_hexagon_layer)
-  validate_line_miter_limit(h3_hexagon_layer)
-  validate_get_fill_color(h3_hexagon_layer)
-  validate_get_line_color(h3_hexagon_layer)
-  validate_get_line_width(h3_hexagon_layer)
-  validate_get_elevation(h3_hexagon_layer)
-  validate_material(h3_hexagon_layer)
-  validate_high_precision(h3_hexagon_layer)
-  validate_coverage(h3_hexagon_layer)
-  validate_center_hexagon(h3_hexagon_layer)
-  validate_get_hexagon(h3_hexagon_layer)
-  validate_blending_mode(h3_hexagon_layer)
-  validate_visibility_toggle(h3_hexagon_layer)
-  validate_tooltip(h3_hexagon_layer)
+  with_layer_create_errors({
+    validate_id(h3_hexagon_layer)
+    validate_name(h3_hexagon_layer)
+    validate_group_name(h3_hexagon_layer)
+    validate_data(h3_hexagon_layer)
+    validate_visible(h3_hexagon_layer)
+    validate_pickable(h3_hexagon_layer)
+    validate_opacity(h3_hexagon_layer)
+    validate_wrap_longitude(h3_hexagon_layer)
+    validate_position_format(h3_hexagon_layer)
+    validate_color_format(h3_hexagon_layer)
+    validate_auto_highlight(h3_hexagon_layer)
+    validate_highlight_color(h3_hexagon_layer)
+    validate_stroked(h3_hexagon_layer)
+    validate_filled(h3_hexagon_layer)
+    validate_extruded(h3_hexagon_layer)
+    validate_elevation_scale(h3_hexagon_layer)
+    validate_wireframe(h3_hexagon_layer)
+    validate_line_width_units(h3_hexagon_layer)
+    validate_line_width_scale(h3_hexagon_layer)
+    validate_line_width_min_pixels(h3_hexagon_layer)
+    validate_line_width_max_pixels(h3_hexagon_layer)
+    validate_line_joint_rounded(h3_hexagon_layer)
+    validate_line_miter_limit(h3_hexagon_layer)
+    validate_get_fill_color(h3_hexagon_layer)
+    validate_get_line_color(h3_hexagon_layer)
+    validate_get_line_width(h3_hexagon_layer)
+    validate_get_elevation(h3_hexagon_layer)
+    validate_material(h3_hexagon_layer)
+    validate_high_precision(h3_hexagon_layer)
+    validate_coverage(h3_hexagon_layer)
+    validate_center_hexagon(h3_hexagon_layer)
+    validate_get_hexagon(h3_hexagon_layer)
+    validate_blending_mode(h3_hexagon_layer)
+    validate_visibility_toggle(h3_hexagon_layer)
+    validate_tooltip(h3_hexagon_layer)
+  })
 
   add_layer(rdeck, h3_hexagon_layer)
 }
@@ -3091,7 +3019,7 @@ add_h3_hexagon_layer <- function(rdeck,
 add_tile_layer <- function(rdeck,
                            ...,
                            id = uuid::UUIDgenerate(),
-                           name = "BitmapLayer",
+                           name = "TileLayer",
                            group_name = NULL,
                            data = NULL,
                            visible = TRUE,
@@ -3119,13 +3047,15 @@ add_tile_layer <- function(rdeck,
                            desaturate = 0,
                            transparent_color = "#00000000",
                            tint_color = "#ffffff") {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   tooltip <- rlang::enquo(tooltip)
 
-  tile_layer <- rlang::try_fetch(
+  tile_layer <- with_layer_create_errors(
     layer(
       type = "TileLayer",
       ...,
@@ -3158,45 +3088,40 @@ add_tile_layer <- function(rdeck,
       desaturate = desaturate,
       transparent_color = transparent_color,
       tint_color = tint_color
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create tile_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(tile_layer)
-  validate_name(tile_layer)
-  validate_group_name(tile_layer)
-  validate_data(tile_layer)
-  validate_visible(tile_layer)
-  validate_pickable(tile_layer)
-  validate_opacity(tile_layer)
-  validate_wrap_longitude(tile_layer)
-  validate_position_format(tile_layer)
-  validate_color_format(tile_layer)
-  validate_auto_highlight(tile_layer)
-  validate_highlight_color(tile_layer)
-  validate_get_tile_data(tile_layer)
-  validate_extent(tile_layer)
-  validate_tile_size(tile_layer)
-  validate_max_zoom(tile_layer)
-  validate_min_zoom(tile_layer)
-  validate_max_cache_size(tile_layer)
-  validate_max_cache_byte_size(tile_layer)
-  validate_refinement_strategy(tile_layer)
-  validate_z_range(tile_layer)
-  validate_max_requests(tile_layer)
-  validate_zoom_offset(tile_layer)
-  validate_blending_mode(tile_layer)
-  validate_visibility_toggle(tile_layer)
-  validate_tooltip(tile_layer)
-  validate_desaturate(tile_layer)
-  validate_transparent_color(tile_layer)
-  validate_tint_color(tile_layer)
+  with_layer_create_errors({
+    validate_id(tile_layer)
+    validate_name(tile_layer)
+    validate_group_name(tile_layer)
+    validate_data(tile_layer)
+    validate_visible(tile_layer)
+    validate_pickable(tile_layer)
+    validate_opacity(tile_layer)
+    validate_wrap_longitude(tile_layer)
+    validate_position_format(tile_layer)
+    validate_color_format(tile_layer)
+    validate_auto_highlight(tile_layer)
+    validate_highlight_color(tile_layer)
+    validate_get_tile_data(tile_layer)
+    validate_extent(tile_layer)
+    validate_tile_size(tile_layer)
+    validate_max_zoom(tile_layer)
+    validate_min_zoom(tile_layer)
+    validate_max_cache_size(tile_layer)
+    validate_max_cache_byte_size(tile_layer)
+    validate_refinement_strategy(tile_layer)
+    validate_z_range(tile_layer)
+    validate_max_requests(tile_layer)
+    validate_zoom_offset(tile_layer)
+    validate_blending_mode(tile_layer)
+    validate_visibility_toggle(tile_layer)
+    validate_tooltip(tile_layer)
+    validate_desaturate(tile_layer)
+    validate_transparent_color(tile_layer)
+    validate_tint_color(tile_layer)
+  })
 
   add_layer(rdeck, tile_layer)
 }
@@ -3237,8 +3162,10 @@ add_trips_layer <- function(rdeck,
                             tooltip = NULL,
                             loop_length = 1800,
                             animation_speed = 30) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_path <- rlang::enquo(get_path)
@@ -3247,7 +3174,7 @@ add_trips_layer <- function(rdeck,
   get_timestamps <- rlang::enquo(get_timestamps)
   tooltip <- rlang::enquo(tooltip)
 
-  trips_layer <- rlang::try_fetch(
+  trips_layer <- with_layer_create_errors(
     layer(
       type = "TripsLayer",
       ...,
@@ -3282,47 +3209,42 @@ add_trips_layer <- function(rdeck,
       tooltip = eval_tooltip(tooltip, data, NULL),
       loop_length = loop_length,
       animation_speed = animation_speed
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create trips_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(trips_layer)
-  validate_name(trips_layer)
-  validate_group_name(trips_layer)
-  validate_data(trips_layer)
-  validate_visible(trips_layer)
-  validate_pickable(trips_layer)
-  validate_opacity(trips_layer)
-  validate_wrap_longitude(trips_layer)
-  validate_position_format(trips_layer)
-  validate_color_format(trips_layer)
-  validate_auto_highlight(trips_layer)
-  validate_highlight_color(trips_layer)
-  validate_width_units(trips_layer)
-  validate_width_scale(trips_layer)
-  validate_width_min_pixels(trips_layer)
-  validate_width_max_pixels(trips_layer)
-  validate_joint_rounded(trips_layer)
-  validate_cap_rounded(trips_layer)
-  validate_miter_limit(trips_layer)
-  validate_billboard(trips_layer)
-  validate_get_path(trips_layer)
-  validate_get_color(trips_layer)
-  validate_get_width(trips_layer)
-  validate_fade_trail(trips_layer)
-  validate_trail_length(trips_layer)
-  validate_get_timestamps(trips_layer)
-  validate_blending_mode(trips_layer)
-  validate_visibility_toggle(trips_layer)
-  validate_tooltip(trips_layer)
-  validate_loop_length(trips_layer)
-  validate_animation_speed(trips_layer)
+  with_layer_create_errors({
+    validate_id(trips_layer)
+    validate_name(trips_layer)
+    validate_group_name(trips_layer)
+    validate_data(trips_layer)
+    validate_visible(trips_layer)
+    validate_pickable(trips_layer)
+    validate_opacity(trips_layer)
+    validate_wrap_longitude(trips_layer)
+    validate_position_format(trips_layer)
+    validate_color_format(trips_layer)
+    validate_auto_highlight(trips_layer)
+    validate_highlight_color(trips_layer)
+    validate_width_units(trips_layer)
+    validate_width_scale(trips_layer)
+    validate_width_min_pixels(trips_layer)
+    validate_width_max_pixels(trips_layer)
+    validate_joint_rounded(trips_layer)
+    validate_cap_rounded(trips_layer)
+    validate_miter_limit(trips_layer)
+    validate_billboard(trips_layer)
+    validate_get_path(trips_layer)
+    validate_get_color(trips_layer)
+    validate_get_width(trips_layer)
+    validate_fade_trail(trips_layer)
+    validate_trail_length(trips_layer)
+    validate_get_timestamps(trips_layer)
+    validate_blending_mode(trips_layer)
+    validate_visibility_toggle(trips_layer)
+    validate_tooltip(trips_layer)
+    validate_loop_length(trips_layer)
+    validate_animation_speed(trips_layer)
+  })
 
   add_layer(rdeck, trips_layer)
 }
@@ -3365,14 +3287,16 @@ add_tile_3d_layer <- function(rdeck,
                               blending_mode = "normal",
                               visibility_toggle = TRUE,
                               tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_point_color <- rlang::enquo(get_point_color)
   tooltip <- rlang::enquo(tooltip)
 
-  tile_3d_layer <- rlang::try_fetch(
+  tile_3d_layer <- with_layer_create_errors(
     layer(
       type = "Tile3DLayer",
       ...,
@@ -3394,34 +3318,29 @@ add_tile_3d_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create tile_3d_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(tile_3d_layer)
-  validate_name(tile_3d_layer)
-  validate_group_name(tile_3d_layer)
-  validate_data(tile_3d_layer)
-  validate_visible(tile_3d_layer)
-  validate_pickable(tile_3d_layer)
-  validate_opacity(tile_3d_layer)
-  validate_wrap_longitude(tile_3d_layer)
-  validate_position_format(tile_3d_layer)
-  validate_color_format(tile_3d_layer)
-  validate_auto_highlight(tile_3d_layer)
-  validate_highlight_color(tile_3d_layer)
-  validate_get_point_color(tile_3d_layer)
-  validate_point_size(tile_3d_layer)
-  validate_loader(tile_3d_layer)
-  validate_blending_mode(tile_3d_layer)
-  validate_visibility_toggle(tile_3d_layer)
-  validate_tooltip(tile_3d_layer)
+  with_layer_create_errors({
+    validate_id(tile_3d_layer)
+    validate_name(tile_3d_layer)
+    validate_group_name(tile_3d_layer)
+    validate_data(tile_3d_layer)
+    validate_visible(tile_3d_layer)
+    validate_pickable(tile_3d_layer)
+    validate_opacity(tile_3d_layer)
+    validate_wrap_longitude(tile_3d_layer)
+    validate_position_format(tile_3d_layer)
+    validate_color_format(tile_3d_layer)
+    validate_auto_highlight(tile_3d_layer)
+    validate_highlight_color(tile_3d_layer)
+    validate_get_point_color(tile_3d_layer)
+    validate_point_size(tile_3d_layer)
+    validate_loader(tile_3d_layer)
+    validate_blending_mode(tile_3d_layer)
+    validate_visibility_toggle(tile_3d_layer)
+    validate_tooltip(tile_3d_layer)
+  })
 
   add_layer(rdeck, tile_3d_layer)
 }
@@ -3458,7 +3377,7 @@ add_terrain_layer <- function(rdeck,
                               texture = NULL,
                               mesh_max_error = 4,
                               bounds = NULL,
-                              color = c(255, 255, 255),
+                              color = "#ffffff",
                               elevation_decoder = list(
                                 rScaler = 1,
                                 gScaler = 0,
@@ -3471,13 +3390,15 @@ add_terrain_layer <- function(rdeck,
                               blending_mode = "normal",
                               visibility_toggle = TRUE,
                               tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   tooltip <- rlang::enquo(tooltip)
 
-  terrain_layer <- rlang::try_fetch(
+  terrain_layer <- with_layer_create_errors(
     layer(
       type = "TerrainLayer",
       ...,
@@ -3516,51 +3437,46 @@ add_terrain_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create terrain_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(terrain_layer)
-  validate_name(terrain_layer)
-  validate_group_name(terrain_layer)
-  validate_data(terrain_layer)
-  validate_visible(terrain_layer)
-  validate_pickable(terrain_layer)
-  validate_opacity(terrain_layer)
-  validate_wrap_longitude(terrain_layer)
-  validate_position_format(terrain_layer)
-  validate_color_format(terrain_layer)
-  validate_auto_highlight(terrain_layer)
-  validate_highlight_color(terrain_layer)
-  validate_get_tile_data(terrain_layer)
-  validate_extent(terrain_layer)
-  validate_tile_size(terrain_layer)
-  validate_max_zoom(terrain_layer)
-  validate_min_zoom(terrain_layer)
-  validate_max_cache_size(terrain_layer)
-  validate_max_cache_byte_size(terrain_layer)
-  validate_refinement_strategy(terrain_layer)
-  validate_z_range(terrain_layer)
-  validate_max_requests(terrain_layer)
-  validate_zoom_offset(terrain_layer)
-  validate_elevation_data(terrain_layer)
-  validate_texture(terrain_layer)
-  validate_mesh_max_error(terrain_layer)
-  validate_bounds(terrain_layer)
-  validate_color(terrain_layer)
-  validate_elevation_decoder(terrain_layer)
-  validate_worker_url(terrain_layer)
-  validate_wireframe(terrain_layer)
-  validate_material(terrain_layer)
-  validate_blending_mode(terrain_layer)
-  validate_visibility_toggle(terrain_layer)
-  validate_tooltip(terrain_layer)
+  with_layer_create_errors({
+    validate_id(terrain_layer)
+    validate_name(terrain_layer)
+    validate_group_name(terrain_layer)
+    validate_data(terrain_layer)
+    validate_visible(terrain_layer)
+    validate_pickable(terrain_layer)
+    validate_opacity(terrain_layer)
+    validate_wrap_longitude(terrain_layer)
+    validate_position_format(terrain_layer)
+    validate_color_format(terrain_layer)
+    validate_auto_highlight(terrain_layer)
+    validate_highlight_color(terrain_layer)
+    validate_get_tile_data(terrain_layer)
+    validate_extent(terrain_layer)
+    validate_tile_size(terrain_layer)
+    validate_max_zoom(terrain_layer)
+    validate_min_zoom(terrain_layer)
+    validate_max_cache_size(terrain_layer)
+    validate_max_cache_byte_size(terrain_layer)
+    validate_refinement_strategy(terrain_layer)
+    validate_z_range(terrain_layer)
+    validate_max_requests(terrain_layer)
+    validate_zoom_offset(terrain_layer)
+    validate_elevation_data(terrain_layer)
+    validate_texture(terrain_layer)
+    validate_mesh_max_error(terrain_layer)
+    validate_bounds(terrain_layer)
+    validate_color(terrain_layer)
+    validate_elevation_decoder(terrain_layer)
+    validate_worker_url(terrain_layer)
+    validate_wireframe(terrain_layer)
+    validate_material(terrain_layer)
+    validate_blending_mode(terrain_layer)
+    validate_visibility_toggle(terrain_layer)
+    validate_tooltip(terrain_layer)
+  })
 
   add_layer(rdeck, terrain_layer)
 }
@@ -3571,7 +3487,7 @@ add_terrain_layer <- function(rdeck,
 add_mvt_layer <- function(rdeck,
                           ...,
                           id = uuid::UUIDgenerate(),
-                          name = "GeoJsonLayer",
+                          name = "MVTLayer",
                           group_name = NULL,
                           data = NULL,
                           visible = TRUE,
@@ -3663,8 +3579,10 @@ add_mvt_layer <- function(rdeck,
                           material = TRUE,
                           get_elevation = 1000,
                           point_type = "circle") {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   tooltip <- rlang::enquo(tooltip)
@@ -3689,7 +3607,7 @@ add_mvt_layer <- function(rdeck,
   get_text_border_width <- rlang::enquo(get_text_border_width)
   get_elevation <- rlang::enquo(get_elevation)
 
-  mvt_layer <- rlang::try_fetch(
+  mvt_layer <- with_layer_create_errors(
     layer(
       type = "MVTLayer",
       ...,
@@ -3786,109 +3704,104 @@ add_mvt_layer <- function(rdeck,
       material = material,
       get_elevation = accessor(get_elevation, data, "geojson"),
       point_type = point_type
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create mvt_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(mvt_layer)
-  validate_name(mvt_layer)
-  validate_group_name(mvt_layer)
-  validate_data(mvt_layer)
-  validate_visible(mvt_layer)
-  validate_pickable(mvt_layer)
-  validate_opacity(mvt_layer)
-  validate_wrap_longitude(mvt_layer)
-  validate_position_format(mvt_layer)
-  validate_color_format(mvt_layer)
-  validate_auto_highlight(mvt_layer)
-  validate_highlight_color(mvt_layer)
-  validate_get_tile_data(mvt_layer)
-  validate_extent(mvt_layer)
-  validate_tile_size(mvt_layer)
-  validate_max_zoom(mvt_layer)
-  validate_min_zoom(mvt_layer)
-  validate_max_cache_size(mvt_layer)
-  validate_max_cache_byte_size(mvt_layer)
-  validate_refinement_strategy(mvt_layer)
-  validate_z_range(mvt_layer)
-  validate_max_requests(mvt_layer)
-  validate_zoom_offset(mvt_layer)
-  validate_unique_id_property(mvt_layer)
-  validate_highlighted_feature_id(mvt_layer)
-  validate_binary(mvt_layer)
-  validate_blending_mode(mvt_layer)
-  validate_visibility_toggle(mvt_layer)
-  validate_tooltip(mvt_layer)
-  validate_filled(mvt_layer)
-  validate_stroked(mvt_layer)
-  validate_line_width_max_pixels(mvt_layer)
-  validate_line_width_min_pixels(mvt_layer)
-  validate_line_width_scale(mvt_layer)
-  validate_line_width_units(mvt_layer)
-  validate_point_radius_max_pixels(mvt_layer)
-  validate_point_radius_min_pixels(mvt_layer)
-  validate_point_radius_scale(mvt_layer)
-  validate_point_radius_units(mvt_layer)
-  validate_point_antialiasing(mvt_layer)
-  validate_point_billboard(mvt_layer)
-  validate_get_fill_color(mvt_layer)
-  validate_get_line_color(mvt_layer)
-  validate_get_line_width(mvt_layer)
-  validate_get_point_radius(mvt_layer)
-  validate_icon_atlas(mvt_layer)
-  validate_icon_mapping(mvt_layer)
-  validate_icon_size_max_pixels(mvt_layer)
-  validate_icon_size_min_pixels(mvt_layer)
-  validate_icon_size_scale(mvt_layer)
-  validate_icon_size_units(mvt_layer)
-  validate_icon_alpha_cutoff(mvt_layer)
-  validate_icon_billboard(mvt_layer)
-  validate_get_icon(mvt_layer)
-  validate_get_icon_angle(mvt_layer)
-  validate_get_icon_color(mvt_layer)
-  validate_get_icon_pixel_offset(mvt_layer)
-  validate_get_icon_size(mvt_layer)
-  validate_text_size_max_pixels(mvt_layer)
-  validate_text_size_min_pixels(mvt_layer)
-  validate_text_size_scale(mvt_layer)
-  validate_text_size_units(mvt_layer)
-  validate_text_background(mvt_layer)
-  validate_text_background_padding(mvt_layer)
-  validate_text_font_family(mvt_layer)
-  validate_text_font_weight(mvt_layer)
-  validate_text_line_height(mvt_layer)
-  validate_text_max_width(mvt_layer)
-  validate_text_outline_color(mvt_layer)
-  validate_text_outline_width(mvt_layer)
-  validate_text_word_break(mvt_layer)
-  validate_text_billboard(mvt_layer)
-  validate_text_font_settings(mvt_layer)
-  validate_get_text(mvt_layer)
-  validate_get_text_angle(mvt_layer)
-  validate_get_text_color(mvt_layer)
-  validate_get_text_pixel_offset(mvt_layer)
-  validate_get_text_size(mvt_layer)
-  validate_get_text_anchor(mvt_layer)
-  validate_get_text_alignment_baseline(mvt_layer)
-  validate_get_text_background_color(mvt_layer)
-  validate_get_text_border_color(mvt_layer)
-  validate_get_text_border_width(mvt_layer)
-  validate_line_joint_rounded(mvt_layer)
-  validate_line_cap_rounded(mvt_layer)
-  validate_line_miter_limit(mvt_layer)
-  validate_line_billboard(mvt_layer)
-  validate_extruded(mvt_layer)
-  validate_wireframe(mvt_layer)
-  validate_elevation_scale(mvt_layer)
-  validate_material(mvt_layer)
-  validate_get_elevation(mvt_layer)
-  validate_point_type(mvt_layer)
+  with_layer_create_errors({
+    validate_id(mvt_layer)
+    validate_name(mvt_layer)
+    validate_group_name(mvt_layer)
+    validate_data(mvt_layer)
+    validate_visible(mvt_layer)
+    validate_pickable(mvt_layer)
+    validate_opacity(mvt_layer)
+    validate_wrap_longitude(mvt_layer)
+    validate_position_format(mvt_layer)
+    validate_color_format(mvt_layer)
+    validate_auto_highlight(mvt_layer)
+    validate_highlight_color(mvt_layer)
+    validate_get_tile_data(mvt_layer)
+    validate_extent(mvt_layer)
+    validate_tile_size(mvt_layer)
+    validate_max_zoom(mvt_layer)
+    validate_min_zoom(mvt_layer)
+    validate_max_cache_size(mvt_layer)
+    validate_max_cache_byte_size(mvt_layer)
+    validate_refinement_strategy(mvt_layer)
+    validate_z_range(mvt_layer)
+    validate_max_requests(mvt_layer)
+    validate_zoom_offset(mvt_layer)
+    validate_unique_id_property(mvt_layer)
+    validate_highlighted_feature_id(mvt_layer)
+    validate_binary(mvt_layer)
+    validate_blending_mode(mvt_layer)
+    validate_visibility_toggle(mvt_layer)
+    validate_tooltip(mvt_layer)
+    validate_filled(mvt_layer)
+    validate_stroked(mvt_layer)
+    validate_line_width_max_pixels(mvt_layer)
+    validate_line_width_min_pixels(mvt_layer)
+    validate_line_width_scale(mvt_layer)
+    validate_line_width_units(mvt_layer)
+    validate_point_radius_max_pixels(mvt_layer)
+    validate_point_radius_min_pixels(mvt_layer)
+    validate_point_radius_scale(mvt_layer)
+    validate_point_radius_units(mvt_layer)
+    validate_point_antialiasing(mvt_layer)
+    validate_point_billboard(mvt_layer)
+    validate_get_fill_color(mvt_layer)
+    validate_get_line_color(mvt_layer)
+    validate_get_line_width(mvt_layer)
+    validate_get_point_radius(mvt_layer)
+    validate_icon_atlas(mvt_layer)
+    validate_icon_mapping(mvt_layer)
+    validate_icon_size_max_pixels(mvt_layer)
+    validate_icon_size_min_pixels(mvt_layer)
+    validate_icon_size_scale(mvt_layer)
+    validate_icon_size_units(mvt_layer)
+    validate_icon_alpha_cutoff(mvt_layer)
+    validate_icon_billboard(mvt_layer)
+    validate_get_icon(mvt_layer)
+    validate_get_icon_angle(mvt_layer)
+    validate_get_icon_color(mvt_layer)
+    validate_get_icon_pixel_offset(mvt_layer)
+    validate_get_icon_size(mvt_layer)
+    validate_text_size_max_pixels(mvt_layer)
+    validate_text_size_min_pixels(mvt_layer)
+    validate_text_size_scale(mvt_layer)
+    validate_text_size_units(mvt_layer)
+    validate_text_background(mvt_layer)
+    validate_text_background_padding(mvt_layer)
+    validate_text_font_family(mvt_layer)
+    validate_text_font_weight(mvt_layer)
+    validate_text_line_height(mvt_layer)
+    validate_text_max_width(mvt_layer)
+    validate_text_outline_color(mvt_layer)
+    validate_text_outline_width(mvt_layer)
+    validate_text_word_break(mvt_layer)
+    validate_text_billboard(mvt_layer)
+    validate_text_font_settings(mvt_layer)
+    validate_get_text(mvt_layer)
+    validate_get_text_angle(mvt_layer)
+    validate_get_text_color(mvt_layer)
+    validate_get_text_pixel_offset(mvt_layer)
+    validate_get_text_size(mvt_layer)
+    validate_get_text_anchor(mvt_layer)
+    validate_get_text_alignment_baseline(mvt_layer)
+    validate_get_text_background_color(mvt_layer)
+    validate_get_text_border_color(mvt_layer)
+    validate_get_text_border_width(mvt_layer)
+    validate_line_joint_rounded(mvt_layer)
+    validate_line_cap_rounded(mvt_layer)
+    validate_line_miter_limit(mvt_layer)
+    validate_line_billboard(mvt_layer)
+    validate_extruded(mvt_layer)
+    validate_wireframe(mvt_layer)
+    validate_elevation_scale(mvt_layer)
+    validate_material(mvt_layer)
+    validate_get_elevation(mvt_layer)
+    validate_point_type(mvt_layer)
+  })
 
   add_layer(rdeck, mvt_layer)
 }
@@ -3924,8 +3837,10 @@ add_simple_mesh_layer <- function(rdeck,
                                   blending_mode = "normal",
                                   visibility_toggle = TRUE,
                                   tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
@@ -3936,7 +3851,7 @@ add_simple_mesh_layer <- function(rdeck,
   get_transform_matrix <- rlang::enquo(get_transform_matrix)
   tooltip <- rlang::enquo(tooltip)
 
-  simple_mesh_layer <- rlang::try_fetch(
+  simple_mesh_layer <- with_layer_create_errors(
     layer(
       type = "SimpleMeshLayer",
       ...,
@@ -3966,42 +3881,37 @@ add_simple_mesh_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create simple_mesh_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(simple_mesh_layer)
-  validate_name(simple_mesh_layer)
-  validate_group_name(simple_mesh_layer)
-  validate_data(simple_mesh_layer)
-  validate_visible(simple_mesh_layer)
-  validate_pickable(simple_mesh_layer)
-  validate_opacity(simple_mesh_layer)
-  validate_wrap_longitude(simple_mesh_layer)
-  validate_position_format(simple_mesh_layer)
-  validate_color_format(simple_mesh_layer)
-  validate_auto_highlight(simple_mesh_layer)
-  validate_highlight_color(simple_mesh_layer)
-  validate_mesh(simple_mesh_layer)
-  validate_texture(simple_mesh_layer)
-  validate_size_scale(simple_mesh_layer)
-  validate_wireframe(simple_mesh_layer)
-  validate_material(simple_mesh_layer)
-  validate_get_position(simple_mesh_layer)
-  validate_get_color(simple_mesh_layer)
-  validate_get_orientation(simple_mesh_layer)
-  validate_get_scale(simple_mesh_layer)
-  validate_get_translation(simple_mesh_layer)
-  validate_get_transform_matrix(simple_mesh_layer)
-  validate_blending_mode(simple_mesh_layer)
-  validate_visibility_toggle(simple_mesh_layer)
-  validate_tooltip(simple_mesh_layer)
+  with_layer_create_errors({
+    validate_id(simple_mesh_layer)
+    validate_name(simple_mesh_layer)
+    validate_group_name(simple_mesh_layer)
+    validate_data(simple_mesh_layer)
+    validate_visible(simple_mesh_layer)
+    validate_pickable(simple_mesh_layer)
+    validate_opacity(simple_mesh_layer)
+    validate_wrap_longitude(simple_mesh_layer)
+    validate_position_format(simple_mesh_layer)
+    validate_color_format(simple_mesh_layer)
+    validate_auto_highlight(simple_mesh_layer)
+    validate_highlight_color(simple_mesh_layer)
+    validate_mesh(simple_mesh_layer)
+    validate_texture(simple_mesh_layer)
+    validate_size_scale(simple_mesh_layer)
+    validate_wireframe(simple_mesh_layer)
+    validate_material(simple_mesh_layer)
+    validate_get_position(simple_mesh_layer)
+    validate_get_color(simple_mesh_layer)
+    validate_get_orientation(simple_mesh_layer)
+    validate_get_scale(simple_mesh_layer)
+    validate_get_translation(simple_mesh_layer)
+    validate_get_transform_matrix(simple_mesh_layer)
+    validate_blending_mode(simple_mesh_layer)
+    validate_visibility_toggle(simple_mesh_layer)
+    validate_tooltip(simple_mesh_layer)
+  })
 
   add_layer(rdeck, simple_mesh_layer)
 }
@@ -4038,8 +3948,10 @@ add_scenegraph_layer <- function(rdeck,
                                  blending_mode = "normal",
                                  visibility_toggle = TRUE,
                                  tooltip = NULL) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   highlight_color <- rlang::enquo(highlight_color)
   get_position <- rlang::enquo(get_position)
@@ -4050,7 +3962,7 @@ add_scenegraph_layer <- function(rdeck,
   get_transform_matrix <- rlang::enquo(get_transform_matrix)
   tooltip <- rlang::enquo(tooltip)
 
-  scenegraph_layer <- rlang::try_fetch(
+  scenegraph_layer <- with_layer_create_errors(
     layer(
       type = "ScenegraphLayer",
       ...,
@@ -4081,43 +3993,38 @@ add_scenegraph_layer <- function(rdeck,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
       tooltip = eval_tooltip(tooltip, data, NULL)
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create scenegraph_layer",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
 
-  validate_id(scenegraph_layer)
-  validate_name(scenegraph_layer)
-  validate_group_name(scenegraph_layer)
-  validate_data(scenegraph_layer)
-  validate_visible(scenegraph_layer)
-  validate_pickable(scenegraph_layer)
-  validate_opacity(scenegraph_layer)
-  validate_wrap_longitude(scenegraph_layer)
-  validate_position_format(scenegraph_layer)
-  validate_color_format(scenegraph_layer)
-  validate_auto_highlight(scenegraph_layer)
-  validate_highlight_color(scenegraph_layer)
-  validate_scenegraph(scenegraph_layer)
-  validate_get_scene(scenegraph_layer)
-  validate_get_animator(scenegraph_layer)
-  validate_size_scale(scenegraph_layer)
-  validate_size_min_pixels(scenegraph_layer)
-  validate_size_max_pixels(scenegraph_layer)
-  validate_get_position(scenegraph_layer)
-  validate_get_color(scenegraph_layer)
-  validate_get_orientation(scenegraph_layer)
-  validate_get_scale(scenegraph_layer)
-  validate_get_translation(scenegraph_layer)
-  validate_get_transform_matrix(scenegraph_layer)
-  validate_blending_mode(scenegraph_layer)
-  validate_visibility_toggle(scenegraph_layer)
-  validate_tooltip(scenegraph_layer)
+  with_layer_create_errors({
+    validate_id(scenegraph_layer)
+    validate_name(scenegraph_layer)
+    validate_group_name(scenegraph_layer)
+    validate_data(scenegraph_layer)
+    validate_visible(scenegraph_layer)
+    validate_pickable(scenegraph_layer)
+    validate_opacity(scenegraph_layer)
+    validate_wrap_longitude(scenegraph_layer)
+    validate_position_format(scenegraph_layer)
+    validate_color_format(scenegraph_layer)
+    validate_auto_highlight(scenegraph_layer)
+    validate_highlight_color(scenegraph_layer)
+    validate_scenegraph(scenegraph_layer)
+    validate_get_scene(scenegraph_layer)
+    validate_get_animator(scenegraph_layer)
+    validate_size_scale(scenegraph_layer)
+    validate_size_min_pixels(scenegraph_layer)
+    validate_size_max_pixels(scenegraph_layer)
+    validate_get_position(scenegraph_layer)
+    validate_get_color(scenegraph_layer)
+    validate_get_orientation(scenegraph_layer)
+    validate_get_scale(scenegraph_layer)
+    validate_get_translation(scenegraph_layer)
+    validate_get_transform_matrix(scenegraph_layer)
+    validate_blending_mode(scenegraph_layer)
+    validate_visibility_toggle(scenegraph_layer)
+    validate_tooltip(scenegraph_layer)
+  })
 
   add_layer(rdeck, scenegraph_layer)
 }

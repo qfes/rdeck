@@ -23,8 +23,10 @@ add_<%- layer.name -%> <- function(rdeck,
                                        .map((p) => `${p.name} = ${p.value ?? "NULL"}`)
                                        .join(",\n");
                                    -%>) {
-  rlang::check_required(rdeck)
-  check_dots(...)
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    check_dots(...)
+  })
 
   <%# diffuse accessors %>
   <%-
@@ -36,7 +38,7 @@ add_<%- layer.name -%> <- function(rdeck,
 
   <%# construct layer object %>
   <% const dataType = layer.dataType != null ? JSON.stringify(layer.dataType) : "NULL" -%>
-  <%- layer.name -%> <- rlang::try_fetch(
+  <%- layer.name -%> <- with_layer_create_errors(
     layer(
       type = "<%- layer.typeName -%>",
       ...,
@@ -50,17 +52,14 @@ add_<%- layer.name -%> <- function(rdeck,
           })
           .join(",\n")
       %>
-    ),
-    error = function(err) {
-      rlang::abort(
-        "Failed to create <%- layer.name -%>",
-        class = "rdeck_error",
-        parent = err
-      )
-    }
+    )
   )
+
   <%# validate params %>
-  <%- layer.props.map((p) => `validate_${p.name}(${layer.name})`).join("\n"); %>
+  with_layer_create_errors({
+    <%- layer.props.map((p) => `validate_${p.name}(${layer.name})`).join("\n"); %>
+  })
+
   <%# add layer %>
   add_layer(rdeck, <%- layer.name %>)
 }
