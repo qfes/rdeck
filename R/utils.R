@@ -84,5 +84,7 @@ enstring <- function(arg) rlang::as_name(rlang::ensym(arg))
 # obj is an rgba hex colour vector
 is_rgba_color <- function(obj) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", obj, ignore.case = TRUE)
 
+all_finite <- function(x) all(is.finite(x))
+
 # nullish coalesce, where length-0 is treated as null
 `%??%` <- function(a, b) if(length(a) == 0) b else a

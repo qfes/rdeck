@@ -23,7 +23,7 @@ validate_alpha_cutoff.default <- function(layer) {
   alpha_cutoff <- layer$alpha_cutoff
   tidyassert::assert(!is.null(alpha_cutoff))
   tidyassert::assert(
-    is.numeric(alpha_cutoff) && is.finite(alpha_cutoff) && length(alpha_cutoff) == 1 && min(alpha_cutoff) >= 0 && max(alpha_cutoff) <= 1,
+    is.numeric(alpha_cutoff) && all_finite(alpha_cutoff) && length(alpha_cutoff) == 1 && min(alpha_cutoff) >= 0 && max(alpha_cutoff) <= 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 1"),
     name = "alpha_cutoff"
   )
@@ -37,7 +37,7 @@ validate_angle.default <- function(layer) {
   angle <- layer$angle
   tidyassert::assert(!is.null(angle))
   tidyassert::assert(
-    is.numeric(angle) && is.finite(angle) && length(angle) == 1,
+    is.numeric(angle) && all_finite(angle) && length(angle) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "angle"
   )
@@ -51,7 +51,7 @@ validate_animation_speed.default <- function(layer) {
   animation_speed <- layer$animation_speed
   tidyassert::assert(!is.null(animation_speed))
   tidyassert::assert(
-    is.numeric(animation_speed) && is.finite(animation_speed) && length(animation_speed) == 1 && min(animation_speed) >= 0,
+    is.numeric(animation_speed) && all_finite(animation_speed) && length(animation_speed) == 1 && min(animation_speed) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "animation_speed"
   )
@@ -107,7 +107,7 @@ validate_background_padding.default <- function(layer) {
   background_padding <- layer$background_padding
   tidyassert::assert(!is.null(background_padding))
   tidyassert::assert(
-    is.numeric(background_padding) && is.finite(background_padding) && length(background_padding) %in% c(2, 4),
+    is.numeric(background_padding) && all_finite(background_padding) && length(background_padding) %in% c(2, 4),
     c("x" = "{.arg {name}} must be a {.cls length-[2,4] numeric} vector"),
     name = "background_padding"
   )
@@ -188,7 +188,7 @@ validate_cell_margin_pixels.default <- function(layer) {
   cell_margin_pixels <- layer$cell_margin_pixels
   tidyassert::assert(!is.null(cell_margin_pixels))
   tidyassert::assert(
-    is.numeric(cell_margin_pixels) && is.finite(cell_margin_pixels) && length(cell_margin_pixels) == 1 && min(cell_margin_pixels) >= 0 && max(cell_margin_pixels) <= 5,
+    is.numeric(cell_margin_pixels) && all_finite(cell_margin_pixels) && length(cell_margin_pixels) == 1 && min(cell_margin_pixels) >= 0 && max(cell_margin_pixels) <= 5,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 5"),
     name = "cell_margin_pixels"
   )
@@ -202,7 +202,7 @@ validate_cell_size.default <- function(layer) {
   cell_size <- layer$cell_size
   tidyassert::assert(!is.null(cell_size))
   tidyassert::assert(
-    is.numeric(cell_size) && is.finite(cell_size) && length(cell_size) == 1 && min(cell_size) >= 1 && max(cell_size) <= 1000,
+    is.numeric(cell_size) && all_finite(cell_size) && length(cell_size) == 1 && min(cell_size) >= 1 && max(cell_size) <= 1000,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 1 <= {.arg values} <= 1000"),
     name = "cell_size"
   )
@@ -216,7 +216,7 @@ validate_cell_size_pixels.default <- function(layer) {
   cell_size_pixels <- layer$cell_size_pixels
   tidyassert::assert(!is.null(cell_size_pixels))
   tidyassert::assert(
-    is.numeric(cell_size_pixels) && is.finite(cell_size_pixels) && length(cell_size_pixels) == 1 && min(cell_size_pixels) >= 1,
+    is.numeric(cell_size_pixels) && all_finite(cell_size_pixels) && length(cell_size_pixels) == 1 && min(cell_size_pixels) >= 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 1"),
     name = "cell_size_pixels"
   )
@@ -331,7 +331,7 @@ validate_coverage.default <- function(layer) {
   coverage <- layer$coverage
   tidyassert::assert(!is.null(coverage))
   tidyassert::assert(
-    is.numeric(coverage) && is.finite(coverage) && length(coverage) == 1 && min(coverage) >= 0 && max(coverage) <= 1,
+    is.numeric(coverage) && all_finite(coverage) && length(coverage) == 1 && min(coverage) >= 0 && max(coverage) <= 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 1"),
     name = "coverage"
   )
@@ -356,7 +356,7 @@ validate_debounce_timeout.default <- function(layer) {
   debounce_timeout <- layer$debounce_timeout
   tidyassert::assert(!is.null(debounce_timeout))
   tidyassert::assert(
-    is.numeric(debounce_timeout) && is.finite(debounce_timeout) && length(debounce_timeout) == 1 && min(debounce_timeout) >= 0 && max(debounce_timeout) <= 1000,
+    is.numeric(debounce_timeout) && all_finite(debounce_timeout) && length(debounce_timeout) == 1 && min(debounce_timeout) >= 0 && max(debounce_timeout) <= 1000,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 1000"),
     name = "debounce_timeout"
   )
@@ -370,7 +370,7 @@ validate_desaturate.default <- function(layer) {
   desaturate <- layer$desaturate
   tidyassert::assert(!is.null(desaturate))
   tidyassert::assert(
-    is.numeric(desaturate) && is.finite(desaturate) && length(desaturate) == 1 && min(desaturate) >= 0 && max(desaturate) <= 1,
+    is.numeric(desaturate) && all_finite(desaturate) && length(desaturate) == 1 && min(desaturate) >= 0 && max(desaturate) <= 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 1"),
     name = "desaturate"
   )
@@ -384,7 +384,7 @@ validate_disk_resolution.default <- function(layer) {
   disk_resolution <- layer$disk_resolution
   tidyassert::assert(!is.null(disk_resolution))
   tidyassert::assert(
-    is.numeric(disk_resolution) && is.finite(disk_resolution) && length(disk_resolution) == 1 && min(disk_resolution) >= 4,
+    is.numeric(disk_resolution) && all_finite(disk_resolution) && length(disk_resolution) == 1 && min(disk_resolution) >= 4,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 4"),
     name = "disk_resolution"
   )
@@ -443,7 +443,7 @@ validate_elevation_lower_percentile.default <- function(layer) {
   elevation_lower_percentile <- layer$elevation_lower_percentile
   tidyassert::assert(!is.null(elevation_lower_percentile))
   tidyassert::assert(
-    is.numeric(elevation_lower_percentile) && is.finite(elevation_lower_percentile) && length(elevation_lower_percentile) == 1 && min(elevation_lower_percentile) >= 0 && max(elevation_lower_percentile) <= 100,
+    is.numeric(elevation_lower_percentile) && all_finite(elevation_lower_percentile) && length(elevation_lower_percentile) == 1 && min(elevation_lower_percentile) >= 0 && max(elevation_lower_percentile) <= 100,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 100"),
     name = "elevation_lower_percentile"
   )
@@ -457,7 +457,7 @@ validate_elevation_range.default <- function(layer) {
   elevation_range <- layer$elevation_range
   tidyassert::assert(!is.null(elevation_range))
   tidyassert::assert(
-    is.numeric(elevation_range) && is.finite(elevation_range) && length(elevation_range) == 2,
+    is.numeric(elevation_range) && all_finite(elevation_range) && length(elevation_range) == 2,
     c("x" = "{.arg {name}} must be a {.cls length-2 numeric} vector"),
     name = "elevation_range"
   )
@@ -471,7 +471,7 @@ validate_elevation_scale.default <- function(layer) {
   elevation_scale <- layer$elevation_scale
   tidyassert::assert(!is.null(elevation_scale))
   tidyassert::assert(
-    is.numeric(elevation_scale) && is.finite(elevation_scale) && length(elevation_scale) == 1 && min(elevation_scale) >= 0,
+    is.numeric(elevation_scale) && all_finite(elevation_scale) && length(elevation_scale) == 1 && min(elevation_scale) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "elevation_scale"
   )
@@ -499,7 +499,7 @@ validate_elevation_upper_percentile.default <- function(layer) {
   elevation_upper_percentile <- layer$elevation_upper_percentile
   tidyassert::assert(!is.null(elevation_upper_percentile))
   tidyassert::assert(
-    is.numeric(elevation_upper_percentile) && is.finite(elevation_upper_percentile) && length(elevation_upper_percentile) == 1 && min(elevation_upper_percentile) >= 0 && max(elevation_upper_percentile) <= 100,
+    is.numeric(elevation_upper_percentile) && all_finite(elevation_upper_percentile) && length(elevation_upper_percentile) == 1 && min(elevation_upper_percentile) >= 0 && max(elevation_upper_percentile) <= 100,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 100"),
     name = "elevation_upper_percentile"
   )
@@ -627,7 +627,7 @@ validate_get_angle.default <- function(layer) {
   get_angle <- layer$get_angle
   tidyassert::assert(!is.null(get_angle))
   tidyassert::assert(
-    is_accessor(get_angle) || is.numeric(get_angle) && is.finite(get_angle) && length(get_angle) == 1,
+    is_accessor(get_angle) || is.numeric(get_angle) && all_finite(get_angle) && length(get_angle) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_angle"
   )
@@ -635,7 +635,7 @@ validate_get_angle.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_angle$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_angle",
       col = substitute(get_angle$col)
@@ -710,7 +710,7 @@ validate_get_border_width.default <- function(layer) {
   get_border_width <- layer$get_border_width
   tidyassert::assert(!is.null(get_border_width))
   tidyassert::assert(
-    is_numeric_scale(get_border_width) || is_accessor(get_border_width) || is.numeric(get_border_width) && is.finite(get_border_width) && length(get_border_width) == 1,
+    is_numeric_scale(get_border_width) || is_accessor(get_border_width) || is.numeric(get_border_width) && all_finite(get_border_width) && length(get_border_width) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_border_width"
   )
@@ -718,7 +718,7 @@ validate_get_border_width.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_border_width$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_border_width",
       col = substitute(get_border_width$col)
@@ -769,7 +769,7 @@ validate_get_color_weight.default <- function(layer) {
   get_color_weight <- layer$get_color_weight
   tidyassert::assert(!is.null(get_color_weight))
   tidyassert::assert(
-    is_numeric_scale(get_color_weight) || is_accessor(get_color_weight) || is.numeric(get_color_weight) && is.finite(get_color_weight) && length(get_color_weight) == 1,
+    is_numeric_scale(get_color_weight) || is_accessor(get_color_weight) || is.numeric(get_color_weight) && all_finite(get_color_weight) && length(get_color_weight) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_color_weight"
   )
@@ -777,7 +777,7 @@ validate_get_color_weight.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_color_weight$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_color_weight",
       col = substitute(get_color_weight$col)
@@ -793,7 +793,7 @@ validate_get_elevation.default <- function(layer) {
   get_elevation <- layer$get_elevation
   tidyassert::assert(!is.null(get_elevation))
   tidyassert::assert(
-    is_numeric_scale(get_elevation) || is_accessor(get_elevation) || is.numeric(get_elevation) && is.finite(get_elevation) && length(get_elevation) == 1,
+    is_numeric_scale(get_elevation) || is_accessor(get_elevation) || is.numeric(get_elevation) && all_finite(get_elevation) && length(get_elevation) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_elevation"
   )
@@ -801,7 +801,7 @@ validate_get_elevation.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_elevation$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_elevation",
       col = substitute(get_elevation$col)
@@ -828,7 +828,7 @@ validate_get_elevation_weight.default <- function(layer) {
   get_elevation_weight <- layer$get_elevation_weight
   tidyassert::assert(!is.null(get_elevation_weight))
   tidyassert::assert(
-    is_numeric_scale(get_elevation_weight) || is_accessor(get_elevation_weight) || is.numeric(get_elevation_weight) && is.finite(get_elevation_weight) && length(get_elevation_weight) == 1,
+    is_numeric_scale(get_elevation_weight) || is_accessor(get_elevation_weight) || is.numeric(get_elevation_weight) && all_finite(get_elevation_weight) && length(get_elevation_weight) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_elevation_weight"
   )
@@ -836,7 +836,7 @@ validate_get_elevation_weight.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_elevation_weight$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_elevation_weight",
       col = substitute(get_elevation_weight$col)
@@ -876,7 +876,7 @@ validate_get_height.default <- function(layer) {
   get_height <- layer$get_height
   tidyassert::assert(!is.null(get_height))
   tidyassert::assert(
-    is_numeric_scale(get_height) || is_accessor(get_height) || is.numeric(get_height) && is.finite(get_height) && length(get_height) == 1,
+    is_numeric_scale(get_height) || is_accessor(get_height) || is.numeric(get_height) && all_finite(get_height) && length(get_height) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_height"
   )
@@ -884,7 +884,7 @@ validate_get_height.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_height$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_height",
       col = substitute(get_height$col)
@@ -954,7 +954,7 @@ validate_get_icon_angle.default <- function(layer) {
   get_icon_angle <- layer$get_icon_angle
   tidyassert::assert(!is.null(get_icon_angle))
   tidyassert::assert(
-    is_accessor(get_icon_angle) || is.numeric(get_icon_angle) && is.finite(get_icon_angle) && length(get_icon_angle) == 1,
+    is_accessor(get_icon_angle) || is.numeric(get_icon_angle) && all_finite(get_icon_angle) && length(get_icon_angle) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_icon_angle"
   )
@@ -962,7 +962,7 @@ validate_get_icon_angle.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_icon_angle$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_icon_angle",
       col = substitute(get_icon_angle$col)
@@ -1002,7 +1002,7 @@ validate_get_icon_pixel_offset.default <- function(layer) {
   get_icon_pixel_offset <- layer$get_icon_pixel_offset
   tidyassert::assert(!is.null(get_icon_pixel_offset))
   tidyassert::assert(
-    is_accessor(get_icon_pixel_offset) || is.numeric(get_icon_pixel_offset) && is.finite(get_icon_pixel_offset) && length(get_icon_pixel_offset) == 2,
+    is_accessor(get_icon_pixel_offset) || is.numeric(get_icon_pixel_offset) && all_finite(get_icon_pixel_offset) && length(get_icon_pixel_offset) == 2,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-2 numeric} vector"),
     name = "get_icon_pixel_offset"
   )
@@ -1010,7 +1010,7 @@ validate_get_icon_pixel_offset.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_icon_pixel_offset$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))) && all(lengths(accessor_data) == 2),
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 2),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-2 numeric>}"),
       name = "get_icon_pixel_offset",
       col = substitute(get_icon_pixel_offset$col)
@@ -1026,7 +1026,7 @@ validate_get_icon_size.default <- function(layer) {
   get_icon_size <- layer$get_icon_size
   tidyassert::assert(!is.null(get_icon_size))
   tidyassert::assert(
-    is_numeric_scale(get_icon_size) || is_accessor(get_icon_size) || is.numeric(get_icon_size) && is.finite(get_icon_size) && length(get_icon_size) == 1,
+    is_numeric_scale(get_icon_size) || is_accessor(get_icon_size) || is.numeric(get_icon_size) && all_finite(get_icon_size) && length(get_icon_size) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_icon_size"
   )
@@ -1034,7 +1034,7 @@ validate_get_icon_size.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_icon_size$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_icon_size",
       col = substitute(get_icon_size$col)
@@ -1074,7 +1074,7 @@ validate_get_line_width.default <- function(layer) {
   get_line_width <- layer$get_line_width
   tidyassert::assert(!is.null(get_line_width))
   tidyassert::assert(
-    is_numeric_scale(get_line_width) || is_accessor(get_line_width) || is.numeric(get_line_width) && is.finite(get_line_width) && length(get_line_width) == 1,
+    is_numeric_scale(get_line_width) || is_accessor(get_line_width) || is.numeric(get_line_width) && all_finite(get_line_width) && length(get_line_width) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_line_width"
   )
@@ -1082,7 +1082,7 @@ validate_get_line_width.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_line_width$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_line_width",
       col = substitute(get_line_width$col)
@@ -1098,7 +1098,7 @@ validate_get_normal.default <- function(layer) {
   get_normal <- layer$get_normal
   tidyassert::assert(!is.null(get_normal))
   tidyassert::assert(
-    is_accessor(get_normal) || is.numeric(get_normal) && is.finite(get_normal) && length(get_normal) == 3,
+    is_accessor(get_normal) || is.numeric(get_normal) && all_finite(get_normal) && length(get_normal) == 3,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-3 numeric} vector"),
     name = "get_normal"
   )
@@ -1106,7 +1106,7 @@ validate_get_normal.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_normal$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))) && all(lengths(accessor_data) == 3),
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-3 numeric>}"),
       name = "get_normal",
       col = substitute(get_normal$col)
@@ -1122,7 +1122,7 @@ validate_get_orientation.default <- function(layer) {
   get_orientation <- layer$get_orientation
   tidyassert::assert(!is.null(get_orientation))
   tidyassert::assert(
-    is_accessor(get_orientation) || is.numeric(get_orientation) && is.finite(get_orientation) && length(get_orientation) == 3,
+    is_accessor(get_orientation) || is.numeric(get_orientation) && all_finite(get_orientation) && length(get_orientation) == 3,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-3 numeric} vector"),
     name = "get_orientation"
   )
@@ -1130,7 +1130,7 @@ validate_get_orientation.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_orientation$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))) && all(lengths(accessor_data) == 3),
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-3 numeric>}"),
       name = "get_orientation",
       col = substitute(get_orientation$col)
@@ -1164,7 +1164,7 @@ validate_get_pixel_offset.default <- function(layer) {
   get_pixel_offset <- layer$get_pixel_offset
   tidyassert::assert(!is.null(get_pixel_offset))
   tidyassert::assert(
-    is_accessor(get_pixel_offset) || is.numeric(get_pixel_offset) && is.finite(get_pixel_offset) && length(get_pixel_offset) == 2,
+    is_accessor(get_pixel_offset) || is.numeric(get_pixel_offset) && all_finite(get_pixel_offset) && length(get_pixel_offset) == 2,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-2 numeric} vector"),
     name = "get_pixel_offset"
   )
@@ -1172,7 +1172,7 @@ validate_get_pixel_offset.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_pixel_offset$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))) && all(lengths(accessor_data) == 2),
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 2),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-2 numeric>}"),
       name = "get_pixel_offset",
       col = substitute(get_pixel_offset$col)
@@ -1212,7 +1212,7 @@ validate_get_point_radius.default <- function(layer) {
   get_point_radius <- layer$get_point_radius
   tidyassert::assert(!is.null(get_point_radius))
   tidyassert::assert(
-    is_numeric_scale(get_point_radius) || is_accessor(get_point_radius) || is.numeric(get_point_radius) && is.finite(get_point_radius) && length(get_point_radius) == 1,
+    is_numeric_scale(get_point_radius) || is_accessor(get_point_radius) || is.numeric(get_point_radius) && all_finite(get_point_radius) && length(get_point_radius) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_point_radius"
   )
@@ -1220,7 +1220,7 @@ validate_get_point_radius.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_point_radius$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_point_radius",
       col = substitute(get_point_radius$col)
@@ -1272,7 +1272,7 @@ validate_get_radius.default <- function(layer) {
   get_radius <- layer$get_radius
   tidyassert::assert(!is.null(get_radius))
   tidyassert::assert(
-    is_numeric_scale(get_radius) || is_accessor(get_radius) || is.numeric(get_radius) && is.finite(get_radius) && length(get_radius) == 1,
+    is_numeric_scale(get_radius) || is_accessor(get_radius) || is.numeric(get_radius) && all_finite(get_radius) && length(get_radius) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_radius"
   )
@@ -1280,7 +1280,7 @@ validate_get_radius.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_radius$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_radius",
       col = substitute(get_radius$col)
@@ -1314,7 +1314,7 @@ validate_get_scale.default <- function(layer) {
   get_scale <- layer$get_scale
   tidyassert::assert(!is.null(get_scale))
   tidyassert::assert(
-    is_accessor(get_scale) || is.numeric(get_scale) && is.finite(get_scale) && length(get_scale) == 3,
+    is_accessor(get_scale) || is.numeric(get_scale) && all_finite(get_scale) && length(get_scale) == 3,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-3 numeric} vector"),
     name = "get_scale"
   )
@@ -1322,7 +1322,7 @@ validate_get_scale.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_scale$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))) && all(lengths(accessor_data) == 3),
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-3 numeric>}"),
       name = "get_scale",
       col = substitute(get_scale$col)
@@ -1349,7 +1349,7 @@ validate_get_size.default <- function(layer) {
   get_size <- layer$get_size
   tidyassert::assert(!is.null(get_size))
   tidyassert::assert(
-    is_numeric_scale(get_size) || is_accessor(get_size) || is.numeric(get_size) && is.finite(get_size) && length(get_size) == 1,
+    is_numeric_scale(get_size) || is_accessor(get_size) || is.numeric(get_size) && all_finite(get_size) && length(get_size) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_size"
   )
@@ -1357,7 +1357,7 @@ validate_get_size.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_size$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_size",
       col = substitute(get_size$col)
@@ -1523,7 +1523,7 @@ validate_get_text_angle.default <- function(layer) {
   get_text_angle <- layer$get_text_angle
   tidyassert::assert(!is.null(get_text_angle))
   tidyassert::assert(
-    is_accessor(get_text_angle) || is.numeric(get_text_angle) && is.finite(get_text_angle) && length(get_text_angle) == 1,
+    is_accessor(get_text_angle) || is.numeric(get_text_angle) && all_finite(get_text_angle) && length(get_text_angle) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_text_angle"
   )
@@ -1531,7 +1531,7 @@ validate_get_text_angle.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_angle$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_text_angle",
       col = substitute(get_text_angle$col)
@@ -1595,7 +1595,7 @@ validate_get_text_border_width.default <- function(layer) {
   get_text_border_width <- layer$get_text_border_width
   tidyassert::assert(!is.null(get_text_border_width))
   tidyassert::assert(
-    is_numeric_scale(get_text_border_width) || is_accessor(get_text_border_width) || is.numeric(get_text_border_width) && is.finite(get_text_border_width) && length(get_text_border_width) == 1,
+    is_numeric_scale(get_text_border_width) || is_accessor(get_text_border_width) || is.numeric(get_text_border_width) && all_finite(get_text_border_width) && length(get_text_border_width) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_text_border_width"
   )
@@ -1603,7 +1603,7 @@ validate_get_text_border_width.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_border_width$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_text_border_width",
       col = substitute(get_text_border_width$col)
@@ -1643,7 +1643,7 @@ validate_get_text_pixel_offset.default <- function(layer) {
   get_text_pixel_offset <- layer$get_text_pixel_offset
   tidyassert::assert(!is.null(get_text_pixel_offset))
   tidyassert::assert(
-    is_accessor(get_text_pixel_offset) || is.numeric(get_text_pixel_offset) && is.finite(get_text_pixel_offset) && length(get_text_pixel_offset) == 2,
+    is_accessor(get_text_pixel_offset) || is.numeric(get_text_pixel_offset) && all_finite(get_text_pixel_offset) && length(get_text_pixel_offset) == 2,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-2 numeric} vector"),
     name = "get_text_pixel_offset"
   )
@@ -1651,7 +1651,7 @@ validate_get_text_pixel_offset.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_pixel_offset$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))) && all(lengths(accessor_data) == 2),
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 2),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-2 numeric>}"),
       name = "get_text_pixel_offset",
       col = substitute(get_text_pixel_offset$col)
@@ -1667,7 +1667,7 @@ validate_get_text_size.default <- function(layer) {
   get_text_size <- layer$get_text_size
   tidyassert::assert(!is.null(get_text_size))
   tidyassert::assert(
-    is_numeric_scale(get_text_size) || is_accessor(get_text_size) || is.numeric(get_text_size) && is.finite(get_text_size) && length(get_text_size) == 1,
+    is_numeric_scale(get_text_size) || is_accessor(get_text_size) || is.numeric(get_text_size) && all_finite(get_text_size) && length(get_text_size) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_text_size"
   )
@@ -1675,7 +1675,7 @@ validate_get_text_size.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_size$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_text_size",
       col = substitute(get_text_size$col)
@@ -1702,7 +1702,7 @@ validate_get_tilt.default <- function(layer) {
   get_tilt <- layer$get_tilt
   tidyassert::assert(!is.null(get_tilt))
   tidyassert::assert(
-    is_accessor(get_tilt) || is.numeric(get_tilt) && is.finite(get_tilt) && length(get_tilt) == 1 && min(get_tilt) >= -90 && max(get_tilt) <= 90,
+    is_accessor(get_tilt) || is.numeric(get_tilt) && all_finite(get_tilt) && length(get_tilt) == 1 && min(get_tilt) >= -90 && max(get_tilt) <= 90,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric} where -90 <= {.arg values} <= 90"),
     name = "get_tilt"
   )
@@ -1710,7 +1710,7 @@ validate_get_tilt.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_tilt$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data) && min(accessor_data) >= -90 && max(accessor_data) <= 90,
+      is.numeric(accessor_data) && all_finite(accessor_data) && min(accessor_data) >= -90 && max(accessor_data) <= 90,
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector where -90 <= {.arg values} <= 90"),
       name = "get_tilt",
       col = substitute(get_tilt$col)
@@ -1764,7 +1764,7 @@ validate_get_translation.default <- function(layer) {
   get_translation <- layer$get_translation
   tidyassert::assert(!is.null(get_translation))
   tidyassert::assert(
-    is_accessor(get_translation) || is.numeric(get_translation) && is.finite(get_translation) && length(get_translation) == 3,
+    is_accessor(get_translation) || is.numeric(get_translation) && all_finite(get_translation) && length(get_translation) == 3,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls column accessor}", "*" = "a {.cls length-3 numeric} vector"),
     name = "get_translation"
   )
@@ -1772,7 +1772,7 @@ validate_get_translation.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_translation$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all(is.finite(x)))) && all(lengths(accessor_data) == 3),
+      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-3 numeric>}"),
       name = "get_translation",
       col = substitute(get_translation$col)
@@ -1788,7 +1788,7 @@ validate_get_weight.default <- function(layer) {
   get_weight <- layer$get_weight
   tidyassert::assert(!is.null(get_weight))
   tidyassert::assert(
-    is_numeric_scale(get_weight) || is_accessor(get_weight) || is.numeric(get_weight) && is.finite(get_weight) && length(get_weight) == 1,
+    is_numeric_scale(get_weight) || is_accessor(get_weight) || is.numeric(get_weight) && all_finite(get_weight) && length(get_weight) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_weight"
   )
@@ -1796,7 +1796,7 @@ validate_get_weight.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_weight$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_weight",
       col = substitute(get_weight$col)
@@ -1812,7 +1812,7 @@ validate_get_width.default <- function(layer) {
   get_width <- layer$get_width
   tidyassert::assert(!is.null(get_width))
   tidyassert::assert(
-    is_numeric_scale(get_width) || is_accessor(get_width) || is.numeric(get_width) && is.finite(get_width) && length(get_width) == 1,
+    is_numeric_scale(get_width) || is_accessor(get_width) || is.numeric(get_width) && all_finite(get_width) && length(get_width) == 1,
     c("x" = "{.arg {name}} must be one of the following", "*" = "a {.cls numeric scale}", "*" = "a {.cls column accessor}", "*" = "a scalar {.cls numeric}"),
     name = "get_width"
   )
@@ -1820,7 +1820,7 @@ validate_get_width.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_width$col, data)]]
     tidyassert::assert(
-      is.numeric(accessor_data) && is.finite(accessor_data),
+      is.numeric(accessor_data) && all_finite(accessor_data),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls numeric} vector"),
       name = "get_width",
       col = substitute(get_width$col)
@@ -1929,7 +1929,7 @@ validate_icon_alpha_cutoff.default <- function(layer) {
   icon_alpha_cutoff <- layer$icon_alpha_cutoff
   tidyassert::assert(!is.null(icon_alpha_cutoff))
   tidyassert::assert(
-    is.numeric(icon_alpha_cutoff) && is.finite(icon_alpha_cutoff) && length(icon_alpha_cutoff) == 1 && min(icon_alpha_cutoff) >= 0 && max(icon_alpha_cutoff) <= 1,
+    is.numeric(icon_alpha_cutoff) && all_finite(icon_alpha_cutoff) && length(icon_alpha_cutoff) == 1 && min(icon_alpha_cutoff) >= 0 && max(icon_alpha_cutoff) <= 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 1"),
     name = "icon_alpha_cutoff"
   )
@@ -1977,7 +1977,7 @@ validate_icon_size_max_pixels.default <- function(layer) {
   icon_size_max_pixels <- layer$icon_size_max_pixels
   tidyassert::assert(!is.null(icon_size_max_pixels))
   tidyassert::assert(
-    is.numeric(icon_size_max_pixels) && is.finite(icon_size_max_pixels) && length(icon_size_max_pixels) == 1 && min(icon_size_max_pixels) >= 0,
+    is.numeric(icon_size_max_pixels) && all_finite(icon_size_max_pixels) && length(icon_size_max_pixels) == 1 && min(icon_size_max_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "icon_size_max_pixels"
   )
@@ -1991,7 +1991,7 @@ validate_icon_size_min_pixels.default <- function(layer) {
   icon_size_min_pixels <- layer$icon_size_min_pixels
   tidyassert::assert(!is.null(icon_size_min_pixels))
   tidyassert::assert(
-    is.numeric(icon_size_min_pixels) && is.finite(icon_size_min_pixels) && length(icon_size_min_pixels) == 1 && min(icon_size_min_pixels) >= 0,
+    is.numeric(icon_size_min_pixels) && all_finite(icon_size_min_pixels) && length(icon_size_min_pixels) == 1 && min(icon_size_min_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "icon_size_min_pixels"
   )
@@ -2005,7 +2005,7 @@ validate_icon_size_scale.default <- function(layer) {
   icon_size_scale <- layer$icon_size_scale
   tidyassert::assert(!is.null(icon_size_scale))
   tidyassert::assert(
-    is.numeric(icon_size_scale) && is.finite(icon_size_scale) && length(icon_size_scale) == 1 && min(icon_size_scale) >= 0,
+    is.numeric(icon_size_scale) && all_finite(icon_size_scale) && length(icon_size_scale) == 1 && min(icon_size_scale) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "icon_size_scale"
   )
@@ -2060,7 +2060,7 @@ validate_intensity.default <- function(layer) {
   intensity <- layer$intensity
   tidyassert::assert(!is.null(intensity))
   tidyassert::assert(
-    is.numeric(intensity) && is.finite(intensity) && length(intensity) == 1 && min(intensity) >= 0,
+    is.numeric(intensity) && all_finite(intensity) && length(intensity) == 1 && min(intensity) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "intensity"
   )
@@ -2116,7 +2116,7 @@ validate_line_height.default <- function(layer) {
   line_height <- layer$line_height
   tidyassert::assert(!is.null(line_height))
   tidyassert::assert(
-    is.numeric(line_height) && is.finite(line_height) && length(line_height) == 1,
+    is.numeric(line_height) && all_finite(line_height) && length(line_height) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "line_height"
   )
@@ -2144,7 +2144,7 @@ validate_line_miter_limit.default <- function(layer) {
   line_miter_limit <- layer$line_miter_limit
   tidyassert::assert(!is.null(line_miter_limit))
   tidyassert::assert(
-    is.numeric(line_miter_limit) && is.finite(line_miter_limit) && length(line_miter_limit) == 1 && min(line_miter_limit) >= 0,
+    is.numeric(line_miter_limit) && all_finite(line_miter_limit) && length(line_miter_limit) == 1 && min(line_miter_limit) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "line_miter_limit"
   )
@@ -2158,7 +2158,7 @@ validate_line_width_max_pixels.default <- function(layer) {
   line_width_max_pixels <- layer$line_width_max_pixels
   tidyassert::assert(!is.null(line_width_max_pixels))
   tidyassert::assert(
-    is.numeric(line_width_max_pixels) && is.finite(line_width_max_pixels) && length(line_width_max_pixels) == 1 && min(line_width_max_pixels) >= 0,
+    is.numeric(line_width_max_pixels) && all_finite(line_width_max_pixels) && length(line_width_max_pixels) == 1 && min(line_width_max_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "line_width_max_pixels"
   )
@@ -2172,7 +2172,7 @@ validate_line_width_min_pixels.default <- function(layer) {
   line_width_min_pixels <- layer$line_width_min_pixels
   tidyassert::assert(!is.null(line_width_min_pixels))
   tidyassert::assert(
-    is.numeric(line_width_min_pixels) && is.finite(line_width_min_pixels) && length(line_width_min_pixels) == 1 && min(line_width_min_pixels) >= 0,
+    is.numeric(line_width_min_pixels) && all_finite(line_width_min_pixels) && length(line_width_min_pixels) == 1 && min(line_width_min_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "line_width_min_pixels"
   )
@@ -2186,7 +2186,7 @@ validate_line_width_scale.default <- function(layer) {
   line_width_scale <- layer$line_width_scale
   tidyassert::assert(!is.null(line_width_scale))
   tidyassert::assert(
-    is.numeric(line_width_scale) && is.finite(line_width_scale) && length(line_width_scale) == 1 && min(line_width_scale) >= 0,
+    is.numeric(line_width_scale) && all_finite(line_width_scale) && length(line_width_scale) == 1 && min(line_width_scale) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "line_width_scale"
   )
@@ -2223,7 +2223,7 @@ validate_loop_length.default <- function(layer) {
   loop_length <- layer$loop_length
   tidyassert::assert(!is.null(loop_length))
   tidyassert::assert(
-    is.numeric(loop_length) && is.finite(loop_length) && length(loop_length) == 1 && min(loop_length) >= 0,
+    is.numeric(loop_length) && all_finite(loop_length) && length(loop_length) == 1 && min(loop_length) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "loop_length"
   )
@@ -2237,7 +2237,7 @@ validate_lower_percentile.default <- function(layer) {
   lower_percentile <- layer$lower_percentile
   tidyassert::assert(!is.null(lower_percentile))
   tidyassert::assert(
-    is.numeric(lower_percentile) && is.finite(lower_percentile) && length(lower_percentile) == 1 && min(lower_percentile) >= 0 && max(lower_percentile) <= 100,
+    is.numeric(lower_percentile) && all_finite(lower_percentile) && length(lower_percentile) == 1 && min(lower_percentile) >= 0 && max(lower_percentile) <= 100,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 100"),
     name = "lower_percentile"
   )
@@ -2287,7 +2287,7 @@ validate_max_requests.default <- function(layer) {
   max_requests <- layer$max_requests
   tidyassert::assert(!is.null(max_requests))
   tidyassert::assert(
-    is.numeric(max_requests) && is.finite(max_requests) && length(max_requests) == 1,
+    is.numeric(max_requests) && all_finite(max_requests) && length(max_requests) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "max_requests"
   )
@@ -2301,7 +2301,7 @@ validate_max_width.default <- function(layer) {
   max_width <- layer$max_width
   tidyassert::assert(!is.null(max_width))
   tidyassert::assert(
-    is.numeric(max_width) && is.finite(max_width) && length(max_width) == 1,
+    is.numeric(max_width) && all_finite(max_width) && length(max_width) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "max_width"
   )
@@ -2337,7 +2337,7 @@ validate_mesh_max_error.default <- function(layer) {
   mesh_max_error <- layer$mesh_max_error
   tidyassert::assert(!is.null(mesh_max_error))
   tidyassert::assert(
-    is.numeric(mesh_max_error) && is.finite(mesh_max_error) && length(mesh_max_error) == 1,
+    is.numeric(mesh_max_error) && all_finite(mesh_max_error) && length(mesh_max_error) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "mesh_max_error"
   )
@@ -2351,7 +2351,7 @@ validate_min_zoom.default <- function(layer) {
   min_zoom <- layer$min_zoom
   tidyassert::assert(!is.null(min_zoom))
   tidyassert::assert(
-    is.numeric(min_zoom) && is.finite(min_zoom) && length(min_zoom) == 1,
+    is.numeric(min_zoom) && all_finite(min_zoom) && length(min_zoom) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "min_zoom"
   )
@@ -2365,7 +2365,7 @@ validate_miter_limit.default <- function(layer) {
   miter_limit <- layer$miter_limit
   tidyassert::assert(!is.null(miter_limit))
   tidyassert::assert(
-    is.numeric(miter_limit) && is.finite(miter_limit) && length(miter_limit) == 1 && min(miter_limit) >= 0,
+    is.numeric(miter_limit) && all_finite(miter_limit) && length(miter_limit) == 1 && min(miter_limit) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "miter_limit"
   )
@@ -2395,7 +2395,7 @@ validate_offset.default <- function(layer) {
   offset <- layer$offset
   tidyassert::assert(!is.null(offset))
   tidyassert::assert(
-    is.numeric(offset) && is.finite(offset) && length(offset) == 2,
+    is.numeric(offset) && all_finite(offset) && length(offset) == 2,
     c("x" = "{.arg {name}} must be a {.cls length-2 numeric} vector"),
     name = "offset"
   )
@@ -2409,7 +2409,7 @@ validate_opacity.default <- function(layer) {
   opacity <- layer$opacity
   tidyassert::assert(!is.null(opacity))
   tidyassert::assert(
-    is.numeric(opacity) && is.finite(opacity) && length(opacity) == 1 && min(opacity) >= 0 && max(opacity) <= 1,
+    is.numeric(opacity) && all_finite(opacity) && length(opacity) == 1 && min(opacity) >= 0 && max(opacity) <= 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 1"),
     name = "opacity"
   )
@@ -2437,7 +2437,7 @@ validate_outline_width.default <- function(layer) {
   outline_width <- layer$outline_width
   tidyassert::assert(!is.null(outline_width))
   tidyassert::assert(
-    is.numeric(outline_width) && is.finite(outline_width) && length(outline_width) == 1 && min(outline_width) >= 0,
+    is.numeric(outline_width) && all_finite(outline_width) && length(outline_width) == 1 && min(outline_width) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "outline_width"
   )
@@ -2493,7 +2493,7 @@ validate_point_radius_max_pixels.default <- function(layer) {
   point_radius_max_pixels <- layer$point_radius_max_pixels
   tidyassert::assert(!is.null(point_radius_max_pixels))
   tidyassert::assert(
-    is.numeric(point_radius_max_pixels) && is.finite(point_radius_max_pixels) && length(point_radius_max_pixels) == 1 && min(point_radius_max_pixels) >= 0,
+    is.numeric(point_radius_max_pixels) && all_finite(point_radius_max_pixels) && length(point_radius_max_pixels) == 1 && min(point_radius_max_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "point_radius_max_pixels"
   )
@@ -2507,7 +2507,7 @@ validate_point_radius_min_pixels.default <- function(layer) {
   point_radius_min_pixels <- layer$point_radius_min_pixels
   tidyassert::assert(!is.null(point_radius_min_pixels))
   tidyassert::assert(
-    is.numeric(point_radius_min_pixels) && is.finite(point_radius_min_pixels) && length(point_radius_min_pixels) == 1 && min(point_radius_min_pixels) >= 0,
+    is.numeric(point_radius_min_pixels) && all_finite(point_radius_min_pixels) && length(point_radius_min_pixels) == 1 && min(point_radius_min_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "point_radius_min_pixels"
   )
@@ -2521,7 +2521,7 @@ validate_point_radius_scale.default <- function(layer) {
   point_radius_scale <- layer$point_radius_scale
   tidyassert::assert(!is.null(point_radius_scale))
   tidyassert::assert(
-    is.numeric(point_radius_scale) && is.finite(point_radius_scale) && length(point_radius_scale) == 1 && min(point_radius_scale) >= 0,
+    is.numeric(point_radius_scale) && all_finite(point_radius_scale) && length(point_radius_scale) == 1 && min(point_radius_scale) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "point_radius_scale"
   )
@@ -2549,7 +2549,7 @@ validate_point_size.default <- function(layer) {
   point_size <- layer$point_size
   tidyassert::assert(!is.null(point_size))
   tidyassert::assert(
-    is.numeric(point_size) && is.finite(point_size) && length(point_size) == 1 && min(point_size) >= 0,
+    is.numeric(point_size) && all_finite(point_size) && length(point_size) == 1 && min(point_size) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "point_size"
   )
@@ -2591,7 +2591,7 @@ validate_radius.default <- function(layer) {
   radius <- layer$radius
   tidyassert::assert(!is.null(radius))
   tidyassert::assert(
-    is.numeric(radius) && is.finite(radius) && length(radius) == 1 && min(radius) >= 1,
+    is.numeric(radius) && all_finite(radius) && length(radius) == 1 && min(radius) >= 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 1"),
     name = "radius"
   )
@@ -2605,7 +2605,7 @@ validate_radius_max_pixels.default <- function(layer) {
   radius_max_pixels <- layer$radius_max_pixels
   tidyassert::assert(!is.null(radius_max_pixels))
   tidyassert::assert(
-    is.numeric(radius_max_pixels) && is.finite(radius_max_pixels) && length(radius_max_pixels) == 1 && min(radius_max_pixels) >= 0,
+    is.numeric(radius_max_pixels) && all_finite(radius_max_pixels) && length(radius_max_pixels) == 1 && min(radius_max_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "radius_max_pixels"
   )
@@ -2619,7 +2619,7 @@ validate_radius_min_pixels.default <- function(layer) {
   radius_min_pixels <- layer$radius_min_pixels
   tidyassert::assert(!is.null(radius_min_pixels))
   tidyassert::assert(
-    is.numeric(radius_min_pixels) && is.finite(radius_min_pixels) && length(radius_min_pixels) == 1 && min(radius_min_pixels) >= 0,
+    is.numeric(radius_min_pixels) && all_finite(radius_min_pixels) && length(radius_min_pixels) == 1 && min(radius_min_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "radius_min_pixels"
   )
@@ -2633,7 +2633,7 @@ validate_radius_pixels.default <- function(layer) {
   radius_pixels <- layer$radius_pixels
   tidyassert::assert(!is.null(radius_pixels))
   tidyassert::assert(
-    is.numeric(radius_pixels) && is.finite(radius_pixels) && length(radius_pixels) == 1 && min(radius_pixels) >= 1 && max(radius_pixels) <= 100,
+    is.numeric(radius_pixels) && all_finite(radius_pixels) && length(radius_pixels) == 1 && min(radius_pixels) >= 1 && max(radius_pixels) <= 100,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 1 <= {.arg values} <= 100"),
     name = "radius_pixels"
   )
@@ -2647,7 +2647,7 @@ validate_radius_scale.default <- function(layer) {
   radius_scale <- layer$radius_scale
   tidyassert::assert(!is.null(radius_scale))
   tidyassert::assert(
-    is.numeric(radius_scale) && is.finite(radius_scale) && length(radius_scale) == 1 && min(radius_scale) >= 0,
+    is.numeric(radius_scale) && all_finite(radius_scale) && length(radius_scale) == 1 && min(radius_scale) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "radius_scale"
   )
@@ -2700,7 +2700,7 @@ validate_size_max_pixels.default <- function(layer) {
   size_max_pixels <- layer$size_max_pixels
   tidyassert::assert(!is.null(size_max_pixels))
   tidyassert::assert(
-    is.numeric(size_max_pixels) && is.finite(size_max_pixels) && length(size_max_pixels) == 1 && min(size_max_pixels) >= 0,
+    is.numeric(size_max_pixels) && all_finite(size_max_pixels) && length(size_max_pixels) == 1 && min(size_max_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "size_max_pixels"
   )
@@ -2714,7 +2714,7 @@ validate_size_min_pixels.default <- function(layer) {
   size_min_pixels <- layer$size_min_pixels
   tidyassert::assert(!is.null(size_min_pixels))
   tidyassert::assert(
-    is.numeric(size_min_pixels) && is.finite(size_min_pixels) && length(size_min_pixels) == 1 && min(size_min_pixels) >= 0,
+    is.numeric(size_min_pixels) && all_finite(size_min_pixels) && length(size_min_pixels) == 1 && min(size_min_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "size_min_pixels"
   )
@@ -2728,7 +2728,7 @@ validate_size_scale.default <- function(layer) {
   size_scale <- layer$size_scale
   tidyassert::assert(!is.null(size_scale))
   tidyassert::assert(
-    is.numeric(size_scale) && is.finite(size_scale) && length(size_scale) == 1 && min(size_scale) >= 0,
+    is.numeric(size_scale) && all_finite(size_scale) && length(size_scale) == 1 && min(size_scale) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "size_scale"
   )
@@ -2784,7 +2784,7 @@ validate_text_background_padding.default <- function(layer) {
   text_background_padding <- layer$text_background_padding
   tidyassert::assert(!is.null(text_background_padding))
   tidyassert::assert(
-    is.numeric(text_background_padding) && is.finite(text_background_padding) && length(text_background_padding) %in% c(2, 4),
+    is.numeric(text_background_padding) && all_finite(text_background_padding) && length(text_background_padding) %in% c(2, 4),
     c("x" = "{.arg {name}} must be a {.cls length-[2,4] numeric} vector"),
     name = "text_background_padding"
   )
@@ -2849,7 +2849,7 @@ validate_text_line_height.default <- function(layer) {
   text_line_height <- layer$text_line_height
   tidyassert::assert(!is.null(text_line_height))
   tidyassert::assert(
-    is.numeric(text_line_height) && is.finite(text_line_height) && length(text_line_height) == 1,
+    is.numeric(text_line_height) && all_finite(text_line_height) && length(text_line_height) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "text_line_height"
   )
@@ -2863,7 +2863,7 @@ validate_text_max_width.default <- function(layer) {
   text_max_width <- layer$text_max_width
   tidyassert::assert(!is.null(text_max_width))
   tidyassert::assert(
-    is.numeric(text_max_width) && is.finite(text_max_width) && length(text_max_width) == 1,
+    is.numeric(text_max_width) && all_finite(text_max_width) && length(text_max_width) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "text_max_width"
   )
@@ -2891,7 +2891,7 @@ validate_text_outline_width.default <- function(layer) {
   text_outline_width <- layer$text_outline_width
   tidyassert::assert(!is.null(text_outline_width))
   tidyassert::assert(
-    is.numeric(text_outline_width) && is.finite(text_outline_width) && length(text_outline_width) == 1 && min(text_outline_width) >= 0,
+    is.numeric(text_outline_width) && all_finite(text_outline_width) && length(text_outline_width) == 1 && min(text_outline_width) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "text_outline_width"
   )
@@ -2905,7 +2905,7 @@ validate_text_size_max_pixels.default <- function(layer) {
   text_size_max_pixels <- layer$text_size_max_pixels
   tidyassert::assert(!is.null(text_size_max_pixels))
   tidyassert::assert(
-    is.numeric(text_size_max_pixels) && is.finite(text_size_max_pixels) && length(text_size_max_pixels) == 1,
+    is.numeric(text_size_max_pixels) && all_finite(text_size_max_pixels) && length(text_size_max_pixels) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "text_size_max_pixels"
   )
@@ -2919,7 +2919,7 @@ validate_text_size_min_pixels.default <- function(layer) {
   text_size_min_pixels <- layer$text_size_min_pixels
   tidyassert::assert(!is.null(text_size_min_pixels))
   tidyassert::assert(
-    is.numeric(text_size_min_pixels) && is.finite(text_size_min_pixels) && length(text_size_min_pixels) == 1,
+    is.numeric(text_size_min_pixels) && all_finite(text_size_min_pixels) && length(text_size_min_pixels) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "text_size_min_pixels"
   )
@@ -2933,7 +2933,7 @@ validate_text_size_scale.default <- function(layer) {
   text_size_scale <- layer$text_size_scale
   tidyassert::assert(!is.null(text_size_scale))
   tidyassert::assert(
-    is.numeric(text_size_scale) && is.finite(text_size_scale) && length(text_size_scale) == 1,
+    is.numeric(text_size_scale) && all_finite(text_size_scale) && length(text_size_scale) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "text_size_scale"
   )
@@ -2986,7 +2986,7 @@ validate_threshold.default <- function(layer) {
   threshold <- layer$threshold
   tidyassert::assert(!is.null(threshold))
   tidyassert::assert(
-    is.numeric(threshold) && is.finite(threshold) && length(threshold) == 1 && min(threshold) >= 0 && max(threshold) <= 1,
+    is.numeric(threshold) && all_finite(threshold) && length(threshold) == 1 && min(threshold) >= 0 && max(threshold) <= 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 1"),
     name = "threshold"
   )
@@ -3000,7 +3000,7 @@ validate_tile_size.default <- function(layer) {
   tile_size <- layer$tile_size
   tidyassert::assert(!is.null(tile_size))
   tidyassert::assert(
-    is.numeric(tile_size) && is.finite(tile_size) && length(tile_size) == 1,
+    is.numeric(tile_size) && all_finite(tile_size) && length(tile_size) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "tile_size"
   )
@@ -3039,7 +3039,7 @@ validate_trail_length.default <- function(layer) {
   trail_length <- layer$trail_length
   tidyassert::assert(!is.null(trail_length))
   tidyassert::assert(
-    is.numeric(trail_length) && is.finite(trail_length) && length(trail_length) == 1 && min(trail_length) >= 0,
+    is.numeric(trail_length) && all_finite(trail_length) && length(trail_length) == 1 && min(trail_length) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "trail_length"
   )
@@ -3081,7 +3081,7 @@ validate_upper_percentile.default <- function(layer) {
   upper_percentile <- layer$upper_percentile
   tidyassert::assert(!is.null(upper_percentile))
   tidyassert::assert(
-    is.numeric(upper_percentile) && is.finite(upper_percentile) && length(upper_percentile) == 1 && min(upper_percentile) >= 0 && max(upper_percentile) <= 100,
+    is.numeric(upper_percentile) && all_finite(upper_percentile) && length(upper_percentile) == 1 && min(upper_percentile) >= 0 && max(upper_percentile) <= 100,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 0 <= {.arg values} <= 100"),
     name = "upper_percentile"
   )
@@ -3136,7 +3136,7 @@ validate_weights_texture_size.default <- function(layer) {
   weights_texture_size <- layer$weights_texture_size
   tidyassert::assert(!is.null(weights_texture_size))
   tidyassert::assert(
-    is.numeric(weights_texture_size) && is.finite(weights_texture_size) && length(weights_texture_size) == 1 && min(weights_texture_size) >= 128 && max(weights_texture_size) <= 2048,
+    is.numeric(weights_texture_size) && all_finite(weights_texture_size) && length(weights_texture_size) == 1 && min(weights_texture_size) >= 128 && max(weights_texture_size) <= 2048,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where 128 <= {.arg values} <= 2048"),
     name = "weights_texture_size"
   )
@@ -3150,7 +3150,7 @@ validate_width_max_pixels.default <- function(layer) {
   width_max_pixels <- layer$width_max_pixels
   tidyassert::assert(!is.null(width_max_pixels))
   tidyassert::assert(
-    is.numeric(width_max_pixels) && is.finite(width_max_pixels) && length(width_max_pixels) == 1 && min(width_max_pixels) >= 0,
+    is.numeric(width_max_pixels) && all_finite(width_max_pixels) && length(width_max_pixels) == 1 && min(width_max_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "width_max_pixels"
   )
@@ -3164,7 +3164,7 @@ validate_width_min_pixels.default <- function(layer) {
   width_min_pixels <- layer$width_min_pixels
   tidyassert::assert(!is.null(width_min_pixels))
   tidyassert::assert(
-    is.numeric(width_min_pixels) && is.finite(width_min_pixels) && length(width_min_pixels) == 1 && min(width_min_pixels) >= 0,
+    is.numeric(width_min_pixels) && all_finite(width_min_pixels) && length(width_min_pixels) == 1 && min(width_min_pixels) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "width_min_pixels"
   )
@@ -3178,7 +3178,7 @@ validate_width_scale.default <- function(layer) {
   width_scale <- layer$width_scale
   tidyassert::assert(!is.null(width_scale))
   tidyassert::assert(
-    is.numeric(width_scale) && is.finite(width_scale) && length(width_scale) == 1 && min(width_scale) >= 0,
+    is.numeric(width_scale) && all_finite(width_scale) && length(width_scale) == 1 && min(width_scale) >= 0,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric} where {.arg values} >= 0"),
     name = "width_scale"
   )
@@ -3264,7 +3264,7 @@ validate_z_offset.default <- function(layer) {
   z_offset <- layer$z_offset
   tidyassert::assert(!is.null(z_offset))
   tidyassert::assert(
-    is.numeric(z_offset) && is.finite(z_offset) && length(z_offset) == 1,
+    is.numeric(z_offset) && all_finite(z_offset) && length(z_offset) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "z_offset"
   )
@@ -3289,7 +3289,7 @@ validate_zoom_offset.default <- function(layer) {
   zoom_offset <- layer$zoom_offset
   tidyassert::assert(!is.null(zoom_offset))
   tidyassert::assert(
-    is.numeric(zoom_offset) && is.finite(zoom_offset) && length(zoom_offset) == 1,
+    is.numeric(zoom_offset) && all_finite(zoom_offset) && length(zoom_offset) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls numeric}"),
     name = "zoom_offset"
   )

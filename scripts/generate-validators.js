@@ -138,7 +138,7 @@ function numberCheck({ name, valueType, min, max, isScalar }) {
   const messages = [];
 
   if (valueType === "number") {
-    conditions.push(flagCondition(name, "is.numeric"), flagCondition(name, "is.finite"));
+    conditions.push(flagCondition(name, "is.numeric"), flagCondition(name, "all_finite"));
     if (isScalar) conditions.push(lengthCondition(name, 1));
 
     // min & max conditions
@@ -176,7 +176,7 @@ function arrayCheck({ name, valueType, value, length }, isList = false) {
     if (isList) {
       conditions.push(
         flagCondition(name, "is.list"),
-        `all(vapply_l(${name}, function(x) is.numeric(x) && all(is.finite(x))))`
+        `all(vapply_l(${name}, function(x) is.numeric(x) && all_finite(x)))`
       );
 
       // length condition
@@ -188,7 +188,7 @@ function arrayCheck({ name, valueType, value, length }, isList = false) {
 
       messages.push(objectMessage(`list_of<length-${JSON.stringify(length)} numeric>`));
     } else {
-      conditions.push(flagCondition(name, "is.numeric"), flagCondition(name, "is.finite"));
+      conditions.push(flagCondition(name, "is.numeric"), flagCondition(name, "all_finite"));
 
       // length condition
       if (Array.isArray(length)) {
