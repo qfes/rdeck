@@ -2,30 +2,34 @@
 #' @name scale_props
 #' @rdname _scale_props
 #' @param col <`name` | `string`> The name of the column containing data to be scaled.
-#' Can be either a named column (non-standard evaluation), or an expression evaluating a string.
+#' Must be a valid input to [rlang::ensym()]; either a named column (non-standard evaluation), a string.
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
-#' @param palette <[`color`]> The colour palette of the colour scale. Must be a vector of
-#' rgb[a] hex strings of length >= 2.
-#' @param range <`numeric`> The output range of the numeric scale. Must be be a numeric vector of
-#' length >= 2.
+#' @param palette <[`color`]|`function`> The colour palette of the colour scale. Must be a:
+#' - vector of RGBA hex colours,
+#' - a palette generator function, taking a length parameter, or
+#' - a palette ramp created from [scales::colour_ramp()]
+#'
+#' A [scales::colour_ramp()] interpolator is created from the input palette.
+#' @param range <`numeric`> The output range of the numeric scale. Must be length >= 2.
+#' A [stats::approxfun()] interpolator is created from the input range.
 #' @param na_color <[`color`]> The colour value for `NA` input values.
 #' @param na_value <`number`> The output value for `NA` input values.
-#' @param limits <`c(min, max)`> The limits of the scale's input. If not null, must be a
-#' numeric vector of length 2, representing `c(min, max)`. Values outside the range of
-#' `limits` will be clamped to the limits of the scale.
-#' @param breaks <`numeric`> The breaks of the scale, allowing to define a piecewise scale.
-#' If not null, must be `length(palette) - 2` or `length(range) - 2`, such that each `break`
-#' is mapped to a `palette` or `range` entry.
+#' @param limits <`c(min, max)`> The limits of the scale's input. If `NULL`, limits are computed
+#' from layer data. Values outside the range of limits are clamped.
+#' @param breaks <`numeric` | `function`> The breaks of the scale, allowing to define a piecewise scale.
+#' The scale `palette` or numeric `range` are linearly interpolated (by length) and mapped onto `breaks`.
+#' Breaks outside the `limits` of the scale are discarded.
 #'
-#' Each break will be present on the legend for colour scales.
-#' @param n_ticks <`number`> The number of ticks to display on the legend. Includes the domain
-#' of the scale. If `breaks` is not `NULL`, each break must map to a tick and gaps between
-#' breaks must have the same number of ticks; i.e. `n_ticks` must be
-#' `2 + length(breaks) + x * (length(breaks) + 1)`, where `x` is any positive integer.
+#' If not `NULL`, breaks must be either:
+#' - a numeric vector
+#' - a breaks function, taking a numeric vector argument (e.g. [breaks_linear()])
 #'
-#' Defaults to `2 + length(breaks)` when `breaks` is not `NULL`; `6` otherwise.
-#' @param tick_format <`function`> A function taking a vector of ticks returning formatted ticks.
-#' @param legend <`logical`> Indicate whether the legend should be displayed for this scale.
+#' Defaults to [breaks_trans()] where `trans` is the scale's transformer.
+#' @param n_ticks <`number`> The number of ticks to display on the legend. Must be >= 2.
+#' The legend size will grow and shrink depending on this value.
+#'
+#' @param tick_format <`function`> A label function taking a vector of ticks returning formatted ticks.
+#' @param legend <`boolean`> Indicate whether the legend should be displayed for this scale.
 NULL
 
 
@@ -119,9 +123,8 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
 #' Scale power
 #'
 #' @description
-#' Creates a continuous power scale. Power scales are similar to a [`scale_linear`], except
-#' that an exponential transform is applied to each input prior to calculating the output
-#' colour or number.
+#' Creates a continuous power scale, where input values are transformed with
+#' [power_trans(exponent)][power_trans()] before calculating the output.
 #'
 #' Power scales can be useful in transforming positively skewed data. A square-root or
 #' cube-root scale can be helpful in dealing with right-skewed data.
@@ -178,14 +181,13 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
 #' Scale log
 #'
 #' @description
-#' Creates a continuous log scale. Log scales are similar to a [`scale_linear`], except
-#' that a logarithmic transform is applied to each input prior to calculating the output
-#' colour or number.
+#' Creates a continuous log scale, where input values are transformed with [log_trans(base)][log_trans()]
+#' before calculating the output.
 #'
 #' Log scales can be useful in transforming positively skewed data.
 #'
 #' @note
-#' Undefined behaviour if `limits` crosses 0. `limits` must be strictly positive or negative.
+#' `limits`, whether explicitly supplied, or computed from data, must not cross 0.
 #'
 #' @name scale_log
 #' @param base <`number`> The log base. The log base must be a strictly positive value != 1.
@@ -235,21 +237,26 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
 #' Scale threshold
 #'
 #' @description
-#' Creates a discrete threshold scale. Threshold scales slice the input data into
-#' `length(palette)` (or `length(range)`) bins, with each bin being assigned a colour
-#' (or number) associated with that bin.
+#' Creates a discrete threshold scale. Threshold scales slice `palette` or `range` into
+#' `length(breaks) + 1` bins, with each break defining the threshold between 2 bins.
 #'
-#' Threshold scales are similar [`scale_quantize`], except that threshold break values can be
-#' any sequence of numbers, provided that they are in increasing order and within the bounds
-#' of limits.
+#' Threshold scales can be used to create any discrete scale, using either manual breaks
+#' or generated breaks via a transform (e.g. [breaks_power(n = 6, exponent = 0.5)][breaks_power()] for a
+#' discrete sqrt scale).
+#'
+#' @note
+#' Threshold scales don't require limits, but [breaks_trans()] does.
 #'
 #' @name scale_threshold
-#' @param breaks <`numeric`> The threshold breaks of the scale. Must be `length(palette) - 1`
-#' or `length(range) - 1`, such that each `break` defines boundary between between a
-#' pair of a `palette` or `range` entries.
+#' @param breaks <`numeric` | `function`> The threshold breaks of the scale.
+#' The scale `palette` or numeric `range` are linearly interpolated (by length) and mapped onto `breaks`.
+#' Breaks outside the `limits` of the scale are discarded.
 #'
-#' Breaks must be in increasing order, within the bounds of `limits`. Each break will be
-#' present on the legend for colour scales.
+#' If not `NULL`, breaks must be either:
+#' - a numeric vector
+#' - a breaks function, taking a numeric vector argument (e.g. [breaks_linear()])
+#'
+#' Breaks must be in increasing order. Each break will be present on the legend for colour scales.
 #' @inheritParams scale_props
 #' @family scales
 #' @export
@@ -294,24 +301,26 @@ scale_threshold <- function(col, range = 0:1, na_value = 0,
 #' Scale quantile
 #'
 #' @description
-#' Creates a quantile scale. The number of quantiles is defined by the length of
-#' `palette` or `range`. For example, a quantile scale with 5 colours will have quantile
-#' breaks at: `c(0.2, 0.4, 0.6, 0.8)`.
+#' Creates a threshold scale, where threshold breaks are computed from the given quantile
+#' `probs`.
 #'
 #' Quantile scale legend ticks will be quantile values at each quantile break (including
-#' limits), not the quantile probabilities at each break. You may override this with
+#' limits), not the quantile probabilities at each break. This can be overridden in
 #' `tick_format`.
 #'
 #' Example:
-#' `tick_format = function(x) format_number(seq(0, 1, length.out = length(x)))`.
+#' `tick_format = function(x) as.character(probs)`.
 #'
 #' @note
 #' As the quantiles are computed from input data, quantile scales are incompatible with
 #' layers that load data from a url (e.g `mvt_layer`). If quantiles for remote data are
-#' known, a quantile scale can be constructed manually with [`scale_threshold`].
+#' known, a quantile scale can be constructed manually with [scale_threshold()].
 #'
 #' @name scale_quantile
 #' @inheritParams scale_props
+#' @param probs <`numeric`> The quantile probabilities. Must be between 0 and 1.
+#' @param data <`numeric`> The data used to compute the quantiles. If `NULL`, will be
+#' taken from the layer data.
 #' @family scales
 #' @export
 scale_color_quantile <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
@@ -361,8 +370,9 @@ scale_quantile <- function(col, range = 0:1, na_value = 0,
 #' @name scale_category
 #' @param levels <`factor` | `character` | `logical`> The category levels. If `NULL`, will be
 #' populated from input data. The order of the levels is determined by `levels()` for factors
-#' & `unique()` otherwise. Length of `levels` must equal `palette` or `range`, such that each
-#' category level is assigned a colour or range value.
+#' & `unique()` otherwise.
+#'
+#' If there are more levels than colours (or range values), the palette (or range) is interpolated.
 #' @param unmapped_color <[`color`]> The colour representing unmapped levels.
 #' @param unmapped_tick <`string`> The tick label of the unmapped category. If not `NULL` and
 #' `legend == TRUE`, the unmapped category will appear at the bottom of the legend.
@@ -413,15 +423,14 @@ scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, 
 #' Scale quantize
 #'
 #' @description
-#' Creates a discrete quantize scale. Quantize scales are a special case of [`scale_threshold`]
-#' in that each threshold break is uniformly spaced between limits.
-#'
-#' Similar to [`scale_threshold`], quantize scales slice input data into `length(palette)`
-#' (or `length(range)`) equally spaced bins, with each bin being assigned a colour (or number)
-#' associated with that bin.
+#' Creates a discrete quantize scale, with `n_breaks` linearly spaced threshold breaks between
+#' `limits`. This scale can be thought of as a restricted special case of [scale_threshold()],
+#' or a discrete [scale_linear()].
 #'
 #' @name scale_quantize
 #' @inheritParams scale_props
+#' @param n_breaks <`integer`> The number of linearly spaced breaks in the scale.
+#' Each break will be present on the legend for colour scales.
 #' @family scales
 #' @export
 scale_color_quantize <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
