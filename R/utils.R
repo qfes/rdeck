@@ -63,8 +63,8 @@ set_class <- `class<-`
 set_value <- `[[<-`
 
 # vapply shorthands
-vapply_l <- function(x, fn, ..., named = TRUE) vapply(x, fn, logical(1), ..., USE.NAMES = named)
-vapply_c <- function(x, fn, ..., named = TRUE) vapply(x, fn, character(1), ..., USE.NAMES = named)
+vlapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, logical(1), ..., USE.NAMES = named)
+vcapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, character(1), ..., USE.NAMES = named)
 
 # dplyr-like select for lists
 select <- function(lst, ...) {

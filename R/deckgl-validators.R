@@ -1010,7 +1010,7 @@ validate_get_icon_pixel_offset.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_icon_pixel_offset$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 2),
+      is.list(accessor_data) && all(vlapply(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 2),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-2 numeric>}"),
       name = "get_icon_pixel_offset",
       col = substitute(get_icon_pixel_offset$col)
@@ -1106,7 +1106,7 @@ validate_get_normal.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_normal$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
+      is.list(accessor_data) && all(vlapply(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-3 numeric>}"),
       name = "get_normal",
       col = substitute(get_normal$col)
@@ -1130,7 +1130,7 @@ validate_get_orientation.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_orientation$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
+      is.list(accessor_data) && all(vlapply(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-3 numeric>}"),
       name = "get_orientation",
       col = substitute(get_orientation$col)
@@ -1172,7 +1172,7 @@ validate_get_pixel_offset.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_pixel_offset$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 2),
+      is.list(accessor_data) && all(vlapply(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 2),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-2 numeric>}"),
       name = "get_pixel_offset",
       col = substitute(get_pixel_offset$col)
@@ -1322,7 +1322,7 @@ validate_get_scale.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_scale$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
+      is.list(accessor_data) && all(vlapply(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-3 numeric>}"),
       name = "get_scale",
       col = substitute(get_scale$col)
@@ -1651,7 +1651,7 @@ validate_get_text_pixel_offset.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_text_pixel_offset$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 2),
+      is.list(accessor_data) && all(vlapply(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 2),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-2 numeric>}"),
       name = "get_text_pixel_offset",
       col = substitute(get_text_pixel_offset$col)
@@ -1772,7 +1772,7 @@ validate_get_translation.default <- function(layer) {
     data <- layer$data
     accessor_data <- data[[tidyselect::eval_select(get_translation$col, data)]]
     tidyassert::assert(
-      is.list(accessor_data) && all(vapply_l(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
+      is.list(accessor_data) && all(vlapply(accessor_data, function(x) is.numeric(x) && all_finite(x))) && all(lengths(accessor_data) == 3),
       c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls list_of<length-3 numeric>}"),
       name = "get_translation",
       col = substitute(get_translation$col)

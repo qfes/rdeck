@@ -176,7 +176,7 @@ function arrayCheck({ name, valueType, value, length }, isList = false) {
     if (isList) {
       conditions.push(
         flagCondition(name, "is.list"),
-        `all(vapply_l(${name}, function(x) is.numeric(x) && all_finite(x)))`
+        `all(vlapply(${name}, function(x) is.numeric(x) && all_finite(x)))`
       );
 
       // length condition

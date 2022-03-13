@@ -64,7 +64,7 @@ round_sfc <- function(sfc, digits = 6L) {
 
 get_colnames <- function(layer) {
   # cannot *easily* know which cols are referenced in js() accessors
-  if (any(vapply_l(layer, is_js_eval))) {
+  if (any(vlapply(layer, is_js_eval))) {
     return(tidyselect::everything())
   }
 
@@ -72,7 +72,7 @@ get_colnames <- function(layer) {
   tooltip_cols <- if (layer$pickable && is_tooltip(tooltip)) tooltip$cols
 
   accessors <- select(unclass(layer), where(is_accessor), where(is_scale))
-  accessor_cols <- vapply_c(accessors, purrr::pluck, "col")
+  accessor_cols <- vcapply(accessors, purrr::pluck, "col")
 
   unique(c(accessor_cols, tooltip_cols))
 }
