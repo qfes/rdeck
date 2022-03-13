@@ -8,7 +8,7 @@
 add_trips_layer(
   rdeck,
   ...,
-  id = NULL,
+  id = uuid::UUIDgenerate(),
   name = "TripsLayer",
   group_name = NULL,
   data = NULL,
@@ -34,11 +34,11 @@ add_trips_layer(
   fade_trail = TRUE,
   trail_length = 120,
   get_timestamps = timestamps,
-  loop_length = 1800,
-  animation_speed = 30,
   blending_mode = "normal",
   visibility_toggle = TRUE,
-  tooltip = FALSE
+  tooltip = NULL,
+  loop_length = 1800,
+  animation_speed = 30
 )
 }
 \arguments{
@@ -131,10 +131,6 @@ representing the time at which that position was visited.
 Accepts a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}
 list column of numbers.}
 
-\item{loop_length}{<\code{number}> The number of seconds to complete an animation loop.}
-
-\item{animation_speed}{<\code{number}> The animation speed multiplier.}
-
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:
 \itemize{
@@ -145,10 +141,16 @@ dot density on dark maps.
 dot density on light maps.
 }}
 
+\item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
+
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
 \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+
+\item{loop_length}{<\code{number}> The number of seconds to complete an animation loop.}
+
+\item{animation_speed}{<\code{number}> The animation speed multiplier.}
 }
 \description{
 Trips Layer

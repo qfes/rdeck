@@ -58,6 +58,8 @@ to_json.accessor <- function(obj) {
   )
 }
 
+#' @autoglobal
+#' @noRd
 to_json.scale <- function(obj) {
   compiled <- mutate(
     compile(obj),

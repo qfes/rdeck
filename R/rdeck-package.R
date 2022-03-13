@@ -7,5 +7,7 @@
 ## usethis namespace: start
 #' @importFrom generics compile
 #' @importFrom rlang %||%
+#' @importFrom rlang .data
+#' @importFrom rlang .env
 ## usethis namespace: end
 NULL

@@ -36,5 +36,37 @@ utils::globalVariables(c(
   "text", # <add_mvt_layer>
   "position", # <add_simple_mesh_layer>
   "position", # <add_scenegraph_layer>
+  "scale_type", # <to_json.scale>
+  "data_type", # <to_json.scale>
+  "legend", # <to_json.scale>
+  "unknown", # <to_json.scale>
+  ".data", # <to_json.scale>
+  "unknown_tick", # <to_json.scale>
+  "base", # <to_json.scale>
+  "exponent", # <to_json.scale>
+  "get_breaks", # <>
+  "get_palette", # <>
+  "get_range", # <>
+  "get_ticks", # <>
+  "tick_format", # <>
+  "limits", # <compile.scale_color>
+  "domain", # <compile.scale_color>
+  "limits", # <compile.scale_numeric>
+  "domain", # <compile.scale_numeric>
+  "limits", # <compile.scale_color_threshold>
+  "domain", # <compile.scale_color_threshold>
+  "limits", # <compile.scale_numeric_threshold>
+  "domain", # <compile.scale_numeric_threshold>
+  "data", # <compile.scale_color_quantile>
+  "data", # <compile.scale_numeric_quantile>
+  "domain", # <compile.scale_color_category>
+  "domain", # <compile.scale_numeric_category>
+  "limits", # <compile.scale_color_quantize>
+  "domain", # <compile.scale_color_quantize>
+  "limits", # <compile.scale_numeric_quantize>
+  "where", # <select>
+  "x", # <validate_point_type.layer>
+  "y", # <validate_point_type.layer>
+  "z", # <validate_point_type.layer>
   NULL
 ))

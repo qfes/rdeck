@@ -119,7 +119,9 @@ validate_get_text.GeoJsonLayer <- function(layer) {
 
 validate_get_text.MVTLayer <- validate_get_text.GeoJsonLayer
 
-# validate point_type
+#' validate point_type
+#' @autoglobal
+#' @noRd
 validate_point_type.layer <- function(layer) {
   # build vector of all point type combinations
   types <- c("circle", "icon", "text")

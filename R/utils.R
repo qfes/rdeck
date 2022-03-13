@@ -48,6 +48,8 @@ vlapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, logical(1), ..., USE
 vcapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, character(1), ..., USE.NAMES = named)
 
 # dplyr-like select for lists
+#' @global where
+#' @noRd
 select <- function(lst, ...) {
   pos <- tidyselect::eval_select(rlang::expr(c(...)), unclass(lst), )
   attrs <- purrr::list_modify(attributes(lst), names = names(pos))

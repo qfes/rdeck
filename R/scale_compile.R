@@ -1,3 +1,13 @@
+#' @name compile.scale
+#' @global get_breaks
+#' @global get_palette
+#' @global get_range
+#' @global get_ticks
+#' @global tick_format
+#' @noRd
+NULL
+
+#' @autoglobal
 #' @export
 compile.scale_color <- function(object, ...) {
   tidyassert::assert_not_null(object$limits$range)
@@ -13,6 +23,7 @@ compile.scale_color <- function(object, ...) {
   select(scale, where(is.atomic))
 }
 
+#' @autoglobal
 #' @export
 compile.scale_numeric <- function(object, ...) {
   tidyassert::assert_not_null(object$limits$range)
@@ -27,6 +38,7 @@ compile.scale_numeric <- function(object, ...) {
 }
 
 
+#' @autoglobal
 #' @export
 compile.scale_color_threshold <- function(object, ...) {
   scale <- mutate(
@@ -43,6 +55,7 @@ compile.scale_color_threshold <- function(object, ...) {
   select(scale, where(is.atomic))
 }
 
+#' @autoglobal
 #' @export
 compile.scale_numeric_threshold <- function(object, ...) {
   scale <- mutate(
@@ -58,6 +71,7 @@ compile.scale_numeric_threshold <- function(object, ...) {
 }
 
 
+#' @autoglobal
 #' @export
 compile.scale_color_quantile <- function(object, ...) {
   tidyassert::assert_not_null(object$data$range)
@@ -71,6 +85,7 @@ compile.scale_color_quantile <- function(object, ...) {
   compile.scale_color_threshold(object)
 }
 
+#' @autoglobal
 #' @export
 compile.scale_numeric_quantile <- function(object, ...) {
   tidyassert::assert_not_null(object$data$range)
@@ -85,6 +100,7 @@ compile.scale_numeric_quantile <- function(object, ...) {
 }
 
 
+#' @autoglobal
 #' @export
 compile.scale_color_category <- function(object, ...) {
   tidyassert::assert_not_null(object$levels$range)
@@ -99,6 +115,7 @@ compile.scale_color_category <- function(object, ...) {
   select(scale, where(is.atomic))
 }
 
+#' @autoglobal
 #' @export
 compile.scale_numeric_category <- function(object, ...) {
   tidyassert::assert_not_null(object$levels$range)
@@ -113,6 +130,7 @@ compile.scale_numeric_category <- function(object, ...) {
 }
 
 
+#' @autoglobal
 #' @export
 compile.scale_color_quantize <- function(object, ...) {
   tidyassert::assert_not_null(object$limits$range)
@@ -128,6 +146,7 @@ compile.scale_color_quantize <- function(object, ...) {
   select(scale, where(is.atomic))
 }
 
+#' @autoglobal
 #' @export
 compile.scale_numeric_quantize <- function(object, ...) {
   tidyassert::assert_not_null(object$limits$range)

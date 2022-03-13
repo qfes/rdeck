@@ -8,7 +8,7 @@
 add_terrain_layer(
   rdeck,
   ...,
-  id = NULL,
+  id = uuid::UUIDgenerate(),
   name = "TerrainLayer",
   group_name = NULL,
   data = NULL,
@@ -35,14 +35,14 @@ add_terrain_layer(
   texture = NULL,
   mesh_max_error = 4,
   bounds = NULL,
-  color = c(255, 255, 255),
+  color = "#ffffff",
   elevation_decoder = list(rScaler = 1, gScaler = 0, bScaler = 0, offset = 0),
   worker_url = NULL,
   wireframe = FALSE,
   material = TRUE,
   blending_mode = "normal",
   visibility_toggle = TRUE,
-  tooltip = FALSE
+  tooltip = NULL
 )
 }
 \arguments{
@@ -153,6 +153,8 @@ dot density on dark maps.
 \item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.
 }}
+
+\item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.

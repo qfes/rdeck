@@ -8,7 +8,7 @@
 add_geojson_layer(
   rdeck,
   ...,
-  id = NULL,
+  id = uuid::UUIDgenerate(),
   name = "GeoJsonLayer",
   group_name = NULL,
   data = NULL,
@@ -55,7 +55,7 @@ add_geojson_layer(
   text_size_units = "pixels",
   text_background = FALSE,
   text_background_padding = c(0, 0, 0, 0),
-  text_font_family = "Monaco, monospace",
+  text_font_family = "Roboto, Helvetica, Arial, san-serif",
   text_font_weight = "normal",
   text_line_height = 1,
   text_max_width = -1,
@@ -86,7 +86,7 @@ add_geojson_layer(
   point_type = "circle",
   blending_mode = "normal",
   visibility_toggle = TRUE,
-  tooltip = FALSE
+  tooltip = NULL
 )
 }
 \arguments{
@@ -216,6 +216,8 @@ dot density on dark maps.
 \item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.
 }}
+
+\item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.

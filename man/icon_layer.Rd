@@ -8,7 +8,7 @@
 add_icon_layer(
   rdeck,
   ...,
-  id = NULL,
+  id = uuid::UUIDgenerate(),
   name = "IconLayer",
   group_name = NULL,
   data = NULL,
@@ -36,7 +36,7 @@ add_icon_layer(
   get_pixel_offset = c(0, 0),
   blending_mode = "normal",
   visibility_toggle = TRUE,
-  tooltip = FALSE
+  tooltip = NULL
 )
 }
 \arguments{
@@ -139,6 +139,8 @@ dot density on dark maps.
 \item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.
 }}
+
+\item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.

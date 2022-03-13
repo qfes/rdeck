@@ -20,6 +20,8 @@ When \code{visble = NULL}:
 \item on update, use current state in the browser
 \item on add, layer is visible
 }}
+
+\item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
 }
 \description{
 Sets a layer's visibility and whether it is \emph{selectable} in the layer selector.
