@@ -69,12 +69,12 @@ manual_breaks <- breaks_manual
 #' @family breaks
 #' @export
 breaks_trans <- function(n = 10, trans) {
-  tidyassert::assert_is_scalar_integerish(n)
-  tidyassert::assert_inherits(trans, "trans")
+  tidyassert::assert(rlang::is_scalar_integerish(n) && n >= 0)
+  tidyassert::assert(scales::is.trans(trans))
 
   n_default <- n
   function(x, n = n_default) {
-    tidyassert::assert_is_scalar_integerish(n)
+    tidyassert::assert(rlang::is_scalar_integerish(n) && n >= 0)
 
     rng <- scales::train_continuous(x, c(-Inf, Inf))
     if (any(!is.finite(rng))) {
@@ -222,7 +222,6 @@ symlog_breaks <- breaks_symlog
 # Generate a breaks vector for the given probs
 quantile_breaks <- function(probs) {
   tidyassert::assert(is.numeric(probs) && min(probs) >= 0 && max(probs) <= 1 && !is.unsorted(probs))
-  # ensure
   probs <- unique(c(0, probs, 1))
 
   function(x) {

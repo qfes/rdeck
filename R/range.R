@@ -9,6 +9,11 @@ continuous_range <- function(limits = NULL) {
 # initialise a discrete range
 discrete_range <- function(levels = NULL) {
   rng <- scales::DiscreteRange$new()
+  # ensure input order is preserved
+  if (!is.factor(levels)) {
+    lvls <- unique(levels)
+    levels <- factor(lvls, lvls)
+  }
   rng$train(levels)
   rng
 }
