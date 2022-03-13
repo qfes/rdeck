@@ -131,8 +131,6 @@ compile.scale_color_quantize <- function(object, ...) {
 #' @export
 compile.scale_numeric_quantize <- function(object, ...) {
   tidyassert::assert_not_null(object$limits$range)
-  domain <- object$limits$range
-  ramp <- object$get_breaks(0:1)
 
   scale <- mutate(
     unclass(object),

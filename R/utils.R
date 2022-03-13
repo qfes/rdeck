@@ -18,27 +18,6 @@ mvt_url <- function(tileset_id) {
     urltools::param_set("access_token", mapbox_access_token())
 }
 
-discard_null <- function(obj) {
-  obj_filtered <- obj[!vapply(obj, is.null, logical(1))]
-  mostattributes(obj_filtered) <- c(attributes(obj), names = names(obj_filtered))
-
-  obj_filtered
-}
-
-pick <- function(obj, names) {
-  obj_filtered <- obj[base::names(obj) %in% names]
-  class(obj_filtered) <- class(obj)
-
-  obj_filtered
-}
-
-omit <- function(obj, names) {
-  obj_filtered <- obj[!base::names(obj) %in% names]
-  class(obj_filtered) <- class(obj)
-
-  obj_filtered
-}
-
 # extension of sign, where 0 is treated as positive
 sign0 <- function(x) (x >= 0L) - (x < 0L)
 
@@ -51,9 +30,8 @@ isapprox <- function(a, b, tol = sqrt(.Machine$double.eps)) {
 get_levels <- function(x) if (is.factor(x)) levels(x) else unique(x)
 
 # add class
-add_class <- function(obj, new_class, pos = 1L) {
-  class(obj) <- append(class(obj), new_class, pos - 1L)
-  obj
+add_class <- function(object, new_class, pos = 1L) {
+  set_class(object, append(class(object), new_class, pos - 1L))
 }
 
 # set class
@@ -62,6 +40,9 @@ set_class <- `class<-`
 # replace value
 set_value <- `[[<-`
 
+# set most attributes
+set_mostattributes <- `mostattributes<-`
+
 # vapply shorthands
 vlapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, logical(1), ..., USE.NAMES = named)
 vcapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, character(1), ..., USE.NAMES = named)
@@ -69,9 +50,8 @@ vcapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, character(1), ..., U
 # dplyr-like select for lists
 select <- function(lst, ...) {
   pos <- tidyselect::eval_select(rlang::expr(c(...)), unclass(lst), )
-  lst_subset <- rlang::set_names(lst[pos], names(pos))
-
-  set_class(lst_subset, class(lst))
+  attrs <- purrr::list_modify(attributes(lst), names = names(pos))
+  set_mostattributes(lst[pos], attrs)
 }
 
 # dplyr-like rename for lists
@@ -102,12 +82,10 @@ ramp_n <- function(n) seq.int(0, 1, length.out = n)
 
 drop_ends <- function(x) x[-c(1, length(x))]
 
-# obj is an rgba hex colour vector
-is_rgba_color <- function(obj) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", obj, ignore.case = TRUE)
+# is an rgba hex colour vector
+is_rgba_color <- function(x) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", x, ignore.case = TRUE)
 
-is_js_eval <- function(obj) inherits(obj, "JS_EVAL")
-
-is_sfc <- function(obj) inherits(obj, "sfc")
+is_js_eval <- function(object) inherits(object, "JS_EVAL")
 
 all_finite <- function(x) all(is.finite(x))
 

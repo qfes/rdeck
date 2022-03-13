@@ -143,8 +143,9 @@ rdeck_proxy <- function(id,
     use_device_pixels = use_device_pixels,
     blending_mode = blending_mode,
     ...
-  ) %>%
-    discard_null()
+  )
+
+  props <- select(props, -where(is.null))
 
   if (length(props) != 0) {
     data <- structure(
@@ -182,8 +183,9 @@ add_layer.rdeck_proxy <- function(rdeck, layer) {
 set_layer_visibility <- function(rdeck, id, visible = NULL, visibility_toggle = NULL) {
   tidyassert::assert_inherits(rdeck, "rdeck_proxy")
   props <- list(id = id, visible = visible, visibility_toggle = visibility_toggle)
+
   layer <- structure(
-    discard_null(props),
+    select(props, -where(is.null)),
     class = "layer"
   )
 

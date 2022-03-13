@@ -58,8 +58,7 @@ rdeck <- function(map_style = mapbox_dark(),
 
   props <- rlang::exec(
     rdeck_props,
-    !!!omit(dots, "mapbox_api_access_token"),
-    mapbox_api_access_token = dots$mapbox_api_access_token %||% mapbox_access_token(),
+    !!!mutate(dots, mapbox_api_access_token = dots$mapbox_api_access_token %||% mapbox_access_token()),
     map_style = map_style,
     initial_bounds = if (!is.null(initial_bounds)) map_bounds(initial_bounds),
     initial_view_state = initial_view_state,
