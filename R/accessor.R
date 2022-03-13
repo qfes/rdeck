@@ -1,7 +1,7 @@
 #' Accessor
 #'
 #' @name accessor
-#' @param quo a quosure
+#' @param expr an expression
 #' @param data anything. If data.frame, names evaluated from `quo` are validated against data
 #' @param data_type determine the structure of the serialised data. One of:
 #' - table
@@ -10,18 +10,25 @@
 #'
 #' @keywords internal
 #' @noRd
-accessor <- function(quo, data = NULL, data_type = NULL) {
-  # dispatch off the quosure expression
-  expr <- if (!rlang::quo_is_symbol(quo)) rlang::eval_tidy(quo) else rlang::quo_get_expr(quo)
+accessor <- function(expr, data = NULL, data_type = NULL) {
   UseMethod("accessor", expr)
 }
 
-accessor.default <- function(quo, data = NULL, data_type = NULL) {
-  rlang::eval_tidy(quo)
+accessor.default <- function(expr, data = NULL, data_type = NULL) {
+  rlang::eval_tidy(expr)
 }
 
-accessor.name <- function(quo, data = NULL, data_type = NULL) {
-  col <- rlang::as_name(quo)
+accessor.quosure <- function(expr, data = NULL, data_type = NULL) {
+  # dispatch off the quosure expression
+  if (rlang::quo_is_symbol(expr)) {
+    return(accessor.name(rlang::get_expr(expr), data, data_type))
+  }
+
+  accessor(rlang::eval_tidy(expr), data, data_type)
+}
+
+accessor.name <- function(expr, data = NULL, data_type = NULL) {
+  col <- rlang::as_name(expr)
 
   if (!is.null(data_type)) {
     tidyassert::assert(data_type %in% c("table", "object", "geojson"))
@@ -36,20 +43,19 @@ accessor.name <- function(quo, data = NULL, data_type = NULL) {
   )
 }
 
-accessor.sf_column <- function(quo, data = NULL, data_type = NULL) {
+accessor.sf_column <- function(expr, data = NULL, data_type = NULL) {
   # sf_column only applicable to sf objects
   tidyassert::assert(
     inherits(data, "sf"),
     "{.fn sf_column} requires {.cls sf} datatset",
-    print_expr = substitute(inherits(data, "sf") || !inherits(quo, "sf_column"))
+    print_expr = substitute(inherits(data, "sf") || !inherits(expr, "sf_column"))
   )
 
-  new_quo <- rlang::as_quosure(attr(data, "sf_column"), rlang::quo_get_env(quo))
-  accessor.name(new_quo, data, data_type)
+  accessor.name(attr(data, "sf_column"), data, data_type)
 }
 
-accessor.scale <- function(quo, data = NULL, data_type = NULL) {
-  scale <- rlang::eval_tidy(quo)
+accessor.scale <- function(expr, data = NULL, data_type = NULL) {
+  scale <- expr
 
   # does column exist?
   tidyassert::assert(
