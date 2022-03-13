@@ -69,6 +69,7 @@ manhattan_data <- fload(url) %>%
   as_tibble(.name_repair = ~ c("lon", "lat", "species")) %>%
   mutate(
     position = sfc_point(lon, lat),
+    species = as.factor(species),
     species_name = if_else(species == 1, "dog", "cat")
   )
 ```
