@@ -69,7 +69,7 @@ to_json.scale <- function(obj) {
     unknown = jsonlite::unbox(unknown),
 
     # may not exist
-    unknown_tick = if (scale_type == "category" && is_color_scale(obj)) jsonlite::unbox(unknown_tick),
+    unknown_tick = if (rlang::has_name(.data, "unknown_tick")) jsonlite::unbox(unknown_tick),
     base = if (scale_type == "log") jsonlite::unbox(base),
     exponent = if (scale_type == "power") jsonlite::unbox(exponent)
   )
@@ -90,7 +90,7 @@ to_json.scale_color <- function(obj) {
   obj <- rename(
     obj,
     unknown = ifelse(is_category, "unmapped_color", "na_color"),
-    unknown_tick = if (is_category) "unmapped_tick"
+    unknown_tick = if (rlang::has_name(.data, "unmapped_tick")) "unmapped_tick"
   )
 
   NextMethod()
