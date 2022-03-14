@@ -1,0 +1,47 @@
+[
+  {
+    "name": "id",
+    "type": "string",
+    "value": null,
+    "optional": false
+  },
+  {
+    "name": "name",
+    "type": "string",
+    "value": null,
+    "optional": true
+  },
+  {
+    "name": "groupName",
+    "type": "string",
+    "value": null,
+    "optional": true
+  },
+  {
+    "name": "blendingMode",
+    "type": "string",
+    "value": "normal",
+    "values": ["normal", "additive", "subtractive"],
+    "optional": false
+  },
+  {
+    "name": "visibilityToggle",
+    "type": "boolean",
+    "value": true,
+    "optional": false
+  },
+  {
+    "name": "tooltip",
+    "type": "function",
+    "value": null,
+    "optional": true
+  },
+  {
+    "name": "positionFormat",
+    "values": ["XY", "XYZ"]
+  },
+  {
+    "name": "colorFormat",
+    "values": ["RGB", "RGBA"]
+  }
+]

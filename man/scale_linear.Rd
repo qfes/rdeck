@@ -7,7 +7,7 @@
 \usage{
 scale_color_linear(
   col,
-  palette,
+  palette = scales::viridis_pal(),
   na_color = "#000000",
   limits = NULL,
   breaks = NULL,
@@ -27,37 +27,44 @@ scale_linear(
 }
 \arguments{
 \item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
-Can be either a named column (non-standard evaluation), or an expression evaluating a string.
+Must be a valid input to \code{\link[rlang:defusing-advanced]{rlang::ensym()}}; either a named column (non-standard evaluation), a string.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{palette}{<\code{\link{color}}> The colour palette of the colour scale. Must be a vector of
-rgb\link{a} hex strings of length >= 2.}
+\item{palette}{<\code{\link{color}}|\code{function}> The colour palette of the colour scale. Must be a:
+\itemize{
+\item vector of RGBA hex colours,
+\item a palette generator function, taking a length parameter, or
+\item a palette ramp created from \code{\link[scales:colour_ramp]{scales::colour_ramp()}}
+}
+
+A \code{\link[scales:colour_ramp]{scales::colour_ramp()}} interpolator is created from the input palette.}
 
 \item{na_color}{<\code{\link{color}}> The colour value for \code{NA} input values.}
 
-\item{limits}{<\code{c(min, max)}> The limits of the scale's input. If not null, must be a
-numeric vector of length 2, representing \code{c(min, max)}. Values outside the range of
-\code{limits} will be clamped to the limits of the scale.}
+\item{limits}{<\code{c(min, max)}> The limits of the scale's input. If \code{NULL}, limits are computed
+from layer data. Values outside the range of limits are clamped.}
 
-\item{breaks}{<\code{numeric}> The breaks of the scale, allowing to define a piecewise scale.
-If not null, must be \code{length(palette) - 2} or \code{length(range) - 2}, such that each \code{break}
-is mapped to a \code{palette} or \code{range} entry.
+\item{breaks}{<\code{numeric} | \code{function}> The breaks of the scale, allowing to define a piecewise scale.
+The scale \code{palette} or numeric \code{range} are linearly interpolated (by length) and mapped onto \code{breaks}.
+Breaks outside the \code{limits} of the scale are discarded.
 
-Each break will be present on the legend for colour scales.}
+If not \code{NULL}, breaks must be either:
+\itemize{
+\item a numeric vector
+\item a breaks function, taking a numeric vector argument (e.g. \code{\link[=breaks_linear]{breaks_linear()}})
+}
 
-\item{n_ticks}{<\code{number}> The number of ticks to display on the legend. Includes the domain
-of the scale. If \code{breaks} is not \code{NULL}, each break must map to a tick and gaps between
-breaks must have the same number of ticks; i.e. \code{n_ticks} must be
-\code{2 + length(breaks) + x * (length(breaks) + 1)}, where \code{x} is any positive integer.
+Defaults to \code{\link[=breaks_trans]{breaks_trans()}} where \code{trans} is the scale's transformer.}
 
-Defaults to \code{2 + length(breaks)} when \code{breaks} is not \code{NULL}; \code{6} otherwise.}
+\item{n_ticks}{<\code{number}> The number of ticks to display on the legend. Must be >= 2.
+The legend size will grow and shrink depending on this value.}
 
-\item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
+\item{tick_format}{<\code{function}> A label function taking a vector of ticks returning formatted ticks.}
 
-\item{legend}{<\code{logical}> Indicate whether the legend should be displayed for this scale.}
+\item{legend}{<\code{boolean}> Indicate whether the legend should be displayed for this scale.}
 
-\item{range}{<\code{numeric}> The output range of the numeric scale. Must be be a numeric vector of
-length >= 2.}
+\item{range}{<\code{numeric}> The output range of the numeric scale. Must be length >= 2.
+A \code{\link[stats:approxfun]{stats::approxfun()}} interpolator is created from the input range.}
 
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }

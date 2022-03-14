@@ -20,9 +20,9 @@ NULL
 #' @keywords internal
 #' @noRd
 eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
-  assert_type(quo, "quosure")
+  tidyassert::assert_inherits(quo, "quosure")
   if (!is.null(data_type)) {
-    assert_in(data_type, c("table", "object", "geojson"))
+    tidyassert::assert(data_type %in% c("table", "object", "geojson"))
   }
   expr <- rlang::get_expr(quo)
 
@@ -69,7 +69,7 @@ eval_tooltip <- function(quo, data = NULL, data_type = NULL) {
 
   # a character vector
   cols <- rlang::eval_tidy(quo)
-  assert_type(cols, "character", "tooltip")
+  tidyassert::assert_inherits(cols, "character", "tooltip")
 
   tooltip(cols, data)
 }
@@ -83,3 +83,5 @@ tooltip <- function(cols, data = NULL, data_type = NULL) {
     class = "tooltip"
   )
 }
+
+is_tooltip <- function(object) inherits(object, "tooltip")

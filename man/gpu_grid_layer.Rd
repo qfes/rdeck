@@ -8,7 +8,7 @@
 add_gpu_grid_layer(
   rdeck,
   ...,
-  id = NULL,
+  id = uuid::UUIDgenerate(),
   name = "GPUGridLayer",
   group_name = NULL,
   data = NULL,
@@ -35,8 +35,7 @@ add_gpu_grid_layer(
   extruded = FALSE,
   material = TRUE,
   blending_mode = "normal",
-  visibility_toggle = TRUE,
-  tooltip = FALSE
+  visibility_toggle = TRUE
 )
 }
 \arguments{
@@ -143,10 +142,7 @@ dot density on dark maps.
 dot density on light maps.
 }}
 
-\item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable == TRUE}.
-Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
-\code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+\item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
 }
 \description{
 GPU Grid Layer

@@ -30,6 +30,7 @@ labels.
 \examples{
 breaks_log(5)(-10:-1)
 breaks_log(5)(1:10)
+
 }
 \seealso{
 Other breaks: 

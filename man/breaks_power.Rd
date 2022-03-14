@@ -21,7 +21,7 @@ If input range is non-finite, an empty vector is returned.
 }
 \examples{
 breaks_power(5)(-10:10)
-breaks_power(5, exponent = 1/3)(-1:1)
+breaks_power(5, exponent = 1 / 3)(-1:1)
 
 }
 \seealso{

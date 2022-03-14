@@ -452,6 +452,7 @@ NULL
 #' When `visble = NULL`:
 #' - on update, use current state in the browser
 #' - on add, layer is visible
+#' @param visibility_toggle <`boolean`> Whether this layer will appear in the layer selector.
 #' @param pickable <`boolean`> Determines if the layer responds to pointer / touch events.
 #' @param opacity <`number`> Determines the layer's opacity.
 #' @param position_format <`"XY"` | `"XYZ"`> Determines whether each coordinate has two (XY)

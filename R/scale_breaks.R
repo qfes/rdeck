@@ -17,15 +17,11 @@
 #' @family breaks
 #' @export
 breaks_manual <- function(thresholds = 0.5) {
-  tidyassert::assert(is.numeric(thresholds))
-  tidyassert::assert(is.finite(thresholds))
-  tidyassert::assert(!is.unsorted(thresholds))
+  tidyassert::assert(is.numeric(thresholds) && all_finite(thresholds) && !is.unsorted(thresholds))
 
   thresholds_default <- thresholds
   function(x, thresholds = thresholds_default) {
-    tidyassert::assert(is.numeric(thresholds))
-    tidyassert::assert(is.finite(thresholds))
-    tidyassert::assert(!is.unsorted(thresholds))
+    tidyassert::assert(is.numeric(thresholds) && all_finite(thresholds) && !is.unsorted(thresholds))
 
     # rng can be reversed for infinte input
     rng <- sort(scales::train_continuous(x, c(-Inf, Inf)))
@@ -33,7 +29,7 @@ breaks_manual <- function(thresholds = 0.5) {
     # drop any thresholds outside or equal to range
     thresholds_clamped <- thresholds[
       thresholds > rng[1] & thresholds < rng[2] &
-      !isapprox(thresholds, rng[1]) & !isapprox(thresholds, rng[2])
+        !isapprox(thresholds, rng[1]) & !isapprox(thresholds, rng[2])
     ]
 
     c(rng[1], thresholds_clamped, rng[2])
@@ -73,14 +69,14 @@ manual_breaks <- breaks_manual
 #' @family breaks
 #' @export
 breaks_trans <- function(n = 10, trans) {
-  tidyassert::assert_is_scalar_integerish(n)
-  tidyassert::assert_inherits(trans, "trans")
+  tidyassert::assert(rlang::is_scalar_integerish(n) && n >= 0)
+  tidyassert::assert(scales::is.trans(trans))
 
   n_default <- n
   function(x, n = n_default) {
-    tidyassert::assert_is_scalar_integerish(n)
+    tidyassert::assert(rlang::is_scalar_integerish(n) && n >= 0)
 
-    rng <- scales::train_continuous(x)
+    rng <- scales::train_continuous(x, c(-Inf, Inf))
     if (any(!is.finite(rng))) {
       return(numeric())
     }
@@ -134,7 +130,7 @@ linear_breaks <- breaks_linear
 #'
 #' @examples
 #' breaks_power(5)(-10:10)
-#' breaks_power(5, exponent = 1/3)(-1:1)
+#' breaks_power(5, exponent = 1 / 3)(-1:1)
 #'
 #' @name breaks_power
 #' @inherit breaks_linear
@@ -171,7 +167,7 @@ power_breaks <- breaks_power
 #' @examples
 #' breaks_log(5)(-10:-1)
 #' breaks_log(5)(1:10)
-#
+#'
 #' @name breaks_log
 #' @inherit breaks_linear
 #' @inheritParams log_trans
@@ -184,7 +180,7 @@ breaks_log <- function(n = 10, base = exp(1)) {
 
   function(x, n = n_default) {
     tidyassert::assert(
-      min(x, na.rm = TRUE) > 0 | max(x, na.rm = TRUE) < 0,
+      suppressWarnings(min(x, na.rm = TRUE) > 0 | max(x, na.rm = TRUE) < 0),
       "range must not contain, nor cross 0"
     )
 
@@ -206,7 +202,7 @@ log_breaks <- breaks_log
 #' @examples
 #' breaks_symlog(5)(-10:10)
 #' breaks_symlog(5)(0:10)
-#
+#'
 #' @name breaks_symlog
 #' @inherit breaks_linear
 #'
@@ -221,3 +217,26 @@ breaks_symlog <- function(n = 10) {
 #' @usage NULL
 #' @export
 symlog_breaks <- breaks_symlog
+
+
+# Generate a breaks vector for the given probs
+quantile_breaks <- function(probs) {
+  tidyassert::assert(is.numeric(probs) && min(probs) >= 0 && max(probs) <= 1 && !is.unsorted(probs))
+  probs <- unique(c(0, probs, 1))
+
+  function(x) {
+    if (any(!is.finite(x))) {
+      return(numeric())
+    }
+
+    stats::quantile(x, probs = probs, names = FALSE)
+  }
+}
+
+
+# coerce breaks into a breaks function
+as_breaks <- function(breaks) UseMethod("as_breaks")
+as_breaks.NULL <- function(breaks) NULL
+as_breaks.function <- function(breaks) breaks
+as_breaks.integer <- function(breaks) breaks_manual(breaks)
+as_breaks.numeric <- function(breaks) breaks_manual(breaks)

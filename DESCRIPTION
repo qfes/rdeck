@@ -1,7 +1,7 @@
 Type: Package
 Package: rdeck
 Title: Deck.gl Widget
-Version: 0.3.0.9900
+Version: 0.3.0.91000
 Authors@R:
     person(given = "Anthony", family = "North", role = c("aut", "cre"), email = "anthony.jl.north@gmail.com")
 Description: Deck.gl widget for R.
@@ -13,7 +13,6 @@ Depends:
 Imports:
     base64enc,
     geojsonsf (>= 1.3.0),
-    htmltools (>= 0.4.0),
     htmlwidgets (>= 1.5.1),
     magrittr,
     sf (>= 0.9.3),
@@ -25,8 +24,12 @@ Imports:
     tidyselect,
     urltools,
     uuid,
-    tidyassert (>= 0.2.0),
-    scales
+    tidyassert (>= 0.3.0),
+    scales,
+    R6,
+    generics,
+    purrr,
+    jsonlite
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(

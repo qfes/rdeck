@@ -1,17 +1,3 @@
-get_position_format <- function(obj) UseMethod("get_position_format")
-
-get_position_format.sf <- function(obj) {
-  get_position_format(sf::st_geometry(obj))
-}
-
-get_position_format.sfc <- function(col) {
-  get_position_format(col[[1]])
-}
-
-get_position_format.sfg <- function(geom) {
-  class(geom)[1]
-}
-
 #' SFC Point
 #'
 #' Create an sfc_point column from coordinate vectors
@@ -47,3 +33,7 @@ sfc_point <- function(x, y, z = NULL, crs = 4326) {
 #' @name sf_column
 #' @export
 sf_column <- function() structure(list(), class = "sf_column")
+
+
+# is object a simple features column
+is_sfc <- function(object) inherits(object, "sfc")

@@ -7,7 +7,7 @@
 \usage{
 scale_color_category(
   col,
-  palette,
+  palette = scales::brewer_pal("div"),
   unmapped_color = "#000000",
   levels = NULL,
   unmapped_tick = NULL,
@@ -25,28 +25,35 @@ scale_category(
 }
 \arguments{
 \item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
-Can be either a named column (non-standard evaluation), or an expression evaluating a string.
+Must be a valid input to \code{\link[rlang:defusing-advanced]{rlang::ensym()}}; either a named column (non-standard evaluation), a string.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{palette}{<\code{\link{color}}> The colour palette of the colour scale. Must be a vector of
-rgb\link{a} hex strings of length >= 2.}
+\item{palette}{<\code{\link{color}}|\code{function}> The colour palette of the colour scale. Must be a:
+\itemize{
+\item vector of RGBA hex colours,
+\item a palette generator function, taking a length parameter, or
+\item a palette ramp created from \code{\link[scales:colour_ramp]{scales::colour_ramp()}}
+}
+
+A \code{\link[scales:colour_ramp]{scales::colour_ramp()}} interpolator is created from the input palette.}
 
 \item{unmapped_color}{<\code{\link{color}}> The colour representing unmapped levels.}
 
 \item{levels}{<\code{factor} | \code{character} | \code{logical}> The category levels. If \code{NULL}, will be
 populated from input data. The order of the levels is determined by \code{levels()} for factors
-& \code{unique()} otherwise. Length of \code{levels} must equal \code{palette} or \code{range}, such that each
-category level is assigned a colour or range value.}
+& \code{unique()} otherwise.
+
+If there are more levels than colours (or range values), the palette (or range) is interpolated.}
 
 \item{unmapped_tick}{<\code{string}> The tick label of the unmapped category. If not \code{NULL} and
 \code{legend == TRUE}, the unmapped category will appear at the bottom of the legend.}
 
-\item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
+\item{tick_format}{<\code{function}> A label function taking a vector of ticks returning formatted ticks.}
 
-\item{legend}{<\code{logical}> Indicate whether the legend should be displayed for this scale.}
+\item{legend}{<\code{boolean}> Indicate whether the legend should be displayed for this scale.}
 
-\item{range}{<\code{numeric}> The output range of the numeric scale. Must be be a numeric vector of
-length >= 2.}
+\item{range}{<\code{numeric}> The output range of the numeric scale. Must be length >= 2.
+A \code{\link[stats:approxfun]{stats::approxfun()}} interpolator is created from the input range.}
 
 \item{unmapped_value}{<\code{number}> The value representing unmapped levels.}
 }

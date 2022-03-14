@@ -8,7 +8,7 @@
 add_mvt_layer(
   rdeck,
   ...,
-  id = NULL,
+  id = uuid::UUIDgenerate(),
   name = "MVTLayer",
   group_name = NULL,
   data = NULL,
@@ -34,6 +34,9 @@ add_mvt_layer(
   unique_id_property = "",
   highlighted_feature_id = NULL,
   binary = TRUE,
+  blending_mode = "normal",
+  visibility_toggle = TRUE,
+  tooltip = NULL,
   filled = TRUE,
   stroked = TRUE,
   line_width_max_pixels = 9007199254740991,
@@ -69,7 +72,7 @@ add_mvt_layer(
   text_size_units = "pixels",
   text_background = FALSE,
   text_background_padding = c(0, 0, 0, 0),
-  text_font_family = "Monaco, monospace",
+  text_font_family = "Roboto, Helvetica, Arial, san-serif",
   text_font_weight = "normal",
   text_line_height = 1,
   text_max_width = -1,
@@ -97,10 +100,7 @@ add_mvt_layer(
   elevation_scale = 1,
   material = TRUE,
   get_elevation = 1000,
-  point_type = "circle",
-  blending_mode = "normal",
-  visibility_toggle = TRUE,
-  tooltip = FALSE
+  point_type = "circle"
 )
 }
 \arguments{
@@ -196,6 +196,23 @@ and deserialisation between worker and main thread.
 
 Caveat: Polygons and multi-polygons with holes will be rendered as solid polygons.}
 
+\item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
+Blending modes:
+\itemize{
+\item \code{normal}: Normal blending doesn't alter colours of overlapping objects.
+\item \code{additive}: Additive blending adds colours of overlapping objects. Useful for highlighting
+dot density on dark maps.
+\item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
+dot density on light maps.
+}}
+
+\item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
+
+\item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
+the layer tooltip, if \code{pickable == TRUE}.
+Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
+\code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+
 \item{filled}{<\code{boolean}> If \code{TRUE}, draw the filled area of each point.}
 
 \item{stroked}{<\code{boolean}> If \code{TRUE}, draw an outline around each object.}
@@ -263,21 +280,6 @@ Determines how to render point and multipoint features. May be one of:
 }
 
 Or a combination, separated by \code{"+"}, e.g. \code{"circle+text"}.}
-
-\item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
-Blending modes:
-\itemize{
-\item \code{normal}: Normal blending doesn't alter colours of overlapping objects.
-\item \code{additive}: Additive blending adds colours of overlapping objects. Useful for highlighting
-dot density on dark maps.
-\item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
-dot density on light maps.
-}}
-
-\item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
-the layer tooltip, if \code{pickable == TRUE}.
-Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
-\code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
 }
 \description{
 MVT Layer

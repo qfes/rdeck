@@ -25,26 +25,24 @@ mapbox_access_token <- function() {
     return(token)
   }
 
-  vars <- Sys.getenv(c("MAPBOX_ACCESS_TOKEN", "MAPBOX_TOKEN")) %>%
+  var_names <- c("MAPBOX_ACCESS_TOKEN", "MAPBOX_TOKEN")
+  vars <- Sys.getenv(var_names) %>%
     unname()
 
   tokens <- vars[vars != ""]
-  if (length(tokens) == 0) {
-    rlang::warn(
-      paste_line(
-        "No mapbox access token found, mapbox basemap won't be shown.",
-        "Set mapbox token with one of:",
-        paste0("  * option `options(", option, " = <token>)`."),
-        "  * environment variable `MAPBOX_ACCESS_TOKEN = <token>`.",
-        "  * environment variable `MAPBOX_TOKEN = <token>`.",
-        "",
-        "See https://docs.mapbox.com/help/glossary/access-token"
-      ),
-      class = "rdeck_error_token"
-    )
 
-    return(NULL)
-  }
+  tidyassert::warn_if(
+    length(tokens) == 0,
+    c(
+      "!" = "No mapbox access token found, mapbox basemap won't be shown.",
+      "i" = "Set mapbox token with one of:",
+      "option `options({option} = <token>)`",
+      paste0("environment variable `", var_names, " = <token>`"),
+      " " = "",
+      "i" = "See {.url https://docs.mapbox.com/help/glossary/access-token}"
+    ),
+    option = option
+  )
 
-  utils::head(tokens, 1)
+  utils::head(tokens, 1) %??% NULL
 }

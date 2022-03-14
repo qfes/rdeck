@@ -8,7 +8,7 @@
 add_grid_cell_layer(
   rdeck,
   ...,
-  id = NULL,
+  id = uuid::UUIDgenerate(),
   name = "GridCellLayer",
   group_name = NULL,
   data = NULL,
@@ -45,7 +45,7 @@ add_grid_cell_layer(
   cell_size = 1000,
   blending_mode = "normal",
   visibility_toggle = TRUE,
-  tooltip = FALSE
+  tooltip = NULL
 )
 }
 \arguments{
@@ -174,6 +174,8 @@ dot density on dark maps.
 \item \code{subtractive}: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.
 }}
+
+\item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
 
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.

@@ -46,8 +46,8 @@ power_trans <- function(exponent = 0.5) {
 #' @export
 log_trans <- function(base = exp(1)) {
   tidyassert::assert(
-    rlang::is_scalar_double(base) ||
-    rlang::is_scalar_integer(base)
+    is.numeric(base) && length(base) == 1 &&
+    base > 0 && base != 1
   )
 
   scales::trans_new(

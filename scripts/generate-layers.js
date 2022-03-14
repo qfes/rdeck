@@ -27,13 +27,15 @@ function quoteName(key) {
  * @property {any} value
  * @param {PropType} prop
  */
-function defaultValue({ name, type, value }) {
-  if (name.endsWith("Color") && Array.isArray(value)) {
-    return format(rgba2hex(value));
-  }
+function defaultValue({ name, type, value, valueType }) {
+  if (name === "id") return "uuid::UUIDgenerate()";
 
   if (name === "colorRange" && Array.isArray(value)) {
     return format(value.map(rgba2hex));
+  }
+
+  if (valueType === "color" && Array.isArray(value)) {
+    return format(rgba2hex(value));
   }
 
   if (type === "accessor" && typeof value === "function") {
@@ -76,12 +78,14 @@ function defaultValue({ name, type, value }) {
 
 function templateData(Layer) {
   return {
+    type: Layer,
+    typeName: Layer.layerName,
     name: snakeCase(Layer.layerName)
       // GeoJsonLayer -> geojson_layer
       .replace("geo_json", "geojson")
       // Tile3DLayer -> tile3d_layer
       .replace("3_d", "_3d"),
-    type: Layer.layerName,
+    dataType: [deck.GeoJsonLayer, deck.MVTLayer].includes(Layer) ? "geojson" : null,
     props: getProps(Layer).map((propType) => ({
       ...propType,
       name: snakeCase(propType.name),
@@ -103,7 +107,7 @@ const generatedBy = `
   # deck.gl version: ${deckVersion}
 `.trim();
 
-Promise.all(layers.map((layer) => ejs.renderFile(template, layer, { rmWhitespace: true })))
+Promise.all(layers.map((layer) => ejs.renderFile(template, { layer }, { rmWhitespace: true })))
   .then((layers) => {
     const content = [generatedBy, ...layers].join("\n\n");
     return fs.writeFile(output, content);

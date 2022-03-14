@@ -58,8 +58,7 @@ rdeck <- function(map_style = mapbox_dark(),
 
   props <- rlang::exec(
     rdeck_props,
-    !!!omit(dots, "mapbox_api_access_token"),
-    mapbox_api_access_token = dots$mapbox_api_access_token %||% mapbox_access_token(),
+    !!!mutate(dots, mapbox_api_access_token = dots$mapbox_api_access_token %||% mapbox_access_token()),
     map_style = map_style,
     initial_bounds = if (!is.null(initial_bounds)) map_bounds(initial_bounds),
     initial_view_state = initial_view_state,
@@ -104,7 +103,7 @@ rdeck <- function(map_style = mapbox_dark(),
 #' @param rdeck an rdeck instance
 #' @export
 layers <- function(rdeck) {
-  assert_type(rdeck, "rdeck")
+  tidyassert::assert_inherits(rdeck, "rdeck")
 
   rdeck$x$layers
 }
@@ -114,7 +113,7 @@ add_layer <- function(rdeck, layer) {
 }
 
 add_layer.rdeck <- function(rdeck, layer) {
-  assert_type(layer, "layer")
+  tidyassert::assert_inherits(layer, "layer")
 
   rdeck$x$layers <- c(layers(rdeck), list(layer))
   rdeck
@@ -127,13 +126,13 @@ add_layer.rdeck <- function(rdeck, layer) {
 #' @param rdeck an rdeck instance
 #' @export
 props <- function(rdeck) {
-  assert_type(rdeck, "rdeck")
+  tidyassert::assert_inherits(rdeck, "rdeck")
 
   rdeck$x$props
 }
 
 map_bounds <- function(initial_bounds) {
-  assert_type(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
+  tidyassert::assert_inherits(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
 
   sfc <- if (inherits(initial_bounds, "bbox")) {
     sf::st_as_sfc(initial_bounds)

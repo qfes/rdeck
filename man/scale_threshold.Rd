@@ -7,7 +7,7 @@
 \usage{
 scale_color_threshold(
   col,
-  palette,
+  palette = scales::viridis_pal(),
   na_color = "#000000",
   limits = NULL,
   breaks = 0.5,
@@ -27,42 +27,54 @@ scale_threshold(
 }
 \arguments{
 \item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
-Can be either a named column (non-standard evaluation), or an expression evaluating a string.
+Must be a valid input to \code{\link[rlang:defusing-advanced]{rlang::ensym()}}; either a named column (non-standard evaluation), a string.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{palette}{<\code{\link{color}}> The colour palette of the colour scale. Must be a vector of
-rgb\link{a} hex strings of length >= 2.}
+\item{palette}{<\code{\link{color}}|\code{function}> The colour palette of the colour scale. Must be a:
+\itemize{
+\item vector of RGBA hex colours,
+\item a palette generator function, taking a length parameter, or
+\item a palette ramp created from \code{\link[scales:colour_ramp]{scales::colour_ramp()}}
+}
+
+A \code{\link[scales:colour_ramp]{scales::colour_ramp()}} interpolator is created from the input palette.}
 
 \item{na_color}{<\code{\link{color}}> The colour value for \code{NA} input values.}
 
-\item{limits}{<\code{c(min, max)}> The limits of the scale's input. If not null, must be a
-numeric vector of length 2, representing \code{c(min, max)}. Values outside the range of
-\code{limits} will be clamped to the limits of the scale.}
+\item{limits}{<\code{c(min, max)}> The limits of the scale's input. If \code{NULL}, limits are computed
+from layer data. Values outside the range of limits are clamped.}
 
-\item{breaks}{<\code{numeric}> The threshold breaks of the scale. Must be \code{length(palette) - 1}
-or \code{length(range) - 1}, such that each \code{break} defines boundary between between a
-pair of a \code{palette} or \code{range} entries.
+\item{breaks}{<\code{numeric} | \code{function}> The threshold breaks of the scale.
+The scale \code{palette} or numeric \code{range} are linearly interpolated (by length) and mapped onto \code{breaks}.
+Breaks outside the \code{limits} of the scale are discarded.
 
-Breaks must be in increasing order, within the bounds of \code{limits}. Each break will be
-present on the legend for colour scales.}
+If not \code{NULL}, breaks must be either:
+\itemize{
+\item a numeric vector
+\item a breaks function, taking a numeric vector argument (e.g. \code{\link[=breaks_linear]{breaks_linear()}})
+}
 
-\item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
+Breaks must be in increasing order. Each break will be present on the legend for colour scales.}
 
-\item{legend}{<\code{logical}> Indicate whether the legend should be displayed for this scale.}
+\item{tick_format}{<\code{function}> A label function taking a vector of ticks returning formatted ticks.}
 
-\item{range}{<\code{numeric}> The output range of the numeric scale. Must be be a numeric vector of
-length >= 2.}
+\item{legend}{<\code{boolean}> Indicate whether the legend should be displayed for this scale.}
+
+\item{range}{<\code{numeric}> The output range of the numeric scale. Must be length >= 2.
+A \code{\link[stats:approxfun]{stats::approxfun()}} interpolator is created from the input range.}
 
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
-Creates a discrete threshold scale. Threshold scales slice the input data into
-\code{length(palette)} (or \code{length(range)}) bins, with each bin being assigned a colour
-(or number) associated with that bin.
+Creates a discrete threshold scale. Threshold scales slice \code{palette} or \code{range} into
+\code{length(breaks) + 1} bins, with each break defining the threshold between 2 bins.
 
-Threshold scales are similar \code{\link{scale_quantize}}, except that threshold break values can be
-any sequence of numbers, provided that they are in increasing order and within the bounds
-of limits.
+Threshold scales can be used to create any discrete scale, using either manual breaks
+or generated breaks via a transform (e.g. \link[=breaks_power]{breaks_power(n = 6, exponent = 0.5)} for a
+discrete sqrt scale).
+}
+\note{
+Threshold scales don't require limits, but \code{\link[=breaks_trans]{breaks_trans()}} does.
 }
 \seealso{
 Other scales: 

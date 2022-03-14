@@ -20,6 +20,7 @@ If input range is non-finite, an empty vector is returned.
 \examples{
 breaks_symlog(5)(-10:10)
 breaks_symlog(5)(0:10)
+
 }
 \seealso{
 Other breaks: 

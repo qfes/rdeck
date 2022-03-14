@@ -7,49 +7,68 @@
 \usage{
 scale_color_quantile(
   col,
-  palette,
+  palette = scales::viridis_pal(),
   na_color = "#000000",
+  probs = seq.int(0, 1, 0.25),
+  data = NULL,
   tick_format = format_number,
   legend = TRUE
 )
 
-scale_quantile(col, range = 1:5, na_value = 0, legend = TRUE)
+scale_quantile(
+  col,
+  range = 0:1,
+  na_value = 0,
+  probs = seq.int(0, 1, 0.25),
+  data = NULL,
+  legend = TRUE
+)
 }
 \arguments{
 \item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
-Can be either a named column (non-standard evaluation), or an expression evaluating a string.
+Must be a valid input to \code{\link[rlang:defusing-advanced]{rlang::ensym()}}; either a named column (non-standard evaluation), a string.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{palette}{<\code{\link{color}}> The colour palette of the colour scale. Must be a vector of
-rgb\link{a} hex strings of length >= 2.}
+\item{palette}{<\code{\link{color}}|\code{function}> The colour palette of the colour scale. Must be a:
+\itemize{
+\item vector of RGBA hex colours,
+\item a palette generator function, taking a length parameter, or
+\item a palette ramp created from \code{\link[scales:colour_ramp]{scales::colour_ramp()}}
+}
+
+A \code{\link[scales:colour_ramp]{scales::colour_ramp()}} interpolator is created from the input palette.}
 
 \item{na_color}{<\code{\link{color}}> The colour value for \code{NA} input values.}
 
-\item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
+\item{probs}{<\code{numeric}> The quantile probabilities. Must be between 0 and 1.}
 
-\item{legend}{<\code{logical}> Indicate whether the legend should be displayed for this scale.}
+\item{data}{<\code{numeric}> The data used to compute the quantiles. If \code{NULL}, will be
+taken from the layer data.}
 
-\item{range}{<\code{numeric}> The output range of the numeric scale. Must be be a numeric vector of
-length >= 2.}
+\item{tick_format}{<\code{function}> A label function taking a vector of ticks returning formatted ticks.}
+
+\item{legend}{<\code{boolean}> Indicate whether the legend should be displayed for this scale.}
+
+\item{range}{<\code{numeric}> The output range of the numeric scale. Must be length >= 2.
+A \code{\link[stats:approxfun]{stats::approxfun()}} interpolator is created from the input range.}
 
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
-Creates a quantile scale. The number of quantiles is defined by the length of
-\code{palette} or \code{range}. For example, a quantile scale with 5 colours will have quantile
-breaks at: \code{c(0.2, 0.4, 0.6, 0.8)}.
+Creates a threshold scale, where threshold breaks are computed from the given quantile
+\code{probs}.
 
 Quantile scale legend ticks will be quantile values at each quantile break (including
-limits), not the quantile probabilities at each break. You may override this with
+limits), not the quantile probabilities at each break. This can be overridden in
 \code{tick_format}.
 
 Example:
-\code{tick_format = function(x) format_number(seq(0, 1, length.out = length(x)))}.
+\code{tick_format = function(x) as.character(probs)}.
 }
 \note{
 As the quantiles are computed from input data, quantile scales are incompatible with
 layers that load data from a url (e.g \code{mvt_layer}). If quantiles for remote data are
-known, a quantile scale can be constructed manually with \code{\link{scale_threshold}}.
+known, a quantile scale can be constructed manually with \code{\link[=scale_threshold]{scale_threshold()}}.
 }
 \seealso{
 Other scales: 

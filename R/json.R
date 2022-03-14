@@ -58,27 +58,53 @@ to_json.accessor <- function(obj) {
   )
 }
 
-to_json.accessor_scale <- function(obj) {
-  # prevent simplification
-  names_ <- names(obj)
-  obj$domain <- I(obj$domain)
-  if ("palette" %in% names_) obj$palette <- I(obj$palette)
-  if ("range" %in% names_) obj$range <- I(obj$range)
-  if ("ticks" %in% names_) obj$ticks <- I(obj$ticks)
+#' @autoglobal
+#' @noRd
+to_json.scale <- function(obj) {
+  compiled <- mutate(
+    compile(obj),
+    type = jsonlite::unbox("accessor"),
+    scale_type = jsonlite::unbox(scale_type),
+    col = jsonlite::unbox(col),
+    data_type = jsonlite::unbox(data_type),
+    legend = jsonlite::unbox(legend),
+    unknown = jsonlite::unbox(unknown),
 
-  # get unknown value
-  obj$unknown <- obj$na_color %||% obj$na_value %||% obj$unmapped_color %||% obj$unmapped_value
-  if ("unmapped_tick" %in% names_) obj$unknown_tick <- obj$unmapped_tick
-
-  keep <- c(
-    "col", "data_type",
-    "scale", "domain", "range",
-    "palette", "unknown",
-    "exponent", "base",
-    "ticks", "unknown_tick",
-    "legend"
+    # may not exist
+    unknown_tick = if (rlang::has_name(.data, "unknown_tick")) jsonlite::unbox(unknown_tick),
+    base = if (scale_type == "log") jsonlite::unbox(base),
+    exponent = if (scale_type == "power") jsonlite::unbox(exponent)
   )
-  obj <- pick(obj, keep)
+
+  # FIXME: rename scale -> scaleType in typescript
+  compiled <- rename(compiled, scale = scale_type)
+
+  jsonlite::toJSON(
+    select(camel_case(compiled), -where(is.null)),
+    digits = 15,
+    use_signif = TRUE
+  )
+}
+
+to_json.scale_color <- function(obj) {
+  is_category <- obj$scale_type == "category"
+
+  obj <- rename(
+    obj,
+    unknown = ifelse(is_category, "unmapped_color", "na_color"),
+    unknown_tick = if (rlang::has_name(.data, "unmapped_tick")) "unmapped_tick"
+  )
+
+  NextMethod()
+}
+
+to_json.scale_numeric <- function(obj) {
+  is_category <- obj$scale_type == "category"
+
+  obj <- rename(
+    obj,
+    unknown = ifelse(is_category, "unmapped_value", "na_value")
+  )
 
   NextMethod()
 }

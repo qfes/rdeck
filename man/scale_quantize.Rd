@@ -7,45 +7,58 @@
 \usage{
 scale_color_quantize(
   col,
-  palette,
+  palette = scales::viridis_pal(),
   na_color = "#000000",
   limits = NULL,
+  n_breaks = 6,
   tick_format = format_number,
   legend = TRUE
 )
 
-scale_quantize(col, range = 0:1, na_value = 0, limits = NULL, legend = TRUE)
+scale_quantize(
+  col,
+  range = 0:1,
+  na_value = 0,
+  limits = NULL,
+  n_breaks = 6,
+  legend = TRUE
+)
 }
 \arguments{
 \item{col}{<\code{name} | \code{string}> The name of the column containing data to be scaled.
-Can be either a named column (non-standard evaluation), or an expression evaluating a string.
+Must be a valid input to \code{\link[rlang:defusing-advanced]{rlang::ensym()}}; either a named column (non-standard evaluation), a string.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{palette}{<\code{\link{color}}> The colour palette of the colour scale. Must be a vector of
-rgb\link{a} hex strings of length >= 2.}
+\item{palette}{<\code{\link{color}}|\code{function}> The colour palette of the colour scale. Must be a:
+\itemize{
+\item vector of RGBA hex colours,
+\item a palette generator function, taking a length parameter, or
+\item a palette ramp created from \code{\link[scales:colour_ramp]{scales::colour_ramp()}}
+}
+
+A \code{\link[scales:colour_ramp]{scales::colour_ramp()}} interpolator is created from the input palette.}
 
 \item{na_color}{<\code{\link{color}}> The colour value for \code{NA} input values.}
 
-\item{limits}{<\code{c(min, max)}> The limits of the scale's input. If not null, must be a
-numeric vector of length 2, representing \code{c(min, max)}. Values outside the range of
-\code{limits} will be clamped to the limits of the scale.}
+\item{limits}{<\code{c(min, max)}> The limits of the scale's input. If \code{NULL}, limits are computed
+from layer data. Values outside the range of limits are clamped.}
 
-\item{tick_format}{<\code{function}> A function taking a vector of ticks returning formatted ticks.}
+\item{n_breaks}{<\code{integer}> The number of linearly spaced breaks in the scale.
+Each break will be present on the legend for colour scales.}
 
-\item{legend}{<\code{logical}> Indicate whether the legend should be displayed for this scale.}
+\item{tick_format}{<\code{function}> A label function taking a vector of ticks returning formatted ticks.}
 
-\item{range}{<\code{numeric}> The output range of the numeric scale. Must be be a numeric vector of
-length >= 2.}
+\item{legend}{<\code{boolean}> Indicate whether the legend should be displayed for this scale.}
+
+\item{range}{<\code{numeric}> The output range of the numeric scale. Must be length >= 2.
+A \code{\link[stats:approxfun]{stats::approxfun()}} interpolator is created from the input range.}
 
 \item{na_value}{<\code{number}> The output value for \code{NA} input values.}
 }
 \description{
-Creates a discrete quantize scale. Quantize scales are a special case of \code{\link{scale_threshold}}
-in that each threshold break is uniformly spaced between limits.
-
-Similar to \code{\link{scale_threshold}}, quantize scales slice input data into \code{length(palette)}
-(or \code{length(range)}) equally spaced bins, with each bin being assigned a colour (or number)
-associated with that bin.
+Creates a discrete quantize scale, with \code{n_breaks} linearly spaced threshold breaks between
+\code{limits}. This scale can be thought of as a restricted special case of \code{\link[=scale_threshold]{scale_threshold()}},
+or a discrete \code{\link[=scale_linear]{scale_linear()}}.
 }
 \seealso{
 Other scales: 

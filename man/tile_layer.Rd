@@ -8,7 +8,7 @@
 add_tile_layer(
   rdeck,
   ...,
-  id = NULL,
+  id = uuid::UUIDgenerate(),
   name = "TileLayer",
   group_name = NULL,
   data = NULL,
@@ -31,12 +31,12 @@ add_tile_layer(
   z_range = NULL,
   max_requests = 6,
   zoom_offset = 0,
-  desaturate = 0,
-  transparent_color = "#00000000",
-  tint_color = "#ffffff",
   blending_mode = "normal",
   visibility_toggle = TRUE,
-  tooltip = FALSE
+  tooltip = NULL,
+  desaturate = 0,
+  transparent_color = "#00000000",
+  tint_color = "#ffffff"
 )
 }
 \arguments{
@@ -120,14 +120,6 @@ supplied no throttling occurs (HTTP/2 only).}
 
 \item{zoom_offset}{<\code{int}> The offset changes the zoom level at which the tiles are fetched.}
 
-\item{desaturate}{<\code{number}> The desaturation of the bitmap. Between \code{0} and \code{1}, \code{being}
-the original colour, \code{1} being greyscale.}
-
-\item{transparent_color}{<\code{\link{color}}> The colour to use for transparent pixels.}
-
-\item{tint_color}{<\code{\link{color}}> The colour to tint the bitmap by. Alpha channel is ignored
-if supplied.}
-
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:
 \itemize{
@@ -138,10 +130,20 @@ dot density on dark maps.
 dot density on light maps.
 }}
 
+\item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
+
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
 \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+
+\item{desaturate}{<\code{number}> The desaturation of the bitmap. Between \code{0} and \code{1}, \code{being}
+the original colour, \code{1} being greyscale.}
+
+\item{transparent_color}{<\code{\link{color}}> The colour to use for transparent pixels.}
+
+\item{tint_color}{<\code{\link{color}}> The colour to tint the bitmap by. Alpha channel is ignored
+if supplied.}
 }
 \description{
 Tile Layer

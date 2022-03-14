@@ -1,9 +1,10 @@
+# a linear colour ramp for continuous input
 color_gradient <- function(palette) {
   UseMethod("color_gradient")
 }
 
 color_gradient.character <- function(palette) {
-  assert_rgba(palette)
+  tidyassert::assert(is_rgba_color(palette))
   color_gradient(function(n) palette)
 }
 
@@ -19,20 +20,19 @@ color_gradient.function <- function(palette) {
   }
 }
 
+
+# a linear colour ramp for discrete input
 color_categories <- function(palette) {
   UseMethod("color_categories")
 }
 
 color_categories.character <- function(palette) {
-  assert_rgba(palette)
+  tidyassert::assert(is_rgba_color(palette))
   color_categories(scales::manual_pal(palette))
 }
 
 color_categories.function <- function(palette) {
-  get_levels <- function(x) if (is.factor(x)) levels(x) else unique(x)
-  rescale <- function(x, levels) {
-    scales::rescale(match(x, levels))
-  }
+  rescale <- function(x, levels) scales::rescale(match(x, levels))
 
   # function is a ramp built with scales::colour_ramp
   if (isTRUE(attr(palette, "safe_palette_func"))) {
@@ -51,3 +51,35 @@ color_categories.function <- function(palette) {
     ramp(rescale(x, levels))
   }
 }
+
+
+# a linear numeric ramp for continous input
+number_gradient <- function(seq) {
+  UseMethod("number_gradient")
+}
+
+number_gradient.numeric <- function(seq) {
+  tidyassert::assert(all_finite(seq) && length(seq) >= 2)
+  stats::approxfun(scales::rescale(seq_along(seq)), seq)
+}
+
+number_gradient.integer <- number_gradient.numeric
+
+
+# a linear numeric ramp for discrete input
+number_categories <- function(seq) UseMethod("number_categories")
+
+number_categories.numeric <- function(seq) {
+  tidyassert::assert(all_finite(seq) && length(seq) >= 2)
+  seq_pal <- scales::manual_pal(seq)
+
+  function(x) {
+    levels <- get_levels(x)
+    # pull at least 2 values
+    values <- seq_pal(max(length(levels), 2))
+    ramp <- number_gradient(values[!is.na(values)])
+    ramp(scales::rescale(match(x, levels)))
+  }
+}
+
+number_categories.integer <- number_categories.numeric
