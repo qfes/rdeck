@@ -92,6 +92,8 @@ is_rgba_color <- function(x) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", x, ignore.cas
 
 is_js_eval <- function(object) inherits(object, "JS_EVAL")
 
+is_dataframe <- function(object) inherits(object, "data.frame")
+
 all_finite <- function(x) all(is.finite(x))
 
 # nullish coalesce, where length-0 is treated as null

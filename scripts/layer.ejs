@@ -46,7 +46,7 @@ add_<%- layer.name -%> <- function(rdeck,
         layer.props
           .map((p) => {
             if (p.type === "accessor") return `${p.name} = accessor(${p.name}, data, ${dataType})`;
-            if (p.name === "tooltip") return `${p.name} = eval_tooltip(${p.name}, data, ${dataType})`;
+            if (p.name === "tooltip") return `${p.name} = tooltip(${p.name}, data, ${dataType})`;
 
             return `${p.name} = ${p.name}`;
           })

@@ -78,7 +78,7 @@ add_arc_layer <- function(rdeck,
       width_max_pixels = width_max_pixels,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -171,7 +171,7 @@ add_bitmap_layer <- function(rdeck,
       tint_color = tint_color,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -281,7 +281,7 @@ add_icon_layer <- function(rdeck,
       get_pixel_offset = accessor(get_pixel_offset, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -386,7 +386,7 @@ add_line_layer <- function(rdeck,
       width_max_pixels = width_max_pixels,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -480,7 +480,7 @@ add_point_cloud_layer <- function(rdeck,
       material = material,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -596,7 +596,7 @@ add_scatterplot_layer <- function(rdeck,
       get_line_width = accessor(get_line_width, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -735,7 +735,7 @@ add_grid_cell_layer <- function(rdeck,
       cell_size = cell_size,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -878,7 +878,7 @@ add_column_layer <- function(rdeck,
       material = material,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -996,7 +996,7 @@ add_path_layer <- function(rdeck,
       get_width = accessor(get_width, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -1117,7 +1117,7 @@ add_polygon_layer <- function(rdeck,
       material = material,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -1227,7 +1227,7 @@ add_solid_polygon_layer <- function(rdeck,
       material = material,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -1455,7 +1455,7 @@ add_geojson_layer <- function(rdeck,
       point_type = point_type,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, "geojson")
+      tooltip = tooltip(tooltip, data, "geojson")
     )
   )
 
@@ -1653,7 +1653,7 @@ add_text_layer <- function(rdeck,
       get_pixel_offset = accessor(get_pixel_offset, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -2586,7 +2586,7 @@ add_great_circle_layer <- function(rdeck,
       width_max_pixels = width_max_pixels,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -2708,7 +2708,7 @@ add_s2_layer <- function(rdeck,
       get_s2_token = accessor(get_s2_token, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -2835,7 +2835,7 @@ add_h3_cluster_layer <- function(rdeck,
       get_hexagons = accessor(get_hexagons, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -2968,7 +2968,7 @@ add_h3_hexagon_layer <- function(rdeck,
       get_hexagon = accessor(get_hexagon, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -3084,7 +3084,7 @@ add_tile_layer <- function(rdeck,
       zoom_offset = zoom_offset,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL),
+      tooltip = tooltip(tooltip, data, NULL),
       desaturate = desaturate,
       transparent_color = transparent_color,
       tint_color = tint_color
@@ -3206,7 +3206,7 @@ add_trips_layer <- function(rdeck,
       get_timestamps = accessor(get_timestamps, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL),
+      tooltip = tooltip(tooltip, data, NULL),
       loop_length = loop_length,
       animation_speed = animation_speed
     )
@@ -3317,7 +3317,7 @@ add_tile_3d_layer <- function(rdeck,
       loader = loader,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -3436,7 +3436,7 @@ add_terrain_layer <- function(rdeck,
       material = material,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -3639,7 +3639,7 @@ add_mvt_layer <- function(rdeck,
       binary = binary,
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, "geojson"),
+      tooltip = tooltip(tooltip, data, "geojson"),
       filled = filled,
       stroked = stroked,
       line_width_max_pixels = line_width_max_pixels,
@@ -3880,7 +3880,7 @@ add_simple_mesh_layer <- function(rdeck,
       get_transform_matrix = accessor(get_transform_matrix, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
@@ -3992,7 +3992,7 @@ add_scenegraph_layer <- function(rdeck,
       get_transform_matrix = accessor(get_transform_matrix, data, NULL),
       blending_mode = blending_mode,
       visibility_toggle = visibility_toggle,
-      tooltip = eval_tooltip(tooltip, data, NULL)
+      tooltip = tooltip(tooltip, data, NULL)
     )
   )
 
