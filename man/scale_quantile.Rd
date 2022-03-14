@@ -77,6 +77,7 @@ Other scales:
 \code{\link{scale_log}()},
 \code{\link{scale_power}()},
 \code{\link{scale_quantize}()},
+\code{\link{scale_symlog}()},
 \code{\link{scale_threshold}()}
 }
 \concept{scales}

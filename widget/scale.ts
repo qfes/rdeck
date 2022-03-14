@@ -16,6 +16,7 @@ import type { PickInfo, AccessorFn } from "@deck.gl/core";
 import type { Feature } from "geojson";
 import { Accessor, isAccessor } from "./accessor";
 import { parseColor } from "./color";
+import { scaleSymlog } from "d3";
 
 type ScaleFn = (data: any) => number | Color;
 
@@ -46,6 +47,12 @@ export type AccessorScaleLog<Range> = AccessorScaleBase<Range> & {
   scaleData: ScaleLogarithmic<Range, Range>;
 };
 
+export type AccessorScaleSymlog<Range> = AccessorScaleBase<Range> & {
+  scale: "symlog";
+  base: number;
+  scaleData: ScaleLogarithmic<Range, Range>;
+};
+
 export type AccessorScaleThreshold<Range> = AccessorScaleBase<Range> & {
   scale: "threshold";
   scaleData: ScaleThreshold<number, Range>;
@@ -72,7 +79,8 @@ export type AccessorScaleQuantize<Range> = AccessorScaleBase<Range> & {
 export type AccessorScaleContinuous<Range> =
   | AccessorScaleLinear<Range>
   | AccessorScalePower<Range>
-  | AccessorScaleLog<Range>;
+  | AccessorScaleLog<Range>
+  | AccessorScaleSymlog<Range>;
 export type AccessorScaleDiscrete<Range> =
   | AccessorScaleThreshold<Range>
   | AccessorScaleQuantile<Range>
@@ -91,7 +99,9 @@ export function isColorScale(obj: AccessorScale<number | Color>): obj is Accesso
 }
 
 export function isContinuousScale<T>(obj: AccessorScale<T>): obj is AccessorScaleContinuous<T> {
-  return obj.scale === "linear" || obj.scale === "power" || obj.scale === "log";
+  return (
+    obj.scale === "linear" || obj.scale === "power" || obj.scale === "log" || obj.scale === "symlog"
+  );
 }
 
 export function isDiscreteScale<T>(obj: AccessorScale<T>): obj is AccessorScaleDiscrete<T> {
@@ -140,6 +150,12 @@ function scaleFn(accessor: AccessorScale<any>) {
     case "log":
       return scaleLog<T>()
         .base(accessor.base)
+        .domain(accessor.domain)
+        .range(accessor.range)
+        .unknown(accessor.unknown)
+        .clamp(true);
+    case "symlog":
+      return scaleSymlog<T>()
         .domain(accessor.domain)
         .range(accessor.range)
         .unknown(accessor.unknown)

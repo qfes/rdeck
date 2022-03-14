@@ -71,10 +71,11 @@ NULL
 #' - [`scale_linear`]
 #' - [`scale_power`]
 #' - [`scale_log`]
-#' - [`scale_quantize`]
-#' - [`scale_quantile`]
+#' - [`scale_symlog`]
 #' - [`scale_threshold`]
+#' - [`scale_quantile`]
 #' - [`scale_category`]
+#' - [`scale_quantize`]
 #'
 #' @name scale
 #' @keywords internal

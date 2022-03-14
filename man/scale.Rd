@@ -45,10 +45,11 @@ Legends are \href{https://kepler.gl}{kepler.gl} inspired.
 \item \code{\link{scale_linear}}
 \item \code{\link{scale_power}}
 \item \code{\link{scale_log}}
-\item \code{\link{scale_quantize}}
-\item \code{\link{scale_quantile}}
+\item \code{\link{scale_symlog}}
 \item \code{\link{scale_threshold}}
+\item \code{\link{scale_quantile}}
 \item \code{\link{scale_category}}
+\item \code{\link{scale_quantize}}
 }
 }
 

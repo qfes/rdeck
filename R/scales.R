@@ -234,6 +234,56 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
 }
 
 
+#' Scale symlog
+#'
+#' @description
+#' Creates a continuous log1p scale, where input values are transformed with [symlog_trans()][symlog_trans()]
+#' before calculating the output. Unlike [scale_log()], `limits` may cross 0.
+#'
+#' Symlog scales can be useful in transforming positively skewed data.
+#'
+#' @name scale_symlog
+#' @inheritParams scale_props
+#' @family scales
+#' @export
+scale_color_symlog <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
+                               limits = NULL, breaks = NULL,
+                               n_ticks = NULL, tick_format = format_number, legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_color(
+    "symlog",
+    trans = symlog_trans(),
+    col = enstring({{ col }}),
+    get_palette = color_gradient(palette),
+    na_color = na_color,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks) %||% breaks_symlog(10),
+    get_ticks = breaks_symlog(n_ticks %||% 6),
+    tick_format = tick_format,
+    legend = legend
+  )
+}
+
+#' @name scale_symlog
+#' @export
+scale_symlog <- function(col, range = 0:1, na_value = 0,
+                         limits = NULL, breaks = NULL, legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_numeric(
+    "symlog",
+    trans = symlog_trans(),
+    col = enstring({{ col }}),
+    get_range = number_gradient(range),
+    na_value = na_value,
+    limits = continuous_range(limits),
+    get_breaks = as_breaks(breaks) %||% breaks_symlog(length(range)),
+    legend = legend
+  )
+}
+
+
 #' Scale threshold
 #'
 #' @description
