@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rdeck</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9900</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.91000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">add_tile_layer</span><span class="op">(</span>
   <span class="va">rdeck</span>,
   <span class="va">...</span>,
-  id <span class="op">=</span> <span class="cn">NULL</span>,
+  id <span class="op">=</span> <span class="fu">uuid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/uuid/man/UUIDgenerate.html" class="external-link">UUIDgenerate</a></span><span class="op">(</span><span class="op">)</span>,
   name <span class="op">=</span> <span class="st">"TileLayer"</span>,
   group_name <span class="op">=</span> <span class="cn">NULL</span>,
   data <span class="op">=</span> <span class="cn">NULL</span>,
@@ -80,12 +80,12 @@
   z_range <span class="op">=</span> <span class="cn">NULL</span>,
   max_requests <span class="op">=</span> <span class="fl">6</span>,
   zoom_offset <span class="op">=</span> <span class="fl">0</span>,
-  desaturate <span class="op">=</span> <span class="fl">0</span>,
-  transparent_color <span class="op">=</span> <span class="st">"#00000000"</span>,
-  tint_color <span class="op">=</span> <span class="st">"#ffffff"</span>,
   blending_mode <span class="op">=</span> <span class="st">"normal"</span>,
   visibility_toggle <span class="op">=</span> <span class="cn">TRUE</span>,
-  tooltip <span class="op">=</span> <span class="cn">FALSE</span>
+  tooltip <span class="op">=</span> <span class="cn">NULL</span>,
+  desaturate <span class="op">=</span> <span class="fl">0</span>,
+  transparent_color <span class="op">=</span> <span class="st">"#00000000"</span>,
+  tint_color <span class="op">=</span> <span class="st">"#ffffff"</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -168,14 +168,6 @@ requests across all specified tile provider domains. If a negative number is
 supplied no throttling occurs (HTTP/2 only).</p></dd>
 <dt>zoom_offset</dt>
 <dd><p>&lt;<code>int</code>&gt; The offset changes the zoom level at which the tiles are fetched.</p></dd>
-<dt>desaturate</dt>
-<dd><p>&lt;<code>number</code>&gt; The desaturation of the bitmap. Between <code>0</code> and <code>1</code>, <code>being</code>
-the original colour, <code>1</code> being greyscale.</p></dd>
-<dt>transparent_color</dt>
-<dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The colour to use for transparent pixels.</p></dd>
-<dt>tint_color</dt>
-<dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The colour to tint the bitmap by. Alpha channel is ignored
-if supplied.</p></dd>
 <dt>blending_mode</dt>
 <dd><p>&lt;<code>"normal"</code> | <code>"additive"</code> | <code>"subtractive"</code>&gt; Sets the blending mode.
 Blending modes:</p><ul><li><p><code>normal</code>: Normal blending doesn't alter colours of overlapping objects.</p></li>
@@ -184,11 +176,21 @@ dot density on dark maps.</p></li>
 <li><p><code>subtractive</code>: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.</p></li>
 </ul></dd>
+<dt>visibility_toggle</dt>
+<dd><p>&lt;<code>boolean</code>&gt; Whether this layer will appear in the layer selector.</p></dd>
 <dt>tooltip</dt>
 <dd><p>&lt;<code><a href="tooltip.html">tooltip</a></code>&gt; Defines the columns (and their order) that will be displayed in
 the layer tooltip, if <code>pickable == TRUE</code>.
 Supports <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a> if a
 <code>data</code> is a <code>data.frame</code>. <code>sfc</code> columns are always removed.</p></dd>
+<dt>desaturate</dt>
+<dd><p>&lt;<code>number</code>&gt; The desaturation of the bitmap. Between <code>0</code> and <code>1</code>, <code>being</code>
+the original colour, <code>1</code> being greyscale.</p></dd>
+<dt>transparent_color</dt>
+<dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The colour to use for transparent pixels.</p></dd>
+<dt>tint_color</dt>
+<dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The colour to tint the bitmap by. Alpha channel is ignored
+if supplied.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

@@ -14,7 +14,7 @@ unmapped_color (or unmapped_value)."><meta property="og:image" content="https://
     
     <a class="navbar-brand me-2" href="../index.html">rdeck</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9900</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.91000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@ unmapped_color (or unmapped_value)."><meta property="og:image" content="https://
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">scale_color_category</span><span class="op">(</span>
   <span class="va">col</span>,
-  <span class="va">palette</span>,
+  palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span><span class="st">"div"</span><span class="op">)</span>,
   unmapped_color <span class="op">=</span> <span class="st">"#000000"</span>,
   levels <span class="op">=</span> <span class="cn">NULL</span>,
   unmapped_tick <span class="op">=</span> <span class="cn">NULL</span>,
@@ -83,28 +83,30 @@ unmapped_color (or unmapped_value)."><meta property="og:image" content="https://
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>col</dt>
 <dd><p>&lt;<code>name</code> | <code>string</code>&gt; The name of the column containing data to be scaled.
-Can be either a named column (non-standard evaluation), or an expression evaluating a string.
+Must be a valid input to <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html" class="external-link">rlang::ensym()</a></code>; either a named column (non-standard evaluation), a string.
 Supports <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a>.</p></dd>
 <dt>palette</dt>
-<dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The colour palette of the colour scale. Must be a vector of
-rgb<a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">a</a> hex strings of length &gt;= 2.</p></dd>
+<dd><p>&lt;<code><a href="color.html">color</a></code>|<code>function</code>&gt; The colour palette of the colour scale. Must be a:</p><ul><li><p>vector of RGBA hex colours,</p></li>
+<li><p>a palette generator function, taking a length parameter, or</p></li>
+<li><p>a palette ramp created from <code><a href="https://scales.r-lib.org/reference/colour_ramp.html" class="external-link">scales::colour_ramp()</a></code></p></li>
+</ul><p>A <code><a href="https://scales.r-lib.org/reference/colour_ramp.html" class="external-link">scales::colour_ramp()</a></code> interpolator is created from the input palette.</p></dd>
 <dt>unmapped_color</dt>
 <dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The colour representing unmapped levels.</p></dd>
 <dt>levels</dt>
 <dd><p>&lt;<code>factor</code> | <code>character</code> | <code>logical</code>&gt; The category levels. If <code>NULL</code>, will be
 populated from input data. The order of the levels is determined by <code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code> for factors
-&amp; <code><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique()</a></code> otherwise. Length of <code>levels</code> must equal <code>palette</code> or <code>range</code>, such that each
-category level is assigned a colour or range value.</p></dd>
+&amp; <code><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique()</a></code> otherwise.</p>
+<p>If there are more levels than colours (or range values), the palette (or range) is interpolated.</p></dd>
 <dt>unmapped_tick</dt>
 <dd><p>&lt;<code>string</code>&gt; The tick label of the unmapped category. If not <code>NULL</code> and
 <code>legend == TRUE</code>, the unmapped category will appear at the bottom of the legend.</p></dd>
 <dt>tick_format</dt>
-<dd><p>&lt;<code>function</code>&gt; A function taking a vector of ticks returning formatted ticks.</p></dd>
+<dd><p>&lt;<code>function</code>&gt; A label function taking a vector of ticks returning formatted ticks.</p></dd>
 <dt>legend</dt>
-<dd><p>&lt;<code>logical</code>&gt; Indicate whether the legend should be displayed for this scale.</p></dd>
+<dd><p>&lt;<code>boolean</code>&gt; Indicate whether the legend should be displayed for this scale.</p></dd>
 <dt>range</dt>
-<dd><p>&lt;<code>numeric</code>&gt; The output range of the numeric scale. Must be be a numeric vector of
-length &gt;= 2.</p></dd>
+<dd><p>&lt;<code>numeric</code>&gt; The output range of the numeric scale. Must be length &gt;= 2.
+A <code><a href="https://rdrr.io/r/stats/approxfun.html" class="external-link">stats::approxfun()</a></code> interpolator is created from the input range.</p></dd>
 <dt>unmapped_value</dt>
 <dd><p>&lt;<code>number</code>&gt; The value representing unmapped levels.</p></dd>
 </dl></div>
