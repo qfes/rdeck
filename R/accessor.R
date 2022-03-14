@@ -28,19 +28,7 @@ accessor.quosure <- function(expr, data = NULL, data_type = NULL) {
 }
 
 accessor.name <- function(expr, data = NULL, data_type = NULL) {
-  col <- rlang::as_name(expr)
-
-  if (!is.null(data_type)) {
-    tidyassert::assert(data_type %in% c("table", "object", "geojson"))
-  }
-
-  structure(
-    list(
-      col = col,
-      data_type = data_type %||% resolve_data_type(data)
-    ),
-    class = "accessor"
-  )
+  new_accessor(rlang::as_name(expr), data, data_type)
 }
 
 accessor.sf_column <- function(expr, data = NULL, data_type = NULL) {
@@ -62,7 +50,7 @@ accessor.scale <- function(expr, data = NULL, data_type = NULL) {
     !inherits(data, "data.frame") || rlang::has_name(data, scale$col),
     "Scale column {.col {col}} doesn't exist",
     print_expr = substitute(!inherits(data, "data.frame") || rlang::has_name(data, quo$col)),
-    col = substitute(scale$col)
+    col = scale$col
   )
 
   # train scale limits / levels / data
@@ -71,9 +59,23 @@ accessor.scale <- function(expr, data = NULL, data_type = NULL) {
     scale_limits$train(data[[scale$col]])
   }
 
-  purrr::list_modify(
+  mutate(
     scale,
     data_type = data_type %||% resolve_data_type(data)
+  )
+}
+
+new_accessor <- function(col, data, data_type) {
+  if (!is.null(data_type)) {
+    tidyassert::assert(data_type %in% c("table", "object", "geojson"))
+  }
+
+  structure(
+    list(
+      col = col,
+      data_type = data_type %||% resolve_data_type(data)
+    ),
+    class = "accessor"
   )
 }
 
