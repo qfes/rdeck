@@ -35,7 +35,7 @@ tooltip.logical <- function(expr, data, data_type) {
   tidyassert::assert(length(expr) == 1, "Tooltip boolean expression must be a scalar")
 
   if (rlang::is_false(expr) || rlang::is_na(expr)) return(NULL)
-  if (is_dataframe(data)) return(new_tooltip(TRUE, data, data_type))
+  if (!is_dataframe(data)) return(new_tooltip(TRUE, data, data_type))
 
   tooltip_tidyselect(tidyselect::everything(), data, data_type)
 }
