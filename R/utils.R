@@ -84,6 +84,9 @@ ramp_n <- function(n) seq.int(0, 1, length.out = n)
 
 drop_ends <- function(x) x[-c(1, length(x))]
 
+# from {scales}
+is_discrete <- function(x) is.factor(x) || is.character(x) || is.logical(x)
+
 # is an rgba hex colour vector
 is_rgba_color <- function(x) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", x, ignore.case = TRUE)
 

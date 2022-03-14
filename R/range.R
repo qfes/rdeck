@@ -8,15 +8,29 @@ continuous_range <- function(limits = NULL) {
 
 # initialise a discrete range
 discrete_range <- function(levels = NULL) {
-  rng <- scales::DiscreteRange$new()
-  # ensure input order is preserved
-  if (!is.factor(levels)) {
-    lvls <- unique(levels)
-    levels <- factor(lvls, lvls)
-  }
+  rng <- DiscreteRange$new()
   rng$train(levels)
   rng
 }
+
+# re-implementation of scales::DiscreteRange, with the following changes:
+# - input order preserved for non-factor input
+# - doesn't coerce logical as string
+DiscreteRange <- R6::R6Class(
+  "DiscreteRange",
+  inherit = scales::Range,
+  list(
+    train = function(x) {
+      if (is.null(x)) return()
+
+      tidyassert::assert(is_discrete(x), "Continuous value supplied to discrete scale")
+      lvls <- if (is.factor(x)) levels(x) else unique(x)
+      lvls <- lvls[!is.na(lvls)]
+      self$range <- unique(c(self$range, lvls))
+    },
+    reset = function() self$range <- NULL
+  )
+)
 
 
 # initialise a continuous identity range
@@ -32,8 +46,10 @@ ContinuousIdentityRange <- R6::R6Class(
   inherit = scales::Range,
   list(
     train = function(x) {
-      tidyassert::assert(is.null(x) || is.numeric(x), "discrete data supplied to continuous scale")
-      self$range <- x
+      if (is.null(x)) return()
+
+      tidyassert::assert(is.numeric(x), "Discrete data supplied to continuous scale")
+      self$range <- c(self$range, x)
     },
     reset = function() self$range <- NULL
   )
