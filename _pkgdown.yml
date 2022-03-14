@@ -24,6 +24,14 @@ reference:
       - layers
       - props
 
+  - title: Prop Types
+    desc: Description and usage for accessors, scales, tooltips and colours
+    contents:
+      - accessor
+      - scale
+      - tooltip
+      - color
+
   - title: Core layers
     desc: Deck.GL core layers
     contents:
@@ -91,14 +99,6 @@ reference:
       Functions for defining scale breaks
     contents:
       - starts_with("breaks_")
-
-  - title: Prop Types
-    desc: Description and usage for accessors, scales, tooltips and colours
-    contents:
-      - accessor
-      - scale
-      - tooltip
-      - color
 
   - title: Other
     contents:

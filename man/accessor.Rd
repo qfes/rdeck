@@ -7,18 +7,32 @@
 Accessors map \code{data} columns to visual representations, primarily colours: \code{fill}, \code{line},
 \code{highlight} and sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}.
 
-Accessors support \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} expressions.
-String literals referencing a column aren't supported (this will be interpreted as a literal
-string), however you may pass a bare name (\code{my_col}) or an unquoted variable (\code{!!my_var} or
-\code{{{my_var}}}).
-
 On the client, an accessor is translated to a javascript function that retrieves a value from
 \code{data} for each object rendered. Constant columns will work fine, but aren't recommended as
-they are less performant on render and bloat file size; prefer a constant value for these
+they are less performant on render and bloat file size; prefer a constant \emph{value} for these
 cases.
 
 See \href{https://deck.gl/docs/developer-guide/using-layers#accessors}{accessors} for details.
 }
+\section{Tidy-eval}{
+Accessors support \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} expressions.
+Rules for referencing a column vs. a value from the environment is similar to \code{\link[dplyr:mutate]{dplyr::mutate()}},
+main difference is that \emph{all} names are interpreted as columns, instead of falling back to the
+environment when a column isn't found.
+
+Like \code{\link[dplyr:mutate]{dplyr::mutate()}}, using string literals to reference columns isn't supported -- this will be
+interpreted as a literal string. You may reference a column with:
+\itemize{
+\item a bare name (e.g. \code{my_col})
+\item a call evaluating \code{\link{name}}, e.g. \code{\link[=as.name]{as.name()}}, \code{\link[rlang:sym]{rlang::sym()}}, etc
+\item by injecting a variable from the environment containing a \code{name} with \code{!!my_var}, or \code{{{ myvar }}}
+}
+
+Literal expressions -- except calls evaluating a \code{\link{name}} or a \code{\link{scale}} -- will be interpreted as
+constants and used for all features in a layer. To use the \emph{value} of a variable from the environment,
+use the \link[rlang:topic-inject]{injection operators}, e.g. \code{!!my_constant}.
+}
+
 \section{Accessors & Scales}{
 Accessors may be used everywhere that scales can and can perform \emph{almost} the same function
 (i.e. mapping data to a vector of numbers or \link[=color]{colours}), but there are downsides:

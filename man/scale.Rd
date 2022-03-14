@@ -7,30 +7,32 @@
 Scales transform input data into visual representations, predominantly colours:
 \code{fill}, \code{line}, \code{highlight} and sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}.
 
-Columns referenced by a scale support string literals and
-\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} expressions. Columns
-may be bare names (\code{my_col}), string literals (\code{"my_col"}), or unquoted expressions
-(\code{!!my_var} or \code{{{my_var}}}).
-
 Transformations are performed in client-side javascript, thus scales have very minimal
 file-size overhead; what you \emph{pay} for is the source data being scaled, not the scale
 itself. Additional scales referring the same column only \emph{pay} for that column once.
 Adding fields being scaled to the tooltips have minimal overhead also, as this
 data is already required for the scale.
 
-Data retrieved in the browser dynamically can also be scaled. The R interface for scaling
-dynamic data is identical to scaling \code{data.frame} columns, but there is no R-validation for
-this (i.e. your scale can refer a non-existent column, which will error in javascript, but
-not in R).
+Data retrieved in the browser dynamically can also be scaled (including \code{\link[=mvt_layer]{mvt_layer()}}). The R
+interface for scaling dynamic data is identical to scaling \code{data.frame} columns, but there is
+no R-validation for this (i.e. your scale can refer a non-existent column, which will error in
+javascript, but not in R).
 }
+\section{Tidy-eval}{
+Columns referenced by a scale support \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}
+expressions. The \code{col} parameter for a scale must be a valid argument to \code{\link[rlang:defusing-advanced]{rlang::ensym()}} and follows
+the same rules. Use the \link[rlang:topic-inject]{injection operators} to pass the value of a name
+from the environment, e.g. \code{!!my_column}.
+}
+
 \section{Legend}{
 Scales can optionally produce a colour or numeric legend in the client. Numeric legends give
 context for which visual field is being scaled and by what column; colour legends additionally
 provide a colour scale and \emph{untransformed} ticks.
 
-Legend ticks can be formatted with a format function. This function can completely replace the
-input ticks if you wish; the only constraint is the return value is a character vector of the
-same length as the number of \emph{unformatted ticks}.
+Legend ticks can be formatted with a format function (e.g. \code{\link[scales:label_number]{scales::label_number()}}). This function can
+completely replace the input ticks if you wish; the only constraint is the return value is a character
+vector of the same length as the number of \emph{unformatted ticks}.
 
 Legends are \href{https://kepler.gl}{kepler.gl} inspired.
 \if{html}{\out{
