@@ -67,7 +67,7 @@ accessor.scale <- function(expr, data = NULL, data_type = NULL) {
 
   # train scale limits / levels / data
   scale_limits <- scale$limits %||% scale$levels %||% scale$data
-  if (inherits(data, "data.frame") && !is.null(scale_limits)) {
+  if (inherits(data, "data.frame") && is.null(scale_limits$range)) {
     scale_limits$train(data[[scale$col]])
   }
 
