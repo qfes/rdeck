@@ -7,42 +7,59 @@
 Accessors map \code{data} columns to visual representations, primarily colours: \code{fill}, \code{line},
 \code{highlight} and sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}.
 
-On the client, an accessor is translated to a javascript function that retrieves a value from
-\code{data} for each object rendered. Constant columns will work fine, but aren't recommended as
-they are less performant on render and bloat file size; prefer a constant \emph{value} for these
-cases.
-
-See \href{https://deck.gl/docs/developer-guide/using-layers#accessors}{accessors} for details.
+On the client, an accessor is translated to a javascript function that retrieves the specified
+column values for each rendered feature. An equivalent R function would look something like
+\code{function(data, col, index) data[[index, col]]}.
 }
 \section{Tidy-eval}{
 Accessors support \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} expressions.
 Rules for referencing a column vs. a value from the environment is similar to \code{\link[dplyr:mutate]{dplyr::mutate()}},
-main difference is that \emph{all} names are interpreted as columns, instead of falling back to the
-environment when a column isn't found.
+with the main difference being that \emph{all} names are assumed to be columns of \code{data}, not falling
+back to the environment when they're not found.
 
 Like \code{\link[dplyr:mutate]{dplyr::mutate()}}, using string literals to reference columns isn't supported -- this will be
 interpreted as a literal string. You may reference a column with:
 \itemize{
-\item a bare name (e.g. \code{my_col})
+\item a \code{\link{name}} (e.g. \code{my_col})
 \item a call evaluating \code{\link{name}}, e.g. \code{\link[=as.name]{as.name()}}, \code{\link[rlang:sym]{rlang::sym()}}, etc
-\item by injecting a variable from the environment containing a \code{name} with \code{!!my_var}, or \code{{{ myvar }}}
+\item by injecting a variable from the environment containing a \code{name} with \code{!!my_var}, or \code{{{myvar}}}
 }
 
 Literal expressions -- except calls evaluating a \code{\link{name}} or a \code{\link{scale}} -- will be interpreted as
-constants and used for all features in a layer. To use the \emph{value} of a variable from the environment,
-use the \link[rlang:topic-inject]{injection operators}, e.g. \code{!!my_constant}.
-}
+constant values (e.g. \code{"#ff0000"}, \code{1}, \code{TRUE}, etc.). To use the \emph{value} of a variable from the
+environment, use the \link[rlang:topic-inject]{injection operators}, e.g. \code{!!my_constant}.
 
-\section{Accessors & Scales}{
-Accessors may be used everywhere that scales can and can perform \emph{almost} the same function
-(i.e. mapping data to a vector of numbers or \link[=color]{colours}), but there are downsides:
+Examples:
 \itemize{
-\item larger file size
-\item no legend support
+\item \code{get_fill_color = color}: column accessor, referencing the "color" column
+\item \code{get_fill_color = "#ff0000"}: a constant value (red)
+\item \code{get_fill_color = !!color}: injects the value of \code{color} from the environment; if it's a name
+it will be a column with the value of \code{color} (e.g. color <- as.name("my_color_column"))
+\item \code{get_fill_color = rlang::sym("my_color")}: column accessor, referencing "my_color" column
+\item \code{get_fill_color = scale_color_threshold(color)}: a threshold scale, which transforms the "color"
+column
+}
 }
 
-Prefer scales over accessors where both are supported, and use accessors where scales aren't
-supported (e.g. \code{get_path}) or where scaling functions aren't appropriate.
+\section{Accessors vs. Scales}{
+Some parameters accept either an accessor or a \code{\link{scale}}. Scales transform numeric and categorical
+vectors into colours and numeric values, and optionally render a legend; similar to ggplot scaling
+aesthetics.
+
+An accessor can perform this same task by \emph{manually} transforming some input into a vector of colours
+or numbers, but this is worse because:
+\itemize{
+\item the transformed output (e.g. a colour vector) must be stored in the data (data bloat)
+\item visual representations aren't data
+\item legend won't be rendered
+}
+}
+
+\section{Accessors vs. Values}{
+Some parameters accept either an accessor or a value; \code{get_radius} is such an example which accepts
+either a \emph{scalar} \code{numeric} value, or an \code{accessor} to a \code{numeric} column, or a \code{numeric} \code{\link{scale}}.
+A value can be thought of as accessor where all values in the referenced column are the same
+(i.e. a constant column), but optimised for file size and render speed.
 }
 
 \keyword{internal}

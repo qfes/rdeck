@@ -8,15 +8,19 @@ Scales transform input data into visual representations, predominantly colours:
 \code{fill}, \code{line}, \code{highlight} and sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}.
 
 Transformations are performed in client-side javascript, thus scales have very minimal
-file-size overhead; what you \emph{pay} for is the source data being scaled, not the scale
-itself. Additional scales referring the same column only \emph{pay} for that column once.
-Adding fields being scaled to the tooltips have minimal overhead also, as this
-data is already required for the scale.
+file-size overhead; what you pay for is the source data being scaled & the scale descriptor
+(palette, breaks, etc), but you don't pay for the scaled output (e.g. the vector of colours).
+Many scales can refer to the same column of a dataframe, but the column will only be serialised once.
 
-Data retrieved in the browser dynamically can also be scaled (including \code{\link[=mvt_layer]{mvt_layer()}}). The R
-interface for scaling dynamic data is identical to scaling \code{data.frame} columns, but there is
-no R-validation for this (i.e. your scale can refer a non-existent column, which will error in
-javascript, but not in R).
+Data retrieved in the browser dynamically can also be scaled, including \code{\link[=mvt_layer]{mvt_layer()}}. All \code{rdeck}
+scales (except \code{\link[=scale_quantile]{scale_quantile()}}) support both R dataframes and data fetched in javascript, with the
+following restrictions:
+\itemize{
+\item column validation isn't performed -- missing column / incorrect type may error in javascript, or
+result in the \code{na_color} / \code{na_value} used for all features
+\item \code{limits} / \code{levels} must be explictly defined in the scale -- they cannot be learnt from data
+\item quantile scales technically work, but they require a copy of the data to compute the quantiles
+}
 }
 \section{Tidy-eval}{
 Columns referenced by a scale support \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}
@@ -30,9 +34,9 @@ Scales can optionally produce a colour or numeric legend in the client. Numeric 
 context for which visual field is being scaled and by what column; colour legends additionally
 provide a colour scale and \emph{untransformed} ticks.
 
-Legend ticks can be formatted with a format function (e.g. \code{\link[scales:label_number]{scales::label_number()}}). This function can
-completely replace the input ticks if you wish; the only constraint is the return value is a character
-vector of the same length as the number of \emph{unformatted ticks}.
+Legend ticks can be formatted with a labelling function (e.g. \code{\link[scales:label_number]{scales::label_number()}}). This function
+can completely replace the input ticks if you wish; the only constraint is the return value is a character
+vector of the same length as input \emph{unformatted ticks}.
 
 Legends are \href{https://kepler.gl}{kepler.gl} inspired.
 \if{html}{\out{

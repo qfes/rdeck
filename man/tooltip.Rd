@@ -6,7 +6,7 @@
 \description{
 If \code{pickable == TRUE}, tooltip defines which columns (and their order) will be displayed
 when an object is \emph{hovered}. The tooltip will be displayed as a transposed table (1 row
-per column) and is styled according to the \code{\link{rdeck}} \code{theme}. The tooltip layout is inspired
+per column) and is styled according to the \code{\link[=rdeck]{rdeck()}} \code{theme}. The tooltip layout is inspired
 by \href{https://kepler.gl}{kepler.gl}.
 
 \if{html}{\out{
@@ -23,18 +23,22 @@ arguments are always supported:
 }
 }
 \section{Data inherits \code{data.frame}}{
-When \code{data} is a \code{data.frame}, tooltip supports
-\href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} (renaming isn't
-supported). Expressions such as \code{c(foo, bar)}, \code{everything()}, \code{matches("foo")}, \code{-unwanted},
-\code{1:6} etc. are supported.
+When \code{data} is a \code{data.frame}, tooltip supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> (renaming
+isn't supported and will fail silently). Expressions such as: \code{c(foo, bar)}, \code{everything()}, \code{matches("foo")},
+\code{-unwanted}, \code{where(is.character) & matches("foo")}, \code{1:6} etc. are supported.
 
-All columns referenced in tooltip must exist.
+All columns referenced in tooltip must exist. Use \code{\link[tidyselect:all_of]{tidyselect::any_of()}} to reference columns that may not
+be present in data.
 }
 
 \section{Data is a \code{string} or \code{NULL}}{
 For cases where data is absent (tooltip wouldn't be displayed anyway), or dynamically loaded
-in the client, tooltips may take a character vector of column names, or a \code{c()} expression
-of bare names (e.g. \code{c(foo, bar)}).
+in the client, tooltips may take:
+\itemize{
+\item a character vector of column names (e.g. c("foo", "bar"))
+\item a bare name (e.g. \code{my_col})
+\item or a \code{c()} expression of bare names (e.g. \code{c(foo, bar)}).
+}
 
 No validation on these columns is possible in this case.
 }
