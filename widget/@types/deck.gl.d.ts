@@ -41,6 +41,18 @@ declare module "@deck.gl/core" {
     update?: (attribute: any, numInstances: any) => void;
     shaderAttributes?: Record<string, any>;
   }
+
+  export interface Viewport {
+    center: [number, number, number];
+    getBounds(): [number, number, number, number];
+  }
+}
+
+declare module "@deck.gl/core/lib/deck" {
+  import { Viewport } from "@deck.gl/core";
+  export interface PickInfo<D> {
+    viewport: Viewport;
+  }
 }
 
 declare module "@deck.gl/geo-layers" {
@@ -50,6 +62,7 @@ declare module "@deck.gl/geo-layers" {
 declare module "@deck.gl/core/lib/layer" {
   export interface LayerProps<D> {
     name: string | null;
+    groupName: string | null;
     tooltip: TooltipInfo | null;
   }
 }

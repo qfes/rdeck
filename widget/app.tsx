@@ -11,7 +11,10 @@ import { classNames } from "./util";
 import { LayerSelector } from "./layer-selector";
 
 export type DeckProps = DeckGLProps &
-  StaticMapProps & { initialBounds?: Bounds; blendingMode: BlendingMode };
+  StaticMapProps & {
+    initialBounds?: Bounds;
+    blendingMode: BlendingMode;
+  };
 
 export interface AppProps {
   props: DeckProps;

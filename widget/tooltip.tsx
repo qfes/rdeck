@@ -1,4 +1,5 @@
-import type { PickInfo, ObjectInfo } from "@deck.gl/core";
+import type { PickInfo } from "@deck.gl/core";
+import { getPickedObject } from "./picking";
 import styles from "./tooltip.css";
 
 export interface TooltipProps {
@@ -6,15 +7,13 @@ export interface TooltipProps {
 }
 
 export function Tooltip({ info }: TooltipProps) {
-  if (info == null) return null;
+  if (info == null || info.layer.props.tooltip == null) return null;
 
-  const { index, layer, x, y } = info;
-  const { name, tooltip } = layer.props;
+  const { x, y } = info;
+  const { name, tooltip } = info.layer.props;
 
-  const getData = accessorFn(tooltip!.dataType);
-  // we only use data when it is stored as a dataframe
-  const data = getData(info.object, { index, data: layer.props.data as any });
-  const names = tooltip!.cols === true ? Object.keys(data) : tooltip!.cols;
+  const data = getPickedObject(info, tooltip.dataType)!;
+  const names = tooltip.cols === true ? Object.keys(data) : tooltip.cols;
 
   return (
     <div className={styles.tooltip} style={{ transform: `translate(${x}px, ${y}px)` }}>
@@ -31,23 +30,4 @@ export function Tooltip({ info }: TooltipProps) {
       </table>
     </div>
   );
-}
-
-type Info = Omit<ObjectInfo<DataFrame, any>, "target">;
-type DataFn = (object: Record<string, any>, info: Info) => Record<string, any>;
-
-function accessorFn(dataType: DataType): DataFn {
-  switch (dataType) {
-    case "table":
-      return (object, { index, data }) => {
-        const entries = Object.entries(data.frame).map(([name, value]) => [name, value[index]]);
-        return Object.fromEntries(entries);
-      };
-    case "object":
-      return (object) => object ?? {};
-    case "geojson":
-      return (object) => object?.properties ?? {};
-    default:
-      throw TypeError(`${dataType} not supported`);
-  }
 }

@@ -1,15 +1,16 @@
 import "mapbox-gl";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { PickInfo, MapView } from "@deck.gl/core";
-import { DeckGL, DeckGLProps } from "@deck.gl/react";
-import { StaticMap, StaticMapProps } from "react-map-gl";
+import { DeckGL } from "@deck.gl/react";
+import { StaticMap } from "react-map-gl";
 import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
 import { _AggregationLayer } from "@deck.gl/aggregation-layers";
+import { DeckProps } from "./app";
 
 export type MapProps = {
-  props: DeckGLProps & StaticMapProps & { blendingMode: BlendingMode };
+  props: DeckProps;
   layers: Layer[];
 };
 
@@ -30,7 +31,6 @@ export function Map({ props, layers }: MapProps) {
     ...parameters,
     ...blendingParameters(blendingMode),
   };
-
   // layer animation loop
   const [time, setTime] = useState(0);
   const animating = layers.filter((layer) => layer.type === "TripsLayer").length !== 0;

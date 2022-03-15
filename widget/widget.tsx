@@ -1,7 +1,10 @@
 import ReactDOM from "react-dom";
+import type { InitialViewStateProps, PickInfo } from "@deck.gl/core";
 import { App, AppProps, DeckProps } from "./app";
 import type { LayerProps } from "./layer";
-import { debounce, getElementDimensions } from "./util";
+import { debounce, getElementDimensions, pick } from "./util";
+import { getViewState } from "./viewport";
+import { getPickedObject } from "./picking";
 
 export const binding: HTMLWidgets.Binding = {
   name: "rdeck",
@@ -36,6 +39,9 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     this.#el = el;
     this.#width = width;
     this.#height = height;
+    this.onClick.bind(this);
+    this.onViewStateChange.bind(this);
+
     if (HTMLWidgets.shinyMode) {
       const debouncedRender = debounce((props = {}) => this.renderValue(props), 50);
 
@@ -73,10 +79,15 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     this.setLayerVisibility = this.setLayerVisibility.bind(this);
   }
 
-  renderValue({ props, layers, theme, layerSelector, lazyLoad }: Partial<WidgetProps>) {
+  renderValue({ props, layers, theme, layerSelector, lazyLoad }: Partial<WidgetProps> = {}) {
     // merge in new props with existing state
     const _props = {
-      props: props ?? this.props,
+      props: {
+        ...this.props,
+        ...props,
+        onClick: this.onClick,
+        onViewStateChange: debounce(this.onViewStateChange, 50),
+      },
       layers: layers ?? this.layers,
       theme: theme ?? this.theme,
       layerSelector: layerSelector ?? this.layerSelector,
@@ -129,6 +140,27 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     });
 
     this.renderValue({ layers: _layers });
+  }
+
+  onClick(info: PickInfo<any>) {
+    if (HTMLWidgets.shinyMode && info.picked) {
+      const data = {
+        coordinate: info.coordinate,
+        view_state: getViewState(info.viewport),
+        layer: pick(info.layer.props, "id", "name", "groupName"),
+        data: getPickedObject(info),
+      };
+
+      Shiny.setInputValue(`${this.id}_click`, data, { priority: "event" });
+    }
+  }
+
+  onViewStateChange({ viewState }: { viewState: InitialViewStateProps }) {
+    if (HTMLWidgets.shinyMode) {
+      const data = getViewState(viewState);
+
+      Shiny.setInputValue(`${this.id}_viewstate`, data, { priority: "event" });
+    }
   }
 }
 
