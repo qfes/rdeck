@@ -39,8 +39,8 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     this.#el = el;
     this.#width = width;
     this.#height = height;
-    this.onClick.bind(this);
-    this.onViewStateChange.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onViewStateChange = this.onViewStateChange.bind(this);
 
     if (HTMLWidgets.shinyMode) {
       const debouncedRender = debounce((props = {}) => this.renderValue(props), 50);
