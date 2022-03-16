@@ -21,3 +21,12 @@ with_layer_create_errors <- function(expr, call = rlang::caller_env()) {
     call = call
   )
 }
+
+# event data retrieval error
+with_event_data_errors <- function(expr, call = rlang::caller_env()) {
+  with_rdeck_errors(
+    expr,
+    "Failed to get event data",
+    call = call
+  )
+}

@@ -1,11 +1,16 @@
-import { InitialViewStateProps, Viewport, WebMercatorViewport } from "@deck.gl/core";
+import { InitialViewStateProps, WebMercatorViewport } from "@deck.gl/core";
+import { pick } from "./util";
 
-export function getViewState(view: Viewport | InitialViewStateProps) {
-  const viewport = view instanceof Viewport ? view : new WebMercatorViewport(view);
+export function getViewState(viewState: WebMercatorViewport | InitialViewStateProps) {
+  const viewport =
+    viewState instanceof WebMercatorViewport ? viewState : new WebMercatorViewport(viewState);
 
+  const props = pick(viewport, "longitude", "latitude", "zoom", "bearing", "pitch", "altitude");
   return {
-    center: viewport.unprojectFlat(viewport.center),
-    zoom: viewport.zoom,
     bounds: viewport.getBounds(),
+    viewState: {
+      ...props,
+      center: viewport.unprojectFlat(viewport.center),
+    },
   };
 }

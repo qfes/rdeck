@@ -143,12 +143,12 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
   }
 
   onClick(info: PickInfo<any>) {
-    if (HTMLWidgets.shinyMode && info.picked) {
+    if (HTMLWidgets.shinyMode) {
       const data = {
         coordinate: info.coordinate,
-        view_state: getViewState(info.viewport),
+        ...getViewState(info.viewport),
         layer: pick(info.layer.props, "id", "name", "groupName"),
-        data: getPickedObject(info),
+        object: getPickedObject(info),
       };
 
       Shiny.setInputValue(`${this.id}_click`, data, { priority: "event" });

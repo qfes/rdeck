@@ -43,6 +43,12 @@ declare module "@deck.gl/core" {
   }
 
   export interface Viewport {
+    altitude: number;
+    bearing: number;
+    pitch: number;
+    zoom: number;
+    longitude: number;
+    latitude: number;
     center: [number, number, number];
     getBounds(): [number, number, number, number];
   }
@@ -55,16 +61,16 @@ declare module "@deck.gl/core/lib/deck" {
   }
 }
 
-declare module "@deck.gl/geo-layers" {
-  export { TileLayerProps } from "@deck.gl/geo-layers/tile-layer/tile-layer";
-}
-
 declare module "@deck.gl/core/lib/layer" {
   export interface LayerProps<D> {
     name: string | null;
     groupName: string | null;
     tooltip: TooltipInfo | null;
   }
+}
+
+declare module "@deck.gl/geo-layers" {
+  export { TileLayerProps } from "@deck.gl/geo-layers/tile-layer/tile-layer";
 }
 
 declare module "@deck.gl/react" {

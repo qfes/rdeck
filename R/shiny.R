@@ -209,3 +209,113 @@ send_msg <- function(rdeck, name, data) {
     once = TRUE
   )
 }
+
+
+#' Get event data
+#'
+#' @name get_event_data
+#' @param rdeck <`rdeck_proxy` | `string`> the map, or map id
+#' @param session <`ShinySession`> the shiny session
+#' @keywords internal
+get_event_data <- function(rdeck, event_name, session = shiny::getDefaultReactiveDomain()) {
+  tidyassert::assert(
+    inherits(rdeck, "rdeck_proxy") && rlang::is_string(rdeck$id) || rlang::is_string(rdeck)
+  )
+  tidyassert::assert(rlang::is_string(event_name))
+  tidyassert::assert(!is.null(session) || !is.null(rdeck$session))
+
+  id <- if (inherits(rdeck, "rdeck_proxy")) rdeck$id else rdeck
+  session <- session %||% rdeck$session
+  session$input[[paste(id, event_name, sep = "_")]]
+}
+
+#' Get view bounds
+#'
+#' Get the view bounds
+#' @name get_view_bounds
+#' @inherit get_event_data
+#' @export
+get_view_bounds <- function(rdeck, session = shiny::getDefaultReactiveDomain()) {
+  event_data <- with_event_data_errors(
+    get_event_data(rdeck, "viewstate", session)
+  )
+
+  if (is.null(event_data$bounds)) return(NULL)
+
+  bounds <- rlang::set_names(
+    unlist(event_data$bounds),
+    c("xmin", "ymin", "xmax", "ymax")
+  )
+
+  sf::st_bbox(bounds, crs = 4326)
+}
+
+#' Get view state
+#'
+#' Get the view state
+#' @name get_view_state
+#' @inherit get_event_data
+#' @autoglobal
+#' @export
+get_view_state <- function(rdeck, session = shiny::getDefaultReactiveDomain()) {
+  event_data <- with_event_data_errors(
+    get_event_data(rdeck, "viewstate", session)
+  )
+
+  if (is.null(event_data$viewState)) return(NULL)
+
+  mutate(
+    event_data$viewState,
+    center = sf::st_sfc(
+      sf::st_point(unlist(center)),
+      crs = 4326
+    )
+  )
+}
+
+#' Get clicked coordinates
+#'
+#' Get the clicked coordinates
+#' @name get_clicked_coordinates
+#' @inherit get_event_data
+#' @export
+get_clicked_coordinates <- function(rdeck, session = shiny::getDefaultReactiveDomain()) {
+  event_data <- with_event_data_errors(
+    get_event_data(rdeck, "click", session)
+  )
+
+  if (is.null(event_data$coordinate)) return(NULL)
+
+  sf::st_sfc(
+    sf::st_point(unlist(event_data$coordinate)),
+    crs = 4326
+  )
+}
+
+#' Get clicked layer
+#'
+#' Get the clicked layer
+#' @name get_clicked_layer
+#' @inherit get_event_data
+#' @export
+get_clicked_layer <- function(rdeck, session = shiny::getDefaultReactiveDomain()) {
+  event_data <- with_event_data_errors(
+    get_event_data(rdeck, "click", session)
+  )
+
+  event_data$layer
+}
+
+#' Get clicked object
+#'
+#' Get the clicked object
+#' @name get_clicked_object
+#' @inherit get_event_data
+#' @export
+get_clicked_object <- function(rdeck, session = shiny::getDefaultReactiveDomain()) {
+  event_data <- with_event_data_errors(
+    get_event_data(rdeck, "click", session)
+  )
+
+  event_data$object
+}

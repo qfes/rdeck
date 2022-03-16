@@ -64,6 +64,7 @@ utils::globalVariables(c(
   "limits", # <compile.scale_color_quantize>
   "domain", # <compile.scale_color_quantize>
   "limits", # <compile.scale_numeric_quantize>
+  "center", # <get_view_state>
   "where", # <select>
   "x", # <validate_point_type.layer>
   "y", # <validate_point_type.layer>
