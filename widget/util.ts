@@ -7,6 +7,8 @@ export function words(camelCase: string) {
 }
 
 export function pick<T, K extends keyof T>(object: T, ...keys: K[]) {
+  if (object == null) return null;
+
   const entries = keys.map((key) => [key, object[key]]);
   return Object.fromEntries(entries);
 }

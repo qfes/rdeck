@@ -147,7 +147,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
       const data = {
         coordinate: info.coordinate,
         ...getViewState(info.viewport),
-        layer: pick(info.layer.props, "id", "name", "groupName"),
+        layer: pick(info.layer?.props, "id", "name", "groupName"),
         object: getPickedObject(info),
       };
 

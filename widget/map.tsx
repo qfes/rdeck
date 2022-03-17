@@ -54,7 +54,7 @@ export function Map({ props, layers }: MapProps) {
           {mapStyle && <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />}
         </MapView>
       </DeckGL>
-      <Tooltip info={info} />
+      {info && <Tooltip info={info} />}
     </Fragment>
   );
 }

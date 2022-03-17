@@ -1,19 +1,20 @@
 import type { PickInfo } from "@deck.gl/core";
-import { getPickedObject } from "./picking";
+import { FEATURE_ID, getPickedObject } from "./picking";
 import styles from "./tooltip.css";
 
 export interface TooltipProps {
-  info: PickInfo<any> | null;
+  info: PickInfo<any>;
 }
 
 export function Tooltip({ info }: TooltipProps) {
-  if (info == null || info.layer.props.tooltip == null) return null;
+  if (!info.picked || info.layer.props.tooltip == null) return null;
 
   const { x, y } = info;
   const { name, tooltip } = info.layer.props;
 
-  const data = getPickedObject(info, tooltip.dataType)!;
-  const names = tooltip.cols === true ? Object.keys(data) : tooltip.cols;
+  const object = getPickedObject(info, tooltip.dataType)!;
+  delete object[FEATURE_ID];
+  const names = tooltip.cols === true ? Object.keys(object) : tooltip.cols;
 
   return (
     <div className={styles.tooltip} style={{ transform: `translate(${x}px, ${y}px)` }}>
@@ -23,7 +24,7 @@ export function Tooltip({ info }: TooltipProps) {
           {names.map((name) => (
             <tr key={name}>
               <td className={styles.fieldName}>{name}</td>
-              <td className={styles.fieldValue}>{String(data[name] ?? null)}</td>
+              <td className={styles.fieldValue}>{String(object[name] ?? null)}</td>
             </tr>
           ))}
         </tbody>

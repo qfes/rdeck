@@ -4,6 +4,8 @@ import { PickInfo } from "deck.gl";
 import { Feature } from "geojson";
 import { isDataFrame } from "./data-frame";
 
+export const FEATURE_ID = ".feature_id";
+
 export function getPickedObject(info: PickInfo<any>, dataType: DataType | null = null) {
   if (!info.picked) return null;
 
@@ -43,9 +45,12 @@ export function accessorFn(dataType: DataType): DataFn {
         return object;
       };
     case "object":
-      return (object) => object ?? {};
+      return (object) => ({ ...object });
     case "geojson":
-      return (object) => object?.properties ?? {};
+      return (object) => ({
+        [FEATURE_ID]: object?.id,
+        ...object?.properties,
+      });
     default:
       throw TypeError(`${dataType} not supported`);
   }
