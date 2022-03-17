@@ -2,7 +2,7 @@ import "mapbox-gl";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { PickInfo, MapView } from "@deck.gl/core";
 import { DeckGL } from "@deck.gl/react";
-import { StaticMap } from "react-map-gl";
+import { Map as MapGL } from "react-map-gl";
 import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
@@ -19,7 +19,7 @@ export function Map({ props, layers }: MapProps) {
   const [info, handleHover] = useHover();
 
   const {
-    mapboxApiAccessToken,
+    mapboxAccessToken,
     mapStyle,
     mapOptions,
     controller,
@@ -51,7 +51,7 @@ export function Map({ props, layers }: MapProps) {
         onHover={handleHover}
       >
         <MapView id="map" controller={controller} repeat={true}>
-          {mapStyle && <StaticMap reuseMaps {...{ mapboxApiAccessToken, mapStyle, mapOptions }} />}
+          {mapStyle && <MapGL reuseMaps {...{ mapboxAccessToken, mapStyle, mapOptions }} />}
         </MapView>
       </DeckGL>
       {info && <Tooltip info={info} />}

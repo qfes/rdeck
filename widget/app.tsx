@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, RefObject } from "react";
-import type { InitialViewStateProps } from "@deck.gl/core";
+import { InitialViewStateProps, WebMercatorViewport } from "@deck.gl/core";
 import type { DeckGLProps } from "@deck.gl/react";
-import { StaticMapProps, WebMercatorViewport } from "react-map-gl";
+import { StaticMapProps } from "react-map-gl";
 
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { Map } from "./map";

@@ -24,9 +24,9 @@ check_dots_access_token <- function(...) {
 
   var_names <- c("MAPBOX_ACCESS_TOKEN", "MAPBOX_TOKEN")
   tidyassert::warn_if(
-    any(dots_names == "mapbox_api_access_token"),
+    any(dots_names == "mapbox_access_token"),
     c(
-      "i" = "mapbox_api_access_token should be supplied via one of:",
+      "i" = "mapbox_access_token should be supplied via one of:",
       "`options(rdeck.mapbox_access_token)`",
       paste0("environment variable `", var_names, " = <token>`"),
       " " = "",

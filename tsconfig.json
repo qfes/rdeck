@@ -1,4 +1,6 @@
 {
+  "include": ["widget"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es2018",
     "module": "esnext",

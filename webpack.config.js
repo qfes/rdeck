@@ -12,7 +12,7 @@ module.exports = (env, { mode }) => {
 
   return {
     mode,
-    entry: { rdeck: "./widget" },
+    entry: { rdeck: "./widget/index.ts" },
     output: {
       library: {
         name: "rdeck",
@@ -23,15 +23,18 @@ module.exports = (env, { mode }) => {
       clean: { keep: "rdeck.yaml" },
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".js", "jsx"],
-      mainFields: ["esnext", "browser", "module", "main"],
+      extensions: [".ts", ".tsx", ".js"],
+      mainFields: ["browser", "module", "main"],
     },
     module: {
       rules: [
         {
-          test: /\.(ts|js)x?$/,
-          exclude: /node_modules/,
+          test: /\.tsx?$/,
           loader: "ts-loader",
+          options: {
+            // ts-loader not excluding node_modules
+            reportFiles: ["!node_modules/**/*"]
+          }
         },
         {
           test: /\.css$/,

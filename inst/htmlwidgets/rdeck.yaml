@@ -12,12 +12,12 @@ dependencies:
       - vendor/math.gl.js
       - vendor/material-ui.js
       - vendor/d3-selection.js
-      - vendor/react-map-gl.js
       - vendor/d3-transition.js
+      - vendor/react-map-gl.js
       - vendor/babel.js
-      - vendor/probe.gl.js
       - vendor/d3-interpolate.js
       - vendor/d3-format.js
+      - vendor/probe.gl.js
       - vendor/d3-scale.js
       - vendor/mjolnir.js.js
       - vendor/d3-array.js
@@ -36,8 +36,6 @@ dependencies:
       - vendor/d3.js
       - vendor/d3-ease.js
       - vendor/d3-dispatch.js
-      - vendor/viewport-mercator-project.js
-      - vendor/resize-observer-polyfill.js
       - vendor/pbf.js
       - vendor/object-assign.js
       - vendor/mapbox-gl.js
