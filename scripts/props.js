@@ -29,6 +29,8 @@ const excludeProps = [
   /* aggregation functions */
   "gridAggregator",
   "hexagonAggregator",
+  /* mask */
+  "operation",
 ];
 
 function getProps(Layer) {
@@ -65,22 +67,6 @@ function getProps(Layer) {
       ...propTypes,
       loopLength: { name: "loopLength", type: "number", value: 1800, min: 0 },
       animationSpeed: { name: "animationSpeed", type: "number", value: 30, min: 0 },
-    };
-  }
-
-  // mvt layer should inherit geojson
-  if (Layer === deck.MVTLayer) {
-    new deck.GeoJsonLayer({});
-    // @ts-ignore
-    const inherited = deck.GeoJsonLayer._propTypes;
-
-    // include geojson props
-    propTypes = {
-      // mvt props first
-      ...propTypes,
-      ...inherited,
-      // use mvt defaults
-      ...propTypes,
     };
   }
 
