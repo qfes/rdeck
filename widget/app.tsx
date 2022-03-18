@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, RefObject } from "react";
 import { InitialViewStateProps, WebMercatorViewport } from "@deck.gl/core";
 import type { DeckGLProps } from "@deck.gl/react";
-import { StaticMapProps } from "react-map-gl";
+import { MapProps } from "react-map-gl";
 
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { Map } from "./map";
@@ -11,7 +11,7 @@ import { classNames } from "./util";
 import { LayerSelector } from "./layer-selector";
 
 export type DeckProps = DeckGLProps &
-  StaticMapProps & {
+  Pick<MapProps, "mapboxAccessToken" | "mapStyle"> & {
     initialBounds?: Bounds;
     blendingMode: BlendingMode;
   };

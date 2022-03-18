@@ -18,15 +18,7 @@ export function Map({ props, layers }: MapProps) {
   const deckgl = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
-  const {
-    mapboxAccessToken,
-    mapStyle,
-    mapOptions,
-    controller,
-    parameters,
-    blendingMode,
-    ...deckProps
-  } = props;
+  const { mapboxAccessToken, mapStyle, controller, parameters, blendingMode, ...deckProps } = props;
   const _parameters = {
     ...parameters,
     ...blendingParameters(blendingMode),
@@ -36,12 +28,11 @@ export function Map({ props, layers }: MapProps) {
   const animating = layers.some((layer) => layer.type === "TripsLayer");
   useAnimation(animating, (time) => setTime(time));
 
-  const _layers = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
+  const _layers: any = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
 
   return (
     <Fragment>
       <DeckGL
-        // @ts-ignore
         ref={deckgl}
         {...deckProps}
         parameters={_parameters}
@@ -49,7 +40,7 @@ export function Map({ props, layers }: MapProps) {
         onHover={handleHover}
       >
         <MapView id="map" controller={controller} repeat={true}>
-          {mapStyle && <MapGL reuseMaps {...{ mapboxAccessToken, mapStyle, mapOptions }} />}
+          {mapStyle && <MapGL reuseMaps {...{ mapboxAccessToken, mapStyle }} />}
         </MapView>
       </DeckGL>
       {info && <Tooltip info={info} />}
