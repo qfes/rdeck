@@ -3,6 +3,7 @@
 \name{grid_layer}
 \alias{grid_layer}
 \alias{add_grid_layer}
+\alias{update_grid_layer}
 \title{Grid Layer}
 \usage{
 add_grid_layer(

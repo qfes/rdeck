@@ -3,6 +3,7 @@
 \name{gpu_grid_layer}
 \alias{gpu_grid_layer}
 \alias{add_gpu_grid_layer}
+\alias{update_gpu_grid_layer}
 \title{GPU Grid Layer}
 \usage{
 add_gpu_grid_layer(

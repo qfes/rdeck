@@ -3,6 +3,7 @@
 \name{trips_layer}
 \alias{trips_layer}
 \alias{add_trips_layer}
+\alias{update_trips_layer}
 \title{Trips Layer}
 \usage{
 add_trips_layer(

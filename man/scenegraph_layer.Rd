@@ -3,6 +3,7 @@
 \name{scenegraph_layer}
 \alias{scenegraph_layer}
 \alias{add_scenegraph_layer}
+\alias{update_scenegraph_layer}
 \title{Scenegraph Layer}
 \usage{
 add_scenegraph_layer(

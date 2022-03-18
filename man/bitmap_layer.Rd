@@ -3,6 +3,7 @@
 \name{bitmap_layer}
 \alias{bitmap_layer}
 \alias{add_bitmap_layer}
+\alias{update_bitmap_layer}
 \title{Bitmap Layer}
 \usage{
 add_bitmap_layer(

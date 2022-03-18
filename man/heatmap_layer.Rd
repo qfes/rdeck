@@ -3,6 +3,7 @@
 \name{heatmap_layer}
 \alias{heatmap_layer}
 \alias{add_heatmap_layer}
+\alias{update_heatmap_layer}
 \title{Heatmap Layer}
 \usage{
 add_heatmap_layer(

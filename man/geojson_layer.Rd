@@ -3,6 +3,7 @@
 \name{geojson_layer}
 \alias{geojson_layer}
 \alias{add_geojson_layer}
+\alias{update_geojson_layer}
 \title{GeoJson Layer}
 \usage{
 add_geojson_layer(

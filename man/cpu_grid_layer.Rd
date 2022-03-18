@@ -3,6 +3,7 @@
 \name{cpu_grid_layer}
 \alias{cpu_grid_layer}
 \alias{add_cpu_grid_layer}
+\alias{update_cpu_grid_layer}
 \title{CPU Grid Layer}
 \usage{
 add_cpu_grid_layer(

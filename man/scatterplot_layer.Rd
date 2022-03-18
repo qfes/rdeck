@@ -3,6 +3,7 @@
 \name{scatterplot_layer}
 \alias{scatterplot_layer}
 \alias{add_scatterplot_layer}
+\alias{update_scatterplot_layer}
 \title{Scatterplot Layer}
 \usage{
 add_scatterplot_layer(

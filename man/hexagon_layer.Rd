@@ -3,6 +3,7 @@
 \name{hexagon_layer}
 \alias{hexagon_layer}
 \alias{add_hexagon_layer}
+\alias{update_hexagon_layer}
 \title{Hexagon Layer}
 \usage{
 add_hexagon_layer(

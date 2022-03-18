@@ -3,6 +3,7 @@
 \name{screen_grid_layer}
 \alias{screen_grid_layer}
 \alias{add_screen_grid_layer}
+\alias{update_screen_grid_layer}
 \title{Screen Grid Layer}
 \usage{
 add_screen_grid_layer(

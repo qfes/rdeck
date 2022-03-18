@@ -3,6 +3,7 @@
 \name{icon_layer}
 \alias{icon_layer}
 \alias{add_icon_layer}
+\alias{update_icon_layer}
 \title{Icon Layer}
 \usage{
 add_icon_layer(

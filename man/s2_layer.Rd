@@ -3,6 +3,7 @@
 \name{s2_layer}
 \alias{s2_layer}
 \alias{add_s2_layer}
+\alias{update_s2_layer}
 \title{S2 Layer}
 \usage{
 add_s2_layer(

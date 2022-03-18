@@ -3,6 +3,7 @@
 \name{polygon_layer}
 \alias{polygon_layer}
 \alias{add_polygon_layer}
+\alias{update_polygon_layer}
 \title{Polygon Layer}
 \usage{
 add_polygon_layer(

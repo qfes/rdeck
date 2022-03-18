@@ -3,6 +3,7 @@
 \name{h3_hexagon_layer}
 \alias{h3_hexagon_layer}
 \alias{add_h3_hexagon_layer}
+\alias{update_h3_hexagon_layer}
 \title{H3 Hexagon Layer}
 \usage{
 add_h3_hexagon_layer(

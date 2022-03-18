@@ -3,6 +3,7 @@
 \name{great_circle_layer}
 \alias{great_circle_layer}
 \alias{add_great_circle_layer}
+\alias{update_great_circle_layer}
 \title{Great Circle Layer}
 \usage{
 add_great_circle_layer(

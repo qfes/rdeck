@@ -3,6 +3,7 @@
 \name{terrain_layer}
 \alias{terrain_layer}
 \alias{add_terrain_layer}
+\alias{update_terrain_layer}
 \title{Terrain Layer}
 \usage{
 add_terrain_layer(

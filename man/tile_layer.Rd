@@ -3,6 +3,7 @@
 \name{tile_layer}
 \alias{tile_layer}
 \alias{add_tile_layer}
+\alias{update_tile_layer}
 \title{Tile Layer}
 \usage{
 add_tile_layer(

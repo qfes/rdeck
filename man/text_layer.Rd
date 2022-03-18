@@ -3,6 +3,7 @@
 \name{text_layer}
 \alias{text_layer}
 \alias{add_text_layer}
+\alias{update_text_layer}
 \title{Text Layer}
 \usage{
 add_text_layer(

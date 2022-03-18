@@ -3,6 +3,7 @@
 \name{contour_layer}
 \alias{contour_layer}
 \alias{add_contour_layer}
+\alias{update_contour_layer}
 \title{Contour Layer}
 \usage{
 add_contour_layer(

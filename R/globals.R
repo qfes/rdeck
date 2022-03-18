@@ -28,6 +28,8 @@ utils::globalVariables(c(
   "source_position", # <add_great_circle_layer>
   "target_position", # <add_great_circle_layer>
   "token", # <add_s2_layer>
+  "polygon", # <add_quadkey_layer>
+  "quadkey", # <add_quadkey_layer>
   "hexagons", # <add_h3_cluster_layer>
   "hexagon", # <add_h3_hexagon_layer>
   "path", # <add_trips_layer>

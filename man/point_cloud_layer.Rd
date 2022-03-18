@@ -3,6 +3,7 @@
 \name{point_cloud_layer}
 \alias{point_cloud_layer}
 \alias{add_point_cloud_layer}
+\alias{update_point_cloud_layer}
 \title{Point Cloud Layer}
 \usage{
 add_point_cloud_layer(

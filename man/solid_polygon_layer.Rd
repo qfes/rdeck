@@ -3,6 +3,7 @@
 \name{solid_polygon_layer}
 \alias{solid_polygon_layer}
 \alias{add_solid_polygon_layer}
+\alias{update_solid_polygon_layer}
 \title{Solid Polygon Layer}
 \usage{
 add_solid_polygon_layer(

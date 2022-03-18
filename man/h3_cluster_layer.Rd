@@ -3,6 +3,7 @@
 \name{h3_cluster_layer}
 \alias{h3_cluster_layer}
 \alias{add_h3_cluster_layer}
+\alias{update_h3_cluster_layer}
 \title{H3 Cluster Layer}
 \usage{
 add_h3_cluster_layer(

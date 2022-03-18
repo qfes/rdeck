@@ -3,6 +3,7 @@
 \name{path_layer}
 \alias{path_layer}
 \alias{add_path_layer}
+\alias{update_path_layer}
 \title{Path Layer}
 \usage{
 add_path_layer(

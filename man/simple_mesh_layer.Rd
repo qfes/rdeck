@@ -3,6 +3,7 @@
 \name{simple_mesh_layer}
 \alias{simple_mesh_layer}
 \alias{add_simple_mesh_layer}
+\alias{update_simple_mesh_layer}
 \title{Simple Mesh Layer}
 \usage{
 add_simple_mesh_layer(

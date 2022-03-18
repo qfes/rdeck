@@ -3,6 +3,7 @@
 \name{line_layer}
 \alias{line_layer}
 \alias{add_line_layer}
+\alias{update_line_layer}
 \title{Line Layer}
 \usage{
 add_line_layer(

@@ -3,6 +3,7 @@
 \name{arc_layer}
 \alias{arc_layer}
 \alias{add_arc_layer}
+\alias{update_arc_layer}
 \title{Arc Layer}
 \usage{
 add_arc_layer(

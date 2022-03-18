@@ -3,6 +3,7 @@
 \name{column_layer}
 \alias{column_layer}
 \alias{add_column_layer}
+\alias{update_column_layer}
 \title{Column Layer}
 \usage{
 add_column_layer(
