@@ -67,8 +67,14 @@ tooltip.call <- function(expr, data, data_type) {
     return(tooltip(rlang::eval_tidy(expr), data, data_type))
   }
 
+  if (rlang::call_name(expr) == "cur_value") {
+    return(tooltip.cur_value(rlang::eval_tidy(expr), data, data_type))
+  }
+
   tooltip_tidyselect(expr, data, data_type)
 }
+
+tooltip.cur_value <- function(expr, data, data_type) expr
 
 tooltip_tidyselect <- function(expr, data, data_type) {
   tidyassert::assert(is_dataframe(data))

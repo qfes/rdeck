@@ -7,6 +7,10 @@ validate_aggregation <- function(layer) {
 }
 validate_aggregation.default <- function(layer) {
   aggregation <- layer$aggregation
+  if (is_cur_value(aggregation)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(aggregation))
   tidyassert::assert(
     is.character(aggregation) && length(aggregation) == 1 && aggregation %in% c("SUM", "MEAN", "MIN", "MAX"),
@@ -21,6 +25,10 @@ validate_alpha_cutoff <- function(layer) {
 }
 validate_alpha_cutoff.default <- function(layer) {
   alpha_cutoff <- layer$alpha_cutoff
+  if (is_cur_value(alpha_cutoff)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(alpha_cutoff))
   tidyassert::assert(
     is.numeric(alpha_cutoff) && all_finite(alpha_cutoff) && length(alpha_cutoff) == 1 && min(alpha_cutoff) >= 0 && max(alpha_cutoff) <= 1,
@@ -35,6 +43,10 @@ validate_angle <- function(layer) {
 }
 validate_angle.default <- function(layer) {
   angle <- layer$angle
+  if (is_cur_value(angle)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(angle))
   tidyassert::assert(
     is.numeric(angle) && all_finite(angle) && length(angle) == 1,
@@ -49,6 +61,10 @@ validate_animation_speed <- function(layer) {
 }
 validate_animation_speed.default <- function(layer) {
   animation_speed <- layer$animation_speed
+  if (is_cur_value(animation_speed)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(animation_speed))
   tidyassert::assert(
     is.numeric(animation_speed) && all_finite(animation_speed) && length(animation_speed) == 1 && min(animation_speed) >= 0,
@@ -63,6 +79,10 @@ validate_antialiasing <- function(layer) {
 }
 validate_antialiasing.default <- function(layer) {
   antialiasing <- layer$antialiasing
+  if (is_cur_value(antialiasing)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(antialiasing))
   tidyassert::assert(
     is.logical(antialiasing) && length(antialiasing) == 1,
@@ -77,6 +97,10 @@ validate_auto_highlight <- function(layer) {
 }
 validate_auto_highlight.default <- function(layer) {
   auto_highlight <- layer$auto_highlight
+  if (is_cur_value(auto_highlight)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(auto_highlight))
   tidyassert::assert(
     is.logical(auto_highlight) && length(auto_highlight) == 1,
@@ -91,6 +115,10 @@ validate_background <- function(layer) {
 }
 validate_background.default <- function(layer) {
   background <- layer$background
+  if (is_cur_value(background)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(background))
   tidyassert::assert(
     is.logical(background) && length(background) == 1,
@@ -105,6 +133,10 @@ validate_background_padding <- function(layer) {
 }
 validate_background_padding.default <- function(layer) {
   background_padding <- layer$background_padding
+  if (is_cur_value(background_padding)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(background_padding))
   tidyassert::assert(
     is.numeric(background_padding) && all_finite(background_padding) && length(background_padding) %in% c(2, 4),
@@ -119,6 +151,10 @@ validate_billboard <- function(layer) {
 }
 validate_billboard.default <- function(layer) {
   billboard <- layer$billboard
+  if (is_cur_value(billboard)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(billboard))
   tidyassert::assert(
     is.logical(billboard) && length(billboard) == 1,
@@ -133,6 +169,10 @@ validate_binary <- function(layer) {
 }
 validate_binary.default <- function(layer) {
   binary <- layer$binary
+  if (is_cur_value(binary)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(binary))
   tidyassert::assert(
     is.logical(binary) && length(binary) == 1,
@@ -147,6 +187,10 @@ validate_blending_mode <- function(layer) {
 }
 validate_blending_mode.default <- function(layer) {
   blending_mode <- layer$blending_mode
+  if (is_cur_value(blending_mode)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(blending_mode))
   tidyassert::assert(
     is.character(blending_mode) && length(blending_mode) == 1 && blending_mode %in% c("normal", "additive", "subtractive"),
@@ -161,6 +205,10 @@ validate_bounds <- function(layer) {
 }
 validate_bounds.default <- function(layer) {
   bounds <- layer$bounds
+  if (is_cur_value(bounds)) {
+    return()
+  }
+
   if (is.null(bounds)) {
     return()
   }
@@ -172,6 +220,10 @@ validate_cap_rounded <- function(layer) {
 }
 validate_cap_rounded.default <- function(layer) {
   cap_rounded <- layer$cap_rounded
+  if (is_cur_value(cap_rounded)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(cap_rounded))
   tidyassert::assert(
     is.logical(cap_rounded) && length(cap_rounded) == 1,
@@ -186,6 +238,10 @@ validate_cell_margin_pixels <- function(layer) {
 }
 validate_cell_margin_pixels.default <- function(layer) {
   cell_margin_pixels <- layer$cell_margin_pixels
+  if (is_cur_value(cell_margin_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(cell_margin_pixels))
   tidyassert::assert(
     is.numeric(cell_margin_pixels) && all_finite(cell_margin_pixels) && length(cell_margin_pixels) == 1 && min(cell_margin_pixels) >= 0 && max(cell_margin_pixels) <= 5,
@@ -200,6 +256,10 @@ validate_cell_size <- function(layer) {
 }
 validate_cell_size.default <- function(layer) {
   cell_size <- layer$cell_size
+  if (is_cur_value(cell_size)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(cell_size))
   tidyassert::assert(
     is.numeric(cell_size) && all_finite(cell_size) && length(cell_size) == 1 && min(cell_size) >= 1 && max(cell_size) <= 1000,
@@ -214,6 +274,10 @@ validate_cell_size_pixels <- function(layer) {
 }
 validate_cell_size_pixels.default <- function(layer) {
   cell_size_pixels <- layer$cell_size_pixels
+  if (is_cur_value(cell_size_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(cell_size_pixels))
   tidyassert::assert(
     is.numeric(cell_size_pixels) && all_finite(cell_size_pixels) && length(cell_size_pixels) == 1 && min(cell_size_pixels) >= 1,
@@ -228,6 +292,10 @@ validate_center_hexagon <- function(layer) {
 }
 validate_center_hexagon.default <- function(layer) {
   center_hexagon <- layer$center_hexagon
+  if (is_cur_value(center_hexagon)) {
+    return()
+  }
+
   if (is.null(center_hexagon)) {
     return()
   }
@@ -239,6 +307,10 @@ validate_color <- function(layer) {
 }
 validate_color.default <- function(layer) {
   color <- layer$color
+  if (is_cur_value(color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(color))
   tidyassert::assert(
     is_rgba_color(color) && length(color) == 1,
@@ -253,6 +325,10 @@ validate_color_aggregation <- function(layer) {
 }
 validate_color_aggregation.default <- function(layer) {
   color_aggregation <- layer$color_aggregation
+  if (is_cur_value(color_aggregation)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(color_aggregation))
   tidyassert::assert(
     is.character(color_aggregation) && length(color_aggregation) == 1 && color_aggregation %in% c("SUM", "MEAN", "MIN", "MAX"),
@@ -267,6 +343,10 @@ validate_color_domain <- function(layer) {
 }
 validate_color_domain.default <- function(layer) {
   color_domain <- layer$color_domain
+  if (is_cur_value(color_domain)) {
+    return()
+  }
+
   if (is.null(color_domain)) {
     return()
   }
@@ -278,6 +358,10 @@ validate_color_format <- function(layer) {
 }
 validate_color_format.default <- function(layer) {
   color_format <- layer$color_format
+  if (is_cur_value(color_format)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(color_format))
   tidyassert::assert(
     is.character(color_format) && length(color_format) == 1 && color_format %in% c("RGB", "RGBA"),
@@ -292,6 +376,10 @@ validate_color_range <- function(layer) {
 }
 validate_color_range.default <- function(layer) {
   color_range <- layer$color_range
+  if (is_cur_value(color_range)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(color_range))
   tidyassert::assert(
     is_rgba_color(color_range),
@@ -306,6 +394,10 @@ validate_color_scale_type <- function(layer) {
 }
 validate_color_scale_type.default <- function(layer) {
   color_scale_type <- layer$color_scale_type
+  if (is_cur_value(color_scale_type)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(color_scale_type))
   tidyassert::assert(
     is.character(color_scale_type) && length(color_scale_type) == 1 && color_scale_type %in% c("quantize", "linear", "quantile", "ordinal"),
@@ -320,6 +412,10 @@ validate_contours <- function(layer) {
 }
 validate_contours.default <- function(layer) {
   contours <- layer$contours
+  if (is_cur_value(contours)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(contours))
 }
 
@@ -329,6 +425,10 @@ validate_coverage <- function(layer) {
 }
 validate_coverage.default <- function(layer) {
   coverage <- layer$coverage
+  if (is_cur_value(coverage)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(coverage))
   tidyassert::assert(
     is.numeric(coverage) && all_finite(coverage) && length(coverage) == 1 && min(coverage) >= 0 && max(coverage) <= 1,
@@ -343,6 +443,10 @@ validate_data <- function(layer) {
 }
 validate_data.default <- function(layer) {
   data <- layer$data
+  if (is_cur_value(data)) {
+    return()
+  }
+
   if (is.null(data)) {
     return()
   }
@@ -354,6 +458,10 @@ validate_debounce_timeout <- function(layer) {
 }
 validate_debounce_timeout.default <- function(layer) {
   debounce_timeout <- layer$debounce_timeout
+  if (is_cur_value(debounce_timeout)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(debounce_timeout))
   tidyassert::assert(
     is.numeric(debounce_timeout) && all_finite(debounce_timeout) && length(debounce_timeout) == 1 && min(debounce_timeout) >= 0 && max(debounce_timeout) <= 1000,
@@ -368,6 +476,10 @@ validate_desaturate <- function(layer) {
 }
 validate_desaturate.default <- function(layer) {
   desaturate <- layer$desaturate
+  if (is_cur_value(desaturate)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(desaturate))
   tidyassert::assert(
     is.numeric(desaturate) && all_finite(desaturate) && length(desaturate) == 1 && min(desaturate) >= 0 && max(desaturate) <= 1,
@@ -382,6 +494,10 @@ validate_disk_resolution <- function(layer) {
 }
 validate_disk_resolution.default <- function(layer) {
   disk_resolution <- layer$disk_resolution
+  if (is_cur_value(disk_resolution)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(disk_resolution))
   tidyassert::assert(
     is.numeric(disk_resolution) && all_finite(disk_resolution) && length(disk_resolution) == 1 && min(disk_resolution) >= 4,
@@ -396,6 +512,10 @@ validate_elevation_aggregation <- function(layer) {
 }
 validate_elevation_aggregation.default <- function(layer) {
   elevation_aggregation <- layer$elevation_aggregation
+  if (is_cur_value(elevation_aggregation)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(elevation_aggregation))
   tidyassert::assert(
     is.character(elevation_aggregation) && length(elevation_aggregation) == 1 && elevation_aggregation %in% c("SUM", "MEAN", "MIN", "MAX"),
@@ -410,6 +530,10 @@ validate_elevation_data <- function(layer) {
 }
 validate_elevation_data.default <- function(layer) {
   elevation_data <- layer$elevation_data
+  if (is_cur_value(elevation_data)) {
+    return()
+  }
+
   if (is.null(elevation_data)) {
     return()
   }
@@ -421,6 +545,10 @@ validate_elevation_decoder <- function(layer) {
 }
 validate_elevation_decoder.default <- function(layer) {
   elevation_decoder <- layer$elevation_decoder
+  if (is_cur_value(elevation_decoder)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(elevation_decoder))
 }
 
@@ -430,6 +558,10 @@ validate_elevation_domain <- function(layer) {
 }
 validate_elevation_domain.default <- function(layer) {
   elevation_domain <- layer$elevation_domain
+  if (is_cur_value(elevation_domain)) {
+    return()
+  }
+
   if (is.null(elevation_domain)) {
     return()
   }
@@ -441,6 +573,10 @@ validate_elevation_lower_percentile <- function(layer) {
 }
 validate_elevation_lower_percentile.default <- function(layer) {
   elevation_lower_percentile <- layer$elevation_lower_percentile
+  if (is_cur_value(elevation_lower_percentile)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(elevation_lower_percentile))
   tidyassert::assert(
     is.numeric(elevation_lower_percentile) && all_finite(elevation_lower_percentile) && length(elevation_lower_percentile) == 1 && min(elevation_lower_percentile) >= 0 && max(elevation_lower_percentile) <= 100,
@@ -455,6 +591,10 @@ validate_elevation_range <- function(layer) {
 }
 validate_elevation_range.default <- function(layer) {
   elevation_range <- layer$elevation_range
+  if (is_cur_value(elevation_range)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(elevation_range))
   tidyassert::assert(
     is.numeric(elevation_range) && all_finite(elevation_range) && length(elevation_range) == 2,
@@ -469,6 +609,10 @@ validate_elevation_scale <- function(layer) {
 }
 validate_elevation_scale.default <- function(layer) {
   elevation_scale <- layer$elevation_scale
+  if (is_cur_value(elevation_scale)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(elevation_scale))
   tidyassert::assert(
     is.numeric(elevation_scale) && all_finite(elevation_scale) && length(elevation_scale) == 1 && min(elevation_scale) >= 0,
@@ -483,6 +627,10 @@ validate_elevation_scale_type <- function(layer) {
 }
 validate_elevation_scale_type.default <- function(layer) {
   elevation_scale_type <- layer$elevation_scale_type
+  if (is_cur_value(elevation_scale_type)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(elevation_scale_type))
   tidyassert::assert(
     is.character(elevation_scale_type) && length(elevation_scale_type) == 1 && elevation_scale_type %in% c("quantize", "linear", "quantile", "ordinal"),
@@ -497,6 +645,10 @@ validate_elevation_upper_percentile <- function(layer) {
 }
 validate_elevation_upper_percentile.default <- function(layer) {
   elevation_upper_percentile <- layer$elevation_upper_percentile
+  if (is_cur_value(elevation_upper_percentile)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(elevation_upper_percentile))
   tidyassert::assert(
     is.numeric(elevation_upper_percentile) && all_finite(elevation_upper_percentile) && length(elevation_upper_percentile) == 1 && min(elevation_upper_percentile) >= 0 && max(elevation_upper_percentile) <= 100,
@@ -511,6 +663,10 @@ validate_extent <- function(layer) {
 }
 validate_extent.default <- function(layer) {
   extent <- layer$extent
+  if (is_cur_value(extent)) {
+    return()
+  }
+
   if (is.null(extent)) {
     return()
   }
@@ -522,6 +678,10 @@ validate_extruded <- function(layer) {
 }
 validate_extruded.default <- function(layer) {
   extruded <- layer$extruded
+  if (is_cur_value(extruded)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(extruded))
   tidyassert::assert(
     is.logical(extruded) && length(extruded) == 1,
@@ -536,6 +696,10 @@ validate_fade_trail <- function(layer) {
 }
 validate_fade_trail.default <- function(layer) {
   fade_trail <- layer$fade_trail
+  if (is_cur_value(fade_trail)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(fade_trail))
   tidyassert::assert(
     is.logical(fade_trail) && length(fade_trail) == 1,
@@ -550,6 +714,10 @@ validate_filled <- function(layer) {
 }
 validate_filled.default <- function(layer) {
   filled <- layer$filled
+  if (is_cur_value(filled)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(filled))
   tidyassert::assert(
     is.logical(filled) && length(filled) == 1,
@@ -564,6 +732,10 @@ validate_font_family <- function(layer) {
 }
 validate_font_family.default <- function(layer) {
   font_family <- layer$font_family
+  if (is_cur_value(font_family)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(font_family))
   tidyassert::assert(
     is.character(font_family) && length(font_family) == 1,
@@ -578,6 +750,10 @@ validate_font_settings <- function(layer) {
 }
 validate_font_settings.default <- function(layer) {
   font_settings <- layer$font_settings
+  if (is_cur_value(font_settings)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(font_settings))
 }
 
@@ -587,6 +763,10 @@ validate_font_weight <- function(layer) {
 }
 validate_font_weight.default <- function(layer) {
   font_weight <- layer$font_weight
+  if (is_cur_value(font_weight)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(font_weight))
   tidyassert::assert(
     is.character(font_weight) && length(font_weight) == 1 && font_weight %in% c("normal", "bold", 100, 200, 300, 400, 500, 600, 700, 800, 900),
@@ -601,6 +781,10 @@ validate_get_alignment_baseline <- function(layer) {
 }
 validate_get_alignment_baseline.default <- function(layer) {
   get_alignment_baseline <- layer$get_alignment_baseline
+  if (is_cur_value(get_alignment_baseline)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_alignment_baseline))
   tidyassert::assert(
     is_accessor(get_alignment_baseline) || is.character(get_alignment_baseline) && length(get_alignment_baseline) == 1 && get_alignment_baseline %in% c("top", "center", "bottom"),
@@ -625,6 +809,10 @@ validate_get_angle <- function(layer) {
 }
 validate_get_angle.default <- function(layer) {
   get_angle <- layer$get_angle
+  if (is_cur_value(get_angle)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_angle))
   tidyassert::assert(
     is_accessor(get_angle) || is.numeric(get_angle) && all_finite(get_angle) && length(get_angle) == 1,
@@ -649,6 +837,10 @@ validate_get_animator <- function(layer) {
 }
 validate_get_animator.default <- function(layer) {
   get_animator <- layer$get_animator
+  if (is_cur_value(get_animator)) {
+    return()
+  }
+
   if (is.null(get_animator)) {
     return()
   }
@@ -660,6 +852,10 @@ validate_get_background_color <- function(layer) {
 }
 validate_get_background_color.default <- function(layer) {
   get_background_color <- layer$get_background_color
+  if (is_cur_value(get_background_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_background_color))
   tidyassert::assert(
     is_color_scale(get_background_color) || is_accessor(get_background_color) || is_rgba_color(get_background_color) && length(get_background_color) == 1,
@@ -684,6 +880,10 @@ validate_get_border_color <- function(layer) {
 }
 validate_get_border_color.default <- function(layer) {
   get_border_color <- layer$get_border_color
+  if (is_cur_value(get_border_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_border_color))
   tidyassert::assert(
     is_color_scale(get_border_color) || is_accessor(get_border_color) || is_rgba_color(get_border_color) && length(get_border_color) == 1,
@@ -708,6 +908,10 @@ validate_get_border_width <- function(layer) {
 }
 validate_get_border_width.default <- function(layer) {
   get_border_width <- layer$get_border_width
+  if (is_cur_value(get_border_width)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_border_width))
   tidyassert::assert(
     is_numeric_scale(get_border_width) || is_accessor(get_border_width) || is.numeric(get_border_width) && all_finite(get_border_width) && length(get_border_width) == 1,
@@ -732,6 +936,10 @@ validate_get_color <- function(layer) {
 }
 validate_get_color.default <- function(layer) {
   get_color <- layer$get_color
+  if (is_cur_value(get_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_color))
   tidyassert::assert(
     is_color_scale(get_color) || is_accessor(get_color) || is_rgba_color(get_color) && length(get_color) == 1,
@@ -756,6 +964,10 @@ validate_get_color_value <- function(layer) {
 }
 validate_get_color_value.default <- function(layer) {
   get_color_value <- layer$get_color_value
+  if (is_cur_value(get_color_value)) {
+    return()
+  }
+
   if (is.null(get_color_value)) {
     return()
   }
@@ -767,6 +979,10 @@ validate_get_color_weight <- function(layer) {
 }
 validate_get_color_weight.default <- function(layer) {
   get_color_weight <- layer$get_color_weight
+  if (is_cur_value(get_color_weight)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_color_weight))
   tidyassert::assert(
     is_numeric_scale(get_color_weight) || is_accessor(get_color_weight) || is.numeric(get_color_weight) && all_finite(get_color_weight) && length(get_color_weight) == 1,
@@ -791,6 +1007,10 @@ validate_get_elevation <- function(layer) {
 }
 validate_get_elevation.default <- function(layer) {
   get_elevation <- layer$get_elevation
+  if (is_cur_value(get_elevation)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_elevation))
   tidyassert::assert(
     is_numeric_scale(get_elevation) || is_accessor(get_elevation) || is.numeric(get_elevation) && all_finite(get_elevation) && length(get_elevation) == 1,
@@ -815,6 +1035,10 @@ validate_get_elevation_value <- function(layer) {
 }
 validate_get_elevation_value.default <- function(layer) {
   get_elevation_value <- layer$get_elevation_value
+  if (is_cur_value(get_elevation_value)) {
+    return()
+  }
+
   if (is.null(get_elevation_value)) {
     return()
   }
@@ -826,6 +1050,10 @@ validate_get_elevation_weight <- function(layer) {
 }
 validate_get_elevation_weight.default <- function(layer) {
   get_elevation_weight <- layer$get_elevation_weight
+  if (is_cur_value(get_elevation_weight)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_elevation_weight))
   tidyassert::assert(
     is_numeric_scale(get_elevation_weight) || is_accessor(get_elevation_weight) || is.numeric(get_elevation_weight) && all_finite(get_elevation_weight) && length(get_elevation_weight) == 1,
@@ -850,6 +1078,10 @@ validate_get_fill_color <- function(layer) {
 }
 validate_get_fill_color.default <- function(layer) {
   get_fill_color <- layer$get_fill_color
+  if (is_cur_value(get_fill_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_fill_color))
   tidyassert::assert(
     is_color_scale(get_fill_color) || is_accessor(get_fill_color) || is_rgba_color(get_fill_color) && length(get_fill_color) == 1,
@@ -874,6 +1106,10 @@ validate_get_height <- function(layer) {
 }
 validate_get_height.default <- function(layer) {
   get_height <- layer$get_height
+  if (is_cur_value(get_height)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_height))
   tidyassert::assert(
     is_numeric_scale(get_height) || is_accessor(get_height) || is.numeric(get_height) && all_finite(get_height) && length(get_height) == 1,
@@ -898,6 +1134,10 @@ validate_get_hexagon <- function(layer) {
 }
 validate_get_hexagon.default <- function(layer) {
   get_hexagon <- layer$get_hexagon
+  if (is_cur_value(get_hexagon)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_hexagon))
   tidyassert::assert(
     is_accessor(get_hexagon),
@@ -916,6 +1156,10 @@ validate_get_hexagons <- function(layer) {
 }
 validate_get_hexagons.default <- function(layer) {
   get_hexagons <- layer$get_hexagons
+  if (is_cur_value(get_hexagons)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_hexagons))
   tidyassert::assert(
     is_accessor(get_hexagons),
@@ -934,6 +1178,10 @@ validate_get_icon <- function(layer) {
 }
 validate_get_icon.default <- function(layer) {
   get_icon <- layer$get_icon
+  if (is_cur_value(get_icon)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_icon))
   tidyassert::assert(
     is_accessor(get_icon),
@@ -952,6 +1200,10 @@ validate_get_icon_angle <- function(layer) {
 }
 validate_get_icon_angle.default <- function(layer) {
   get_icon_angle <- layer$get_icon_angle
+  if (is_cur_value(get_icon_angle)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_icon_angle))
   tidyassert::assert(
     is_accessor(get_icon_angle) || is.numeric(get_icon_angle) && all_finite(get_icon_angle) && length(get_icon_angle) == 1,
@@ -976,6 +1228,10 @@ validate_get_icon_color <- function(layer) {
 }
 validate_get_icon_color.default <- function(layer) {
   get_icon_color <- layer$get_icon_color
+  if (is_cur_value(get_icon_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_icon_color))
   tidyassert::assert(
     is_color_scale(get_icon_color) || is_accessor(get_icon_color) || is_rgba_color(get_icon_color) && length(get_icon_color) == 1,
@@ -1000,6 +1256,10 @@ validate_get_icon_pixel_offset <- function(layer) {
 }
 validate_get_icon_pixel_offset.default <- function(layer) {
   get_icon_pixel_offset <- layer$get_icon_pixel_offset
+  if (is_cur_value(get_icon_pixel_offset)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_icon_pixel_offset))
   tidyassert::assert(
     is_accessor(get_icon_pixel_offset) || is.numeric(get_icon_pixel_offset) && all_finite(get_icon_pixel_offset) && length(get_icon_pixel_offset) == 2,
@@ -1024,6 +1284,10 @@ validate_get_icon_size <- function(layer) {
 }
 validate_get_icon_size.default <- function(layer) {
   get_icon_size <- layer$get_icon_size
+  if (is_cur_value(get_icon_size)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_icon_size))
   tidyassert::assert(
     is_numeric_scale(get_icon_size) || is_accessor(get_icon_size) || is.numeric(get_icon_size) && all_finite(get_icon_size) && length(get_icon_size) == 1,
@@ -1048,6 +1312,10 @@ validate_get_line_color <- function(layer) {
 }
 validate_get_line_color.default <- function(layer) {
   get_line_color <- layer$get_line_color
+  if (is_cur_value(get_line_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_line_color))
   tidyassert::assert(
     is_color_scale(get_line_color) || is_accessor(get_line_color) || is_rgba_color(get_line_color) && length(get_line_color) == 1,
@@ -1072,6 +1340,10 @@ validate_get_line_width <- function(layer) {
 }
 validate_get_line_width.default <- function(layer) {
   get_line_width <- layer$get_line_width
+  if (is_cur_value(get_line_width)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_line_width))
   tidyassert::assert(
     is_numeric_scale(get_line_width) || is_accessor(get_line_width) || is.numeric(get_line_width) && all_finite(get_line_width) && length(get_line_width) == 1,
@@ -1096,6 +1368,10 @@ validate_get_normal <- function(layer) {
 }
 validate_get_normal.default <- function(layer) {
   get_normal <- layer$get_normal
+  if (is_cur_value(get_normal)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_normal))
   tidyassert::assert(
     is_accessor(get_normal) || is.numeric(get_normal) && all_finite(get_normal) && length(get_normal) == 3,
@@ -1120,6 +1396,10 @@ validate_get_orientation <- function(layer) {
 }
 validate_get_orientation.default <- function(layer) {
   get_orientation <- layer$get_orientation
+  if (is_cur_value(get_orientation)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_orientation))
   tidyassert::assert(
     is_accessor(get_orientation) || is.numeric(get_orientation) && all_finite(get_orientation) && length(get_orientation) == 3,
@@ -1144,6 +1424,10 @@ validate_get_path <- function(layer) {
 }
 validate_get_path.default <- function(layer) {
   get_path <- layer$get_path
+  if (is_cur_value(get_path)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_path))
   tidyassert::assert(
     is_accessor(get_path),
@@ -1162,6 +1446,10 @@ validate_get_pixel_offset <- function(layer) {
 }
 validate_get_pixel_offset.default <- function(layer) {
   get_pixel_offset <- layer$get_pixel_offset
+  if (is_cur_value(get_pixel_offset)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_pixel_offset))
   tidyassert::assert(
     is_accessor(get_pixel_offset) || is.numeric(get_pixel_offset) && all_finite(get_pixel_offset) && length(get_pixel_offset) == 2,
@@ -1186,6 +1474,10 @@ validate_get_point_color <- function(layer) {
 }
 validate_get_point_color.default <- function(layer) {
   get_point_color <- layer$get_point_color
+  if (is_cur_value(get_point_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_point_color))
   tidyassert::assert(
     is_color_scale(get_point_color) || is_accessor(get_point_color) || is_rgba_color(get_point_color) && length(get_point_color) == 1,
@@ -1210,6 +1502,10 @@ validate_get_point_radius <- function(layer) {
 }
 validate_get_point_radius.default <- function(layer) {
   get_point_radius <- layer$get_point_radius
+  if (is_cur_value(get_point_radius)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_point_radius))
   tidyassert::assert(
     is_numeric_scale(get_point_radius) || is_accessor(get_point_radius) || is.numeric(get_point_radius) && all_finite(get_point_radius) && length(get_point_radius) == 1,
@@ -1234,6 +1530,10 @@ validate_get_polygon <- function(layer) {
 }
 validate_get_polygon.default <- function(layer) {
   get_polygon <- layer$get_polygon
+  if (is_cur_value(get_polygon)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_polygon))
   tidyassert::assert(
     is_accessor(get_polygon),
@@ -1252,6 +1552,10 @@ validate_get_position <- function(layer) {
 }
 validate_get_position.default <- function(layer) {
   get_position <- layer$get_position
+  if (is_cur_value(get_position)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_position))
   tidyassert::assert(
     is_accessor(get_position),
@@ -1270,6 +1574,10 @@ validate_get_quadkey <- function(layer) {
 }
 validate_get_quadkey.default <- function(layer) {
   get_quadkey <- layer$get_quadkey
+  if (is_cur_value(get_quadkey)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_quadkey))
   tidyassert::assert(
     is_accessor(get_quadkey),
@@ -1288,6 +1596,10 @@ validate_get_radius <- function(layer) {
 }
 validate_get_radius.default <- function(layer) {
   get_radius <- layer$get_radius
+  if (is_cur_value(get_radius)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_radius))
   tidyassert::assert(
     is_numeric_scale(get_radius) || is_accessor(get_radius) || is.numeric(get_radius) && all_finite(get_radius) && length(get_radius) == 1,
@@ -1312,6 +1624,10 @@ validate_get_s2_token <- function(layer) {
 }
 validate_get_s2_token.default <- function(layer) {
   get_s2_token <- layer$get_s2_token
+  if (is_cur_value(get_s2_token)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_s2_token))
   tidyassert::assert(
     is_accessor(get_s2_token),
@@ -1330,6 +1646,10 @@ validate_get_scale <- function(layer) {
 }
 validate_get_scale.default <- function(layer) {
   get_scale <- layer$get_scale
+  if (is_cur_value(get_scale)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_scale))
   tidyassert::assert(
     is_accessor(get_scale) || is.numeric(get_scale) && all_finite(get_scale) && length(get_scale) == 3,
@@ -1354,6 +1674,10 @@ validate_get_scene <- function(layer) {
 }
 validate_get_scene.default <- function(layer) {
   get_scene <- layer$get_scene
+  if (is_cur_value(get_scene)) {
+    return()
+  }
+
   if (is.null(get_scene)) {
     return()
   }
@@ -1365,6 +1689,10 @@ validate_get_size <- function(layer) {
 }
 validate_get_size.default <- function(layer) {
   get_size <- layer$get_size
+  if (is_cur_value(get_size)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_size))
   tidyassert::assert(
     is_numeric_scale(get_size) || is_accessor(get_size) || is.numeric(get_size) && all_finite(get_size) && length(get_size) == 1,
@@ -1389,6 +1717,10 @@ validate_get_source_color <- function(layer) {
 }
 validate_get_source_color.default <- function(layer) {
   get_source_color <- layer$get_source_color
+  if (is_cur_value(get_source_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_source_color))
   tidyassert::assert(
     is_color_scale(get_source_color) || is_accessor(get_source_color) || is_rgba_color(get_source_color) && length(get_source_color) == 1,
@@ -1413,6 +1745,10 @@ validate_get_source_position <- function(layer) {
 }
 validate_get_source_position.default <- function(layer) {
   get_source_position <- layer$get_source_position
+  if (is_cur_value(get_source_position)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_source_position))
   tidyassert::assert(
     is_accessor(get_source_position),
@@ -1431,6 +1767,10 @@ validate_get_target_color <- function(layer) {
 }
 validate_get_target_color.default <- function(layer) {
   get_target_color <- layer$get_target_color
+  if (is_cur_value(get_target_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_target_color))
   tidyassert::assert(
     is_color_scale(get_target_color) || is_accessor(get_target_color) || is_rgba_color(get_target_color) && length(get_target_color) == 1,
@@ -1455,6 +1795,10 @@ validate_get_target_position <- function(layer) {
 }
 validate_get_target_position.default <- function(layer) {
   get_target_position <- layer$get_target_position
+  if (is_cur_value(get_target_position)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_target_position))
   tidyassert::assert(
     is_accessor(get_target_position),
@@ -1473,6 +1817,10 @@ validate_get_text <- function(layer) {
 }
 validate_get_text.default <- function(layer) {
   get_text <- layer$get_text
+  if (is_cur_value(get_text)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text))
   tidyassert::assert(
     is_accessor(get_text),
@@ -1491,6 +1839,10 @@ validate_get_text_alignment_baseline <- function(layer) {
 }
 validate_get_text_alignment_baseline.default <- function(layer) {
   get_text_alignment_baseline <- layer$get_text_alignment_baseline
+  if (is_cur_value(get_text_alignment_baseline)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text_alignment_baseline))
   tidyassert::assert(
     is_accessor(get_text_alignment_baseline) || is.character(get_text_alignment_baseline) && length(get_text_alignment_baseline) == 1 && get_text_alignment_baseline %in% c("top", "center", "bottom"),
@@ -1515,6 +1867,10 @@ validate_get_text_anchor <- function(layer) {
 }
 validate_get_text_anchor.default <- function(layer) {
   get_text_anchor <- layer$get_text_anchor
+  if (is_cur_value(get_text_anchor)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text_anchor))
   tidyassert::assert(
     is_accessor(get_text_anchor) || is.character(get_text_anchor) && length(get_text_anchor) == 1 && get_text_anchor %in% c("start", "middle", "end"),
@@ -1539,6 +1895,10 @@ validate_get_text_angle <- function(layer) {
 }
 validate_get_text_angle.default <- function(layer) {
   get_text_angle <- layer$get_text_angle
+  if (is_cur_value(get_text_angle)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text_angle))
   tidyassert::assert(
     is_accessor(get_text_angle) || is.numeric(get_text_angle) && all_finite(get_text_angle) && length(get_text_angle) == 1,
@@ -1563,6 +1923,10 @@ validate_get_text_background_color <- function(layer) {
 }
 validate_get_text_background_color.default <- function(layer) {
   get_text_background_color <- layer$get_text_background_color
+  if (is_cur_value(get_text_background_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text_background_color))
   tidyassert::assert(
     is_color_scale(get_text_background_color) || is_accessor(get_text_background_color) || is_rgba_color(get_text_background_color) && length(get_text_background_color) == 1,
@@ -1587,6 +1951,10 @@ validate_get_text_border_color <- function(layer) {
 }
 validate_get_text_border_color.default <- function(layer) {
   get_text_border_color <- layer$get_text_border_color
+  if (is_cur_value(get_text_border_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text_border_color))
   tidyassert::assert(
     is_color_scale(get_text_border_color) || is_accessor(get_text_border_color) || is_rgba_color(get_text_border_color) && length(get_text_border_color) == 1,
@@ -1611,6 +1979,10 @@ validate_get_text_border_width <- function(layer) {
 }
 validate_get_text_border_width.default <- function(layer) {
   get_text_border_width <- layer$get_text_border_width
+  if (is_cur_value(get_text_border_width)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text_border_width))
   tidyassert::assert(
     is_numeric_scale(get_text_border_width) || is_accessor(get_text_border_width) || is.numeric(get_text_border_width) && all_finite(get_text_border_width) && length(get_text_border_width) == 1,
@@ -1635,6 +2007,10 @@ validate_get_text_color <- function(layer) {
 }
 validate_get_text_color.default <- function(layer) {
   get_text_color <- layer$get_text_color
+  if (is_cur_value(get_text_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text_color))
   tidyassert::assert(
     is_color_scale(get_text_color) || is_accessor(get_text_color) || is_rgba_color(get_text_color) && length(get_text_color) == 1,
@@ -1659,6 +2035,10 @@ validate_get_text_pixel_offset <- function(layer) {
 }
 validate_get_text_pixel_offset.default <- function(layer) {
   get_text_pixel_offset <- layer$get_text_pixel_offset
+  if (is_cur_value(get_text_pixel_offset)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text_pixel_offset))
   tidyassert::assert(
     is_accessor(get_text_pixel_offset) || is.numeric(get_text_pixel_offset) && all_finite(get_text_pixel_offset) && length(get_text_pixel_offset) == 2,
@@ -1683,6 +2063,10 @@ validate_get_text_size <- function(layer) {
 }
 validate_get_text_size.default <- function(layer) {
   get_text_size <- layer$get_text_size
+  if (is_cur_value(get_text_size)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_text_size))
   tidyassert::assert(
     is_numeric_scale(get_text_size) || is_accessor(get_text_size) || is.numeric(get_text_size) && all_finite(get_text_size) && length(get_text_size) == 1,
@@ -1707,6 +2091,10 @@ validate_get_tile_data <- function(layer) {
 }
 validate_get_tile_data.default <- function(layer) {
   get_tile_data <- layer$get_tile_data
+  if (is_cur_value(get_tile_data)) {
+    return()
+  }
+
   if (is.null(get_tile_data)) {
     return()
   }
@@ -1718,6 +2106,10 @@ validate_get_tilt <- function(layer) {
 }
 validate_get_tilt.default <- function(layer) {
   get_tilt <- layer$get_tilt
+  if (is_cur_value(get_tilt)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_tilt))
   tidyassert::assert(
     is_accessor(get_tilt) || is.numeric(get_tilt) && all_finite(get_tilt) && length(get_tilt) == 1 && min(get_tilt) >= -90 && max(get_tilt) <= 90,
@@ -1742,6 +2134,10 @@ validate_get_timestamps <- function(layer) {
 }
 validate_get_timestamps.default <- function(layer) {
   get_timestamps <- layer$get_timestamps
+  if (is_cur_value(get_timestamps)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_timestamps))
   tidyassert::assert(
     is_accessor(get_timestamps),
@@ -1760,6 +2156,10 @@ validate_get_transform_matrix <- function(layer) {
 }
 validate_get_transform_matrix.default <- function(layer) {
   get_transform_matrix <- layer$get_transform_matrix
+  if (is_cur_value(get_transform_matrix)) {
+    return()
+  }
+
   if (is.null(get_transform_matrix)) {
     return()
   }
@@ -1780,6 +2180,10 @@ validate_get_translation <- function(layer) {
 }
 validate_get_translation.default <- function(layer) {
   get_translation <- layer$get_translation
+  if (is_cur_value(get_translation)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_translation))
   tidyassert::assert(
     is_accessor(get_translation) || is.numeric(get_translation) && all_finite(get_translation) && length(get_translation) == 3,
@@ -1804,6 +2208,10 @@ validate_get_weight <- function(layer) {
 }
 validate_get_weight.default <- function(layer) {
   get_weight <- layer$get_weight
+  if (is_cur_value(get_weight)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_weight))
   tidyassert::assert(
     is_numeric_scale(get_weight) || is_accessor(get_weight) || is.numeric(get_weight) && all_finite(get_weight) && length(get_weight) == 1,
@@ -1828,6 +2236,10 @@ validate_get_width <- function(layer) {
 }
 validate_get_width.default <- function(layer) {
   get_width <- layer$get_width
+  if (is_cur_value(get_width)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(get_width))
   tidyassert::assert(
     is_numeric_scale(get_width) || is_accessor(get_width) || is.numeric(get_width) && all_finite(get_width) && length(get_width) == 1,
@@ -1852,6 +2264,10 @@ validate_gpu_aggregation <- function(layer) {
 }
 validate_gpu_aggregation.default <- function(layer) {
   gpu_aggregation <- layer$gpu_aggregation
+  if (is_cur_value(gpu_aggregation)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(gpu_aggregation))
   tidyassert::assert(
     is.logical(gpu_aggregation) && length(gpu_aggregation) == 1,
@@ -1866,6 +2282,10 @@ validate_great_circle <- function(layer) {
 }
 validate_great_circle.default <- function(layer) {
   great_circle <- layer$great_circle
+  if (is_cur_value(great_circle)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(great_circle))
   tidyassert::assert(
     is.logical(great_circle) && length(great_circle) == 1,
@@ -1880,6 +2300,10 @@ validate_group_name <- function(layer) {
 }
 validate_group_name.default <- function(layer) {
   group_name <- layer$group_name
+  if (is_cur_value(group_name)) {
+    return()
+  }
+
   if (is.null(group_name)) {
     return()
   }
@@ -1896,6 +2320,10 @@ validate_high_precision <- function(layer) {
 }
 validate_high_precision.default <- function(layer) {
   high_precision <- layer$high_precision
+  if (is_cur_value(high_precision)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(high_precision))
   tidyassert::assert(
     is.character(high_precision) && length(high_precision) == 1 && high_precision %in% c(TRUE, FALSE, "auto"),
@@ -1910,6 +2338,10 @@ validate_highlight_color <- function(layer) {
 }
 validate_highlight_color.default <- function(layer) {
   highlight_color <- layer$highlight_color
+  if (is_cur_value(highlight_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(highlight_color))
   tidyassert::assert(
     is_color_scale(highlight_color) || is_accessor(highlight_color) || is_rgba_color(highlight_color) && length(highlight_color) == 1,
@@ -1934,6 +2366,10 @@ validate_highlighted_feature_id <- function(layer) {
 }
 validate_highlighted_feature_id.default <- function(layer) {
   highlighted_feature_id <- layer$highlighted_feature_id
+  if (is_cur_value(highlighted_feature_id)) {
+    return()
+  }
+
   if (is.null(highlighted_feature_id)) {
     return()
   }
@@ -1945,6 +2381,10 @@ validate_icon_alpha_cutoff <- function(layer) {
 }
 validate_icon_alpha_cutoff.default <- function(layer) {
   icon_alpha_cutoff <- layer$icon_alpha_cutoff
+  if (is_cur_value(icon_alpha_cutoff)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(icon_alpha_cutoff))
   tidyassert::assert(
     is.numeric(icon_alpha_cutoff) && all_finite(icon_alpha_cutoff) && length(icon_alpha_cutoff) == 1 && min(icon_alpha_cutoff) >= 0 && max(icon_alpha_cutoff) <= 1,
@@ -1959,6 +2399,10 @@ validate_icon_atlas <- function(layer) {
 }
 validate_icon_atlas.default <- function(layer) {
   icon_atlas <- layer$icon_atlas
+  if (is_cur_value(icon_atlas)) {
+    return()
+  }
+
   if (is.null(icon_atlas)) {
     return()
   }
@@ -1970,6 +2414,10 @@ validate_icon_billboard <- function(layer) {
 }
 validate_icon_billboard.default <- function(layer) {
   icon_billboard <- layer$icon_billboard
+  if (is_cur_value(icon_billboard)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(icon_billboard))
   tidyassert::assert(
     is.logical(icon_billboard) && length(icon_billboard) == 1,
@@ -1984,6 +2432,10 @@ validate_icon_mapping <- function(layer) {
 }
 validate_icon_mapping.default <- function(layer) {
   icon_mapping <- layer$icon_mapping
+  if (is_cur_value(icon_mapping)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(icon_mapping))
 }
 
@@ -1993,6 +2445,10 @@ validate_icon_size_max_pixels <- function(layer) {
 }
 validate_icon_size_max_pixels.default <- function(layer) {
   icon_size_max_pixels <- layer$icon_size_max_pixels
+  if (is_cur_value(icon_size_max_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(icon_size_max_pixels))
   tidyassert::assert(
     is.numeric(icon_size_max_pixels) && all_finite(icon_size_max_pixels) && length(icon_size_max_pixels) == 1 && min(icon_size_max_pixels) >= 0,
@@ -2007,6 +2463,10 @@ validate_icon_size_min_pixels <- function(layer) {
 }
 validate_icon_size_min_pixels.default <- function(layer) {
   icon_size_min_pixels <- layer$icon_size_min_pixels
+  if (is_cur_value(icon_size_min_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(icon_size_min_pixels))
   tidyassert::assert(
     is.numeric(icon_size_min_pixels) && all_finite(icon_size_min_pixels) && length(icon_size_min_pixels) == 1 && min(icon_size_min_pixels) >= 0,
@@ -2021,6 +2481,10 @@ validate_icon_size_scale <- function(layer) {
 }
 validate_icon_size_scale.default <- function(layer) {
   icon_size_scale <- layer$icon_size_scale
+  if (is_cur_value(icon_size_scale)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(icon_size_scale))
   tidyassert::assert(
     is.numeric(icon_size_scale) && all_finite(icon_size_scale) && length(icon_size_scale) == 1 && min(icon_size_scale) >= 0,
@@ -2035,6 +2499,10 @@ validate_icon_size_units <- function(layer) {
 }
 validate_icon_size_units.default <- function(layer) {
   icon_size_units <- layer$icon_size_units
+  if (is_cur_value(icon_size_units)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(icon_size_units))
   tidyassert::assert(
     is.character(icon_size_units) && length(icon_size_units) == 1 && icon_size_units %in% c("common", "meters", "pixels"),
@@ -2049,6 +2517,10 @@ validate_id <- function(layer) {
 }
 validate_id.default <- function(layer) {
   id <- layer$id
+  if (is_cur_value(id)) {
+    return()
+  }
+
   if (is.null(id)) {
     return()
   }
@@ -2065,6 +2537,10 @@ validate_image <- function(layer) {
 }
 validate_image.default <- function(layer) {
   image <- layer$image
+  if (is_cur_value(image)) {
+    return()
+  }
+
   if (is.null(image)) {
     return()
   }
@@ -2076,6 +2552,10 @@ validate_intensity <- function(layer) {
 }
 validate_intensity.default <- function(layer) {
   intensity <- layer$intensity
+  if (is_cur_value(intensity)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(intensity))
   tidyassert::assert(
     is.numeric(intensity) && all_finite(intensity) && length(intensity) == 1 && min(intensity) >= 0,
@@ -2090,6 +2570,10 @@ validate_joint_rounded <- function(layer) {
 }
 validate_joint_rounded.default <- function(layer) {
   joint_rounded <- layer$joint_rounded
+  if (is_cur_value(joint_rounded)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(joint_rounded))
   tidyassert::assert(
     is.logical(joint_rounded) && length(joint_rounded) == 1,
@@ -2104,6 +2588,10 @@ validate_line_billboard <- function(layer) {
 }
 validate_line_billboard.default <- function(layer) {
   line_billboard <- layer$line_billboard
+  if (is_cur_value(line_billboard)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(line_billboard))
   tidyassert::assert(
     is.logical(line_billboard) && length(line_billboard) == 1,
@@ -2118,6 +2606,10 @@ validate_line_cap_rounded <- function(layer) {
 }
 validate_line_cap_rounded.default <- function(layer) {
   line_cap_rounded <- layer$line_cap_rounded
+  if (is_cur_value(line_cap_rounded)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(line_cap_rounded))
   tidyassert::assert(
     is.logical(line_cap_rounded) && length(line_cap_rounded) == 1,
@@ -2132,6 +2624,10 @@ validate_line_height <- function(layer) {
 }
 validate_line_height.default <- function(layer) {
   line_height <- layer$line_height
+  if (is_cur_value(line_height)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(line_height))
   tidyassert::assert(
     is.numeric(line_height) && all_finite(line_height) && length(line_height) == 1,
@@ -2146,6 +2642,10 @@ validate_line_joint_rounded <- function(layer) {
 }
 validate_line_joint_rounded.default <- function(layer) {
   line_joint_rounded <- layer$line_joint_rounded
+  if (is_cur_value(line_joint_rounded)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(line_joint_rounded))
   tidyassert::assert(
     is.logical(line_joint_rounded) && length(line_joint_rounded) == 1,
@@ -2160,6 +2660,10 @@ validate_line_miter_limit <- function(layer) {
 }
 validate_line_miter_limit.default <- function(layer) {
   line_miter_limit <- layer$line_miter_limit
+  if (is_cur_value(line_miter_limit)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(line_miter_limit))
   tidyassert::assert(
     is.numeric(line_miter_limit) && all_finite(line_miter_limit) && length(line_miter_limit) == 1 && min(line_miter_limit) >= 0,
@@ -2174,6 +2678,10 @@ validate_line_width_max_pixels <- function(layer) {
 }
 validate_line_width_max_pixels.default <- function(layer) {
   line_width_max_pixels <- layer$line_width_max_pixels
+  if (is_cur_value(line_width_max_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(line_width_max_pixels))
   tidyassert::assert(
     is.numeric(line_width_max_pixels) && all_finite(line_width_max_pixels) && length(line_width_max_pixels) == 1 && min(line_width_max_pixels) >= 0,
@@ -2188,6 +2696,10 @@ validate_line_width_min_pixels <- function(layer) {
 }
 validate_line_width_min_pixels.default <- function(layer) {
   line_width_min_pixels <- layer$line_width_min_pixels
+  if (is_cur_value(line_width_min_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(line_width_min_pixels))
   tidyassert::assert(
     is.numeric(line_width_min_pixels) && all_finite(line_width_min_pixels) && length(line_width_min_pixels) == 1 && min(line_width_min_pixels) >= 0,
@@ -2202,6 +2714,10 @@ validate_line_width_scale <- function(layer) {
 }
 validate_line_width_scale.default <- function(layer) {
   line_width_scale <- layer$line_width_scale
+  if (is_cur_value(line_width_scale)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(line_width_scale))
   tidyassert::assert(
     is.numeric(line_width_scale) && all_finite(line_width_scale) && length(line_width_scale) == 1 && min(line_width_scale) >= 0,
@@ -2216,6 +2732,10 @@ validate_line_width_units <- function(layer) {
 }
 validate_line_width_units.default <- function(layer) {
   line_width_units <- layer$line_width_units
+  if (is_cur_value(line_width_units)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(line_width_units))
   tidyassert::assert(
     is.character(line_width_units) && length(line_width_units) == 1 && line_width_units %in% c("common", "meters", "pixels"),
@@ -2230,6 +2750,10 @@ validate_loader <- function(layer) {
 }
 validate_loader.default <- function(layer) {
   loader <- layer$loader
+  if (is_cur_value(loader)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(loader))
 }
 
@@ -2239,6 +2763,10 @@ validate_loop_length <- function(layer) {
 }
 validate_loop_length.default <- function(layer) {
   loop_length <- layer$loop_length
+  if (is_cur_value(loop_length)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(loop_length))
   tidyassert::assert(
     is.numeric(loop_length) && all_finite(loop_length) && length(loop_length) == 1 && min(loop_length) >= 0,
@@ -2253,6 +2781,10 @@ validate_lower_percentile <- function(layer) {
 }
 validate_lower_percentile.default <- function(layer) {
   lower_percentile <- layer$lower_percentile
+  if (is_cur_value(lower_percentile)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(lower_percentile))
   tidyassert::assert(
     is.numeric(lower_percentile) && all_finite(lower_percentile) && length(lower_percentile) == 1 && min(lower_percentile) >= 0 && max(lower_percentile) <= 100,
@@ -2267,6 +2799,10 @@ validate_material <- function(layer) {
 }
 validate_material.default <- function(layer) {
   material <- layer$material
+  if (is_cur_value(material)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(material))
   tidyassert::assert(
     is.logical(material) && length(material) == 1,
@@ -2281,6 +2817,10 @@ validate_max_cache_byte_size <- function(layer) {
 }
 validate_max_cache_byte_size.default <- function(layer) {
   max_cache_byte_size <- layer$max_cache_byte_size
+  if (is_cur_value(max_cache_byte_size)) {
+    return()
+  }
+
   if (is.null(max_cache_byte_size)) {
     return()
   }
@@ -2292,6 +2832,10 @@ validate_max_cache_size <- function(layer) {
 }
 validate_max_cache_size.default <- function(layer) {
   max_cache_size <- layer$max_cache_size
+  if (is_cur_value(max_cache_size)) {
+    return()
+  }
+
   if (is.null(max_cache_size)) {
     return()
   }
@@ -2303,6 +2847,10 @@ validate_max_requests <- function(layer) {
 }
 validate_max_requests.default <- function(layer) {
   max_requests <- layer$max_requests
+  if (is_cur_value(max_requests)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(max_requests))
   tidyassert::assert(
     is.numeric(max_requests) && all_finite(max_requests) && length(max_requests) == 1,
@@ -2317,6 +2865,10 @@ validate_max_width <- function(layer) {
 }
 validate_max_width.default <- function(layer) {
   max_width <- layer$max_width
+  if (is_cur_value(max_width)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(max_width))
   tidyassert::assert(
     is.numeric(max_width) && all_finite(max_width) && length(max_width) == 1,
@@ -2331,6 +2883,10 @@ validate_max_zoom <- function(layer) {
 }
 validate_max_zoom.default <- function(layer) {
   max_zoom <- layer$max_zoom
+  if (is_cur_value(max_zoom)) {
+    return()
+  }
+
   if (is.null(max_zoom)) {
     return()
   }
@@ -2342,6 +2898,10 @@ validate_mesh <- function(layer) {
 }
 validate_mesh.default <- function(layer) {
   mesh <- layer$mesh
+  if (is_cur_value(mesh)) {
+    return()
+  }
+
   if (is.null(mesh)) {
     return()
   }
@@ -2353,6 +2913,10 @@ validate_mesh_max_error <- function(layer) {
 }
 validate_mesh_max_error.default <- function(layer) {
   mesh_max_error <- layer$mesh_max_error
+  if (is_cur_value(mesh_max_error)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(mesh_max_error))
   tidyassert::assert(
     is.numeric(mesh_max_error) && all_finite(mesh_max_error) && length(mesh_max_error) == 1,
@@ -2367,6 +2931,10 @@ validate_min_zoom <- function(layer) {
 }
 validate_min_zoom.default <- function(layer) {
   min_zoom <- layer$min_zoom
+  if (is_cur_value(min_zoom)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(min_zoom))
   tidyassert::assert(
     is.numeric(min_zoom) && all_finite(min_zoom) && length(min_zoom) == 1,
@@ -2381,6 +2949,10 @@ validate_miter_limit <- function(layer) {
 }
 validate_miter_limit.default <- function(layer) {
   miter_limit <- layer$miter_limit
+  if (is_cur_value(miter_limit)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(miter_limit))
   tidyassert::assert(
     is.numeric(miter_limit) && all_finite(miter_limit) && length(miter_limit) == 1 && min(miter_limit) >= 0,
@@ -2395,6 +2967,10 @@ validate_name <- function(layer) {
 }
 validate_name.default <- function(layer) {
   name <- layer$name
+  if (is_cur_value(name)) {
+    return()
+  }
+
   if (is.null(name)) {
     return()
   }
@@ -2411,6 +2987,10 @@ validate_offset <- function(layer) {
 }
 validate_offset.default <- function(layer) {
   offset <- layer$offset
+  if (is_cur_value(offset)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(offset))
   tidyassert::assert(
     is.numeric(offset) && all_finite(offset) && length(offset) == 2,
@@ -2425,6 +3005,10 @@ validate_opacity <- function(layer) {
 }
 validate_opacity.default <- function(layer) {
   opacity <- layer$opacity
+  if (is_cur_value(opacity)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(opacity))
   tidyassert::assert(
     is.numeric(opacity) && all_finite(opacity) && length(opacity) == 1 && min(opacity) >= 0 && max(opacity) <= 1,
@@ -2439,6 +3023,10 @@ validate_outline_color <- function(layer) {
 }
 validate_outline_color.default <- function(layer) {
   outline_color <- layer$outline_color
+  if (is_cur_value(outline_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(outline_color))
   tidyassert::assert(
     is_rgba_color(outline_color) && length(outline_color) == 1,
@@ -2453,6 +3041,10 @@ validate_outline_width <- function(layer) {
 }
 validate_outline_width.default <- function(layer) {
   outline_width <- layer$outline_width
+  if (is_cur_value(outline_width)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(outline_width))
   tidyassert::assert(
     is.numeric(outline_width) && all_finite(outline_width) && length(outline_width) == 1 && min(outline_width) >= 0,
@@ -2467,6 +3059,10 @@ validate_pickable <- function(layer) {
 }
 validate_pickable.default <- function(layer) {
   pickable <- layer$pickable
+  if (is_cur_value(pickable)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(pickable))
   tidyassert::assert(
     is.logical(pickable) && length(pickable) == 1,
@@ -2481,6 +3077,10 @@ validate_point_antialiasing <- function(layer) {
 }
 validate_point_antialiasing.default <- function(layer) {
   point_antialiasing <- layer$point_antialiasing
+  if (is_cur_value(point_antialiasing)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(point_antialiasing))
   tidyassert::assert(
     is.logical(point_antialiasing) && length(point_antialiasing) == 1,
@@ -2495,6 +3095,10 @@ validate_point_billboard <- function(layer) {
 }
 validate_point_billboard.default <- function(layer) {
   point_billboard <- layer$point_billboard
+  if (is_cur_value(point_billboard)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(point_billboard))
   tidyassert::assert(
     is.logical(point_billboard) && length(point_billboard) == 1,
@@ -2509,6 +3113,10 @@ validate_point_radius_max_pixels <- function(layer) {
 }
 validate_point_radius_max_pixels.default <- function(layer) {
   point_radius_max_pixels <- layer$point_radius_max_pixels
+  if (is_cur_value(point_radius_max_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(point_radius_max_pixels))
   tidyassert::assert(
     is.numeric(point_radius_max_pixels) && all_finite(point_radius_max_pixels) && length(point_radius_max_pixels) == 1 && min(point_radius_max_pixels) >= 0,
@@ -2523,6 +3131,10 @@ validate_point_radius_min_pixels <- function(layer) {
 }
 validate_point_radius_min_pixels.default <- function(layer) {
   point_radius_min_pixels <- layer$point_radius_min_pixels
+  if (is_cur_value(point_radius_min_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(point_radius_min_pixels))
   tidyassert::assert(
     is.numeric(point_radius_min_pixels) && all_finite(point_radius_min_pixels) && length(point_radius_min_pixels) == 1 && min(point_radius_min_pixels) >= 0,
@@ -2537,6 +3149,10 @@ validate_point_radius_scale <- function(layer) {
 }
 validate_point_radius_scale.default <- function(layer) {
   point_radius_scale <- layer$point_radius_scale
+  if (is_cur_value(point_radius_scale)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(point_radius_scale))
   tidyassert::assert(
     is.numeric(point_radius_scale) && all_finite(point_radius_scale) && length(point_radius_scale) == 1 && min(point_radius_scale) >= 0,
@@ -2551,6 +3167,10 @@ validate_point_radius_units <- function(layer) {
 }
 validate_point_radius_units.default <- function(layer) {
   point_radius_units <- layer$point_radius_units
+  if (is_cur_value(point_radius_units)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(point_radius_units))
   tidyassert::assert(
     is.character(point_radius_units) && length(point_radius_units) == 1 && point_radius_units %in% c("common", "meters", "pixels"),
@@ -2565,6 +3185,10 @@ validate_point_size <- function(layer) {
 }
 validate_point_size.default <- function(layer) {
   point_size <- layer$point_size
+  if (is_cur_value(point_size)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(point_size))
   tidyassert::assert(
     is.numeric(point_size) && all_finite(point_size) && length(point_size) == 1 && min(point_size) >= 0,
@@ -2579,6 +3203,10 @@ validate_point_type <- function(layer) {
 }
 validate_point_type.default <- function(layer) {
   point_type <- layer$point_type
+  if (is_cur_value(point_type)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(point_type))
   tidyassert::assert(
     is.character(point_type) && length(point_type) == 1,
@@ -2593,6 +3221,10 @@ validate_position_format <- function(layer) {
 }
 validate_position_format.default <- function(layer) {
   position_format <- layer$position_format
+  if (is_cur_value(position_format)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(position_format))
   tidyassert::assert(
     is.character(position_format) && length(position_format) == 1 && position_format %in% c("XY", "XYZ"),
@@ -2607,6 +3239,10 @@ validate_radius <- function(layer) {
 }
 validate_radius.default <- function(layer) {
   radius <- layer$radius
+  if (is_cur_value(radius)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(radius))
   tidyassert::assert(
     is.numeric(radius) && all_finite(radius) && length(radius) == 1 && min(radius) >= 1,
@@ -2621,6 +3257,10 @@ validate_radius_max_pixels <- function(layer) {
 }
 validate_radius_max_pixels.default <- function(layer) {
   radius_max_pixels <- layer$radius_max_pixels
+  if (is_cur_value(radius_max_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(radius_max_pixels))
   tidyassert::assert(
     is.numeric(radius_max_pixels) && all_finite(radius_max_pixels) && length(radius_max_pixels) == 1 && min(radius_max_pixels) >= 0,
@@ -2635,6 +3275,10 @@ validate_radius_min_pixels <- function(layer) {
 }
 validate_radius_min_pixels.default <- function(layer) {
   radius_min_pixels <- layer$radius_min_pixels
+  if (is_cur_value(radius_min_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(radius_min_pixels))
   tidyassert::assert(
     is.numeric(radius_min_pixels) && all_finite(radius_min_pixels) && length(radius_min_pixels) == 1 && min(radius_min_pixels) >= 0,
@@ -2649,6 +3293,10 @@ validate_radius_pixels <- function(layer) {
 }
 validate_radius_pixels.default <- function(layer) {
   radius_pixels <- layer$radius_pixels
+  if (is_cur_value(radius_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(radius_pixels))
   tidyassert::assert(
     is.numeric(radius_pixels) && all_finite(radius_pixels) && length(radius_pixels) == 1 && min(radius_pixels) >= 1 && max(radius_pixels) <= 100,
@@ -2663,6 +3311,10 @@ validate_radius_scale <- function(layer) {
 }
 validate_radius_scale.default <- function(layer) {
   radius_scale <- layer$radius_scale
+  if (is_cur_value(radius_scale)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(radius_scale))
   tidyassert::assert(
     is.numeric(radius_scale) && all_finite(radius_scale) && length(radius_scale) == 1 && min(radius_scale) >= 0,
@@ -2677,6 +3329,10 @@ validate_radius_units <- function(layer) {
 }
 validate_radius_units.default <- function(layer) {
   radius_units <- layer$radius_units
+  if (is_cur_value(radius_units)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(radius_units))
   tidyassert::assert(
     is.character(radius_units) && length(radius_units) == 1 && radius_units %in% c("common", "meters", "pixels"),
@@ -2691,6 +3347,10 @@ validate_refinement_strategy <- function(layer) {
 }
 validate_refinement_strategy.default <- function(layer) {
   refinement_strategy <- layer$refinement_strategy
+  if (is_cur_value(refinement_strategy)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(refinement_strategy))
   tidyassert::assert(
     is.character(refinement_strategy) && length(refinement_strategy) == 1 && refinement_strategy %in% c("best-available", "no-overlap", "never"),
@@ -2705,6 +3365,10 @@ validate_scenegraph <- function(layer) {
 }
 validate_scenegraph.default <- function(layer) {
   scenegraph <- layer$scenegraph
+  if (is_cur_value(scenegraph)) {
+    return()
+  }
+
   if (is.null(scenegraph)) {
     return()
   }
@@ -2716,6 +3380,10 @@ validate_size_max_pixels <- function(layer) {
 }
 validate_size_max_pixels.default <- function(layer) {
   size_max_pixels <- layer$size_max_pixels
+  if (is_cur_value(size_max_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(size_max_pixels))
   tidyassert::assert(
     is.numeric(size_max_pixels) && all_finite(size_max_pixels) && length(size_max_pixels) == 1 && min(size_max_pixels) >= 0,
@@ -2730,6 +3398,10 @@ validate_size_min_pixels <- function(layer) {
 }
 validate_size_min_pixels.default <- function(layer) {
   size_min_pixels <- layer$size_min_pixels
+  if (is_cur_value(size_min_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(size_min_pixels))
   tidyassert::assert(
     is.numeric(size_min_pixels) && all_finite(size_min_pixels) && length(size_min_pixels) == 1 && min(size_min_pixels) >= 0,
@@ -2744,6 +3416,10 @@ validate_size_scale <- function(layer) {
 }
 validate_size_scale.default <- function(layer) {
   size_scale <- layer$size_scale
+  if (is_cur_value(size_scale)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(size_scale))
   tidyassert::assert(
     is.numeric(size_scale) && all_finite(size_scale) && length(size_scale) == 1 && min(size_scale) >= 0,
@@ -2758,6 +3434,10 @@ validate_size_units <- function(layer) {
 }
 validate_size_units.default <- function(layer) {
   size_units <- layer$size_units
+  if (is_cur_value(size_units)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(size_units))
   tidyassert::assert(
     is.character(size_units) && length(size_units) == 1 && size_units %in% c("common", "meters", "pixels"),
@@ -2772,6 +3452,10 @@ validate_stroked <- function(layer) {
 }
 validate_stroked.default <- function(layer) {
   stroked <- layer$stroked
+  if (is_cur_value(stroked)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(stroked))
   tidyassert::assert(
     is.logical(stroked) && length(stroked) == 1,
@@ -2786,6 +3470,10 @@ validate_text_background <- function(layer) {
 }
 validate_text_background.default <- function(layer) {
   text_background <- layer$text_background
+  if (is_cur_value(text_background)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_background))
   tidyassert::assert(
     is.logical(text_background) && length(text_background) == 1,
@@ -2800,6 +3488,10 @@ validate_text_background_padding <- function(layer) {
 }
 validate_text_background_padding.default <- function(layer) {
   text_background_padding <- layer$text_background_padding
+  if (is_cur_value(text_background_padding)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_background_padding))
   tidyassert::assert(
     is.numeric(text_background_padding) && all_finite(text_background_padding) && length(text_background_padding) %in% c(2, 4),
@@ -2814,6 +3506,10 @@ validate_text_billboard <- function(layer) {
 }
 validate_text_billboard.default <- function(layer) {
   text_billboard <- layer$text_billboard
+  if (is_cur_value(text_billboard)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_billboard))
   tidyassert::assert(
     is.logical(text_billboard) && length(text_billboard) == 1,
@@ -2828,6 +3524,10 @@ validate_text_font_family <- function(layer) {
 }
 validate_text_font_family.default <- function(layer) {
   text_font_family <- layer$text_font_family
+  if (is_cur_value(text_font_family)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_font_family))
   tidyassert::assert(
     is.character(text_font_family) && length(text_font_family) == 1,
@@ -2842,6 +3542,10 @@ validate_text_font_settings <- function(layer) {
 }
 validate_text_font_settings.default <- function(layer) {
   text_font_settings <- layer$text_font_settings
+  if (is_cur_value(text_font_settings)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_font_settings))
 }
 
@@ -2851,6 +3555,10 @@ validate_text_font_weight <- function(layer) {
 }
 validate_text_font_weight.default <- function(layer) {
   text_font_weight <- layer$text_font_weight
+  if (is_cur_value(text_font_weight)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_font_weight))
   tidyassert::assert(
     is.character(text_font_weight) && length(text_font_weight) == 1 && text_font_weight %in% c("normal", "bold", 100, 200, 300, 400, 500, 600, 700, 800, 900),
@@ -2865,6 +3573,10 @@ validate_text_line_height <- function(layer) {
 }
 validate_text_line_height.default <- function(layer) {
   text_line_height <- layer$text_line_height
+  if (is_cur_value(text_line_height)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_line_height))
   tidyassert::assert(
     is.numeric(text_line_height) && all_finite(text_line_height) && length(text_line_height) == 1,
@@ -2879,6 +3591,10 @@ validate_text_max_width <- function(layer) {
 }
 validate_text_max_width.default <- function(layer) {
   text_max_width <- layer$text_max_width
+  if (is_cur_value(text_max_width)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_max_width))
   tidyassert::assert(
     is.numeric(text_max_width) && all_finite(text_max_width) && length(text_max_width) == 1,
@@ -2893,6 +3609,10 @@ validate_text_outline_color <- function(layer) {
 }
 validate_text_outline_color.default <- function(layer) {
   text_outline_color <- layer$text_outline_color
+  if (is_cur_value(text_outline_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_outline_color))
   tidyassert::assert(
     is_rgba_color(text_outline_color) && length(text_outline_color) == 1,
@@ -2907,6 +3627,10 @@ validate_text_outline_width <- function(layer) {
 }
 validate_text_outline_width.default <- function(layer) {
   text_outline_width <- layer$text_outline_width
+  if (is_cur_value(text_outline_width)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_outline_width))
   tidyassert::assert(
     is.numeric(text_outline_width) && all_finite(text_outline_width) && length(text_outline_width) == 1 && min(text_outline_width) >= 0,
@@ -2921,6 +3645,10 @@ validate_text_size_max_pixels <- function(layer) {
 }
 validate_text_size_max_pixels.default <- function(layer) {
   text_size_max_pixels <- layer$text_size_max_pixels
+  if (is_cur_value(text_size_max_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_size_max_pixels))
   tidyassert::assert(
     is.numeric(text_size_max_pixels) && all_finite(text_size_max_pixels) && length(text_size_max_pixels) == 1,
@@ -2935,6 +3663,10 @@ validate_text_size_min_pixels <- function(layer) {
 }
 validate_text_size_min_pixels.default <- function(layer) {
   text_size_min_pixels <- layer$text_size_min_pixels
+  if (is_cur_value(text_size_min_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_size_min_pixels))
   tidyassert::assert(
     is.numeric(text_size_min_pixels) && all_finite(text_size_min_pixels) && length(text_size_min_pixels) == 1,
@@ -2949,6 +3681,10 @@ validate_text_size_scale <- function(layer) {
 }
 validate_text_size_scale.default <- function(layer) {
   text_size_scale <- layer$text_size_scale
+  if (is_cur_value(text_size_scale)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_size_scale))
   tidyassert::assert(
     is.numeric(text_size_scale) && all_finite(text_size_scale) && length(text_size_scale) == 1,
@@ -2963,6 +3699,10 @@ validate_text_size_units <- function(layer) {
 }
 validate_text_size_units.default <- function(layer) {
   text_size_units <- layer$text_size_units
+  if (is_cur_value(text_size_units)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_size_units))
   tidyassert::assert(
     is.character(text_size_units) && length(text_size_units) == 1 && text_size_units %in% c("common", "meters", "pixels"),
@@ -2977,6 +3717,10 @@ validate_text_word_break <- function(layer) {
 }
 validate_text_word_break.default <- function(layer) {
   text_word_break <- layer$text_word_break
+  if (is_cur_value(text_word_break)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(text_word_break))
   tidyassert::assert(
     is.character(text_word_break) && length(text_word_break) == 1 && text_word_break %in% c("break-word", "break-all"),
@@ -2991,6 +3735,10 @@ validate_texture <- function(layer) {
 }
 validate_texture.default <- function(layer) {
   texture <- layer$texture
+  if (is_cur_value(texture)) {
+    return()
+  }
+
   if (is.null(texture)) {
     return()
   }
@@ -3002,6 +3750,10 @@ validate_threshold <- function(layer) {
 }
 validate_threshold.default <- function(layer) {
   threshold <- layer$threshold
+  if (is_cur_value(threshold)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(threshold))
   tidyassert::assert(
     is.numeric(threshold) && all_finite(threshold) && length(threshold) == 1 && min(threshold) >= 0 && max(threshold) <= 1,
@@ -3016,6 +3768,10 @@ validate_tile_size <- function(layer) {
 }
 validate_tile_size.default <- function(layer) {
   tile_size <- layer$tile_size
+  if (is_cur_value(tile_size)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(tile_size))
   tidyassert::assert(
     is.numeric(tile_size) && all_finite(tile_size) && length(tile_size) == 1,
@@ -3030,6 +3786,10 @@ validate_tint_color <- function(layer) {
 }
 validate_tint_color.default <- function(layer) {
   tint_color <- layer$tint_color
+  if (is_cur_value(tint_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(tint_color))
   tidyassert::assert(
     is_rgba_color(tint_color) && length(tint_color) == 1,
@@ -3044,6 +3804,10 @@ validate_tooltip <- function(layer) {
 }
 validate_tooltip.default <- function(layer) {
   tooltip <- layer$tooltip
+  if (is_cur_value(tooltip)) {
+    return()
+  }
+
   if (is.null(tooltip)) {
     return()
   }
@@ -3055,6 +3819,10 @@ validate_trail_length <- function(layer) {
 }
 validate_trail_length.default <- function(layer) {
   trail_length <- layer$trail_length
+  if (is_cur_value(trail_length)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(trail_length))
   tidyassert::assert(
     is.numeric(trail_length) && all_finite(trail_length) && length(trail_length) == 1 && min(trail_length) >= 0,
@@ -3069,6 +3837,10 @@ validate_transparent_color <- function(layer) {
 }
 validate_transparent_color.default <- function(layer) {
   transparent_color <- layer$transparent_color
+  if (is_cur_value(transparent_color)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(transparent_color))
   tidyassert::assert(
     is_rgba_color(transparent_color) && length(transparent_color) == 1,
@@ -3083,6 +3855,10 @@ validate_unique_id_property <- function(layer) {
 }
 validate_unique_id_property.default <- function(layer) {
   unique_id_property <- layer$unique_id_property
+  if (is_cur_value(unique_id_property)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(unique_id_property))
   tidyassert::assert(
     is.character(unique_id_property) && length(unique_id_property) == 1,
@@ -3097,6 +3873,10 @@ validate_upper_percentile <- function(layer) {
 }
 validate_upper_percentile.default <- function(layer) {
   upper_percentile <- layer$upper_percentile
+  if (is_cur_value(upper_percentile)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(upper_percentile))
   tidyassert::assert(
     is.numeric(upper_percentile) && all_finite(upper_percentile) && length(upper_percentile) == 1 && min(upper_percentile) >= 0 && max(upper_percentile) <= 100,
@@ -3111,6 +3891,10 @@ validate_vertices <- function(layer) {
 }
 validate_vertices.default <- function(layer) {
   vertices <- layer$vertices
+  if (is_cur_value(vertices)) {
+    return()
+  }
+
   if (is.null(vertices)) {
     return()
   }
@@ -3122,6 +3906,10 @@ validate_visibility_toggle <- function(layer) {
 }
 validate_visibility_toggle.default <- function(layer) {
   visibility_toggle <- layer$visibility_toggle
+  if (is_cur_value(visibility_toggle)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(visibility_toggle))
   tidyassert::assert(
     is.logical(visibility_toggle) && length(visibility_toggle) == 1,
@@ -3136,6 +3924,10 @@ validate_visible <- function(layer) {
 }
 validate_visible.default <- function(layer) {
   visible <- layer$visible
+  if (is_cur_value(visible)) {
+    return()
+  }
+
   if (is.null(visible)) {
     return()
   }
@@ -3152,6 +3944,10 @@ validate_weights_texture_size <- function(layer) {
 }
 validate_weights_texture_size.default <- function(layer) {
   weights_texture_size <- layer$weights_texture_size
+  if (is_cur_value(weights_texture_size)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(weights_texture_size))
   tidyassert::assert(
     is.numeric(weights_texture_size) && all_finite(weights_texture_size) && length(weights_texture_size) == 1 && min(weights_texture_size) >= 128 && max(weights_texture_size) <= 2048,
@@ -3166,6 +3962,10 @@ validate_width_max_pixels <- function(layer) {
 }
 validate_width_max_pixels.default <- function(layer) {
   width_max_pixels <- layer$width_max_pixels
+  if (is_cur_value(width_max_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(width_max_pixels))
   tidyassert::assert(
     is.numeric(width_max_pixels) && all_finite(width_max_pixels) && length(width_max_pixels) == 1 && min(width_max_pixels) >= 0,
@@ -3180,6 +3980,10 @@ validate_width_min_pixels <- function(layer) {
 }
 validate_width_min_pixels.default <- function(layer) {
   width_min_pixels <- layer$width_min_pixels
+  if (is_cur_value(width_min_pixels)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(width_min_pixels))
   tidyassert::assert(
     is.numeric(width_min_pixels) && all_finite(width_min_pixels) && length(width_min_pixels) == 1 && min(width_min_pixels) >= 0,
@@ -3194,6 +3998,10 @@ validate_width_scale <- function(layer) {
 }
 validate_width_scale.default <- function(layer) {
   width_scale <- layer$width_scale
+  if (is_cur_value(width_scale)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(width_scale))
   tidyassert::assert(
     is.numeric(width_scale) && all_finite(width_scale) && length(width_scale) == 1 && min(width_scale) >= 0,
@@ -3208,6 +4016,10 @@ validate_width_units <- function(layer) {
 }
 validate_width_units.default <- function(layer) {
   width_units <- layer$width_units
+  if (is_cur_value(width_units)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(width_units))
   tidyassert::assert(
     is.character(width_units) && length(width_units) == 1 && width_units %in% c("common", "meters", "pixels"),
@@ -3222,6 +4034,10 @@ validate_wireframe <- function(layer) {
 }
 validate_wireframe.default <- function(layer) {
   wireframe <- layer$wireframe
+  if (is_cur_value(wireframe)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(wireframe))
   tidyassert::assert(
     is.logical(wireframe) && length(wireframe) == 1,
@@ -3236,6 +4052,10 @@ validate_word_break <- function(layer) {
 }
 validate_word_break.default <- function(layer) {
   word_break <- layer$word_break
+  if (is_cur_value(word_break)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(word_break))
   tidyassert::assert(
     is.character(word_break) && length(word_break) == 1 && word_break %in% c("break-word", "break-all"),
@@ -3250,6 +4070,10 @@ validate_worker_url <- function(layer) {
 }
 validate_worker_url.default <- function(layer) {
   worker_url <- layer$worker_url
+  if (is_cur_value(worker_url)) {
+    return()
+  }
+
   if (is.null(worker_url)) {
     return()
   }
@@ -3266,6 +4090,10 @@ validate_wrap_longitude <- function(layer) {
 }
 validate_wrap_longitude.default <- function(layer) {
   wrap_longitude <- layer$wrap_longitude
+  if (is_cur_value(wrap_longitude)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(wrap_longitude))
   tidyassert::assert(
     is.logical(wrap_longitude) && length(wrap_longitude) == 1,
@@ -3280,6 +4108,10 @@ validate_z_offset <- function(layer) {
 }
 validate_z_offset.default <- function(layer) {
   z_offset <- layer$z_offset
+  if (is_cur_value(z_offset)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(z_offset))
   tidyassert::assert(
     is.numeric(z_offset) && all_finite(z_offset) && length(z_offset) == 1,
@@ -3294,6 +4126,10 @@ validate_z_range <- function(layer) {
 }
 validate_z_range.default <- function(layer) {
   z_range <- layer$z_range
+  if (is_cur_value(z_range)) {
+    return()
+  }
+
   if (is.null(z_range)) {
     return()
   }
@@ -3305,6 +4141,10 @@ validate_zoom_offset <- function(layer) {
 }
 validate_zoom_offset.default <- function(layer) {
   zoom_offset <- layer$zoom_offset
+  if (is_cur_value(zoom_offset)) {
+    return()
+  }
+
   tidyassert::assert(!is.null(zoom_offset))
   tidyassert::assert(
     is.numeric(zoom_offset) && all_finite(zoom_offset) && length(zoom_offset) == 1,

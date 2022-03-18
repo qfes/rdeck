@@ -29,37 +29,59 @@ add_<%- layer.name -%> <- function(rdeck,
   })
 
   <%# diffuse accessors %>
-  <%-
-    layer.props
-      .filter((p) => p.type === "accessor" || p.name === "tooltip")
-      .map((p) => `${p.name} <- rlang::enquo(${p.name})`)
-      .join("\n");
-  %>
+  <%- utils.diffuseAccessors(layer) %>
 
   <%# construct layer object %>
-  <% const dataType = layer.dataType != null ? JSON.stringify(layer.dataType) : "NULL" -%>
   <%- layer.name -%> <- with_layer_create_errors(
-    layer(
+    new_layer(
       type = "<%- layer.typeName -%>",
       ...,
-      <%-
-        layer.props
-          .map((p) => {
-            if (p.type === "accessor") return `${p.name} = accessor(${p.name}, data, ${dataType})`;
-            if (p.name === "tooltip") return `${p.name} = tooltip(${p.name}, data, ${dataType})`;
-
-            return `${p.name} = ${p.name}`;
-          })
-          .join(",\n")
-      %>
+      <%- utils.transformProps(layer) -%>
     )
   )
 
   <%# validate params %>
   with_layer_create_errors({
-    <%- layer.props.map((p) => `validate_${p.name}(${layer.name})`).join("\n"); %>
+    <%- utils.validateProps(layer) -%>
   })
 
   <%# add layer %>
   add_layer(rdeck, <%- layer.name %>)
+}
+
+#' @rdname <%- layer.name %>
+#' @usage NULL
+#' @export
+update_<%- layer.name -%> <- function(rdeck,
+                                      ...,
+                                      <%-
+                                        layer.props
+                                          .map((p) => p.name === "id" ? p.name : `${p.name} = cur_value()`)
+                                          .join(",\n");
+                                      -%>) {
+  with_layer_create_errors({
+    rlang::check_required(rdeck)
+    tidyassert::assert(rlang::is_string(id))
+    check_dots(...)
+  })
+
+  <%# diffuse accessors %>
+  <%- utils.diffuseAccessors(layer) -%>
+
+  <%# construct layer object %>
+  <%- layer.name -%> <- with_layer_create_errors(
+    new_layer(
+      type = "<%- layer.typeName -%>",
+      ...,
+      <%- utils.transformProps(layer) -%>
+    )
+  )
+
+  <%# validate params %>
+  with_layer_create_errors({
+    <%- utils.validateProps(layer) -%>
+  })
+
+  <%# update layer %>
+  update_layer(rdeck, <%- layer.name %>)
 }

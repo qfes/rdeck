@@ -69,7 +69,7 @@ get_colnames <- function(layer) {
   }
 
   tooltip <- layer$tooltip
-  tooltip_cols <- if (layer$pickable && is_tooltip(tooltip)) tooltip$cols
+  tooltip_cols <- if (isTRUE(layer$pickable) && is_tooltip(tooltip)) tooltip$cols
 
   accessors <- select(unclass(layer), where(is_accessor), where(is_scale))
   accessor_cols <- vcapply(accessors, purrr::pluck, "col")

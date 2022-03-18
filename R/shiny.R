@@ -170,6 +170,8 @@ add_layer.rdeck_proxy <- function(rdeck, layer) {
   rdeck
 }
 
+update_layer.rdeck_proxy <- add_layer.rdeck_proxy
+
 #' Set layer visibility
 #'
 #' Sets a layer's visibility and whether it is _selectable_ in the layer selector.

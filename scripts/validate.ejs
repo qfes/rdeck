@@ -28,6 +28,8 @@
 
 <%- func -%>.default <- function(layer) {
   <%- propType.name %> <- layer$<%- propType.name -%>
+  <%# current value %>
+  if (is_cur_value(<%- propType.name -%>)) return()
   <%# validate optional / required %>
   <%-
     propType.isOptional

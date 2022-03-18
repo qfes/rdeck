@@ -31,6 +31,8 @@ camel_case <- function(obj) {
 }
 
 to_json.layer <- function(obj) {
+  obj <- select(obj, -where(is_cur_value))
+
   if (!is.null(obj$data)) {
     obj$data <- layer_data(obj)
   }
@@ -44,9 +46,13 @@ to_json.layer <- function(obj) {
   camel_case(obj)
 }
 
+to_json.rdeck_props <- function(obj) {
+  obj <- select(obj, -where(is_cur_value))
+  camel_case(obj)
+}
+
 to_json.rdeck <- to_json.list
 to_json.rdeck_data <- camel_case
-to_json.rdeck_props <- camel_case
 to_json.view_state <- camel_case
 to_json.bbox <- function(obj) as.vector(obj)
 

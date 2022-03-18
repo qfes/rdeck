@@ -18,6 +18,24 @@ mvt_url <- function(tileset_id) {
     urltools::param_set("access_token", mapbox_access_token())
 }
 
+#' Cur value
+#'
+#' @description
+#' A sentinel object that represents the current value in the browser. Use this value
+#' to indicate that a map / layer property should remain unchanged.
+#'
+#' Intended for use in shiny applications.
+#'
+#' @examples
+#' rdeck_proxy("map") %>%
+#'   set_layer_visibility("layer_id", visible = cur_value(), visibility_toggle = TRUE)
+#'
+#' @name cur_value
+#' @export
+cur_value <- function() structure(list(), class = "cur_value")
+
+is_cur_value <- function(object) inherits(object, "cur_value")
+
 # extension of sign, where 0 is treated as positive
 sign0 <- function(x) (x >= 0L) - (x < 0L)
 

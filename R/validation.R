@@ -38,6 +38,8 @@ check_dots_access_token <- function(...) {
 # validate data
 validate_data.layer <- function(layer) {
   data <- layer$data
+  if (is_cur_value(data)) return()
+
   if (!is.null(data)) {
     tidyassert::assert_inherits(data, c("data.frame", "character"))
   }
@@ -45,6 +47,8 @@ validate_data.layer <- function(layer) {
 
 validate_data.GeoJsonLayer <- function(layer) {
   data <- layer$data
+  if (is_cur_value(data)) return()
+
   if (!is.null(data)) {
     tidyassert::assert_inherits(data, c("sf", "character"))
   }
@@ -52,6 +56,8 @@ validate_data.GeoJsonLayer <- function(layer) {
 
 validate_geometry_accessor <- function(layer, name, sfc_type) {
   prop <- layer[[name]]
+  if (is_cur_value(prop)) return()
+
   tidyassert::assert(
     !is.null(prop) && inherits(prop, "accessor"),
     "{.arg {name}} must be a {.cls column accessor}",
@@ -98,8 +104,11 @@ validate_get_target_position.layer <- function(layer) {
 
 # validate image
 validate_image.layer <- function(layer) {
-  if (!is.null(layer$image)) {
-    tidyassert::assert_inherits(layer$image, c("character", "array"))
+  image <- layer$image
+  if (is_cur_value(image)) return()
+
+  if (!is.null(image)) {
+    tidyassert::assert_inherits(image, c("character", "array"))
   }
 }
 
@@ -123,6 +132,9 @@ validate_get_text.MVTLayer <- validate_get_text.GeoJsonLayer
 #' @autoglobal
 #' @noRd
 validate_point_type.layer <- function(layer) {
+  point_type <- layer$point_type
+  if (is_cur_value(point_type)) return()
+
   # build vector of all point type combinations
   types <- c("circle", "icon", "text")
   grid <- expand.grid(z = types, y = types, x = types) %>%
@@ -133,8 +145,6 @@ validate_point_type.layer <- function(layer) {
     )
 
   all_types <- c(types, unique(grid$pair), grid$triple)
-
-  point_type <- layer$point_type
   tidyassert::assert(
     rlang::is_string(point_type) && point_type %in% all_types,
     c("x" = "{.arg point_type} must be one of {.val {types}}, or a combination joined by {.val +}"),
@@ -145,6 +155,8 @@ validate_point_type.layer <- function(layer) {
 # validate high_precision
 validate_high_precision.layer <- function(layer) {
   high_precision <- layer$high_precision
+  if (is_cur_value(high_precision)) return()
+
   tidyassert::assert(!is.null(high_precision))
   tidyassert::assert(
     (is.character(high_precision) && high_precision == "auto" ||

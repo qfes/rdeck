@@ -108,14 +108,34 @@ layers <- function(rdeck) {
   rdeck$x$layers
 }
 
-add_layer <- function(rdeck, layer) {
-  UseMethod("add_layer")
-}
-
 add_layer.rdeck <- function(rdeck, layer) {
   tidyassert::assert_inherits(layer, "layer")
 
   rdeck$x$layers <- c(layers(rdeck), list(layer))
+  rdeck
+}
+
+update_layer.rdeck <- function(rdeck, layer) {
+  tidyassert::assert_inherits(layer, "layer")
+
+  layer_index <- purrr::detect_index(
+    rdeck$x$layers,
+    function(l) l$id == layer$id & l$type == layer$type
+  )
+
+  tidyassert::assert(
+    layer_index != 0,
+    "Layer {.arg {layer_id}} doesn't exist",
+    layer_id = layer$id
+  )
+
+  # update
+  rdeck$x$layers <- purrr::assign_in(
+    rdeck$x$layers,
+    layer_index,
+    layer
+  )
+
   rdeck
 }
 

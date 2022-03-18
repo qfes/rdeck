@@ -76,6 +76,31 @@ function defaultValue({ name, type, value, valueType }) {
   }
 }
 
+function diffuseAccessors({ props }) {
+  return props
+    .filter((p) => p.type === "accessor" || p.name === "tooltip")
+    .map((p) => `${p.name} <- rlang::enquo(${p.name})`)
+    .join("\n");
+}
+
+function transformProps({ props, dataType }) {
+  const _dataType = dataType != null ? JSON.stringify(dataType) : "NULL";
+
+  return props
+    .map((p) => {
+      if (p.type === "accessor") return `${p.name} = accessor(${p.name}, data, ${_dataType})`;
+      if (p.name === "tooltip") return `${p.name} = tooltip(${p.name}, data, ${_dataType})`;
+
+      // default
+      return `${p.name} = ${p.name}`;
+    })
+    .join(",\n");
+}
+
+function validateProps({ name, props }) {
+  return props.map((p) => `validate_${p.name}(${name})`).join("\n");
+}
+
 function templateData(Layer) {
   return {
     type: Layer,
@@ -107,7 +132,15 @@ const generatedBy = `
   # deck.gl version: ${deckVersion}
 `.trim();
 
-Promise.all(layers.map((layer) => ejs.renderFile(template, { layer }, { rmWhitespace: true })))
+Promise.all(
+  layers.map((layer) =>
+    ejs.renderFile(
+      template,
+      { layer, utils: { diffuseAccessors, transformProps, validateProps } },
+      { rmWhitespace: true }
+    )
+  )
+)
   .then((layers) => {
     const content = [generatedBy, ...layers].join("\n\n");
     return fs.writeFile(output, content);
