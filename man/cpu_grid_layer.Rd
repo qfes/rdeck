@@ -46,6 +46,47 @@ add_cpu_grid_layer(
   blending_mode = "normal",
   visibility_toggle = TRUE
 )
+
+update_cpu_grid_layer(
+  rdeck,
+  ...,
+  id,
+  name = cur_value(),
+  group_name = cur_value(),
+  data = cur_value(),
+  visible = cur_value(),
+  pickable = cur_value(),
+  opacity = cur_value(),
+  wrap_longitude = cur_value(),
+  position_format = cur_value(),
+  color_format = cur_value(),
+  auto_highlight = cur_value(),
+  highlight_color = cur_value(),
+  color_domain = cur_value(),
+  color_range = cur_value(),
+  get_color_value = cur_value(),
+  get_color_weight = cur_value(),
+  color_aggregation = cur_value(),
+  lower_percentile = cur_value(),
+  upper_percentile = cur_value(),
+  color_scale_type = cur_value(),
+  elevation_domain = cur_value(),
+  elevation_range = cur_value(),
+  get_elevation_value = cur_value(),
+  get_elevation_weight = cur_value(),
+  elevation_aggregation = cur_value(),
+  elevation_lower_percentile = cur_value(),
+  elevation_upper_percentile = cur_value(),
+  elevation_scale = cur_value(),
+  elevation_scale_type = cur_value(),
+  cell_size = cur_value(),
+  coverage = cur_value(),
+  get_position = cur_value(),
+  extruded = cur_value(),
+  material = cur_value(),
+  blending_mode = cur_value(),
+  visibility_toggle = cur_value()
+)
 }
 \arguments{
 \item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
@@ -218,6 +259,7 @@ Other layers:
 \code{\link{path_layer}},
 \code{\link{point_cloud_layer}},
 \code{\link{polygon_layer}},
+\code{\link{quadkey_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
 \code{\link{scenegraph_layer}},

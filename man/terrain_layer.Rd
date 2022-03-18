@@ -45,6 +45,46 @@ add_terrain_layer(
   visibility_toggle = TRUE,
   tooltip = NULL
 )
+
+update_terrain_layer(
+  rdeck,
+  ...,
+  id,
+  name = cur_value(),
+  group_name = cur_value(),
+  data = cur_value(),
+  visible = cur_value(),
+  pickable = cur_value(),
+  opacity = cur_value(),
+  wrap_longitude = cur_value(),
+  position_format = cur_value(),
+  color_format = cur_value(),
+  auto_highlight = cur_value(),
+  highlight_color = cur_value(),
+  get_tile_data = cur_value(),
+  extent = cur_value(),
+  tile_size = cur_value(),
+  max_zoom = cur_value(),
+  min_zoom = cur_value(),
+  max_cache_size = cur_value(),
+  max_cache_byte_size = cur_value(),
+  refinement_strategy = cur_value(),
+  z_range = cur_value(),
+  max_requests = cur_value(),
+  zoom_offset = cur_value(),
+  elevation_data = cur_value(),
+  texture = cur_value(),
+  mesh_max_error = cur_value(),
+  bounds = cur_value(),
+  color = cur_value(),
+  elevation_decoder = cur_value(),
+  worker_url = cur_value(),
+  wireframe = cur_value(),
+  material = cur_value(),
+  blending_mode = cur_value(),
+  visibility_toggle = cur_value(),
+  tooltip = cur_value()
+)
 }
 \arguments{
 \item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
@@ -173,6 +213,7 @@ Other geo-layers:
 \code{\link{h3_cluster_layer}},
 \code{\link{h3_hexagon_layer}},
 \code{\link{mvt_layer}},
+\code{\link{quadkey_layer}},
 \code{\link{s2_layer}},
 \code{\link{tile_3d_layer}},
 \code{\link{tile_layer}},
@@ -199,6 +240,7 @@ Other layers:
 \code{\link{path_layer}},
 \code{\link{point_cloud_layer}},
 \code{\link{polygon_layer}},
+\code{\link{quadkey_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
 \code{\link{scenegraph_layer}},

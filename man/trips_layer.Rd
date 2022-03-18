@@ -41,6 +41,42 @@ add_trips_layer(
   loop_length = 1800,
   animation_speed = 30
 )
+
+update_trips_layer(
+  rdeck,
+  ...,
+  id,
+  name = cur_value(),
+  group_name = cur_value(),
+  data = cur_value(),
+  visible = cur_value(),
+  pickable = cur_value(),
+  opacity = cur_value(),
+  wrap_longitude = cur_value(),
+  position_format = cur_value(),
+  color_format = cur_value(),
+  auto_highlight = cur_value(),
+  highlight_color = cur_value(),
+  width_units = cur_value(),
+  width_scale = cur_value(),
+  width_min_pixels = cur_value(),
+  width_max_pixels = cur_value(),
+  joint_rounded = cur_value(),
+  cap_rounded = cur_value(),
+  miter_limit = cur_value(),
+  billboard = cur_value(),
+  get_path = cur_value(),
+  get_color = cur_value(),
+  get_width = cur_value(),
+  fade_trail = cur_value(),
+  trail_length = cur_value(),
+  get_timestamps = cur_value(),
+  blending_mode = cur_value(),
+  visibility_toggle = cur_value(),
+  tooltip = cur_value(),
+  loop_length = cur_value(),
+  animation_speed = cur_value()
+)
 }
 \arguments{
 \item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
@@ -164,6 +200,7 @@ Other geo-layers:
 \code{\link{h3_cluster_layer}},
 \code{\link{h3_hexagon_layer}},
 \code{\link{mvt_layer}},
+\code{\link{quadkey_layer}},
 \code{\link{s2_layer}},
 \code{\link{terrain_layer}},
 \code{\link{tile_3d_layer}},
@@ -190,6 +227,7 @@ Other layers:
 \code{\link{path_layer}},
 \code{\link{point_cloud_layer}},
 \code{\link{polygon_layer}},
+\code{\link{quadkey_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
 \code{\link{scenegraph_layer}},

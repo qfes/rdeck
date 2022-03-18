@@ -114,8 +114,7 @@ add_arc_layer <- function(rdeck,
 
   add_layer(rdeck, arc_layer)
 }
-#' @rdname arc_layer
-#' @usage NULL
+#' @name arc_layer
 #' @export
 update_arc_layer <- function(rdeck,
                              ...,
@@ -313,8 +312,7 @@ add_bitmap_layer <- function(rdeck,
 
   add_layer(rdeck, bitmap_layer)
 }
-#' @rdname bitmap_layer
-#' @usage NULL
+#' @name bitmap_layer
 #' @export
 update_bitmap_layer <- function(rdeck,
                                 ...,
@@ -517,8 +515,7 @@ add_icon_layer <- function(rdeck,
 
   add_layer(rdeck, icon_layer)
 }
-#' @rdname icon_layer
-#' @usage NULL
+#' @name icon_layer
 #' @export
 update_icon_layer <- function(rdeck,
                               ...,
@@ -734,8 +731,7 @@ add_line_layer <- function(rdeck,
 
   add_layer(rdeck, line_layer)
 }
-#' @rdname line_layer
-#' @usage NULL
+#' @name line_layer
 #' @export
 update_line_layer <- function(rdeck,
                               ...,
@@ -924,8 +920,7 @@ add_point_cloud_layer <- function(rdeck,
 
   add_layer(rdeck, point_cloud_layer)
 }
-#' @rdname point_cloud_layer
-#' @usage NULL
+#' @name point_cloud_layer
 #' @export
 update_point_cloud_layer <- function(rdeck,
                                      ...,
@@ -1142,8 +1137,7 @@ add_scatterplot_layer <- function(rdeck,
 
   add_layer(rdeck, scatterplot_layer)
 }
-#' @rdname scatterplot_layer
-#' @usage NULL
+#' @name scatterplot_layer
 #' @export
 update_scatterplot_layer <- function(rdeck,
                                      ...,
@@ -1413,8 +1407,7 @@ add_grid_cell_layer <- function(rdeck,
 
   add_layer(rdeck, grid_cell_layer)
 }
-#' @rdname grid_cell_layer
-#' @usage NULL
+#' @name grid_cell_layer
 #' @export
 update_grid_cell_layer <- function(rdeck,
                                    ...,
@@ -1699,8 +1692,7 @@ add_column_layer <- function(rdeck,
 
   add_layer(rdeck, column_layer)
 }
-#' @rdname column_layer
-#' @usage NULL
+#' @name column_layer
 #' @export
 update_column_layer <- function(rdeck,
                                 ...,
@@ -1947,8 +1939,7 @@ add_path_layer <- function(rdeck,
 
   add_layer(rdeck, path_layer)
 }
-#' @rdname path_layer
-#' @usage NULL
+#' @name path_layer
 #' @export
 update_path_layer <- function(rdeck,
                               ...,
@@ -2180,8 +2171,7 @@ add_polygon_layer <- function(rdeck,
 
   add_layer(rdeck, polygon_layer)
 }
-#' @rdname polygon_layer
-#' @usage NULL
+#' @name polygon_layer
 #' @export
 update_polygon_layer <- function(rdeck,
                                  ...,
@@ -2408,8 +2398,7 @@ add_solid_polygon_layer <- function(rdeck,
 
   add_layer(rdeck, solid_polygon_layer)
 }
-#' @rdname solid_polygon_layer
-#' @usage NULL
+#' @name solid_polygon_layer
 #' @export
 update_solid_polygon_layer <- function(rdeck,
                                        ...,
@@ -2792,8 +2781,7 @@ add_geojson_layer <- function(rdeck,
 
   add_layer(rdeck, geojson_layer)
 }
-#' @rdname geojson_layer
-#' @usage NULL
+#' @name geojson_layer
 #' @export
 update_geojson_layer <- function(rdeck,
                                  ...,
@@ -3234,8 +3222,7 @@ add_text_layer <- function(rdeck,
 
   add_layer(rdeck, text_layer)
 }
-#' @rdname text_layer
-#' @usage NULL
+#' @name text_layer
 #' @export
 update_text_layer <- function(rdeck,
                               ...,
@@ -3486,8 +3473,7 @@ add_screen_grid_layer <- function(rdeck,
 
   add_layer(rdeck, screen_grid_layer)
 }
-#' @rdname screen_grid_layer
-#' @usage NULL
+#' @name screen_grid_layer
 #' @export
 update_screen_grid_layer <- function(rdeck,
                                      ...,
@@ -3714,8 +3700,7 @@ add_cpu_grid_layer <- function(rdeck,
 
   add_layer(rdeck, cpu_grid_layer)
 }
-#' @rdname cpu_grid_layer
-#' @usage NULL
+#' @name cpu_grid_layer
 #' @export
 update_cpu_grid_layer <- function(rdeck,
                                   ...,
@@ -3985,8 +3970,7 @@ add_hexagon_layer <- function(rdeck,
 
   add_layer(rdeck, hexagon_layer)
 }
-#' @rdname hexagon_layer
-#' @usage NULL
+#' @name hexagon_layer
 #' @export
 update_hexagon_layer <- function(rdeck,
                                  ...,
@@ -4210,8 +4194,7 @@ add_contour_layer <- function(rdeck,
 
   add_layer(rdeck, contour_layer)
 }
-#' @rdname contour_layer
-#' @usage NULL
+#' @name contour_layer
 #' @export
 update_contour_layer <- function(rdeck,
                                  ...,
@@ -4438,8 +4421,7 @@ add_grid_layer <- function(rdeck,
 
   add_layer(rdeck, grid_layer)
 }
-#' @rdname grid_layer
-#' @usage NULL
+#' @name grid_layer
 #' @export
 update_grid_layer <- function(rdeck,
                               ...,
@@ -4688,8 +4670,7 @@ add_gpu_grid_layer <- function(rdeck,
 
   add_layer(rdeck, gpu_grid_layer)
 }
-#' @rdname gpu_grid_layer
-#' @usage NULL
+#' @name gpu_grid_layer
 #' @export
 update_gpu_grid_layer <- function(rdeck,
                                   ...,
@@ -4898,8 +4879,7 @@ add_heatmap_layer <- function(rdeck,
 
   add_layer(rdeck, heatmap_layer)
 }
-#' @rdname heatmap_layer
-#' @usage NULL
+#' @name heatmap_layer
 #' @export
 update_heatmap_layer <- function(rdeck,
                                  ...,
@@ -5110,8 +5090,7 @@ add_great_circle_layer <- function(rdeck,
 
   add_layer(rdeck, great_circle_layer)
 }
-#' @rdname great_circle_layer
-#' @usage NULL
+#' @name great_circle_layer
 #' @export
 update_great_circle_layer <- function(rdeck,
                                       ...,
@@ -5350,8 +5329,7 @@ add_s2_layer <- function(rdeck,
 
   add_layer(rdeck, s2_layer)
 }
-#' @rdname s2_layer
-#' @usage NULL
+#' @name s2_layer
 #' @export
 update_s2_layer <- function(rdeck,
                             ...,
@@ -5607,8 +5585,7 @@ add_quadkey_layer <- function(rdeck,
 
   add_layer(rdeck, quadkey_layer)
 }
-#' @rdname quadkey_layer
-#' @usage NULL
+#' @name quadkey_layer
 #' @export
 update_quadkey_layer <- function(rdeck,
                                  ...,
@@ -5864,8 +5841,7 @@ add_h3_cluster_layer <- function(rdeck,
 
   add_layer(rdeck, h3_cluster_layer)
 }
-#' @rdname h3_cluster_layer
-#' @usage NULL
+#' @name h3_cluster_layer
 #' @export
 update_h3_cluster_layer <- function(rdeck,
                                     ...,
@@ -6126,8 +6102,7 @@ add_h3_hexagon_layer <- function(rdeck,
 
   add_layer(rdeck, h3_hexagon_layer)
 }
-#' @rdname h3_hexagon_layer
-#' @usage NULL
+#' @name h3_hexagon_layer
 #' @export
 update_h3_hexagon_layer <- function(rdeck,
                                     ...,
@@ -6374,8 +6349,7 @@ add_tile_layer <- function(rdeck,
 
   add_layer(rdeck, tile_layer)
 }
-#' @rdname tile_layer
-#' @usage NULL
+#' @name tile_layer
 #' @export
 update_tile_layer <- function(rdeck,
                               ...,
@@ -6609,8 +6583,7 @@ add_trips_layer <- function(rdeck,
 
   add_layer(rdeck, trips_layer)
 }
-#' @rdname trips_layer
-#' @usage NULL
+#' @name trips_layer
 #' @export
 update_trips_layer <- function(rdeck,
                                ...,
@@ -6827,8 +6800,7 @@ add_tile_3d_layer <- function(rdeck,
 
   add_layer(rdeck, tile_3d_layer)
 }
-#' @rdname tile_3d_layer
-#' @usage NULL
+#' @name tile_3d_layer
 #' @export
 update_tile_3d_layer <- function(rdeck,
                                  ...,
@@ -7043,8 +7015,7 @@ add_terrain_layer <- function(rdeck,
 
   add_layer(rdeck, terrain_layer)
 }
-#' @rdname terrain_layer
-#' @usage NULL
+#' @name terrain_layer
 #' @export
 update_terrain_layer <- function(rdeck,
                                  ...,
@@ -7498,8 +7469,7 @@ add_mvt_layer <- function(rdeck,
 
   add_layer(rdeck, mvt_layer)
 }
-#' @rdname mvt_layer
-#' @usage NULL
+#' @name mvt_layer
 #' @export
 update_mvt_layer <- function(rdeck,
                              ...,
@@ -7932,8 +7902,7 @@ add_simple_mesh_layer <- function(rdeck,
 
   add_layer(rdeck, simple_mesh_layer)
 }
-#' @rdname simple_mesh_layer
-#' @usage NULL
+#' @name simple_mesh_layer
 #' @export
 update_simple_mesh_layer <- function(rdeck,
                                      ...,
@@ -8154,8 +8123,7 @@ add_scenegraph_layer <- function(rdeck,
 
   add_layer(rdeck, scenegraph_layer)
 }
-#' @rdname scenegraph_layer
-#' @usage NULL
+#' @name scenegraph_layer
 #' @export
 update_scenegraph_layer <- function(rdeck,
                                     ...,

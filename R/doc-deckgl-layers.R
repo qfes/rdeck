@@ -311,6 +311,15 @@ NULL
 #' @family layers
 NULL
 
+#' Quadkey Layer
+#'
+#' @name quadkey_layer
+#' @inherit layer_props
+#' @eval deckgl_docs("geo-layers", "quadkey-layer")
+#' @family geo-layers
+#' @family layers
+NULL
+
 #' Tile Layer
 #'
 #' @name tile_layer

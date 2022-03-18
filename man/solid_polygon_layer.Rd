@@ -34,6 +34,35 @@ add_solid_polygon_layer(
   visibility_toggle = TRUE,
   tooltip = NULL
 )
+
+update_solid_polygon_layer(
+  rdeck,
+  ...,
+  id,
+  name = cur_value(),
+  group_name = cur_value(),
+  data = cur_value(),
+  visible = cur_value(),
+  pickable = cur_value(),
+  opacity = cur_value(),
+  wrap_longitude = cur_value(),
+  position_format = cur_value(),
+  color_format = cur_value(),
+  auto_highlight = cur_value(),
+  highlight_color = cur_value(),
+  filled = cur_value(),
+  extruded = cur_value(),
+  wireframe = cur_value(),
+  elevation_scale = cur_value(),
+  get_polygon = cur_value(),
+  get_elevation = cur_value(),
+  get_fill_color = cur_value(),
+  get_line_color = cur_value(),
+  material = cur_value(),
+  blending_mode = cur_value(),
+  visibility_toggle = cur_value(),
+  tooltip = cur_value()
+)
 }
 \arguments{
 \item{rdeck}{<\code{\link{rdeck}} | \code{\link{rdeck_proxy}}> An rdeck map instance.}
@@ -173,6 +202,7 @@ Other layers:
 \code{\link{path_layer}},
 \code{\link{point_cloud_layer}},
 \code{\link{polygon_layer}},
+\code{\link{quadkey_layer}},
 \code{\link{s2_layer}},
 \code{\link{scatterplot_layer}},
 \code{\link{scenegraph_layer}},

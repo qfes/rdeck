@@ -67,6 +67,7 @@ reference:
       - h3_cluster_layer
       - h3_hexagon_layer
       - s2_layer
+      - quadkey_layer
       - tile_layer
       - tile_3d_layer
       - trips_layer
