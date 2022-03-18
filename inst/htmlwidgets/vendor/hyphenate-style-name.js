@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrdeck=self.webpackChunkrdeck||[]).push([[7044],{5477:(e,r,t)=>{t.d(r,{Z:()=>a});var n=/[A-Z]/g,s=/^ms-/,c={};function u(e){return"-"+e.toLowerCase()}const a=function(e){if(c.hasOwnProperty(e))return c[e];var r=e.replace(n,u);return c[e]=s.test(r)?"-"+r:r}}}]);

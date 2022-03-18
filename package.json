@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "@danmarshall/deckgl-typings": "^4.9.15",
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
     "@fontsource/roboto": "^4.5.3",
-    "@material-ui/icons": "^4.11.2",
+    "@mui/icons-material": "^5.5.1",
     "@types/d3": "7.1.0",
     "@types/geojson": "^7946.0.8",
     "@types/node": "^17.0.21",

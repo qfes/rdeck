@@ -1,5 +1,5 @@
 import { Fragment, PropsWithChildren, useEffect, useRef, useState } from "react";
-import { CheckBoxOutlineBlank, CheckBox, IndeterminateCheckBox, Layers } from "@material-ui/icons";
+import { CheckBoxOutlineBlank, CheckBox, IndeterminateCheckBox, Layers } from "@mui/icons-material";
 
 import { VisibilityInfo } from "./layer";
 import { classNames, groupBy } from "./util";

@@ -9,23 +9,24 @@ dependencies:
       - vendor/loaders.gl.js
       - vendor/luma.gl.js
       - vendor/core-js.js
+      - vendor/mui.js
       - vendor/math.gl.js
-      - vendor/material-ui.js
       - vendor/d3-selection.js
       - vendor/d3-transition.js
       - vendor/react-map-gl.js
-      - vendor/babel.js
       - vendor/d3-interpolate.js
       - vendor/d3-format.js
       - vendor/probe.gl.js
       - vendor/d3-scale.js
       - vendor/mjolnir.js.js
+      - vendor/emotion.js
+      - vendor/stylis.js
       - vendor/d3-array.js
       - vendor/gl-matrix.js
       - vendor/react.js
       - vendor/d3-zoom.js
+      - vendor/babel.js
       - vendor/prop-types.js
-      - vendor/hoist-non-react-statics.js
       - vendor/d3-timer.js
       - vendor/d3-color.js
       - vendor/d3-brush.js
@@ -41,20 +42,9 @@ dependencies:
       - vendor/mapbox-gl.js
       - vendor/long.js
       - vendor/ktx-parse.js
-      - vendor/jss.js
-      - vendor/jss-plugin-vendor-prefixer.js
-      - vendor/jss-plugin-rule-value-function.js
-      - vendor/jss-plugin-props-sort.js
-      - vendor/jss-plugin-nested.js
-      - vendor/jss-plugin-global.js
-      - vendor/jss-plugin-default-unit.js
-      - vendor/jss-plugin-camel-case.js
-      - vendor/is-in-browser.js
       - vendor/ieee754.js
-      - vendor/hyphenate-style-name.js
       - vendor/hammerjs.js
       - vendor/h3-js.js
       - vendor/earcut.js
-      - vendor/css-vendor.js
       - vendor/clsx.js
       - vendor/mapbox.js
