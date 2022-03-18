@@ -167,12 +167,12 @@ function scaleFn(accessor: AccessorScale<any>) {
         .range(accessor.range)
         .unknown(accessor.unknown);
     case "category":
-      return scaleOrdinal<T>() //
+      return scaleOrdinal<T>()
         .domain(accessor.domain)
         .range(accessor.range)
         .unknown(accessor.unknown);
     case "quantize":
-      return scaleQuantize<T>() //
+      return scaleQuantize<T>()
         .domain(accessor.domain)
         .range(accessor.range)
         .unknown(accessor.unknown);
@@ -208,30 +208,30 @@ function highlightFn({ col, dataType }: Accessor, scaleData: ScaleFn): AccessorF
 }
 
 function tableData(col: string, scaleData: ScaleFn): AccessorFn<DataFrame, any> {
-  return (_, { index, data }) => scaleData(data.frame[col][index] ?? undefined);
+  return (_, { index, data }) => scaleData(data.frame[col][index]);
 }
 
 function tableHighlight(col: string, scaleData: ScaleFn): AccessorFn<PickInfo<null>, any> {
   return ({ index, layer }) =>
     // @ts-ignore
-    scaleData(layer.props.data!.frame[col][index] ?? undefined);
+    scaleData(layer.props.data!.frame[col][index]);
 }
 
 function objectData(col: string, scaleData: ScaleFn): AccessorFn<Record<string, any>, any> {
-  return (object) => scaleData(object[col] ?? undefined);
+  return (object) => scaleData(object[col]);
 }
 
 function objectHighlight(
   col: string,
   scaleData: ScaleFn
 ): AccessorFn<PickInfo<Record<string, any>>, any> {
-  return ({ object }) => scaleData(object[col] ?? undefined);
+  return ({ object }) => scaleData(object[col]);
 }
 
 function geojsonData(col: string, scaleData: ScaleFn): AccessorFn<Feature, any> {
-  return (object) => scaleData(object.properties![col] ?? undefined);
+  return (object) => scaleData(object.properties![col]);
 }
 
 function geojsonHighlight(col: string, scaleData: ScaleFn): AccessorFn<PickInfo<Feature>, any> {
-  return ({ object }) => scaleData(object.properties![col] ?? undefined);
+  return ({ object }) => scaleData(object.properties![col]);
 }

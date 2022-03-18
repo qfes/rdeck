@@ -33,12 +33,10 @@ export function Map({ props, layers }: MapProps) {
   };
   // layer animation loop
   const [time, setTime] = useState(0);
-  const animating = layers.filter((layer) => layer.type === "TripsLayer").length !== 0;
+  const animating = layers.some((layer) => layer.type === "TripsLayer");
   useAnimation(animating, (time) => setTime(time));
 
-  const _layers = layers
-    .filter((layer) => layer.type != null)
-    .map((layer) => layer.renderLayer(time));
+  const _layers = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
 
   return (
     <Fragment>
