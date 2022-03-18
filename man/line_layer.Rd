@@ -133,7 +133,7 @@ the camera; if \code{FALSE}, the width always faces up (z).}
 Line Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/layers/line-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.7-release/docs/api-reference/layers/line-layer.md}
 
 Other core-layers: 
 \code{\link{arc_layer}},

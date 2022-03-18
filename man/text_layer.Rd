@@ -186,7 +186,7 @@ channel is ignored. The alpha of the background matches the opacity of each obje
 Text Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/layers/text-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.7-release/docs/api-reference/layers/text-layer.md}
 
 Other core-layers: 
 \code{\link{arc_layer}},

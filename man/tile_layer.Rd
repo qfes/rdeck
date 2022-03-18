@@ -150,7 +150,7 @@ if supplied.}
 Tile Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/geo-layers/tile-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.7-release/docs/api-reference/geo-layers/tile-layer.md}
 
 Other geo-layers: 
 \code{\link{great_circle_layer}},

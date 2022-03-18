@@ -119,7 +119,7 @@ dot density on light maps.
 Contour Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/aggregation-layers/contour-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.7-release/docs/api-reference/aggregation-layers/contour-layer.md}
 
 Other aggregation-layers: 
 \code{\link{cpu_grid_layer}},

@@ -157,7 +157,7 @@ Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tid
 Trips Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/geo-layers/trips-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.7-release/docs/api-reference/geo-layers/trips-layer.md}
 
 Other geo-layers: 
 \code{\link{great_circle_layer}},

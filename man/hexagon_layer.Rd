@@ -188,7 +188,7 @@ dot density on light maps.
 Hexagon Layer
 }
 \seealso{
-\url{https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/aggregation-layers/hexagon-layer.md}
+\url{https://github.com/visgl/deck.gl/blob/8.7-release/docs/api-reference/aggregation-layers/hexagon-layer.md}
 
 Other aggregation-layers: 
 \code{\link{contour_layer}},
