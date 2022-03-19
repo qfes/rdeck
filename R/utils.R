@@ -1,22 +1,3 @@
-#' MVT URL
-#'
-#' Make a mapbox vector tile url template
-#' @name mvt_url
-#' @param tileset_id A mapbox tileset identifier of the form:
-#'
-#' - `mapbox.mapbox-streets-v8`, or
-#' - `mapbox://mapbox.mapbox-streets-v8`
-#'
-#' @seealso mvt_layer
-#' @export
-mvt_url <- function(tileset_id) {
-  mvt_endpoint <- "https://api.mapbox.com/v4"
-  xyz_template <- "{z}/{x}/{y}.vector.pbf"
-  id <- sub("mapbox://", "", tileset_id)
-
-  url <- file.path(mvt_endpoint, id, xyz_template, fsep = "/") %>%
-    urltools::param_set("access_token", mapbox_access_token())
-}
 
 #' Cur value
 #'
@@ -54,6 +35,8 @@ add_class <- function(object, new_class, pos = 1L) {
 
 # set class
 set_class <- `class<-`
+
+as_class <- function(x) structure(x, class = x)
 
 # replace value
 set_value <- `[[<-`
@@ -111,6 +94,8 @@ is_rgba_color <- function(x) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", x, ignore.cas
 is_js_eval <- function(object) inherits(object, "JS_EVAL")
 
 is_dataframe <- function(object) inherits(object, "data.frame")
+
+is_absolute_url <- function(object) !is.na(urltools::scheme(object))
 
 all_finite <- function(x) all(is.finite(x))
 

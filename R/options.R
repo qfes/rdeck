@@ -46,3 +46,11 @@ mapbox_access_token <- function() {
 
   utils::head(tokens, 1) %??% NULL
 }
+
+
+tile_service <- function() {
+  service <- getOption("rdeck.tile_service") %||% "mapbox"
+  tidyassert::assert(rlang::is_string(service))
+
+  service
+}
