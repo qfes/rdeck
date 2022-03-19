@@ -18,11 +18,17 @@ reference:
     desc: Create Deck.GL map
     contents:
       - rdeck
+
+      - layers
+      - props
+
+  - title: Shiny
+    desc: Shiny
+    contents:
       - rdeck_proxy
       - rdeckOutput
       - renderRdeck
-      - layers
-      - props
+      - shiny-events
 
   - title: Prop Types
     desc: Description and usage for accessors, scales, tooltips and colours
@@ -104,9 +110,9 @@ reference:
   - title: Other
     contents:
       - mapbox_access_token
+      - tile_json
       - set_layer_visibility
       - view_state
-      - mvt_url
       - format_number
       - sfc_point
       - sf_column

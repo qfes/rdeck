@@ -9,6 +9,8 @@ get_event_data(rdeck, event_name, session = shiny::getDefaultReactiveDomain())
 \arguments{
 \item{rdeck}{<\code{rdeck_proxy} | \code{string}> the map, or map id}
 
+\item{event_name}{<\code{string}> the event name}
+
 \item{session}{<\code{ShinySession}> the shiny session}
 }
 \description{

@@ -17,3 +17,4 @@ rdeck_proxy("map") \%>\%
   set_layer_visibility("layer_id", visible = cur_value(), visibility_toggle = TRUE)
 
 }
+\keyword{internal}

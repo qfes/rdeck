@@ -12,6 +12,7 @@
 #'   set_layer_visibility("layer_id", visible = cur_value(), visibility_toggle = TRUE)
 #'
 #' @name cur_value
+#' @keywords internal
 #' @export
 cur_value <- function() structure(list(), class = "cur_value")
 

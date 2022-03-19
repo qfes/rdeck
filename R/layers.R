@@ -17,7 +17,7 @@ add_layer <- function(rdeck, layer) {
   UseMethod("add_layer")
 }
 
-#' update an existing layer
+# update an existing layer
 update_layer <- function(rdeck, layer) {
   UseMethod("update_layer")
 }
