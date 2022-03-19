@@ -215,7 +215,7 @@ send_msg <- function(rdeck, name, data) {
 #' Shiny events data
 #'
 #' @description
-#' Get map event data in a shiny application.
+#' Utilities for retrieving map event data in a shiny application.
 #'
 #' @name shiny-events
 NULL
@@ -239,9 +239,6 @@ get_event_data <- function(rdeck, event_name, session = shiny::getDefaultReactiv
   session$input[[paste(id, event_name, sep = "_")]]
 }
 
-#' Get view bounds
-#'
-#' Get the view bounds
 #' @describeIn shiny-events Get the current map bounding box
 #' @inherit get_event_data
 #' @export
@@ -260,9 +257,6 @@ get_view_bounds <- function(rdeck, session = shiny::getDefaultReactiveDomain()) 
   sf::st_bbox(bounds, crs = 4326)
 }
 
-#' Get view state
-#'
-#' Get the view state
 #' @describeIn shiny-events Get the map view state
 #' @inherit get_event_data
 #' @autoglobal
@@ -283,9 +277,6 @@ get_view_state <- function(rdeck, session = shiny::getDefaultReactiveDomain()) {
   )
 }
 
-#' Get clicked coordinates
-#'
-#' Get the clicked coordinates
 #' @describeIn shiny-events Get the last clicked coordinates
 #' @inherit get_event_data
 #' @export
@@ -302,9 +293,6 @@ get_clicked_coordinates <- function(rdeck, session = shiny::getDefaultReactiveDo
   )
 }
 
-#' Get clicked layer
-#'
-#' Get the clicked layer
 #' @describeIn shiny-events Get the last clicked layer (or NULL)
 #' @inherit get_event_data
 #' @export
@@ -316,9 +304,6 @@ get_clicked_layer <- function(rdeck, session = shiny::getDefaultReactiveDomain()
   event_data$layer
 }
 
-#' Get clicked object
-#'
-#' Get the clicked object
 #' @describeIn shiny-events Get the last clicked object (or NULL)
 #' @inherit get_event_data
 #' @export

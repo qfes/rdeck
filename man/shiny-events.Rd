@@ -25,17 +25,7 @@ get_clicked_object(rdeck, session = shiny::getDefaultReactiveDomain())
 \item{session}{<\code{ShinySession}> the shiny session}
 }
 \description{
-Get map event data in a shiny application.
-
-Get the view bounds
-
-Get the view state
-
-Get the clicked coordinates
-
-Get the clicked layer
-
-Get the clicked object
+Utilities for retrieving map event data in a shiny application.
 }
 \section{Functions}{
 \itemize{

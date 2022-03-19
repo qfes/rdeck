@@ -22,7 +22,7 @@ tile_json(tileset_id, tile_service = NULL)
 \description{
 Intended for use as the \code{data} parameter of \code{\link[=mvt_layer]{mvt_layer()}}. Creates a tile json url
 from a tileset_id and tile_service. Tile service defaults to
-\verb{getOption("rdeck.tile_service") \%||\% "mapbox}.
+\code{getOption("rdeck.tile_service") \%||\% "mapbox"}.
 
 The created url will be fetched and parsed with \code{\link[jsonlite:fromJSON]{jsonlite::fromJSON()}}.
 }

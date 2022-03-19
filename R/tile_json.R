@@ -3,7 +3,7 @@
 #' @description
 #' Intended for use as the `data` parameter of [mvt_layer()]. Creates a tile json url
 #' from a tileset_id and tile_service. Tile service defaults to
-#' `getOption("rdeck.tile_service") %||% "mapbox`.
+#' `getOption("rdeck.tile_service") %||% "mapbox"`.
 #'
 #' The created url will be fetched and parsed with [jsonlite::fromJSON()].
 #'
