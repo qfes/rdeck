@@ -83,6 +83,37 @@
   blending_mode <span class="op">=</span> <span class="st">"normal"</span>,
   visibility_toggle <span class="op">=</span> <span class="cn">TRUE</span>,
   tooltip <span class="op">=</span> <span class="cn">NULL</span>
+<span class="op">)</span>
+
+<span class="fu">update_simple_mesh_layer</span><span class="op">(</span>
+  <span class="va">rdeck</span>,
+  <span class="va">...</span>,
+  <span class="va">id</span>,
+  name <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  group_name <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  data <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  visible <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  pickable <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  opacity <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  wrap_longitude <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  position_format <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  color_format <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  auto_highlight <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  highlight_color <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  mesh <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  texture <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  size_scale <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  wireframe <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  material <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  get_position <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  get_color <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  get_orientation <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  get_scale <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  get_translation <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  get_transform_matrix <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  blending_mode <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  visibility_toggle <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  tooltip <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -181,7 +212,7 @@ Supports <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" 
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><a href="https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/mesh-layers/simple-mesh-layer.md" class="external-link">https://github.com/visgl/deck.gl/blob/8.4-release/docs/api-reference/mesh-layers/simple-mesh-layer.md</a></p>
+    <div class="dont-index"><p><a href="https://github.com/visgl/deck.gl/blob/8.7-release/docs/api-reference/mesh-layers/simple-mesh-layer.md" class="external-link">https://github.com/visgl/deck.gl/blob/8.7-release/docs/api-reference/mesh-layers/simple-mesh-layer.md</a></p>
 <p>Other mesh-layers: 
 <code><a href="scenegraph_layer.html">scenegraph_layer</a></code></p>
 <p>Other layers: 
@@ -205,6 +236,7 @@ Supports <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" 
 <code><a href="path_layer.html">path_layer</a></code>,
 <code><a href="point_cloud_layer.html">point_cloud_layer</a></code>,
 <code><a href="polygon_layer.html">polygon_layer</a></code>,
+<code><a href="quadkey_layer.html">quadkey_layer</a></code>,
 <code><a href="s2_layer.html">s2_layer</a></code>,
 <code><a href="scatterplot_layer.html">scatterplot_layer</a></code>,
 <code><a href="scenegraph_layer.html">scenegraph_layer</a></code>,

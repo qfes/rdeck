@@ -64,10 +64,16 @@
     <loc>https://anthonynorth.github.io/rdeck/reference/cpu_grid_layer.html</loc>
   </url>
   <url>
+    <loc>https://anthonynorth.github.io/rdeck/reference/cur_value.html</loc>
+  </url>
+  <url>
     <loc>https://anthonynorth.github.io/rdeck/reference/format_number.html</loc>
   </url>
   <url>
     <loc>https://anthonynorth.github.io/rdeck/reference/geojson_layer.html</loc>
+  </url>
+  <url>
+    <loc>https://anthonynorth.github.io/rdeck/reference/get_event_data.html</loc>
   </url>
   <url>
     <loc>https://anthonynorth.github.io/rdeck/reference/gpu_grid_layer.html</loc>
@@ -133,6 +139,9 @@
     <loc>https://anthonynorth.github.io/rdeck/reference/props.html</loc>
   </url>
   <url>
+    <loc>https://anthonynorth.github.io/rdeck/reference/quadkey_layer.html</loc>
+  </url>
+  <url>
     <loc>https://anthonynorth.github.io/rdeck/reference/rdeck-package.html</loc>
   </url>
   <url>
@@ -196,6 +205,9 @@
     <loc>https://anthonynorth.github.io/rdeck/reference/sfc_point.html</loc>
   </url>
   <url>
+    <loc>https://anthonynorth.github.io/rdeck/reference/shiny-events.html</loc>
+  </url>
+  <url>
     <loc>https://anthonynorth.github.io/rdeck/reference/simple_mesh_layer.html</loc>
   </url>
   <url>
@@ -212,6 +224,9 @@
   </url>
   <url>
     <loc>https://anthonynorth.github.io/rdeck/reference/tile_3d_layer.html</loc>
+  </url>
+  <url>
+    <loc>https://anthonynorth.github.io/rdeck/reference/tile_json.html</loc>
   </url>
   <url>
     <loc>https://anthonynorth.github.io/rdeck/reference/tile_layer.html</loc>
