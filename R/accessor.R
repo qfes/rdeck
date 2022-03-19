@@ -61,7 +61,7 @@ accessor.scale <- function(expr, data = NULL, data_type = NULL) {
 
   mutate(
     scale,
-    data_type = data_type %||% resolve_data_type(data)
+    data_type = data_type %||% resolve_data_type(!!data)
   )
 }
 
