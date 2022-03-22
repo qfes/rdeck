@@ -31,8 +31,6 @@ camel_case <- function(obj) {
 }
 
 to_json.layer <- function(obj) {
-  obj <- select(obj, -where(is_cur_value))
-
   if (!is.null(obj$data)) {
     obj$data <- layer_data(obj)
   }
@@ -43,7 +41,7 @@ to_json.layer <- function(obj) {
     obj$image <- paste0("data:image/png;base64,", b64_image)
   }
 
-  camel_case(obj)
+  camel_case(select(obj, -where(is_cur_value)))
 }
 
 to_json.rdeck_props <- function(obj) {

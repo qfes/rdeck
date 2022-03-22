@@ -64,7 +64,28 @@ round_sfc <- function(sfc, digits = 6L) {
 
 get_colnames <- function(layer) {
   # cannot *easily* know which cols are referenced in js() accessors
-  if (any(vlapply(layer, is_js_eval))) {
+  js_props <- select(layer, where(is_js_eval))
+  if (!rlang::is_empty(js_props)) {
+    rlang::warn(
+      c(
+        "!" = "Some properties are javascript expressions, cannot safely omit columns",
+        rlang::set_names(names(js_props), "*")
+      )
+    )
+
+    return(tidyselect::everything())
+  }
+
+  # any accessors with cur_value() -> unsafe to subset layer
+  missing_accessors <- select(layer, maybe_accessor() & where(is_cur_value))
+  if (!rlang::is_empty(missing_accessors)) {
+    rlang::warn(
+      c(
+        "!" = "Some accessors are `cur_value()`, cannot safely omit columns from output",
+        rlang::set_names(names(missing_accessors), "*")
+      )
+    )
+
     return(tidyselect::everything())
   }
 

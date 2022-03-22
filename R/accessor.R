@@ -79,7 +79,13 @@ new_accessor <- function(col, data, data_type) {
   )
 }
 
+# object an accessor instance
 is_accessor <- function(object) inherits(object, "accessor")
+
+# select helper: match names of possible accessor
+maybe_accessor <- function() {
+  setdiff(tidyselect::starts_with("get_"), tidyselect::ends_with("_value"))
+}
 
 resolve_data_type <- function(data = NULL) {
   ifelse(is.null(data) | inherits(data, "data.frame"), "table", "object")
