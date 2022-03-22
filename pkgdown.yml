@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   rdeck: rdeck.html
-last_built: 2022-03-19T11:57Z
+last_built: 2022-03-22T10:05Z
 urls:
   reference: https://anthonynorth.github.io/rdeck/reference
   article: https://anthonynorth.github.io/rdeck/articles
