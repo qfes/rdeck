@@ -133,7 +133,10 @@ update_layer.rdeck <- function(rdeck, layer) {
   rdeck$x$layers <- purrr::assign_in(
     rdeck$x$layers,
     layer_index,
-    layer
+    mutate(
+      rdeck$x$layers[[layer_index]],
+      !!!select(layer, -where(is_cur_value))
+    )
   )
 
   rdeck
