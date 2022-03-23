@@ -127,6 +127,25 @@ to_json.tooltip <- function(obj) {
   )
 }
 
+to_json.tile_json <- function(obj) {
+  tilejson <- select(
+    obj,
+    -tidyselect::any_of(c(
+      "tilestats",
+      "vector_layers",
+      "fields",
+      "generator",
+      "generator_options"
+    ))
+  )
+
+  jsonlite::toJSON(
+    unclass(tilejson),
+    auto_unbox = TRUE,
+    digits = 6
+  )
+}
+
 to_camel_case <- function(string) {
   # preserve _ prefix
   prefix <- ifelse(startsWith(string, "_"), "_", "")
