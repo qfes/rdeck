@@ -71,6 +71,8 @@ is_scale <- function(object) inherits(object, "scale")
 is_color_scale <- function(object) is_scale(object) && inherits(object, "scale_color")
 is_numeric_scale <- function(object) is_scale(object) && inherits(object, "scale_numeric")
 
+is_quantile_scale <- function(object) is_scale(object) && object$scale_type == "quantile"
+is_category_scale <- function(object) is_scale(object) && object$scale_type == "category"
 
 #' Scale linear
 #'

@@ -44,24 +44,69 @@ accessor.sf_column <- function(expr, data = NULL, data_type = NULL) {
 
 accessor.scale <- function(expr, data = NULL, data_type = NULL) {
   scale <- expr
-
-  # does column exist?
-  tidyassert::assert(
-    !inherits(data, "data.frame") || rlang::has_name(data, scale$col),
-    "Scale column {.col {col}} doesn't exist",
-    print_expr = substitute(!inherits(data, "data.frame") || rlang::has_name(data, quo$col)),
-    col = scale$col
-  )
-
-  # train scale limits / levels / data
   scale_limits <- scale$limits %||% scale$levels %||% scale$data
-  if (inherits(data, "data.frame") && is.null(scale_limits$range)) {
-    scale_limits$train(data[[scale$col]])
+
+  if (is_dataframe(data)) {
+    # does column exist?
+    tidyassert::assert(
+      rlang::has_name(data, scale$col),
+      "Scale column {.col {col}} doesn't exist",
+      print_expr = substitute(rlang::has_name(data, expr$col)),
+      col = scale$col
+    )
+
+    # populate limits / levels / data if not given
+    if (is.null(scale_limits$range)) {
+      scale_limits$train(data[[scale$col]])
+    }
+
+    return(
+      mutate(
+        scale,
+        data_type = data_type %||% resolve_data_type(.env$data)
+      )
+    )
+  }
+
+  # mvt specific - assert field exists, populate limits from metadata
+  if (is_tile_json(data)) {
+    tidyassert::assert(
+      has_tilejson_field(data, scale$col),
+      "Scale column {.col {col}} doesn't exist in tilejson",
+      print_expr = substitute(has_tilejson_field(data, expr$col)),
+      col = scale$col
+    )
+
+    field_info <- get_tilejson_field(data, scale$col)
+    tidyassert::assert(
+      n_unique(field_info$type[!is.na(field_info$type)]) <= 1,
+      "Field {.col {col}} has mixed types",
+      col = scale$col
+    )
+
+    tidyassert::assert(
+      !is.null(scale_limits$range) || !is_quantile_scale(scale),
+      "Cannot compute quantiles from tilejson",
+      print_expr = substitute(!is.null(expr$data) || !is_quantile_scale(expr))
+    )
+
+    if (is.null(scale_limits$range)) {
+      scale_limits$train(
+        if (is_category_scale(scale)) unlist(field_info$values) else c(field_info$min, field_info$max)
+      )
+    }
+
+    return(
+      mutate(
+        scale,
+        data_type = "geojson"
+      )
+    )
   }
 
   mutate(
     scale,
-    data_type = data_type %||% resolve_data_type(!!data)
+    data_type = data_type %||% resolve_data_type(.env$data)
   )
 }
 

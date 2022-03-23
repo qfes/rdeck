@@ -127,15 +127,11 @@ validate_get_icon.GeoJsonLayer <- function(layer) {
   }
 }
 
-validate_get_icon.MVTLayer <- validate_get_icon.GeoJsonLayer
-
 validate_get_text.GeoJsonLayer <- function(layer) {
   if (grepl("text", layer$point_type, fixed = TRUE)) {
     NextMethod()
   }
 }
-
-validate_get_text.MVTLayer <- validate_get_text.GeoJsonLayer
 
 #' validate point_type
 #' @autoglobal

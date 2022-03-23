@@ -4152,3 +4152,282 @@ validate_zoom_offset.default <- function(layer) {
     name = "zoom_offset"
   )
 }
+
+validate_highlight_color.MVTLayer <- function(layer) {
+  highlight_color <- layer$highlight_color
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(highlight_color)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, highlight_color$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = highlight_color$col
+    )
+  }
+}
+
+validate_get_fill_color.MVTLayer <- function(layer) {
+  get_fill_color <- layer$get_fill_color
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_fill_color)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_fill_color$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_fill_color$col
+    )
+  }
+}
+
+validate_get_line_color.MVTLayer <- function(layer) {
+  get_line_color <- layer$get_line_color
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_line_color)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_line_color$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_line_color$col
+    )
+  }
+}
+
+validate_get_line_width.MVTLayer <- function(layer) {
+  get_line_width <- layer$get_line_width
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_line_width)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_line_width$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_line_width$col
+    )
+  }
+}
+
+validate_get_point_radius.MVTLayer <- function(layer) {
+  get_point_radius <- layer$get_point_radius
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_point_radius)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_point_radius$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_point_radius$col
+    )
+  }
+}
+
+validate_get_icon.MVTLayer <- function(layer) {
+  get_icon <- layer$get_icon
+  if (!grepl("icon", layer$point_type, fixed = TRUE)) {
+    return()
+  }
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_icon)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_icon$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_icon$col
+    )
+  }
+}
+
+validate_get_icon_angle.MVTLayer <- function(layer) {
+  get_icon_angle <- layer$get_icon_angle
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_icon_angle)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_icon_angle$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_icon_angle$col
+    )
+  }
+}
+
+validate_get_icon_color.MVTLayer <- function(layer) {
+  get_icon_color <- layer$get_icon_color
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_icon_color)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_icon_color$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_icon_color$col
+    )
+  }
+}
+
+validate_get_icon_pixel_offset.MVTLayer <- function(layer) {
+  get_icon_pixel_offset <- layer$get_icon_pixel_offset
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_icon_pixel_offset)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_icon_pixel_offset$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_icon_pixel_offset$col
+    )
+  }
+}
+
+validate_get_icon_size.MVTLayer <- function(layer) {
+  get_icon_size <- layer$get_icon_size
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_icon_size)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_icon_size$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_icon_size$col
+    )
+  }
+}
+
+validate_get_text.MVTLayer <- function(layer) {
+  get_text <- layer$get_text
+  if (!grepl("text", layer$point_type, fixed = TRUE)) {
+    return()
+  }
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text$col
+    )
+  }
+}
+
+validate_get_text_angle.MVTLayer <- function(layer) {
+  get_text_angle <- layer$get_text_angle
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text_angle)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text_angle$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text_angle$col
+    )
+  }
+}
+
+validate_get_text_color.MVTLayer <- function(layer) {
+  get_text_color <- layer$get_text_color
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text_color)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text_color$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text_color$col
+    )
+  }
+}
+
+validate_get_text_pixel_offset.MVTLayer <- function(layer) {
+  get_text_pixel_offset <- layer$get_text_pixel_offset
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text_pixel_offset)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text_pixel_offset$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text_pixel_offset$col
+    )
+  }
+}
+
+validate_get_text_size.MVTLayer <- function(layer) {
+  get_text_size <- layer$get_text_size
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text_size)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text_size$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text_size$col
+    )
+  }
+}
+
+validate_get_text_anchor.MVTLayer <- function(layer) {
+  get_text_anchor <- layer$get_text_anchor
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text_anchor)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text_anchor$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text_anchor$col
+    )
+  }
+}
+
+validate_get_text_alignment_baseline.MVTLayer <- function(layer) {
+  get_text_alignment_baseline <- layer$get_text_alignment_baseline
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text_alignment_baseline)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text_alignment_baseline$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text_alignment_baseline$col
+    )
+  }
+}
+
+validate_get_text_background_color.MVTLayer <- function(layer) {
+  get_text_background_color <- layer$get_text_background_color
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text_background_color)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text_background_color$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text_background_color$col
+    )
+  }
+}
+
+validate_get_text_border_color.MVTLayer <- function(layer) {
+  get_text_border_color <- layer$get_text_border_color
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text_border_color)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text_border_color$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text_border_color$col
+    )
+  }
+}
+
+validate_get_text_border_width.MVTLayer <- function(layer) {
+  get_text_border_width <- layer$get_text_border_width
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_text_border_width)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_text_border_width$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_text_border_width$col
+    )
+  }
+}
+
+validate_get_elevation.MVTLayer <- function(layer) {
+  get_elevation <- layer$get_elevation
+  NextMethod()
+
+  if (is_tile_json(layer$data) && is_accessor(get_elevation)) {
+    tidyassert::assert(
+      has_tilejson_field(layer$data, get_elevation$col),
+      "`Field {.col {col}} doesn't exist in tile json",
+      col = get_elevation$col
+    )
+  }
+}

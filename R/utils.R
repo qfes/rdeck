@@ -86,6 +86,11 @@ ramp_n <- function(n) seq.int(0, 1, length.out = n)
 
 drop_ends <- function(x) x[-c(1, length(x))]
 
+n_unique <- function(x, na_rm = FALSE) {
+  unique_x <- unique(x)
+  if (na_rm) length(unique_x[!is.na(unique_x)]) else length(unique_x)
+}
+
 # from {scales}
 is_discrete <- function(x) is.factor(x) || is.character(x) || is.logical(x)
 

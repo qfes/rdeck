@@ -160,6 +160,18 @@ get_tilejson_fields <- function(tilejson) {
   )
 }
 
+get_tilejson_field <- function(tilejson, field, layers = NULL) {
+  dplyr::filter(
+    tilejson$fields,
+    field == !!field,
+    is.null(layers) | layer %in% layers
+  )
+}
+
+has_tilejson_field <- function(tilejson, field, layers = NULL) {
+  nrow(get_tilejson_field(tilejson, field, layers)) != 0
+}
+
 #' MVT URL
 #'
 #' `r lifecycle::badge("deprecated")`

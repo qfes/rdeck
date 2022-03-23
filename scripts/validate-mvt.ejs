@@ -1,0 +1,20 @@
+validate_<%- propType.name -%>.MVTLayer <- function(layer) {
+  <%- propType.name %> <- layer$<%- propType.name -%>
+  <%# get_text & get_icon validated conditionally based on point_type %>
+  <% if (["get_text", "get_icon"].includes(propType.name)) { -%>
+    if (!grepl(<%- JSON.stringify(propType.name.slice(4)) -%>, layer$point_type, fixed = TRUE)) return()
+  <% } -%>
+  <%# default validation -%>
+  NextMethod()
+  <%# accessor column validation %>
+  <% if (propType.type === "accessor" && propType.valueType != null) { -%>
+    if (is_tile_json(layer$data) && is_accessor(<%- propType.name %>)) {
+      <% let columnName = `${propType.name}$col`; -%>
+      tidyassert::assert(
+        has_tilejson_field(layer$data, <%- columnName -%>),
+        "`Field {.col {col}} doesn't exist in tile json",
+        col = <%- columnName -%>
+      )
+    }
+  <% } -%>
+}

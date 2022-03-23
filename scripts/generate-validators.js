@@ -281,8 +281,15 @@ const props = Object.values(deck)
   .map(templateData);
 
 const uniqueProps = unique(props);
-
 const template = path.join(__dirname, "validate.ejs");
+
+// overrides for mvt layer
+const mvtProps = getProps(deck.MVTLayer)
+  .filter((p) => p.type === "accessor")
+  .map(templateData);
+
+const mvtTemplate = path.join(__dirname, "validate-mvt.ejs");
+
 const output = path.join(__dirname, "../R/deckgl-validators.R");
 // @ts-ignore
 const deckVersion = deck.Deck.VERSION;
@@ -291,15 +298,20 @@ const generatedBy = `
   # deck.gl version: ${deckVersion}
 `.trim();
 
-Promise.all(
-  uniqueProps.map((propType) =>
-    ejs.renderFile(
-      template,
-      { propType, utils: { typeCheck, columnCheck, formatAssertion } },
-      { rmWhitespace: true }
-    )
-  )
-)
+function render(template, propType) {
+  return ejs.renderFile(
+    template,
+    { propType, utils: { typeCheck, columnCheck, formatAssertion } },
+    { rmWhitespace: true }
+  );
+}
+
+const renders = [
+  ...uniqueProps.map((propType) => render(template, propType)),
+  ...mvtProps.map((propType) => render(mvtTemplate, propType)),
+];
+
+Promise.all(renders)
   .then((validators) => {
     const content = [generatedBy, ...validators].join("\n\n");
     return fs.writeFile(output, content);

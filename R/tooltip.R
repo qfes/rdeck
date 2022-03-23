@@ -35,7 +35,7 @@ tooltip.logical <- function(expr, data, data_type) {
   tidyassert::assert(length(expr) == 1, "Tooltip boolean expression must be a scalar")
 
   if (rlang::is_false(expr) || rlang::is_na(expr)) return(NULL)
-  if (!is_dataframe(data)) return(new_tooltip(TRUE, data, data_type))
+  if (!is_dataframe(data) && !is_tile_json(data)) return(TRUE)
 
   tooltip_tidyselect(tidyselect::everything(), data, data_type)
 }
@@ -47,7 +47,7 @@ tooltip.name <- function(expr, data, data_type) {
 tooltip.character <- function(expr, data, data_type) {
   tidyassert::assert(!is.na(expr), "Tooltip columns must not contain missing values")
 
-  if (!is_dataframe(data)) {
+  if (!is_dataframe(data) && !is_tile_json(data)) {
     cols <- unname(expr)[!is.na(expr)]
     return(new_tooltip(cols, data, data_type))
   }
@@ -56,7 +56,7 @@ tooltip.character <- function(expr, data, data_type) {
 }
 
 tooltip.call <- function(expr, data, data_type) {
-  if (!is_dataframe(data)) {
+  if (!is_dataframe(data) && !is_tile_json(data)) {
     # emulate tidy-select of a quoted c() call
     if (rlang::call_name(expr) == "c") {
       cols <- vcapply(rlang::call_args(expr), rlang::as_name, named = FALSE)
@@ -77,13 +77,21 @@ tooltip.call <- function(expr, data, data_type) {
 tooltip.cur_value <- function(expr, data, data_type) expr
 
 tooltip_tidyselect <- function(expr, data, data_type) {
-  tidyassert::assert(is_dataframe(data))
+  tidyassert::assert(is_dataframe(data) || is_tile_json(data))
+
+  if (is_tile_json(data)) {
+    field_names <- unique(data$fields$field)
+    fields <- rlang::set_names(seq_along(field_names), field_names)
+    pos <- tidyselect::eval_select(expr, fields)
+
+    return(new_tooltip(names(fields)[pos], data, "geojson"))
+  }
 
   pos <- tidyselect::eval_select(expr, data)
   sfc_pos <- tidyselect::eval_select(rlang::expr(where(is_sfc)), data)
   cols <- names(data)[setdiff(pos, sfc_pos)]
 
-  new_tooltip(cols, data, data_type)
+  return(new_tooltip(cols, data, data_type))
 }
 
 new_tooltip <- function(cols, data = NULL, data_type = NULL) {
