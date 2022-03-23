@@ -54,6 +54,15 @@ validate_data.GeoJsonLayer <- function(layer) {
   }
 }
 
+validate_data.MVTLayer <- function(layer) {
+  data <- layer$data
+  if (is_cur_value(data)) return()
+
+  if (!is.null(data)) {
+    tidyassert::assert_inherits(data, c("character", "tile_json"))
+  }
+}
+
 validate_geometry_accessor <- function(layer, name, sfc_type) {
   prop <- layer[[name]]
   if (is_cur_value(prop)) return()

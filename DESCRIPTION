@@ -30,7 +30,8 @@ Imports:
     generics,
     purrr,
     jsonlite,
-    lifecycle
+    lifecycle,
+    dplyr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(
@@ -41,7 +42,6 @@ Suggests:
     knitr,
     rmarkdown,
     roxyglobals (>= 0.2.1),
-    dplyr,
     RcppSimdJson,
     viridis,
     testthat (>= 3.0.0)

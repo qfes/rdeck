@@ -41,26 +41,7 @@ tile_json <- function(tileset_id, tile_service = NULL) {
 
 #' @export
 tile_json.NULL <- function(tileset_id, tile_service = NULL) {
-  json <- new_tile_json(tileset_id)
-  tileset_id
-}
-
-#' @export
-tile_json.mapbox <- function(tileset_id, tile_service = NULL) {
-  # strip mapbox protocol and .json
-  tileset_id <- gsub("(^mapbox://)|(\\.json$)", "", tileset_id)
-  url <- urltools::param_set(
-      file.path(
-      "https://api.mapbox.com/v4",
-      paste0(tileset_id, ".json"),
-      fsep = "/"
-    ),
-    "access_token",
-    mapbox_access_token()
-  )
-
-  json <- new_tile_json(url)
-  url
+  new_tile_json(tileset_id)
 }
 
 #' @export
@@ -72,13 +53,27 @@ tile_json.character <- function(tileset_id, tile_service = NULL) {
     fsep = "/"
   )
 
-  json <- new_tile_json(url)
-  url
+  new_tile_json(url)
+}
+
+#' @export
+tile_json.mapbox <- function(tileset_id, tile_service = NULL) {
+  # strip mapbox protocol and .json
+  tileset_id <- gsub("(^mapbox://)|(\\.json$)", "", tileset_id)
+  url <- urltools::param_set(
+    file.path(
+      "https://api.mapbox.com/v4",
+      paste0(tileset_id, ".json"),
+      fsep = "/"
+    ),
+    "access_token",
+    mapbox_access_token()
+  )
+
+  new_tile_json(url)
 }
 
 is_mapbox <- function(x) "mapbox" %in% c(x, urltools::scheme(x))
-
-strip_mapbox <- function(x) sub("mapbox://", "", x)
 
 get_tileservice_class <- function(tileset_id, tile_service) {
   if (is_absolute_url(tileset_id) && !is_mapbox(tileset_id)) {
@@ -96,14 +91,72 @@ get_tileservice_class <- function(tileset_id, tile_service) {
   as_class(tile_service)
 }
 
-new_tile_json <- function(url) {
+fetch_tile_json <- function(url) {
   with_rdeck_errors(
-    structure(
-      jsonlite::fromJSON(url),
-      class = "tile_json"
-    ),
+    jsonlite::fromJSON(url, simplifyDataFrame = FALSE),
     error_message = paste0("Error fetching tilejson from <", url, ">"),
-    call = rlang::caller_env()
+    call = rlang::caller_call()
+  )
+}
+
+new_tile_json <- function(url) {
+  tilejson <- fetch_tile_json(url)
+  structure(
+    mutate(
+      tilejson,
+      fields = get_tilejson_fields(.env$tilejson)
+    ),
+    class = "tile_json"
+  )
+}
+
+is_tile_json <- function(object) inherits(object, "tile_json")
+
+get_tilejson_fields <- function(tilejson) {
+  # get fields dataframe for tilejson layer
+  get_fields <- function(layer) {
+    dplyr::bind_cols(
+      layer = layer$id,
+      field = names(layer$fields)
+    )
+  }
+
+  # get attributes dataframe for tilestats layer
+  get_attrs <- function(layer) {
+    dplyr::bind_cols(
+      layer = layer$layer,
+      dplyr::bind_rows(
+        lapply(
+          layer$attributes,
+          function(attr) mutate(attr, values = if (exists("values")) list(values))
+        )
+      )
+    )
+  }
+
+  tilejson_fields <- dplyr::bind_rows(
+    lapply(tilejson$vector_layers, get_fields)
+  )
+
+  # could be empty, ensure schema
+  tilestats_schema <- dplyr::tibble(
+    layer = character(),
+    attribute = character(),
+    type = character(),
+    values = list(),
+    min = numeric(),
+    max = numeric()
+  )
+
+  tilestats_fields <- dplyr::bind_rows(
+    tilestats_schema,
+    lapply(tilejson$tilestats$layers, get_attrs)
+  )
+
+  dplyr::left_join(
+    tilejson_fields,
+    tilestats_fields,
+    by = c("layer", "field" = "attribute")
   )
 }
 
