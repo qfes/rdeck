@@ -19,7 +19,7 @@ Imports:
     shiny,
     snakecase,
     png,
-    stylebox (>= 0.1.0),
+    stylebox (>= 0.2.0),
     rlang,
     tidyselect,
     urltools,

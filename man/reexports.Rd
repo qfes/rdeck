@@ -9,22 +9,26 @@
 \alias{mapbox_dark}
 \alias{mapbox_satellite}
 \alias{mapbox_satellite_streets}
-\alias{mapbox_gallery_decimal}
-\alias{mapbox_gallery_standard}
-\alias{mapbox_gallery_blueprint}
-\alias{mapbox_gallery_frank}
+\alias{mapbox_navigation_day}
+\alias{mapbox_navigation_night}
+\alias{mapbox_navigation_guidance_night}
+\alias{mapbox_navigation_guidance_day}
+\alias{mapbox_gallery_bubble}
+\alias{mapbox_gallery_pencil}
 \alias{mapbox_gallery_streets_japan}
-\alias{mapbox_galley_pencil}
-\alias{mapbox_galley_bubble}
-\alias{mapbox_galley_minimo}
-\alias{mapbox_galley_le_shine}
-\alias{mapbox_gallery_cali_terrain}
-\alias{mapbox_gallery_ice_cream}
-\alias{mapbox_gallery_north_star}
-\alias{mapbox_gallery_moonlight}
+\alias{mapbox_gallery_frank}
+\alias{mapbox_gallery_blueprint}
+\alias{mapbox_gallery_standard}
 \alias{mapbox_gallery_mineral}
-\alias{mapbox_gallery_moves_map}
-\alias{mapbox_gallery_swiss_ski}
+\alias{mapbox_gallery_moonlight}
+\alias{mapbox_gallery_north_star}
+\alias{mapbox_gallery_decimal}
+\alias{mapbox_gallery_ice_cream}
+\alias{mapbox_gallery_cali_terrain}
+\alias{mapbox_gallery_le_shine}
+\alias{mapbox_gallery_minimo}
+\alias{mapbox_gallery_basic}
+\alias{mapbox_studio_galaxy}
 \alias{uber_dark}
 \alias{uber_light}
 \alias{uber_muted_light}
@@ -42,6 +46,6 @@ below to see their documentation.
 
   \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
 
-  \item{stylebox}{\code{\link[stylebox:mapbox_styles]{mapbox_dark}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_blueprint}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_cali_terrain}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_decimal}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_frank}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_ice_cream}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_mineral}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_moonlight}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_moves_map}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_north_star}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_standard}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_streets_japan}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_swiss_ski}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_galley_bubble}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_galley_le_shine}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_galley_minimo}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_galley_pencil}}, \code{\link[stylebox:mapbox_styles]{mapbox_light}}, \code{\link[stylebox:mapbox_styles]{mapbox_outdoors}}, \code{\link[stylebox:mapbox_styles]{mapbox_satellite}}, \code{\link[stylebox:mapbox_styles]{mapbox_satellite_streets}}, \code{\link[stylebox:mapbox_styles]{mapbox_streets}}, \code{\link[stylebox:uber_styles]{uber_dark}}, \code{\link[stylebox:uber_styles]{uber_light}}, \code{\link[stylebox:uber_styles]{uber_muted_light}}, \code{\link[stylebox:uber_styles]{uber_muted_night}}}
+  \item{stylebox}{\code{\link[stylebox:mapbox_styles]{mapbox_dark}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_basic}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_blueprint}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_bubble}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_cali_terrain}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_decimal}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_frank}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_ice_cream}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_le_shine}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_mineral}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_minimo}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_moonlight}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_north_star}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_pencil}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_standard}}, \code{\link[stylebox:mapbox_gallery_styles]{mapbox_gallery_streets_japan}}, \code{\link[stylebox:mapbox_styles]{mapbox_light}}, \code{\link[stylebox:mapbox_styles]{mapbox_navigation_day}}, \code{\link[stylebox:mapbox_styles]{mapbox_navigation_guidance_day}}, \code{\link[stylebox:mapbox_styles]{mapbox_navigation_guidance_night}}, \code{\link[stylebox:mapbox_styles]{mapbox_navigation_night}}, \code{\link[stylebox:mapbox_styles]{mapbox_outdoors}}, \code{\link[stylebox:mapbox_styles]{mapbox_satellite}}, \code{\link[stylebox:mapbox_styles]{mapbox_satellite_streets}}, \code{\link[stylebox:mapbox_styles]{mapbox_streets}}, \code{\link[stylebox:mapbox_studio_styles]{mapbox_studio_galaxy}}, \code{\link[stylebox:uber_styles]{uber_dark}}, \code{\link[stylebox:uber_styles]{uber_light}}, \code{\link[stylebox:uber_styles]{uber_muted_light}}, \code{\link[stylebox:uber_styles]{uber_muted_night}}}
 }}
 
