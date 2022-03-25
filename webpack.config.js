@@ -31,10 +31,6 @@ module.exports = (env, { mode }) => {
         {
           test: /\.tsx?$/,
           loader: "ts-loader",
-          options: {
-            // ts-loader not excluding node_modules
-            reportFiles: ["!node_modules/**/*"]
-          }
         },
         {
           test: /\.css$/,
