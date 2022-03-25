@@ -15,32 +15,50 @@ by \href{https://kepler.gl}{kepler.gl}.
   </div>
 }}
 
-Tooltips support different arguments depending on the value of \code{data}, but the following
+Tooltips support \link[dplyr:dplyr_tidy_select]{tidy-select} expressions (renaming isn't supported and
+will fail silently) and boolean expressions. Tidy-select support is limited when layer \code{data} is
+a URL or \code{NULL}.
+
+Similar to \code{\link[dplyr:select]{dplyr::select()}}, names are interpreted as column / field names. Use the
+\link[rlang:topic-inject]{injection operators} to pass the value of a name from the environment,
+e.g. \code{!!my_column}.
+}
+\section{Always supported}{
+Tooltips support different arguments depending on the value of the layer \code{data}, but the following
 arguments are always supported:
 \itemize{
 \item \code{NULL} | \code{NA} | \code{FALSE} -> no tooltip
-\item \code{TRUE} -> all columns (except \code{sfc} columns)
+\item \code{TRUE} -> all columns. This will be translated to \code{\link[tidyselect:everything]{tidyselect::everything()}} when data
+is a data frame or a tile json object
+\item character vector of column names, e.g. \code{c("foo", "bar")}
+\item a \code{c()} expression of bare names, e.g. \code{c(foo, bar)}
+\item a bare name, e.g. \code{my_col}
 }
 }
-\section{Data inherits \code{data.frame}}{
-When \code{data} is a \code{data.frame}, tooltip supports <\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> (renaming
-isn't supported and will fail silently). Expressions such as: \code{c(foo, bar)}, \code{everything()}, \code{matches("foo")},
-\code{-unwanted}, \code{where(is.character) & matches("foo")}, \code{1:6} etc. are supported.
 
-All columns referenced in tooltip must exist. Use \code{\link[tidyselect:all_of]{tidyselect::any_of()}} to reference columns that may not
-be present in data.
+\section{Data is a \code{data.frame} or \code{tile_json} object}{
+When layer \code{data} is a \code{\link[=data.frame]{data.frame()}} or \code{\link[=tile_json]{tile_json()}} object, \code{tooltip} supports
+\link[dplyr:dplyr_tidy_select]{tidy-select}, including selection helpers. The following are some
+examples of supported expressions:
+\itemize{
+\item \code{c(foo, bar)}
+\item \code{tidyselect::everything()}
+\item \code{tidyselect::matches("foo")},
+\item \code{-unwanted}
+\item \code{where(is.character) & matches("foo")}
+\item \code{1:6}
+}
+
+Like \code{\link[dplyr:select]{dplyr::select()}}, referencing non-existent columns results in an error. Use
+\code{\link[tidyselect:all_of]{tidyselect::any_of()}} to include columns that may not exist.
+
+All \code{sf} columns will be forcibly removed from the tooltip.
 }
 
 \section{Data is a \code{string} or \code{NULL}}{
-For cases where data is absent (tooltip wouldn't be displayed anyway), or dynamically loaded
-in the client, tooltips may take:
-\itemize{
-\item a character vector of column names (e.g. c("foo", "bar"))
-\item a bare name (e.g. \code{my_col})
-\item or a \code{c()} expression of bare names (e.g. \code{c(foo, bar)}).
-}
-
-No validation on these columns is possible in this case.
+There is no column / field name validation when When layer \code{data} is a \code{string} (interpreted as a URL)
+or \code{NULL}. Including non-existent names in the tooltip will \emph{not} cause errors in the client; these columns
+will be given a value of \code{null} in the rendered tooltip.
 }
 
 \keyword{internal}

@@ -125,27 +125,44 @@ NULL
 #'   </div>
 #' }}
 #'
-#' Tooltips support different arguments depending on the value of `data`, but the following
+#' Tooltips support [tidy-select][dplyr::dplyr_tidy_select] expressions (renaming isn't supported and
+#' will fail silently) and boolean expressions. Tidy-select support is limited when layer `data` is
+#' a URL or `NULL`.
+#'
+#' Similar to [dplyr::select()], names are interpreted as column / field names. Use the
+#' [injection operators][rlang::topic-inject] to pass the value of a name from the environment,
+#' e.g. `!!my_column`.
+#'
+#' # Always supported
+#' Tooltips support different arguments depending on the value of the layer `data`, but the following
 #' arguments are always supported:
 #' - `NULL` | `NA` | `FALSE` -> no tooltip
-#' - `TRUE` -> all columns (except `sfc` columns)
+#' - `TRUE` -> all columns. This will be translated to [tidyselect::everything()] when data
+#'   is a data frame or a tile json object
+#' - character vector of column names, e.g. `c("foo", "bar")`
+#' - a `c()` expression of bare names, e.g. `c(foo, bar)`
+#' - a bare name, e.g. `my_col`
 #'
-#' # Data inherits `data.frame`
-#' When `data` is a `data.frame`, tooltip supports <[`tidy-select`][dplyr::dplyr_tidy_select]> (renaming
-#' isn't supported and will fail silently). Expressions such as: `c(foo, bar)`, `everything()`, `matches("foo")`,
-#' `-unwanted`, `where(is.character) & matches("foo")`, `1:6` etc. are supported.
+#' # Data is a `data.frame` or `tile_json` object
+#' When layer `data` is a [data.frame()] or [tile_json()] object, `tooltip` supports
+#' [tidy-select][dplyr::dplyr_tidy_select], including selection helpers. The following are some
+#' examples of supported expressions:
+#' - `c(foo, bar)`
+#' - `tidyselect::everything()`
+#' - `tidyselect::matches("foo")`,
+#' - `-unwanted`
+#' - `where(is.character) & matches("foo")`
+#' - `1:6`
 #'
-#' All columns referenced in tooltip must exist. Use [tidyselect::any_of()] to reference columns that may not
-#' be present in data.
+#' Like [dplyr::select()], referencing non-existent columns results in an error. Use
+#' [tidyselect::any_of()] to include columns that may not exist.
+#'
+#' All `sf` columns will be forcibly removed from the tooltip.
 #'
 #' # Data is a `string` or `NULL`
-#' For cases where data is absent (tooltip wouldn't be displayed anyway), or dynamically loaded
-#' in the client, tooltips may take:
-#' - a character vector of column names (e.g. c("foo", "bar"))
-#' - a bare name (e.g. `my_col`)
-#' - or a `c()` expression of bare names (e.g. `c(foo, bar)`).
-#'
-#' No validation on these columns is possible in this case.
+#' There is no column / field name validation when When layer `data` is a `string` (interpreted as a URL)
+#' or `NULL`. Including non-existent names in the tooltip will _not_ cause errors in the client; these columns
+#' will be given a value of `null` in the rendered tooltip.
 #'
 #' @name tooltip
 #' @keywords internal
