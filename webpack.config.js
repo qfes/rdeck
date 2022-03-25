@@ -1,5 +1,5 @@
 const { resolve } = require("path");
-const { DefinePlugin } = require("webpack");
+const { DefinePlugin, SourceMapDevToolPlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -62,8 +62,11 @@ module.exports = (env, { mode }) => {
       new DefinePlugin({ __VERSION__: JSON.stringify(version) }),
       new MiniCssExtractPlugin({ filename: "[name].css" }),
       new DependenciesPlugin({ filename: "rdeck.yaml", version, exclude: "rdeck.js" }),
+      new SourceMapDevToolPlugin({
+        include: mode === "production" ? "rdeck.js" : null,
+        noSources: mode === "production",
+      }),
     ],
-    devtool: mode === "development" && "inline-source-map",
     optimization: {
       minimize: mode === "production",
       minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
