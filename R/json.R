@@ -68,16 +68,11 @@ to_json.scale <- function(obj) {
   compiled <- mutate(
     compile(obj),
     type = jsonlite::unbox("accessor"),
-    scale_type = jsonlite::unbox(scale_type),
-    col = jsonlite::unbox(col),
-    data_type = jsonlite::unbox(data_type),
-    legend = jsonlite::unbox(legend),
-    unknown = jsonlite::unbox(unknown),
-
-    # may not exist
-    unknown_tick = if (rlang::has_name(.data, "unknown_tick")) jsonlite::unbox(unknown_tick),
-    base = if (scale_type == "log") jsonlite::unbox(base),
-    exponent = if (scale_type == "power") jsonlite::unbox(exponent)
+    across(
+      tidyselect::all_of(c("scale_type", "col", "data_type", "legend", "unknown")) |
+      tidyselect::any_of(c("unknown_tick", "base", "exponent")),
+      jsonlite::unbox
+    )
   )
 
   # FIXME: rename scale -> scaleType in typescript
@@ -91,19 +86,19 @@ to_json.scale <- function(obj) {
 }
 
 to_json.scale_color <- function(obj) {
-  is_category <- obj$scale_type == "category"
+  is_category <- is_category_scale(obj)
 
   obj <- rename(
     obj,
     unknown = ifelse(is_category, "unmapped_color", "na_color"),
-    unknown_tick = if (rlang::has_name(.data, "unmapped_tick")) "unmapped_tick"
+    unknown_tick = tidyselect::any_of("unmapped_tick")
   )
 
   NextMethod()
 }
 
 to_json.scale_numeric <- function(obj) {
-  is_category <- obj$scale_type == "category"
+  is_category <- is_category_scale(obj)
 
   obj <- rename(
     obj,
