@@ -32,17 +32,19 @@ mutate <- function(lst, ...) {
 }
 
 # dplyr-like across, accepts only a single function
-across <- function(.cols, .fn, ...) {
+across <- function(.cols, .fn = NULL, ...) {
   mask <- rlang::caller_env()
-  # mask top = bottom
-  data <- as.list(mask$.top_env)
+  # mask bottom
+  data <- as.list(rlang::env_parent(mask))
   subset <- select(data, {{ .cols }})
+
+  fn <- .fn %||% function(col, ...) col
 
   purrr::reduce2(
     names(subset),
     subset,
     .init = subset,
-    function(data, nm, col) set_value(data, nm, .fn(col, ...))
+    function(data, nm, col) set_value(data, nm, fn(col, ...))
   )
 }
 
