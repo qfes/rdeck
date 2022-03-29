@@ -112,6 +112,8 @@ new_tile_json <- function(url) {
 
 is_tile_json <- function(object) inherits(object, "tile_json")
 
+#' @autoglobal
+#' @noRd
 get_tilejson_fields <- function(tilejson) {
   # get fields dataframe for tilejson layer
   get_fields <- function(layer) {
@@ -160,6 +162,8 @@ get_tilejson_fields <- function(tilejson) {
   )
 }
 
+#' @autoglobal
+#' @noRd
 get_tilejson_field <- function(tilejson, field, layers = NULL) {
   dplyr::filter(
     tilejson$fields,

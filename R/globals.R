@@ -38,14 +38,14 @@ utils::globalVariables(c(
   "text", # <add_mvt_layer>
   "position", # <add_simple_mesh_layer>
   "position", # <add_scenegraph_layer>
-  "scale_type", # <to_json.scale>
-  "data_type", # <to_json.scale>
-  "legend", # <to_json.scale>
-  "unknown", # <to_json.scale>
-  ".data", # <to_json.scale>
-  "unknown_tick", # <to_json.scale>
-  "base", # <to_json.scale>
-  "exponent", # <to_json.scale>
+  "scale_type", # <as_json.scale>
+  "data_type", # <as_json.tooltip>
+  "cols", # <as_json.tooltip>
+  "geometry", # <as_json.layer_table>
+  ".env", # <as_json.layer_table>
+  "data", # <compile.BitmapLayer>
+  ".env", # <compile.BitmapLayer>
+  "image", # <compile.BitmapLayer>
   "get_breaks", # <>
   "get_palette", # <>
   "get_range", # <>
@@ -67,6 +67,8 @@ utils::globalVariables(c(
   "domain", # <compile.scale_color_quantize>
   "limits", # <compile.scale_numeric_quantize>
   "center", # <get_view_state>
+  "values", # <get_tilejson_fields>
+  "layer", # <get_tilejson_field>
   "where", # <select>
   "x", # <validate_point_type.layer>
   "y", # <validate_point_type.layer>

@@ -157,7 +157,7 @@ rdeck_proxy <- function(id,
       ),
       class = "rdeck_data"
     )
-    send_msg(rdeck, "deck", to_json(data))
+    send_msg(rdeck, "deck", as_json(data))
   }
 
   rdeck
@@ -166,7 +166,7 @@ rdeck_proxy <- function(id,
 add_layer.rdeck_proxy <- function(rdeck, layer) {
   tidyassert::assert_inherits(layer, "layer")
 
-  send_msg(rdeck, "layer", to_json(layer))
+  send_msg(rdeck, "layer", as_json(layer))
   rdeck
 }
 
@@ -197,7 +197,7 @@ set_layer_visibility <- function(rdeck, id, visible = NULL, visibility_toggle = 
     validate_visibility_toggle(layer)
   }
 
-  send_msg(rdeck, "layer", to_json(layer))
+  send_msg(rdeck, "layer", json_stringify(layer))
   rdeck
 }
 

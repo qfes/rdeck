@@ -1,130 +1,112 @@
-
-#' To JSON
+#' As JSON
 #'
-#' Modify `obj` for JSON serialisation.
+#' Serialise object as JSON
 #'
 #' @keywords internal
 #' @noRd
-to_json <- function(obj) {
-  UseMethod("to_json")
+as_json <- function(object) {
+  UseMethod("as_json")
 }
 
-to_json.default <- function(obj) {
-  # remove names from vectors
-  if (is.vector(obj) && !is.null(names(obj))) as.vector(obj) else obj
+# identity: a convenient hack for safely calling as_json on anything
+as_json.default <- function(object) object
+
+as_json.layer <- function(object) {
+  compiled_layer <- select(compile(object), -where(is_cur_value))
+
+  json_stringify(
+    lapply(compiled_layer, function(p) as_json(p)),
+    camel_case = TRUE,
+    auto_unbox = TRUE
+  )
 }
 
-to_json.list <- function(obj) {
-  obj_json <- structure(
-    lapply(obj, function(p) to_json(p)),
-    class = class(obj)
+as_json.rdeck_props <- function(object) {
+  rdeck_props <- select(object, -where(is_cur_value))
+
+  json_stringify(
+    lapply(rdeck_props, function(p) as_json(p)),
+    camel_case = TRUE,
+    auto_unbox = TRUE
+  )
+}
+
+as_json.rdeck_data <- function(object) {
+  rdeck_data <- mutate(
+    object,
+    props = as_json(props),
+    layers = lapply(layers, function(layer) as_json(layer))
   )
 
-  mostattributes(obj_json) <- attributes(obj)
-  obj_json
+  json_stringify(rdeck_data, camel_case = TRUE, auto_unbox = TRUE)
 }
 
-camel_case <- function(obj) {
-  obj_names <- names(obj)
-  names(obj) <- to_camel_case(names(obj))
-  to_json.list(obj)
+as_json.view_state <- function(object) {
+  json_stringify(
+    object,
+    camel_case = TRUE,
+    auto_unbox = TRUE,
+    digits = 6
+  )
 }
 
-to_json.layer <- function(obj) {
-  if (!is.null(obj$data)) {
-    obj$data <- layer_data(obj)
-  }
-
-  # base64 encode image data
-  if (!is.null(obj$image) && inherits(obj$image, "array")) {
-    b64_image <- base64enc::base64encode(png::writePNG(obj$image))
-    obj$image <- paste0("data:image/png;base64,", b64_image)
-  }
-
-  camel_case(select(obj, -where(is_cur_value)))
+as_json.bbox <- function(object) {
+  json_stringify(object, digits = 6)
 }
 
-to_json.rdeck_props <- function(obj) {
-  obj <- select(obj, -where(is_cur_value))
-  camel_case(obj)
-}
-
-to_json.rdeck <- to_json.list
-to_json.rdeck_data <- camel_case
-to_json.view_state <- camel_case
-to_json.bbox <- function(obj) as.vector(obj)
-
-to_json.accessor <- function(obj) {
-  utils::modifyList(
-    camel_case(obj),
-    list(type = "accessor"),
-    keep.null = TRUE
+as_json.accessor <- function(object) {
+  json_stringify(
+    mutate(object, type = "accessor"),
+    camel_case = TRUE,
+    auto_unbox = TRUE
   )
 }
 
 #' @autoglobal
 #' @noRd
-to_json.scale <- function(obj) {
-  compiled <- mutate(
-    compile(obj),
+as_json.scale <- function(object) {
+  compiled_scale <- mutate(
+    compile(object),
     type = jsonlite::unbox("accessor"),
     across(
-      tidyselect::all_of(c("scale_type", "col", "data_type", "legend", "unknown")) |
-      tidyselect::any_of(c("unknown_tick", "base", "exponent")),
+      -tidyselect::any_of(c("domain", "palette", "range", "ticks")),
       jsonlite::unbox
     )
   )
 
   # FIXME: rename scale -> scaleType in typescript
-  compiled <- rename(compiled, scale = scale_type)
+  # FIXME: preserve original na / unknown field name
+  compiled_scale <- rename(
+    compiled_scale,
+    scale = scale_type,
+    unknown = tidyselect::any_of(c("na_color", "na_value", "unmapped_color", "unmapped_value")),
+    unknown_tick = tidyselect::any_of("unmapped_tick")
+  )
 
-  jsonlite::toJSON(
-    select(camel_case(compiled), -where(is.null)),
+  json_stringify(
+    compiled_scale,
+    camel_case = TRUE,
     digits = 15,
     use_signif = TRUE
   )
 }
 
-to_json.scale_color <- function(obj) {
-  is_category <- is_category_scale(obj)
-
-  obj <- rename(
-    obj,
-    unknown = ifelse(is_category, "unmapped_color", "na_color"),
-    unknown_tick = tidyselect::any_of("unmapped_tick")
+#' @autoglobal
+#' @noRd
+as_json.tooltip <- function(object) {
+  tooltip <- mutate(
+    object,
+    data_type = jsonlite::unbox(data_type),
+    # unbox cols only if logical
+    across(cols & where(is.logical), jsonlite::unbox)
   )
 
-  NextMethod()
+  json_stringify(tooltip, camel_case = TRUE)
 }
 
-to_json.scale_numeric <- function(obj) {
-  is_category <- is_category_scale(obj)
-
-  obj <- rename(
-    obj,
-    unknown = ifelse(is_category, "unmapped_value", "na_value")
-  )
-
-  NextMethod()
-}
-
-to_json.tooltip <- function(obj) {
-  # true can be simplified, names cannot
-  cols <- if (is.logical(obj$cols)) obj$cols else I(obj$cols)
-
-  utils::modifyList(
-    camel_case(obj),
-    list(
-      type = "tooltip",
-      cols = cols
-    ),
-    keep.null = TRUE
-  )
-}
-
-to_json.tile_json <- function(obj) {
+as_json.tile_json <- function(object) {
   tilejson <- select(
-    obj,
+    object,
     -tidyselect::any_of(c(
       "tilestats",
       "vector_layers",
@@ -134,10 +116,64 @@ to_json.tile_json <- function(obj) {
     ))
   )
 
+  json_stringify(tilejson, auto_unbox = TRUE, digits = 6)
+}
+
+#' @autoglobal
+#' @noRd
+as_json.layer_table <- function(object) {
+  table <- mutate(
+    object,
+    length = jsonlite::unbox(length),
+    geometry = lapply(geometry, jsonlite::unbox)
+  )
+
+  # FIXME: separate geometry cols from frame
+  coord_cols <- names(object$geometry)
+  table$frame <- mutate(
+    table$frame,
+    across(tidyselect::any_of(.env$coord_cols), json_stringify, digits = 6)
+  )
+
+  json_stringify(
+    table,
+    camel_case = TRUE,
+    digits = 15,
+    use_signif = TRUE
+  )
+}
+
+as_json.sf <- function(object) geojsonsf::sf_geojson(object, digits = 6)
+
+as_json.png <- function(object) {
+  paste0(
+    "data:image/png;base64,",
+    base64enc::base64encode(object)
+  )
+}
+
+# json serialise
+json_stringify <- function(object,
+                           camel_case = FALSE,
+                           null = "null",
+                           digits = 15,
+                           use_signif = FALSE,
+                           POSIXt = "ISO8601",
+                           force = TRUE,
+                           json_verbatim = TRUE,
+                           ...) {
+  if (camel_case) {
+    names(object) <- to_camel_case(names(object))
+  }
+
   jsonlite::toJSON(
-    unclass(tilejson),
-    auto_unbox = TRUE,
-    digits = 6
+    object,
+    null = null,
+    digits = digits,
+    POSIXt = POSIXt,
+    force = force,
+    json_verbatim = json_verbatim,
+    ...
   )
 }
 

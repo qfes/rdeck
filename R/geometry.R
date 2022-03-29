@@ -37,3 +37,11 @@ sf_column <- function() structure(list(), class = "sf_column")
 
 # is object a simple features column
 is_sfc <- function(object) inherits(object, "sfc")
+
+
+get_coordinates <- function(sfc) {
+  UseMethod("get_coordinates")
+}
+
+get_coordinates.sfc_POINT <- sf::st_coordinates
+get_coordinates.sfc <- function(sfc) lapply(unclass(sfc), unclass)

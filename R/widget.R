@@ -92,7 +92,7 @@ rdeck <- function(map_style = mapbox_dark(),
       browser.fill = TRUE,
     ),
     elementId = id,
-    preRenderHook = function(rdeck) to_json(rdeck)
+    preRenderHook = function(rdeck) mutate(rdeck, x = as_json(x))
   )
 }
 
