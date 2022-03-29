@@ -39,7 +39,9 @@ set_class <- `class<-`
 as_class <- function(x) structure(x, class = x)
 
 # replace value
-set_value <- `[[<-`
+set_value <- function(x, i, value) `[[<-`(x, i, value = value)
+
+set_null <- function(x, i) `[<-`(x, i, value = list(NULL))
 
 # set most attributes
 set_mostattributes <- `mostattributes<-`

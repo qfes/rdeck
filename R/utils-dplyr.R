@@ -20,15 +20,18 @@ mutate <- function(lst, ...) {
   quos <- rlang::enquos(..., .named = TRUE, .ignore_empty = "all", .check_assign = TRUE)
   nms <- rlang::names2(quos)
 
-  purrr::reduce2(
-    nms,
-    quos,
-    .init = lst,
-    function(data, nm, quo) {
-      val <- rlang::eval_tidy(quo, data)
-      if (!is_across(quo)) set_value(data, nm, val) else purrr::list_modify(data, !!!val)
+  mutate_col <- function(data, nm, quo) {
+    value <- rlang::eval_tidy(quo, data)
+
+    if (!is_across(quo)) {
+      set_value(data, nm, value)
+    } else {
+      nms <- names(value)
+      purrr::reduce2(nms, value, .init = data, set_value)
     }
-  )
+  }
+
+  purrr::reduce2(nms, quos, .init = lst, mutate_col) -> x
 }
 
 # dplyr-like across, accepts only a single function
@@ -40,12 +43,18 @@ across <- function(.cols, .fn = NULL, ...) {
 
   fn <- .fn %||% function(col, ...) col
 
-  purrr::reduce2(
-    names(subset),
-    subset,
-    .init = subset,
-    function(data, nm, col) set_value(data, nm, fn(col, ...))
-  )
+  across_col <- function(data, nm, col) {
+    value <- fn(col, ...)
+
+    if (!is.null(value)) {
+      set_value(data, nm, value)
+    } else {
+      # preserve null here to remove in mutate
+      set_null(data, nm)
+    }
+  }
+
+  purrr::reduce2(names(subset), subset, .init = subset, across_col) -> x
 }
 
 # is quo an across call
