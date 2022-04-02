@@ -63,9 +63,10 @@ module.exports = (env, { mode }) => {
       new MiniCssExtractPlugin({ filename: "[name].css" }),
       new DependenciesPlugin({ filename: "rdeck.yaml", version, exclude: "rdeck.js" }),
       new SourceMapDevToolPlugin({
-        include: mode === "production" ? "rdeck" : null
+        include: mode === "production" ? "rdeck" : undefined
       }),
     ],
+    devtool: false,
     optimization: {
       minimize: mode === "production",
       minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
