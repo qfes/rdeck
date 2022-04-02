@@ -11,12 +11,13 @@ import {
   ScaleQuantize,
   ScaleThreshold,
   scaleThreshold,
+  ScaleSymLog,
+  scaleSymlog,
 } from "d3-scale";
 import type { PickInfo, AccessorFn } from "@deck.gl/core";
 import type { Feature } from "geojson";
 import { Accessor, isAccessor } from "./accessor";
 import { parseColor } from "./color";
-import { scaleSymlog } from "d3";
 
 type ScaleFn = (data: any) => number | Color;
 
@@ -49,8 +50,7 @@ export type AccessorScaleLog<Range> = AccessorScaleBase<Range> & {
 
 export type AccessorScaleSymlog<Range> = AccessorScaleBase<Range> & {
   scale: "symlog";
-  base: number;
-  scaleData: ScaleLogarithmic<Range, Range>;
+  scaleData: ScaleSymLog<Range, Range>;
 };
 
 export type AccessorScaleThreshold<Range> = AccessorScaleBase<Range> & {

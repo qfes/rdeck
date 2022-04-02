@@ -16,4 +16,8 @@ declare module "d3-scale" {
     unknown(): Range;
     unknown(value: Range): this;
   }
+
+  export interface ScaleSymLog<Range, Output> {
+    interpolate: any;
+  }
 }
