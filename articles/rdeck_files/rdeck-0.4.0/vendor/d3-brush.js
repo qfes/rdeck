@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrdeck=self.webpackChunkrdeck||[]).push([[354],{684:(n,e,s)=>{s(14);const{abs:t,max:u,min:c}=Math;function r(n){return[+n[0],+n[1]]}function a(n){return[r(n[0]),r(n[1])]}["w","e"].map(p),["n","s"].map(p),["n","w","e","s","nw","ne","sw","se"].map(p);function p(n){return{type:n}}}}]);

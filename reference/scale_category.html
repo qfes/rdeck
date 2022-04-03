@@ -67,6 +67,7 @@ unmapped_color (or unmapped_value)."><meta property="og:image" content="https://
   levels <span class="op">=</span> <span class="cn">NULL</span>,
   unmapped_tick <span class="op">=</span> <span class="cn">NULL</span>,
   tick_format <span class="op">=</span> <span class="cn">NULL</span>,
+  col_label <span class="op">=</span> <span class="st">"{.col}"</span>,
   legend <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
 
@@ -75,6 +76,7 @@ unmapped_color (or unmapped_value)."><meta property="og:image" content="https://
   range <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span>,
   unmapped_value <span class="op">=</span> <span class="fl">0</span>,
   levels <span class="op">=</span> <span class="cn">NULL</span>,
+  col_label <span class="op">=</span> <span class="st">"{.col}"</span>,
   legend <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -102,6 +104,11 @@ populated from input data. The order of the levels is determined by <code><a hre
 <code>legend == TRUE</code>, the unmapped category will appear at the bottom of the legend.</p></dd>
 <dt>tick_format</dt>
 <dd><p>&lt;<code>function</code>&gt; A label function taking a vector of ticks returning formatted ticks.</p></dd>
+<dt>col_label</dt>
+<dd><p>&lt;<code>string</code> | <code>function</code>&gt; A template string or a label function for customising the
+column name in the legend.</p><ul><li><p>if <code>col_label</code> is a string, <code>{.col}</code> may be used to represent the <code>col</code> name</p></li>
+<li><p>if <code>col_label</code> is a function, the function must take a single argument: the <code>col</code> name</p></li>
+</ul></dd>
 <dt>legend</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Indicate whether the legend should be displayed for this scale.</p></dd>
 <dt>range</dt>
