@@ -17,7 +17,8 @@ compile.scale_color <- function(object, ...) {
     domain = get_breaks(limits$range),
     palette = get_palette(ramp_n(length(domain))),
     ticks = get_ticks(limits$range) %>%
-      tick_format()
+      tick_format(),
+    scale_by = col_label(col)
   )
 
   select(scale, where(is.atomic))
@@ -31,7 +32,8 @@ compile.scale_numeric <- function(object, ...) {
   scale <- mutate(
     unclass(object),
     domain = get_breaks(limits$range),
-    range = get_range(ramp_n(length(domain)))
+    range = get_range(ramp_n(length(domain))),
+    scale_by = col_label(col)
   )
 
   select(scale, where(is.atomic))
@@ -48,7 +50,8 @@ compile.scale_color_threshold <- function(object, ...) {
       drop_ends(),
     palette = get_palette(ramp_n(length(domain) + 1)),
     ticks = get_ticks(limits$range) %>%
-      tick_format()
+      tick_format(),
+    scale_by = col_label(col)
   )
 
   tidyassert::warn_if(length(scale$domain) == 0, "domain is empty, scale will be constant")
@@ -63,7 +66,8 @@ compile.scale_numeric_threshold <- function(object, ...) {
     # d3 threshold domain excludes limits
     domain = get_breaks(limits$range) %>%
       drop_ends(),
-    range = get_range(ramp_n(length(domain) + 1))
+    range = get_range(ramp_n(length(domain) + 1)),
+    scale_by = col_label(col)
   )
 
   tidyassert::warn_if(length(scale$domain) == 0, "domain is empty, scale will be constant")
@@ -109,7 +113,8 @@ compile.scale_color_category <- function(object, ...) {
     unclass(object),
     domain = levels$range,
     palette = get_palette(domain),
-    ticks = tick_format(domain)
+    ticks = tick_format(domain),
+    scale_by = col_label(col)
   )
 
   select(scale, where(is.atomic))
@@ -123,7 +128,8 @@ compile.scale_numeric_category <- function(object, ...) {
   scale <- mutate(
     unclass(object),
     domain = levels$range,
-    range = get_range(domain)
+    range = get_range(domain),
+    scale_by = col_label(col)
   )
 
   select(scale, where(is.atomic))
@@ -140,7 +146,8 @@ compile.scale_color_quantize <- function(object, ...) {
     domain = limits$range,
     palette = get_palette(get_breaks(0:1)),
     ticks = get_ticks(domain) %>%
-      tick_format()
+      tick_format(),
+    scale_by = col_label(col)
   )
 
   select(scale, where(is.atomic))
@@ -154,7 +161,8 @@ compile.scale_numeric_quantize <- function(object, ...) {
   scale <- mutate(
     unclass(object),
     domain = limits$range,
-    range = get_range(get_breaks(0:1))
+    range = get_range(get_breaks(0:1)),
+    scale_by = col_label(col)
   )
 
   select(scale, where(is.atomic))

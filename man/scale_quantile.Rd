@@ -12,6 +12,7 @@ scale_color_quantile(
   probs = seq.int(0, 1, 0.25),
   data = NULL,
   tick_format = format_number,
+  col_label = "{.col}",
   legend = TRUE
 )
 
@@ -21,6 +22,7 @@ scale_quantile(
   na_value = 0,
   probs = seq.int(0, 1, 0.25),
   data = NULL,
+  col_label = "{.col}",
   legend = TRUE
 )
 }
@@ -46,6 +48,13 @@ A \code{\link[scales:colour_ramp]{scales::colour_ramp()}} interpolator is create
 taken from the layer data.}
 
 \item{tick_format}{<\code{function}> A label function taking a vector of ticks returning formatted ticks.}
+
+\item{col_label}{<\code{string} | \code{function}> A template string or a label function for customising the
+column name in the legend.
+\itemize{
+\item if \code{col_label} is a string, \code{{.col}} may be used to represent the \code{col} name
+\item if \code{col_label} is a function, the function must take a single argument: the \code{col} name
+}}
 
 \item{legend}{<\code{boolean}> Indicate whether the legend should be displayed for this scale.}
 

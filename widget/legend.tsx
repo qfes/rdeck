@@ -58,7 +58,7 @@ function Scale(scale: AccessorScale<number | Color>) {
       <div className={styles.scaleName}>{scaleName}</div>
       <span className={styles.scaleBy}>by </span>
       <span className={styles.fieldName} title={scale.col}>
-        {scale.col}
+        {scale.scaleBy ?? scale.col}
       </span>
       {isColor && isContinuous && <Continuous {...(scale as AccessorScaleContinuous<Color>)} />}
       {isColor && isDiscrete && <Discrete {...(scale as AccessorScaleDiscrete<Color>)} />}

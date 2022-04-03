@@ -29,6 +29,7 @@ type AccessorScaleBase<Range> = Accessor & {
   unknown: Range;
   legend: boolean;
   ticks: string[];
+  scaleBy?: string;
 };
 
 export type AccessorScaleLinear<Range> = AccessorScaleBase<Range> & {

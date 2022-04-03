@@ -28,6 +28,11 @@
 #' @param n_ticks <`number`> The number of ticks to display on the legend. Must be >= 2.
 #' The legend size will grow and shrink depending on this value.
 #'
+#' @param col_label <`string` | `function`> A template string or a label function for customising the
+#' column name in the legend.
+#' - if `col_label` is a string, `{.col}` may be used to represent the `col` name
+#' - if `col_label` is a function, the function must take a single argument: the `col` name
+#'
 #' @param tick_format <`function`> A label function taking a vector of ticks returning formatted ticks.
 #' @param legend <`boolean`> Indicate whether the legend should be displayed for this scale.
 NULL
@@ -85,7 +90,8 @@ is_category_scale <- function(object) is_scale(object) && object$scale_type == "
 #' @export
 scale_color_linear <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
                                limits = NULL, breaks = NULL,
-                               n_ticks = NULL, tick_format = format_number, legend = TRUE) {
+                               n_ticks = NULL, tick_format = format_number,
+                               col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_color(
@@ -98,6 +104,7 @@ scale_color_linear <- function(col, palette = scales::viridis_pal(), na_color = 
     get_breaks = as_breaks(breaks) %||% breaks_linear(10),
     get_ticks = breaks_linear(n_ticks %||% 6),
     tick_format = tick_format,
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -106,7 +113,8 @@ scale_color_linear <- function(col, palette = scales::viridis_pal(), na_color = 
 #' @name scale_linear
 #' @export
 scale_linear <- function(col, range = 0:1, na_value = 0,
-                         limits = NULL, breaks = NULL, legend = TRUE) {
+                         limits = NULL, breaks = NULL,
+                         col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_numeric(
@@ -117,6 +125,7 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
     na_value = na_value,
     limits = continuous_range(limits),
     get_breaks = as_breaks(breaks) %||% breaks_linear(length(range)),
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -142,7 +151,8 @@ scale_linear <- function(col, range = 0:1, na_value = 0,
 #' @export
 scale_color_power <- function(col, palette = scales::viridis_pal(), na_color = "#000000", exponent = 0.5,
                               limits = NULL, breaks = NULL,
-                              n_ticks = 6, tick_format = format_number, legend = TRUE) {
+                              n_ticks = 6, tick_format = format_number,
+                              col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_color(
@@ -156,6 +166,7 @@ scale_color_power <- function(col, palette = scales::viridis_pal(), na_color = "
     get_breaks = as_breaks(breaks) %||% breaks_power(10, exponent),
     get_ticks = breaks_power(n_ticks %||% 6, exponent),
     tick_format = tick_format,
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -163,7 +174,8 @@ scale_color_power <- function(col, palette = scales::viridis_pal(), na_color = "
 #' @name scale_power
 #' @export
 scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
-                        limits = NULL, breaks = NULL, legend = TRUE) {
+                        limits = NULL, breaks = NULL,
+                        col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_numeric(
@@ -175,6 +187,7 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
     na_value = na_value,
     limits = continuous_range(limits),
     get_breaks = as_breaks(breaks) %||% breaks_power(length(range), exponent),
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -198,7 +211,8 @@ scale_power <- function(col, range = 0:1, na_value = 0, exponent = 0.5,
 #' @export
 scale_color_log <- function(col, palette = scales::viridis_pal(), na_color = "#000000", base = 10,
                             limits = NULL, breaks = NULL,
-                            n_ticks = NULL, tick_format = format_number, legend = TRUE) {
+                            n_ticks = NULL, tick_format = format_number,
+                            col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_color(
@@ -212,6 +226,7 @@ scale_color_log <- function(col, palette = scales::viridis_pal(), na_color = "#0
     get_breaks = as_breaks(breaks) %||% breaks_log(10, base),
     get_ticks = breaks_log(n_ticks %||% 6, base),
     tick_format = tick_format,
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -219,7 +234,8 @@ scale_color_log <- function(col, palette = scales::viridis_pal(), na_color = "#0
 #' @name scale_log
 #' @export
 scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
-                      limits = NULL, breaks = NULL, legend = TRUE) {
+                      limits = NULL, breaks = NULL,
+                      col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_numeric(
@@ -231,6 +247,7 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
     na_value = na_value,
     limits = continuous_range(limits),
     get_breaks = as_breaks(breaks) %||% breaks_log(length(range), base),
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -250,7 +267,8 @@ scale_log <- function(col, range = 0:1, na_value = 0, base = 10,
 #' @export
 scale_color_symlog <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
                                limits = NULL, breaks = NULL,
-                               n_ticks = NULL, tick_format = format_number, legend = TRUE) {
+                               n_ticks = NULL, tick_format = format_number,
+                               col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_color(
@@ -263,6 +281,7 @@ scale_color_symlog <- function(col, palette = scales::viridis_pal(), na_color = 
     get_breaks = as_breaks(breaks) %||% breaks_symlog(10),
     get_ticks = breaks_symlog(n_ticks %||% 6),
     tick_format = tick_format,
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -270,7 +289,8 @@ scale_color_symlog <- function(col, palette = scales::viridis_pal(), na_color = 
 #' @name scale_symlog
 #' @export
 scale_symlog <- function(col, range = 0:1, na_value = 0,
-                         limits = NULL, breaks = NULL, legend = TRUE) {
+                         limits = NULL, breaks = NULL,
+                         col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_numeric(
@@ -281,6 +301,7 @@ scale_symlog <- function(col, range = 0:1, na_value = 0,
     na_value = na_value,
     limits = continuous_range(limits),
     get_breaks = as_breaks(breaks) %||% breaks_symlog(length(range)),
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -314,7 +335,8 @@ scale_symlog <- function(col, range = 0:1, na_value = 0,
 #' @export
 scale_color_threshold <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
                                   limits = NULL, breaks = 0.5,
-                                  tick_format = format_number, legend = TRUE) {
+                                  tick_format = format_number,
+                                  col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
   tidyassert::assert_not_null(breaks)
 
@@ -327,6 +349,7 @@ scale_color_threshold <- function(col, palette = scales::viridis_pal(), na_color
     get_breaks = as_breaks(breaks),
     get_ticks = as_breaks(breaks),
     tick_format = tick_format,
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -335,7 +358,8 @@ scale_color_threshold <- function(col, palette = scales::viridis_pal(), na_color
 #' @export
 scale_threshold <- function(col, range = 0:1, na_value = 0,
                             limits = NULL, breaks = 0.5,
-                            tick_format = format_number, legend = TRUE) {
+                            tick_format = format_number,
+                            col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
   tidyassert::assert_not_null(breaks)
 
@@ -346,6 +370,7 @@ scale_threshold <- function(col, range = 0:1, na_value = 0,
     na_value = na_value,
     limits = continuous_range(limits),
     get_breaks = as_breaks(breaks),
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -377,7 +402,8 @@ scale_threshold <- function(col, range = 0:1, na_value = 0,
 #' @export
 scale_color_quantile <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
                                  probs = seq.int(0, 1, 0.25), data = NULL,
-                                 tick_format = format_number, legend = TRUE) {
+                                 tick_format = format_number,
+                                 col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_color(
@@ -389,6 +415,7 @@ scale_color_quantile <- function(col, palette = scales::viridis_pal(), na_color 
     get_breaks = quantile_breaks(probs),
     get_ticks = quantile_breaks(probs),
     tick_format = tick_format,
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -398,7 +425,7 @@ scale_color_quantile <- function(col, palette = scales::viridis_pal(), na_color 
 #' @export
 scale_quantile <- function(col, range = 0:1, na_value = 0,
                            probs = seq.int(0, 1, 0.25), data = NULL,
-                           legend = TRUE) {
+                           col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
 
   scale_numeric(
@@ -408,6 +435,8 @@ scale_quantile <- function(col, range = 0:1, na_value = 0,
     na_value = na_value,
     data = continuous_identity_range(data),
     get_breaks = quantile_breaks(probs),
+    col_label = col_label,
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -432,8 +461,8 @@ scale_quantile <- function(col, range = 0:1, na_value = 0,
 #' @family scales
 #' @export
 scale_color_category <- function(col, palette = scales::brewer_pal("div"), unmapped_color = "#000000",
-                                 levels = NULL, unmapped_tick = NULL,
-                                 tick_format = NULL, legend = TRUE) {
+                                 levels = NULL, unmapped_tick = NULL, tick_format = NULL,
+                                 col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
   tidyassert::assert(is_rgba_color(unmapped_color))
   tidyassert::assert(is.null(unmapped_tick) || rlang::is_string(unmapped_tick))
@@ -446,6 +475,7 @@ scale_color_category <- function(col, palette = scales::brewer_pal("div"), unmap
     unmapped_color = unmapped_color,
     levels = discrete_range(levels),
     tick_format = tick_format %||% function(x) x,
+    col_label = as_labeller(col_label),
     legend = legend
   )
 
@@ -455,7 +485,8 @@ scale_color_category <- function(col, palette = scales::brewer_pal("div"), unmap
 #' @name scale_category
 #' @param unmapped_value <`number`> The value representing unmapped levels.
 #' @export
-scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, legend = TRUE) {
+scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL,
+col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
   tidyassert::assert_is_scalar_numeric(unmapped_value)
 
@@ -465,6 +496,7 @@ scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, 
     get_range = number_categories(range),
     unmapped_value = unmapped_value,
     levels = discrete_range(levels),
+    col_label = as_labeller(col_label),
     legend = legend
   )
 
@@ -487,7 +519,8 @@ scale_category <- function(col, range = 0:1, unmapped_value = 0, levels = NULL, 
 #' @export
 scale_color_quantize <- function(col, palette = scales::viridis_pal(), na_color = "#000000",
                                  limits = NULL, n_breaks = 6,
-                                 tick_format = format_number, legend = TRUE) {
+                                 tick_format = format_number,
+                                 col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
   tidyassert::assert_is_scalar_integerish(n_breaks)
 
@@ -500,13 +533,15 @@ scale_color_quantize <- function(col, palette = scales::viridis_pal(), na_color 
     get_breaks = breaks_linear(n_breaks),
     get_ticks = breaks_linear(n_breaks),
     tick_format = tick_format,
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
 
 #' @name scale_quantize
 #' @export
-scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, n_breaks = 6, legend = TRUE) {
+scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, n_breaks = 6,
+col_label = "{.col}", legend = TRUE) {
   rlang::check_required(col)
   tidyassert::assert_is_scalar_integerish(n_breaks)
 
@@ -517,6 +552,7 @@ scale_quantize <- function(col, range = 0:1, na_value = 0, limits = NULL, n_brea
     na_value = na_value,
     limits = continuous_range(limits),
     get_breaks = breaks_linear(n_breaks),
+    col_label = as_labeller(col_label),
     legend = legend
   )
 }
@@ -537,4 +573,15 @@ format_number <- function(tick, digits = 2) {
     big.mark = ",",
     drop0trailing = is.integer(tick)
   )
+}
+
+
+as_labeller <- function(col_label) {
+  tidyassert::assert(is.null(col_label) || rlang::is_string(col_label) || is.function(col_label))
+
+  if (is.function(col_label)) {
+    col_label
+  } else {
+    function(col) gsub("{.col}", col, col_label %||% col, fixed = TRUE)
+  }
 }
