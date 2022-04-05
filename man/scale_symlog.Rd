@@ -86,6 +86,7 @@ Symlog scales can be useful in transforming positively skewed data.
 \seealso{
 Other scales: 
 \code{\link{scale_category}()},
+\code{\link{scale_identity}()},
 \code{\link{scale_linear}()},
 \code{\link{scale_log}()},
 \code{\link{scale_power}()},

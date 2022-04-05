@@ -72,6 +72,7 @@ or a discrete \code{\link[=scale_linear]{scale_linear()}}.
 \seealso{
 Other scales: 
 \code{\link{scale_category}()},
+\code{\link{scale_identity}()},
 \code{\link{scale_linear}()},
 \code{\link{scale_log}()},
 \code{\link{scale_power}()},

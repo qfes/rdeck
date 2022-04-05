@@ -9,10 +9,12 @@ import {
   ScalePower,
   scaleQuantize,
   ScaleQuantize,
-  ScaleThreshold,
-  scaleThreshold,
   ScaleSymLog,
   scaleSymlog,
+  ScaleThreshold,
+  scaleThreshold,
+  scaleIdentity,
+  ScaleIdentity,
 } from "d3-scale";
 import type { PickInfo, AccessorFn } from "@deck.gl/core";
 import type { Feature } from "geojson";
@@ -54,6 +56,11 @@ export type AccessorScaleSymlog<Range> = AccessorScaleBase<Range> & {
   scaleData: ScaleSymLog<Range, Range>;
 };
 
+export type AccessorScaleIdentity<Range> = AccessorScaleBase<Range> & {
+  scale: "identity";
+  scaleData: ScaleIdentity<Range>;
+};
+
 export type AccessorScaleThreshold<Range> = AccessorScaleBase<Range> & {
   scale: "threshold";
   scaleData: ScaleThreshold<number, Range>;
@@ -89,7 +96,8 @@ export type AccessorScaleDiscrete<Range> =
 export type AccessorScale<Range> =
   | AccessorScaleContinuous<Range>
   | AccessorScaleDiscrete<Range>
-  | AccessorScaleCategory<Range>;
+  | AccessorScaleCategory<Range>
+  | AccessorScaleIdentity<Range>;
 
 export function isAccessorScale(obj: any): obj is AccessorScale<number | Color> {
   return isAccessor(obj) && "scale" in obj;
@@ -161,6 +169,8 @@ function scaleFn(accessor: AccessorScale<any>) {
         .range(accessor.range)
         .unknown(accessor.unknown)
         .clamp(true);
+    case "identity":
+      return scaleIdentity<T>().unknown(accessor.unknown);
     case "threshold":
     case "quantile":
       return scaleThreshold<number, T>()

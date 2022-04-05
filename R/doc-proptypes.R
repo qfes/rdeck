@@ -101,6 +101,7 @@ NULL
 #' - [`scale_power`]
 #' - [`scale_log`]
 #' - [`scale_symlog`]
+#' - [`scale_identity`]
 #' - [`scale_threshold`]
 #' - [`scale_quantile`]
 #' - [`scale_category`]

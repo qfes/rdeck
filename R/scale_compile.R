@@ -42,6 +42,17 @@ compile.scale_numeric <- function(object, ...) {
 
 #' @autoglobal
 #' @export
+compile.scale_numeric_identity <- function(object, ...) {
+  scale <- mutate(
+    unclass(object),
+    scale_by = col_label(col)
+  )
+
+  select(scale, where(is.atomic))
+}
+
+#' @autoglobal
+#' @export
 compile.scale_color_threshold <- function(object, ...) {
   scale <- mutate(
     unclass(object),

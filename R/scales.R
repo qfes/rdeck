@@ -307,6 +307,37 @@ scale_symlog <- function(col, range = 0:1, na_value = 0,
 }
 
 
+#' Scale identity
+#'
+#' Creates an identity scale; a special case of a linear scale, where input is
+#' mapped to itself (input limits = output range). An identity scale is useful
+#' in cases where input data is already expressed in a visual representation
+#' (e.g. a line width) and should be used as-is.
+#'
+#' @note
+#' Identity scales are _almost_ equivalent to an [`accessor`] to a numeric column;
+#' differences are:
+#' - `NA` is replaced with `na_value`
+#' - May render a _numeric_ legend
+#'
+#' @name scale_identity
+#' @inheritParams scale_props
+#' @family scales
+#' @export
+scale_identity <- function(col, na_value = 0, col_label = "{.col}", legend = TRUE) {
+  rlang::check_required(col)
+
+  scale_numeric(
+    "identity",
+    trans = scales::identity_trans(),
+    col = enstring({{ col }}),
+    na_value = na_value,
+    col_label = as_labeller(col_label),
+    legend = legend
+  )
+}
+
+
 #' Scale threshold
 #'
 #' @description

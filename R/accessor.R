@@ -56,7 +56,7 @@ accessor.scale <- function(expr, data = NULL, data_type = NULL) {
     )
 
     # populate limits / levels / data if not given
-    if (is.null(scale_limits$range)) {
+    if (!is.null(scale_limits) && is.null(scale_limits$range)) {
       scale_limits$train(data[[scale$col]])
     }
 

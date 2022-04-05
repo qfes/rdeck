@@ -73,6 +73,7 @@ Creates a categorical scale. Categorical scales map input values defined in the 
 }
 \seealso{
 Other scales: 
+\code{\link{scale_identity}()},
 \code{\link{scale_linear}()},
 \code{\link{scale_log}()},
 \code{\link{scale_power}()},
