@@ -60,7 +60,12 @@ in the browser.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">set_layer_visibility</span><span class="op">(</span><span class="va">rdeck</span>, <span class="va">id</span>, visible <span class="op">=</span> <span class="cn">NULL</span>, visibility_toggle <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">set_layer_visibility</span><span class="op">(</span>
+  <span class="va">rdeck</span>,
+  <span class="va">id</span>,
+  visible <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>,
+  visibility_toggle <span class="op">=</span> <span class="fu"><a href="cur_value.html">cur_value</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
