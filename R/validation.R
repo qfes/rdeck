@@ -77,8 +77,17 @@ validate_geometry_accessor <- function(layer, name, sfc_type) {
   if (inherits(data, "data.frame") && nrow(data) != 0) {
     accessor_data <- data[[tidyselect::eval_select(prop$col, data)]]
     tidyassert::assert(
-      inherits(accessor_data, sfc_type) && sf::st_crs(accessor_data) == sf::st_crs(4326),
-      c("x" = "Column {.col {col}} is invalid for accessor {.arg {name}}; it must be a {.cls {type}} vector, with crs 4326"),
+      inherits(accessor_data, sfc_type) && is_wgs84(accessor_data),
+      c(
+        "x" = "Column {.col {col}} is invalid for accessor {.arg {name}}",
+        "x" = "A {.emph WGS84} {.cls {type}} vector is required"
+      ),
+      call = rlang::caller_call(),
+      # prettier assertion expression
+      print_expr = substitute(
+        inherits(data$col, sfc_type) && is_wgs84(data$col),
+        list(col = prop$col, sfc_type = sfc_type)
+      ),
       name = name,
       col = prop$col,
       type = sfc_type

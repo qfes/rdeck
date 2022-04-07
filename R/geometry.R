@@ -38,6 +38,14 @@ sf_column <- function() structure(list(), class = "sf_column")
 # is object a simple features column
 is_sfc <- function(object) inherits(object, "sfc")
 
+# is crs = epsg:4326
+is_wgs84 <- function(object) {
+  crs <- sf::st_crs(object)
+  wgs84 <- sf::st_crs(4326)
+
+  crs == wgs84 || !is.na(crs$input) && crs$input == wgs84$input
+}
+
 
 get_coordinates <- function(sfc) {
   UseMethod("get_coordinates")
