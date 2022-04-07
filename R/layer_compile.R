@@ -6,6 +6,8 @@ compile.Layer <- function(object, ...) {
   )
 }
 
+compile.layer <- compile.Layer
+
 #' @autoglobal
 #' @export
 compile.BitmapLayer <- function(object, ...) {

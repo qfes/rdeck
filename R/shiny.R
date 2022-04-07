@@ -197,7 +197,7 @@ set_layer_visibility <- function(rdeck, id, visible = NULL, visibility_toggle = 
     validate_visibility_toggle(layer)
   }
 
-  send_msg(rdeck, "layer", json_stringify(layer))
+  send_msg(rdeck, "layer", as_json(layer))
   rdeck
 }
 
