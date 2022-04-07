@@ -4,7 +4,12 @@
 \alias{set_layer_visibility}
 \title{Set layer visibility}
 \usage{
-set_layer_visibility(rdeck, id, visible = NULL, visibility_toggle = NULL)
+set_layer_visibility(
+  rdeck,
+  id,
+  visible = cur_value(),
+  visibility_toggle = cur_value()
+)
 }
 \arguments{
 \item{rdeck}{<\code{rdeck_proxy}> the rdeck proxy object}

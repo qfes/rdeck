@@ -182,22 +182,26 @@ update_layer.rdeck_proxy <- add_layer.rdeck_proxy
 #' @inheritParams layer_props
 #'
 #' @export
-set_layer_visibility <- function(rdeck, id, visible = NULL, visibility_toggle = NULL) {
+set_layer_visibility <- function(rdeck, id, visible = cur_value(), visibility_toggle = cur_value()) {
   tidyassert::assert_inherits(rdeck, "rdeck_proxy")
-  props <- list(id = id, visible = visible, visibility_toggle = visibility_toggle)
-
-  layer <- structure(
-    select(props, -where(is.null)),
-    class = "layer"
+  layer <- new_layer(
+    NULL,
+    id = id,
+    visible = visible,
+    visibility_toggle = visibility_toggle
   )
 
   validate_id(layer)
   validate_visible(layer)
-  if (!is.null(visibility_toggle)) {
-    validate_visibility_toggle(layer)
-  }
+  validate_visibility_toggle(layer)
 
-  send_msg(rdeck, "layer", as_json(layer))
+  json <- json_stringify(
+    select(layer, -where(is.null), -where(is_cur_value)),
+    camel_case = TRUE,
+    auto_unbox = TRUE
+  )
+
+  send_msg(rdeck, "layer", json)
   rdeck
 }
 
