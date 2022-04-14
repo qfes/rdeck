@@ -4,6 +4,7 @@ dependencies:
     src: htmlwidgets
     stylesheet:
       - rdeck.css
+      - vendor/mapbox-gl.css
     script:
       - vendor/deck.gl.js
       - vendor/loaders.gl.js
@@ -24,6 +25,7 @@ dependencies:
       - vendor/react.js
       - vendor/babel.js
       - vendor/prop-types.js
+      - vendor/mapbox-gl.js
       - vendor/d3-color.js
       - vendor/scheduler.js
       - vendor/react-dom.js
@@ -31,7 +33,6 @@ dependencies:
       - vendor/internmap.js
       - vendor/pbf.js
       - vendor/object-assign.js
-      - vendor/mapbox-gl.js
       - vendor/long.js
       - vendor/ktx-parse.js
       - vendor/ieee754.js
