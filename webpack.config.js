@@ -41,6 +41,9 @@ module.exports = (env, { mode }) => {
               options: {
                 importLoaders: 1,
                 modules: {
+                  mode(resourcePath) {
+                    return /[\\/]node_modules[\\/]/.test(resourcePath) ? "global" : "local";
+                  },
                   exportGlobals: true,
                   exportLocalsConvention: "camelCase",
                 },
@@ -63,7 +66,7 @@ module.exports = (env, { mode }) => {
       new MiniCssExtractPlugin({ filename: "[name].css" }),
       new DependenciesPlugin({ filename: "rdeck.yaml", version, exclude: "rdeck.js" }),
       new SourceMapDevToolPlugin({
-        include: mode === "production" ? "rdeck" : undefined
+        include: mode === "production" ? "rdeck" : undefined,
       }),
     ],
     devtool: false,
@@ -78,7 +81,8 @@ module.exports = (env, { mode }) => {
           vendors: {
             test: /[\\/]node_modules[\\/]/,
             name(module) {
-              const packageName = module.context.match(/[\\/]node_modules[\\/]([^\\/]+)/)[1];
+              const resource = module.nameForCondition();
+              const packageName = resource.match(/[\\/]node_modules[\\/]([^\\/]+)/)[1];
               return `vendor/${packageName.replace("@", "")}`;
             },
           },

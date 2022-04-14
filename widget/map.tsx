@@ -1,4 +1,6 @@
 import "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { PickInfo, MapView } from "@deck.gl/core";
 import { DeckGL } from "@deck.gl/react";
