@@ -72,15 +72,11 @@
 <div class="row">
   <main id="main" class="col-md-9">
 <div class="page-header">
-<img src="logo.svg" class="logo" alt=""><h1 align="center">
-rdeck 
+<img src="logo.svg" class="logo" alt=""><h1 align="center">rdeck 
 </h1>
 </div>
-<p align="center">
-<a href="https://github.com/visgl/deck.gl" class="external-link">deck.gl</a> widget for R.
-</p>
-<!-- spacer -->
-<p><br><br></p>
+<p align="center"><a href="https://github.com/visgl/deck.gl" class="external-link">deck.gl</a> widget for R.</p>
+<!-- spacer --><p><br><br></p>
 <p><a href="https://anthonynorth.github.io/rdeck"><img src="https://user-images.githubusercontent.com/391385/102683609-fceff080-421d-11eb-9b97-2889c683f03f.png" alt="documentation"></a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -103,8 +99,7 @@ rdeck
 <p>Some notable differences to <a href="https://symbolixau.github.io/mapdeck/articles/mapdeck.html" class="external-link">mapdeck</a>:</p>
 <ul>
 <li>
-<a href="https://github.com/rstudio/rmarkdown" class="external-link">rmarkdown</a> HTML reports made with <a href="https://anthonynorth.github.io/rdeck">rdeck</a> are typically an order of magnitude smaller in file size than <a href="https://symbolixau.github.io/mapdeck/articles/mapdeck.html" class="external-link">mapdeck</a>. Thanks to:
-<ul>
+<a href="https://github.com/rstudio/rmarkdown" class="external-link">rmarkdown</a> HTML reports made with <a href="https://anthonynorth.github.io/rdeck">rdeck</a> are typically an order of magnitude smaller in file size than <a href="https://symbolixau.github.io/mapdeck/articles/mapdeck.html" class="external-link">mapdeck</a>. Thanks to:<ul>
 <li>column-major data storage</li>
 <li>client-side visual attributes scaling</li>
 <li>client-side tooltip formatting</li>
@@ -114,24 +109,17 @@ rdeck
 <li>Tidy evaluation is supported for column specifications.</li>
 <li>Extensive validation of layer properties in R is preferred, rather than throwing errors in the browser.</li>
 <li>
-<a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> style <code>scale_</code> functions that perform common layer data transformations and automatically generate <a href="https://anthonynorth.github.io/rdeck/reference/scale.html#legend">legends</a> with appropriate untransformed tick marks.
-<ul>
-<li>e.g. <code>scale_color_power</code>, <code>scale_color_log</code> etc.</li>
-</ul>
+<a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> style <code>scale_</code> functions that perform common layer data transformations and automatically generate <a href="https://anthonynorth.github.io/rdeck/reference/scale.html#legend">legends</a> with appropriate untransformed tick marks.<ul><li>e.g. <code>scale_color_power</code>, <code>scale_color_log</code> etc.</li></ul>
 </li>
 <li>Automatic creation of formatted <a href="https://anthonynorth.github.io/rdeck/reference/tooltip.html">tooltips</a>
 </li>
 <li>Choice of light or dark themes for tooltips and legends.</li>
-<li>Auto-generated interface from JS source
-<ul>
+<li>Auto-generated interface from JS source<ul>
 <li>every deck.gl layer is supported to some degree</li>
 <li>every layer property is a snake_case version of the camelCase deck.gl counterpart.</li>
 </ul>
 </li>
-<li>Users can orchestrate browser-side map layer updates with Shiny, allowing for extremely performant reactivity.
-<ul>
-<li>Traditional Shiny interactivity using whole datasets is also possible, and is slightly slower than <a href="https://symbolixau.github.io/mapdeck/articles/mapdeck.html" class="external-link">mapdeck</a> at present.</li>
-</ul>
+<li>Users can orchestrate browser-side map layer updates with Shiny, allowing for extremely performant reactivity.<ul><li>Traditional Shiny interactivity using whole datasets is also possible, and is slightly slower than <a href="https://symbolixau.github.io/mapdeck/articles/mapdeck.html" class="external-link">mapdeck</a> at present.</li></ul>
 </li>
 </ul>
 </div>
@@ -196,7 +184,7 @@ rdeck
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer>
