@@ -11,12 +11,20 @@ compile.layer <- compile.Layer
 #' @autoglobal
 #' @export
 compile.BitmapLayer <- function(object, ...) {
-  as_png <- function(image) add_class(png::writePNG(image), "png")
-
   mutate(
     object,
     data = compile_data(data, .env$object),
     image = if (inherits(image, "array")) as_png(image) else image
+  )
+}
+
+#' @autoglobal
+#' @export
+compile.IconLayer <- function(object, ...) {
+  mutate(
+    object,
+    data = compile_data(data, .env$object),
+    icon_atlas = if (inherits(icon_atlas, "array")) as_png(icon_atlas) else icon_atlas
   )
 }
 

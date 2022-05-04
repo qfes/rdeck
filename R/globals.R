@@ -46,6 +46,9 @@ utils::globalVariables(c(
   "data", # <compile.BitmapLayer>
   ".env", # <compile.BitmapLayer>
   "image", # <compile.BitmapLayer>
+  "data", # <compile.IconLayer>
+  ".env", # <compile.IconLayer>
+  "icon_atlas", # <compile.IconLayer>
   "get_breaks", # <>
   "get_palette", # <>
   "get_range", # <>
