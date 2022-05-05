@@ -6,19 +6,19 @@ declare module "deck.gl" {
 }
 
 declare module "@deck.gl/core" {
-  export { DeckProps, PickInfo, InitialViewStateProps } from "@deck.gl/core/lib/deck";
-  import { LayerProps } from "@deck.gl/core/lib/layer";
-  export { LayerProps };
-
   import { DeckProps } from "@deck.gl/core/lib/deck";
-  type deckProps = "id" | "width" | "height" | "controller" | "viewState";
+  import { LayerProps } from "@deck.gl/core/lib/layer";
+  export { PickInfo, InitialViewStateProps } from "@deck.gl/core/lib/deck";
+  export { LayerProps, DeckProps };
 
-  export type MapViewProps = Partial<Pick<DeckProps, deckProps>> & {
+  interface MapViewProps
+    extends Partial<Pick<DeckProps, "id" | "width" | "height" | "controller" | "viewState">> {
     x?: string | number;
     y?: string | number;
     repeat?: boolean;
-  };
-  export interface MapView extends React.Component<MapViewProps> {}
+  }
+
+  export interface MapView extends React.Component<React.PropsWithChildren<MapViewProps>> {}
 
   export interface Layer<D, P extends LayerProps<D>> {
     getAttributeManager(): AttributeManager | null;

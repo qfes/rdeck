@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom";
+import { createRoot, Root } from "react-dom/client";
 import type { InitialViewStateProps, PickInfo } from "@deck.gl/core";
 import { App, AppProps, DeckProps } from "./app";
 import type { LayerProps } from "./layer";
@@ -34,9 +34,11 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
   theme: "kepler" | "light" = "kepler";
   layerSelector: boolean = true;
   lazyLoad: boolean = false;
+  #root: Root;
 
   constructor(el: HTMLElement, width: number, height: number) {
     this.#el = el;
+    this.#root = createRoot(el);
     this.#width = width;
     this.#height = height;
     this.onClick = this.onClick.bind(this);
@@ -95,14 +97,13 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     };
     Object.assign(this, _props);
 
-    ReactDOM.render(
+    this.#root.render(
       <App
         {..._props}
         onLayerVisibilityChange={this.setLayerVisibility}
         width={this.#width}
         height={this.#height}
-      />,
-      this.#el
+      />
     );
   }
 

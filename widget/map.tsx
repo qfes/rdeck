@@ -34,6 +34,7 @@ export function Map({ props, layers }: MapProps) {
 
   return (
     <Fragment>
+      {/* @ts-ignore */}
       <DeckGL
         ref={deckgl}
         {...deckProps}
