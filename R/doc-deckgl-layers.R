@@ -497,12 +497,11 @@ NULL
 #' @name mvt_layer
 #' @inherit layer_props
 #' @inherit geojson_layer
-#' @param data <`character`|`tile_json`> A character vector of mapbox vector tile url templates.
-#' Substrings `"{x}"`, `"{y}"`, `"{z}"` will be replaced with a tile's actual index on
-#' request.
-#'
-#' If multiple url templates are supplied, each endpoint must return the same data for the
-#' same tile index.
+#' @param data <`character` | [`tile_json`]> Defines the remote data for the layer. May take any of:
+#' - A [tile_json()] object
+#' - A `string` which is a valid URL to a [tilejson](https://docs.mapbox.com/help/glossary/tilejson)
+#' - A `character` vector of tile url templates, each containing placeholders for tile coordinates: `{z}/{x}/{y}`
+
 #' @param unique_id_property <`string`> Used for highlighting features across tiles. Features
 #' on separate tiles are deemed to be _the same feature_ by the supplied property name. If
 #' no value is supplied, the feature id will be used.

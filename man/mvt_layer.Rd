@@ -219,12 +219,12 @@ not need to be unique, but should be brief. Defaults to the deck.gl class name f
 \item{group_name}{<\code{string}> Defines the group that this layer belongs to. Currently only
 effective on the layer selector, if \code{visibility_toggle = TRUE}.}
 
-\item{data}{<\code{character}|\code{tile_json}> A character vector of mapbox vector tile url templates.
-Substrings \code{"{x}"}, \code{"{y}"}, \code{"{z}"} will be replaced with a tile's actual index on
-request.
-
-If multiple url templates are supplied, each endpoint must return the same data for the
-same tile index.}
+\item{data}{<\code{character} | \code{\link{tile_json}}> Defines the remote data for the layer. May take any of:
+\itemize{
+\item A \code{\link[=tile_json]{tile_json()}} object
+\item A \code{string} which is a valid URL to a \href{https://docs.mapbox.com/help/glossary/tilejson}{tilejson}
+\item A \code{character} vector of tile url templates, each containing placeholders for tile coordinates: \code{{z}/{x}/{y}}
+}}
 
 \item{visible}{<\code{boolean}> Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.
