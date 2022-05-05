@@ -160,6 +160,23 @@ faces up (z).}
 
 \item{size_max_pixels}{<\code{number}> The maximum size in pixels.}
 
+\item{background}{<\code{boolean}> Whether to render background for text labels.}
+
+\item{get_background_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The text background colour,
+if \code{background = TRUE}. Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+
+\item{get_border_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The text background border colour,
+if \code{background = TRUE}. Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+
+\item{get_border_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The text background border width,
+if \code{background = TRUE}. Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+
+\item{background_padding}{<\code{numeric}> The text background padding. Must be an array of 2 or
+4 numbers.}
+
 \item{font_family}{<\code{string}> Specifies a prioritised list of one or more font family names.
 See \href{https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}{font-family}.}
 
@@ -168,6 +185,11 @@ See \href{https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}{font-fam
 
 \item{line_height}{<\code{number}> A unitless number that will be multiplied with \code{get_size}
 to set the line height.}
+
+\item{outline_width}{<\code{number}> The text outline width, relative to font size. Requires
+\code{font_settings$sdf = TRUE}.}
+
+\item{outline_color}{<\code{\link{color}}> The text outline colour. Requires \code{font_settings$sdf = TRUE}.}
 
 \item{font_settings}{<\code{font_settings}> Advanced options for fine tuning the appearance
 and performance of the generated \code{font_atlas}.}
@@ -194,7 +216,7 @@ in units specified by \code{size_units}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{get_angle}{<\code{\link{accessor}} | \code{number}> The rotating angle of each icon in degrees.
+\item{get_angle}{<\code{\link{accessor}} | \code{number}> The rotating angle of each text label in degrees.
 Accepts a single numeric value, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
@@ -206,7 +228,9 @@ anchor. May be a single value, or a
 label alignment baseline. May be a single value, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column.}
 
-\item{get_pixel_offset}{<\code{\link{accessor}} | \code{number}>}
+\item{get_pixel_offset}{<\code{\link{accessor}} | \code{number}> The pixel offset for each object.
+Accepts a single length-2 \code{numeric} vector, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} list column.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:
@@ -224,9 +248,6 @@ dot density on light maps.
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
 \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
-
-\item{background_color}{<\code{\link{color}}> The colour to use for the text background. The alpha
-channel is ignored. The alpha of the background matches the opacity of each object.}
 }
 \description{
 Text Layer

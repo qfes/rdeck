@@ -181,6 +181,8 @@ Accepts a single numeric value, a numeric scale, or a
 
 \item{material}{<\code{boolean}>}
 
+\item{get_quadkey}{<\code{accessor}> The column containing the quadkey identifier.}
+
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:
 \itemize{

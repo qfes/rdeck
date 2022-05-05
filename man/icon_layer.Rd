@@ -124,9 +124,13 @@ highlighted object. If a single colour value is supplied, that colour will be us
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{icon_atlas}{object}
+\item{icon_atlas}{<\code{string}|\code{array}> The image sprite containing raster icons. Must
+be either a string which is interpreted as a URL to an image, or an image bitmap.}
 
-\item{icon_mapping}{object}
+\item{icon_mapping}{<\code{string}|\code{list}> The image sprite index. Must be either a string
+which is interpreted as a URL to a json document, or a named-list of icon descriptors.
+See https://github.com/visgl/deck.gl/blob/master/docs/api-reference/layers/icon-layer.md#iconmapping-objectstring-optional
+for icon descriptor fields.}
 
 \item{size_scale}{<\code{number}> The size multiplier.}
 
@@ -148,13 +152,14 @@ the object.}
 a \code{sfc_MULTIPOINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
-\item{get_icon}{<\code{\link{accessor}}>}
+\item{get_icon}{<\code{\link{accessor}}> The name of the icon for each feature. Icon name must be
+present in the \code{icon_mapping}.}
 
 \item{get_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.
 Accepts a single colour value, a colour scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
-\item{get_size}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The icon size of each text label,
+\item{get_size}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The size of each icon,
 in units specified by \code{size_units}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
@@ -163,7 +168,9 @@ Accepts a single numeric value, a numeric scale, or a
 Accepts a single numeric value, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
-\item{get_pixel_offset}{<\code{\link{accessor}} | \code{number}>}
+\item{get_pixel_offset}{<\code{\link{accessor}} | \code{number}> The pixel offset for each object.
+Accepts a single length-2 \code{numeric} vector, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} list column.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:

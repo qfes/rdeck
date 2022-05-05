@@ -150,10 +150,10 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 
 \item{filled}{<\code{boolean}> If \code{TRUE}, draw the filled area of each point.}
 
-\item{billboard}{<\code{boolean}> If \code{TRUE}, the object always faces the camera;
-if \code{FALSE}, it faces up always faces up (z).}
+\item{billboard}{<\code{boolean}> If \code{TRUE}, circles always face the camera;
+if \code{FALSE} circles face up (z).}
 
-\item{antialiasing}{<\code{boolean}> If \code{TRUE}, objects are rendered with smoothed
+\item{antialiasing}{<\code{boolean}> If \code{TRUE}, circles are rendered with smoothed
 edges.}
 
 \item{get_position}{<\code{\link{accessor}}> The position geometry column, either a \code{sfc_POINT} or

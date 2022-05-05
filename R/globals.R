@@ -54,6 +54,7 @@ utils::globalVariables(c(
   "get_range", # <>
   "get_ticks", # <>
   "tick_format", # <>
+  "col_label", # <>
   "limits", # <compile.scale_color>
   "domain", # <compile.scale_color>
   "limits", # <compile.scale_numeric>

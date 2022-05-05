@@ -153,9 +153,6 @@ dot density on light maps.
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
 \code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
-
-\item{billboard}{<\code{boolean}> If \code{TRUE}, extrude the path in screen space (width always faces)
-the camera; if \code{FALSE}, the width always faces up (z).}
 }
 \description{
 Line Layer

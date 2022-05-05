@@ -219,7 +219,7 @@ not need to be unique, but should be brief. Defaults to the deck.gl class name f
 \item{group_name}{<\code{string}> Defines the group that this layer belongs to. Currently only
 effective on the layer selector, if \code{visibility_toggle = TRUE}.}
 
-\item{data}{<\code{character}> A character vector of mapbox vector tile url templates.
+\item{data}{<\code{character}|\code{tile_json}> A character vector of mapbox vector tile url templates.
 Substrings \code{"{x}"}, \code{"{y}"}, \code{"{z}"} will be replaced with a tile's actual index on
 request.
 
@@ -303,6 +303,12 @@ supplied no throttling occurs (HTTP/2 only).}
 
 \item{point_radius_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of point radius.}
 
+\item{point_antialiasing}{<\code{boolean}> If \code{TRUE}, circles are rendered with smoothed
+edges.}
+
+\item{point_billboard}{<\code{boolean}> If \code{TRUE}, circles always face the camera;
+if \code{FALSE} circles face up (z).}
+
 \item{get_fill_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The fill colour of each object.
 Accepts a single colour value, a colour scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
@@ -321,9 +327,138 @@ specified by \code{radius_units}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
 
+\item{icon_atlas}{<\code{string}|\code{array}> The image sprite containing raster icons. Must
+be either a string which is interpreted as a URL to an image, or an image bitmap.}
+
+\item{icon_mapping}{<\code{string}|\code{list}> The image sprite index. Must be either a string
+which is interpreted as a URL to a json document, or a named-list of icon descriptors.
+See https://github.com/visgl/deck.gl/blob/master/docs/api-reference/layers/icon-layer.md#iconmapping-objectstring-optional
+for icon descriptor fields.}
+
+\item{icon_size_max_pixels}{<\code{number}> The maximum icon size in pixels.}
+
+\item{icon_size_min_pixels}{<\code{number}> The minimum icon size in pixels.}
+
+\item{icon_size_scale}{<\code{number}> The icon size multiplier.}
+
+\item{icon_size_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of the icon size specified by
+\code{get_icon_size}.}
+
+\item{icon_alpha_cutoff}{<\code{number}> Discard icon pixels whose opacity is below this threshold.
+A discarded pixel would create a "hole" in the icon that is not considered part of
+the object.}
+
+\item{icon_billboard}{<\code{boolean}> If \code{TRUE}, the icon always faces the camera, otherwise it
+faces up (z).}
+
+\item{get_icon}{<\code{\link{accessor}}> The name of the icon for each feature. Icon name must be
+present in the \code{icon_mapping}.}
+
+\item{get_icon_angle}{<\code{\link{accessor}} | \code{number}> The rotating angle of each icon in degrees.
+Accepts a single numeric value, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+
+\item{get_icon_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each icon.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+
+\item{get_icon_pixel_offset}{<\code{\link{accessor}} | \code{number}> The pixel offset for each icon.
+Accepts a single length-2 \code{numeric} vector, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} list column.}
+
+\item{get_icon_size}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The size of each icon,
+in units specified by \code{size_units}.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+
+\item{text_size_max_pixels}{<\code{number}> The maximum text label size in pixels.}
+
+\item{text_size_min_pixels}{<\code{number}> The minimum text label size in pixels.}
+
+\item{text_size_scale}{<\code{number}> The text label size multiplier.}
+
+\item{text_size_units}{<\code{"pixels"} | \code{"common"} | \code{"meters"}> The units of the text label
+size, specified by \code{get_text_size}.}
+
+\item{text_background}{<\code{boolean}> Whether to render background for text labels.}
+
+\item{text_background_padding}{<\code{numeric}> The text background padding. Must be an array of 2 or
+4 numbers.}
+
+\item{text_font_family}{<\code{string}> Specifies a prioritised list of one or more font family names.
+See \href{https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}{font-family}.}
+
+\item{text_font_weight}{<\code{"normal"} | \code{"bold"} | \code{100:900}> The font weight. See
+\href{https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight}{font-weight}}
+
+\item{text_line_height}{<\code{number}> A unitless number that will be multiplied with \code{get_size}
+to set the line height.}
+
+\item{text_max_width}{<\code{number}> Used together with \code{text_word_break} for wrapping text. Specifies
+the width limit to break the text into multiple lines.}
+
+\item{text_outline_color}{<\code{\link{color}}> The text outline colour. Requires \code{text_font_settings$sdf = TRUE}.}
+
+\item{text_outline_width}{<\code{number}> The text outline width, relative to font size. Requires
+\code{text_font_settings$sdf = TRUE}.}
+
+\item{text_word_break}{<\code{"break-word"} | \code{"break-all"}> Requires a valid \code{text_max_width}.}
+
+\item{text_billboard}{<\code{boolean}> If \code{TRUE}, the text label always faces the camera, otherwise it
+faces up (z).}
+
+\item{text_font_settings}{<\code{font_settings}> Advanced options for fine tuning the appearance
+and performance of the generated \code{font_atlas}.}
+
+\item{get_text}{<\code{\link{accessor}}> The text value of each text label. Accepts a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column of
+labels.}
+
+\item{get_text_angle}{<\code{\link{accessor}} | \code{number}> The rotating angle of each text label in degrees.
+Accepts a single numeric value, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+
+\item{get_text_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each text label.
+Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+
+\item{get_text_pixel_offset}{<\code{\link{accessor}} | \code{number}> The pixel offset for each text label.
+Accepts a single length-2 \code{numeric} vector, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} list column.}
+
+\item{get_text_size}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The font size of each text label,
+in units specified by \code{text_size_units}.
+Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+
+\item{get_text_anchor}{<\code{\link{accessor}} | \code{"start"} | \code{"middle"} | \code{"end"}> The text label
+anchor. May be a single value, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column.}
+
+\item{get_text_alignment_baseline}{<\code{\link{accessor}} | \code{"top"} | \code{"center"} | \code{"bottom"}> The text
+label alignment baseline. May be a single value, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} character column.}
+
+\item{get_text_background_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The text background colour,
+if \code{text_background = TRUE}. Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+
+\item{get_text_border_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The text background border colour,
+if \code{text_background = TRUE}. Accepts a single colour value, a colour scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
+
+\item{get_text_border_width}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The text background border width,
+if \code{text_background = TRUE}. Accepts a single numeric value, a numeric scale, or a
+\href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+
 \item{line_joint_rounded}{<\code{boolean}>}
 
+\item{line_cap_rounded}{<\code{boolean}> If \code{TRUE}, draw round caps; else draw square caps.}
+
 \item{line_miter_limit}{number}
+
+\item{line_billboard}{<\code{boolean}> If \code{TRUE}, extrude the path in screen space (width always faces)
+the camera; if \code{FALSE}, the width always faces up (z).}
 
 \item{extruded}{<\code{boolean}> If \code{TRUE}, extrude objects along the z-axis; if \code{FALSE}, all
 objects will be flat.}
@@ -359,9 +494,7 @@ no value is supplied, the feature id will be used.}
 corresponding to the supplied value with be highlighted with \code{highlight_color}.}
 
 \item{binary}{<\code{boolean}> Improves rendering performance by removing the tile serialisation
-and deserialisation between worker and main thread.
-
-Caveat: Polygons and multi-polygons with holes will be rendered as solid polygons.}
+and deserialisation between worker and main thread.}
 
 \item{blending_mode}{<\code{"normal"} | \code{"additive"} | \code{"subtractive"}> Sets the blending mode.
 Blending modes:

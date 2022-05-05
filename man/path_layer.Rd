@@ -133,8 +133,8 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{miter_limit}{<\code{number}> The maximum extent of a joint in ratio to the stroke width.
 Only applicable if \code{rounded == FALSE}.}
 
-\item{billboard}{<\code{boolean}> If \code{TRUE}, the object always faces the camera;
-if \code{FALSE}, it faces up always faces up (z).}
+\item{billboard}{<\code{boolean}> If \code{TRUE}, extrude the path in screen space (width always faces)
+the camera; if \code{FALSE}, the width always faces up (z).}
 
 \item{get_path}{<\code{\link{accessor}}> The path geometry column, either a \code{sfc_LINESTRING} or
 a \code{sfc_MULTILINESTRING} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.

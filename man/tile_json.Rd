@@ -31,11 +31,13 @@ Authentication via \code{\link[=mapbox_access_token]{mapbox_access_token()}} occ
 or \code{tileset_id} uses the mapbox scheme (i.e. mapbox://).
 }
 \examples{
+\dontrun{
 tile_json("mapbox.mapbox-streets-v8", "mapbox")
 tile_json("mapbox.mapbox-streets-v8.json", "mapbox")
 tile_json("mapbox://mapbox.mapbox-streets-v8")
 tile_json("mapbox://mapbox.mapbox-streets-v8.json")
 tile_json("https://mytileserver/tileset.json")
 tile_json("tileset.json", "https://mytileserver")
+}
 
 }

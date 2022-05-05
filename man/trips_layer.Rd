@@ -143,8 +143,8 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{miter_limit}{<\code{number}> The maximum extent of a joint in ratio to the stroke width.
 Only applicable if \code{rounded == FALSE}.}
 
-\item{billboard}{<\code{boolean}> If \code{TRUE}, the object always faces the camera;
-if \code{FALSE}, it faces up always faces up (z).}
+\item{billboard}{<\code{boolean}> If \code{TRUE}, extrude the path in screen space (width always faces)
+the camera; if \code{FALSE}, the width always faces up (z).}
 
 \item{get_path}{<\code{\link{accessor}}> The path geometry column, either a \code{sfc_LINESTRING} or
 a \code{sfc_MULTILINESTRING} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
@@ -158,6 +158,8 @@ Accepts a single colour value, a colour scale, or a
 specified by \code{width_scale}.
 Accepts a single numeric value, a numeric scale, or a
 \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of numbers.}
+
+\item{fade_trail}{<\code{boolean}> Whether or not the path fades out.}
 
 \item{trail_length}{<\code{number}> The number of seconds for a path to completely fade out.}
 

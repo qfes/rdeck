@@ -4,6 +4,7 @@
 #' @global get_range
 #' @global get_ticks
 #' @global tick_format
+#' @global col_label
 #' @noRd
 NULL
 

@@ -12,12 +12,14 @@
 #' or `tileset_id` uses the mapbox scheme (i.e. mapbox://).
 #'
 #' @examples
+#' \dontrun{
 #' tile_json("mapbox.mapbox-streets-v8", "mapbox")
 #' tile_json("mapbox.mapbox-streets-v8.json", "mapbox")
 #' tile_json("mapbox://mapbox.mapbox-streets-v8")
 #' tile_json("mapbox://mapbox.mapbox-streets-v8.json")
 #' tile_json("https://mytileserver/tileset.json")
 #' tile_json("tileset.json", "https://mytileserver")
+#' }
 #'
 #' @name tile_json
 #' @param tileset_id <`string`> The tileset_id, may be one of the following

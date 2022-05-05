@@ -12,7 +12,7 @@ NULL
 #' @name bitmap_layer
 #' @inherit layer_props
 #' @param image <`string` | `array`> The image to display. Either a string interpreted as a
-#' URL or Data URL, or an array raster image.
+#' URL or Data URL, or an image bitmap.
 #' @eval deckgl_docs("layers", "bitmap-layer")
 #' @family core-layers
 #' @family layers
@@ -22,15 +22,20 @@ NULL
 #'
 #' @name icon_layer
 #' @inherit layer_props
-#' @param icon_atlas object
-#' @param icon_mapping object
+#' @param icon_atlas <`string`|`array`> The image sprite containing raster icons. Must
+#' be either a string which is interpreted as a URL to an image, or an image bitmap.
+#' @param icon_mapping <`string`|`list`> The image sprite index. Must be either a string
+#' which is interpreted as a URL to a json document, or a named-list of icon descriptors.
+#' See https://github.com/visgl/deck.gl/blob/master/docs/api-reference/layers/icon-layer.md#iconmapping-objectstring-optional
+#' for icon descriptor fields.
 #' @param billboard <`boolean`> If `TRUE`, the icon always faces the camera, otherwise it
 #' faces up (z).
 #' @param alpha_cutoff <`number`> Discard pixels whose opacity is below this threshold.
 #' A discarded pixel would create a "hole" in the icon that is not considered part of
 #' the object.
-#' @param get_icon <[`accessor`]>
-#' @param get_size <[`accessor`] | [`scale`] | `number`> The icon size of each text label,
+#' @param get_icon <[`accessor`]> The name of the icon for each feature. Icon name must be
+#' present in the `icon_mapping`.
+#' @param get_size <[`accessor`] | [`scale`] | `number`> The size of each icon,
 #' in units specified by `size_units`.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
@@ -46,8 +51,6 @@ NULL
 #'
 #' @name line_layer
 #' @inherit layer_props
-#' @param billboard <`boolean`> If `TRUE`, extrude the path in screen space (width always faces)
-#' the camera; if `FALSE`, the width always faces up (z).
 #' @eval deckgl_docs("layers", "line-layer")
 #' @family core-layers
 #' @family layers
@@ -72,6 +75,10 @@ NULL
 #' @param radius_scale <`number`> The radius multiplier for all points.
 #' @param radius_min_pixels <`number`> The minimum radius in pixels.
 #' @param radius_max_pixels <`number`> The maximum radius in pixels.
+#' @param billboard <`boolean`> If `TRUE`, circles always face the camera;
+#' if `FALSE` circles face up (z).
+#' @param antialiasing <`boolean`> If `TRUE`, circles are rendered with smoothed
+#' edges.
 #' @eval deckgl_docs("layers", "scatterplot-layer")
 #' @family core-layers
 #' @family layers
@@ -102,6 +109,8 @@ NULL
 #'
 #' @name path_layer
 #' @inherit layer_props
+#' @param billboard <`boolean`> If `TRUE`, extrude the path in screen space (width always faces)
+#' the camera; if `FALSE`, the width always faces up (z).
 #' @eval deckgl_docs("layers", "path-layer")
 #' @family core-layers
 #' @family layers
@@ -128,10 +137,97 @@ NULL
 #' GeoJson Layer
 #'
 #' @name geojson_layer
-#' @inheritParams layer_props
+#' @inherit layer_props
+#' @inherit icon_layer
+#' @inherit text_layer
 #' @param data <[`sf`][sf::sf] | `string`> The layer's data. Data frames and
 #' sf objects will contain all columns that are referenced by the layer's accessors. Strings
 #' will be interpreted as a URL to geojson data that will be retrieved dynamically in the browser.
+#'
+#' @param line_billboard <`boolean`> If `TRUE`, extrude the path in screen space (width always faces)
+#' the camera; if `FALSE`, the width always faces up (z).
+#' @param line_cap_rounded <`boolean`> If `TRUE`, draw round caps; else draw square caps.
+#' @param line_joint_rounded <`boolean`> If `TRUE`, draw round joints; else draw square joints.
+#'
+#' @param point_antialiasing <`boolean`> If `TRUE`, circles are rendered with smoothed
+#' edges.
+#' @param point_billboard <`boolean`> If `TRUE`, circles always face the camera;
+#' if `FALSE` circles face up (z).
+#'
+#' @param icon_size_scale <`number`> The icon size multiplier.
+#' @param icon_size_units <`"pixels"` | `"common"` | `"meters"`> The units of the icon size specified by
+#' `get_icon_size`.
+#' @param icon_size_min_pixels <`number`> The minimum icon size in pixels.
+#' @param icon_size_max_pixels <`number`> The maximum icon size in pixels.
+#' @param icon_billboard <`boolean`> If `TRUE`, the icon always faces the camera, otherwise it
+#' faces up (z).
+#' @param icon_alpha_cutoff <`number`> Discard icon pixels whose opacity is below this threshold.
+#' A discarded pixel would create a "hole" in the icon that is not considered part of
+#' the object.
+#' @param get_icon_size <[`accessor`] | [`scale`] | `number`> The size of each icon,
+#' in units specified by `size_units`.
+#' Accepts a single numeric value, a numeric scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
+#' @param get_icon_color <[`accessor`] | [`scale`] | [`color`]> The colour of each icon.
+#' Accepts a single colour value, a colour scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
+#' @param get_icon_angle <[`accessor`] | `number`> The rotating angle of each icon in degrees.
+#' Accepts a single numeric value, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
+#' @param get_icon_pixel_offset <[`accessor`] | `number`> The pixel offset for each icon.
+#' Accepts a single length-2 `numeric` vector, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) list column.
+#'
+#' @param text_size_scale <`number`> The text label size multiplier.
+#' @param text_size_units <`"pixels"` | `"common"` | `"meters"`> The units of the text label
+#' size, specified by `get_text_size`.
+#' @param text_size_min_pixels <`number`> The minimum text label size in pixels.
+#' @param text_size_max_pixels <`number`> The maximum text label size in pixels.
+#' @param text_billboard <`boolean`> If `TRUE`, the text label always faces the camera, otherwise it
+#' faces up (z).
+#' @param text_background <`boolean`> Whether to render background for text labels.
+#' @param text_background_padding <`numeric`> The text background padding. Must be an array of 2 or
+#' 4 numbers.
+#' @param text_font_family <`string`> Specifies a prioritised list of one or more font family names.
+#' See [font-family](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family).
+#' @param text_font_weight <`"normal"` | `"bold"` | `100:900`> The font weight. See
+#' [font-weight](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
+#' @param text_line_height <`number`> A unitless number that will be multiplied with `get_size`
+#' to set the line height.
+#' @param text_font_settings <`font_settings`> Advanced options for fine tuning the appearance
+#' and performance of the generated `font_atlas`.
+#' @param text_word_break <`"break-word"` | `"break-all"`> Requires a valid `text_max_width`.
+#' @param text_max_width <`number`> Used together with `text_word_break` for wrapping text. Specifies
+#' the width limit to break the text into multiple lines.
+#' @param text_outline_width <`number`> The text outline width, relative to font size. Requires
+#' `text_font_settings$sdf = TRUE`.
+#' @param text_outline_color <[`color`]> The text outline colour. Requires `text_font_settings$sdf = TRUE`.
+#' @param get_text_size <[`accessor`] | [`scale`] | `number`> The font size of each text label,
+#' in units specified by `text_size_units`.
+#' Accepts a single numeric value, a numeric scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
+#' @param get_text_color <[`accessor`] | [`scale`] | [`color`]> The colour of each text label.
+#' Accepts a single colour value, a colour scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
+#' @param get_text_angle <[`accessor`] | `number`> The rotating angle of each text label in degrees.
+#' Accepts a single numeric value, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
+#' @param get_text_alignment_baseline <[`accessor`] | `"top"` | `"center"` | `"bottom"`> The text
+#' label alignment baseline. May be a single value, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) character column.
+#' @param get_text_pixel_offset <[`accessor`] | `number`> The pixel offset for each text label.
+#' Accepts a single length-2 `numeric` vector, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) list column.
+#' @param get_text_background_color <[`accessor`] | [`scale`] | [`color`]> The text background colour,
+#' if `text_background = TRUE`. Accepts a single colour value, a colour scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
+#' @param get_text_border_color <[`accessor`] | [`scale`] | [`color`]> The text background border colour,
+#' if `text_background = TRUE`. Accepts a single colour value, a colour scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
+#' @param get_text_border_width <[`accessor`] | [`scale`] | `number`> The text background border width,
+#' if `text_background = TRUE`. Accepts a single numeric value, a numeric scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
+#'
 #' @eval deckgl_docs("layers", "geojson-layer")
 #' @family core-layers
 #' @family layers
@@ -143,8 +239,9 @@ NULL
 #' @inherit layer_props
 #' @param billboard <`boolean`> If `TRUE`, the text label always faces the camera, otherwise it
 #' faces up (z).
-#' @param background_color <[`color`]> The colour to use for the text background. The alpha
-#' channel is ignored. The alpha of the background matches the opacity of each object.
+#' @param background <`boolean`> Whether to render background for text labels.
+#' @param background_padding <`numeric`> The text background padding. Must be an array of 2 or
+#' 4 numbers.
 #' @param font_family <`string`> Specifies a prioritised list of one or more font family names.
 #' See [font-family](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family).
 #' @param font_weight <`"normal"` | `"bold"` | `100:900`> The font weight. See
@@ -156,6 +253,9 @@ NULL
 #' @param word_break <`"break-word"` | `"break-all"`> Requires a valid `max_width`.
 #' @param max_width <`number`> Used together with `word_break` for wrapping text. Specifies
 #' the width limit to break the text into multiple lines.
+#' @param outline_width <`number`> The text outline width, relative to font size. Requires
+#' `font_settings$sdf = TRUE`.
+#' @param outline_color <[`color`]> The text outline colour. Requires `font_settings$sdf = TRUE`.
 #' @param get_text <[`accessor`]> The text value of each text label. Accepts a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) character column of
 #' labels.
@@ -163,7 +263,7 @@ NULL
 #' in units specified by `size_units`.
 #' Accepts a single numeric value, a numeric scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
-#' @param get_angle <[`accessor`] | `number`> The rotating angle of each icon in degrees.
+#' @param get_angle <[`accessor`] | `number`> The rotating angle of each text label in degrees.
 #' Accepts a single numeric value, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
 #' @param get_text_anchor <[`accessor`] | `"start"` | `"middle"` | `"end"`> The text label
@@ -172,6 +272,16 @@ NULL
 #' @param get_alignment_baseline <[`accessor`] | `"top"` | `"center"` | `"bottom"`> The text
 #' label alignment baseline. May be a single value, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) character column.
+#' @param get_background_color <[`accessor`] | [`scale`] | [`color`]> The text background colour,
+#' if `background = TRUE`. Accepts a single colour value, a colour scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
+#' @param get_border_color <[`accessor`] | [`scale`] | [`color`]> The text background border colour,
+#' if `background = TRUE`. Accepts a single colour value, a colour scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
+#' @param get_border_width <[`accessor`] | [`scale`] | `number`> The text background border width,
+#' if `background = TRUE`. Accepts a single numeric value, a numeric scale, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of numbers.
+
 #' @eval deckgl_docs("layers", "text-layer")
 #' @family core-layers
 #' @family layers
@@ -315,6 +425,7 @@ NULL
 #'
 #' @name quadkey_layer
 #' @inherit layer_props
+#' @param get_quadkey <`accessor`> The column containing the quadkey identifier.
 #' @eval deckgl_docs("geo-layers", "quadkey-layer")
 #' @family geo-layers
 #' @family layers
@@ -338,7 +449,8 @@ NULL
 #' Trips Layer
 #'
 #' @name trips_layer
-#' @inherit layer_props
+#' @inherit path_layer
+#' @param fade_trail <`boolean`> Whether or not the path fades out.
 #' @param trail_length <`number`> The number of seconds for a path to completely fade out.
 #' @param get_timestamps <[`accessor`]> The timestamps for each _trip_. For each trip,
 #' each timestamp corresponds to a position in the linestring returned by `get_path`,
@@ -358,7 +470,6 @@ NULL
 #' @name tile_3d_layer
 #' @inherit layer_props
 #' @param get_point_color <[`color`]> The colour of each object.
-#' @param load_options object
 #' @param loader object
 #' @eval deckgl_docs("geo-layers", "tile3d-layer")
 #' @family geo-layers
@@ -385,7 +496,8 @@ NULL
 #'
 #' @name mvt_layer
 #' @inherit layer_props
-#' @param data <`character`> A character vector of mapbox vector tile url templates.
+#' @inherit geojson_layer
+#' @param data <`character`|`tile_json`> A character vector of mapbox vector tile url templates.
 #' Substrings `"{x}"`, `"{y}"`, `"{z}"` will be replaced with a tile's actual index on
 #' request.
 #'
@@ -398,8 +510,6 @@ NULL
 #' corresponding to the supplied value with be highlighted with `highlight_color`.
 #' @param binary <`boolean`> Improves rendering performance by removing the tile serialisation
 #' and deserialisation between worker and main thread.
-#'
-#' Caveat: Polygons and multi-polygons with holes will be rendered as solid polygons.
 #' @eval deckgl_docs("geo-layers", "mvt-layer")
 #' @family geo-layers
 #' @family layers
@@ -512,10 +622,7 @@ NULL
 #' @param width_max_pixels <`number`> The maximum line width in pixels.
 #' @param bounds  <`bbox`> A [`st_bbox`][sf::st_bbox] object with CRS
 #' [EPSG:4326](http://epsg.io/4326).
-#' @param billboard <`boolean`> If `TRUE`, the object always faces the camera;
-#' if `FALSE`, it faces up always faces up (z).
-#' @param antialiasing <`boolean`> If `TRUE`, objects are rendered with smoothed
-#' edges.
+
 #' @param size_scale <`number`> The size multiplier.
 #' @param size_units <`"pixels"` | `"common"` | `"meters"`> The units of the size specified by
 #' `get_size`.
@@ -527,7 +634,9 @@ NULL
 #' @param get_color <[`accessor`] | [`scale`] | [`color`]> The colour of each object.
 #' Accepts a single colour value, a colour scale, or a
 #' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
-#' @param get_pixel_offset <[`accessor`] | `number`>
+#' @param get_pixel_offset <[`accessor`] | `number`> The pixel offset for each object.
+#' Accepts a single length-2 `numeric` vector, or a
+#' [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) list column.
 #' @param point_size <`number`> The radius of all points in units specified
 #' by `size_units`.
 #' @param material <`boolean`>

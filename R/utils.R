@@ -7,9 +7,10 @@
 #' Intended for use in shiny applications.
 #'
 #' @examples
+#' \dontrun{
 #' rdeck_proxy("map") %>%
 #'   set_layer_visibility("layer_id", visible = cur_value(), visibility_toggle = TRUE)
-#'
+#' }
 #' @name cur_value
 #' @keywords internal
 #' @export

@@ -107,7 +107,7 @@ highlight all objects in the layer. Per-object highlighting is achieved with a c
 or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} column of colours.}
 
 \item{image}{<\code{string} | \code{array}> The image to display. Either a string interpreted as a
-URL or Data URL, or an array raster image.}
+URL or Data URL, or an image bitmap.}
 
 \item{bounds}{<\code{bbox}> A \code{\link[sf:st_bbox]{st_bbox}} object with CRS
 \href{http://epsg.io/4326}{EPSG:4326}.}
