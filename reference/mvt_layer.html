@@ -270,11 +270,10 @@ not need to be unique, but should be brief. Defaults to the deck.gl class name f
 <dd><p>&lt;<code>string</code>&gt; Defines the group that this layer belongs to. Currently only
 effective on the layer selector, if <code>visibility_toggle = TRUE</code>.</p></dd>
 <dt>data</dt>
-<dd><p>&lt;<code>character</code>|<code>tile_json</code>&gt; A character vector of mapbox vector tile url templates.
-Substrings <code>"{x}"</code>, <code>"{y}"</code>, <code>"{z}"</code> will be replaced with a tile's actual index on
-request.</p>
-<p>If multiple url templates are supplied, each endpoint must return the same data for the
-same tile index.</p></dd>
+<dd><p>&lt;<code>character</code> | <code><a href="tile_json.html">tile_json</a></code>&gt; Defines the remote data for the layer. May take any of:</p><ul><li><p>A <code><a href="tile_json.html">tile_json()</a></code> object</p></li>
+<li><p>A <code>string</code> which is a valid URL to a <a href="https://docs.mapbox.com/help/glossary/tilejson" class="external-link">tilejson</a></p></li>
+<li><p>A <code>character</code> vector of tile url templates, each containing placeholders for tile coordinates: <code>{z}/{x}/{y}</code></p></li>
+</ul></dd>
 <dt>visible</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.
