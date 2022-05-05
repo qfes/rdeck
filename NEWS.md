@@ -1,3 +1,22 @@
+# rdeck 0.4.0
+
+- Add layer partial updaters for shiny
+- Add map view state & layer click events for shiny (#57)
+- Remove auto-sfc column resolution from sf data (#50)
+- Add identity scale (#62)
+- Add symlog scale
+- Scale enhancements (#56)
+  - Generators for palette, range, breaks
+  - Palette & range interpolation
+  - Refactor quantile & quantize scales
+- Add QuadKeyLayer
+- Fix: multi-polygon auto-highlight (#42)
+- Fix: javascript dependencies colliding with other widgets (#37)
+- Fix: remove aggregation layer tooltips (#34)
+- Add widget javascript api for extensions (#29)
+- Add layer selector (#28)
+- Add map lazy loading (#27)
+
 # rdeck 0.3.0
 
 Version 0.3.0 is an almost complete rewrite. Changes of note:
