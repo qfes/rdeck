@@ -208,6 +208,23 @@ faces up (z).</p></dd>
 <dd><p>&lt;<code>number</code>&gt; The minimum size in pixels.</p></dd>
 <dt>size_max_pixels</dt>
 <dd><p>&lt;<code>number</code>&gt; The maximum size in pixels.</p></dd>
+<dt>background</dt>
+<dd><p>&lt;<code>boolean</code>&gt; Whether to render background for text labels.</p></dd>
+<dt>get_background_color</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; The text background colour,
+if <code>background = TRUE</code>. Accepts a single colour value, a colour scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of colours.</p></dd>
+<dt>get_border_color</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; The text background border colour,
+if <code>background = TRUE</code>. Accepts a single colour value, a colour scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of colours.</p></dd>
+<dt>get_border_width</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code>number</code>&gt; The text background border width,
+if <code>background = TRUE</code>. Accepts a single numeric value, a numeric scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
+<dt>background_padding</dt>
+<dd><p>&lt;<code>numeric</code>&gt; The text background padding. Must be an array of 2 or
+4 numbers.</p></dd>
 <dt>font_family</dt>
 <dd><p>&lt;<code>string</code>&gt; Specifies a prioritised list of one or more font family names.
 See <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-family" class="external-link">font-family</a>.</p></dd>
@@ -217,6 +234,11 @@ See <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-family" class
 <dt>line_height</dt>
 <dd><p>&lt;<code>number</code>&gt; A unitless number that will be multiplied with <code>get_size</code>
 to set the line height.</p></dd>
+<dt>outline_width</dt>
+<dd><p>&lt;<code>number</code>&gt; The text outline width, relative to font size. Requires
+<code>font_settings$sdf = TRUE</code>.</p></dd>
+<dt>outline_color</dt>
+<dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The text outline colour. Requires <code>font_settings$sdf = TRUE</code>.</p></dd>
 <dt>font_settings</dt>
 <dd><p>&lt;<code>font_settings</code>&gt; Advanced options for fine tuning the appearance
 and performance of the generated <code>font_atlas</code>.</p></dd>
@@ -243,7 +265,7 @@ in units specified by <code>size_units</code>.
 Accepts a single numeric value, a numeric scale, or a
 <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
 <dt>get_angle</dt>
-<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt; The rotating angle of each icon in degrees.
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt; The rotating angle of each text label in degrees.
 Accepts a single numeric value, or a
 <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
 <dt>get_text_anchor</dt>
@@ -255,7 +277,9 @@ anchor. May be a single value, or a
 label alignment baseline. May be a single value, or a
 <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> character column.</p></dd>
 <dt>get_pixel_offset</dt>
-<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt;</p></dd>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt; The pixel offset for each object.
+Accepts a single length-2 <code>numeric</code> vector, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> list column.</p></dd>
 <dt>blending_mode</dt>
 <dd><p>&lt;<code>"normal"</code> | <code>"additive"</code> | <code>"subtractive"</code>&gt; Sets the blending mode.
 Blending modes:</p><ul><li><p><code>normal</code>: Normal blending doesn't alter colours of overlapping objects.</p></li>
@@ -271,9 +295,6 @@ dot density on light maps.</p></li>
 the layer tooltip, if <code>pickable == TRUE</code>.
 Supports <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a> if a
 <code>data</code> is a <code>data.frame</code>. <code>sfc</code> columns are always removed.</p></dd>
-<dt>background_color</dt>
-<dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The colour to use for the text background. The alpha
-channel is ignored. The alpha of the background matches the opacity of each object.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

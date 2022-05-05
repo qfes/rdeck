@@ -85,54 +85,14 @@ or <code>tileset_id</code> uses the mapbox scheme (i.e. mapbox://).</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">tile_json</span><span class="op">(</span><span class="st">"mapbox.mapbox-streets-v8"</span>, <span class="st">"mapbox"</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span><span style="color: #BBBB00;">!</span> Assertion failed: length(tokens) == 0</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No mapbox access token found, mapbox basemap won't be shown.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Set mapbox token with one of:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> option `options(rdeck.mapbox_access_token = &lt;token&gt;)`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> environment variable `MAPBOX_ACCESS_TOKEN = &lt;token&gt;`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> environment variable `MAPBOX_TOKEN = &lt;token&gt;`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> See <span style="color: #0000BB; font-style: italic;">&lt;https://docs.mapbox.com/help/glossary/access-token&gt;</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in urltools::param_set(file.path("https://api.mapbox.com/v4", paste0(tileset_id,     ".json"), fsep = "/"), "access_token", mapbox_access_token()):</span> Not compatible with STRSXP: [type=NULL].</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="fu">tile_json</span><span class="op">(</span><span class="st">"mapbox.mapbox-streets-v8"</span>, <span class="st">"mapbox"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">tile_json</span><span class="op">(</span><span class="st">"mapbox.mapbox-streets-v8.json"</span>, <span class="st">"mapbox"</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span><span style="color: #BBBB00;">!</span> Assertion failed: length(tokens) == 0</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No mapbox access token found, mapbox basemap won't be shown.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Set mapbox token with one of:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> option `options(rdeck.mapbox_access_token = &lt;token&gt;)`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> environment variable `MAPBOX_ACCESS_TOKEN = &lt;token&gt;`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> environment variable `MAPBOX_TOKEN = &lt;token&gt;`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> See <span style="color: #0000BB; font-style: italic;">&lt;https://docs.mapbox.com/help/glossary/access-token&gt;</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in urltools::param_set(file.path("https://api.mapbox.com/v4", paste0(tileset_id,     ".json"), fsep = "/"), "access_token", mapbox_access_token()):</span> Not compatible with STRSXP: [type=NULL].</span>
 <span class="r-in"><span class="fu">tile_json</span><span class="op">(</span><span class="st">"mapbox://mapbox.mapbox-streets-v8"</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span><span style="color: #BBBB00;">!</span> Assertion failed: length(tokens) == 0</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No mapbox access token found, mapbox basemap won't be shown.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Set mapbox token with one of:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> option `options(rdeck.mapbox_access_token = &lt;token&gt;)`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> environment variable `MAPBOX_ACCESS_TOKEN = &lt;token&gt;`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> environment variable `MAPBOX_TOKEN = &lt;token&gt;`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> See <span style="color: #0000BB; font-style: italic;">&lt;https://docs.mapbox.com/help/glossary/access-token&gt;</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in urltools::param_set(file.path("https://api.mapbox.com/v4", paste0(tileset_id,     ".json"), fsep = "/"), "access_token", mapbox_access_token()):</span> Not compatible with STRSXP: [type=NULL].</span>
 <span class="r-in"><span class="fu">tile_json</span><span class="op">(</span><span class="st">"mapbox://mapbox.mapbox-streets-v8.json"</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span><span style="color: #BBBB00;">!</span> Assertion failed: length(tokens) == 0</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No mapbox access token found, mapbox basemap won't be shown.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Set mapbox token with one of:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> option `options(rdeck.mapbox_access_token = &lt;token&gt;)`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> environment variable `MAPBOX_ACCESS_TOKEN = &lt;token&gt;`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> environment variable `MAPBOX_TOKEN = &lt;token&gt;`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> See <span style="color: #0000BB; font-style: italic;">&lt;https://docs.mapbox.com/help/glossary/access-token&gt;</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in urltools::param_set(file.path("https://api.mapbox.com/v4", paste0(tileset_id,     ".json"), fsep = "/"), "access_token", mapbox_access_token()):</span> Not compatible with STRSXP: [type=NULL].</span>
 <span class="r-in"><span class="fu">tile_json</span><span class="op">(</span><span class="st">"https://mytileserver/tileset.json"</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in new_tile_json(tileset_id):</span> Error fetching tilejson from &lt;https://mytileserver/tileset.json&gt;</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `open.connection()`:</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Could not resolve host: mytileserver</span>
 <span class="r-in"><span class="fu">tile_json</span><span class="op">(</span><span class="st">"tileset.json"</span>, <span class="st">"https://mytileserver"</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in new_tile_json(url):</span> Error fetching tilejson from &lt;https://mytileserver/tileset.json&gt;</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `open.connection()`:</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Could not resolve host: mytileserver</span>
+<span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

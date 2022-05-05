@@ -192,8 +192,8 @@ or a <a href="https://dplyr.tidyverse.org/articles/programming.html" class="exte
 <dd><p>&lt;<code>number</code>&gt; The maximum extent of a joint in ratio to the stroke width.
 Only applicable if <code>rounded == FALSE</code>.</p></dd>
 <dt>billboard</dt>
-<dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, the object always faces the camera;
-if <code>FALSE</code>, it faces up always faces up (z).</p></dd>
+<dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, extrude the path in screen space (width always faces)
+the camera; if <code>FALSE</code>, the width always faces up (z).</p></dd>
 <dt>get_path</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code>&gt; The path geometry column, either a <code>sfc_LINESTRING</code> or
 a <code>sfc_MULTILINESTRING</code> column with CRS <a href="http://epsg.io/4326" class="external-link">EPSG:4326</a>.
@@ -207,6 +207,8 @@ Accepts a single colour value, a colour scale, or a
 specified by <code>width_scale</code>.
 Accepts a single numeric value, a numeric scale, or a
 <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
+<dt>fade_trail</dt>
+<dd><p>&lt;<code>boolean</code>&gt; Whether or not the path fades out.</p></dd>
 <dt>trail_length</dt>
 <dd><p>&lt;<code>number</code>&gt; The number of seconds for a path to completely fade out.</p></dd>
 <dt>get_timestamps</dt>

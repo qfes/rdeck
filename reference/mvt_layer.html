@@ -270,7 +270,7 @@ not need to be unique, but should be brief. Defaults to the deck.gl class name f
 <dd><p>&lt;<code>string</code>&gt; Defines the group that this layer belongs to. Currently only
 effective on the layer selector, if <code>visibility_toggle = TRUE</code>.</p></dd>
 <dt>data</dt>
-<dd><p>&lt;<code>character</code>&gt; A character vector of mapbox vector tile url templates.
+<dd><p>&lt;<code>character</code>|<code>tile_json</code>&gt; A character vector of mapbox vector tile url templates.
 Substrings <code>"{x}"</code>, <code>"{y}"</code>, <code>"{z}"</code> will be replaced with a tile's actual index on
 request.</p>
 <p>If multiple url templates are supplied, each endpoint must return the same data for the
@@ -350,6 +350,12 @@ supplied no throttling occurs (HTTP/2 only).</p></dd>
 <dd><p>&lt;<code>number</code>&gt; The radius multiplier for all points.</p></dd>
 <dt>point_radius_units</dt>
 <dd><p>&lt;<code>"pixels"</code> | <code>"common"</code> | <code>"meters"</code>&gt; The units of point radius.</p></dd>
+<dt>point_antialiasing</dt>
+<dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, circles are rendered with smoothed
+edges.</p></dd>
+<dt>point_billboard</dt>
+<dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, circles always face the camera;
+if <code>FALSE</code> circles face up (z).</p></dd>
 <dt>get_fill_color</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; The fill colour of each object.
 Accepts a single colour value, a colour scale, or a
@@ -368,10 +374,139 @@ Accepts a single numeric value, a numeric scale, or a
 specified by <code>radius_units</code>.
 Accepts a single numeric value, a numeric scale, or a
 <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
+<dt>icon_atlas</dt>
+<dd><p>&lt;<code>string</code>|<code>array</code>&gt; The image sprite containing raster icons. Must
+be either a string which is interpreted as a URL to an image, or an image bitmap.</p></dd>
+<dt>icon_mapping</dt>
+<dd><p>&lt;<code>string</code>|<code>list</code>&gt; The image sprite index. Must be either a string
+which is interpreted as a URL to a json document, or a named-list of icon descriptors.
+See https://github.com/visgl/deck.gl/blob/master/docs/api-reference/layers/icon-layer.md#iconmapping-objectstring-optional
+for icon descriptor fields.</p></dd>
+<dt>icon_size_max_pixels</dt>
+<dd><p>&lt;<code>number</code>&gt; The maximum icon size in pixels.</p></dd>
+<dt>icon_size_min_pixels</dt>
+<dd><p>&lt;<code>number</code>&gt; The minimum icon size in pixels.</p></dd>
+<dt>icon_size_scale</dt>
+<dd><p>&lt;<code>number</code>&gt; The icon size multiplier.</p></dd>
+<dt>icon_size_units</dt>
+<dd><p>&lt;<code>"pixels"</code> | <code>"common"</code> | <code>"meters"</code>&gt; The units of the icon size specified by
+<code>get_icon_size</code>.</p></dd>
+<dt>icon_alpha_cutoff</dt>
+<dd><p>&lt;<code>number</code>&gt; Discard icon pixels whose opacity is below this threshold.
+A discarded pixel would create a "hole" in the icon that is not considered part of
+the object.</p></dd>
+<dt>icon_billboard</dt>
+<dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, the icon always faces the camera, otherwise it
+faces up (z).</p></dd>
+<dt>get_icon</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code>&gt; The name of the icon for each feature. Icon name must be
+present in the <code>icon_mapping</code>.</p></dd>
+<dt>get_icon_angle</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt; The rotating angle of each icon in degrees.
+Accepts a single numeric value, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
+<dt>get_icon_color</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; The colour of each icon.
+Accepts a single colour value, a colour scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of colours.</p></dd>
+<dt>get_icon_pixel_offset</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt; The pixel offset for each icon.
+Accepts a single length-2 <code>numeric</code> vector, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> list column.</p></dd>
+<dt>get_icon_size</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code>number</code>&gt; The size of each icon,
+in units specified by <code>size_units</code>.
+Accepts a single numeric value, a numeric scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
+<dt>text_size_max_pixels</dt>
+<dd><p>&lt;<code>number</code>&gt; The maximum text label size in pixels.</p></dd>
+<dt>text_size_min_pixels</dt>
+<dd><p>&lt;<code>number</code>&gt; The minimum text label size in pixels.</p></dd>
+<dt>text_size_scale</dt>
+<dd><p>&lt;<code>number</code>&gt; The text label size multiplier.</p></dd>
+<dt>text_size_units</dt>
+<dd><p>&lt;<code>"pixels"</code> | <code>"common"</code> | <code>"meters"</code>&gt; The units of the text label
+size, specified by <code>get_text_size</code>.</p></dd>
+<dt>text_background</dt>
+<dd><p>&lt;<code>boolean</code>&gt; Whether to render background for text labels.</p></dd>
+<dt>text_background_padding</dt>
+<dd><p>&lt;<code>numeric</code>&gt; The text background padding. Must be an array of 2 or
+4 numbers.</p></dd>
+<dt>text_font_family</dt>
+<dd><p>&lt;<code>string</code>&gt; Specifies a prioritised list of one or more font family names.
+See <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-family" class="external-link">font-family</a>.</p></dd>
+<dt>text_font_weight</dt>
+<dd><p>&lt;<code>"normal"</code> | <code>"bold"</code> | <code>100:900</code>&gt; The font weight. See
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight" class="external-link">font-weight</a></p></dd>
+<dt>text_line_height</dt>
+<dd><p>&lt;<code>number</code>&gt; A unitless number that will be multiplied with <code>get_size</code>
+to set the line height.</p></dd>
+<dt>text_max_width</dt>
+<dd><p>&lt;<code>number</code>&gt; Used together with <code>text_word_break</code> for wrapping text. Specifies
+the width limit to break the text into multiple lines.</p></dd>
+<dt>text_outline_color</dt>
+<dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The text outline colour. Requires <code>text_font_settings$sdf = TRUE</code>.</p></dd>
+<dt>text_outline_width</dt>
+<dd><p>&lt;<code>number</code>&gt; The text outline width, relative to font size. Requires
+<code>text_font_settings$sdf = TRUE</code>.</p></dd>
+<dt>text_word_break</dt>
+<dd><p>&lt;<code>"break-word"</code> | <code>"break-all"</code>&gt; Requires a valid <code>text_max_width</code>.</p></dd>
+<dt>text_billboard</dt>
+<dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, the text label always faces the camera, otherwise it
+faces up (z).</p></dd>
+<dt>text_font_settings</dt>
+<dd><p>&lt;<code>font_settings</code>&gt; Advanced options for fine tuning the appearance
+and performance of the generated <code>font_atlas</code>.</p></dd>
+<dt>get_text</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code>&gt; The text value of each text label. Accepts a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> character column of
+labels.</p></dd>
+<dt>get_text_angle</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt; The rotating angle of each text label in degrees.
+Accepts a single numeric value, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
+<dt>get_text_color</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; The colour of each text label.
+Accepts a single colour value, a colour scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of colours.</p></dd>
+<dt>get_text_pixel_offset</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt; The pixel offset for each text label.
+Accepts a single length-2 <code>numeric</code> vector, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> list column.</p></dd>
+<dt>get_text_size</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code>number</code>&gt; The font size of each text label,
+in units specified by <code>text_size_units</code>.
+Accepts a single numeric value, a numeric scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
+<dt>get_text_anchor</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>"start"</code> | <code>"middle"</code> | <code>"end"</code>&gt; The text label
+anchor. May be a single value, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> character column.</p></dd>
+<dt>get_text_alignment_baseline</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>"top"</code> | <code>"center"</code> | <code>"bottom"</code>&gt; The text
+label alignment baseline. May be a single value, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> character column.</p></dd>
+<dt>get_text_background_color</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; The text background colour,
+if <code>text_background = TRUE</code>. Accepts a single colour value, a colour scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of colours.</p></dd>
+<dt>get_text_border_color</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; The text background border colour,
+if <code>text_background = TRUE</code>. Accepts a single colour value, a colour scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of colours.</p></dd>
+<dt>get_text_border_width</dt>
+<dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code>number</code>&gt; The text background border width,
+if <code>text_background = TRUE</code>. Accepts a single numeric value, a numeric scale, or a
+<a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
 <dt>line_joint_rounded</dt>
 <dd><p>&lt;<code>boolean</code>&gt;</p></dd>
+<dt>line_cap_rounded</dt>
+<dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, draw round caps; else draw square caps.</p></dd>
 <dt>line_miter_limit</dt>
 <dd><p>number</p></dd>
+<dt>line_billboard</dt>
+<dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, extrude the path in screen space (width always faces)
+the camera; if <code>FALSE</code>, the width always faces up (z).</p></dd>
 <dt>extruded</dt>
 <dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, extrude objects along the z-axis; if <code>FALSE</code>, all
 objects will be flat.</p></dd>
@@ -403,8 +538,7 @@ no value is supplied, the feature id will be used.</p></dd>
 corresponding to the supplied value with be highlighted with <code>highlight_color</code>.</p></dd>
 <dt>binary</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Improves rendering performance by removing the tile serialisation
-and deserialisation between worker and main thread.</p>
-<p>Caveat: Polygons and multi-polygons with holes will be rendered as solid polygons.</p></dd>
+and deserialisation between worker and main thread.</p></dd>
 <dt>blending_mode</dt>
 <dd><p>&lt;<code>"normal"</code> | <code>"additive"</code> | <code>"subtractive"</code>&gt; Sets the blending mode.
 Blending modes:</p><ul><li><p><code>normal</code>: Normal blending doesn't alter colours of overlapping objects.</p></li>
