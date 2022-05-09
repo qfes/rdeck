@@ -113,16 +113,16 @@ renderRdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @export
 rdeck_proxy <- function(id,
                         session = shiny::getDefaultReactiveDomain(),
-                        map_style = NULL,
-                        theme = NULL,
-                        initial_bounds = NULL,
-                        initial_view_state = NULL,
-                        controller = NULL,
-                        picking_radius = NULL,
-                        use_device_pixels = NULL,
-                        blending_mode = NULL,
-                        layer_selector = NULL,
-                        lazy_load = NULL,
+                        map_style = cur_value(),
+                        theme = cur_value(),
+                        initial_bounds = cur_value(),
+                        initial_view_state = cur_value(),
+                        controller = cur_value(),
+                        picking_radius = cur_value(),
+                        use_device_pixels = cur_value(),
+                        blending_mode = cur_value(),
+                        layer_selector = cur_value(),
+                        lazy_load = cur_value(),
                         ...) {
   tidyassert::assert_is_string(id)
 
@@ -145,7 +145,7 @@ rdeck_proxy <- function(id,
     ...
   )
 
-  props <- select(props, -where(is.null))
+  props <- select(props, -where(is_cur_value))
 
   if (length(props) != 0) {
     data <- structure(

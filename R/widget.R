@@ -169,14 +169,14 @@ map_bounds <- function(initial_bounds) {
 }
 
 rdeck_props <- function(...,
-                        mapbox_access_token = NULL,
-                        map_style = NULL,
-                        initial_bounds = NULL,
-                        initial_view_state = NULL,
-                        controller = NULL,
-                        picking_radius = NULL,
-                        use_device_pixels = NULL,
-                        blending_mode = NULL) {
+                        mapbox_access_token = cur_value(),
+                        map_style = cur_value(),
+                        initial_bounds = cur_value(),
+                        initial_view_state = cur_value(),
+                        controller = cur_value(),
+                        picking_radius = cur_value(),
+                        use_device_pixels = cur_value(),
+                        blending_mode = cur_value()) {
   check_dots(...)
   structure(
     c(

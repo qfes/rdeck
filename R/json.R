@@ -38,6 +38,7 @@ as_json.rdeck_data <- function(object) {
     layers = lapply(layers, function(layer) as_json(layer))
   )
 
+  rdeck_data <- select(rdeck_data, -where(is_cur_value))
   json_stringify(rdeck_data, camel_case = TRUE, auto_unbox = TRUE)
 }
 
