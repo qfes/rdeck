@@ -59,6 +59,11 @@ module.exports = (env, { mode }) => {
             filename: "fonts/[name][ext]",
           },
         },
+        {
+          test: /\.svg$/,
+          issuer: /\.(js|ts)x?$/,
+          use: [{ loader: "@svgr/webpack", options: { icon: true } }],
+        },
       ],
     },
     plugins: [
