@@ -27,6 +27,9 @@
 #' @param layer_selector <`boolean`> If `TRUE`, the layer selector control will be enabled
 #' and layers with `visibility_toggle = TRUE` may be toggled. If `FALSE`, the layer selector control
 #' won't be rendered.
+#' @param polygon_editor <`boolean`|[`polygon_editor_opts`]> Whether to render the polygon editor.
+#' If `TRUE`, renders with the default [polygon_editor_opts()]. If `FALSE`, the polygon editor
+#' is not rendered.
 #' @param lazy_load <`boolean`> If `TRUE`, maps will be rendered when they are scrolled into
 #' view and destroyed when they are scrolled out of view. If `FALSE`, maps will be rendered
 #' when the page loads.
@@ -48,6 +51,7 @@ rdeck <- function(map_style = mapbox_dark(),
                   use_device_pixels = TRUE,
                   blending_mode = "normal",
                   layer_selector = FALSE,
+                  polygon_editor = FALSE,
                   lazy_load = FALSE,
                   width = NULL,
                   height = NULL,
@@ -74,6 +78,7 @@ rdeck <- function(map_style = mapbox_dark(),
       layers = list(),
       theme = theme,
       layer_selector = layer_selector,
+      polygon_editor = polygon_editor,
       lazy_load = lazy_load
     ),
     class = "rdeck_data"

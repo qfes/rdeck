@@ -318,3 +318,14 @@ get_clicked_object <- function(rdeck, session = shiny::getDefaultReactiveDomain(
 
   event_data$object
 }
+
+#' @describeIn shiny-events Get the last clicked object (or NULL)
+#' @inherit get_event_data
+#' @export
+get_edited_polygon <- function(rdeck, session = shiny::getDefaultReactiveDomain()) {
+  event_data <- with_event_data_errors(
+    get_event_data(rdeck, "edit-polygon", session)
+  )
+
+  geojsonsf::geojson_sfc(event_data$object)
+}
