@@ -5,10 +5,9 @@ import { MapProps } from "react-map-gl";
 
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { Map } from "./map";
-import { Legend } from "./legend";
+import { LayerSelector, Legend } from "./controls";
 import styles from "./app.css";
 import { classNames } from "./util";
-import { LayerSelector } from "./layer-selector";
 
 export type DeckProps = DeckGLProps &
   Pick<MapProps, "mapboxAccessToken" | "mapStyle"> & {

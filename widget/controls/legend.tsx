@@ -7,10 +7,10 @@ import {
   isColorScale,
   isContinuousScale,
   isDiscreteScale,
-} from "./scale";
-import type { LegendInfo } from "./layer";
-import { rgba } from "./color";
-import { words } from "./util";
+} from "../scale";
+import type { LegendInfo } from "../layer";
+import { rgba } from "../color";
+import { words } from "../util";
 import styles from "./legend.css";
 
 const TICK_HEIGHT = 16;
