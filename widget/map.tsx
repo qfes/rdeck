@@ -9,7 +9,7 @@ import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
 import { _AggregationLayer } from "@deck.gl/aggregation-layers";
-import { DeckProps } from "./app";
+import { DeckProps } from "./rdeck";
 
 export type MapProps = {
   props: DeckProps;

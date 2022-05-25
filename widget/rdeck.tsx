@@ -6,7 +6,7 @@ import { MapProps } from "react-map-gl";
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { Map } from "./map";
 import { LayerSelector, Legend } from "./controls";
-import styles from "./app.css";
+import styles from "./rdeck.css";
 import { classNames } from "./util";
 
 export type DeckProps = DeckGLProps &
@@ -15,7 +15,7 @@ export type DeckProps = DeckGLProps &
     blendingMode: BlendingMode;
   };
 
-export interface AppProps {
+export interface RDeckProps {
   props: DeckProps;
   layers: LayerProps[];
   theme: "kepler" | "light";
@@ -26,7 +26,7 @@ export interface AppProps {
   height: number;
 }
 
-export function App({
+export function RDeck({
   props,
   layers,
   theme,
@@ -35,7 +35,7 @@ export function App({
   onLayerVisibilityChange,
   width,
   height,
-}: AppProps) {
+}: RDeckProps) {
   const { initialBounds, initialViewState, ...deckglProps } = props;
 
   // fit bounds

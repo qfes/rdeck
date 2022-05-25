@@ -1,9 +1,6 @@
 import { FeatureCollection } from "geojson";
-import { AppProps } from "../app";
 
 declare global {
-  type RDeckProps = Omit<AppProps, "height" | "width">;
-
   type Bounds = [number, number, number, number];
   type Color = [number, number, number, number];
   type DataType = "table" | "object" | "geojson";

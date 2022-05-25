@@ -1,6 +1,6 @@
 import { createRoot, Root } from "react-dom/client";
 import type { InitialViewStateProps, PickInfo } from "@deck.gl/core";
-import { App, AppProps, DeckProps } from "./app";
+import { RDeck, RDeckProps, DeckProps } from "./rdeck";
 import type { LayerProps } from "./layer";
 import { debounce, getElementDimensions, pick } from "./util";
 import { getViewState } from "./viewport";
@@ -23,7 +23,7 @@ type LayerVisibilityProps = Pick<LayerProps, "groupName" | "visible"> & {
   name: string | null;
 };
 
-type WidgetProps = Pick<AppProps, "props" | "layers" | "theme" | "layerSelector" | "lazyLoad">;
+type WidgetProps = Pick<RDeckProps, "props" | "layers" | "theme" | "layerSelector" | "lazyLoad">;
 
 export class Widget implements HTMLWidgets.Widget, WidgetProps {
   #el: HTMLElement;
@@ -98,7 +98,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     Object.assign(this, _props);
 
     this.#root.render(
-      <App
+      <RDeck
         {..._props}
         onLayerVisibilityChange={this.setLayerVisibility}
         width={this.#width}
