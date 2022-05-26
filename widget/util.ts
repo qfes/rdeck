@@ -13,34 +13,31 @@ export function pick<T, K extends keyof T>(object: T, ...keys: K[]) {
   return Object.fromEntries(entries);
 }
 
-function getFirstVisible(el: HTMLElement): Element | null {
+function findVisibleAncestor(el: Element): Element | null {
   if (el.clientHeight > 0 && el.clientHeight > 0) {
     return el;
   }
 
-  return el.parentElement ? getFirstVisible(el.parentElement) : null;
+  return el.parentElement ? findVisibleAncestor(el.parentElement) : null;
 }
 
-export function getElementDimensions(el: HTMLElement): [number, number] {
-  const visible = getFirstVisible(el);
+export function getElementSize(el: Element): { width: number; height: number } {
+  const visible = findVisibleAncestor(el);
 
   if (el === visible || visible == null) {
-    return [el.clientWidth, el.clientHeight];
+    return { width: el.clientWidth, height: el.clientHeight };
   }
 
+  // create clone of el as child of first visible ancestor & capture size
   const { width, height } = getComputedStyle(el);
   const node = document.createElement("div");
-  Object.assign(node.style, {
-    width,
-    height,
-    display: "hidden",
-  });
+  Object.assign(node.style, { width, height, display: "hidden" });
 
   visible.appendChild(node);
-  const dims: [number, number] = [node.clientWidth, node.clientHeight];
+  const size = { width: node.clientWidth, height: node.clientHeight };
   visible.removeChild(node);
 
-  return dims;
+  return size;
 }
 
 export function groupBy<K, V>(list: V[], key: (x: V) => K): Map<K, V[]> {

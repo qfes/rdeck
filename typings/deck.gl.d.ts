@@ -9,7 +9,13 @@ declare module "@deck.gl/core" {
   import { DeckProps } from "@deck.gl/core/lib/deck";
   import { LayerProps } from "@deck.gl/core/lib/layer";
   export { PickInfo, InitialViewStateProps } from "@deck.gl/core/lib/deck";
+  import ViewManager from "@deck.gl/core/lib/view-manager";
   export { LayerProps, DeckProps };
+
+  export class Deck {
+    static defaultProps: DeckProps;
+    viewManager: ViewManager | null;
+  }
 
   interface MapViewProps
     extends Partial<Pick<DeckProps, "id" | "width" | "height" | "controller" | "viewState">> {
@@ -69,10 +75,34 @@ declare module "@deck.gl/core/lib/layer" {
   }
 }
 
+declare module "@deck.gl/core/lib/view-manager" {
+  import Viewport from "@deck.gl/core/viewports/viewport";
+
+  export default interface ViewManager {
+    getViewport(viewId: string): Viewport | undefined;
+    getViewports(rect?: { x: number; y: number; width?: number; height?: number }): Viewport[];
+  }
+}
+
 declare module "@deck.gl/geo-layers" {
   export { TileLayerProps } from "@deck.gl/geo-layers/tile-layer/tile-layer";
 }
 
 declare module "@deck.gl/react" {
-  export { DeckGLProps } from "@deck.gl/react/deckgl";
+  import Deck, { ContextProviderValue } from "@deck.gl/core/lib/deck";
+  import { DeckGLProps as _DeckGLProps } from "@deck.gl/react/deckgl";
+
+  // HACK: cannot merge DeckGLProps from @deck.gl/react/deckgl
+  export interface DeckGLProps<T = ContextProviderValue, D = typeof Deck> extends _DeckGLProps<T> {
+    Deck?: D;
+  }
+}
+
+declare module "@deck.gl/react/deckgl" {
+  import { ContextProviderValue } from "@deck.gl/core/lib/deck";
+
+  // deckgl also callable
+  export default function DeckGL<T = ContextProviderValue>(
+    props: Partial<DeckGLProps<T>>
+  ): DeckGL<T>;
 }
