@@ -1,5 +1,5 @@
 {
-  "include": ["widget"],
+  "include": ["widget", "typings"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es2018",
