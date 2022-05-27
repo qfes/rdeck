@@ -5,6 +5,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { PickInfo, MapView } from "@deck.gl/core";
 import { DeckGL } from "@deck.gl/react";
 import { Map as MapGL } from "react-map-gl";
+import { Deck } from "./deck";
 import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
@@ -34,8 +35,8 @@ export function Map({ props, layers }: MapProps) {
 
   return (
     <Fragment>
-      {/* @ts-ignore */}
       <DeckGL
+        Deck={Deck}
         ref={deckgl}
         {...deckProps}
         parameters={_parameters}

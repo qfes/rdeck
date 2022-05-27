@@ -2,7 +2,7 @@ import { createRoot, Root } from "react-dom/client";
 import type { InitialViewStateProps, PickInfo } from "@deck.gl/core";
 import { RDeck, RDeckProps, DeckProps } from "./rdeck";
 import type { LayerProps } from "./layer";
-import { debounce, getElementDimensions, pick } from "./util";
+import { debounce, pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
 
@@ -10,11 +10,6 @@ export const binding: HTMLWidgets.Binding = {
   name: "rdeck",
   type: "output",
   factory(el, width, height) {
-    // compute el dimensions if initially hidden
-    if (width === 0 || height === 0) {
-      [width, height] = getElementDimensions(el);
-    }
-
     return new Widget(el, width, height);
   },
 };
@@ -27,8 +22,6 @@ type WidgetProps = Pick<RDeckProps, "props" | "layers" | "theme" | "layerSelecto
 
 export class Widget implements HTMLWidgets.Widget, WidgetProps {
   #el: HTMLElement;
-  #width: number;
-  #height: number;
   props: DeckProps = { blendingMode: "normal" };
   layers: LayerProps[] = [];
   theme: "kepler" | "light" = "kepler";
@@ -39,8 +32,6 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
   constructor(el: HTMLElement, width: number, height: number) {
     this.#el = el;
     this.#root = createRoot(el);
-    this.#width = width;
-    this.#height = height;
     this.onClick = this.onClick.bind(this);
     this.onViewStateChange = this.onViewStateChange.bind(this);
 
@@ -95,16 +86,15 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
       layerSelector: layerSelector ?? this.layerSelector,
       lazyLoad: lazyLoad ?? this.lazyLoad,
     };
+
+    // overwritten on initialBounds change
+    if (_props.props.initialBounds != null) {
+      delete _props.props.initialViewState;
+    }
+
     Object.assign(this, _props);
 
-    this.#root.render(
-      <RDeck
-        {..._props}
-        onLayerVisibilityChange={this.setLayerVisibility}
-        width={this.#width}
-        height={this.#height}
-      />
-    );
+    this.#root.render(<RDeck {..._props} onLayerVisibilityChange={this.setLayerVisibility} />);
   }
 
   // deck.gl handles resize automatically
