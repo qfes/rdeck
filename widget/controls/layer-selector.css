@@ -1,4 +1,4 @@
-@import "theme.css";
+@import "../theme.css";
 
 .toggle-button {
   @mixin button;
