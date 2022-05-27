@@ -1,0 +1,37 @@
+@import "../theme.css";
+
+.container {
+  @mixin map-widget;
+  @mixin shadow;
+}
+
+.button {
+  @mixin button;
+  @mixin transition;
+  padding: 5px;
+
+  &:is(:hover, .active):enabled {
+    color: var(--hover-color);
+    background-color: var(--hover-background-color);
+  }
+
+  &:first-child {
+    border-top-left-radius: 1px;
+    border-bottom-left-radius: 1px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 1px;
+  }
+
+  &:disabled {
+    color: var(--muted-color);
+  }
+}
+
+.active {}
+
+svg.icon {
+  font-size: 20px;
+}
