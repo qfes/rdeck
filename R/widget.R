@@ -53,6 +53,14 @@ rdeck <- function(map_style = mapbox_dark(),
                   height = NULL,
                   id = NULL,
                   ...) {
+  if (!missing(lazy_load)) {
+    lifecycle::deprecate_warn(
+      when = "0.4",
+      what = "rdeck(lazy_load)",
+      details = "Lazy loading will be removed in v0.5"
+    )
+  }
+
   check_dots_access_token(...)
   dots <- rlang::dots_list(...)
 
