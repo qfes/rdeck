@@ -1,5 +1,7 @@
 import type { CSSProperties, MouseEventHandler } from "react";
 import type { FeatureCollection } from "geojson";
+import type { EditAction } from "@nebula.gl/edit-modes";
+
 import Lasso from "@mdi/svg/svg/lasso.svg";
 import VectorSquare from "@mdi/svg/svg/vector-square.svg";
 import VectorSquareEdit from "@mdi/svg/svg/vector-square-edit.svg";
@@ -13,19 +15,27 @@ import { classNames } from "../util";
 const noop = () => {};
 
 export type PolygonEditorProps = {
-  mode?: PolygonEditorMode;
-  polygon?: FeatureCollection;
-  onSetMode?: (mode: PolygonEditorMode) => void;
-  onPolygonChange?: (polygon: FeatureCollection) => void;
+  mode: PolygonEditorMode;
+  polygon: FeatureCollection;
+  onModeChange?: (mode: PolygonEditorMode) => void;
+  onPolygonChange?: (action: EditAction<FeatureCollection>) => void;
 };
 
 export function PolygonEditor({
   mode = "view",
   polygon = { type: "FeatureCollection", features: [] },
-  onSetMode = noop,
+  onModeChange = noop,
   onPolygonChange = noop,
 }: PolygonEditorProps) {
-  const handleDelete = () => onPolygonChange({ type: "FeatureCollection", features: [] });
+  const handleDelete = () => {
+    onPolygonChange({
+      updatedData: { type: "FeatureCollection", features: [] } as FeatureCollection,
+      editType: "deleteFeature",
+      editContext: {
+        featureIndexes: polygon.features.map((_, i) => i),
+      },
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -33,26 +43,26 @@ export function PolygonEditor({
         name="Pan"
         icon={PanTool}
         active={mode === "view"}
-        onClick={() => onSetMode("view")}
+        onClick={() => onModeChange("view")}
       />
       <EditorButton
         name="Modify"
         icon={VectorSquareEdit}
         active={mode === "modify"}
         disabled={!hasFeatures(polygon)}
-        onClick={() => onSetMode("modify")}
+        onClick={() => onModeChange("modify")}
       />
       <EditorButton
         name="Polygon"
         icon={VectorSquare}
         active={mode === "polygon"}
-        onClick={() => onSetMode("polygon")}
+        onClick={() => onModeChange("polygon")}
       />
       <EditorButton
         name="Lasso"
         icon={Lasso}
         active={mode === "lasso"}
-        onClick={() => onSetMode("lasso")}
+        onClick={() => onModeChange("lasso")}
       />
       <EditorButton
         name="Delete"

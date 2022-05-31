@@ -4,7 +4,7 @@ import { MapProps } from "react-map-gl";
 
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { Map } from "./map";
-import { LayerSelector, Legend } from "./controls";
+import { LayerSelector, Legend, PolygonEditor, PolygonEditorProps } from "./controls";
 import styles from "./rdeck.css";
 import { classNames } from "./util";
 
@@ -21,6 +21,7 @@ export interface RDeckProps {
   lazyLoad: boolean;
   layerSelector: boolean;
   onLayerVisibilityChange: (layers: VisibilityInfo[]) => void;
+  polygonEditor: PolygonEditorProps | null;
 }
 
 export function RDeck({
@@ -30,6 +31,7 @@ export function RDeck({
   lazyLoad,
   layerSelector,
   onLayerVisibilityChange,
+  polygonEditor,
 }: RDeckProps) {
   const _layers = layers.map(Layer.create);
 
@@ -50,7 +52,6 @@ export function RDeck({
           />
         )}
       </div>
-      {shouldRender && <Map props={props} layers={_layers} />}
       <div className={classNames(styles.controlContainer, styles.right)}>
         <Legend
           layers={_layers
@@ -59,6 +60,10 @@ export function RDeck({
             .reverse()}
         />
       </div>
+      <div className={classNames(styles.controlContainer, styles.top)}>
+        {polygonEditor && <PolygonEditor {...polygonEditor} />}
+      </div>
+      {shouldRender && <Map props={props} layers={_layers} polygonEditor={polygonEditor} />}
     </div>
   );
 }

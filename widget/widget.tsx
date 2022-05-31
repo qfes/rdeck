@@ -1,7 +1,11 @@
 import { createRoot, Root } from "react-dom/client";
 import type { InitialViewStateProps, PickInfo } from "@deck.gl/core";
+import { EditAction } from "@nebula.gl/edit-modes";
+import type { FeatureCollection } from "geojson";
 import { RDeck, RDeckProps, DeckProps } from "./rdeck";
 import type { LayerProps } from "./layer";
+import type { PolygonEditorProps } from "./controls";
+import type { PolygonEditorMode } from "./types";
 import { debounce, pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
@@ -18,7 +22,7 @@ type LayerVisibilityProps = Pick<LayerProps, "groupName" | "visible"> & {
   name: string | null;
 };
 
-type WidgetProps = Pick<RDeckProps, "props" | "layers" | "theme" | "layerSelector" | "lazyLoad">;
+type WidgetProps = Omit<RDeckProps, "onLayerVisibilityChange">;
 
 export class Widget implements HTMLWidgets.Widget, WidgetProps {
   readonly #element: HTMLElement;
@@ -29,13 +33,17 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
   theme: "kepler" | "light" = "kepler";
   layerSelector: boolean = true;
   lazyLoad: boolean = false;
+  polygonEditor: PolygonEditorProps | null = null;
 
   constructor(el: HTMLElement, width: number, height: number) {
     this.#element = el;
     this.#root = createRoot(el);
+
     // event handlers
     this.handleClick = this.handleClick.bind(this);
     this.handleViewStateChange = debounce(this.handleViewStateChange.bind(this), 50);
+    this.handlePolygonChange = debounce(this.handlePolygonChange.bind(this), 50);
+    this.handleEditorModeChange = this.handleEditorModeChange.bind(this);
     this.setLayerVisibility = this.setLayerVisibility.bind(this);
 
     if (HTMLWidgets.shinyMode) {
@@ -74,6 +82,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     layers = this.layers,
     theme = this.theme,
     layerSelector = this.layerSelector,
+    polygonEditor = this.polygonEditor,
     lazyLoad = this.lazyLoad,
   }: Partial<WidgetProps> = {}) {
     // merge props
@@ -89,11 +98,19 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
       delete props.initialViewState;
     }
 
-    Object.assign(this, { props, layers, theme, layerSelector, lazyLoad });
+    if (polygonEditor != null) {
+      polygonEditor = {
+        ...polygonEditor,
+        onModeChange: this.handleEditorModeChange,
+        onPolygonChange: this.handlePolygonChange,
+      };
+    }
+
+    Object.assign(this, { props, layers, theme, layerSelector, polygonEditor, lazyLoad });
 
     this.#root.render(
       <RDeck
-        {...{ props, layers, theme, layerSelector, lazyLoad }}
+        {...{ props, layers, theme, layerSelector, polygonEditor, lazyLoad }}
         onLayerVisibilityChange={this.setLayerVisibility}
       />
     );
@@ -155,6 +172,29 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
 
       Shiny.setInputValue(`${this.id}_viewstate`, data, { priority: "event" });
     }
+  }
+
+  private handleEditorModeChange(mode: PolygonEditorMode): void {
+    if (this.polygonEditor == null) return;
+
+    this.renderValue({
+      polygonEditor: { ...this.polygonEditor, mode },
+    });
+  }
+
+  private handlePolygonChange({ updatedData, editType }: EditAction<FeatureCollection>) {
+    if (this.polygonEditor == null) return;
+
+    const editMap: Record<string, PolygonEditorMode> = {
+      addFeature: "modify",
+      deleteFeature: "view",
+    };
+
+    const mode = editMap[editType] ?? this.polygonEditor.mode;
+
+    this.renderValue({
+      polygonEditor: { ...this.polygonEditor, mode, polygon: updatedData },
+    });
   }
 }
 

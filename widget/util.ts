@@ -6,7 +6,7 @@ export function words(camelCase: string) {
   return camelCase.replace(/([A-Z])/g, " $1").toLowerCase();
 }
 
-export function pick<T, K extends keyof T>(object: T, ...keys: K[]) {
+export function pick<T, K extends keyof T>(object: T | null, ...keys: K[]): Pick<T, K> | null {
   if (object == null) return null;
 
   const entries = keys.map((key) => [key, object[key]]);

@@ -7,17 +7,20 @@ import { DeckGL } from "@deck.gl/react";
 import { Map as MapGL } from "react-map-gl";
 import { Deck } from "./deck";
 import { Layer } from "./layer";
+import { EditableLayer, nebulaMode } from "./layers";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
 import { _AggregationLayer } from "@deck.gl/aggregation-layers";
 import { DeckProps } from "./rdeck";
+import { PolygonEditorProps } from "./controls";
 
 export type MapProps = {
   props: DeckProps;
   layers: Layer[];
+  polygonEditor: PolygonEditorProps | null;
 };
 
-export function Map({ props, layers }: MapProps) {
+export function Map({ props, layers, polygonEditor }: MapProps) {
   const deckgl = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
@@ -32,6 +35,7 @@ export function Map({ props, layers }: MapProps) {
   useAnimation(animating, (time) => setTime(time));
 
   const _layers: any = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
+  const editableLayer = renderEditableLayer(polygonEditor);
 
   return (
     <Fragment>
@@ -40,7 +44,7 @@ export function Map({ props, layers }: MapProps) {
         ref={deckgl}
         {...deckProps}
         parameters={_parameters}
-        layers={_layers}
+        layers={[..._layers, editableLayer]}
         onHover={handleHover}
       >
         <MapView id="map" controller={controller} repeat={true}>
@@ -84,3 +88,15 @@ const useAnimation = (enabled: boolean, onFrame: (time: number) => void) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enabled]);
 };
+
+function renderEditableLayer(props: PolygonEditorProps | null) {
+  if (props == null) return null;
+
+  return new EditableLayer({
+    mode: nebulaMode(props.mode),
+    data: props.polygon,
+    onChange: props.onPolygonChange,
+    filled: props.mode !== "view",
+    getDashArray: props.mode !== "view" ? [4, 2] : [0, 0],
+  });
+}
