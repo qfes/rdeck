@@ -21,22 +21,26 @@ type LayerVisibilityProps = Pick<LayerProps, "groupName" | "visible"> & {
 type WidgetProps = Pick<RDeckProps, "props" | "layers" | "theme" | "layerSelector" | "lazyLoad">;
 
 export class Widget implements HTMLWidgets.Widget, WidgetProps {
-  #el: HTMLElement;
+  readonly #element: HTMLElement;
+  readonly #root: Root;
+
   props: DeckProps = { blendingMode: "normal" };
   layers: LayerProps[] = [];
   theme: "kepler" | "light" = "kepler";
   layerSelector: boolean = true;
   lazyLoad: boolean = false;
-  #root: Root;
 
   constructor(el: HTMLElement, width: number, height: number) {
-    this.#el = el;
+    this.#element = el;
     this.#root = createRoot(el);
-    this.onClick = this.onClick.bind(this);
-    this.onViewStateChange = this.onViewStateChange.bind(this);
+    // event handlers
+    this.handleClick = this.handleClick.bind(this);
+    const { handleViewStateChange } = this;
+    this.handleViewStateChange = debounce((viewState) => handleViewStateChange(viewState), 50);
+    this.setLayerVisibility = this.setLayerVisibility.bind(this);
 
     if (HTMLWidgets.shinyMode) {
-      const debouncedRender = debounce((props = {}) => this.renderValue(props), 50);
+      const render = debounce((props) => this.renderValue(props), 50);
 
       // update layers
       Shiny.addCustomMessageHandler(`${el.id}:layer`, (layer: LayerProps) => {
@@ -56,45 +60,44 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
             ? [...this.layers, merged]
             : this.layers.map((x) => (x === _layer ? merged : x));
 
-        debouncedRender({ layers: this.layers });
+        render({ layers: this.layers });
       });
 
       // update map
-      Shiny.addCustomMessageHandler(`${el.id}:deck`, ({ props, theme, lazyLoad }: RDeckProps) => {
-        this.renderValue({
-          props: { ...this.props, ...props },
-          theme: theme,
-          lazyLoad: lazyLoad,
-        });
+      Shiny.addCustomMessageHandler(`${el.id}:deck`, (props: RDeckProps) => {
+        this.renderValue(props);
       });
     }
-
-    this.setLayerVisibility = this.setLayerVisibility.bind(this);
   }
 
-  renderValue({ props, layers, theme, layerSelector, lazyLoad }: Partial<WidgetProps> = {}) {
-    // merge in new props with existing state
-    const _props = {
-      props: {
-        ...this.props,
-        ...props,
-        onClick: this.onClick,
-        onViewStateChange: debounce(this.onViewStateChange, 50),
-      },
-      layers: layers ?? this.layers,
-      theme: theme ?? this.theme,
-      layerSelector: layerSelector ?? this.layerSelector,
-      lazyLoad: lazyLoad ?? this.lazyLoad,
+  renderValue({
+    props = this.props,
+    layers = this.layers,
+    theme = this.theme,
+    layerSelector = this.layerSelector,
+    lazyLoad = this.lazyLoad,
+  }: Partial<WidgetProps> = {}) {
+    // merge props
+    props = {
+      ...this.props,
+      ...props,
+      onClick: this.handleClick,
+      onViewStateChange: this.handleViewStateChange,
     };
 
     // overwritten on initialBounds change
-    if (_props.props.initialBounds != null) {
-      delete _props.props.initialViewState;
+    if (props.initialBounds != null) {
+      delete props.initialViewState;
     }
 
-    Object.assign(this, _props);
+    Object.assign(this, { props, layers, theme, layerSelector, lazyLoad });
 
-    this.#root.render(<RDeck {..._props} onLayerVisibilityChange={this.setLayerVisibility} />);
+    this.#root.render(
+      <RDeck
+        {...{ props, layers, theme, layerSelector, lazyLoad }}
+        onLayerVisibilityChange={this.setLayerVisibility}
+      />
+    );
   }
 
   // deck.gl handles resize automatically
@@ -104,12 +107,12 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
    * Get widget id
    */
   get id(): string {
-    return this.#el.id;
+    return this.#element.id;
   }
 
   /**
    * Set layers' visibility. Layers not included in visibility are unaltered.
-   * @param visibility the layers visibility
+   * @param layers the layers whose visibility is to be changed
    */
   setLayerVisibility(layers: LayerVisibilityProps[]): void {
     if (layers.length === 0) return;
@@ -133,7 +136,8 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     this.renderValue({ layers: _layers });
   }
 
-  onClick(info: PickInfo<any>) {
+  // event handlers
+  private handleClick(info: PickInfo<any>): void {
     if (HTMLWidgets.shinyMode) {
       const data = {
         coordinate: info.coordinate,
@@ -146,7 +150,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     }
   }
 
-  onViewStateChange({ viewState }: { viewState: InitialViewStateProps }) {
+  private handleViewStateChange({ viewState }: { viewState: InitialViewStateProps }): void {
     if (HTMLWidgets.shinyMode) {
       const data = getViewState(viewState);
 
