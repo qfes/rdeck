@@ -35,8 +35,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     this.#root = createRoot(el);
     // event handlers
     this.handleClick = this.handleClick.bind(this);
-    const { handleViewStateChange } = this;
-    this.handleViewStateChange = debounce((viewState) => handleViewStateChange(viewState), 50);
+    this.handleViewStateChange = debounce(this.handleViewStateChange.bind(this), 50);
     this.setLayerVisibility = this.setLayerVisibility.bind(this);
 
     if (HTMLWidgets.shinyMode) {
