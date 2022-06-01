@@ -151,6 +151,7 @@ rdeck_proxy <- function(id,
     data <- structure(
       list(
         props = props,
+        layers = list(),
         theme = theme,
         layer_selector = layer_selector,
         lazy_load = lazy_load
