@@ -34,12 +34,21 @@ as_json.rdeck_props <- function(object) {
 as_json.rdeck_data <- function(object) {
   rdeck_data <- mutate(
     object,
-    props = as_json(props),
-    layers = lapply(layers, function(layer) as_json(layer))
+    across(-tidyselect::any_of("layers"), as_json)
   )
 
-  rdeck_data <- select(rdeck_data, -where(is_cur_value))
-  json_stringify(rdeck_data, camel_case = TRUE, auto_unbox = TRUE)
+  if (length(rdeck_data$layers) != 0) {
+    rdeck_data <- mutate(
+      rdeck_data,
+      layers = lapply(layers, function(layer) as_json(layer))
+    )
+  }
+
+  json_stringify(
+    select(rdeck_data, -where(is_cur_value)),
+    camel_case = TRUE,
+    auto_unbox = TRUE
+  )
 }
 
 as_json.view_state <- function(object) {
