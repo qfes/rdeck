@@ -182,7 +182,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     });
   }
 
-  private handlePolygonChange({ updatedData, editType }: EditAction<FeatureCollection>) {
+  private handlePolygonChange({ updatedData, editType }: EditAction<FeatureCollection>): void {
     if (this.polygonEditor == null) return;
 
     const editMap: Record<string, PolygonEditorMode> = {
@@ -195,6 +195,11 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     this.renderValue({
       polygonEditor: { ...this.polygonEditor, mode, polygon: updatedData },
     });
+
+    if (HTMLWidgets.shinyMode) {
+      // we need to parse the json with geojsonsf
+      Shiny.setInputValue(`${this.id}_editedpolygon`, { polygon: JSON.stringify(updatedData) });
+    }
   }
 }
 
