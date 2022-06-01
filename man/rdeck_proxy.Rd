@@ -16,7 +16,7 @@ rdeck_proxy(
   use_device_pixels = cur_value(),
   blending_mode = cur_value(),
   layer_selector = cur_value(),
-  polygon_edior = cur_value(),
+  polygon_editor = cur_value(),
   lazy_load = cur_value(),
   ...
 )
@@ -67,6 +67,10 @@ dot density on light maps.
 \item{layer_selector}{<\code{boolean}> If \code{TRUE}, the layer selector control will be enabled
 and layers with \code{visibility_toggle = TRUE} may be toggled. If \code{FALSE}, the layer selector control
 won't be rendered.}
+
+\item{polygon_editor}{<\code{boolean}|\code{\link{polygon_editor_options}}> Whether to render the polygon editor.
+If \code{TRUE}, renders with the default \code{\link[=polygon_editor_options]{polygon_editor_options()}}. If \code{FALSE}, the polygon editor
+is not rendered.}
 
 \item{lazy_load}{<\code{boolean}> If \code{TRUE}, maps will be rendered when they are scrolled into
 view and destroyed when they are scrolled out of view. If \code{FALSE}, maps will be rendered
