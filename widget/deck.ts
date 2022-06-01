@@ -30,7 +30,15 @@ export class Deck extends _Deck {
       const { width, height } = this._getMapSize();
 
       // fit & overwrite
-      props = { ...props, initialViewState: fitBounds({ height, width, bounds }) };
+      props = {
+        ...props,
+        initialViewState: {
+          ...fitBounds({ height, width, bounds }),
+          // visgl/deck.gl#6883
+          bearing: 0,
+          pitch: 0,
+        },
+      };
     }
 
     super.setProps(props);
