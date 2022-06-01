@@ -42,6 +42,11 @@ export class EditableLayer extends EditableGeoJsonLayer {
     selectedFeatureIndexes: [0],
     pickingDepth: 0,
     onChange: () => {},
+    // translate in mercator
+    modeConfig: {
+      screenSpace: true,
+      viewport: {},
+    },
     // line & handle size
     getRadius: 5,
     getLineWidth: 2,
