@@ -35,7 +35,8 @@ as_json.rdeck_data <- function(object) {
   rdeck_data <- mutate(
     object,
     props = as_json(props),
-    layers = lapply(layers, function(layer) as_json(layer))
+    layers = lapply(layers, function(layer) as_json(layer)),
+    polygon_editor = as_json(polygon_editor)
   )
 
   rdeck_data <- select(rdeck_data, -where(is_cur_value))
@@ -53,6 +54,23 @@ as_json.view_state <- function(object) {
 
 as_json.bbox <- function(object) {
   json_stringify(object, digits = 6)
+}
+
+as_json.polygon_editor_options <- function(object) {
+  options <- mutate(
+    select(object, -where(is_cur_value)),
+    across(
+      tidyselect::any_of("polygon"),
+      function(sfc) geojsonsf::sf_geojson(sf::st_sf(sfc), simplify = FALSE)
+    )
+  )
+
+  json_stringify(
+    options,
+    camel_case = TRUE,
+    auto_unbox = TRUE,
+    digits = 6
+  )
 }
 
 as_json.accessor <- function(object) {

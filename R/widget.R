@@ -27,8 +27,8 @@
 #' @param layer_selector <`boolean`> If `TRUE`, the layer selector control will be enabled
 #' and layers with `visibility_toggle = TRUE` may be toggled. If `FALSE`, the layer selector control
 #' won't be rendered.
-#' @param polygon_editor <`boolean`|[`polygon_editor_opts`]> Whether to render the polygon editor.
-#' If `TRUE`, renders with the default [polygon_editor_opts()]. If `FALSE`, the polygon editor
+#' @param polygon_editor <`boolean`|[`polygon_editor_options`]> Whether to render the polygon editor.
+#' If `TRUE`, renders with the default [polygon_editor_options()]. If `FALSE`, the polygon editor
 #' is not rendered.
 #' @param lazy_load <`boolean`> If `TRUE`, maps will be rendered when they are scrolled into
 #' view and destroyed when they are scrolled out of view. If `FALSE`, maps will be rendered
@@ -80,13 +80,15 @@ rdeck <- function(map_style = mapbox_dark(),
     blending_mode = blending_mode
   )
 
+  tidyassert::assert(is_polygon_editor_options(polygon_editor) | rlang::is_scalar_logical(polygon_editor))
+
   x <- structure(
     list(
       props = props,
       layers = list(),
       theme = theme,
       layer_selector = layer_selector,
-      polygon_editor = polygon_editor,
+      polygon_editor = as_polygon_editor(polygon_editor),
       lazy_load = lazy_load
     ),
     class = "rdeck_data"

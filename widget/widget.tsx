@@ -101,6 +101,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     if (polygonEditor != null) {
       polygonEditor = {
         ...polygonEditor,
+        polygon: polygonEditor.polygon ?? { type: "FeatureCollection", features: [] },
         onModeChange: this.handleEditorModeChange,
         onPolygonChange: this.handlePolygonChange,
       };

@@ -16,6 +16,7 @@ rdeck_proxy(
   use_device_pixels = cur_value(),
   blending_mode = cur_value(),
   layer_selector = cur_value(),
+  polygon_edior = cur_value(),
   lazy_load = cur_value(),
   ...
 )
