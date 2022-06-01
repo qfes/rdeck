@@ -11,11 +11,11 @@
 #' @export
 polygon_editor_options <- function(mode = "view", polygon = cur_value()) {
   tidyassert::assert(
-    is_cur_value(mode) |
+    is_cur_value(mode) ||
       rlang::is_string(mode) & mode %in% c("view", "modify", "polygon", "lasso")
   )
   tidyassert::assert(
-    is_cur_value(polygon) |
+    is_cur_value(polygon) ||
       is_sfc(polygon) & sf::st_geometry_type(polygon, FALSE) == "POLYGON"
   )
 
