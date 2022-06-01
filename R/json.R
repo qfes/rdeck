@@ -31,6 +31,8 @@ as_json.rdeck_props <- function(object) {
   )
 }
 
+#' @autoglobal
+#' @noRd
 as_json.rdeck_data <- function(object) {
   rdeck_data <- mutate(
     object,
