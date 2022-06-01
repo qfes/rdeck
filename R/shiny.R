@@ -157,6 +157,7 @@ rdeck_proxy <- function(id,
     data <- structure(
       list(
         props = props,
+        layers = list(),
         theme = theme,
         layer_selector = layer_selector,
         polygon_editor = as_polygon_editor(polygon_editor),
