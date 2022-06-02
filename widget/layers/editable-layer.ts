@@ -8,6 +8,8 @@ import {
   DrawPolygonMode,
   DrawPolygonByDraggingMode,
   EditAction,
+  ModeProps,
+  PointerMoveEvent,
 } from "@nebula.gl/edit-modes";
 import type { FeatureCollection } from "geojson";
 import { PolygonEditorMode } from "../types";
@@ -105,9 +107,26 @@ function getProp<K extends keyof P, P extends object>(name: K, ...props: P[]): P
     .find((x) => x !== undefined);
 }
 
+class TranslateModifyMode extends CompositeMode {
+  constructor(modes = [new TranslateMode(), new ModifyMode()]) {
+    super(modes);
+  }
+
+  // avoid losing translate cursor
+  handlePointerMove(event: PointerMoveEvent, props: ModeProps<any>): void {
+    const cursors: Array<string | null | undefined> = [];
+    const setCursor = (cursor: string | null | undefined) => cursors.unshift(cursor);
+
+    const _props = { ...props, onUpdateCursor: setCursor };
+    this._modes.forEach((mode) => mode.handlePointerMove(event, _props));
+
+    props.onUpdateCursor(cursors.find((cursor) => cursor != null));
+  }
+}
+
 const EDITOR_MODES = Object.seal({
   view: new ViewMode(),
-  modify: new CompositeMode([new TranslateMode(), new ModifyMode()]),
+  modify: new TranslateModifyMode(),
   polygon: new DrawPolygonMode(),
   lasso: new DrawPolygonByDraggingMode(),
 });

@@ -24,7 +24,16 @@ export function Map({ props, layers, polygonEditor }: MapProps) {
   const deckgl = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
-  const { mapboxAccessToken, mapStyle, controller, parameters, blendingMode, ...deckProps } = props;
+  const {
+    mapboxAccessToken,
+    mapStyle,
+    controller,
+    parameters,
+    blendingMode,
+    onClick: handleClick,
+    ...deckProps
+  } = props;
+
   const _parameters = {
     ...parameters,
     ...blendingParameters(blendingMode),
@@ -36,6 +45,7 @@ export function Map({ props, layers, polygonEditor }: MapProps) {
 
   const _layers: any = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
   const editableLayer = renderEditableLayer(polygonEditor);
+  const isEditing = polygonEditor != null && polygonEditor.mode !== "view";
 
   return (
     <Fragment>
@@ -45,9 +55,12 @@ export function Map({ props, layers, polygonEditor }: MapProps) {
         {...deckProps}
         parameters={_parameters}
         layers={[..._layers, editableLayer]}
-        onHover={handleHover}
+        // remove picking callbacks when editing
+        onHover={!isEditing ? handleHover : undefined}
+        onClick={!isEditing ? handleClick : undefined}
+        getCursor={editableLayer?.getCursor.bind(editableLayer)}
       >
-        <MapView id="map" controller={controller} repeat={true}>
+        <MapView id="map" controller={controller} repeat>
           {mapStyle && <MapGL reuseMaps {...{ mapboxAccessToken, mapStyle }} />}
         </MapView>
       </DeckGL>
