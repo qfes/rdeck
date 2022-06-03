@@ -8,34 +8,36 @@ import VectorSquareEdit from "@mdi/svg/svg/vector-square-edit.svg";
 import { SvgIcon } from "@mui/material";
 import { Delete, PanTool } from "@mui/icons-material";
 
-import styles from "./polygon-editor.css";
+import styles from "./editor-panel.css";
 import type { PolygonEditorMode } from "../types";
 import { classNames } from "../util";
 
 const noop = () => {};
 
-export type PolygonEditorProps = {
+export type EditorPanelProps = {
   mode: PolygonEditorMode;
-  polygon: FeatureCollection;
+  geojson: FeatureCollection;
   onModeChange?: (mode: PolygonEditorMode) => void;
-  onPolygonChange?: (action: EditAction<FeatureCollection>) => void;
+  onGeoJsonChange?: (action: EditAction<FeatureCollection>) => void;
 };
 
-export function PolygonEditor({
+export function EditorPanel({
   mode = "view",
-  polygon = { type: "FeatureCollection", features: [] },
+  geojson = { type: "FeatureCollection", features: [] },
   onModeChange = noop,
-  onPolygonChange = noop,
-}: PolygonEditorProps) {
+  onGeoJsonChange = noop,
+}: EditorPanelProps) {
   const handleDelete = () => {
-    onPolygonChange({
+    onGeoJsonChange({
       updatedData: { type: "FeatureCollection", features: [] } as FeatureCollection,
       editType: "deleteFeature",
       editContext: {
-        featureIndexes: polygon.features.map((_, i) => i),
+        featureIndexes: geojson.features.map((_, i) => i),
       },
     });
   };
+
+  const isEmpty = geojson.features.length === 0;
 
   return (
     <div className={styles.container}>
@@ -49,7 +51,7 @@ export function PolygonEditor({
         name="Modify"
         icon={VectorSquareEdit}
         active={mode === "modify"}
-        disabled={!hasFeatures(polygon)}
+        disabled={!isEmpty}
         onClick={() => onModeChange("modify")}
       />
       <EditorButton
@@ -64,12 +66,7 @@ export function PolygonEditor({
         active={mode === "lasso"}
         onClick={() => onModeChange("lasso")}
       />
-      <EditorButton
-        name="Delete"
-        icon={Delete}
-        disabled={!hasFeatures(polygon)}
-        onClick={handleDelete}
-      />
+      <EditorButton name="Delete" icon={Delete} disabled={!isEmpty} onClick={handleDelete} />
     </div>
   );
 }
@@ -99,8 +96,4 @@ function EditorButton({
       )}
     </button>
   );
-}
-
-function hasFeatures(featureCollection?: FeatureCollection) {
-  return featureCollection?.features?.length !== 0;
 }

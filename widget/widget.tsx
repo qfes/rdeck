@@ -4,8 +4,8 @@ import { EditAction } from "@nebula.gl/edit-modes";
 import type { FeatureCollection } from "geojson";
 import { RDeck, RDeckProps, DeckProps } from "./rdeck";
 import type { LayerProps } from "./layer";
-import type { PolygonEditorProps } from "./controls";
-import type { PolygonEditorMode } from "./types";
+import type { EditorPanelProps } from "./controls";
+import type { PolygonEditorMode as EditorMode } from "./types";
 import { debounce, pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
@@ -33,7 +33,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
   theme: "kepler" | "light" = "kepler";
   layerSelector: boolean = true;
   lazyLoad: boolean = false;
-  polygonEditor: PolygonEditorProps | null = null;
+  editor: EditorPanelProps | null = null;
 
   constructor(el: HTMLElement, width: number, height: number) {
     this.#element = el;
@@ -42,7 +42,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     // event handlers
     this.handleClick = this.handleClick.bind(this);
     this.handleViewStateChange = debounce(this.handleViewStateChange.bind(this), 50);
-    this.handlePolygonChange = debounce(this.handlePolygonChange.bind(this), 50);
+    this.handleGeoJsonChange = debounce(this.handleGeoJsonChange.bind(this), 50);
     this.handleEditorModeChange = this.handleEditorModeChange.bind(this);
     this.setLayerVisibility = this.setLayerVisibility.bind(this);
 
@@ -82,7 +82,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     layers = this.layers,
     theme = this.theme,
     layerSelector = this.layerSelector,
-    polygonEditor = this.polygonEditor,
+    editor = this.editor,
     lazyLoad = this.lazyLoad,
   }: Partial<WidgetProps> = {}) {
     // merge props
@@ -98,20 +98,20 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
       delete props.initialViewState;
     }
 
-    if (polygonEditor != null) {
-      polygonEditor = {
-        ...polygonEditor,
-        polygon: polygonEditor.polygon ?? { type: "FeatureCollection", features: [] },
+    if (editor != null) {
+      editor = {
+        ...editor,
+        geojson: editor.geojson ?? { type: "FeatureCollection", features: [] },
         onModeChange: this.handleEditorModeChange,
-        onPolygonChange: this.handlePolygonChange,
+        onGeoJsonChange: this.handleGeoJsonChange,
       };
     }
 
-    Object.assign(this, { props, layers, theme, layerSelector, polygonEditor, lazyLoad });
+    Object.assign(this, { props, layers, theme, layerSelector, editor, lazyLoad });
 
     this.#root.render(
       <RDeck
-        {...{ props, layers, theme, layerSelector, polygonEditor, lazyLoad }}
+        {...{ props, layers, theme, layerSelector, editor, lazyLoad }}
         onLayerVisibilityChange={this.setLayerVisibility}
       />
     );
@@ -175,26 +175,26 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     }
   }
 
-  private handleEditorModeChange(mode: PolygonEditorMode): void {
-    if (this.polygonEditor == null) return;
+  private handleEditorModeChange(mode: EditorMode): void {
+    if (this.editor == null) return;
 
     this.renderValue({
-      polygonEditor: { ...this.polygonEditor, mode },
+      editor: { ...this.editor, mode },
     });
   }
 
-  private handlePolygonChange({ updatedData, editType }: EditAction<FeatureCollection>): void {
-    if (this.polygonEditor == null) return;
+  private handleGeoJsonChange({ updatedData, editType }: EditAction<FeatureCollection>): void {
+    if (this.editor == null) return;
 
-    const editMap: Record<string, PolygonEditorMode> = {
+    const editMap: Record<string, EditorMode> = {
       addFeature: "modify",
       deleteFeature: "view",
     };
 
-    const mode = editMap[editType] ?? this.polygonEditor.mode;
+    const mode = editMap[editType] ?? this.editor.mode;
 
     this.renderValue({
-      polygonEditor: { ...this.polygonEditor, mode, polygon: updatedData },
+      editor: { ...this.editor, mode, geojson: updatedData },
     });
 
     if (HTMLWidgets.shinyMode) {

@@ -1,3 +1,3 @@
 export { LayerSelector, LayerSelectorProps } from "./layer-selector";
 export { Legend, LegendProps } from "./legend";
-export { PolygonEditor, PolygonEditorProps } from "./polygon-editor";
+export { EditorPanel, EditorPanelProps } from "./editor-panel";

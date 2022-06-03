@@ -12,15 +12,15 @@ import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
 import { _AggregationLayer } from "@deck.gl/aggregation-layers";
 import { DeckProps } from "./rdeck";
-import { PolygonEditorProps } from "./controls";
+import { EditorPanelProps } from "./controls";
 
 export type MapProps = {
   props: DeckProps;
   layers: Layer[];
-  polygonEditor: PolygonEditorProps | null;
+  editor: EditorPanelProps | null;
 };
 
-export function Map({ props, layers, polygonEditor }: MapProps) {
+export function Map({ props, layers, editor }: MapProps) {
   const deckgl = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
@@ -44,8 +44,8 @@ export function Map({ props, layers, polygonEditor }: MapProps) {
   useAnimation(animating, (time) => setTime(time));
 
   const _layers: any = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
-  const editableLayer = renderEditableLayer(polygonEditor);
-  const isEditing = polygonEditor != null && polygonEditor.mode !== "view";
+  const editableLayer = renderEditableLayer(editor);
+  const isEditing = editor != null && editor.mode !== "view";
 
   return (
     <Fragment>
@@ -102,13 +102,13 @@ const useAnimation = (enabled: boolean, onFrame: (time: number) => void) => {
   }, [enabled]);
 };
 
-function renderEditableLayer(props: PolygonEditorProps | null) {
+function renderEditableLayer(props: EditorPanelProps | null) {
   if (props == null) return null;
 
   return new EditableLayer({
     mode: nebulaMode(props.mode),
-    data: props.polygon,
-    onChange: props.onPolygonChange,
+    data: props.geojson,
+    onChange: props.onGeoJsonChange,
     filled: props.mode !== "view",
     getDashArray: props.mode !== "view" ? [4, 2] : [0, 0],
   });
