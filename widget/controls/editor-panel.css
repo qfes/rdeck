@@ -1,6 +1,11 @@
 @import "../theme.css";
 
 .container {
+  display: flex;
+  gap: 6px;
+}
+
+.group {
   @mixin map-widget;
   @mixin shadow;
 }

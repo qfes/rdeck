@@ -1,1 +1,1 @@
-export type PolygonEditorMode = "view" | "modify" | "polygon" | "lasso";
+export type EditorMode = "view" | "modify" | "polygon" | "lasso";

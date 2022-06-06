@@ -46,6 +46,11 @@ as_json.rdeck_data <- function(object) {
     )
   }
 
+  # FIXME: rename polygon_editor -> editor
+  if (!is.null(rdeck_data$polygon_editor)) {
+    rdeck_data <- rename(rdeck_data, editor = polygon_editor)
+  }
+
   json_stringify(
     select(rdeck_data, -where(is_cur_value)),
     camel_case = TRUE,

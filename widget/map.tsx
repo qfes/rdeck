@@ -7,17 +7,16 @@ import { DeckGL } from "@deck.gl/react";
 import { Map as MapGL } from "react-map-gl";
 import { Deck } from "./deck";
 import { Layer } from "./layer";
-import { EditableLayer, nebulaMode } from "./layers";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
 import { _AggregationLayer } from "@deck.gl/aggregation-layers";
 import { DeckProps } from "./rdeck";
-import { EditorPanelProps } from "./controls";
+import { createEditableLayer, EditorProps } from "./editor";
 
 export type MapProps = {
   props: DeckProps;
   layers: Layer[];
-  editor: EditorPanelProps | null;
+  editor: EditorProps | null;
 };
 
 export function Map({ props, layers, editor }: MapProps) {
@@ -44,7 +43,7 @@ export function Map({ props, layers, editor }: MapProps) {
   useAnimation(animating, (time) => setTime(time));
 
   const _layers: any = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
-  const editableLayer = renderEditableLayer(editor);
+  const editableLayer = createEditableLayer(editor);
   const isEditing = editor != null && editor.mode !== "view";
 
   return (
@@ -102,14 +101,4 @@ const useAnimation = (enabled: boolean, onFrame: (time: number) => void) => {
   }, [enabled]);
 };
 
-function renderEditableLayer(props: EditorPanelProps | null) {
-  if (props == null) return null;
 
-  return new EditableLayer({
-    mode: nebulaMode(props.mode),
-    data: props.geojson,
-    onChange: props.onGeoJsonChange,
-    filled: props.mode !== "view",
-    getDashArray: props.mode !== "view" ? [4, 2] : [0, 0],
-  });
-}

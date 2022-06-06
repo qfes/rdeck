@@ -4,11 +4,11 @@ import { EditAction } from "@nebula.gl/edit-modes";
 import type { FeatureCollection } from "geojson";
 import { RDeck, RDeckProps, DeckProps } from "./rdeck";
 import type { LayerProps } from "./layer";
-import type { EditorPanelProps } from "./controls";
-import type { PolygonEditorMode as EditorMode } from "./types";
+import type { EditorMode } from "./types";
 import { debounce, pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
+import { EditorProps } from "./editor";
 
 export const binding: HTMLWidgets.Binding = {
   name: "rdeck",
@@ -33,7 +33,7 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
   theme: "kepler" | "light" = "kepler";
   layerSelector: boolean = true;
   lazyLoad: boolean = false;
-  editor: EditorPanelProps | null = null;
+  editor: EditorProps | null = null;
 
   constructor(el: HTMLElement, width: number, height: number) {
     this.#element = el;
@@ -42,9 +42,12 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     // event handlers
     this.handleClick = this.handleClick.bind(this);
     this.handleViewStateChange = debounce(this.handleViewStateChange.bind(this), 50);
-    this.handleGeoJsonChange = debounce(this.handleGeoJsonChange.bind(this), 50);
-    this.handleEditorModeChange = this.handleEditorModeChange.bind(this);
     this.setLayerVisibility = this.setLayerVisibility.bind(this);
+    this.handleEditorModeChange = this.handleEditorModeChange.bind(this);
+    this.handleEditorGeoJsonChange = this.handleEditorGeoJsonChange.bind(this);
+    this.handleEditorDeleteSelected = this.handleEditorDeleteSelected.bind(this);
+    this.handleEditorDownload = this.handleEditorDownload.bind(this);
+    this.handleEditorUpload = this.handleEditorUpload.bind(this);
 
     if (HTMLWidgets.shinyMode) {
       const render = debounce((props) => this.renderValue(props), 50);
@@ -102,8 +105,11 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
       editor = {
         ...editor,
         geojson: editor.geojson ?? { type: "FeatureCollection", features: [] },
-        onModeChange: this.handleEditorModeChange,
-        onGeoJsonChange: this.handleGeoJsonChange,
+        setMode: this.handleEditorModeChange,
+        setGeoJson: this.handleEditorGeoJsonChange,
+        deleteSelected: this.handleEditorDeleteSelected,
+        upload: this.handleEditorUpload,
+        download: this.handleEditorDownload,
       };
     }
 
@@ -183,7 +189,10 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
     });
   }
 
-  private handleGeoJsonChange({ updatedData, editType }: EditAction<FeatureCollection>): void {
+  private handleEditorGeoJsonChange({
+    updatedData,
+    editType,
+  }: EditAction<FeatureCollection>): void {
     if (this.editor == null) return;
 
     const editMap: Record<string, EditorMode> = {
@@ -191,16 +200,39 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
       deleteFeature: "view",
     };
 
-    const mode = editMap[editType] ?? this.editor.mode;
+    this.renderValue({
+      editor: { ...this.editor, mode: editMap[editType] ?? this.editor.mode, geojson: updatedData },
+    });
+  }
+
+  private handleEditorDeleteSelected(selectedIndices: number[] = [0]): void {
+    if (this.editor == null) return;
+
+    const features = this.editor.geojson.features.filter((_, i) => !selectedIndices.includes(i));
 
     this.renderValue({
-      editor: { ...this.editor, mode, geojson: updatedData },
+      editor: { ...this.editor, geojson: { type: "FeatureCollection", features } },
     });
+  }
 
-    if (HTMLWidgets.shinyMode) {
+  private handleEditorUpload(geojson: FeatureCollection): void {
+    if (this.editor != null && HTMLWidgets.shinyMode) {
       // we need to parse the json with geojsonsf
-      Shiny.setInputValue(`${this.id}_editedpolygon`, { polygon: JSON.stringify(updatedData) });
+      Shiny.setInputValue(`${this.id}_editedpolygon`, {
+        polygon: JSON.stringify(geojson),
+      });
     }
+  }
+
+  private handleEditorDownload(geojson: FeatureCollection): void {
+    if (this.editor == null) return;
+
+    const data = new Blob([JSON.stringify(geojson)], { type: "application/geo+json" });
+    // download
+    const el = document.createElement("a");
+    el.href = URL.createObjectURL(data);
+    el.download = "rdeck.geojson";
+    el.click();
   }
 }
 

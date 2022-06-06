@@ -1,0 +1,1 @@
+(self.webpackChunkrdeck=self.webpackChunkrdeck||[]).push([[264],{9144:(e,d,n)=>{var o,C=void 0!==n.g?n.g:"undefined"!=typeof window?window:{},_=n(7579);"undefined"!=typeof document?o=document:(o=C["__GLOBAL_DOCUMENT_CACHE@4"])||(o=C["__GLOBAL_DOCUMENT_CACHE@4"]=_),e.exports=o}}]);

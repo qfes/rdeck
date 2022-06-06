@@ -1,4 +1,3 @@
-import { EditableGeoJsonLayer } from "@nebula.gl/layers";
 import { PathStyleExtension } from "@deck.gl/extensions";
 import {
   ViewMode,
@@ -12,100 +11,85 @@ import {
   PointerMoveEvent,
 } from "@nebula.gl/edit-modes";
 import type { FeatureCollection } from "geojson";
-import { PolygonEditorMode } from "../types";
+import { EditableGeoJsonLayer } from "nebula.gl";
+import type { EditorPanelProps } from "./controls";
+import type { EditorMode } from "./types";
+
+export type EditorProps = EditorPanelProps & {
+  setGeoJson: (action: EditAction<FeatureCollection>) => void;
+};
 
 const LIGHT_BLUE = [3, 169, 244] as const;
 const LINE_COLOR: Color = [...LIGHT_BLUE, 255];
 const FILL_COLOR: Color = [...LIGHT_BLUE, 0.1 * 255];
 const TRANSPARENT: Color = [0, 0, 0, 0];
 
-export type EditHandler = (action: EditAction<FeatureCollection>) => void;
-export type ChangeHandler = EditHandler;
+export function createEditableLayer(props: EditorProps | null) {
+  if (props == null) return null;
 
-export type EditableLayerProps = Omit<
-  typeof EditableGeoJsonLayer.defaultProps,
-  "name" | "groupName" | "tooltip"
-> & {
-  data?: FeatureCollection;
-  onChange?: ChangeHandler;
-  dash?: boolean;
-  getDashArray?: [number, number];
-};
+  const { mode, geojson, setGeoJson } = props;
 
-// @ts-ignore
-export interface EditableLayer extends EditableGeoJsonLayer {
-  props: EditableLayerProps;
-}
-
-// @ts-ignore
-export class EditableLayer extends EditableGeoJsonLayer {
-  static defaultProps: EditableLayerProps = {
-    ...EditableGeoJsonLayer.defaultProps,
+  return new EditableGeoJsonLayer({
+    data: geojson,
     selectedFeatureIndexes: [0],
-    pickingDepth: 0,
-    onChange: () => {},
-    // translate in mercator
+    mode: nebulaMode(mode),
     modeConfig: {
       screenSpace: true,
       viewport: {},
     },
+    onEdit: handleEdit(setGeoJson),
+
     // line & handle size
     getRadius: 5,
     getLineWidth: 2,
     getTentativeLineWidth: 2,
 
     // colours
+    getFillColor: mode === "view" ? TRANSPARENT : FILL_COLOR,
     getLineColor: LINE_COLOR,
     getTentativeLineColor: LINE_COLOR,
     getEditHandlePointOutlineColor: LINE_COLOR,
-    getFillColor: FILL_COLOR,
     getTentativeFillColor: FILL_COLOR,
     getEditHandlePointColor: TRANSPARENT,
 
-    getDashArray: [4, 2],
-    extensions: [new PathStyleExtension({ dash: true })],
-  };
-
-  constructor(props: EditableLayerProps, ...additionalProps: EditableLayerProps[]) {
-    const onEdit = getProp("onEdit", props, ...additionalProps);
-    const onChange = getProp("onChange", props, ...additionalProps);
-
     // @ts-ignore
-    super(props, ...additionalProps, { onEdit: handleEdit(onEdit, onChange) });
-  }
+    getDashArray: mode === "view" ? [0, 0] : [4, 2],
+    extensions: [new PathStyleExtension({ dash: true })],
+  });
 }
 
-const CHANGE_EVENTS = Object.freeze([
-  "addFeature",
-  "addPosition",
-  "removePosition",
-  "finishMovePosition",
-  "translated",
-]);
+type EditHandler = (action: EditAction<FeatureCollection>) => void;
 
-function handleEdit(onEdit?: EditHandler, onChange?: ChangeHandler) {
+// wrapper for EditableGeoJsonLayer.props.onEdit. avoid unnecessary re-renders
+function handleEdit(onEdit?: EditHandler) {
   return function ({ updatedData, editType, editContext }: EditAction<FeatureCollection>) {
     // drawing a new polygon? delete any current polygons
-    if (editType === "updateTentativeFeature" && updatedData && updatedData.features.length !== 0) {
+    if (editType === "updateTentativeFeature" && updatedData.features.length !== 0) {
       updatedData.features.length = 0;
     }
 
     // @ts-ignore
     this.data = updatedData;
-    onEdit?.({ updatedData, editType, editContext });
 
-    if (editType != null && CHANGE_EVENTS.includes(editType)) {
-      onChange?.({ updatedData, editType, editContext });
+    if (EDIT_EVENTS.has(editType)) {
+      onEdit?.({ updatedData, editType, editContext });
     }
   };
 }
 
-function getProp<K extends keyof P, P extends object>(name: K, ...props: P[]): P[K] | undefined {
-  return props
-    .map((p) => p[name])
-    .reverse()
-    .find((x) => x !== undefined);
-}
+const EDIT_EVENTS = Object.freeze(
+  new Set([
+    "addPosition",
+    "removePosition",
+    "addFeature",
+    "finishMovePosition",
+    "scaled",
+    "rotated",
+    "translated",
+    "extruded",
+    "split",
+  ])
+);
 
 class TranslateModifyMode extends CompositeMode {
   constructor(modes = [new TranslateMode(), new ModifyMode()]) {
@@ -131,6 +115,6 @@ const EDITOR_MODES = Object.seal({
   lasso: new DrawPolygonByDraggingMode(),
 });
 
-export function nebulaMode(mode?: PolygonEditorMode) {
+function nebulaMode(mode?: EditorMode) {
   return EDITOR_MODES[mode ?? "view"] ?? EDITOR_MODES.view;
 }

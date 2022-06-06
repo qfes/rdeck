@@ -4,9 +4,10 @@ import { MapProps } from "react-map-gl";
 
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { Map } from "./map";
-import { LayerSelector, Legend, EditorPanel, EditorPanelProps } from "./controls";
+import { LayerSelector, Legend, EditorPanel } from "./controls";
 import styles from "./rdeck.css";
 import { classNames } from "./util";
+import type { EditorProps } from "./editor";
 
 export type DeckProps = DeckGLProps &
   Pick<MapProps, "mapboxAccessToken" | "mapStyle"> & {
@@ -21,7 +22,7 @@ export interface RDeckProps {
   lazyLoad: boolean;
   layerSelector: boolean;
   onLayerVisibilityChange: (layers: VisibilityInfo[]) => void;
-  editor: EditorPanelProps | null;
+  editor: EditorProps | null;
 }
 
 export function RDeck({
