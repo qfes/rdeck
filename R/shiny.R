@@ -126,6 +126,15 @@ rdeck_proxy <- function(id,
                         ...) {
   tidyassert::assert_is_string(id)
 
+  args <- rlang::call_args(rlang::current_call())
+  needs_update <- !rlang::is_empty(
+    select(
+      args,
+      -tidyselect::any_of(c("id", "session")),
+      -where(is_cur_value)
+    )
+  )
+
   rdeck <- structure(
     list(
       id = session$ns(id),
@@ -134,8 +143,9 @@ rdeck_proxy <- function(id,
     class = c("rdeck_proxy", "rdeck")
   )
 
-  props <- rdeck_props(
-    map_style = map_style,
+  if (!needs_update) return(rdeck)
+
+  deckgl <- deck_props(
     initial_bounds = initial_bounds,
     initial_view_state = initial_view_state,
     controller = controller,
@@ -145,21 +155,20 @@ rdeck_proxy <- function(id,
     ...
   )
 
-  props <- select(props, -where(is_cur_value))
+  mapgl <- map_props(map_style = map_style)
 
-  if (length(props) != 0) {
-    data <- structure(
-      list(
-        props = props,
-        theme = theme,
-        layer_selector = layer_selector,
-        lazy_load = lazy_load
-      ),
-      class = "rdeck_data"
-    )
-    send_msg(rdeck, "deck", as_json(data))
-  }
+  data <- structure(
+    list(
+      theme = theme,
+      deckgl = deckgl,
+      mapgl = mapgl,
+      layer_selector = layer_selector,
+      lazy_load = lazy_load
+    ),
+    class = "rdeck_data"
+  )
 
+  send_msg(rdeck, "deck", as_json(data))
   rdeck
 }
 

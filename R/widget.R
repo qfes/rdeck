@@ -62,12 +62,9 @@ rdeck <- function(map_style = mapbox_dark(),
   }
 
   check_dots_access_token(...)
-  dots <- rlang::dots_list(...)
 
-  props <- rlang::exec(
-    rdeck_props,
-    !!!mutate(dots, mapbox_access_token = dots$mapbox_access_token %||% mapbox_access_token()),
-    map_style = map_style,
+  deckgl <- deck_props(
+    ...,
     initial_bounds = if (!is.null(initial_bounds)) map_bounds(initial_bounds),
     initial_view_state = initial_view_state,
     controller = controller,
@@ -76,11 +73,17 @@ rdeck <- function(map_style = mapbox_dark(),
     blending_mode = blending_mode
   )
 
+  mapgl <- map_props(
+    map_style = map_style,
+    mapbox_access_token = mapbox_access_token()
+  )
+
   x <- structure(
     list(
-      props = props,
-      layers = list(),
       theme = theme,
+      deckgl = deckgl,
+      mapgl = mapgl,
+      layers = list(),
       layer_selector = layer_selector,
       lazy_load = lazy_load
     ),
@@ -176,9 +179,7 @@ map_bounds <- function(initial_bounds) {
     sf::st_bbox()
 }
 
-rdeck_props <- function(...,
-                        mapbox_access_token = cur_value(),
-                        map_style = cur_value(),
+deck_props <- function(...,
                         initial_bounds = cur_value(),
                         initial_view_state = cur_value(),
                         controller = cur_value(),
@@ -189,8 +190,6 @@ rdeck_props <- function(...,
   structure(
     c(
       list(
-        mapbox_access_token = mapbox_access_token,
-        map_style = map_style,
         initial_bounds = initial_bounds,
         initial_view_state = initial_view_state,
         controller = controller,
@@ -200,6 +199,18 @@ rdeck_props <- function(...,
       ),
       rlang::dots_list(...)
     ),
-    class = "rdeck_props"
+    class = "deck_props"
+  )
+}
+
+map_props <- function(...,
+                      map_style = cur_value(),
+                      mapbox_access_token = cur_value()) {
+  structure(
+    list(
+      map_style = map_style,
+      mapbox_access_token = mapbox_access_token
+    ),
+    class = "map_props"
   )
 }

@@ -1,142 +1,86 @@
 import { createRoot, Root } from "react-dom/client";
-import type { InitialViewStateProps, PickInfo } from "@deck.gl/core";
-import { RDeck, RDeckProps, DeckProps } from "./rdeck";
-import type { LayerProps } from "./layer";
-import { debounce, pick } from "./util";
+import { StrictMode } from "react";
+import type { PickInfo, ViewStateChangeParams } from "@deck.gl/core";
+import { RDeck, RDeckProps } from "./rdeck";
+import type { LayerProps, VisibilityInfo } from "./layer";
+import { pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
+import { Store } from "./store";
 
-export const binding: HTMLWidgets.Binding = {
-  name: "rdeck",
-  type: "output",
-  factory(el, width, height) {
-    return new Widget(el, width, height);
-  },
-};
+export class Widget {
+  #root: Root;
+  #element: Element;
+  get element() {
+    return this.#element;
+  }
 
-type LayerVisibilityProps = Pick<LayerProps, "groupName" | "visible"> & {
-  name: string | null;
-};
+  #state: Store;
+  get state() {
+    return this.#state;
+  }
 
-type WidgetProps = Pick<RDeckProps, "props" | "layers" | "theme" | "layerSelector" | "lazyLoad">;
+  constructor(element: Element, props: Partial<Store>) {
+    this.#element = element;
+    this.#root = createRoot(element);
+    this.#state = new Store(props, () => this.render());
 
-export class Widget implements HTMLWidgets.Widget, WidgetProps {
-  readonly #element: HTMLElement;
-  readonly #root: Root;
-
-  props: DeckProps = { blendingMode: "normal" };
-  layers: LayerProps[] = [];
-  theme: "kepler" | "light" = "kepler";
-  layerSelector: boolean = true;
-  lazyLoad: boolean = false;
-
-  constructor(el: HTMLElement, width: number, height: number) {
-    this.#element = el;
-    this.#root = createRoot(el);
-    // event handlers
-    this.handleClick = this.handleClick.bind(this);
-    this.handleViewStateChange = debounce(this.handleViewStateChange.bind(this), 50);
-    this.setLayerVisibility = this.setLayerVisibility.bind(this);
-
+    // FIXME: move to service
     if (HTMLWidgets.shinyMode) {
-      const render = debounce((props) => this.renderValue(props), 50);
-
       // update layers
-      Shiny.addCustomMessageHandler(`${el.id}:layer`, (layer: LayerProps) => {
-        const _layer = this.layers.find((x) => x.id === layer.id);
-        const merged = {
-          ..._layer,
-          ...layer,
-          // if visible is null, use existing
-          visible: layer.visible ?? _layer?.visible,
-          // if data is not supplied / is falsey from shiny, use existing
-          data: layer.data ?? _layer?.data ?? null,
-        };
-
-        // upsert
-        this.layers =
-          _layer == null
-            ? [...this.layers, merged]
-            : this.layers.map((x) => (x === _layer ? merged : x));
-
-        render({ layers: this.layers });
+      Shiny.addCustomMessageHandler(`${element.id}:layer`, (layer: LayerProps) => {
+        // FIXME: batch upserts
+        this.state.upsertLayer(layer);
       });
 
       // update map
-      Shiny.addCustomMessageHandler(`${el.id}:deck`, (props: RDeckProps) => {
-        this.renderValue(props);
+      Shiny.addCustomMessageHandler(`${element.id}:deck`, (props: RDeckProps) => {
+        Object.assign(this.state.deckgl, props);
       });
     }
   }
 
-  renderValue({
-    props = this.props,
-    layers = this.layers,
-    theme = this.theme,
-    layerSelector = this.layerSelector,
-    lazyLoad = this.lazyLoad,
-  }: Partial<WidgetProps> = {}) {
-    // merge props
-    props = {
-      ...this.props,
-      ...props,
-      onClick: this.handleClick,
-      onViewStateChange: this.handleViewStateChange,
+  render() {
+    const { theme, mapgl, layers, layerSelector, lazyLoad } = this.#state;
+    const deckgl = {
+      ...this.#state.deckgl,
+      onClick: this.#handleClick,
+      onViewStateChange: this.#handleViewStateChange,
     };
 
-    // overwritten on initialBounds change
-    if (props.initialBounds != null) {
-      delete props.initialViewState;
+    // overwritten
+    if (deckgl.initialBounds != null) {
+      delete deckgl.initialViewState;
     }
 
-    Object.assign(this, { props, layers, theme, layerSelector, lazyLoad });
-
     this.#root.render(
-      <RDeck
-        {...{ props, layers, theme, layerSelector, lazyLoad }}
-        onLayerVisibilityChange={this.setLayerVisibility}
-      />
+      <StrictMode>
+        <RDeck
+          {...{
+            theme,
+            deckgl,
+            mapgl,
+            layers,
+            layerSelector,
+            onLayerVisibilityChange: this.state.setLayerVisibility,
+            lazyLoad,
+          }}
+        />
+      </StrictMode>
     );
-  }
-
-  // deck.gl handles resize automatically
-  resize(width: number, height: number): void {}
-
-  /**
-   * Get widget id
-   */
-  get id(): string {
-    return this.#element.id;
   }
 
   /**
    * Set layers' visibility. Layers not included in visibility are unaltered.
-   * @param layers the layers whose visibility is to be changed
+   * @param layersVisibility the layers whose visibility is to be changed
    */
-  setLayerVisibility(layers: LayerVisibilityProps[]): void {
-    if (layers.length === 0) return;
-
-    const isMatch = (layerVisiblity: LayerVisibilityProps, layer: LayerProps) => {
-      const nameEqual = layerVisiblity.name === layer.name;
-      const groupEqual = layerVisiblity.groupName === layer.groupName;
-
-      return (
-        (nameEqual && groupEqual) ||
-        // all layers in a group
-        (layerVisiblity.name == null && layerVisiblity.groupName != null && groupEqual)
-      );
-    };
-
-    const _layers = this.layers.map((layer) => {
-      const _layer = layers.find((x) => isMatch(x, layer) && x.visible !== layer.visible);
-      return _layer ? { ...layer, visible: _layer.visible } : layer;
-    });
-
-    this.renderValue({ layers: _layers });
+  setLayerVisibility(layersVisibility: VisibilityInfo[]) {
+    return this.#state.setLayerVisibility(layersVisibility);
   }
 
-  // event handlers
-  private handleClick(info: PickInfo<any>): void {
+  // FIXME: move to store
+  #handleClick = (info: PickInfo<any>, event: MouseEvent): void => {
+    this.#state.deckgl.onClick?.(info, event);
     if (HTMLWidgets.shinyMode) {
       const data = {
         coordinate: info.coordinate,
@@ -145,38 +89,17 @@ export class Widget implements HTMLWidgets.Widget, WidgetProps {
         object: getPickedObject(info),
       };
 
-      Shiny.setInputValue(`${this.id}_click`, data, { priority: "event" });
+      Shiny.setInputValue(`${this.element.id}_click`, data, { priority: "event" });
     }
-  }
+  };
 
-  private handleViewStateChange({ viewState }: { viewState: InitialViewStateProps }): void {
+  // FIXME: move to store
+  #handleViewStateChange = (params: ViewStateChangeParams): void => {
+    this.#state.deckgl.onViewStateChange?.(params);
     if (HTMLWidgets.shinyMode) {
-      const data = getViewState(viewState);
+      const data = getViewState(params.viewState);
 
-      Shiny.setInputValue(`${this.id}_viewstate`, data, { priority: "event" });
+      Shiny.setInputValue(`${this.element.id}_viewstate`, data, { priority: "event" });
     }
-  }
+  };
 }
-
-type WidgetContainer = HTMLElement & { htmlwidget_data_init_result: Widget };
-
-/**
- * Get an rdeck widget instance by id
- * @param id the widget id
- * @returns {Widget}
- */
-export function getWidgetById(id: string): Widget | null {
-  const element = document.getElementById(id) as WidgetContainer | null;
-  return element?.htmlwidget_data_init_result ?? null;
-}
-
-/**
- * Get all rdeck widget instances
- */
-export function getWidgets(): Widget[] {
-  const elements = [...document.querySelectorAll(".rdeck.html-widget")] as WidgetContainer[];
-  return elements.map((x) => x.htmlwidget_data_init_result).filter((x) => x instanceof Widget);
-}
-
-/* register widget */
-HTMLWidgets.widget(binding);

@@ -21,11 +21,19 @@ as_json.layer <- function(object) {
   )
 }
 
-as_json.rdeck_props <- function(object) {
-  rdeck_props <- select(object, -where(is_cur_value))
+as_json.deck_props <- function(object) {
+  deck_props <- select(object, -where(is_cur_value))
 
   json_stringify(
-    lapply(rdeck_props, function(p) as_json(p)),
+    lapply(deck_props, function(p) as_json(p)),
+    camel_case = TRUE,
+    auto_unbox = TRUE
+  )
+}
+
+as_json.map_props <- function(object) {
+  json_stringify(
+    select(object, -where(is_cur_value)),
     camel_case = TRUE,
     auto_unbox = TRUE
   )
