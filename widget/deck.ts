@@ -2,8 +2,9 @@ import { Deck as _Deck, DeckProps as _DeckProps } from "@deck.gl/core";
 import { fitBounds } from "@math.gl/web-mercator";
 import { getElementSize } from "./util";
 
-export interface DeckProps extends _DeckProps {
-  initialBounds: Bounds | null;
+export interface DeckProps extends Partial<_DeckProps> {
+  initialBounds?: Bounds;
+  blendingMode?: BlendingMode;
 }
 
 export class Deck extends _Deck {
@@ -12,7 +13,8 @@ export class Deck extends _Deck {
     initialBounds: null,
   };
 
-  props!: DeckProps;
+  // @ts-ignore: all deck props should be optional
+  declare props: DeckProps;
 
   setProps(props: Partial<DeckProps>): void {
     const initialBounds = props.initialBounds;

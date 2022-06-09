@@ -4,28 +4,31 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { PickInfo, MapView } from "@deck.gl/core";
 import { DeckGL } from "@deck.gl/react";
-import { Map as MapGL } from "react-map-gl";
-import { Deck } from "./deck";
+import { _AggregationLayer } from "@deck.gl/aggregation-layers";
+import { Map as MapGL, MapProps as MapGLProps } from "react-map-gl";
+
+import { Deck, DeckProps } from "./deck";
 import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
-import { _AggregationLayer } from "@deck.gl/aggregation-layers";
-import { DeckProps } from "./rdeck";
 
 export type MapProps = {
-  props: DeckProps;
+  deckgl: DeckProps;
+  mapgl: MapGLProps;
   layers: Layer[];
 };
 
-export function Map({ props, layers }: MapProps) {
-  const deckgl = useRef<DeckGL>(null);
+export function Map({ deckgl, mapgl, layers }: MapProps) {
+  const deck = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
-  const { mapboxAccessToken, mapStyle, controller, parameters, blendingMode, ...deckProps } = props;
-  const _parameters = {
-    ...parameters,
-    ...blendingParameters(blendingMode),
+  const { controller, blendingMode, ...deckProps } = deckgl;
+
+  const parameters = {
+    ...deckgl.parameters,
+    ...(blendingMode && blendingParameters(blendingMode)),
   };
+
   // layer animation loop
   const [time, setTime] = useState(0);
   const animating = layers.some((layer) => layer.type === "TripsLayer");
@@ -36,15 +39,15 @@ export function Map({ props, layers }: MapProps) {
   return (
     <Fragment>
       <DeckGL
+        // @ts-ignore
         Deck={Deck}
-        ref={deckgl}
+        ref={deck}
         {...deckProps}
-        parameters={_parameters}
-        layers={_layers}
-        onHover={handleHover}
+        {...{ parameters, layers: _layers, onHover: handleHover }}
       >
-        <MapView id="map" controller={controller} repeat={true}>
-          {mapStyle && <MapGL reuseMaps {...{ mapboxAccessToken, mapStyle }} />}
+        <MapView id="map" controller={controller} repeat>
+          {/* @ts-ignore} */}
+          {mapgl.mapStyle && <MapGL {...mapgl} />}
         </MapView>
       </DeckGL>
       {info && <Tooltip info={info} />}

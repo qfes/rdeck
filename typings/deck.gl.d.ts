@@ -8,9 +8,10 @@ declare module "deck.gl" {
 declare module "@deck.gl/core" {
   import { DeckProps } from "@deck.gl/core/lib/deck";
   import { LayerProps } from "@deck.gl/core/lib/layer";
-  export { PickInfo, InitialViewStateProps } from "@deck.gl/core/lib/deck";
+  export { PickInfo, InitialViewStateProps, ViewStateChangeParams } from "@deck.gl/core/lib/deck";
   import ViewManager from "@deck.gl/core/lib/view-manager";
   export { LayerProps, DeckProps };
+  export { ControllerOptions } from "@deck.gl/core/controllers/controller";
 
   export class Deck {
     static defaultProps: DeckProps;
@@ -62,13 +63,20 @@ declare module "@deck.gl/core" {
 
 declare module "@deck.gl/core/lib/deck" {
   import { Viewport } from "@deck.gl/core";
-  export interface PickInfo<D> {
+  import { LayerProps } from "@deck.gl/core/lib/layer";
+  export interface PickInfo<D = any> {
     viewport: Viewport;
   }
+
+  export type ViewStateChangeParams = {
+    viewState: InitialViewStateProps;
+    interactionState: InteractionState;
+    oldViewState?: InitialViewStateProps;
+  };
 }
 
 declare module "@deck.gl/core/lib/layer" {
-  export interface LayerProps<D> {
+  export interface LayerProps<D = any> {
     name: string | null;
     groupName: string | null;
     tooltip: TooltipInfo | null;

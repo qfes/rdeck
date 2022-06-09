@@ -1,37 +1,33 @@
 import { useEffect, useRef, useState, RefObject } from "react";
-import type { DeckGLProps } from "@deck.gl/react";
-import { MapProps } from "react-map-gl";
+import type { MapProps } from "react-map-gl";
 
-import { Layer, LayerProps, VisibilityInfo } from "./layer";
+import type { DeckProps } from "./deck";
 import { Map } from "./map";
+import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { LayerSelector, Legend } from "./controls";
 import styles from "./rdeck.css";
 import { classNames } from "./util";
 
-export type DeckProps = DeckGLProps &
-  Pick<MapProps, "mapboxAccessToken" | "mapStyle"> & {
-    initialBounds?: Bounds;
-    blendingMode: BlendingMode;
-  };
-
 export interface RDeckProps {
-  props: DeckProps;
-  layers: LayerProps[];
   theme: "kepler" | "light";
+  deckgl: DeckProps;
+  mapgl: MapProps;
+  layers: LayerProps[];
   lazyLoad: boolean;
   layerSelector: boolean;
-  onLayerVisibilityChange: (layers: VisibilityInfo[]) => void;
+  onLayerVisibilityChange: (layersVisibility: VisibilityInfo[]) => void;
 }
 
 export function RDeck({
-  props,
-  layers,
   theme,
-  lazyLoad,
-  layerSelector,
+  deckgl,
+  mapgl,
+  layers,
+  lazyLoad = false,
+  layerSelector = false,
   onLayerVisibilityChange,
 }: RDeckProps) {
-  const _layers = layers.map(Layer.create);
+  const _layers = layers?.map(Layer.create) ?? [];
 
   const container = useRef<HTMLDivElement>(null);
   const inViewport = useInViewport(container, lazyLoad);
@@ -50,7 +46,7 @@ export function RDeck({
           />
         )}
       </div>
-      {shouldRender && <Map props={props} layers={_layers} />}
+      {shouldRender && <Map {...{ deckgl, mapgl, layers: _layers }} />}
       <div className={classNames(styles.controlContainer, styles.right)}>
         <Legend
           layers={_layers
