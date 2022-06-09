@@ -6,7 +6,7 @@ export function observable<T extends object>(object: T, observer?: (info: Partia
         return value;
       },
       set(newValue) {
-        if (newValue === value) return;
+        if (Object.is(newValue, value)) return;
         value = newValue;
         observer?.({ [property]: newValue } as Pick<T, typeof property>);
       },
