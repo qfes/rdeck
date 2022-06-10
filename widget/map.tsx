@@ -4,39 +4,33 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { PickInfo, MapView } from "@deck.gl/core";
 import { DeckGL } from "@deck.gl/react";
-import { Map as MapGL } from "react-map-gl";
-import { Deck } from "./deck";
+import { _AggregationLayer } from "@deck.gl/aggregation-layers";
+import { Map as MapGL, MapProps as MapGLProps } from "react-map-gl";
+
+import { Deck, DeckProps } from "./deck";
 import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
-import { _AggregationLayer } from "@deck.gl/aggregation-layers";
-import { DeckProps } from "./rdeck";
 import { createEditableLayer, EditorProps } from "./editor";
 
 export type MapProps = {
-  props: DeckProps;
+  deckgl: DeckProps;
+  mapgl: MapGLProps;
   layers: Layer[];
   editor: EditorProps | null;
 };
 
-export function Map({ props, layers, editor }: MapProps) {
-  const deckgl = useRef<DeckGL>(null);
+export function Map({ deckgl, mapgl, layers, editor }: MapProps) {
+  const deck = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
-  const {
-    mapboxAccessToken,
-    mapStyle,
-    controller,
-    parameters,
-    blendingMode,
-    onClick: handleClick,
-    ...deckProps
-  } = props;
+  const { controller, blendingMode, onClick: handleClick, ...deckProps } = deckgl;
 
-  const _parameters = {
-    ...parameters,
-    ...blendingParameters(blendingMode),
+  const parameters = {
+    ...deckgl.parameters,
+    ...(blendingMode && blendingParameters(blendingMode)),
   };
+
   // layer animation loop
   const [time, setTime] = useState(0);
   const animating = layers.some((layer) => layer.type === "TripsLayer");
@@ -49,10 +43,10 @@ export function Map({ props, layers, editor }: MapProps) {
   return (
     <Fragment>
       <DeckGL
+        // @ts-ignore
         Deck={Deck}
-        ref={deckgl}
-        {...deckProps}
-        parameters={_parameters}
+        ref={deck}
+        {...{ ...deckProps, parameters }}
         layers={[..._layers, editableLayer]}
         // remove picking callbacks when editing
         onHover={!isEditing ? handleHover : undefined}
@@ -60,7 +54,8 @@ export function Map({ props, layers, editor }: MapProps) {
         getCursor={editableLayer?.getCursor.bind(editableLayer)}
       >
         <MapView id="map" controller={controller} repeat>
-          {mapStyle && <MapGL reuseMaps {...{ mapboxAccessToken, mapStyle }} />}
+          {/* @ts-ignore} */}
+          {mapgl.mapStyle && <MapGL {...mapgl} />}
         </MapView>
       </DeckGL>
       {info && <Tooltip info={info} />}
@@ -100,5 +95,3 @@ const useAnimation = (enabled: boolean, onFrame: (time: number) => void) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enabled]);
 };
-
-

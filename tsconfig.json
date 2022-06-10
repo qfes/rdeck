@@ -12,6 +12,7 @@
     "esModuleInterop": true,
     "allowUmdGlobalAccess": true,
     "resolveJsonModule": true,
+    "useDefineForClassFields": true,
     "forceConsistentCasingInFileNames": true
   }
 }

@@ -126,6 +126,20 @@ rdeck_proxy <- function(id,
                         lazy_load = cur_value(),
                         ...) {
   tidyassert::assert_is_string(id)
+  tidyassert::assert(
+    is_cur_value(polygon_editor) |
+      is_polygon_editor_options(polygon_editor) |
+      rlang::is_scalar_logical(polygon_editor)
+  )
+
+  args <- rlang::call_args(rlang::current_call())
+  needs_update <- !rlang::is_empty(
+    select(
+      args,
+      -tidyselect::any_of(c("id", "session")),
+      -where(is_cur_value)
+    )
+  )
 
   rdeck <- structure(
     list(
@@ -135,8 +149,9 @@ rdeck_proxy <- function(id,
     class = c("rdeck_proxy", "rdeck")
   )
 
-  props <- rdeck_props(
-    map_style = map_style,
+  if (!needs_update) return(rdeck)
+
+  deckgl <- deck_props(
     initial_bounds = initial_bounds,
     initial_view_state = initial_view_state,
     controller = controller,
@@ -146,27 +161,20 @@ rdeck_proxy <- function(id,
     ...
   )
 
-  props <- select(props, -where(is_cur_value))
-  tidyassert::assert(
-    is_cur_value(polygon_editor) |
-      is_polygon_editor_options(polygon_editor) |
-      rlang::is_scalar_logical(polygon_editor)
+  mapgl <- map_props(map_style = map_style)
+
+  data <- structure(
+    list(
+      theme = theme,
+      deckgl = deckgl,
+      mapgl = mapgl,
+      layer_selector = layer_selector,
+      lazy_load = lazy_load
+    ),
+    class = "rdeck_data"
   )
 
-  if (length(props) != 0) {
-    data <- structure(
-      list(
-        props = props,
-        theme = theme,
-        layer_selector = layer_selector,
-        polygon_editor = as_polygon_editor(polygon_editor),
-        lazy_load = lazy_load
-      ),
-      class = "rdeck_data"
-    )
-    send_msg(rdeck, "deck", as_json(data))
-  }
-
+  send_msg(rdeck, "deck", as_json(data))
   rdeck
 }
 

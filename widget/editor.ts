@@ -16,7 +16,7 @@ import type { EditorPanelProps } from "./controls";
 import type { EditorMode } from "./types";
 
 export type EditorProps = EditorPanelProps & {
-  setGeoJson: (action: EditAction<FeatureCollection>) => void;
+  setGeoJson?: (action: EditAction<FeatureCollection>) => void;
 };
 
 const LIGHT_BLUE = [3, 169, 244] as const;
