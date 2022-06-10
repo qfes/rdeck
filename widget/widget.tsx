@@ -115,8 +115,8 @@ export class Widget {
   #handleUpload = (geojson: FeatureCollection): void => {
     if (HTMLWidgets.shinyMode) {
       // we need to parse the json with geojsonsf
-      Shiny.setInputValue(`${this.element.id}_editedpolygon`, {
-        polygon: JSON.stringify(geojson),
+      Shiny.setInputValue(`${this.element.id}_editorupload`, {
+        geojson: JSON.stringify(geojson),
       });
     }
   };

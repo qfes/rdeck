@@ -27,8 +27,8 @@
 #' @param layer_selector <`boolean`> If `TRUE`, the layer selector control will be enabled
 #' and layers with `visibility_toggle = TRUE` may be toggled. If `FALSE`, the layer selector control
 #' won't be rendered.
-#' @param polygon_editor <`boolean`|[`polygon_editor_options`]> Whether to render the polygon editor.
-#' If `TRUE`, renders with the default [polygon_editor_options()]. If `FALSE`, the polygon editor
+#' @param editor <`boolean`|[`editor_options`]> Whether to render the polygon editor.
+#' If `TRUE`, renders with the default [editor_options()]. If `FALSE`, the polygon editor
 #' is not rendered.
 #' @param lazy_load <`boolean`> If `TRUE`, maps will be rendered when they are scrolled into
 #' view and destroyed when they are scrolled out of view. If `FALSE`, maps will be rendered
@@ -51,7 +51,7 @@ rdeck <- function(map_style = mapbox_dark(),
                   use_device_pixels = TRUE,
                   blending_mode = "normal",
                   layer_selector = FALSE,
-                  polygon_editor = FALSE,
+                  editor = FALSE,
                   lazy_load = FALSE,
                   width = NULL,
                   height = NULL,
@@ -67,7 +67,7 @@ rdeck <- function(map_style = mapbox_dark(),
 
   check_dots_access_token(...)
   tidyassert::assert(
-    is_polygon_editor_options(polygon_editor) | rlang::is_scalar_logical(polygon_editor)
+    is_editor_options(editor) | rlang::is_scalar_logical(editor)
   )
 
   deckgl <- deck_props(
@@ -92,7 +92,7 @@ rdeck <- function(map_style = mapbox_dark(),
       mapgl = mapgl,
       layers = list(),
       layer_selector = layer_selector,
-      polygon_editor = as_polygon_editor(polygon_editor),
+      editor = as_editor_options(editor),
       lazy_load = lazy_load
     ),
     class = "rdeck_data"

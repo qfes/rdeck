@@ -7,7 +7,7 @@
 \alias{get_clicked_coordinates}
 \alias{get_clicked_layer}
 \alias{get_clicked_object}
-\alias{get_edited_polygon}
+\alias{get_edited_features}
 \title{Shiny events data}
 \usage{
 get_view_bounds(rdeck, session = shiny::getDefaultReactiveDomain())
@@ -20,7 +20,7 @@ get_clicked_layer(rdeck, session = shiny::getDefaultReactiveDomain())
 
 get_clicked_object(rdeck, session = shiny::getDefaultReactiveDomain())
 
-get_edited_polygon(rdeck, session = shiny::getDefaultReactiveDomain())
+get_edited_features(rdeck, session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
 \item{rdeck}{<\code{rdeck_proxy} | \code{string}> the map, or map id}
@@ -42,6 +42,6 @@ Utilities for retrieving map event data in a shiny application.
 
 \item \code{get_clicked_object}: Get the last clicked object (or NULL)
 
-\item \code{get_edited_polygon}: Get the last clicked object (or NULL)
+\item \code{get_edited_features}: Get the edited features
 }}
 

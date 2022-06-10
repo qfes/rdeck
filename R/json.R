@@ -54,11 +54,6 @@ as_json.rdeck_data <- function(object) {
     )
   }
 
-  # FIXME: rename polygon_editor -> editor
-  if (!is.null(rdeck_data$polygon_editor)) {
-    rdeck_data <- rename(rdeck_data, editor = polygon_editor)
-  }
-
   json_stringify(
     select(rdeck_data, -where(is_cur_value)),
     camel_case = TRUE,
@@ -79,14 +74,18 @@ as_json.bbox <- function(object) {
   json_stringify(object, digits = 6)
 }
 
-as_json.polygon_editor_options <- function(object) {
-  options <- mutate(
-    select(object, -where(is_cur_value)),
-    across(
-      tidyselect::any_of("polygon"),
-      function(sfc) geojsonsf::sf_geojson(sf::st_sf(sfc), simplify = FALSE)
+as_json.editor_options <- function(object) {
+  options <- mutate(select(object, -where(is_cur_value)))
+
+  # features to geojson
+  if (!is.null(options$features)) {
+    options <- mutate(
+      options,
+      geojson = geojsonsf::sf_geojson(sf::st_sf(features), simplify = FALSE)
     )
-  )
+
+    options <- select(options, -features)
+  }
 
   json_stringify(
     options,

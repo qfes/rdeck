@@ -1,36 +1,32 @@
 #' Polygon editor options
 #'
 #' Options for the polygon editor
-#' @name polygon_editor_options
+#' @name editor_options
 #' @param mode <`"view"` | `"modify"` | `"polygon"` | `"lasso"`> The polygon editor mode.
 #' - `view`: editor is in readonly mode
 #' - `modify`: add/move/delete vertices, or move the entire polygon
 #' - `polygon`: draw a polygon by clicking each vertex
 #' - `lasso`: freehand polygon draw by click-dragging
-#' @param polygon <`sfc`> A polygon with which to initialise the editor
+#' @param features <`sfc`> Features with which to initialise the editor
 #' @export
-polygon_editor_options <- function(mode = "view", polygon = cur_value()) {
-  tidyassert::assert(
-    is_cur_value(mode) ||
-      rlang::is_string(mode) & mode %in% c("view", "modify", "polygon", "lasso")
-  )
-  tidyassert::assert(
-    is_cur_value(polygon) ||
-      is_sfc(polygon) & sf::st_geometry_type(polygon, FALSE) == "POLYGON"
-  )
+editor_options <- function(mode = "view", features = cur_value()) {
+  tidyassert::assert(!rlang::is_null(mode) || is_cur_value(mode))
+  tidyassert::assert(rlang::is_string(mode) & mode %in% c("view", "modify", "features", "lasso"))
+  tidyassert::assert(!rlang::is_null(features) || is_cur_value(features))
+  tidyassert::assert(is_sfc(features) & sf::st_geometry_type(features, FALSE) == "POLYGON")
 
   structure(
     list(
       mode = mode,
-      polygon = polygon
+      features = features
     ),
-    class = "polygon_editor_options"
+    class = "editor_options"
   )
 }
 
-is_polygon_editor_options <- function(object) inherits(object, "polygon_editor_options")
+is_editor_options <- function(object) inherits(object, "editor_options")
 
-as_polygon_editor <- function(object) UseMethod("as_polygon_editor")
-as_polygon_editor.default <- function(object) object
-as_polygon_editor.NULL <- function(object) NULL
-as_polygon_editor.logical <- function(object) if (isTRUE(object)) polygon_editor_options() else NULL
+as_editor_options <- function(object) UseMethod("as_editor_options")
+as_editor_options.default <- function(object) object
+as_editor_options.NULL <- function(object) NULL
+as_editor_options.logical <- function(object) if (isTRUE(object)) editor_options() else NULL

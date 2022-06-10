@@ -38,7 +38,6 @@ utils::globalVariables(c(
   "text", # <add_mvt_layer>
   "position", # <add_simple_mesh_layer>
   "position", # <add_scenegraph_layer>
-  "polygon_editor", # <as_json.rdeck_data>
   "scale_type", # <as_json.scale>
   "data_type", # <as_json.tooltip>
   "cols", # <as_json.tooltip>
