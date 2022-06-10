@@ -9,11 +9,22 @@
 #' - `lasso`: freehand polygon draw by click-dragging
 #' @param features <`sfc`> Features with which to initialise the editor
 #' @export
-editor_options <- function(mode = "view", features = cur_value()) {
-  tidyassert::assert(!rlang::is_null(mode) || is_cur_value(mode))
-  tidyassert::assert(rlang::is_string(mode) & mode %in% c("view", "modify", "features", "lasso"))
-  tidyassert::assert(!rlang::is_null(features) || is_cur_value(features))
-  tidyassert::assert(is_sfc(features) & sf::st_geometry_type(features, FALSE) == "POLYGON")
+editor_options <- function(mode = cur_value(), features = cur_value()) {
+  tidyassert::assert(
+    is_cur_value(mode) ||
+      rlang::is_string(mode) && mode %in% editor_modes(),
+    error_message = c(
+      "x" = paste("{.arg mode} must be one of ", paste0(editor_modes(), collapse = ", "))
+    )
+  )
+
+  tidyassert::assert(
+    is_cur_value(features) ||
+      (is_sf(features) || is_sfc(features)) && is_wgs84(features),
+      error_message = c(
+        "x" = "{.arg features} must be a {.emph WGS84} {.cls sf/sfc}"
+      )
+  )
 
   structure(
     list(
@@ -23,6 +34,8 @@ editor_options <- function(mode = "view", features = cur_value()) {
     class = "editor_options"
   )
 }
+
+editor_modes <- function() c("view", "modify", "polygon", "lasso")
 
 is_editor_options <- function(object) inherits(object, "editor_options")
 
