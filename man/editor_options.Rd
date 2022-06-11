@@ -4,7 +4,7 @@
 \alias{editor_options}
 \title{Polygon editor options}
 \usage{
-editor_options(mode = "view", features = cur_value())
+editor_options(mode = cur_value(), features = cur_value())
 }
 \arguments{
 \item{mode}{<\code{"view"} | \code{"modify"} | \code{"polygon"} | \code{"lasso"}> The polygon editor mode.
