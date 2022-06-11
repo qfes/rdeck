@@ -24,7 +24,7 @@ export function Map({ deckgl, mapgl, layers, editor }: MapProps) {
   const deck = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
-  const { controller, blendingMode, onClick: handleClick, ...deckProps } = deckgl;
+  let { blendingMode, pickingRadius, controller, onClick: handleClick, ...deckProps } = deckgl;
 
   const parameters = {
     ...deckgl.parameters,
@@ -38,7 +38,21 @@ export function Map({ deckgl, mapgl, layers, editor }: MapProps) {
 
   const _layers: any = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
   const editableLayer = createEditableLayer(editor);
-  const isEditing = editor != null && editor.mode !== "view";
+  const isEditing = editor != null && !["view", "select"].includes(editor.mode);
+
+  // disable double-click zoom for editor
+  if (isEditing && controller) {
+    controller = {
+      // @ts-ignore
+      ...controller,
+      doubleClickZoom: false,
+    };
+  }
+
+  // ensure easy picking for editor select
+  if (editor?.mode === "select") {
+    pickingRadius = Math.max(pickingRadius ?? 0, 5);
+  }
 
   return (
     <Fragment>
@@ -46,7 +60,7 @@ export function Map({ deckgl, mapgl, layers, editor }: MapProps) {
         // @ts-ignore
         Deck={Deck}
         ref={deck}
-        {...{ ...deckProps, parameters }}
+        {...{ ...deckProps, parameters, pickingRadius }}
         layers={[..._layers, editableLayer]}
         // remove picking callbacks when editing
         onHover={!isEditing ? handleHover : undefined}

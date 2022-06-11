@@ -52,11 +52,13 @@ const EMPTY_GEOJSON: FeatureCollection = Object.freeze({
 export class EditorState implements EditorProps {
   mode: EditorMode = "view";
   geojson: FeatureCollection<Geometry, GeoJsonProperties> = EMPTY_GEOJSON;
+  selectedFeatureIndices: number[] = [];
 
   constructor(props?: Partial<EditorProps>) {
     Object.assign(this, props);
 
     this.setMode = this.setMode.bind(this);
+    this.selectFeatures = this.selectFeatures.bind(this);
     this.setGeoJson = this.setGeoJson.bind(this);
     this.deleteSelected = this.deleteSelected.bind(this);
     this.download = this.download.bind(this);
@@ -66,17 +68,19 @@ export class EditorState implements EditorProps {
     this.mode = mode;
   }
 
-  setGeoJson(action: EditAction<FeatureCollection<Geometry, GeoJsonProperties>>): void {
-    Object.assign(this, {
-      mode: action.editType === "addFeature" ? "modify" : this.mode,
-      geojson: action.updatedData,
-    });
+  selectFeatures(featureIndices: number[]): void {
+    this.selectedFeatureIndices = featureIndices;
+  }
+
+  setGeoJson(geojson: FeatureCollection): void {
+    this.geojson = geojson;
   }
 
   deleteSelected(selectedIndices: number[] = [0]): void {
     const features = this.geojson.features.filter((_, i) => !selectedIndices.includes(i));
     Object.assign(this, {
       mode: "view",
+      selectedFeatureIndices: [],
       geojson: {
         ...this.geojson,
         features,

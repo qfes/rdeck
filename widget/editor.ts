@@ -4,8 +4,14 @@ import {
   CompositeMode,
   ModifyMode,
   TranslateMode,
+  SnappableMode,
   DrawPolygonMode,
   DrawPolygonByDraggingMode,
+  DrawLineStringMode,
+  DrawPointMode,
+} from "@nebula.gl/edit-modes";
+import type {
+  GeoJsonEditMode,
   EditAction,
   ModeProps,
   PointerMoveEvent,
@@ -14,67 +20,84 @@ import type { FeatureCollection } from "geojson";
 import { EditableGeoJsonLayer } from "nebula.gl";
 import type { EditorPanelProps } from "./controls";
 import type { EditorMode } from "./types";
+import { PickInfo } from "@deck.gl/core";
 
 export type EditorProps = EditorPanelProps & {
-  setGeoJson?: (action: EditAction<FeatureCollection>) => void;
+  setGeoJson?: (geojson: FeatureCollection) => void;
+  selectFeatures?: (featureIndices: number[]) => void;
 };
 
 const LIGHT_BLUE = [3, 169, 244] as const;
+const MUTED_BLUE = [116, 117, 129] as const;
 const LINE_COLOR: Color = [...LIGHT_BLUE, 255];
-const FILL_COLOR: Color = [...LIGHT_BLUE, 0.1 * 255];
+const FILL_COLOR: Color = [...LIGHT_BLUE, 0.15 * 255];
 const TRANSPARENT: Color = [0, 0, 0, 0];
 
 export function createEditableLayer(props: EditorProps | null) {
   if (props == null) return null;
 
-  const { mode, geojson, setGeoJson } = props;
+  const { geojson, selectedFeatureIndices, setGeoJson, selectFeatures } = props;
+  const mode = nebulaMode(props.mode);
+  const isEditing = !READONLY_MODES.includes(mode);
+
+  function handleClick({ index }: PickInfo) {
+    if (mode !== EDITOR_MODES.select) return;
+
+    selectFeatures?.(
+      selectedFeatureIndices.includes(index)
+        ? selectedFeatureIndices.filter((x) => x !== index)
+        : [...selectedFeatureIndices, index]
+    );
+  }
+
+  function handleEdit({ updatedData, editType, editContext }: EditAction<FeatureCollection>) {
+    // NOTE: update internal state for in-progress edits
+    // @ts-ignore
+    this.data = updatedData;
+
+    if (EDIT_EVENTS.has(editType)) {
+      setGeoJson?.(updatedData);
+    }
+    if (editType === "addFeature") {
+      selectFeatures?.([...selectedFeatureIndices, ...editContext.featureIndexes]);
+    }
+  }
 
   return new EditableGeoJsonLayer({
     data: geojson,
-    selectedFeatureIndexes: [0],
-    mode: nebulaMode(mode),
+    selectedFeatureIndexes: selectedFeatureIndices,
+    mode: mode,
     modeConfig: {
       screenSpace: true,
       viewport: {},
+      enableSnapping: true,
     },
-    onEdit: handleEdit(setGeoJson),
+    onEdit: handleEdit,
+    onClick: handleClick,
+    pickable: mode !== EDITOR_MODES.view,
 
     // line & handle size
     getRadius: 5,
-    getLineWidth: 2,
-    getTentativeLineWidth: 2,
+    getLineWidth: 1.5,
+    getTentativeLineWidth: 1.5,
 
     // colours
-    getFillColor: mode === "view" ? TRANSPARENT : FILL_COLOR,
-    getLineColor: LINE_COLOR,
+    getFillColor: (feature, isSelected, mode) =>
+      mode === EDITOR_MODES.view
+        ? TRANSPARENT
+        : isSelected
+        ? FILL_COLOR
+        : [...MUTED_BLUE, 0.15 * 255],
+    getLineColor: (feature, isSelected, mode) => (isSelected ? LINE_COLOR : [...MUTED_BLUE, 255]),
     getTentativeLineColor: LINE_COLOR,
     getEditHandlePointOutlineColor: LINE_COLOR,
     getTentativeFillColor: FILL_COLOR,
     getEditHandlePointColor: TRANSPARENT,
 
     // @ts-ignore
-    getDashArray: mode === "view" ? [0, 0] : [4, 2],
+    getDashArray: isEditing ? [4, 2] : [0, 0],
     extensions: [new PathStyleExtension({ dash: true })],
   });
-}
-
-type EditHandler = (action: EditAction<FeatureCollection>) => void;
-
-// wrapper for EditableGeoJsonLayer.props.onEdit. avoid unnecessary re-renders
-function handleEdit(onEdit?: EditHandler) {
-  return function ({ updatedData, editType, editContext }: EditAction<FeatureCollection>) {
-    // drawing a new polygon? delete any current polygons
-    if (editType === "updateTentativeFeature" && updatedData.features.length !== 0) {
-      updatedData.features.length = 0;
-    }
-
-    // @ts-ignore
-    this.data = updatedData;
-
-    if (EDIT_EVENTS.has(editType)) {
-      onEdit?.({ updatedData, editType, editContext });
-    }
-  };
 }
 
 const EDIT_EVENTS = Object.freeze(
@@ -108,12 +131,24 @@ class TranslateModifyMode extends CompositeMode {
   }
 }
 
-const EDITOR_MODES = Object.seal({
-  view: new ViewMode(),
-  modify: new TranslateModifyMode(),
-  polygon: new DrawPolygonMode(),
-  lasso: new DrawPolygonByDraggingMode(),
+class SelectMode extends ViewMode {
+  handlePointerMove(event: PointerMoveEvent, props: ModeProps<any>): void {
+    const isPicked = event?.picks?.length !== 0;
+    props.onUpdateCursor(isPicked ? "pointer" : null);
+  }
+}
+
+const EDITOR_MODES: Record<EditorMode, typeof GeoJsonEditMode> = Object.seal({
+  view: ViewMode,
+  select: SelectMode,
+  modify: TranslateModifyMode,
+  linestring: DrawLineStringMode,
+  point: DrawPointMode,
+  polygon: DrawPolygonMode,
+  lasso: DrawPolygonByDraggingMode,
 });
+
+const READONLY_MODES = [EDITOR_MODES.view, EDITOR_MODES.select];
 
 function nebulaMode(mode?: EditorMode) {
   return EDITOR_MODES[mode ?? "view"] ?? EDITOR_MODES.view;

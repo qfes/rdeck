@@ -4,8 +4,16 @@ import type { FeatureCollection } from "geojson";
 import Lasso from "@mdi/svg/svg/lasso.svg";
 import VectorSquare from "@mdi/svg/svg/vector-square.svg";
 import VectorSquareEdit from "@mdi/svg/svg/vector-square-edit.svg";
+import VectorPolyLine from "@mdi/svg/svg/vector-polyline.svg";
 import { SvgIcon } from "@mui/material";
-import { Delete, PanTool, Download, Upload } from "@mui/icons-material";
+import {
+  Delete,
+  PanTool,
+  TouchApp,
+  LocationOnOutlined,
+  Download,
+  Upload,
+} from "@mui/icons-material";
 
 import styles from "./editor-panel.css";
 import type { EditorMode } from "../types";
@@ -16,6 +24,7 @@ const noop = () => {};
 export type EditorPanelProps = {
   mode: EditorMode;
   geojson: FeatureCollection;
+  selectedFeatureIndices: number[];
   setMode?: (mode: EditorMode) => void;
   download?: (geojson: FeatureCollection) => void;
   upload?: (geojson: FeatureCollection) => void;
@@ -25,12 +34,13 @@ export type EditorPanelProps = {
 export function EditorPanel({
   mode = "view",
   geojson,
+  selectedFeatureIndices,
   setMode = noop,
   download = noop,
   upload = noop,
   deleteSelected = noop,
 }: EditorPanelProps) {
-  const isEmpty = geojson.features.length === 0;
+  const anySelected = selectedFeatureIndices?.length !== 0;
 
   return (
     <div className={styles.container}>
@@ -38,8 +48,15 @@ export function EditorPanel({
         <EditorButton
           name="Pan"
           icon={PanTool}
+          iconStyle={{ transform: "scale(0.9)" }}
           active={mode === "view"}
           onClick={() => setMode("view")}
+        />
+        <EditorButton
+          name="Select"
+          icon={TouchApp}
+          active={mode === "select"}
+          onClick={() => setMode("select")}
         />
       </div>
       <div className={styles.group}>
@@ -47,8 +64,20 @@ export function EditorPanel({
           name="Modify"
           icon={VectorSquareEdit}
           active={mode === "modify"}
-          disabled={isEmpty}
+          disabled={!anySelected}
           onClick={() => setMode("modify")}
+        />
+        <EditorButton
+          name="Point"
+          icon={LocationOnOutlined}
+          active={mode === "point"}
+          onClick={() => setMode("point")}
+        />
+        <EditorButton
+          name="LineString"
+          icon={VectorPolyLine}
+          active={mode === "linestring"}
+          onClick={() => setMode("linestring")}
         />
         <EditorButton
           name="Polygon"
@@ -71,8 +100,8 @@ export function EditorPanel({
         <EditorButton
           name="Delete"
           icon={Delete}
-          disabled={isEmpty}
-          onClick={() => deleteSelected([0])}
+          disabled={!anySelected}
+          onClick={() => deleteSelected(selectedFeatureIndices)}
         />
       </div>
     </div>
