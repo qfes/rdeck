@@ -4,7 +4,6 @@ import {
   CompositeMode,
   ModifyMode,
   TranslateMode,
-  SnappableMode,
   DrawPolygonMode,
   DrawPolygonByDraggingMode,
   DrawLineStringMode,
@@ -20,7 +19,8 @@ import type { FeatureCollection } from "geojson";
 import { EditableGeoJsonLayer } from "nebula.gl";
 import type { EditorPanelProps } from "./controls";
 import type { EditorMode } from "./types";
-import { PickInfo } from "@deck.gl/core";
+import { BasePointerEvent } from "@nebula.gl/edit-modes/dist-types/types";
+import { isSuperset, difference, union } from "./utils";
 
 export type EditorProps = EditorPanelProps & {
   setGeoJson?: (geojson: FeatureCollection) => void;
@@ -40,40 +40,36 @@ export function createEditableLayer(props: EditorProps | null) {
   const mode = nebulaMode(props.mode);
   const isEditing = !READONLY_MODES.includes(mode);
 
-  function handleClick({ index }: PickInfo) {
-    if (mode !== EDITOR_MODES.select) return;
-
-    selectFeatures?.(
-      selectedFeatureIndices.includes(index)
-        ? selectedFeatureIndices.filter((x) => x !== index)
-        : [...selectedFeatureIndices, index]
-    );
-  }
-
   function handleEdit({ updatedData, editType, editContext }: EditAction<FeatureCollection>) {
+    if (editType === "updateTentativeFeature") return;
+
     // NOTE: update internal state for in-progress edits
     // @ts-ignore
     this.data = updatedData;
 
+    if (editType === "selectFeature") {
+      selectFeatures?.(editContext.selectedIndices ?? []);
+      return;
+    }
+
     if (EDIT_EVENTS.has(editType)) {
       setGeoJson?.(updatedData);
-    }
-    if (editType === "addFeature") {
-      selectFeatures?.([...selectedFeatureIndices, ...editContext.featureIndexes]);
+      if (editType === "addFeature") {
+        selectFeatures?.([...selectedFeatureIndices, ...editContext.featureIndexes]);
+      }
     }
   }
 
   return new EditableGeoJsonLayer({
     data: geojson,
     selectedFeatureIndexes: selectedFeatureIndices,
-    mode: mode,
+    mode,
     modeConfig: {
       screenSpace: true,
       viewport: {},
       enableSnapping: true,
     },
     onEdit: handleEdit,
-    onClick: handleClick,
     pickable: mode !== EDITOR_MODES.view,
 
     // line & handle size
@@ -135,6 +131,27 @@ class SelectMode extends ViewMode {
   handlePointerMove(event: PointerMoveEvent, props: ModeProps<any>): void {
     const isPicked = event?.picks?.length !== 0;
     props.onUpdateCursor(isPicked ? "pointer" : null);
+  }
+
+  handleClick(event: BasePointerEvent, props: ModeProps<any>): void {
+    const isPicked = event?.picks.length !== 0;
+    if (!isPicked) return;
+
+    const current = new Set(props.selectedIndexes);
+    const picked = new Set(event.picks.map((x) => x.index));
+
+    // all picked already selected? unselect picked, else select picked
+    const selected = isSuperset(current, picked)
+      ? difference(current, picked)
+      : union(current, picked);
+
+    props.onEdit?.({
+      updatedData: props.data,
+      editType: "selectFeature",
+      editContext: {
+        selectedIndices: [...selected],
+      },
+    });
   }
 }
 
