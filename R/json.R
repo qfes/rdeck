@@ -74,6 +74,8 @@ as_json.bbox <- function(object) {
   json_stringify(object, digits = 6)
 }
 
+#' @autoglobal
+#' @noRd
 as_json.editor_options <- function(object) {
   options <- mutate(select(object, -where(is_cur_value)))
 
