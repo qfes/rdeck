@@ -93,7 +93,37 @@ export function createEditableLayer(props: EditorProps | null) {
     // @ts-ignore
     getDashArray: isEditing ? [4, 2] : [0, 0],
     extensions: [new PathStyleExtension({ dash: true })],
+
+    _subLayerProps: {
+      geojson: {
+        dataComparator: featuresEqual,
+        _dataDiff: featuresDiff,
+      },
+    },
   });
+}
+
+function featuresEqual(newData: FeatureCollection, oldData: FeatureCollection) {
+  return Object.is(newData.features, oldData.features);
+}
+
+type DataDiff = { startRow: number; endRow: number };
+// optimise updates for the modify-features case
+function featuresDiff(newData: FeatureCollection, oldData: FeatureCollection): DataDiff[] | string {
+  const newFeatures = newData.features;
+  const oldFeatures = oldData.features;
+
+  if (newFeatures.length !== oldFeatures.length) return "A new data container was supplied";
+
+  // modified existing features?
+  const diff: DataDiff[] = [];
+  for (let i = 0; i < newFeatures.length; ++i) {
+    if (newFeatures[i] !== oldFeatures[i]) {
+      diff.push({ startRow: i, endRow: i + 1 });
+    }
+  }
+
+  return diff;
 }
 
 const EDIT_EVENTS = Object.freeze(
