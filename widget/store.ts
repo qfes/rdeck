@@ -132,7 +132,7 @@ export class Store implements Observable {
   }
 
   set editor(value) {
-    this.#editor = value && observable(new EditorState(value), this.#emitChange);
+    this.#editor = value != null ? observable(new EditorState(value), this.#emitChange) : null;
   }
 
   onChange?: ChangeHandler;
@@ -160,8 +160,12 @@ export class Store implements Observable {
       // merge objects
       deckgl: { ...this.deckgl, ...deckgl },
       mapgl: { ...this.mapgl, ...mapgl },
-      editor: editor && { ...this.editor, ...editor },
     });
+
+    if (editor !== undefined) {
+      // @ts-ignore
+      this.editor = editor != null ? { ...this.editor, ...editor } : null;
+    }
   }
 
   upsertLayer(layer: LayerProps): void {
