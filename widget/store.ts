@@ -126,13 +126,13 @@ export class Store implements Observable {
   layerSelector = false;
   lazyLoad = false;
 
-  #editor = new EditorState();
+  #editor: EditorState | null = null;
   get editor() {
     return this.#editor;
   }
 
   set editor(value) {
-    this.#editor = observable(new EditorState(value), this.#emitChange);
+    this.#editor = value && observable(new EditorState(value), this.#emitChange);
   }
 
   onChange?: ChangeHandler;
@@ -160,7 +160,7 @@ export class Store implements Observable {
       // merge objects
       deckgl: { ...this.deckgl, ...deckgl },
       mapgl: { ...this.mapgl, ...mapgl },
-      editor: { ...this.editor, ...editor },
+      editor: editor && { ...this.editor, ...editor },
     });
   }
 

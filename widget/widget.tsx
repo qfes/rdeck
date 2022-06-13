@@ -43,17 +43,21 @@ export class Widget {
   }
 
   render() {
-    const { theme, mapgl, layers, layerSelector, lazyLoad } = this.#state;
-    const deckgl = {
-      ...this.#state.deckgl,
+    let { deckgl, mapgl, editor, ...props } = this.#state;
+
+    deckgl = {
+      ...deckgl,
       onClick: this.#handleClick,
       onViewStateChange: this.#handleViewStateChange,
     };
 
-    const editor = {
-      ...this.#state.editor,
-      upload: this.#handleUpload,
-    };
+    if (editor != null) {
+      // @ts-ignore
+      editor = {
+        ...editor,
+        upload: this.#handleUpload,
+      };
+    }
 
     // overwritten
     if (deckgl.initialBounds != null) {
@@ -64,14 +68,11 @@ export class Widget {
       <StrictMode>
         <RDeck
           {...{
-            theme,
+            ...props,
             deckgl,
             mapgl,
-            layers,
-            layerSelector,
-            onLayerVisibilityChange: this.state.setLayerVisibility,
             editor,
-            lazyLoad,
+            onLayerVisibilityChange: this.state.setLayerVisibility,
           }}
         />
       </StrictMode>
