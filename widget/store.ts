@@ -104,48 +104,64 @@ export class EditorState implements EditorProps {
 export class Store implements Observable {
   theme: "kepler" | "light" = "kepler";
 
-  readonly #deckgl: DeckState;
+  #deckgl = new DeckState();
   get deckgl() {
     return this.#deckgl;
   }
 
-  readonly #mapgl: MapState;
+  set deckgl(value) {
+    this.#deckgl = observable(new DeckState(value), this.#emitChange);
+  }
+
+  #mapgl = new MapState();
   get mapgl() {
     return this.#mapgl;
   }
 
-  layers: LayerProps[] = [];
-  layerSelector: boolean = false;
-  lazyLoad: boolean = false;
+  set mapgl(value) {
+    this.#mapgl = observable(new MapState(value), this.#emitChange);
+  }
 
-  readonly #editor: EditorState;
+  layers: LayerProps[] = [];
+  layerSelector = false;
+  lazyLoad = false;
+
+  #editor = new EditorState();
   get editor() {
     return this.#editor;
+  }
+
+  set editor(value) {
+    this.#editor = observable(new EditorState(value), this.#emitChange);
   }
 
   onChange?: ChangeHandler;
   readonly #emitChange = () => this.onChange?.();
 
-  constructor(
-    { theme, deckgl, mapgl, layers, layerSelector, editor, lazyLoad }: Partial<Store> = {},
-    onChange?: ChangeHandler
-  ) {
-    this.theme = theme ?? "kepler";
-    this.layerSelector = layerSelector ?? false;
-    this.lazyLoad = lazyLoad ?? false;
-    this.layers = layers ?? [];
-    this.#deckgl = observable(new DeckState(deckgl), this.#emitChange);
-    this.#mapgl = observable(new MapState(mapgl), this.#emitChange);
-    this.#editor = observable(new EditorState(editor), this.#emitChange);
-    this.setLayerVisibility = this.setLayerVisibility.bind(this);
+  constructor(state: Partial<Store> = {}, onChange?: ChangeHandler) {
+    this.setState(state);
 
     Reflect.defineProperty(this, "onChange", {
       configurable: false,
       enumerable: false,
-      writable: true,
       value: onChange,
+      writable: true,
     });
+
+    this.setLayerVisibility = this.setLayerVisibility.bind(this);
+
+    // observe all properties
     observable(this, this.#emitChange);
+  }
+
+  setState({ deckgl, mapgl, editor, ...state }: Partial<Store> = {}) {
+    Object.assign(this, {
+      ...state,
+      // merge objects
+      deckgl: { ...this.deckgl, ...deckgl },
+      mapgl: { ...this.mapgl, ...mapgl },
+      editor: { ...this.editor, ...editor },
+    });
   }
 
   upsertLayer(layer: LayerProps): void {
