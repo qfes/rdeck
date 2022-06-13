@@ -1,7 +1,7 @@
 import { createRoot, Root } from "react-dom/client";
 import { StrictMode } from "react";
 import type { PickInfo, ViewStateChangeParams } from "@deck.gl/core";
-import { RDeck, RDeckProps } from "./rdeck";
+import { RDeck } from "./rdeck";
 import type { LayerProps, VisibilityInfo } from "./layer";
 import { pick } from "./util";
 import { getViewState } from "./viewport";
@@ -34,8 +34,8 @@ export class Widget {
       });
 
       // update map
-      Shiny.addCustomMessageHandler(`${element.id}:deck`, (props: RDeckProps) => {
-        Object.assign(this.state.deckgl, props);
+      Shiny.addCustomMessageHandler(`${element.id}:deck`, (state: Partial<Store>) => {
+        this.state.setState(state);
       });
     }
   }

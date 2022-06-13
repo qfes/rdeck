@@ -43,43 +43,55 @@ export class MapState implements MapProps {
 export class Store implements Observable {
   theme: "kepler" | "light" = "kepler";
 
-  readonly #deckgl: DeckState;
+  #deckgl = new DeckState();
   get deckgl() {
     return this.#deckgl;
   }
 
-  readonly #mapgl: MapState;
+  set deckgl(value) {
+    this.#deckgl = observable(new DeckState(value), this.#emitChange);
+  }
+
+  #mapgl = new MapState();
   get mapgl() {
     return this.#mapgl;
   }
 
+  set mapgl(value) {
+    this.#mapgl = observable(new MapState(value), this.#emitChange);
+  }
+
   layers: LayerProps[] = [];
 
-  layerSelector: boolean = false;
-  lazyLoad: boolean = false;
+  layerSelector = false;
+  lazyLoad = false;
 
   onChange?: ChangeHandler;
   readonly #emitChange = () => this.onChange?.();
 
-  constructor(
-    { theme, deckgl, mapgl, layers, layerSelector, lazyLoad }: Partial<Store> = {},
-    onChange?: ChangeHandler
-  ) {
-    this.theme = theme ?? "kepler";
-    this.layerSelector = layerSelector ?? false;
-    this.lazyLoad = lazyLoad ?? false;
-    this.layers = layers ?? [];
-    this.#deckgl = observable(new DeckState(deckgl), this.#emitChange);
-    this.#mapgl = observable(new MapState(mapgl), this.#emitChange);
-    this.setLayerVisibility = this.setLayerVisibility.bind(this);
+  constructor(state: Partial<Store> = {}, onChange?: ChangeHandler) {
+    this.setState(state);
 
     Reflect.defineProperty(this, "onChange", {
       configurable: false,
       enumerable: false,
-      writable: true,
       value: onChange,
+      writable: true,
     });
+
+    this.setLayerVisibility = this.setLayerVisibility.bind(this);
+
+    // observe all properties
     observable(this, this.#emitChange);
+  }
+
+  setState({ deckgl, mapgl, ...state }: Partial<Store> = {}) {
+    Object.assign(this, {
+      ...state,
+      // merge objects
+      deckgl: { ...this.deckgl, ...deckgl },
+      mapgl: { ...this.mapgl, ...mapgl },
+    });
   }
 
   upsertLayer(layer: LayerProps): void {
