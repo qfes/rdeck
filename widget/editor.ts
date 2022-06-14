@@ -7,6 +7,7 @@ import {
   DrawPolygonByDraggingMode,
   DrawLineStringMode,
   DrawPointMode,
+  utils,
 } from "@nebula.gl/edit-modes";
 import type {
   GeoJsonEditMode,
@@ -15,11 +16,13 @@ import type {
   PointerMoveEvent,
   ClickEvent,
 } from "@nebula.gl/edit-modes";
-import { EditableGeoJsonLayer } from "@nebula.gl/layers";
+import { EditableGeoJsonLayer as _EditableGeoJsonLayer } from "@nebula.gl/layers";
 import type { FeatureCollection, Feature } from "geojson";
+
 import type { EditorToolboxProps } from "./controls";
 import type { EditorMode } from "./types";
 import { isSuperset, difference, union } from "./utils";
+import { memoize } from "./util";
 
 export type EditorProps = EditorToolboxProps & {
   setGeoJson?: (geojson: FeatureCollection) => void;
@@ -76,7 +79,7 @@ export function createEditableLayer(props: EditorProps | null) {
 
     // picking
     pickable: mode !== EDITOR_MODES.view,
-    pickingLineWidthExtraPixels: 0,
+    pickingLineWidthExtraPixels: 5,
     pickingDepth: 0,
 
     // line & handle size
@@ -99,6 +102,10 @@ export function createEditableLayer(props: EditorProps | null) {
 
     _subLayerProps: {
       geojson: {
+        dataComparator: featuresEqual,
+        _dataDiff: featuresDiff,
+      },
+      guides: {
         dataComparator: featuresEqual,
         _dataDiff: featuresDiff,
       },
@@ -128,7 +135,8 @@ function featuresDiff(newData: FeatureCollection, oldData: FeatureCollection): D
 
   // modified existing features?
   const diff: DataDiff[] = [];
-  for (let i = 0; i < newFeatures.length; ++i) {
+  const length = newFeatures.length;
+  for (let i = 0; i < length; ++i) {
     if (newFeatures[i] !== oldFeatures[i]) {
       diff.push({ startRow: i, endRow: i + 1 });
     }
@@ -150,6 +158,31 @@ const EDIT_EVENTS = Object.freeze(
     "split",
   ])
 );
+
+class EditableGeoJsonLayer extends _EditableGeoJsonLayer {
+  onPointerMove(event: PointerMoveEvent): void {
+    // performance optimisation for pointer move state
+    this.state.lastPointerMoveEvent = event;
+    const mode = this.getActiveMode();
+    // @ts-ignore
+    mode.handlePointerMove(event, this.getModeProps(this.props));
+  }
+
+  updateState(params: any): void {
+    if (!params.changeFlags.propsOrDataChanged) return;
+    super.updateState(params);
+  }
+
+  setState(updateObject: any): void {
+    if (this.props.mode === EDITOR_MODES.modify) return super.setState(updateObject);
+
+    // optimise cursor update in non-modify mode
+    for (const key in updateObject) {
+      if (key !== "cursor" || updateObject.cursor !== this.state.cursor)
+        return super.setState(updateObject);
+    }
+  }
+}
 
 class SelectMode extends ViewMode {
   handlePointerMove(event: PointerMoveEvent, props: ModeProps<any>): void {
@@ -178,6 +211,9 @@ class SelectMode extends ViewMode {
     });
   }
 }
+
+// memoize nebula util function
+utils.getEditHandlesForGeometry = memoize(utils.getEditHandlesForGeometry);
 
 const EDITOR_MODES: Record<EditorMode, typeof GeoJsonEditMode> = Object.seal({
   view: ViewMode,
