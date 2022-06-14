@@ -15,13 +15,13 @@ import {
   Upload,
 } from "@mui/icons-material";
 
-import styles from "./editor-panel.css";
+import styles from "./editor-toolbox.css";
 import type { EditorMode } from "../types";
 import { classNames } from "../util";
 
 const noop = () => {};
 
-export type EditorPanelProps = {
+export type EditorToolboxProps = {
   mode: EditorMode;
   geojson: FeatureCollection;
   selectedFeatureIndices: number[];
@@ -31,7 +31,7 @@ export type EditorPanelProps = {
   deleteSelected?: (indices: number[]) => void;
 };
 
-export function EditorPanel({
+export function EditorToolbox({
   mode = "view",
   geojson,
   selectedFeatureIndices,
@@ -39,7 +39,7 @@ export function EditorPanel({
   download = noop,
   upload = noop,
   deleteSelected = noop,
-}: EditorPanelProps) {
+}: EditorToolboxProps) {
   const anySelected = selectedFeatureIndices?.length !== 0;
 
   return (

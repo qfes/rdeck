@@ -4,7 +4,7 @@ import type { MapProps } from "react-map-gl";
 import type { DeckProps } from "./deck";
 import { Map } from "./map";
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
-import { LayerSelector, Legend, EditorPanel } from "./controls";
+import { LayerSelector, Legend, EditorToolbox } from "./controls";
 import type { EditorProps } from "./editor";
 import styles from "./rdeck.css";
 import { classNames } from "./util";
@@ -58,7 +58,7 @@ export function RDeck({
         />
       </div>
       <div className={classNames(styles.controlContainer, styles.top)}>
-        {editor && <EditorPanel {...editor} />}
+        {editor && <EditorToolbox {...editor} />}
       </div>
       {shouldRender && <Map {...{ deckgl, mapgl, layers: _layers, editor }} />}
     </div>

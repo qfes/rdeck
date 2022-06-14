@@ -17,12 +17,12 @@ import type {
 } from "@nebula.gl/edit-modes";
 import type { FeatureCollection } from "geojson";
 import { EditableGeoJsonLayer } from "nebula.gl";
-import type { EditorPanelProps } from "./controls";
+import type { EditorToolboxProps } from "./controls";
 import type { EditorMode } from "./types";
 import { BasePointerEvent } from "@nebula.gl/edit-modes/dist-types/types";
 import { isSuperset, difference, union } from "./utils";
 
-export type EditorProps = EditorPanelProps & {
+export type EditorProps = EditorToolboxProps & {
   setGeoJson?: (geojson: FeatureCollection) => void;
   selectFeatures?: (featureIndices: number[]) => void;
 };
