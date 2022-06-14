@@ -13,12 +13,12 @@ import type {
   EditAction,
   ModeProps,
   PointerMoveEvent,
+  ClickEvent,
 } from "@nebula.gl/edit-modes";
+import { EditableGeoJsonLayer } from "@nebula.gl/layers";
 import type { FeatureCollection, Feature } from "geojson";
-import { EditableGeoJsonLayer } from "nebula.gl";
 import type { EditorToolboxProps } from "./controls";
 import type { EditorMode } from "./types";
-import { BasePointerEvent } from "@nebula.gl/edit-modes/dist-types/types";
 import { isSuperset, difference, union } from "./utils";
 
 export type EditorProps = EditorToolboxProps & {
@@ -157,7 +157,7 @@ class SelectMode extends ViewMode {
     props.onUpdateCursor(isPicked ? "pointer" : null);
   }
 
-  handleClick(event: BasePointerEvent, props: ModeProps<any>): void {
+  handleClick(event: ClickEvent, props: ModeProps<any>): void {
     const isPicked = event?.picks.length !== 0;
     if (!isPicked) return;
 

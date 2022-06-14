@@ -21,7 +21,6 @@ dependencies:
       - vendor/d3-interpolate.js
       - vendor/mjolnir.js.js
       - vendor/emotion.js
-      - vendor/uuid.js
       - vendor/stylis.js
       - vendor/d3-array.js
       - vendor/gl-matrix.js
@@ -46,9 +45,7 @@ dependencies:
       - vendor/ieee754.js
       - vendor/hammerjs.js
       - vendor/h3-js.js
-      - vendor/global.js
       - vendor/geojson-rbush.js
-      - vendor/events.js
       - vendor/earcut.js
       - vendor/clsx.js
       - vendor/mapbox.js
