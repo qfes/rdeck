@@ -7,15 +7,19 @@
 editor_options(mode = cur_value(), features = cur_value())
 }
 \arguments{
-\item{mode}{<\code{"view"} | \code{"modify"} | \code{"polygon"} | \code{"lasso"}> The polygon editor mode.
+\item{mode}{<\code{editor-mode}> The polygon editor mode. One of:
 \itemize{
 \item \code{view}: editor is in readonly mode
-\item \code{modify}: add/move/delete vertices, or move the entire polygon
-\item \code{polygon}: draw a polygon by clicking each vertex
+\item \code{select}: select/unselect features
+\item \code{modify}: add/move/delete vertices
+\item \code{transform}: move/scale/rotate selected features
+\item \code{point}: draw points
+\item \code{linestring}: draw linestrings by clicking each vertex
+\item \code{polygon}: draw polygons by clicking each vertex
 \item \code{lasso}: freehand polygon draw by click-dragging
 }}
 
-\item{features}{<\code{sfc}> Features with which to initialise the editor}
+\item{features}{<\code{sf} | \code{sfc}> Features with which to initialise the editor}
 }
 \description{
 Options for the polygon editor

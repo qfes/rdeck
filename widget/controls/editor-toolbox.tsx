@@ -7,12 +7,13 @@ import VectorSquareEdit from "@mdi/svg/svg/vector-square-edit.svg";
 import VectorPolyLine from "@mdi/svg/svg/vector-polyline.svg";
 import { SvgIcon } from "@mui/material";
 import {
-  Delete,
   PanTool,
   TouchApp,
+  Transform,
   LocationOnOutlined,
   Download,
   Upload,
+  Delete,
 } from "@mui/icons-material";
 
 import styles from "./editor-toolbox.css";
@@ -46,7 +47,7 @@ export function EditorToolbox({
     <div className={styles.container}>
       <div className={styles.group}>
         <EditorButton
-          name="Pan"
+          name="View"
           icon={PanTool}
           iconStyle={{ transform: "scale(0.9)" }}
           active={mode === "view"}
@@ -66,6 +67,13 @@ export function EditorToolbox({
           active={mode === "modify"}
           disabled={!anySelected}
           onClick={() => setMode("modify")}
+        />
+        <EditorButton
+          name="Transform"
+          icon={Transform}
+          active={mode === "transform"}
+          disabled={!anySelected}
+          onClick={() => setMode("transform")}
         />
         <EditorButton
           name="Point"

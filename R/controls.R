@@ -2,17 +2,20 @@
 #'
 #' Options for the polygon editor
 #' @name editor_options
-#' @param mode <`"view"` | `"modify"` | `"polygon"` | `"lasso"`> The polygon editor mode.
+#' @param mode <`editor-mode`> The polygon editor mode. One of:
 #' - `view`: editor is in readonly mode
-#' - `modify`: add/move/delete vertices, or move the entire polygon
-#' - `polygon`: draw a polygon by clicking each vertex
+#' - `select`: select/unselect features
+#' - `modify`: add/move/delete vertices
+#' - `transform`: move/scale/rotate selected features
+#' - `point`: draw points
+#' - `linestring`: draw linestrings by clicking each vertex
+#' - `polygon`: draw polygons by clicking each vertex
 #' - `lasso`: freehand polygon draw by click-dragging
-#' @param features <`sfc`> Features with which to initialise the editor
+#' @param features <`sf` | `sfc`> Features with which to initialise the editor
 #' @export
 editor_options <- function(mode = cur_value(), features = cur_value()) {
   tidyassert::assert(
-    is_cur_value(mode) ||
-      rlang::is_string(mode) && mode %in% editor_modes(),
+    is_cur_value(mode) || rlang::is_string(mode) && mode %in% editor_modes(),
     error_message = c(
       "x" = paste("{.arg mode} must be one of ", paste0(editor_modes(), collapse = ", "))
     )
@@ -21,9 +24,9 @@ editor_options <- function(mode = cur_value(), features = cur_value()) {
   tidyassert::assert(
     is_cur_value(features) ||
       (is_sf(features) || is_sfc(features)) && is_wgs84(features),
-      error_message = c(
-        "x" = "{.arg features} must be a {.emph WGS84} {.cls sf/sfc}"
-      )
+    error_message = c(
+      "x" = "{.arg features} must be a {.emph WGS84} {.cls sf/sfc}"
+    )
   )
 
   structure(
@@ -35,7 +38,14 @@ editor_options <- function(mode = cur_value(), features = cur_value()) {
   )
 }
 
-editor_modes <- function() c("view", "modify", "polygon", "lasso")
+
+editor_modes <- function() {
+  c(
+    "view", "select",
+    "transform", "modify",
+    "point", "linestring", "polygon", "lasso"
+  )
+}
 
 is_editor_options <- function(object) inherits(object, "editor_options")
 

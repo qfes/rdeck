@@ -79,7 +79,7 @@ export class EditorState implements EditorProps {
   deleteSelected(selectedIndices: number[] = [0]): void {
     const features = this.geojson.features.filter((_, i) => !selectedIndices.includes(i));
     Object.assign(this, {
-      mode: this.mode === "modify" ? "view" : this.mode,
+      mode: ["modify", "transform"].includes(this.mode) ? "view" : this.mode,
       selectedFeatureIndices: [],
       geojson: {
         ...this.geojson,

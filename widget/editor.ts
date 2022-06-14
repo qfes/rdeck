@@ -1,9 +1,8 @@
 import { PathStyleExtension } from "@deck.gl/extensions";
 import {
   ViewMode,
-  CompositeMode,
   ModifyMode,
-  TranslateMode,
+  TransformMode,
   DrawPolygonMode,
   DrawPolygonByDraggingMode,
   DrawLineStringMode,
@@ -15,7 +14,7 @@ import type {
   ModeProps,
   PointerMoveEvent,
 } from "@nebula.gl/edit-modes";
-import type { FeatureCollection } from "geojson";
+import type { FeatureCollection, Feature } from "geojson";
 import { EditableGeoJsonLayer } from "nebula.gl";
 import type { EditorToolboxProps } from "./controls";
 import type { EditorMode } from "./types";
@@ -29,8 +28,13 @@ export type EditorProps = EditorToolboxProps & {
 
 const LIGHT_BLUE = [3, 169, 244] as const;
 const MUTED_BLUE = [116, 117, 129] as const;
-const LINE_COLOR: Color = [...LIGHT_BLUE, 255];
+
+const LINE_COLOR: Color = [...LIGHT_BLUE, 0.85 * 255];
+const MUTED_LINE_COLOR: Color = [...MUTED_BLUE, 0.85 * 255];
+
 const FILL_COLOR: Color = [...LIGHT_BLUE, 0.15 * 255];
+const MUTED_FILL_COLOR: Color = [...MUTED_BLUE, 0.15 * 255];
+
 const TRANSPARENT: Color = [0, 0, 0, 0];
 
 export function createEditableLayer(props: EditorProps | null) {
@@ -67,24 +71,23 @@ export function createEditableLayer(props: EditorProps | null) {
     modeConfig: {
       screenSpace: true,
       viewport: {},
-      enableSnapping: true,
     },
     onEdit: handleEdit,
+
+    // picking
     pickable: mode !== EDITOR_MODES.view,
+    pickingLineWidthExtraPixels: 0,
+    pickingDepth: 0,
 
     // line & handle size
-    getRadius: 5,
+    getRadius: 6,
     getLineWidth: 1.5,
     getTentativeLineWidth: 1.5,
+    lineWidthScale: 1,
 
     // colours
-    getFillColor: (feature, isSelected, mode) =>
-      mode === EDITOR_MODES.view
-        ? TRANSPARENT
-        : isSelected
-        ? FILL_COLOR
-        : [...MUTED_BLUE, 0.15 * 255],
-    getLineColor: (feature, isSelected, mode) => (isSelected ? LINE_COLOR : [...MUTED_BLUE, 255]),
+    getFillColor: mode === EDITOR_MODES.view ? TRANSPARENT : getFillColor,
+    getLineColor: getLineColor,
     getTentativeLineColor: LINE_COLOR,
     getEditHandlePointOutlineColor: LINE_COLOR,
     getTentativeFillColor: FILL_COLOR,
@@ -101,6 +104,14 @@ export function createEditableLayer(props: EditorProps | null) {
       },
     },
   });
+}
+
+function getFillColor(feature: Feature, isSelected: boolean, mode: EditorMode) {
+  return isSelected ? FILL_COLOR : MUTED_FILL_COLOR;
+}
+
+function getLineColor(feature: Feature, isSelected: boolean, mode: EditorMode) {
+  return isSelected ? LINE_COLOR : MUTED_LINE_COLOR;
 }
 
 function featuresEqual(newData: FeatureCollection, oldData: FeatureCollection) {
@@ -140,23 +151,6 @@ const EDIT_EVENTS = Object.freeze(
   ])
 );
 
-class TranslateModifyMode extends CompositeMode {
-  constructor(modes = [new TranslateMode(), new ModifyMode()]) {
-    super(modes);
-  }
-
-  // avoid losing translate cursor
-  handlePointerMove(event: PointerMoveEvent, props: ModeProps<any>): void {
-    const cursors: Array<string | null | undefined> = [];
-    const setCursor = (cursor: string | null | undefined) => cursors.unshift(cursor);
-
-    const _props = { ...props, onUpdateCursor: setCursor };
-    this._modes.forEach((mode) => mode.handlePointerMove(event, _props));
-
-    props.onUpdateCursor(cursors.find((cursor) => cursor != null));
-  }
-}
-
 class SelectMode extends ViewMode {
   handlePointerMove(event: PointerMoveEvent, props: ModeProps<any>): void {
     const isPicked = event?.picks?.length !== 0;
@@ -188,7 +182,8 @@ class SelectMode extends ViewMode {
 const EDITOR_MODES: Record<EditorMode, typeof GeoJsonEditMode> = Object.seal({
   view: ViewMode,
   select: SelectMode,
-  modify: TranslateModifyMode,
+  modify: ModifyMode,
+  transform: TransformMode,
   linestring: DrawLineStringMode,
   point: DrawPointMode,
   polygon: DrawPolygonMode,
