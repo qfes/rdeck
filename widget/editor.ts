@@ -21,7 +21,7 @@ import type { FeatureCollection, Feature } from "geojson";
 
 import type { EditorToolboxProps } from "./controls";
 import type { EditorMode } from "./types";
-import { isSuperset, difference, union } from "./utils";
+import { isSuperset, difference, union, coordsLength } from "./utils";
 import { memoize } from "./util";
 
 export type EditorProps = EditorToolboxProps & {
@@ -137,10 +137,19 @@ function featuresDiff(newData: FeatureCollection, oldData: FeatureCollection): D
   const diff: DataDiff[] = [];
   const length = newFeatures.length;
   for (let i = 0; i < length; ++i) {
+    const newFeature = newFeatures[i];
+    const oldFeature = oldFeatures[i];
+
     // feature changed?
-    if (newFeatures[i] !== oldFeatures[i]) {
-      // NOTE: include extra feature as workaround for polygon-fill artifacts
-      diff.push({ startRow: i, endRow: Math.min(i + 2, length) });
+    if (newFeature !== oldFeature) {
+      // NOTE: rendering artifacts occur if number of vertices has changed
+      if (coordsLength(newFeature.geometry) !== coordsLength(oldFeature.geometry)) {
+        diff.push({ startRow: i, endRow: length });
+        break;
+      }
+
+      // lengths equal? safe diff
+      diff.push({ startRow: i, endRow: i + 1 });
     }
   }
 
