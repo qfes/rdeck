@@ -55,7 +55,10 @@ export class Widget {
       // @ts-ignore
       editor = {
         ...editor,
-        upload: this.#handleUpload,
+        onUpload: (geojson) => {
+          this.#handleUpload(geojson);
+          editor?.setMode("view");
+        },
       };
     }
 

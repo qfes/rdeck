@@ -52,19 +52,30 @@ export class EditorState implements EditorProps {
   mode: EditorMode = "view";
   geojson: FeatureCollection<Geometry, GeoJsonProperties> = EMPTY_GEOJSON;
   selectedFeatureIndices: number[] = [];
+  // handlers
+  onSetMode = (mode: EditorMode) => this.setMode(mode);
+  onSelectFeatures = (featureIndices: number[]) => this.selectFeatures(featureIndices);
+  onSetGeoJson = (geojson: FeatureCollection) => this.setGeoJson(geojson);
+  onDeleteSelected = (selectedIndices: number[]) => this.deleteSelected(selectedIndices);
+  onUpload = (geojson: FeatureCollection) => {};
+  onDownload = (geojson: FeatureCollection) => this.download(geojson);
 
   constructor(props?: Partial<EditorProps>) {
     Object.assign(this, props);
-
-    this.setMode = this.setMode.bind(this);
-    this.selectFeatures = this.selectFeatures.bind(this);
-    this.setGeoJson = this.setGeoJson.bind(this);
-    this.deleteSelected = this.deleteSelected.bind(this);
-    this.download = this.download.bind(this);
   }
 
   setMode(mode: EditorMode): void {
-    this.mode = mode;
+    switch (mode) {
+      case "modify":
+        this.mode = this.selectedFeatureIndices?.length ? "modify" : "view";
+        break;
+      case "select":
+        this.mode = this.geojson?.features.length ? "select" : "view";
+        break;
+      default:
+        this.mode = mode;
+        break;
+    }
   }
 
   selectFeatures(featureIndices: number[]): void {
@@ -75,7 +86,7 @@ export class EditorState implements EditorProps {
     this.geojson = geojson;
   }
 
-  deleteSelected(selectedIndices: number[] = [0]): void {
+  deleteSelected(selectedIndices: number[]): void {
     const features = this.geojson.features.filter((_, i) => !selectedIndices.includes(i));
     Object.assign(this, {
       mode: ["modify", "transform"].includes(this.mode) ? "view" : this.mode,
@@ -97,6 +108,8 @@ export class EditorState implements EditorProps {
     el.href = URL.createObjectURL(data);
     el.download = "rdeck.geojson";
     el.click();
+
+    this.setMode("view");
   }
 }
 

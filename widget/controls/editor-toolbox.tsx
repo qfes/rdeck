@@ -26,22 +26,23 @@ export type EditorToolboxProps = {
   mode: EditorMode;
   geojson: FeatureCollection;
   selectedFeatureIndices: number[];
-  setMode?: (mode: EditorMode) => void;
-  download?: (geojson: FeatureCollection) => void;
-  upload?: (geojson: FeatureCollection) => void;
-  deleteSelected?: (indices: number[]) => void;
+  onSetMode?: (mode: EditorMode) => void;
+  onDownload?: (geojson: FeatureCollection) => void;
+  onUpload?: (geojson: FeatureCollection) => void;
+  onDeleteSelected?: (indices: number[]) => void;
 };
 
 export function EditorToolbox({
   mode = "view",
   geojson,
   selectedFeatureIndices,
-  setMode = noop,
-  download = noop,
-  upload = noop,
-  deleteSelected = noop,
+  onSetMode = noop,
+  onDownload = noop,
+  onUpload = noop,
+  onDeleteSelected = noop,
 }: EditorToolboxProps) {
-  const anySelected = selectedFeatureIndices?.length !== 0;
+  const anySelected = selectedFeatureIndices?.length > 0;
+  const anyFeatures = geojson?.features.length > 0;
 
   return (
     <div className={styles.container}>
@@ -51,13 +52,14 @@ export function EditorToolbox({
           icon={PanTool}
           iconStyle={{ transform: "scale(0.9)" }}
           active={mode === "view"}
-          onClick={() => setMode("view")}
+          onClick={() => onSetMode("view")}
         />
         <EditorButton
           name="Select"
           icon={TouchApp}
           active={mode === "select"}
-          onClick={() => setMode("select")}
+          disabled={!anyFeatures}
+          onClick={() => onSetMode("select")}
         />
       </div>
       <div className={styles.group}>
@@ -66,50 +68,60 @@ export function EditorToolbox({
           icon={VectorSquareEdit}
           active={mode === "modify"}
           disabled={!anySelected}
-          onClick={() => setMode("modify")}
+          onClick={() => onSetMode("modify")}
         />
         <EditorButton
           name="Transform"
           icon={Transform}
           active={mode === "transform"}
           disabled={!anySelected}
-          onClick={() => setMode("transform")}
+          onClick={() => onSetMode("transform")}
         />
         <EditorButton
           name="Point"
           icon={LocationOnOutlined}
           active={mode === "point"}
-          onClick={() => setMode("point")}
+          onClick={() => onSetMode("point")}
         />
         <EditorButton
           name="LineString"
           icon={VectorPolyLine}
           active={mode === "linestring"}
-          onClick={() => setMode("linestring")}
+          onClick={() => onSetMode("linestring")}
         />
         <EditorButton
           name="Polygon"
           icon={VectorSquare}
           active={mode === "polygon"}
-          onClick={() => setMode("polygon")}
+          onClick={() => onSetMode("polygon")}
         />
         <EditorButton
           name="Lasso"
           icon={Lasso}
           active={mode === "lasso"}
-          onClick={() => setMode("lasso")}
+          onClick={() => onSetMode("lasso")}
         />
       </div>
       <div className={styles.group}>
-        <EditorButton name="Download" icon={Download} onClick={() => download(geojson)} />
-        <EditorButton name="Upload" icon={Upload} onClick={() => upload(geojson)} />
+        <EditorButton
+          name="Download"
+          icon={Download}
+          disabled={!anyFeatures}
+          onClick={() => onDownload(geojson)}
+        />
+        <EditorButton
+          name="Upload"
+          icon={Upload}
+          disabled={!anyFeatures}
+          onClick={() => onUpload(geojson)}
+        />
       </div>
       <div className={styles.group}>
         <EditorButton
           name="Delete"
           icon={Delete}
           disabled={!anySelected}
-          onClick={() => deleteSelected(selectedFeatureIndices)}
+          onClick={() => onDeleteSelected(selectedFeatureIndices)}
         />
       </div>
     </div>

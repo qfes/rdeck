@@ -25,8 +25,8 @@ import { isSuperset, difference, union, coordsLength } from "./utils";
 import { memoize } from "./util";
 
 export type EditorProps = EditorToolboxProps & {
-  setGeoJson?: (geojson: FeatureCollection) => void;
-  selectFeatures?: (featureIndices: number[]) => void;
+  onSetGeoJson?: (geojson: FeatureCollection) => void;
+  onSelectFeatures?: (featureIndices: number[]) => void;
 };
 
 const LIGHT_BLUE = [3, 169, 244] as const;
@@ -43,7 +43,7 @@ const TRANSPARENT: Color = [0, 0, 0, 0];
 export function createEditableLayer(props: EditorProps | null) {
   if (props == null) return null;
 
-  const { geojson, selectedFeatureIndices, setGeoJson, selectFeatures } = props;
+  const { geojson, selectedFeatureIndices, onSetGeoJson, onSelectFeatures } = props;
   const mode = nebulaMode(props.mode);
   const isEditing = !READONLY_MODES.includes(mode);
 
@@ -51,7 +51,7 @@ export function createEditableLayer(props: EditorProps | null) {
     if (editType === "updateTentativeFeature") return;
 
     if (editType === "selectFeature") {
-      selectFeatures?.(editContext.selectedIndices ?? []);
+      onSelectFeatures?.(editContext.selectedIndices ?? []);
       return;
     }
 
@@ -60,9 +60,9 @@ export function createEditableLayer(props: EditorProps | null) {
     this.data = updatedData;
 
     if (EDIT_EVENTS.has(editType)) {
-      setGeoJson?.(updatedData);
+      onSetGeoJson?.(updatedData);
       if (editType === "addFeature") {
-        selectFeatures?.([...selectedFeatureIndices, ...editContext.featureIndexes]);
+        onSelectFeatures?.([...selectedFeatureIndices, ...editContext.featureIndexes]);
       }
     }
   }
