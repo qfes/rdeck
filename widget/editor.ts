@@ -50,14 +50,14 @@ export function createEditableLayer(props: EditorProps | null) {
   function handleEdit({ updatedData, editType, editContext }: EditAction<FeatureCollection>) {
     if (editType === "updateTentativeFeature") return;
 
-    // NOTE: update internal state for in-progress edits
-    // @ts-ignore
-    this.data = updatedData;
-
     if (editType === "selectFeature") {
       selectFeatures?.(editContext.selectedIndices ?? []);
       return;
     }
+
+    // NOTE: update internal state for in-progress edits
+    // @ts-ignore
+    this.data = updatedData;
 
     if (EDIT_EVENTS.has(editType)) {
       setGeoJson?.(updatedData);
@@ -126,19 +126,21 @@ function featuresEqual(newData: FeatureCollection, oldData: FeatureCollection) {
 }
 
 type DataDiff = { startRow: number; endRow: number };
-// optimise updates for the modify-features case
+
+// optimise in-place feature updates
 function featuresDiff(newData: FeatureCollection, oldData: FeatureCollection): DataDiff[] | string {
   const newFeatures = newData.features;
   const oldFeatures = oldData.features;
 
   if (newFeatures.length !== oldFeatures.length) return "A new data container was supplied";
 
-  // modified existing features?
   const diff: DataDiff[] = [];
   const length = newFeatures.length;
   for (let i = 0; i < length; ++i) {
+    // feature changed?
     if (newFeatures[i] !== oldFeatures[i]) {
-      diff.push({ startRow: i, endRow: i + 1 });
+      // NOTE: include extra feature as workaround for polygon-fill artifacts
+      diff.push({ startRow: i, endRow: Math.min(i + 2, length) });
     }
   }
 

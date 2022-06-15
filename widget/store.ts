@@ -1,7 +1,6 @@
 import type { Effect, InitialViewStateProps, PickInfo, ViewStateChangeParams } from "@deck.gl/core";
-import type { EditAction } from "@nebula.gl/edit-modes";
-import type { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 import type { MapProps } from "react-map-gl";
+import type { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 
 import type { DeckProps } from "./deck";
 import type { EditorProps } from "./editor";
