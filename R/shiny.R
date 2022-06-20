@@ -343,5 +343,5 @@ get_edited_features <- function(rdeck, session = shiny::getDefaultReactiveDomain
     get_event_data(rdeck, "editorupload", session)
   )
 
-  geojsonsf::geojson_sfc(event_data$geojson %||% '{"type": "FeatureCollection","features": []}')
+  geojsonsf::geojson_sf(event_data$geojson %||% '{"type": "FeatureCollection","features": []}')
 }
