@@ -1,7 +1,7 @@
 import type { LayerProps, VisibilityInfo } from "../layer";
 import { ChangeHandler, observable, Observable } from "../utils";
 import { DeckState } from "./deck";
-import { EditorState } from "./editor";
+import { UndoableEditorState } from "./editor";
 import { MapState } from "./map";
 
 export class Store implements Observable {
@@ -29,13 +29,19 @@ export class Store implements Observable {
   layerSelector = false;
   lazyLoad = false;
 
-  #editor: EditorState | null = null;
+  #editor: UndoableEditorState | null = null;
   get editor() {
     return this.#editor;
   }
 
   set editor(value) {
-    this.#editor = value != null ? observable(new EditorState(value), this.#emitChange) : null;
+    if (value == null) {
+      this.#editor = null;
+    } else if (this.#editor == null) {
+      this.#editor = observable(new UndoableEditorState(value), this.#emitChange);
+    } else {
+      this.#editor.setState(value);
+    }
   }
 
   onChange?: ChangeHandler;

@@ -1,5 +1,5 @@
 import type { Effect, InitialViewStateProps, PickInfo, ViewStateChangeParams } from "@deck.gl/core";
-import { DeckProps } from "../deck";
+import type { DeckProps } from "../deck";
 
 const GLOBE: InitialViewStateProps = {
   longitude: 0,

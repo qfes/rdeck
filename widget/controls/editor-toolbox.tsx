@@ -5,6 +5,8 @@ import Lasso from "@mdi/svg/svg/lasso.svg";
 import VectorSquare from "@mdi/svg/svg/vector-square.svg";
 import VectorSquareEdit from "@mdi/svg/svg/vector-square-edit.svg";
 import VectorPolyLine from "@mdi/svg/svg/vector-polyline.svg";
+import Undo from "@mdi/svg/svg/arrow-u-left-top.svg";
+import Redo from "@mdi/svg/svg/arrow-u-right-top.svg";
 import { SvgIcon } from "@mui/material";
 import {
   PanTool,
@@ -30,16 +32,25 @@ export type EditorToolboxProps = {
   onDownload?: (geojson: FeatureCollection) => void;
   onUpload?: (geojson: FeatureCollection) => void;
   onDeleteSelected?: (indices: number[]) => void;
+  // undo/redo
+  canUndo: boolean;
+  canRedo: boolean;
+  onUndo?: () => void;
+  onRedo?: () => void;
 };
 
 export function EditorToolbox({
-  mode = "view",
+  mode,
   geojson,
   selectedFeatureIndices,
   onSetMode = noop,
   onDownload = noop,
   onUpload = noop,
   onDeleteSelected = noop,
+  canUndo,
+  canRedo,
+  onUndo = noop,
+  onRedo = noop,
 }: EditorToolboxProps) {
   const anySelected = selectedFeatureIndices?.length > 0;
   const anyFeatures = geojson?.features.length > 0;
@@ -115,6 +126,10 @@ export function EditorToolbox({
           disabled={!anyFeatures}
           onClick={() => onUpload(geojson)}
         />
+      </div>
+      <div className={styles.group}>
+        <EditorButton name="Undo" icon={Undo} disabled={!canUndo} onClick={onUndo} />
+        <EditorButton name="Redo" icon={Redo} disabled={!canRedo} onClick={onRedo} />
       </div>
       <div className={styles.group}>
         <EditorButton

@@ -55,6 +55,8 @@ export class Widget {
       // @ts-ignore
       editor = {
         ...editor,
+        canUndo: editor.canUndo,
+        canRedo: editor.canRedo,
         onUpload: (geojson) => {
           this.#handleUpload(geojson);
           editor?.setMode("view");

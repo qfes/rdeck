@@ -23,9 +23,9 @@ dependencies:
       - vendor/emotion.js
       - vendor/stylis.js
       - vendor/d3-array.js
+      - vendor/mdi.js
       - vendor/gl-matrix.js
       - vendor/react.js
-      - vendor/mdi.js
       - vendor/babel.js
       - vendor/react-dom.js
       - vendor/prop-types.js

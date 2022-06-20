@@ -1,5 +1,6 @@
-import type { FeatureCollection } from "geojson";
+import type { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 
+import { equal } from "../utils";
 import type { EditorProps } from "../editor";
 import type { EditorMode } from "../types";
 
@@ -8,7 +9,7 @@ const EMPTY_GEOJSON: FeatureCollection = Object.freeze({
   features: [],
 });
 
-export class EditorState implements EditorProps {
+export class EditorState implements Partial<EditorProps> {
   mode: EditorMode = "view";
   geojson: FeatureCollection = EMPTY_GEOJSON;
   selectedFeatureIndices: number[] = [];
@@ -22,6 +23,10 @@ export class EditorState implements EditorProps {
 
   constructor(props?: Partial<EditorProps>) {
     Object.assign(this, props);
+  }
+
+  setState(state: Partial<EditorState> = {}) {
+    Object.assign(this, state);
   }
 
   setMode(mode: EditorMode): void {
@@ -71,4 +76,81 @@ export class EditorState implements EditorProps {
 
     this.setMode("view");
   }
+}
+
+type ChangeProps = Pick<EditorProps, "mode" | "geojson" | "selectedFeatureIndices">;
+export class UndoableEditorState extends EditorState {
+  #current: number = -1;
+  readonly #history: ChangeProps[] = [];
+
+  get canUndo() {
+    return this.#current > 0;
+  }
+
+  get canRedo() {
+    return this.#current < this.#history.length - 1;
+  }
+
+  onUndo = () => this.undo();
+  onRedo = () => this.redo();
+
+  constructor(props?: Partial<EditorProps>) {
+    super(props);
+    this.#pushChange();
+  }
+
+  #pushChange(change: ChangeProps = this) {
+    const newState = pick(change);
+    const currentState = this.#history[this.#current];
+
+    if (equal(newState, currentState)) return;
+
+    // delete future values
+    this.#history.length = this.#current + 1;
+    // push change onto history stack
+    this.#current = this.#history.push(newState) - 1;
+  }
+
+  undo() {
+    if (!this.canUndo) return;
+
+    this.#current -= 1;
+    Object.assign(this, this.#history[this.#current]);
+  }
+
+  redo() {
+    if (!this.canRedo) return;
+
+    this.#current += 1;
+    Object.assign(this, this.#history[this.#current]);
+  }
+
+  setState(state?: Partial<EditorState>): void {
+    super.setState(state);
+    this.#history[this.#current] = pick(this);
+  }
+
+  setMode(mode: EditorMode): void {
+    super.setMode(mode);
+    this.#pushChange();
+  }
+
+  selectFeatures(featureIndices: number[]): void {
+    super.selectFeatures(featureIndices);
+    this.#pushChange();
+  }
+
+  setGeoJson(geojson: FeatureCollection<Geometry, GeoJsonProperties>): void {
+    super.setGeoJson(geojson);
+    this.#pushChange();
+  }
+
+  deleteSelected(selectedIndices: number[]): void {
+    super.deleteSelected(selectedIndices);
+    this.#pushChange();
+  }
+}
+
+function pick({ mode, geojson, selectedFeatureIndices }: ChangeProps): ChangeProps {
+  return { mode, geojson, selectedFeatureIndices };
 }

@@ -6,11 +6,13 @@ export function words(camelCase: string) {
   return camelCase.replace(/([A-Z])/g, " $1").toLowerCase();
 }
 
-export function pick<T, K extends keyof T>(object: T | null, ...keys: K[]): Pick<T, K> | null {
+export function pick(object: null): null;
+export function pick<T, K extends keyof T>(object: T, ...keys: K[]): Pick<T, K>;
+export function pick<T, K extends keyof T>(object: T, ...keys: K[]): Pick<T, K> | null {
   if (object == null) return null;
 
   const entries = keys.map((key) => [key, object[key]]);
-  return Object.fromEntries(entries);
+  return Object.fromEntries(entries) as Pick<T, K>;
 }
 
 function findVisibleAncestor(el: Element): Element | null {
