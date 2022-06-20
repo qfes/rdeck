@@ -48,16 +48,23 @@ export function createEditableLayer(props: EditorProps | null) {
   const isEditing = !READONLY_MODES.includes(mode);
 
   function handleEdit({ updatedData, editType, editContext }: EditAction<FeatureCollection>) {
-    if (editType === "updateTentativeFeature") return;
+    if (editType === "updateTentativeFeature" || editType === "addTentativePosition") return;
 
     if (editType === "selectFeature") {
       onSelectFeatures?.(editContext.selectedIndices ?? []);
       return;
     }
 
-    // NOTE: update internal state for in-progress edits
-    // @ts-ignore
-    this.data = updatedData;
+    // compute changed data range for efficient update
+    const ranges: DataRange[] =
+      editType === "addPosition" || editType === "removePosition"
+        ? [{ startRow: editContext.featureIndexes[0] ?? 0, endRow: updatedData.features.length }]
+        : editContext?.featureIndexes?.map(asRange);
+
+    // update internal state for in-progress edits
+    layer.props.data = { ...updatedData, __diff: ranges };
+    layer.setChangeFlags({ dataChanged: ranges });
+    layer.setNeedsUpdate();
 
     if (EDIT_EVENTS.has(editType)) {
       onSetGeoJson?.(updatedData);
@@ -67,7 +74,7 @@ export function createEditableLayer(props: EditorProps | null) {
     }
   }
 
-  return new EditableGeoJsonLayer({
+  const layer = new EditableGeoJsonLayer({
     data: geojson,
     selectedFeatureIndexes: selectedFeatureIndices,
     mode,
@@ -103,7 +110,7 @@ export function createEditableLayer(props: EditorProps | null) {
     _subLayerProps: {
       geojson: {
         dataComparator: featuresEqual,
-        _dataDiff: featuresDiff,
+        // _dataDiff: featuresDiff,
       },
       guides: {
         dataComparator: featuresEqual,
@@ -111,6 +118,8 @@ export function createEditableLayer(props: EditorProps | null) {
       },
     },
   });
+
+  return layer;
 }
 
 function getFillColor(feature: Feature, isSelected: boolean, mode: EditorMode) {
@@ -125,16 +134,26 @@ function featuresEqual(newData: FeatureCollection, oldData: FeatureCollection) {
   return Object.is(newData.features, oldData.features);
 }
 
-type DataDiff = { startRow: number; endRow: number };
+function asRange(index: number): DataRange {
+  return { startRow: index, endRow: index + 1 };
+}
+
+type DataRange = { startRow: number; endRow: number };
 
 // optimise in-place feature updates
-function featuresDiff(newData: FeatureCollection, oldData: FeatureCollection): DataDiff[] | string {
+function featuresDiff(
+  newData: FeatureCollection,
+  oldData: FeatureCollection
+): DataRange[] | string {
+  // @ts-ignore use default dataDiff where applicable
+  if (newData.__diff) return newData.__diff;
+
   const newFeatures = newData.features;
   const oldFeatures = oldData.features;
 
   if (newFeatures.length !== oldFeatures.length) return "A new data container was supplied";
 
-  const diff: DataDiff[] = [];
+  const diff: DataRange[] = [];
   const length = newFeatures.length;
   for (let i = 0; i < length; ++i) {
     const newFeature = newFeatures[i];
