@@ -8,7 +8,7 @@ import type { LayerProps, VisibilityInfo } from "./layer";
 import { pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
-import { Store } from "./store";
+import { Store } from "./state";
 
 export class Widget {
   #root: Root;
