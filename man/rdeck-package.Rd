@@ -13,9 +13,9 @@ Deck.gl widget for R.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://anthonynorth.github.io/rdeck}
-  \item \url{https://github.com/anthonynorth/rdeck}
-  \item Report bugs at \url{https://github.com/anthonynorth/rdeck/issues}
+  \item \url{https://qfes.github.io/rdeck}
+  \item \url{https://github.com/qfes/rdeck}
+  \item Report bugs at \url{https://github.com/qfes/rdeck/issues}
 }
 
 }

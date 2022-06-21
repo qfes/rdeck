@@ -6,8 +6,8 @@ Authors@R:
     person(given = "Anthony", family = "North", role = c("aut", "cre"), email = "anthony.jl.north@gmail.com")
 Description: Deck.gl widget for R.
 License: MIT + file LICENSE
-URL: https://anthonynorth.github.io/rdeck, https://github.com/anthonynorth/rdeck
-BugReports: https://github.com/anthonynorth/rdeck/issues
+URL: https://qfes.github.io/rdeck, https://github.com/qfes/rdeck
+BugReports: https://github.com/qfes/rdeck/issues
 Depends:
     R (>= 3.3.0)
 Imports:
