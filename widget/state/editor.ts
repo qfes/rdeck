@@ -111,6 +111,10 @@ export class UndoableEditorState extends EditorState {
     this.#current = this.#history.push(newState) - 1;
   }
 
+  #updateCurrentState(change: ChangeProps = this) {
+    this.#history[this.#current] = pick(change);
+  }
+
   undo() {
     if (!this.canUndo) return;
 
@@ -127,17 +131,17 @@ export class UndoableEditorState extends EditorState {
 
   setState(state?: Partial<EditorState>): void {
     super.setState(state);
-    this.#history[this.#current] = pick(this);
+    this.#updateCurrentState();
   }
 
   setMode(mode: EditorMode): void {
     super.setMode(mode);
-    this.#pushChange();
+    this.#updateCurrentState();
   }
 
   selectFeatures(featureIndices: number[]): void {
     super.selectFeatures(featureIndices);
-    this.#pushChange();
+    this.#updateCurrentState();
   }
 
   setGeoJson(geojson: FeatureCollection<Geometry, GeoJsonProperties>): void {
