@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rdeck</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9017</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,81 +127,131 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rdeck</dt>
 <dd><p>&lt;<code><a href="rdeck.html">rdeck</a></code> | <code><a href="rdeck_proxy.html">rdeck_proxy</a></code>&gt; An rdeck map instance.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be <code>camelCased</code> when serialised.
 A warning is raised when dots are used, warning class <code>rdeck_dots_nonempty</code>.</p></dd>
+
+
 <dt>id</dt>
 <dd><p>&lt;<code>string</code>&gt; The layer's identifier must be unique for among all layers of the same
 type for a map. Defaults to <code><a href="https://rdrr.io/pkg/uuid/man/UUIDgenerate.html" class="external-link">uuid::UUIDgenerate()</a></code>, but should be explicitly defined for
 updatable layers in a shiny application.</p></dd>
+
+
 <dt>name</dt>
 <dd><p>&lt;<code>string</code>&gt; Identifies the layer on tooltips and legends. It does
 not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.</p></dd>
+
+
 <dt>group_name</dt>
 <dd><p>&lt;<code>string</code>&gt; Defines the group that this layer belongs to. Currently only
 effective on the layer selector, if <code>visibility_toggle = TRUE</code>.</p></dd>
+
+
 <dt>data</dt>
 <dd><p>&lt;<code>character</code>&gt; A character vector of raster tile url templates.
 Substrings <code>"{x}"</code>, <code>"{y}"</code>, <code>"{z}"</code> will be replaced with a tile's actual index on
 request.</p>
 <p>If multiple url templates are supplied, each endpoint must return the same data for the
 same tile index.</p></dd>
+
+
 <dt>visible</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.
 When <code>visble = NULL</code>:</p><ul><li><p>on update, use current state in the browser</p></li>
 <li><p>on add, layer is visible</p></li>
 </ul></dd>
+
+
 <dt>pickable</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Determines if the layer responds to pointer / touch events.</p></dd>
+
+
 <dt>opacity</dt>
 <dd><p>&lt;<code>number</code>&gt; Determines the layer's opacity.</p></dd>
+
+
 <dt>wrap_longitude</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Normalises geometry longitudes.</p></dd>
+
+
 <dt>position_format</dt>
 <dd><p>&lt;<code>"XY"</code> | <code>"XYZ"</code>&gt; Determines whether each coordinate has two (XY)
 or three (XYZ) elements.</p></dd>
+
+
 <dt>color_format</dt>
 <dd><p>&lt;<code>"RGB"</code> | <code>"RGBA"</code>&gt; Determines whether the alpha channel of the colours
 will be ignored by accessors, making all colours opaque.</p></dd>
+
+
 <dt>auto_highlight</dt>
 <dd><p>&lt;<code>boolean</code>&gt; When <code>TRUE</code>, the current object <em>hovered</em> by the cursor is
 highlighted by <code>highlight_color</code>.</p></dd>
+
+
 <dt>highlight_color</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; When <code>auto_highlight</code> and
 <code>pickable</code> are enabled, <code>highlight_color</code> determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of colours.</p></dd>
+
+
 <dt>get_tile_data</dt>
 <dd><p>&lt;<code><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">JS</a></code>&gt; retrieves the data of each tile.
 See deck.gl <a href="https://deck.gl/docs/api-reference/geo-layers/tile-layer#gettiledata" class="external-link">getTileData</a>.</p></dd>
+
+
 <dt>extent</dt>
 <dd><p>&lt;<code>c(min_x, min_y, max_x, max_y)</code>&gt; Tiles in this bounding box
 will be rendered at <code>min_zoom</code>, when zoomed out below <code>min_zoom</code>.</p></dd>
+
+
 <dt>tile_size</dt>
 <dd><p>&lt;<code>number</code>&gt; A power of 2 that is the pixel dimensions of the tile.</p></dd>
+
+
 <dt>max_zoom</dt>
 <dd><p>&lt;<code>number</code>&gt; Tiles above this zoom level are not shown. Defaults to <code>NULL</code>.</p></dd>
+
+
 <dt>min_zoom</dt>
 <dd><p>&lt;<code>number</code>&gt; Tiles below this zoom level are not shown. Defaults to <code>0</code>.</p></dd>
+
+
 <dt>max_cache_size</dt>
 <dd><p>&lt;<code>number</code>&gt; Maximum number of tiles that can be cached. Defaults to
 5x the number of tiles in current viewport.</p></dd>
+
+
 <dt>max_cache_byte_size</dt>
 <dd><p>&lt;<code>number</code>&gt; Maximum memory used for caching tiles.</p></dd>
+
+
 <dt>refinement_strategy</dt>
 <dd><p>&lt;<code>"best-available"</code> | <code>"no-overlap"</code> | <code>"never"</code>&gt; How the tile
 layer refines visibility of tiles. Defaults to <code>"best-available"</code>.</p></dd>
+
+
 <dt>z_range</dt>
 <dd><p>&lt;<code>c(min, max)</code>&gt; Array representing the range of heights in the tile.</p></dd>
+
+
 <dt>max_requests</dt>
 <dd><p>&lt;<code>number</code>&gt; Maximum number of concurrent HTTP
 requests across all specified tile provider domains. If a negative number is
 supplied no throttling occurs (HTTP/2 only).</p></dd>
+
+
 <dt>zoom_offset</dt>
 <dd><p>&lt;<code>int</code>&gt; The offset changes the zoom level at which the tiles are fetched.</p></dd>
+
+
 <dt>blending_mode</dt>
 <dd><p>&lt;<code>"normal"</code> | <code>"additive"</code> | <code>"subtractive"</code>&gt; Sets the blending mode.
 Blending modes:</p><ul><li><p><code>normal</code>: Normal blending doesn't alter colours of overlapping objects.</p></li>
@@ -210,21 +260,32 @@ dot density on dark maps.</p></li>
 <li><p><code>subtractive</code>: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.</p></li>
 </ul></dd>
+
+
 <dt>visibility_toggle</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Whether this layer will appear in the layer selector.</p></dd>
+
+
 <dt>tooltip</dt>
 <dd><p>&lt;<code><a href="tooltip.html">tooltip</a></code>&gt; Defines the columns (and their order) that will be displayed in
 the layer tooltip, if <code>pickable == TRUE</code>.
 Supports <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a> if a
 <code>data</code> is a <code>data.frame</code>. <code>sfc</code> columns are always removed.</p></dd>
+
+
 <dt>desaturate</dt>
 <dd><p>&lt;<code>number</code>&gt; The desaturation of the bitmap. Between <code>0</code> and <code>1</code>, <code>being</code>
 the original colour, <code>1</code> being greyscale.</p></dd>
+
+
 <dt>transparent_color</dt>
 <dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The colour to use for transparent pixels.</p></dd>
+
+
 <dt>tint_color</dt>
 <dd><p>&lt;<code><a href="color.html">color</a></code>&gt; The colour to tint the bitmap by. Alpha channel is ignored
 if supplied.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -282,7 +343,7 @@ if supplied.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

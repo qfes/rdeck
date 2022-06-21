@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rdeck</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9017</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,99 +127,155 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rdeck</dt>
 <dd><p>&lt;<code><a href="rdeck.html">rdeck</a></code> | <code><a href="rdeck_proxy.html">rdeck_proxy</a></code>&gt; An rdeck map instance.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be <code>camelCased</code> when serialised.
 A warning is raised when dots are used, warning class <code>rdeck_dots_nonempty</code>.</p></dd>
+
+
 <dt>id</dt>
 <dd><p>&lt;<code>string</code>&gt; The layer's identifier must be unique for among all layers of the same
 type for a map. Defaults to <code><a href="https://rdrr.io/pkg/uuid/man/UUIDgenerate.html" class="external-link">uuid::UUIDgenerate()</a></code>, but should be explicitly defined for
 updatable layers in a shiny application.</p></dd>
+
+
 <dt>name</dt>
 <dd><p>&lt;<code>string</code>&gt; Identifies the layer on tooltips and legends. It does
 not need to be unique, but should be brief. Defaults to the deck.gl class name for the layer.</p></dd>
+
+
 <dt>group_name</dt>
 <dd><p>&lt;<code>string</code>&gt; Defines the group that this layer belongs to. Currently only
 effective on the layer selector, if <code>visibility_toggle = TRUE</code>.</p></dd>
+
+
 <dt>data</dt>
 <dd><p>&lt;<code>data.frame</code> | <code><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf</a></code> | <code>string</code>&gt; The layer's data. Data frames and
 sf objects will contain all columns that are referenced by the layer's accessors. Strings
 will be interpreted as a URL and data will be retrieved dynamically in the browser.</p></dd>
+
+
 <dt>visible</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.
 When <code>visble = NULL</code>:</p><ul><li><p>on update, use current state in the browser</p></li>
 <li><p>on add, layer is visible</p></li>
 </ul></dd>
+
+
 <dt>pickable</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Determines if the layer responds to pointer / touch events.</p></dd>
+
+
 <dt>opacity</dt>
 <dd><p>&lt;<code>number</code>&gt; Determines the layer's opacity.</p></dd>
+
+
 <dt>wrap_longitude</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Normalises geometry longitudes.</p></dd>
+
+
 <dt>position_format</dt>
 <dd><p>&lt;<code>"XY"</code> | <code>"XYZ"</code>&gt; Determines whether each coordinate has two (XY)
 or three (XYZ) elements.</p></dd>
+
+
 <dt>color_format</dt>
 <dd><p>&lt;<code>"RGB"</code> | <code>"RGBA"</code>&gt; Determines whether the alpha channel of the colours
 will be ignored by accessors, making all colours opaque.</p></dd>
+
+
 <dt>auto_highlight</dt>
 <dd><p>&lt;<code>boolean</code>&gt; When <code>TRUE</code>, the current object <em>hovered</em> by the cursor is
 highlighted by <code>highlight_color</code>.</p></dd>
+
+
 <dt>highlight_color</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; When <code>auto_highlight</code> and
 <code>pickable</code> are enabled, <code>highlight_color</code> determines the colour of the currently
 highlighted object. If a single colour value is supplied, that colour will be used to
 highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 or a <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of colours.</p></dd>
+
+
 <dt>icon_atlas</dt>
 <dd><p>&lt;<code>string</code>|<code>array</code>&gt; The image sprite containing raster icons. Must
 be either a string which is interpreted as a URL to an image, or an image bitmap.</p></dd>
+
+
 <dt>icon_mapping</dt>
 <dd><p>&lt;<code>string</code>|<code>list</code>&gt; The image sprite index. Must be either a string
 which is interpreted as a URL to a json document, or a named-list of icon descriptors.
 See https://github.com/visgl/deck.gl/blob/master/docs/api-reference/layers/icon-layer.md#iconmapping-objectstring-optional
 for icon descriptor fields.</p></dd>
+
+
 <dt>size_scale</dt>
 <dd><p>&lt;<code>number</code>&gt; The size multiplier.</p></dd>
+
+
 <dt>billboard</dt>
 <dd><p>&lt;<code>boolean</code>&gt; If <code>TRUE</code>, the icon always faces the camera, otherwise it
 faces up (z).</p></dd>
+
+
 <dt>size_units</dt>
 <dd><p>&lt;<code>"pixels"</code> | <code>"common"</code> | <code>"meters"</code>&gt; The units of the size specified by
 <code>get_size</code>.</p></dd>
+
+
 <dt>size_min_pixels</dt>
 <dd><p>&lt;<code>number</code>&gt; The minimum size in pixels.</p></dd>
+
+
 <dt>size_max_pixels</dt>
 <dd><p>&lt;<code>number</code>&gt; The maximum size in pixels.</p></dd>
+
+
 <dt>alpha_cutoff</dt>
 <dd><p>&lt;<code>number</code>&gt; Discard pixels whose opacity is below this threshold.
 A discarded pixel would create a "hole" in the icon that is not considered part of
 the object.</p></dd>
+
+
 <dt>get_position</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code>&gt; The position geometry column, either a <code>sfc_POINT</code> or
 a <code>sfc_MULTIPOINT</code> column with CRS <a href="http://epsg.io/4326" class="external-link">EPSG:4326</a>.
 Supports <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a>.</p></dd>
+
+
 <dt>get_icon</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code>&gt; The name of the icon for each feature. Icon name must be
 present in the <code>icon_mapping</code>.</p></dd>
+
+
 <dt>get_color</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code><a href="color.html">color</a></code>&gt; The colour of each object.
 Accepts a single colour value, a colour scale, or a
 <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of colours.</p></dd>
+
+
 <dt>get_size</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code><a href="scale.html">scale</a></code> | <code>number</code>&gt; The size of each icon,
 in units specified by <code>size_units</code>.
 Accepts a single numeric value, a numeric scale, or a
 <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
+
+
 <dt>get_angle</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt; The rotating angle of each icon in degrees.
 Accepts a single numeric value, or a
 <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> column of numbers.</p></dd>
+
+
 <dt>get_pixel_offset</dt>
 <dd><p>&lt;<code><a href="accessor.html">accessor</a></code> | <code>number</code>&gt; The pixel offset for each object.
 Accepts a single length-2 <code>numeric</code> vector, or a
 <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy-eval</a> list column.</p></dd>
+
+
 <dt>blending_mode</dt>
 <dd><p>&lt;<code>"normal"</code> | <code>"additive"</code> | <code>"subtractive"</code>&gt; Sets the blending mode.
 Blending modes:</p><ul><li><p><code>normal</code>: Normal blending doesn't alter colours of overlapping objects.</p></li>
@@ -228,13 +284,18 @@ dot density on dark maps.</p></li>
 <li><p><code>subtractive</code>: Subtractive blending darkens overlapping objects. Useful for highlighting
 dot density on light maps.</p></li>
 </ul></dd>
+
+
 <dt>visibility_toggle</dt>
 <dd><p>&lt;<code>boolean</code>&gt; Whether this layer will appear in the layer selector.</p></dd>
+
+
 <dt>tooltip</dt>
 <dd><p>&lt;<code><a href="tooltip.html">tooltip</a></code>&gt; Defines the columns (and their order) that will be displayed in
 the layer tooltip, if <code>pickable == TRUE</code>.
 Supports <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a> if a
 <code>data</code> is a <code>data.frame</code>. <code>sfc</code> columns are always removed.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -295,7 +356,7 @@ Supports <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" 
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>
