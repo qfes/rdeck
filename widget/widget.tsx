@@ -9,6 +9,7 @@ import { pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
 import { Store } from "./state";
+import { EditorProps } from "./editor";
 
 export class Widget {
   #root: Root;
@@ -43,7 +44,7 @@ export class Widget {
   }
 
   render() {
-    let { deckgl, mapgl, editor, ...props } = this.#state;
+    let { deckgl, mapgl, editor: _editor, ...props } = this.#state;
 
     deckgl = {
       ...deckgl,
@@ -51,15 +52,15 @@ export class Widget {
       onViewStateChange: this.#handleViewStateChange,
     };
 
-    if (editor != null) {
-      // @ts-ignore
+    let editor: EditorProps | null = null;
+    if (_editor != null) {
       editor = {
-        ...editor,
-        canUndo: editor.canUndo,
-        canRedo: editor.canRedo,
+        ..._editor,
+        canUndo: _editor.canUndo,
+        canRedo: _editor.canRedo,
         onUpload: (geojson) => {
           this.#handleUpload(geojson);
-          editor?.setMode("view");
+          _editor!.setMode("view");
         },
       };
     }
