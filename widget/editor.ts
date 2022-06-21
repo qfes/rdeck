@@ -48,7 +48,7 @@ export function createEditableLayer(props: EditorProps | null) {
   const isEditing = !READONLY_MODES.includes(mode);
 
   function handleEdit({ updatedData, editType, editContext }: EditAction<FeatureCollection>) {
-    if (editType === "updateTentativeFeature" || editType === "addTentativePosition") return;
+    if (TENTATIVE_EVENTS.includes(editType)) return;
 
     if (editType === "selectFeature") {
       onSelectFeatures?.(editContext.selectedIndices ?? []);
@@ -56,10 +56,9 @@ export function createEditableLayer(props: EditorProps | null) {
     }
 
     // compute changed data range for efficient update
-    const ranges: DataRange[] =
-      editType === "addPosition" || editType === "removePosition"
-        ? [{ startRow: editContext.featureIndexes[0] ?? 0, endRow: updatedData.features.length }]
-        : editContext?.featureIndexes?.map(asRange);
+    const ranges: boolean | DataRange[] = UNSAFE_DIFF_EVENTS.includes(editType)
+      ? true
+      : editContext?.selectedIndices?.map(asRange);
 
     // update internal state for in-progress edits
     layer.props.data = { ...updatedData, __diff: ranges };
@@ -188,6 +187,9 @@ const EDIT_EVENTS = Object.freeze(
     "split",
   ])
 );
+
+const TENTATIVE_EVENTS = Object.freeze(["updateTentativeFeature", "addTentativePosition"]);
+const UNSAFE_DIFF_EVENTS = Object.freeze(["addPosition", "removePosition", "addFeature"]);
 
 class EditableGeoJsonLayer extends _EditableGeoJsonLayer {
   onPointerMove(event: PointerMoveEvent): void {
