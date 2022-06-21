@@ -11,18 +11,20 @@ import { Deck, DeckProps } from "./deck";
 import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
+import { createEditableLayer, EditorProps } from "./editor";
 
 export type MapProps = {
   deckgl: DeckProps;
   mapgl: MapGLProps;
   layers: Layer[];
+  editor: EditorProps | null;
 };
 
-export function Map({ deckgl, mapgl, layers }: MapProps) {
+export function Map({ deckgl, mapgl, layers, editor }: MapProps) {
   const deck = useRef<DeckGL>(null);
   const [info, handleHover] = useHover();
 
-  const { controller, blendingMode, ...deckProps } = deckgl;
+  let { blendingMode, controller, onClick: handleClick, ...deckProps } = deckgl;
 
   const parameters = {
     ...deckgl.parameters,
@@ -35,6 +37,17 @@ export function Map({ deckgl, mapgl, layers }: MapProps) {
   useAnimation(animating, (time) => setTime(time));
 
   const _layers: any = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
+  const editableLayer = createEditableLayer(editor);
+  const isEditing = editor != null && !["view", "select"].includes(editor.mode);
+
+  // disable double-click zoom for editor
+  if (isEditing && controller) {
+    controller = {
+      // @ts-ignore
+      ...controller,
+      doubleClickZoom: false,
+    };
+  }
 
   return (
     <Fragment>
@@ -42,8 +55,12 @@ export function Map({ deckgl, mapgl, layers }: MapProps) {
         // @ts-ignore
         Deck={Deck}
         ref={deck}
-        {...deckProps}
-        {...{ parameters, layers: _layers, onHover: handleHover }}
+        {...{ ...deckProps, parameters }}
+        layers={[..._layers, editableLayer]}
+        // remove picking callbacks when editing
+        onHover={!isEditing ? handleHover : undefined}
+        onClick={!isEditing ? handleClick : undefined}
+        getCursor={editableLayer?.getCursor.bind(editableLayer)}
       >
         <MapView id="map" controller={controller} repeat>
           {/* @ts-ignore} */}

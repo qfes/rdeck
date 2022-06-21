@@ -46,6 +46,12 @@
   max-height: calc(100% - 20px);
 }
 
+.control-container.top {
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
 :global(.rdeck) {
   scrollbar-width: 12px;
   scrollbar-color: hsla(218, 8%, 40%, 0.6) transparent;

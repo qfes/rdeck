@@ -18,7 +18,6 @@ reference:
     desc: Create Deck.GL map
     contents:
       - rdeck
-
       - layers
       - props
 
@@ -113,6 +112,7 @@ reference:
       - tile_json
       - set_layer_visibility
       - view_state
+      - editor_options
       - format_number
       - sfc_point
       - sf_column

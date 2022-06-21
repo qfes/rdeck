@@ -12,7 +12,8 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fontsource/roboto": "^4.5.5",
-    "@mui/icons-material": "^5.6.2",
+    "@mdi/svg": "^6.7.96",
+    "@mui/icons-material": "^5.8.4",
     "@types/d3": "^7.1.0",
     "@types/geojson": "^7946.0.8",
     "@types/node": "^17.0.31",
@@ -22,11 +23,13 @@
     "deck.gl": "8.7.8",
     "h3-js": "^3.7.2",
     "mapbox-gl": "2.8.2",
+    "nebula.gl": "^1.0.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-map-gl": "^7.0.11"
   },
   "devDependencies": {
+    "@svgr/webpack": "^6.2.1",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "browserslist-config-google": "^3.0.1",

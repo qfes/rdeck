@@ -1,44 +1,8 @@
-import type { Effect, InitialViewStateProps, PickInfo, ViewStateChangeParams } from "@deck.gl/core";
-import type { MapProps } from "react-map-gl";
-
-import type { DeckProps } from "./deck";
-import type { LayerProps, VisibilityInfo } from "./layer";
-import { ChangeHandler, Observable, observable } from "./utils";
-
-const GLOBE: InitialViewStateProps = {
-  longitude: 0,
-  latitude: 0,
-  zoom: 0,
-  pitch: 0,
-  bearing: 0,
-};
-
-export class DeckState implements DeckProps {
-  useDevicePixels?: number | boolean;
-  pickingRadius?: number;
-  blendingMode?: BlendingMode;
-  effects?: Effect[];
-  controller?: boolean;
-  initialViewState?: InitialViewStateProps = GLOBE;
-  initialBounds?: Bounds;
-
-  onViewStateChange?: (params: ViewStateChangeParams) => any;
-  onClick?: (info: PickInfo, event: MouseEvent) => void;
-
-  constructor(props?: Partial<DeckProps>) {
-    Object.assign(this, props);
-  }
-}
-
-export class MapState implements MapProps {
-  mapboxAccessToken?: string;
-  mapStyle?: string;
-  reuseMaps?: boolean = true;
-
-  constructor(props?: Partial<MapProps>) {
-    Object.assign(this, props);
-  }
-}
+import type { LayerProps, VisibilityInfo } from "../layer";
+import { ChangeHandler, observable, Observable } from "../utils";
+import { DeckState } from "./deck";
+import { UndoableEditorState } from "./editor";
+import { MapState } from "./map";
 
 export class Store implements Observable {
   theme: "kepler" | "light" = "kepler";
@@ -62,9 +26,23 @@ export class Store implements Observable {
   }
 
   layers: LayerProps[] = [];
-
   layerSelector = false;
   lazyLoad = false;
+
+  #editor: UndoableEditorState | null = null;
+  get editor() {
+    return this.#editor;
+  }
+
+  set editor(value) {
+    if (value == null) {
+      this.#editor = null;
+    } else if (this.#editor == null) {
+      this.#editor = observable(new UndoableEditorState(value), this.#emitChange);
+    } else {
+      this.#editor.setState(value);
+    }
+  }
 
   onChange?: ChangeHandler;
   readonly #emitChange = () => this.onChange?.();
@@ -85,13 +63,18 @@ export class Store implements Observable {
     observable(this, this.#emitChange);
   }
 
-  setState({ deckgl, mapgl, ...state }: Partial<Store> = {}) {
+  setState({ deckgl, mapgl, editor, ...state }: Partial<Store> = {}) {
     Object.assign(this, {
       ...state,
       // merge objects
       deckgl: { ...this.deckgl, ...deckgl },
       mapgl: { ...this.mapgl, ...mapgl },
     });
+
+    if (editor !== undefined) {
+      // @ts-ignore
+      this.editor = editor != null ? { ...this.editor, ...editor } : null;
+    }
   }
 
   upsertLayer(layer: LayerProps): void {

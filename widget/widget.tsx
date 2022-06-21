@@ -1,12 +1,14 @@
 import { createRoot, Root } from "react-dom/client";
 import { StrictMode } from "react";
 import type { PickInfo, ViewStateChangeParams } from "@deck.gl/core";
+import type { FeatureCollection } from "geojson";
+
 import { RDeck } from "./rdeck";
 import type { LayerProps, VisibilityInfo } from "./layer";
 import { pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
-import { Store } from "./store";
+import { Store } from "./state";
 
 export class Widget {
   #root: Root;
@@ -41,12 +43,26 @@ export class Widget {
   }
 
   render() {
-    const { theme, mapgl, layers, layerSelector, lazyLoad } = this.#state;
-    const deckgl = {
-      ...this.#state.deckgl,
+    let { deckgl, mapgl, editor, ...props } = this.#state;
+
+    deckgl = {
+      ...deckgl,
       onClick: this.#handleClick,
       onViewStateChange: this.#handleViewStateChange,
     };
+
+    if (editor != null) {
+      // @ts-ignore
+      editor = {
+        ...editor,
+        canUndo: editor.canUndo,
+        canRedo: editor.canRedo,
+        onUpload: (geojson) => {
+          this.#handleUpload(geojson);
+          editor?.setMode("view");
+        },
+      };
+    }
 
     // overwritten
     if (deckgl.initialBounds != null) {
@@ -57,13 +73,11 @@ export class Widget {
       <StrictMode>
         <RDeck
           {...{
-            theme,
+            ...props,
             deckgl,
             mapgl,
-            layers,
-            layerSelector,
+            editor,
             onLayerVisibilityChange: this.state.setLayerVisibility,
-            lazyLoad,
           }}
         />
       </StrictMode>
@@ -100,6 +114,16 @@ export class Widget {
       const data = getViewState(params.viewState);
 
       Shiny.setInputValue(`${this.element.id}_viewstate`, data, { priority: "event" });
+    }
+  };
+
+  // FIXME: move to store
+  #handleUpload = (geojson: FeatureCollection): void => {
+    if (HTMLWidgets.shinyMode) {
+      // we need to parse the json with geojsonsf
+      Shiny.setInputValue(`${this.element.id}_editorupload`, {
+        geojson: JSON.stringify(geojson),
+      });
     }
   };
 }

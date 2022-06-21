@@ -122,9 +122,15 @@ rdeck_proxy <- function(id,
                         use_device_pixels = cur_value(),
                         blending_mode = cur_value(),
                         layer_selector = cur_value(),
+                        editor = cur_value(),
                         lazy_load = cur_value(),
                         ...) {
   tidyassert::assert_is_string(id)
+  tidyassert::assert(
+    is_cur_value(editor) |
+      is_editor_options(editor) |
+      rlang::is_scalar_logical(editor)
+  )
 
   args <- rlang::call_args(rlang::current_call())
   needs_update <- !rlang::is_empty(
@@ -163,6 +169,7 @@ rdeck_proxy <- function(id,
       deckgl = deckgl,
       mapgl = mapgl,
       layer_selector = layer_selector,
+      editor = as_editor_options(editor),
       lazy_load = lazy_load
     ),
     class = "rdeck_data"
@@ -326,4 +333,15 @@ get_clicked_object <- function(rdeck, session = shiny::getDefaultReactiveDomain(
   )
 
   event_data$object
+}
+
+#' @describeIn shiny-events Get the edited features
+#' @inherit get_event_data
+#' @export
+get_edited_features <- function(rdeck, session = shiny::getDefaultReactiveDomain()) {
+  event_data <- with_event_data_errors(
+    get_event_data(rdeck, "editorupload", session)
+  )
+
+  geojsonsf::geojson_sf(event_data$geojson %||% '{"type": "FeatureCollection","features": []}')
 }

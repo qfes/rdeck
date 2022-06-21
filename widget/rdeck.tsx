@@ -4,7 +4,8 @@ import type { MapProps } from "react-map-gl";
 import type { DeckProps } from "./deck";
 import { Map } from "./map";
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
-import { LayerSelector, Legend } from "./controls";
+import { LayerSelector, Legend, EditorToolbox } from "./controls";
+import type { EditorProps } from "./editor";
 import styles from "./rdeck.css";
 import { classNames } from "./util";
 
@@ -16,6 +17,7 @@ export interface RDeckProps {
   lazyLoad: boolean;
   layerSelector: boolean;
   onLayerVisibilityChange: (layersVisibility: VisibilityInfo[]) => void;
+  editor: EditorProps | null;
 }
 
 export function RDeck({
@@ -26,6 +28,7 @@ export function RDeck({
   lazyLoad = false,
   layerSelector = false,
   onLayerVisibilityChange,
+  editor,
 }: RDeckProps) {
   const _layers = layers?.map(Layer.create) ?? [];
 
@@ -46,7 +49,6 @@ export function RDeck({
           />
         )}
       </div>
-      {shouldRender && <Map {...{ deckgl, mapgl, layers: _layers }} />}
       <div className={classNames(styles.controlContainer, styles.right)}>
         <Legend
           layers={_layers
@@ -55,6 +57,10 @@ export function RDeck({
             .reverse()}
         />
       </div>
+      <div className={classNames(styles.controlContainer, styles.top)}>
+        {editor && <EditorToolbox {...editor} />}
+      </div>
+      {shouldRender && <Map {...{ deckgl, mapgl, layers: _layers, editor }} />}
     </div>
   );
 }

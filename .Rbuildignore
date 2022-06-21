@@ -3,6 +3,7 @@
 
 # widget
 ^widget$
+^typings$
 ^scripts$
 ^node_modules$
 ^package\.json$

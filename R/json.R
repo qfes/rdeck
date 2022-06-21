@@ -39,6 +39,8 @@ as_json.map_props <- function(object) {
   )
 }
 
+#' @autoglobal
+#' @noRd
 as_json.rdeck_data <- function(object) {
   rdeck_data <- mutate(
     object,
@@ -70,6 +72,29 @@ as_json.view_state <- function(object) {
 
 as_json.bbox <- function(object) {
   json_stringify(object, digits = 6)
+}
+
+#' @autoglobal
+#' @noRd
+as_json.editor_options <- function(object) {
+  options <- mutate(select(object, -where(is_cur_value)))
+
+  # features to geojson
+  if (!is.null(options$features)) {
+    options <- mutate(
+      options,
+      geojson = geojsonsf::sf_geojson(sf::st_sf(features), simplify = FALSE)
+    )
+
+    options <- select(options, -features)
+  }
+
+  json_stringify(
+    options,
+    camel_case = TRUE,
+    auto_unbox = TRUE,
+    digits = 6
+  )
 }
 
 as_json.accessor <- function(object) {

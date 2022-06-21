@@ -38,6 +38,9 @@ sf_column <- function() structure(list(), class = "sf_column")
 # is object a simple features column
 is_sfc <- function(object) inherits(object, "sfc")
 
+# is object a simple features column
+is_sf <- function(object) inherits(object, "sf")
+
 # is crs = epsg:4326
 is_wgs84 <- function(object) {
   crs <- sf::st_crs(object)
