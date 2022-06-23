@@ -1,17 +1,26 @@
 import "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  Fragment,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { PickInfo, MapView } from "@deck.gl/core";
-import { DeckGL } from "@deck.gl/react";
+import { DeckGL, DeckGLRef } from "@deck.gl/react";
 import { _AggregationLayer } from "@deck.gl/aggregation-layers";
-import { Map as MapGL, MapProps as MapGLProps } from "react-map-gl";
+import { Map as MapGL, MapProps as MapGLProps, MapRef as MapGLRef } from "react-map-gl";
 
 import { Deck, DeckProps } from "./deck";
 import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
 import { createEditableLayer, EditorProps } from "./editor";
+import { getMapImageBitmap } from "./utils";
 
 export type MapProps = {
   deckgl: DeckProps;
@@ -20,8 +29,28 @@ export type MapProps = {
   editor: EditorProps | null;
 };
 
-export function Map({ deckgl, mapgl, layers, editor }: MapProps) {
-  const deck = useRef<DeckGL>(null);
+export type MapRef = {
+  getImage(): Promise<ImageBitmap | null>;
+};
+
+export const Map = forwardRef<MapRef, MapProps>(({ deckgl, mapgl, layers, editor }, ref) => {
+  const deckglRef = useRef<DeckGLRef>(null);
+  const mapglRef = useRef<MapGLRef>(null);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      async getImage() {
+        const deck = deckglRef.current?.deck;
+        if (deck == null) return null;
+
+        const mapbox = mapglRef.current?.getMap();
+        return getMapImageBitmap(deck, mapbox);
+      },
+    }),
+    []
+  );
+
   const [info, handleHover] = useHover();
 
   let { blendingMode, controller, onClick: handleClick, ...deckProps } = deckgl;
@@ -54,7 +83,8 @@ export function Map({ deckgl, mapgl, layers, editor }: MapProps) {
       <DeckGL
         // @ts-ignore
         Deck={Deck}
-        ref={deck}
+        // @ts-ignore
+        ref={deckglRef}
         {...{ ...deckProps, parameters }}
         layers={[..._layers, editableLayer]}
         // remove picking callbacks when editing
@@ -64,13 +94,15 @@ export function Map({ deckgl, mapgl, layers, editor }: MapProps) {
       >
         <MapView id="map" controller={controller} repeat>
           {/* @ts-ignore} */}
-          {mapgl.mapStyle && <MapGL {...mapgl} />}
+          {mapgl.mapStyle && <MapGL ref={mapglRef} {...mapgl} />}
         </MapView>
       </DeckGL>
       {info && <Tooltip info={info} />}
     </Fragment>
   );
-}
+});
+
+Map.displayName = "Map";
 
 const useHover = () => {
   const [state, setState] = useState<PickInfo<any> | null>(null);

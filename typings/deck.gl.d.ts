@@ -104,6 +104,11 @@ declare module "@deck.gl/react" {
   export interface DeckGLProps<T = ContextProviderValue, D = typeof Deck> extends _DeckGLProps<T> {
     Deck?: D;
   }
+
+  export interface DeckGLRef<T = ContextProviderValue>
+    extends Pick<Deck, "pickObject" | "pickObjects" | "pickMultipleObjects"> {
+    readonly deck: Deck<T>;
+  }
 }
 
 declare module "@deck.gl/react/deckgl" {

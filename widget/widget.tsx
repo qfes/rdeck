@@ -1,15 +1,16 @@
 import { createRoot, Root } from "react-dom/client";
-import { StrictMode } from "react";
+import { createRef, StrictMode } from "react";
 import type { PickInfo, ViewStateChangeParams } from "@deck.gl/core";
 import type { FeatureCollection } from "geojson";
 
-import { RDeck } from "./rdeck";
+import { RDeck, RDeckRef } from "./rdeck";
 import type { LayerProps, VisibilityInfo } from "./layer";
 import { pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
 import { Store } from "./state";
 import { EditorProps } from "./editor";
+import { download } from "./utils";
 
 export class Widget {
   #root: Root;
@@ -17,6 +18,8 @@ export class Widget {
   get element() {
     return this.#element;
   }
+
+  #rdeckRef = createRef<RDeckRef>();
 
   #state: Store;
   get state() {
@@ -73,6 +76,7 @@ export class Widget {
     this.#root.render(
       <StrictMode>
         <RDeck
+          ref={this.#rdeckRef}
           {...{
             ...props,
             deckgl,
@@ -91,6 +95,13 @@ export class Widget {
    */
   setLayerVisibility(layersVisibility: VisibilityInfo[]) {
     return this.#state.setLayerVisibility(layersVisibility);
+  }
+
+  async snapshot(filename = "rdeck.png"): Promise<void> {
+    const rdeck = this.#rdeckRef.current;
+    const image = await rdeck?.getImage();
+
+    if (image != null) download(image, filename);
   }
 
   // FIXME: move to store
