@@ -1,15 +1,5 @@
-import { Deck } from "@deck.gl/core";
-import { MapboxMap } from "react-map-gl";
-
-export function download(blob: Blob, filename: string) {
-  const element = document.createElement("a");
-  const blobUrl = URL.createObjectURL(blob);
-  element.href = blobUrl;
-  element.download = filename;
-  element.click();
-
-  URL.revokeObjectURL(blobUrl);
-}
+import type { Deck } from "@deck.gl/core";
+import type { MapboxMap } from "react-map-gl";
 
 async function getDeckglImageBitmap(deck: Deck): Promise<ImageBitmap> {
   return new Promise((resolve, reject) => {
@@ -55,18 +45,15 @@ export async function getMapImageBitmap(deck: Deck, mapbox?: MapboxMap): Promise
   return createImageBitmap(canvas);
 }
 
-async function getCanvasImage(canvas: HTMLCanvasElement): Promise<Blob> {
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => resolve(blob!));
-  });
-}
-
-export async function getImageData(bitmap: ImageBitmap): Promise<Blob> {
+export async function transferToBlob(image: ImageBitmap): Promise<Blob> {
   const canvas = document.createElement("canvas");
-  canvas.width = bitmap.width;
-  canvas.height = bitmap.height;
+  canvas.width = image.width;
+  canvas.height = image.height;
   const context = canvas.getContext("2d");
 
-  context?.drawImage(bitmap, 0, 0);
-  return getCanvasImage(canvas);
+  context?.drawImage(image, 0, 0);
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => resolve(blob!));
+    image.close();
+  });
 }

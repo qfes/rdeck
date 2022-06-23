@@ -8,7 +8,7 @@ import { LayerSelector, Legend, EditorToolbox } from "./controls";
 import type { EditorProps } from "./editor";
 import styles from "./rdeck.css";
 import { classNames } from "./util";
-import { getImageData } from "./utils";
+import { transferToBlob } from "./utils";
 
 export interface RDeckProps {
   theme: "kepler" | "light";
@@ -47,7 +47,7 @@ export const RDeck = forwardRef<RDeckRef, RDeckProps>(
           const map = mapRef.current;
           const bitmap = await map?.getImage();
 
-          return bitmap != null ? getImageData(bitmap) : null;
+          return bitmap != null ? transferToBlob(bitmap) : null;
         },
       }),
       []
