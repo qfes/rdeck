@@ -1,3 +1,4 @@
+export * from "./dom";
 export * from "./download";
 export * from "./equal";
 export * from "./geometry";

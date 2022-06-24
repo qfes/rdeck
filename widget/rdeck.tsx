@@ -4,11 +4,11 @@ import type { MapProps } from "react-map-gl";
 import type { DeckProps } from "./deck";
 import { Map, MapRef } from "./map";
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
-import { LayerSelector, Legend, EditorToolbox } from "./controls";
+import { LayerSelector, Legend, EditorToolbox, LegendRef } from "./controls";
 import type { EditorProps } from "./editor";
 import styles from "./rdeck.css";
 import { classNames } from "./util";
-import { transferToBlob } from "./utils";
+import { getSnapshot } from "./utils";
 
 export interface RDeckProps {
   theme: "kepler" | "light";
@@ -21,8 +21,12 @@ export interface RDeckProps {
   editor: EditorProps | null;
 }
 
+export type SnapshotOptions = {
+  legend: boolean;
+};
+
 export type RDeckRef = {
-  getImage(): Promise<Blob | null>;
+  getSnapshot({ legend }: SnapshotOptions): Promise<Blob | null>;
 };
 
 export const RDeck = forwardRef<RDeckRef, RDeckProps>(
@@ -40,14 +44,20 @@ export const RDeck = forwardRef<RDeckRef, RDeckProps>(
     ref
   ) => {
     const mapRef = useRef<MapRef>(null);
+    const legendRef = useRef<LegendRef>(null);
     useImperativeHandle(
       ref,
       () => ({
-        async getImage() {
+        async getSnapshot({ legend = true }) {
           const map = mapRef.current;
-          const bitmap = await map?.getImage();
+          const mapLegend = legendRef.current;
 
-          return bitmap != null ? transferToBlob(bitmap) : null;
+          const mapImage = await map?.getImage();
+          if (mapImage == null) return null;
+
+          const legendImage = legend ? await mapLegend?.getImage() : null;
+
+          return getSnapshot(mapImage, legendImage);
         },
       }),
       []
@@ -74,6 +84,7 @@ export const RDeck = forwardRef<RDeckRef, RDeckProps>(
         </div>
         <div className={classNames(styles.controlContainer, styles.right)}>
           <Legend
+            ref={legendRef}
             layers={_layers
               .filter((layer) => layer.props.visible)
               .map((layer) => layer.renderLegend())

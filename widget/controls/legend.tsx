@@ -1,4 +1,6 @@
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import type { ScaleLinear, ScaleLogarithmic, ScalePower } from "d3-scale";
+
 import {
   AccessorScale,
   AccessorScaleCategory,
@@ -12,6 +14,7 @@ import type { LegendInfo } from "../layer";
 import { rgba } from "../color";
 import { words } from "../util";
 import styles from "./legend.css";
+import { getElementImageBitmap } from "../utils";
 
 const TICK_HEIGHT = 16;
 const TICK_FONT_SIZE = 11;
@@ -20,17 +23,34 @@ export type LegendProps = {
   layers: LegendInfo[];
 };
 
-export function Legend({ layers }: LegendProps) {
-  if (layers.length === 0) return null;
+export type LegendRef = {
+  getImage(): Promise<ImageBitmap | null>;
+};
 
+export const Legend = forwardRef<LegendRef, LegendProps>(({ layers }, ref) => {
+  const container = useRef<HTMLDivElement>(null);
+  useImperativeHandle(
+    ref,
+    () => ({
+      async getImage() {
+        if (container.current == null) return null;
+        return getElementImageBitmap(container.current);
+      },
+    }),
+    []
+  );
+
+  if (layers.length === 0) return null;
   return (
-    <div className={styles.legend}>
+    <div ref={container} className={styles.legend}>
       {layers.map((layer) => (
         <Layer key={layer.id} {...layer} />
       ))}
     </div>
   );
-}
+});
+
+Legend.displayName = "Legend";
 
 function Layer({ name, scales }: LegendInfo) {
   if (scales.length === 0) return null;

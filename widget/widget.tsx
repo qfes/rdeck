@@ -97,11 +97,13 @@ export class Widget {
     return this.#state.setLayerVisibility(layersVisibility);
   }
 
-  async snapshot(filename = "rdeck.png"): Promise<void> {
+
+  async snapshot({ filename = "rdeck.png", legend = true } = {}): Promise<Blob | null> {
     const rdeck = this.#rdeckRef.current;
-    const image = await rdeck?.getImage();
+    const image = (await rdeck?.getSnapshot({ legend })) ?? null;
 
     if (image != null) download(image, filename);
+    return image;
   }
 
   // FIXME: move to store
