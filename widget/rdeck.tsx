@@ -22,7 +22,9 @@ export interface RDeckProps {
 }
 
 export type SnapshotOptions = {
-  legend: boolean;
+  filename?: string;
+  legend?: boolean;
+  size?: [number, number];
 };
 
 export type RDeckRef = {
@@ -48,7 +50,7 @@ export const RDeck = forwardRef<RDeckRef, RDeckProps>(
     useImperativeHandle(
       ref,
       () => ({
-        async getSnapshot({ legend = true }) {
+        async getSnapshot({ legend = true, size }) {
           const map = mapRef.current;
           const mapLegend = legendRef.current;
 
@@ -56,7 +58,7 @@ export const RDeck = forwardRef<RDeckRef, RDeckProps>(
           if (mapImage == null) return null;
 
           const legendImage = legend ? await mapLegend?.getImage() : null;
-          return getSnapshot(mapImage, legendImage ?? null);
+          return getSnapshot(mapImage, legendImage ?? null, size);
         },
       }),
       []

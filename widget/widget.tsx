@@ -3,7 +3,7 @@ import { createRef, StrictMode } from "react";
 import type { PickInfo, ViewStateChangeParams } from "@deck.gl/core";
 import type { FeatureCollection } from "geojson";
 
-import { RDeck, RDeckRef } from "./rdeck";
+import { RDeck, RDeckRef, SnapshotOptions } from "./rdeck";
 import type { LayerProps, VisibilityInfo } from "./layer";
 import { pick } from "./util";
 import { getViewState } from "./viewport";
@@ -97,13 +97,18 @@ export class Widget {
     return this.#state.setLayerVisibility(layersVisibility);
   }
 
-
-  async snapshot({ filename = "rdeck.png", legend = true } = {}): Promise<Blob | null> {
+  async snapshot({
+    filename = "rdeck.png",
+    legend = true,
+    size = undefined,
+  }: SnapshotOptions = {}): Promise<Blob | null> {
     const rdeck = this.#rdeckRef.current;
-    const image = (await rdeck?.getSnapshot({ legend })) ?? null;
+    const image = await rdeck?.getSnapshot({ legend, size });
 
-    if (image != null) download(image, filename);
-    return image;
+    if (image != null && filename != null) {
+      download(image, filename);
+    }
+    return image ?? null;
   }
 
   // FIXME: move to store

@@ -45,14 +45,33 @@ export async function getMapImage(
 
 export async function getSnapshot(
   mapImage: HTMLCanvasElement,
-  legendImage: HTMLImageElement | null
+  legendImage: HTMLImageElement | null,
+  size?: [number, number]
 ): Promise<Blob> {
   const canvas = document.createElement("canvas");
-  canvas.width = mapImage.width;
-  canvas.height = mapImage.height;
   const context = canvas.getContext("2d");
 
-  context?.drawImage(mapImage, 0, 0);
+  const [width, height] = size ?? [mapImage.width, mapImage.height];
+  Object.assign(canvas, { width, height });
+
+  if (width > mapImage.width || height > mapImage.height) {
+    throw new RangeError("Snapshot size must be <= map size");
+  }
+
+  const offsetX = (mapImage.width - canvas.width) / 2;
+  const offsetY = (mapImage.height - canvas.height) / 2;
+  context?.drawImage(
+    mapImage,
+    offsetX,
+    offsetY,
+    mapImage.width,
+    mapImage.height,
+    0,
+    0,
+    mapImage.width,
+    mapImage.height
+  );
+
   if (legendImage != null) {
     context?.drawImage(legendImage, canvas.width - legendImage.width - 10, 10);
   }
