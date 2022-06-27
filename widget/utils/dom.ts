@@ -42,7 +42,10 @@ export function createImage(url: string): Promise<HTMLImageElement> {
   });
 }
 
-export function createSvg({ width, height }: { width: number; height: number }): SVGElement {
+export function createSvg(
+  { width, height }: { width: number; height: number },
+  ...children: HTMLElement[]
+): SVGElement {
   const ns = "http://www.w3.org/2000/svg";
   const svg = document.createElementNS(ns, "svg");
   svg.setAttribute("width", `${width}`);
@@ -53,6 +56,8 @@ export function createSvg({ width, height }: { width: number; height: number }):
   foreignObject.setAttribute("width", "100%");
   foreignObject.setAttribute("height", "100%");
   svg.appendChild(foreignObject);
+
+  children.forEach((element) => foreignObject.appendChild(element));
 
   return svg;
 }

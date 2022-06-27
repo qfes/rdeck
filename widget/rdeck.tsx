@@ -56,8 +56,7 @@ export const RDeck = forwardRef<RDeckRef, RDeckProps>(
           if (mapImage == null) return null;
 
           const legendImage = legend ? await mapLegend?.getImage() : null;
-
-          return getSnapshot(mapImage, legendImage);
+          return getSnapshot(mapImage, legendImage ?? null);
         },
       }),
       []

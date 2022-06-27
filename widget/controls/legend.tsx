@@ -14,7 +14,7 @@ import type { LegendInfo } from "../layer";
 import { rgba } from "../color";
 import { words } from "../util";
 import styles from "./legend.css";
-import { getElementImageBitmap } from "../utils";
+import { getElementImage } from "../utils";
 
 const TICK_HEIGHT = 16;
 const TICK_FONT_SIZE = 11;
@@ -24,7 +24,7 @@ export type LegendProps = {
 };
 
 export type LegendRef = {
-  getImage(): Promise<ImageBitmap | null>;
+  getImage(): Promise<HTMLImageElement | null>;
 };
 
 export const Legend = forwardRef<LegendRef, LegendProps>(({ layers }, ref) => {
@@ -34,7 +34,7 @@ export const Legend = forwardRef<LegendRef, LegendProps>(({ layers }, ref) => {
     () => ({
       async getImage() {
         if (container.current == null) return null;
-        return getElementImageBitmap(container.current);
+        return getElementImage(container.current);
       },
     }),
     []

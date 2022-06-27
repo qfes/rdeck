@@ -20,7 +20,7 @@ import { Layer } from "./layer";
 import { Tooltip } from "./tooltip";
 import { blendingParameters } from "./blending";
 import { createEditableLayer, EditorProps } from "./editor";
-import { getMapImageBitmap } from "./utils";
+import { getMapImage } from "./utils";
 
 export type MapProps = {
   deckgl: DeckProps;
@@ -30,7 +30,7 @@ export type MapProps = {
 };
 
 export type MapRef = {
-  getImage(): Promise<ImageBitmap | null>;
+  getImage(): Promise<HTMLCanvasElement | null>;
 };
 
 export const Map = forwardRef<MapRef, MapProps>(({ deckgl, mapgl, layers, editor }, ref) => {
@@ -45,7 +45,7 @@ export const Map = forwardRef<MapRef, MapProps>(({ deckgl, mapgl, layers, editor
         if (deck == null) return null;
 
         const mapbox = mapglRef.current?.getMap();
-        return getMapImageBitmap(deck, mapbox);
+        return getMapImage(deck, mapbox ?? null);
       },
     }),
     []

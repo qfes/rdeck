@@ -3,13 +3,13 @@ import type { MapboxMap } from "react-map-gl";
 
 import { cloneElement, createImage, createSvg } from "./dom";
 
-async function getDeckglImageBitmap(deck: Deck): Promise<ImageBitmap> {
+async function drawDeckgl(context: CanvasRenderingContext2D, deck: Deck): Promise<void> {
   return new Promise((resolve, reject) => {
     const { onAfterRender } = deck.props;
 
     const getImage = ({ gl }: { gl: WebGLRenderingContext }) => {
       deck.setProps({ onAfterRender });
-      resolve(createImageBitmap(gl.canvas));
+      resolve(context.drawImage(gl.canvas, 0, 0));
     };
 
     deck.setProps({ onAfterRender: getImage });
@@ -17,39 +17,35 @@ async function getDeckglImageBitmap(deck: Deck): Promise<ImageBitmap> {
   });
 }
 
-async function getMapboxImageBitmap(mapbox: MapboxMap): Promise<ImageBitmap> {
+async function drawMapboxgl(context: CanvasRenderingContext2D, mapbox: MapboxMap): Promise<void> {
   return new Promise((resolve, reject) => {
     mapbox.once("render", ({ target }) => {
       const canvas = target.getCanvas();
-      resolve(createImageBitmap(canvas));
+      resolve(context.drawImage(canvas, 0, 0));
     });
 
     mapbox.triggerRepaint();
   });
 }
 
-export async function getMapImageBitmap(deck: Deck, mapbox?: MapboxMap): Promise<ImageBitmap> {
-  if (mapbox == null) return getDeckglImageBitmap(deck);
-
-  const images = await Promise.all([getMapboxImageBitmap(mapbox), getDeckglImageBitmap(deck)]);
-
-  // create canvas to draw images
+export async function getMapImage(
+  deck: Deck,
+  mapbox: MapboxMap | null
+): Promise<HTMLCanvasElement> {
   const canvas = document.createElement("canvas");
-  canvas.width = images[0].width;
-  canvas.height = images[0].height;
-  const context = canvas.getContext("2d");
+  const context = canvas.getContext("2d")!;
+  canvas.width = deck.width;
+  canvas.height = deck.height;
 
-  for (const image of images) {
-    context?.drawImage(image, 0, 0);
-    image.close();
-  }
+  if (mapbox != null) await drawMapboxgl(context, mapbox);
+  await drawDeckgl(context, deck);
 
-  return createImageBitmap(canvas);
+  return canvas;
 }
 
 export async function getSnapshot(
-  mapImage: ImageBitmap,
-  legendImage?: ImageBitmap | null
+  mapImage: HTMLCanvasElement,
+  legendImage: HTMLImageElement | null
 ): Promise<Blob> {
   const canvas = document.createElement("canvas");
   canvas.width = mapImage.width;
@@ -63,44 +59,21 @@ export async function getSnapshot(
 
   return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => resolve(blob!));
-    mapImage.close();
-    legendImage?.close();
   });
 }
 
-export async function transferToBlob(image: ImageBitmap): Promise<Blob> {
-  const canvas = document.createElement("canvas");
-  canvas.width = image.width;
-  canvas.height = image.height;
-  const context = canvas.getContext("2d");
-
-  context?.drawImage(image, 0, 0);
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => resolve(blob!));
-    image.close();
-  });
-}
-
-export async function getElementImageBitmap(element: HTMLElement): Promise<ImageBitmap> {
+export async function getElementImage(element: HTMLElement): Promise<HTMLImageElement> {
   // clone element tree
   const clone = cloneElement(element);
   const { clientWidth: width, clientHeight: height } = element;
 
   // wrap clone inside svg
-  const svg = createSvg({ width, height });
-  svg.firstChild?.appendChild(clone);
+  const svg = createSvg({ width, height }, clone);
 
   // get datauri
   const serializer = new XMLSerializer();
   const svgText = serializer.serializeToString(svg);
   const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgText);
 
-  // img > canvas > imagebitmap
-  const img = await createImage(url);
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
-  Object.assign(canvas, { width, height });
-
-  context?.drawImage(img, 0, 0);
-  return createImageBitmap(canvas);
+  return createImage(url);
 }
