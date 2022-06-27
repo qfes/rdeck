@@ -14,7 +14,7 @@ import { download } from "./utils";
 
 export class Widget {
   #root: Root;
-  #element: Element;
+  #element: HTMLElement;
   get element() {
     return this.#element;
   }
@@ -26,10 +26,18 @@ export class Widget {
     return this.#state;
   }
 
-  constructor(element: Element, props: Partial<Store>) {
+  constructor(element: HTMLElement, props: Partial<Store>) {
     this.#element = element;
     this.#root = createRoot(element);
     this.#state = new Store(props, () => this.render());
+
+    element.addEventListener("keydown", (event) => {
+      // FIXME: mac os
+      if (event.ctrlKey && event.code === "KeyS") {
+        event.preventDefault();
+        this.snapshot();
+      }
+    });
 
     // FIXME: move to service
     if (HTMLWidgets.shinyMode) {
