@@ -10,7 +10,7 @@ import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
 import { Store } from "./state";
 import { EditorProps } from "./editor";
-import { download } from "./utils";
+import { download, isMacOS } from "./utils";
 
 export class Widget {
   #root: Root;
@@ -32,8 +32,8 @@ export class Widget {
     this.#state = new Store(props, () => this.render());
 
     element.addEventListener("keydown", (event) => {
-      // FIXME: mac os
-      if (event.ctrlKey && event.code === "KeyS") {
+      const ctrlKey = isMacOS ? event.metaKey : event.ctrlKey;
+      if (ctrlKey && event.code === "KeyS") {
         event.preventDefault();
         this.snapshot();
       }
