@@ -1,32 +1,43 @@
 import { createRoot, Root } from "react-dom/client";
-import { StrictMode } from "react";
+import { createRef, StrictMode } from "react";
 import type { PickInfo, ViewStateChangeParams } from "@deck.gl/core";
 import type { FeatureCollection } from "geojson";
 
-import { RDeck } from "./rdeck";
+import { RDeck, RDeckRef, SnapshotOptions } from "./rdeck";
 import type { LayerProps, VisibilityInfo } from "./layer";
 import { pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
 import { Store } from "./state";
 import { EditorProps } from "./editor";
+import { download, isMacOS } from "./utils";
 
 export class Widget {
   #root: Root;
-  #element: Element;
+  #element: HTMLElement;
   get element() {
     return this.#element;
   }
+
+  #rdeckRef = createRef<RDeckRef>();
 
   #state: Store;
   get state() {
     return this.#state;
   }
 
-  constructor(element: Element, props: Partial<Store>) {
+  constructor(element: HTMLElement, props: Partial<Store>) {
     this.#element = element;
     this.#root = createRoot(element);
     this.#state = new Store(props, () => this.render());
+
+    element.addEventListener("keydown", (event) => {
+      const ctrlKey = isMacOS ? event.metaKey : event.ctrlKey;
+      if (ctrlKey && event.code === "KeyS") {
+        event.preventDefault();
+        this.snapshot();
+      }
+    });
 
     // FIXME: move to service
     if (HTMLWidgets.shinyMode) {
@@ -73,6 +84,7 @@ export class Widget {
     this.#root.render(
       <StrictMode>
         <RDeck
+          ref={this.#rdeckRef}
           {...{
             ...props,
             deckgl,
@@ -91,6 +103,20 @@ export class Widget {
    */
   setLayerVisibility(layersVisibility: VisibilityInfo[]) {
     return this.#state.setLayerVisibility(layersVisibility);
+  }
+
+  async snapshot({
+    filename = "rdeck.png",
+    legend = true,
+    size = undefined,
+  }: SnapshotOptions = {}): Promise<Blob | null> {
+    const rdeck = this.#rdeckRef.current;
+    const image = await rdeck?.getSnapshot({ legend, size });
+
+    if (image != null && filename != null) {
+      download(image, filename);
+    }
+    return image ?? null;
   }
 
   // FIXME: move to store

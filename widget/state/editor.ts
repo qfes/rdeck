@@ -1,6 +1,6 @@
 import type { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 
-import { equal } from "../utils";
+import { download, equal } from "../utils";
 import type { EditorProps } from "../editor";
 import type { EditorMode } from "../types";
 
@@ -68,12 +68,7 @@ export class EditorState implements Partial<EditorProps> {
 
   download(geojson: FeatureCollection): void {
     const data = new Blob([JSON.stringify(geojson)], { type: "application/geo+json" });
-    // download
-    const el = document.createElement("a");
-    el.href = URL.createObjectURL(data);
-    el.download = "rdeck.geojson";
-    el.click();
-
+    download(data, "rdeck.geojson");
     this.setMode("view");
   }
 }
