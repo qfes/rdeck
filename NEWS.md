@@ -1,8 +1,8 @@
-# rdeck dev
+# rdeck development version
 
+- Add snapshot util (#77)
 - Add feature editor (#75)
 - Rewrite client api (#73)
-
 
 # rdeck 0.4.0
 
