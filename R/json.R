@@ -80,7 +80,7 @@ as_json.editor_options <- function(object) {
   options <- mutate(select(object, -where(is_cur_value)))
 
   # features to geojson
-  if (rlang::has_name(object, "features")) {
+  if (rlang::has_name(options, "features")) {
     options <- mutate(
       options,
       geojson = geojsonsf::sf_geojson(
