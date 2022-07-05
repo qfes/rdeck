@@ -49,7 +49,6 @@ is_wgs84 <- function(object) {
   crs == wgs84 || !is.na(crs$input) && crs$input == wgs84$input
 }
 
-
 get_coordinates <- function(sfc) {
   UseMethod("get_coordinates")
 }

@@ -22,7 +22,8 @@ editor_options <- function(mode = cur_value(), features = cur_value()) {
   )
 
   tidyassert::assert(
-    is_cur_value(features) ||
+    is.null(features) ||
+      is_cur_value(features) ||
       (is_sf(features) || is_sfc(features)) && is_wgs84(features),
     error_message = c(
       "x" = "{.arg features} must be a {.emph WGS84} {.cls sf/sfc}"
