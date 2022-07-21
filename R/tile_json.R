@@ -65,7 +65,7 @@ tile_json.mapbox <- function(tileset_id, tile_service = NULL) {
   url <- urltools::param_set(
     file.path(
       "https://api.mapbox.com/v4",
-      paste0(tileset_id, ".json"),
+      paste0(tileset_id, ".json?secure"),
       fsep = "/"
     ),
     "access_token",
