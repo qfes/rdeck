@@ -38,6 +38,44 @@ rescale_center.scale_numeric <- function(scale, center = 0) {
   scale
 }
 
+
+#' @export
+rescale_diverge <- function(scale, center = 0) {
+  UseMethod("rescale_diverge")
+}
+
+#' @export
+rescale_diverge.scale_color_category <- rescale_center.scale_color_category
+
+#' @export
+rescale_diverge.scale_numeric_category <- rescale_diverge.scale_color_category
+
+#' @export
+rescale_diverge.scale_color <- function(scale, center = 0) {
+  get_palette <- scale$get_palette
+
+  scale$get_palette <- function(x) {
+    xmid <- rescale_ramp(scale, center)
+    ramp <- rescale_piecewise(x, xmid)
+    get_palette(ramp)
+  }
+
+  scale
+}
+
+#' @export
+rescale_diverge.scale_numeric <- function(scale, center = 0) {
+  get_palette <- scale$get_palette
+
+  scale$get_palette <- function(x) {
+    xmid <- rescale_ramp(scale, center)
+    ramp <- rescale_piecewise(x, xmid)
+    get_palette(ramp)
+  }
+
+  scale
+}
+
 rescale_ramp <- function(scale, x) {
   limits <- (scale$limits %||% scale$data)$range
   tidyassert::assert(x >= limits[1] & x <= limits[2])
@@ -54,9 +92,17 @@ rescale_ramp <- function(scale, x) {
   }
 }
 
+rescale_piecewise <- function(x, mid) {
+  ifelse(
+    x <= mid,
+    scales::rescale(x, c(0, 0.5), c(0, mid)),
+    scales::rescale(x, c(0.5, 1), c(mid, 1))
+  )
+}
+
 rescale_not_supported <- function(rescale_fn, scale_type) {
   rlang::abort(
     paste(rescale_fn, "doesn't handle", scale_type, "scales."),
-    class = "rdeck_warning"
+    class = "rdeck_error"
   )
 }
