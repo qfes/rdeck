@@ -65,12 +65,12 @@ rescale_diverge.scale_color <- function(scale, center = 0) {
 
 #' @export
 rescale_diverge.scale_numeric <- function(scale, center = 0) {
-  get_palette <- scale$get_palette
+  get_range <- scale$get_range
 
-  scale$get_palette <- function(x) {
+  scale$get_range <- function(x) {
     xmid <- rescale_ramp(scale, center)
     ramp <- rescale_piecewise(x, xmid)
-    get_palette(ramp)
+    get_range(ramp)
   }
 
   scale
@@ -93,10 +93,10 @@ rescale_ramp <- function(scale, x) {
 }
 
 rescale_piecewise <- function(x, mid) {
-  ifelse(
-    x <= mid,
-    scales::rescale(x, c(0, 0.5), c(0, mid)),
-    scales::rescale(x, c(0.5, 1), c(mid, 1))
+  dplyr::case_when(
+    x == mid ~ 0.5,
+    x < mid ~ scales::rescale(x, c(0, 0.5), c(0, mid)),
+    x > mid ~ scales::rescale(x, c(0.5, 1), c(mid, 1))
   )
 }
 

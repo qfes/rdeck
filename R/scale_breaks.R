@@ -180,7 +180,7 @@ breaks_log <- function(n = 10, base = exp(1)) {
   breaks_fn <- breaks_trans(n, log_trans(base))
   n_default <- n
 
-  function(x, n = n_default) {
+  wrapper_fn <- function(x, n = n_default) {
     tidyassert::assert(
       suppressWarnings(min(x, na.rm = TRUE) > 0 | max(x, na.rm = TRUE) < 0),
       "range must not contain, nor cross 0"
@@ -188,6 +188,8 @@ breaks_log <- function(n = 10, base = exp(1)) {
 
     breaks_fn(x, n)
   }
+
+  structure(wrapper_fn, trans = attr(breaks_fn, "trans"))
 }
 
 
