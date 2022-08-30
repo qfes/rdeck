@@ -73,7 +73,7 @@ breaks_trans <- function(n = 10, trans) {
   tidyassert::assert(scales::is.trans(trans))
 
   n_default <- n
-  function(x, n = n_default) {
+  breaks_fn <- function(x, n = n_default) {
     tidyassert::assert(rlang::is_scalar_integerish(n) && n >= 0)
 
     rng <- scales::train_continuous(x, c(-Inf, Inf))
@@ -88,6 +88,8 @@ breaks_trans <- function(n = 10, trans) {
     breaks <- trans$inverse(trans_breaks)
     c(rng[1], breaks[-c(1, n)], rng[2])
   }
+
+  structure(breaks_fn, trans = trans)
 }
 
 
