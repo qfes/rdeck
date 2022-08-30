@@ -4,13 +4,15 @@ rescale_center <- function(scale, center = 0) {
 }
 
 #' @export
-rescale_center.scale_color_category <- function(scale, center) {
+rescale_center.scale_numeric_identity <- function(scale, center) {
   rescale_not_supported("rescale_center()", scale$scale_type)
-  scale
 }
 
 #' @export
-rescale_center.scale_numeric_category <- rescale_center.scale_color_category
+rescale_center.scale_color_category <- rescale_center.scale_numeric_identity
+
+#' @export
+rescale_center.scale_numeric_category <- rescale_center.scale_numeric_identity
 
 #' @export
 rescale_center.scale_color <- function(scale, center = 0) {
@@ -45,10 +47,15 @@ rescale_diverge <- function(scale, center = 0) {
 }
 
 #' @export
-rescale_diverge.scale_color_category <- rescale_center.scale_color_category
+rescale_diverge.scale_numeric_identity <- function(scale, center) {
+  rescale_not_supported("rescale_diverge()", scale$scale_type)
+}
 
 #' @export
-rescale_diverge.scale_numeric_category <- rescale_diverge.scale_color_category
+rescale_diverge.scale_color_category <- rescale_diverge.scale_numeric_identity
+
+#' @export
+rescale_diverge.scale_numeric_category <- rescale_diverge.scale_numeric_identity
 
 #' @export
 rescale_diverge.scale_color <- function(scale, center = 0) {
