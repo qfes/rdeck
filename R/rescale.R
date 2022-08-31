@@ -11,9 +11,9 @@
 #' from the center.
 #'
 #' # Centering vs Diverging
-#' The plot below shows how [rescale_center()] and [rescale_diverge()] distort the scale output. The input
-#' scale in this case is `power_scale(limits = -36:4)`, centered and diverged at 0 (which is 0.75 on the
-#' original output).
+#' The plot below shows how [rescale_center()] and [rescale_diverge()] distort the scale output. The gradient
+#' background shows the viridis color that would be applied at a given input. The input scale in this case is
+#' `power_scale(limits = -36:4)`, centered and diverged at 0 (which is 0.75 on the original output).
 #'
 #' [rescale_diverge()] is creating a piecewise scale, so the two halves of the output ramp have a different slope;
 #' [rescale_center()] is keeping the output linear, but adjusting the slope such that y = 2 / 3x on

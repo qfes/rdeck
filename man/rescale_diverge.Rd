@@ -20,9 +20,9 @@ always used.
 Category and identity scales aren't supported.
 }
 \section{Centering vs Diverging}{
-The plot below shows how \code{\link[=rescale_center]{rescale_center()}} and \code{\link[=rescale_diverge]{rescale_diverge()}} distort the scale output. The input
-scale in this case is \code{power_scale(limits = -36:4)}, centered and diverged at 0 (which is 0.75 on the
-original output).
+The plot below shows how \code{\link[=rescale_center]{rescale_center()}} and \code{\link[=rescale_diverge]{rescale_diverge()}} distort the scale output. The gradient
+background shows the viridis color that would be applied at a given input. The input scale in this case is
+\code{power_scale(limits = -36:4)}, centered and diverged at 0 (which is 0.75 on the original output).
 
 \code{\link[=rescale_diverge]{rescale_diverge()}} is creating a piecewise scale, so the two halves of the output ramp have a different slope;
 \code{\link[=rescale_center]{rescale_center()}} is keeping the output linear, but adjusting the slope such that y = 2 / 3x on
