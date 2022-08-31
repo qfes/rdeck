@@ -10,6 +10,17 @@
 #' This is useful in creating _difference_ layer, where the output palette or range represents distance
 #' from the center.
 #'
+#' # Centering vs Diverging
+#' The plot below shows how [scale_center()] and [scale_diverge()] distort the scale output. The input
+#' scale in this case is `power_scale(limits = -36:4)`, centered and diverged at 0 (which is 0.75 on the
+#' original output).
+#'
+#' [rescale_diverge()] is creating a piecewise scale, so the two halves of the output ramp have a different slope;
+#' [rescale_center()] is keeping the output linear, but adjusting the slope such that y = 0.5 at x = 0.75 on
+#' the linear ramp.
+#'
+#' ![](rescale.png)
+#'
 #' @note
 #' Category and identity scales aren't supported.
 #'
@@ -169,5 +180,45 @@ rescale_not_supported <- function(rescale_fn, scale_type) {
   rlang::abort(
     paste(rescale_fn, "doesn't handle", scale_type, "scales."),
     class = "rdeck_error"
+  )
+}
+
+function() {
+  devtools::load_all(export=F)
+
+  ramp <- seq.int(0, 1, length.out = 101)
+  limits <- range(-36:4)
+  trans <- power_trans()
+
+  mid <- scales::rescale(trans$transform(0), from = trans$transform(limits))
+  centered <- scales::rescale_mid(ramp, mid = mid)
+  diverged <- rdeck:::rescale_piecewise(ramp, mid)
+
+  linear <- tibble::tibble(
+    x = rep(ramp, 3),
+    y = c(ramp, centered, diverged),
+    type = rep(c("original", "centered", "diverged"), each = length(ramp))
+  )
+
+  nonlinear <- dplyr::mutate(linear, x = rep(breaks_trans(101, trans)(limits), 3))
+  data <- dplyr::bind_rows(linear_ramp = linear, input_range = nonlinear, .id = "input_scale")
+
+
+
+  p <- ggplot2::ggplot(data, ggplot2::aes(x, y, color = type)) +
+    ggplot2::geom_line() +
+    ggplot2::xlab("input") +
+    ggplot2::ylab("output") +
+    ggplot2::facet_wrap(~ input_scale, ncol = 2, scales="free_x")
+
+  ggplot2::ggsave(
+    filename = "man/figures/rescale.png",
+    plot = p,
+    width = 8,
+    height = 5,
+    # width = 600,
+    # height = 600,
+    # units = "px",
+    dpi = 150
   )
 }

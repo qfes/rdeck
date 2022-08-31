@@ -37,7 +37,7 @@ LazyData: true
 Roxygen: list(
     markdown = TRUE,
     roclets = c("collate", "namespace", "rd", "roxyglobals::global_roclet"))
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Suggests:
     knitr,
     rmarkdown,

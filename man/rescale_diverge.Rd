@@ -16,6 +16,21 @@ Creates a diverging scale with defined center / midpoint. Similar to \code{\link
 the output palette / range is piecewise linear (with respect to breaks) and the entire output range is
 always used.
 }
+\note{
+Category and identity scales aren't supported.
+}
+\section{Centering vs Diverging}{
+The plot below shows how \code{\link[=scale_center]{scale_center()}} and \code{\link[=scale_diverge]{scale_diverge()}} distort the scale output. The input
+scale in this case is \code{power_scale(limits = -36:4)}, centered and diverged at 0 (which is 0.75 on the
+original output).
+
+\code{\link[=rescale_diverge]{rescale_diverge()}} is creating a piecewise scale, so the two halves of the output ramp have a different slope;
+\code{\link[=rescale_center]{rescale_center()}} is keeping the output linear, but adjusting the slope such that y = 0.5 at x = 0.75 on
+the linear ramp.
+
+\figure{rescale.png}
+}
+
 \examples{
 # create a diverging linear scale at 0
 rescale_diverge(
