@@ -12,22 +12,22 @@
   expect_error(rescale_diverge(scale), class = "rdeck_error")
 })
 
-test_that("rescale_ramp works", {
+test_that("rescale_breaks works", {
   linear_scale <- scale_linear(col, limits = -10:10)
 
   # linear is identity
-  expect_equal(rescale_ramp(linear_scale, c(-10, 0, 10)), c(0, 0.5, 1))
-  expect_equal(rescale_ramp(linear_scale, 1), 11 / 20)
+  expect_equal(rescale_breaks(linear_scale, c(-10, 0, 10)), c(0, 0.5, 1))
+  expect_equal(rescale_breaks(linear_scale, 1), 11 / 20)
 
   # center should be 16, since sqrt(c(9, 25)) == c(3, 5), centre is sqrt(16)
   power_scale <- scale_power(col, limits = 9:25)
-  expect_equal(rescale_ramp(power_scale, c(9, 16, 25)), c(0, 0.5, 1))
-  expect_equal(rescale_ramp(power_scale, 11), (sqrt(11) - 3) / 2)
+  expect_equal(rescale_breaks(power_scale, c(9, 16, 25)), c(0, 0.5, 1))
+  expect_equal(rescale_breaks(power_scale, 11), (sqrt(11) - 3) / 2)
 
   # centre should be 1
   power_scale <- scale_power(col, limits = -9:25)
-  expect_equal(rescale_ramp(power_scale, c(-9, 25)), 0:1)
-  expect_equal(rescale_ramp(power_scale, 1), 0.5)
+  expect_equal(rescale_breaks(power_scale, c(-9, 25)), 0:1)
+  expect_equal(rescale_breaks(power_scale, 1), 0.5)
 
   # approximate breaks without an invertible transform
   threshold_scale <- scale_threshold(
@@ -36,9 +36,9 @@ test_that("rescale_ramp works", {
     breaks = seq.int(-10, 10, length.out = 5)
   )
 
-  expect_equal(rescale_ramp(threshold_scale, 0), 0.5)
-  expect_equal(rescale_ramp(threshold_scale, -5), 0.25)
-  expect_equal(rescale_ramp(threshold_scale, 5), 0.75)
+  expect_equal(rescale_breaks(threshold_scale, 0), 0.5)
+  expect_equal(rescale_breaks(threshold_scale, -5), 0.25)
+  expect_equal(rescale_breaks(threshold_scale, 5), 0.75)
 })
 
 test_that("rescale_piecewise works", {

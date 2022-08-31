@@ -32,22 +32,11 @@ rescale_center <- function(scale, center = 0) {
 }
 
 #' @export
-rescale_center.scale_numeric_identity <- function(scale, center) {
-  rescale_not_supported("rescale_center()", scale$scale_type)
-}
-
-#' @export
-rescale_center.scale_color_category <- rescale_center.scale_numeric_identity
-
-#' @export
-rescale_center.scale_numeric_category <- rescale_center.scale_numeric_identity
-
-#' @export
 rescale_center.scale_color <- function(scale, center = 0) {
   get_palette <- scale$get_palette
 
   scale$get_palette <- function(x) {
-    xmid <- rescale_ramp(scale, center)
+    xmid <- rescale_breaks(scale, center)
     ramp <- scales::rescale_mid(x, mid = xmid)
     get_palette(ramp)
   }
@@ -60,13 +49,26 @@ rescale_center.scale_numeric <- function(scale, center = 0) {
   get_range <- scale$get_range
 
   scale$get_range <- function(x) {
-    xmid <- rescale_ramp(scale, center)
+    xmid <- rescale_breaks(scale, center)
     ramp <- scales::rescale_mid(x, mid = xmid)
     get_range(ramp)
   }
 
   scale
 }
+
+rescale_center_not_supported <- function(scale, center) {
+  rescale_not_supported("rescale_center()", scale$scale_type)
+}
+
+#' @export
+rescale_center.scale_numeric_identity <- rescale_center_not_supported
+
+#' @export
+rescale_center.scale_color_category <- rescale_center_not_supported
+
+#' @export
+rescale_center.scale_numeric_category <- rescale_center_not_supported
 
 
 #' Rescale diverge
@@ -99,22 +101,11 @@ rescale_diverge <- function(scale, center = 0) {
 }
 
 #' @export
-rescale_diverge.scale_numeric_identity <- function(scale, center) {
-  rescale_not_supported("rescale_diverge()", scale$scale_type)
-}
-
-#' @export
-rescale_diverge.scale_color_category <- rescale_diverge.scale_numeric_identity
-
-#' @export
-rescale_diverge.scale_numeric_category <- rescale_diverge.scale_numeric_identity
-
-#' @export
 rescale_diverge.scale_color <- function(scale, center = 0) {
   get_palette <- scale$get_palette
 
   scale$get_palette <- function(x) {
-    xmid <- rescale_ramp(scale, center)
+    xmid <- rescale_breaks(scale, center)
     ramp <- rescale_piecewise(x, xmid)
     get_palette(ramp)
   }
@@ -127,7 +118,7 @@ rescale_diverge.scale_numeric <- function(scale, center = 0) {
   get_range <- scale$get_range
 
   scale$get_range <- function(x) {
-    xmid <- rescale_ramp(scale, center)
+    xmid <- rescale_breaks(scale, center)
     ramp <- rescale_piecewise(x, xmid)
     get_range(ramp)
   }
@@ -135,17 +126,31 @@ rescale_diverge.scale_numeric <- function(scale, center = 0) {
   scale
 }
 
-rescale_ramp <- function(scale, x) {
-  limits <- (scale$limits %||% scale$data)$range
-  tidyassert::assert(x >= limits[1] & x <= limits[2])
+rescale_diverge_not_supported <- function(scale, center) {
+  rescale_not_supported("rescale_diverge()", scale$scale_type)
+}
+
+#' @export
+rescale_diverge.scale_numeric_identity <- rescale_diverge_not_supported
+
+#' @export
+rescale_diverge.scale_color_category <- rescale_diverge_not_supported
+
+#' @export
+rescale_diverge.scale_numeric_category <- rescale_diverge_not_supported
+
+
+rescale_breaks <- function(scale, x) {
+  range <- (scale$limits %||% scale$data)$range
+  tidyassert::assert(x >= range[1] & x <= range[2])
 
   # use transform if available
   trans <- attr(scale$get_breaks, "trans")
   if (!is.null(trans)) {
-    scales::rescale(trans$transform(x), from = trans$transform(limits))
+    scales::rescale(trans$transform(x), from = trans$transform(range))
   # approximate function from breaks
   } else {
-    breaks <- scale$get_breaks(limits)
+    breaks <- scale$get_breaks(range)
     rescale <- stats::splinefun(breaks, seq.int(0, 1, length.out = length(breaks)))
     rescale(x)
   }
