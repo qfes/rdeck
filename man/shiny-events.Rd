@@ -32,16 +32,16 @@ Utilities for retrieving map event data in a shiny application.
 }
 \section{Functions}{
 \itemize{
-\item \code{get_view_bounds}: Get the current map bounding box
+\item \code{get_view_bounds()}: Get the current map bounding box
 
-\item \code{get_view_state}: Get the map view state
+\item \code{get_view_state()}: Get the map view state
 
-\item \code{get_clicked_coordinates}: Get the last clicked coordinates
+\item \code{get_clicked_coordinates()}: Get the last clicked coordinates
 
-\item \code{get_clicked_layer}: Get the last clicked layer (or NULL)
+\item \code{get_clicked_layer()}: Get the last clicked layer (or NULL)
 
-\item \code{get_clicked_object}: Get the last clicked object (or NULL)
+\item \code{get_clicked_object()}: Get the last clicked object (or NULL)
 
-\item \code{get_edited_features}: Get the edited features
+\item \code{get_edited_features()}: Get the edited features
+
 }}
-

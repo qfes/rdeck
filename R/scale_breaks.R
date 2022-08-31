@@ -73,7 +73,7 @@ breaks_trans <- function(n = 10, trans) {
   tidyassert::assert(scales::is.trans(trans))
 
   n_default <- n
-  function(x, n = n_default) {
+  breaks_fn <- function(x, n = n_default) {
     tidyassert::assert(rlang::is_scalar_integerish(n) && n >= 0)
 
     rng <- scales::train_continuous(x, c(-Inf, Inf))
@@ -88,6 +88,8 @@ breaks_trans <- function(n = 10, trans) {
     breaks <- trans$inverse(trans_breaks)
     c(rng[1], breaks[-c(1, n)], rng[2])
   }
+
+  structure(breaks_fn, trans = trans)
 }
 
 
@@ -178,7 +180,7 @@ breaks_log <- function(n = 10, base = exp(1)) {
   breaks_fn <- breaks_trans(n, log_trans(base))
   n_default <- n
 
-  function(x, n = n_default) {
+  wrapper_fn <- function(x, n = n_default) {
     tidyassert::assert(
       suppressWarnings(min(x, na.rm = TRUE) > 0 | max(x, na.rm = TRUE) < 0),
       "range must not contain, nor cross 0"
@@ -186,6 +188,8 @@ breaks_log <- function(n = 10, base = exp(1)) {
 
     breaks_fn(x, n)
   }
+
+  structure(wrapper_fn, trans = attr(breaks_fn, "trans"))
 }
 
 

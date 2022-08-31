@@ -94,6 +94,8 @@ in a linear scale for the \code{area} of each point.
 }
 \seealso{
 Other scales: 
+\code{\link{rescale_center}()},
+\code{\link{rescale_diverge}()},
 \code{\link{scale_category}()},
 \code{\link{scale_identity}()},
 \code{\link{scale_linear}()},

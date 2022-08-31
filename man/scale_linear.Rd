@@ -83,6 +83,8 @@ between \code{limits} (or between \code{limits} and between \code{breaks} for pi
 }
 \seealso{
 Other scales: 
+\code{\link{rescale_center}()},
+\code{\link{rescale_diverge}()},
 \code{\link{scale_category}()},
 \code{\link{scale_identity}()},
 \code{\link{scale_log}()},

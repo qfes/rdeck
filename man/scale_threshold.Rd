@@ -87,6 +87,8 @@ Threshold scales don't require limits, but \code{\link[=breaks_trans]{breaks_tra
 }
 \seealso{
 Other scales: 
+\code{\link{rescale_center}()},
+\code{\link{rescale_diverge}()},
 \code{\link{scale_category}()},
 \code{\link{scale_identity}()},
 \code{\link{scale_linear}()},

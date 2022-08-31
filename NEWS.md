@@ -1,5 +1,6 @@
 # rdeck development version
 
+- Add centering, diverging scales (#82)
 - Add snapshot util (#77)
 - Add feature editor (#75)
 - Rewrite client api (#73)

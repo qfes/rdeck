@@ -81,6 +81,8 @@ known, a quantile scale can be constructed manually with \code{\link[=scale_thre
 }
 \seealso{
 Other scales: 
+\code{\link{rescale_center}()},
+\code{\link{rescale_diverge}()},
 \code{\link{scale_category}()},
 \code{\link{scale_identity}()},
 \code{\link{scale_linear}()},
