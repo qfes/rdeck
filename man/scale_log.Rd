@@ -92,6 +92,8 @@ Log scales can be useful in transforming positively skewed data.
 }
 \seealso{
 Other scales: 
+\code{\link{rescale_center}()},
+\code{\link{rescale_diverge}()},
 \code{\link{scale_category}()},
 \code{\link{scale_identity}()},
 \code{\link{scale_linear}()},

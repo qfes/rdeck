@@ -91,6 +91,7 @@ reference:
       and sizes: radius, elevation, width, height.
     contents:
       - matches("scale_")
+      - matches("rescale_")
 
   - title: Transformations
     desc: >

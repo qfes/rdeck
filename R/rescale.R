@@ -1,3 +1,31 @@
+#' Rescale center
+#'
+#' @description
+#' Re-centers a scale to have a defined center / midpoint. This is the rdeck equivalent of
+#' [scales::rescale_mid()].
+#'
+#' Centering an rdeck scale creates a new scale with the output palette or range centered at `center`.
+#' This is similar to creating a diverging scale; the key difference is that the output palette or range
+#' remains linear (with respect to the breaks) and is truncated on the side that is closest to `center`.
+#' This is useful in creating _difference_ layer, where the output palette or range represents distance
+#' from the center.
+#'
+#' @examples
+#' # create a sqrt scale that is centered at 0
+#' rescale_center(
+#'   scale_color_power(col, limits = -36:4),
+#'   center = 0
+#' )
+#'
+#' # create a discrete symlog scale that is centered at 5
+#' rescale_center(
+#'   scale_color_threshold(col, limits = -100:100, breaks = breaks_symlog()),
+#'   center = 5
+#' )
+#'
+#' @param scale <`scale`> a scale object
+#' @param center <`number`> the center of the scale input
+#' @family scales
 #' @export
 rescale_center <- function(scale, center = 0) {
   UseMethod("rescale_center")
@@ -41,6 +69,30 @@ rescale_center.scale_numeric <- function(scale, center = 0) {
 }
 
 
+#' Rescale diverge
+#'
+#' @description
+#' Creates a diverging scale with defined center / midpoint. Similar to [rescale_center()], key difference is
+#' the output palette / range is piecewise linear (with respect to breaks) and the entire output range is
+#' always used.
+#'
+#' @examples
+#' # create a diverging linear scale at 0
+#' rescale_diverge(
+#'   scale_color_linear(col, limits = -5:10),
+#'   center = 0
+#' )
+#'
+#' # create a diverging log scale at 10
+#' rescale_diverge(
+#'   scale_log(col, limits = 1:1000),
+#'   center = 10
+#' )
+#'
+#' @param scale <`scale`> a scale object
+#' @param center <`number`> the center of the scale input
+#' @family scales
+#' @export
 #' @export
 rescale_diverge <- function(scale, center = 0) {
   UseMethod("rescale_diverge")
@@ -94,7 +146,7 @@ rescale_ramp <- function(scale, x) {
   # approximate function from breaks
   } else {
     breaks <- scale$get_breaks(limits)
-    rescale <- splinefun(breaks, seq.int(0, 1, length.out = length(breaks)))
+    rescale <- stats::splinefun(breaks, seq.int(0, 1, length.out = length(breaks)))
     rescale(x)
   }
 }
