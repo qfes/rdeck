@@ -21,6 +21,9 @@ remains linear (with respect to the breaks) and is truncated on the side that is
 This is useful in creating \emph{difference} layer, where the output palette or range represents distance
 from the center.
 }
+\note{
+Category and identity scales aren't supported.
+}
 \examples{
 # create a sqrt scale that is centered at 0
 rescale_center(

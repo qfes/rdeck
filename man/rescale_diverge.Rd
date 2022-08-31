@@ -28,7 +28,6 @@ rescale_diverge(
   scale_log(col, limits = 1:1000),
   center = 10
 )
-
 }
 \seealso{
 Other scales: 

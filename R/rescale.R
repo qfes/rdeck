@@ -10,6 +10,9 @@
 #' This is useful in creating _difference_ layer, where the output palette or range represents distance
 #' from the center.
 #'
+#' @note
+#' Category and identity scales aren't supported.
+#'
 #' @examples
 #' # create a sqrt scale that is centered at 0
 #' rescale_center(
@@ -90,9 +93,7 @@ rescale_center.scale_numeric_category <- rescale_center_not_supported
 #'   scale_log(col, limits = 1:1000),
 #'   center = 10
 #' )
-#'
-#' @param scale <`scale`> a scale object
-#' @param center <`number`> the center of the scale input
+#' @inherit rescale_center
 #' @family scales
 #' @export
 #' @export
