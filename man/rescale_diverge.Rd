@@ -33,13 +33,13 @@ the linear ramp.
 
 \examples{
 # create a diverging linear scale at 0
-rescale_diverge(
+linear_diverged <- rescale_diverge(
   scale_color_linear(col, limits = -5:10),
   center = 0
 )
 
 # create a diverging log scale at 10
-rescale_diverge(
+log_diverged <- rescale_diverge(
   scale_log(col, limits = 1:1000),
   center = 10
 )

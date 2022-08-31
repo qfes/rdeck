@@ -38,13 +38,13 @@ the linear ramp.
 
 \examples{
 # create a sqrt scale that is centered at 0
-rescale_center(
+sqrt_centered <- rescale_center(
   scale_color_power(col, limits = -36:4),
   center = 0
 )
 
 # create a discrete symlog scale that is centered at 5
-rescale_center(
+symlog_centered <- rescale_center(
   scale_color_threshold(col, limits = -100:100, breaks = breaks_symlog()),
   center = 5
 )

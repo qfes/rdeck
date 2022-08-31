@@ -26,13 +26,13 @@
 #'
 #' @examples
 #' # create a sqrt scale that is centered at 0
-#' rescale_center(
+#' sqrt_centered <- rescale_center(
 #'   scale_color_power(col, limits = -36:4),
 #'   center = 0
 #' )
 #'
 #' # create a discrete symlog scale that is centered at 5
-#' rescale_center(
+#' symlog_centered <- rescale_center(
 #'   scale_color_threshold(col, limits = -100:100, breaks = breaks_symlog()),
 #'   center = 5
 #' )
@@ -94,13 +94,13 @@ rescale_center.scale_numeric_category <- rescale_center_not_supported
 #'
 #' @examples
 #' # create a diverging linear scale at 0
-#' rescale_diverge(
+#' linear_diverged <- rescale_diverge(
 #'   scale_color_linear(col, limits = -5:10),
 #'   center = 0
 #' )
 #'
 #' # create a diverging log scale at 10
-#' rescale_diverge(
+#' log_diverged <- rescale_diverge(
 #'   scale_log(col, limits = 1:1000),
 #'   center = 10
 #' )
