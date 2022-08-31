@@ -30,7 +30,7 @@ scale in this case is \code{power_scale(limits = -36:4)}, centered and diverged 
 original output).
 
 \code{\link[=rescale_diverge]{rescale_diverge()}} is creating a piecewise scale, so the two halves of the output ramp have a different slope;
-\code{\link[=rescale_center]{rescale_center()}} is keeping the output linear, but adjusting the slope such that y = 0.5 at x = 0.75 on
+\code{\link[=rescale_center]{rescale_center()}} is keeping the output linear, but adjusting the slope such that y = 2 / 3x on
 the linear ramp.
 
 \figure{rescale.png}

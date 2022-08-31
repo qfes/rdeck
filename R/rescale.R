@@ -16,7 +16,7 @@
 #' original output).
 #'
 #' [rescale_diverge()] is creating a piecewise scale, so the two halves of the output ramp have a different slope;
-#' [rescale_center()] is keeping the output linear, but adjusting the slope such that y = 0.5 at x = 0.75 on
+#' [rescale_center()] is keeping the output linear, but adjusting the slope such that y = 2 / 3x on
 #' the linear ramp.
 #'
 #' ![](rescale.png)
