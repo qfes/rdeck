@@ -25,7 +25,7 @@ from the center.
 Category and identity scales aren't supported.
 }
 \section{Centering vs Diverging}{
-The plot below shows how \code{\link[=scale_center]{scale_center()}} and \code{\link[=scale_diverge]{scale_diverge()}} distort the scale output. The input
+The plot below shows how \code{\link[=rescale_center]{rescale_center()}} and \code{\link[=rescale_diverge]{rescale_diverge()}} distort the scale output. The input
 scale in this case is \code{power_scale(limits = -36:4)}, centered and diverged at 0 (which is 0.75 on the
 original output).
 

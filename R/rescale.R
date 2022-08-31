@@ -11,7 +11,7 @@
 #' from the center.
 #'
 #' # Centering vs Diverging
-#' The plot below shows how [scale_center()] and [scale_diverge()] distort the scale output. The input
+#' The plot below shows how [rescale_center()] and [rescale_diverge()] distort the scale output. The input
 #' scale in this case is `power_scale(limits = -36:4)`, centered and diverged at 0 (which is 0.75 on the
 #' original output).
 #'
