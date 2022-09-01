@@ -12,26 +12,36 @@ rescale_center(scale, center = 0)
 \item{center}{<\code{number}> the center of the scale input}
 }
 \description{
-Re-centers a scale to have a defined center / midpoint. This is the rdeck equivalent of
+Re-centres a scale to have a defined centre / midpoint. This is the rdeck equivalent of
 \code{\link[scales:rescale_mid]{scales::rescale_mid()}}.
 
-Centering an rdeck scale creates a new scale with the output palette or range centered at \code{center}.
+centring an rdeck scale creates a new scale with the output palette or range centred at \code{center}.
 This is similar to creating a diverging scale; the key difference is that the output palette or range
 remains linear (with respect to the breaks) and is truncated on the side that is closest to \code{center}.
-This is useful in creating \emph{difference} layer, where the output palette or range represents distance
-from the center.
+This is useful in creating \emph{difference} layers, where the output palette or range represents distance
+from the centre.
 }
 \note{
 Category and identity scales aren't supported.
 }
-\section{Centering vs Diverging}{
-The plot below shows how \code{\link[=rescale_center]{rescale_center()}} and \code{\link[=rescale_diverge]{rescale_diverge()}} distort the scale output. The gradient
-background shows the viridis color that would be applied at a given input. The input scale in this case is
-\code{power_scale(limits = -36:4)}, centered and diverged at 0 (which is 0.75 on the original output).
+\section{Centring vs Diverging}{
+The plot below shows how \code{\link[=rescale_center]{rescale_center()}} and \code{\link[=rescale_diverge]{rescale_diverge()}} distort the scale output. The input
+scale in this case is \code{power_scale(limits = -36:4)}; this scale is centred and diverged at 0.
 
-\code{\link[=rescale_diverge]{rescale_diverge()}} is creating a piecewise scale, so the two halves of the output ramp have a different slope;
-\code{\link[=rescale_center]{rescale_center()}} is keeping the output linear, but adjusting the slope such that y = 2 / 3x on
-the linear ramp.
+The plot on the left shows the mapping between the input \code{-36:4} (x axis) and output \code{0:1} (y axis). The
+plot on the right is a linear representation of the left and is the space that rdeck works in. The input
+\code{-36:4} transformed with \code{power_trans()} and rescaled to \code{0:1}. This plot has been included because it's
+(hopefully) easier to understand.
+
+In the unaltered scale, we see that 0 is mapped to 0.75 in the output, which would be the colour at 0.75
+on a colour ramp (e.g. \code{scales::colour_ramp(viridis::viridis(256))(0.75)}).
+
+When applying \code{\link[=rescale_center]{rescale_center()}} we see that gradient of function has become y = 2/3x in the linear
+scale, which is \code{2/3 * scales::rescale(trans$transform(x))} for our data. For \code{\link[=rescale_diverge]{rescale_diverge()}}
+we see a piecewise scale with the break at \code{center}; both sides of \code{center} have a different gradient
+(y = 2/3x and y = 2x - 1) and the full range  of y is used.
+
+The colour ramp plot shows the effect rescaling has on a colour palette (in this case viridis).
 
 \figure{rescale.png}
 }

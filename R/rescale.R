@@ -1,23 +1,33 @@
 #' Rescale center
 #'
 #' @description
-#' Re-centers a scale to have a defined center / midpoint. This is the rdeck equivalent of
+#' Re-centres a scale to have a defined centre / midpoint. This is the rdeck equivalent of
 #' [scales::rescale_mid()].
 #'
-#' Centering an rdeck scale creates a new scale with the output palette or range centered at `center`.
+#' centring an rdeck scale creates a new scale with the output palette or range centred at `center`.
 #' This is similar to creating a diverging scale; the key difference is that the output palette or range
 #' remains linear (with respect to the breaks) and is truncated on the side that is closest to `center`.
-#' This is useful in creating _difference_ layer, where the output palette or range represents distance
-#' from the center.
+#' This is useful in creating _difference_ layers, where the output palette or range represents distance
+#' from the centre.
 #'
-#' # Centering vs Diverging
-#' The plot below shows how [rescale_center()] and [rescale_diverge()] distort the scale output. The gradient
-#' background shows the viridis color that would be applied at a given input. The input scale in this case is
-#' `power_scale(limits = -36:4)`, centered and diverged at 0 (which is 0.75 on the original output).
+#' # Centring vs Diverging
+#' The plot below shows how [rescale_center()] and [rescale_diverge()] distort the scale output. The input
+#' scale in this case is `power_scale(limits = -36:4)`; this scale is centred and diverged at 0.
 #'
-#' [rescale_diverge()] is creating a piecewise scale, so the two halves of the output ramp have a different slope;
-#' [rescale_center()] is keeping the output linear, but adjusting the slope such that y = 2 / 3x on
-#' the linear ramp.
+#' The plot on the left shows the mapping between the input `-36:4` (x axis) and output `0:1` (y axis). The
+#' plot on the right is a linear representation of the left and is the space that rdeck works in. The input
+#' `-36:4` transformed with `power_trans()` and rescaled to `0:1`. This plot has been included because it's
+#' (hopefully) easier to understand.
+#'
+#' In the unaltered scale, we see that 0 is mapped to 0.75 in the output, which would be the colour at 0.75
+#' on a colour ramp (e.g. `scales::colour_ramp(viridis::viridis(256))(0.75)`).
+#'
+#' When applying [rescale_center()] we see that gradient of function has become y = 2/3x in the linear
+#' scale, which is `2/3 * scales::rescale(trans$transform(x))` for our data. For [rescale_diverge()]
+#' we see a piecewise scale with the break at `center`; both sides of `center` have a different gradient
+#' (y = 2/3x and y = 2x - 1) and the full range  of y is used.
+#'
+#' The colour ramp plot shows the effect rescaling has on a colour palette (in this case viridis).
 #'
 #' ![](rescale.png)
 #'
@@ -88,7 +98,7 @@ rescale_center.scale_numeric_category <- rescale_center_not_supported
 #' Rescale diverge
 #'
 #' @description
-#' Creates a diverging scale with defined center / midpoint. Similar to [rescale_center()], key difference is
+#' Creates a diverging scale with defined centre / midpoint. Similar to [rescale_center()], key difference is
 #' the output palette / range is piecewise linear (with respect to breaks) and the entire output range is
 #' always used.
 #'
