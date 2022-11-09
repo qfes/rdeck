@@ -5,7 +5,6 @@ import {
   forwardRef,
   Fragment,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -60,14 +59,11 @@ export const Map = forwardRef<MapRef, MapProps>(({ deckgl, mapgl, layers, editor
     ...(blendingMode && blendingParameters(blendingMode)),
   };
 
-  // layer animation loop
-  const [time, setTime] = useState(0);
-  const animating = layers.some((layer) => layer.type === "TripsLayer");
-  useAnimation(animating, (time) => setTime(time));
-
-  const _layers: any = layers.map((layer) => (layer.type != null ? layer.renderLayer(time) : null));
   const editableLayer = createEditableLayer(editor);
   const isEditing = editor != null && !["view", "select"].includes(editor.mode);
+  const _layers = layers.map((x) =>
+    x.type != null ? x.renderLayer({ pickable: !isEditing && x.props.pickable }) : null
+  );
 
   // disable double-click zoom for editor
   if (isEditing && controller) {
@@ -117,22 +113,4 @@ const useHover = () => {
   }, []);
 
   return [state, handleHover] as [PickInfo<any> | null, (info: PickInfo<any>) => void];
-};
-
-const useAnimation = (enabled: boolean, onFrame: (time: number) => void) => {
-  const animation = useRef<number>(0);
-  const startTime = useRef<number>(Date.now());
-
-  const animate = () => {
-    onFrame(Date.now() - startTime.current);
-    animation.current = window.requestAnimationFrame(animate);
-  };
-
-  useEffect(() => {
-    if (enabled) {
-      animation.current = window.requestAnimationFrame(animate);
-      return () => window.cancelAnimationFrame(animation.current);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enabled]);
 };

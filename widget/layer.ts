@@ -11,6 +11,7 @@ import { blendingParameters } from "./blending";
 import { flattenGeometries as _flattenGeometries, isDataFrame } from "./data-frame";
 import { MultiHighlightExtension } from "./multi-highlight-extension";
 import { memoize } from "./util";
+import { ContinuousTripsLayer } from "./deckgl-layers";
 
 type LayerData = string | DataFrame | FeatureCollection;
 type Entry<T> = [string, T];
@@ -31,12 +32,6 @@ export interface LayerProps extends Omit<DeckLayerProps<any>, "data"> {
   blendingMode: BlendingMode;
   visibilityToggle: boolean;
   tooltip: TooltipInfo | null;
-}
-
-interface TripsLayerProps extends LayerProps {
-  currentTime: number;
-  loopLength: number;
-  animationSpeed: number;
 }
 
 // performance optimisation: avoid shallow prop changes
@@ -109,17 +104,10 @@ export class Layer {
     return new Layer(props);
   }
 
-  renderLayer(time?: number): DeckLayer<any, any> {
-    // animate trips layer
-    if (this.type === "TripsLayer" && time !== undefined) {
-      const props = this.props as TripsLayerProps;
-      const { loopLength, animationSpeed } = props;
-      const animationTime = loopLength / animationSpeed;
-      const ratioComplete = ((time / 1000) % animationTime) / animationTime;
-      props.currentTime = ratioComplete * loopLength;
-    }
+  renderLayer(props?: Partial<LayerProps>): DeckLayer<any, any> {
+    if (this.type === "TripsLayer") return new ContinuousTripsLayer({ ...this.props, ...props });
     // @ts-ignore
-    return new deck[this.type]({ ...this.props });
+    return new deck[this.type]({ ...this.props, ...props });
   }
 
   renderLegend(): LegendInfo {
