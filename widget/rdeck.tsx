@@ -73,7 +73,7 @@ export const RDeck = forwardRef<RDeckRef, RDeckProps>(
           <Legend
             ref={legendRef}
             layers={_layers
-              .filter((layer) => layer.props.visible)
+              .filter((layer) => layer.isVisible)
               .map((layer) => layer.renderLegend())
               .reverse()}
           />

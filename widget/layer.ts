@@ -50,6 +50,10 @@ export class Layer {
   props: LayerProps;
   scales: AccessorScale<any>[];
 
+  get isVisible(): boolean {
+    return (this.props.visible ?? false) || !("visible" in this.props);
+  }
+
   constructor({ type, ...props }: LayerProps) {
     const entries = Object.entries(props);
     const colors = getColors(entries);
@@ -127,13 +131,11 @@ export class Layer {
   }
 
   renderSelector(): VisibilityInfo {
-    // visible missing -> visible = true
-    const visible = (this.props.visible ?? false) || !("visible" in this.props);
     return {
       id: this.props.id!,
       groupName: this.props.groupName,
       name: this.props.name,
-      visible
+      visible: this.isVisible
     };
   }
 }
