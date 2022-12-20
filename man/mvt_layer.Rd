@@ -227,12 +227,7 @@ effective on the layer selector, if \code{visibility_toggle = TRUE}.}
 }}
 
 \item{visible}{<\code{boolean}> Determines whether the layer is visible or not; also determines
-whether any legend elements for the layer will be displayed.
-When \code{visble = NULL}:
-\itemize{
-\item on update, use current state in the browser
-\item on add, layer is visible
-}}
+whether any legend elements for the layer will be displayed.}
 
 \item{pickable}{<\code{boolean}> Determines if the layer responds to pointer / touch events.}
 

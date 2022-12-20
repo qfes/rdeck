@@ -63,8 +63,8 @@ n_unique <- function(x, na_rm = FALSE) {
   if (na_rm) length(unique_x[!is.na(unique_x)]) else length(unique_x)
 }
 
-# from {scales}
-is_discrete <- function(x) is.factor(x) || is.character(x) || is.logical(x)
+# from {scales} + treat integer as discrete
+is_discrete <- function(x) is.factor(x) || is.character(x) || is.logical(x) || rlang::is_integerish(x)
 
 # is an rgba hex colour vector
 is_rgba_color <- function(x) grepl("^#([0-9A-F]{6}|[0-9A-F]{8})$", x, ignore.case = TRUE)

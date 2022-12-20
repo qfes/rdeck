@@ -1,9 +1,11 @@
-# rdeck (development version)
+# rdeck 0.5.0
 
 - Add centering, diverging scales (#82)
 - Add snapshot util (#77)
 - Add feature editor (#75)
 - Rewrite client api (#73)
+- Deprecate lazy loading (#71)
+- Support integerish data in category scales (#64)
 
 # rdeck 0.4.0
 

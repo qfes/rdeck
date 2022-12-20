@@ -123,7 +123,7 @@ rdeck_proxy <- function(id,
                         blending_mode = cur_value(),
                         layer_selector = cur_value(),
                         editor = cur_value(),
-                        lazy_load = cur_value(),
+                        lazy_load = deprecated(),
                         ...) {
   tidyassert::assert_is_string(id)
   tidyassert::assert(
@@ -132,11 +132,15 @@ rdeck_proxy <- function(id,
       rlang::is_scalar_logical(editor)
   )
 
+  if (lifecycle::is_present(lazy_load)) {
+    lifecycle::deprecate_warn("0.4", "rdeck::rdeck_proxy(lazy_load = )")
+  }
+
   args <- rlang::call_args(rlang::current_call())
   needs_update <- !rlang::is_empty(
     select(
       args,
-      -tidyselect::any_of(c("id", "session")),
+      -tidyselect::any_of(c("id", "session", "lazy_load")),
       -where(is_cur_value)
     )
   )
@@ -169,11 +173,12 @@ rdeck_proxy <- function(id,
       deckgl = deckgl,
       mapgl = mapgl,
       layer_selector = layer_selector,
-      editor = as_editor_options(editor),
-      lazy_load = lazy_load
+      editor = as_editor_options(editor)
     ),
     class = "rdeck_data"
   )
+
+  as_json(data)
 
   send_msg(rdeck, "deck", as_json(data))
   rdeck
@@ -191,7 +196,7 @@ update_layer.rdeck_proxy <- add_layer.rdeck_proxy
 #' Set layer visibility
 #'
 #' Sets a layer's visibility and whether it is _selectable_ in the layer selector.
-#' Setting either `visible` or `visibility_toggle` as `NULL` will have no change
+#' Setting either `visible` or `visibility_toggle` as `cur_value()` will have no change
 #' in the browser.
 #' @name set_layer_visibility
 #' @param rdeck <`rdeck_proxy`> the rdeck proxy object
@@ -212,7 +217,7 @@ set_layer_visibility <- function(rdeck, id, visible = cur_value(), visibility_to
   validate_visibility_toggle(layer)
 
   json <- json_stringify(
-    select(layer, -where(is.null), -where(is_cur_value)),
+    select(layer, -where(is_cur_value)),
     camel_case = TRUE,
     auto_unbox = TRUE
   )

@@ -26,8 +26,7 @@ export class Store implements Observable {
   }
 
   layers: LayerProps[] = [];
-  layerSelector = false;
-  lazyLoad = false;
+  layerSelector = true;
 
   #editor: UndoableEditorState | null = null;
   get editor() {
@@ -89,8 +88,6 @@ export class Store implements Observable {
     const merged = {
       ...existing,
       ...layer,
-      // if visible is null, use existing
-      visible: layer.visible ?? existing?.visible,
       // if data is not supplied / is falsey from shiny, use existing
       data: layer.data ?? existing?.data ?? null,
     };

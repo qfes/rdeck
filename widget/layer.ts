@@ -45,6 +45,10 @@ export class Layer {
   props: LayerProps;
   scales: AccessorScale<any>[];
 
+  get isVisible(): boolean {
+    return (this.props.visible ?? false) || !("visible" in this.props);
+  }
+
   constructor({ type, ...props }: LayerProps) {
     const entries = Object.entries(props);
     const colors = getColors(entries);
@@ -56,7 +60,6 @@ export class Layer {
       ...colors,
       ...accessors.map(([name, value]) => [name, value.getData]),
       ...getWeightProps(entries),
-      ["visible", props.visible ?? true],
       ["updateTriggers", getUpdateTriggers(accessors)],
       ["parameters", getParameters(props.parameters, props.blendingMode)],
     ]);
@@ -120,7 +123,7 @@ export class Layer {
       id: this.props.id!,
       groupName: this.props.groupName,
       name: this.props.name,
-      visible: this.props.visible ?? true,
+      visible: this.isVisible
     };
   }
 }

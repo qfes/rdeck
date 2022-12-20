@@ -17,7 +17,7 @@ rdeck_proxy(
   blending_mode = cur_value(),
   layer_selector = cur_value(),
   editor = cur_value(),
-  lazy_load = cur_value(),
+  lazy_load = deprecated(),
   ...
 )
 }
@@ -72,9 +72,7 @@ won't be rendered.}
 If \code{TRUE}, renders with the default \code{\link[=editor_options]{editor_options()}}. If \code{FALSE}, the polygon editor
 is not rendered.}
 
-\item{lazy_load}{<\code{boolean}> If \code{TRUE}, maps will be rendered when they are scrolled into
-view and destroyed when they are scrolled out of view. If \code{FALSE}, maps will be rendered
-when the page loads.}
+\item{lazy_load}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Maps are always eagerly rendered.}
 
 \item{...}{Additional parameters that will be forwarded to deck.gl javascript without
 validation nor processing. All dots must be named and will be \code{camelCased} when serialised.

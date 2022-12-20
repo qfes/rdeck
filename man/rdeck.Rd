@@ -13,9 +13,9 @@ rdeck(
   picking_radius = 0,
   use_device_pixels = TRUE,
   blending_mode = "normal",
-  layer_selector = FALSE,
+  layer_selector = TRUE,
   editor = FALSE,
-  lazy_load = FALSE,
+  lazy_load = deprecated(),
   width = NULL,
   height = NULL,
   id = NULL,
@@ -69,9 +69,7 @@ won't be rendered.}
 If \code{TRUE}, renders with the default \code{\link[=editor_options]{editor_options()}}. If \code{FALSE}, the polygon editor
 is not rendered.}
 
-\item{lazy_load}{<\code{boolean}> If \code{TRUE}, maps will be rendered when they are scrolled into
-view and destroyed when they are scrolled out of view. If \code{FALSE}, maps will be rendered
-when the page loads.}
+\item{lazy_load}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Maps are always eagerly rendered.}
 
 \item{width}{<\code{number}> The width of the map canvas.}
 

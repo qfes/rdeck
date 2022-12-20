@@ -3928,9 +3928,7 @@ validate_visible.default <- function(layer) {
     return()
   }
 
-  if (is.null(visible)) {
-    return()
-  }
+  tidyassert::assert(!is.null(visible))
   tidyassert::assert(
     is.logical(visible) && length(visible) == 1,
     c("x" = "{.arg {name}} must be a scalar {.cls logical}"),
