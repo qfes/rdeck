@@ -19,17 +19,12 @@ type for a map. Defaults to \code{\link[uuid:UUIDgenerate]{uuid::UUIDgenerate()}
 updatable layers in a shiny application.}
 
 \item{visible}{<\code{boolean}> Determines whether the layer is visible or not; also determines
-whether any legend elements for the layer will be displayed.
-When \code{visble = NULL}:
-\itemize{
-\item on update, use current state in the browser
-\item on add, layer is visible
-}}
+whether any legend elements for the layer will be displayed.}
 
 \item{visibility_toggle}{<\code{boolean}> Whether this layer will appear in the layer selector.}
 }
 \description{
 Sets a layer's visibility and whether it is \emph{selectable} in the layer selector.
-Setting either \code{visible} or \code{visibility_toggle} as \code{NULL} will have no change
+Setting either \code{visible} or \code{visibility_toggle} as \code{cur_value()} will have no change
 in the browser.
 }

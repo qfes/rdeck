@@ -196,7 +196,7 @@ update_layer.rdeck_proxy <- add_layer.rdeck_proxy
 #' Set layer visibility
 #'
 #' Sets a layer's visibility and whether it is _selectable_ in the layer selector.
-#' Setting either `visible` or `visibility_toggle` as `NULL` will have no change
+#' Setting either `visible` or `visibility_toggle` as `cur_value()` will have no change
 #' in the browser.
 #' @name set_layer_visibility
 #' @param rdeck <`rdeck_proxy`> the rdeck proxy object
@@ -217,7 +217,7 @@ set_layer_visibility <- function(rdeck, id, visible = cur_value(), visibility_to
   validate_visibility_toggle(layer)
 
   json <- json_stringify(
-    select(layer, -where(is.null), -where(is_cur_value)),
+    select(layer, -where(is_cur_value)),
     camel_case = TRUE,
     auto_unbox = TRUE
   )

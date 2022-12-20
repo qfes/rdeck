@@ -96,11 +96,6 @@ function getProps(Layer) {
     propTypes.extruded.value = false;
   }
 
-  // visible optional
-  if ("visible" in propTypes) {
-    propTypes.visible.optional = true;
-  }
-
   // tilt range
   if ("getTilt" in propTypes) {
     propTypes.getTilt = {
