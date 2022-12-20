@@ -26,7 +26,7 @@ export class Store implements Observable {
   }
 
   layers: LayerProps[] = [];
-  layerSelector = false;
+  layerSelector = true;
 
   #editor: UndoableEditorState | null = null;
   get editor() {

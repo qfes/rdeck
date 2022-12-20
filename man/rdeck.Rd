@@ -13,7 +13,7 @@ rdeck(
   picking_radius = 0,
   use_device_pixels = TRUE,
   blending_mode = "normal",
-  layer_selector = FALSE,
+  layer_selector = TRUE,
   editor = FALSE,
   lazy_load = deprecated(),
   width = NULL,
