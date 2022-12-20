@@ -30,9 +30,7 @@
 #' @param editor <`boolean`|[`editor_options`]> Whether to render the polygon editor.
 #' If `TRUE`, renders with the default [editor_options()]. If `FALSE`, the polygon editor
 #' is not rendered.
-#' @param lazy_load <`boolean`> If `TRUE`, maps will be rendered when they are scrolled into
-#' view and destroyed when they are scrolled out of view. If `FALSE`, maps will be rendered
-#' when the page loads.
+#' @param lazy_load `r lifecycle::badge("deprecated")`. Maps are always eagerly rendered.
 #' @param width <`number`> The width of the map canvas.
 #' @param height <`number`> The height of the map canvas.
 #' @param id <`string`> The map element id. Not used in shiny applications.
@@ -52,17 +50,13 @@ rdeck <- function(map_style = mapbox_dark(),
                   blending_mode = "normal",
                   layer_selector = FALSE,
                   editor = FALSE,
-                  lazy_load = FALSE,
+                  lazy_load = deprecated(),
                   width = NULL,
                   height = NULL,
                   id = NULL,
                   ...) {
-  if (!missing(lazy_load)) {
-    lifecycle::deprecate_warn(
-      when = "0.4",
-      what = "rdeck(lazy_load)",
-      details = "Lazy loading will be removed in v0.5"
-    )
+  if (lifecycle::is_present(lazy_load)) {
+    lifecycle::deprecate_warn("0.4", "rdeck::rdeck(lazy_load = )")
   }
 
   check_dots_access_token(...)
@@ -92,8 +86,7 @@ rdeck <- function(map_style = mapbox_dark(),
       mapgl = mapgl,
       layers = list(),
       layer_selector = layer_selector,
-      editor = as_editor_options(editor),
-      lazy_load = lazy_load
+      editor = as_editor_options(editor)
     ),
     class = "rdeck_data"
   )

@@ -6,6 +6,7 @@
 # roxygen namespace tags. Modify with care!
 ## usethis namespace: start
 #' @importFrom generics compile
+#' @importFrom lifecycle deprecated
 #' @importFrom rlang %||%
 #' @importFrom rlang .data
 #' @importFrom rlang .env

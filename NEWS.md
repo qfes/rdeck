@@ -4,6 +4,7 @@
 - Add snapshot util (#77)
 - Add feature editor (#75)
 - Rewrite client api (#73)
+- Deprecate lazy loading (#71)
 
 # rdeck 0.4.0
 
