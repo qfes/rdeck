@@ -1,4 +1,4 @@
-# rdeck (development version)
+# rdeck 0.5.0
 
 - Add centering, diverging scales (#82)
 - Add snapshot util (#77)
