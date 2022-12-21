@@ -9,7 +9,7 @@ import { AccessorScale, accessorScale as _accessorScale, isAccessorScale } from 
 import { accessor as _accessor, Accessor, isAccessor } from "./accessor";
 import { blendingParameters } from "./blending";
 import { flattenGeometries as _flattenGeometries, isDataFrame } from "./data-frame";
-import { MultiHighlightExtension } from "./multi-highlight-extension";
+import { MultiHighlightExtension } from "./deckgl-extensions";
 import { memoize } from "./util";
 
 type LayerData = string | DataFrame | FeatureCollection;
