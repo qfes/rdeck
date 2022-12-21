@@ -10,7 +10,7 @@ import {
   SolidPolygonLayer,
 } from "@deck.gl/layers";
 
-import { isDataFrame } from "./data-frame";
+import { isTable } from "../table";
 
 export class MultiHighlightExtension extends LayerExtension {
   initializeState() {
@@ -28,17 +28,14 @@ export class MultiHighlightExtension extends LayerExtension {
           size: 3,
           accessor: (object, { index, data, target }) => {
             // data is a dataframe, with flattened geometries?
-            if (isDataFrame(data) && Array.isArray(data.indices)) {
-              return layer.encodePickingColor(data.indices.indexOf(data.indices[index]), target);
+            if (isTable(data) && Array.isArray(data.featureIds)) {
+              return layer.encodePickingColor(data.featureIds[index], target);
             }
 
             // sub-layer, where parent data is a dataframe with flattened geometries?
             const parentData = object?.__source?.parent?.props.data;
-            if (isDataFrame(parentData) && Array.isArray(parentData.indices)) {
-              return layer.encodePickingColor(
-                parentData.indices.indexOf(parentData.indices[object.__source.index]),
-                target
-              );
+            if (isTable(parentData) && Array.isArray(parentData.featureIds)) {
+              return layer.encodePickingColor(parentData.featureIds[object.__source.index], target);
             }
 
             // default
