@@ -32,7 +32,7 @@ compile_data <- function(data, layer) {
   UseMethod("compile_data")
 }
 
-compile_data.default <- function(data, layer) data
+compile_data.default <- function(object, layer) object
 
 compile_data.data.frame <- function(object, layer) {
   data <- select(
@@ -41,21 +41,24 @@ compile_data.data.frame <- function(object, layer) {
     tidyselect::any_of(get_used_colnames(.env$layer))
   )
 
-  layer_table <- list(
-    # number of features
-    length = nrow(object),
-    # geometry columns and their types
-    geometry = lapply(
-      select(data, where(is_sfc)),
-      sf::st_geometry_type,
-      by_geometry = FALSE
-    ),
-    # extract coords from sfc, avoid geojson serialisation
-    frame = mutate(data, across(where(is_sfc), get_coordinates))
-  )
+  # how many features per sfg?
+  sfc <- purrr::detect(data, is_sfc)
+  feature_lengths <- if (!is.null(sfc)) get_feature_lengths(sfc)
 
-  # set class for json serialiser
-  set_class(layer_table, "layer_table")
+  # size of each coordinate
+  dim <- nchar(layer$position_format)
+
+  structure(
+    list(
+      # number of features
+      length = max(sum(feature_lengths), nrow(object)),
+      lengths = if (max(feature_lengths, 0L) > 1L) feature_lengths,
+      columns = purrr::map_if(data, is_sfc, function(x) get_coordinates(x, dim))
+    ),
+    # attrs for json_serialiser
+    sf_columns = names(data)[vlapply(data, is_sfc)],
+    class = "layer_table"
+  )
 }
 
 compile_data.sf <- function(object, layer) {
@@ -65,7 +68,7 @@ compile_data.sf <- function(object, layer) {
 
   select(
     object,
-    # not relying on stick-geoms
+    # not relying on sticky-geoms
     attr(.env$object, "sf_column"),
     # keep used columns
     tidyselect::any_of(get_used_colnames(.env$layer))

@@ -170,16 +170,13 @@ as_json.tile_json <- function(object) {
 as_json.layer_table <- function(object) {
   table <- mutate(
     object,
-    length = jsonlite::unbox(length),
-    geometry = lapply(geometry, jsonlite::unbox)
+    length = jsonlite::unbox(length)
   )
 
-  # FIXME: separate geometry cols from frame
-  coord_cols <- names(object$geometry)
-  table$frame <- mutate(
-    table$frame,
-    across(tidyselect::any_of(.env$coord_cols), json_stringify, digits = 6)
-  )
+  sf_columns <- attr(object, "sf_columns")
+  if (!is.null(sf_columns)) {
+    table$columns <- purrr::map_at(table$columns, sf_columns, function(x) json_stringify(x, digits = 6))
+  }
 
   json_stringify(
     table,

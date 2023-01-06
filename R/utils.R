@@ -50,6 +50,7 @@ set_mostattributes <- `mostattributes<-`
 # vapply shorthands
 vlapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, logical(1), ..., USE.NAMES = named)
 vcapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, character(1), ..., USE.NAMES = named)
+viapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, integer(1), ..., USE.NAMES = named)
 
 # expects arg be embraced
 enstring <- function(arg) rlang::as_name(rlang::ensym(arg))
