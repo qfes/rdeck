@@ -29,13 +29,15 @@ export class MultiHighlightExtension extends LayerExtension {
           accessor: (object, { index, data, target }) => {
             // data is a dataframe, with flattened geometries?
             if (isTable(data) && Array.isArray(data.featureIds)) {
-              return layer.encodePickingColor(data.featureIds[index], target);
+              const startIndex = getStartIndex(data.featureIds, index);
+              return layer.encodePickingColor(startIndex, target);
             }
 
             // sub-layer, where parent data is a dataframe with flattened geometries?
             const parentData = object?.__source?.parent?.props.data;
             if (isTable(parentData) && Array.isArray(parentData.featureIds)) {
-              return layer.encodePickingColor(parentData.featureIds[object.__source.index], target);
+              const startIndex = getStartIndex(parentData.featureIds, object.__source.index);
+              return layer.encodePickingColor(startIndex, target);
             }
 
             // default
@@ -68,4 +70,8 @@ const Layers = [
 type BaseLayer = Layer<any, any>;
 function isPrimitiveLayer(layer: BaseLayer | LayerExtension): layer is BaseLayer {
   return Layers.some((Layer) => layer instanceof Layer);
+}
+
+function getStartIndex(featureIds: number[], index: number) {
+  return featureIds.indexOf(featureIds[index]);
 }
