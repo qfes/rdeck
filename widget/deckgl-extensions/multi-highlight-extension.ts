@@ -1,5 +1,4 @@
-import { Layer, LayerExtension } from "@deck.gl/core";
-import { default as GL } from "@luma.gl/constants";
+import { AccessorParameters, Layer, LayerExtension } from "@deck.gl/core";
 import {
   ArcLayer,
   IconLayer,
@@ -14,46 +13,49 @@ import { isTable } from "../table";
 
 export class MultiHighlightExtension extends LayerExtension {
   initializeState() {
-    if (!isPrimitiveLayer(this)) {
-      return;
-    }
+    if (!isPrimitiveLayer(this)) return;
 
     const layer = this;
-    const attributeManager = layer.getAttributeManager();
+    const attributeManager = this.getAttributeManager();
+    if (!attributeManager) return;
 
-    if (attributeManager) {
-      attributeManager.addInstanced({
-        pickingColors: {
-          type: GL.UNSIGNED_BYTE,
-          size: 3,
-          accessor: (object, { index, data, target }) => {
-            // data is a dataframe, with flattened geometries?
-            if (isTable(data) && Array.isArray(data.featureIds)) {
-              const startIndex = getStartIndex(data.featureIds, index);
-              return layer.encodePickingColor(startIndex, target);
-            }
+    const { pickingColors, instancePickingColors } = attributeManager.getAttributes();
+    const attribute = pickingColors ?? instancePickingColors;
 
-            // sub-layer, where parent data is a dataframe with flattened geometries?
-            const parentData = object?.__source?.parent?.props.data;
-            if (isTable(parentData) && Array.isArray(parentData.featureIds)) {
-              const startIndex = getStartIndex(parentData.featureIds, object.__source.index);
-              return layer.encodePickingColor(startIndex, target);
-            }
+    if (!attribute) return;
 
-            // default
-            return layer.encodePickingColor(object?.__source.index ?? index, target);
-          },
-          shaderAttributes: {
-            pickingColors: {
-              divisor: 0,
-            },
-            instancePickingColors: {
-              divisor: 1,
-            },
-          },
-        },
-      });
-    }
+    const instanced = instancePickingColors != null;
+    const { id, type, size, noAlloc, shaderAttributes, accessor, update } = attribute.settings;
+
+    const settings: AccessorParameters = {
+      type,
+      size,
+      noAlloc,
+      shaderAttributes,
+      update,
+      accessor: (object, { data, index, target }) => {
+        // data is a dataframe, with flattened geometries?
+        if (isTable(data) && Array.isArray(data.featureIds)) {
+          const startIndex = getStartIndex(data.featureIds, index);
+          return layer.encodePickingColor(startIndex, target);
+        }
+
+        // sub-layer, where parent data is a dataframe with flattened geometries?
+        const parentData = object?.__source?.parent?.props.data;
+        if (isTable(parentData) && Array.isArray(parentData.featureIds)) {
+          const startIndex = getStartIndex(parentData.featureIds, object.__source.index);
+          return layer.encodePickingColor(startIndex, target);
+        }
+
+        // default
+        return typeof accessor === "function"
+          ? accessor(object, { data, index, target })
+          : layer.encodePickingColor(object?.__source.index ?? index, target);
+      },
+    };
+
+    if (instanced) attributeManager.addInstanced({ [id]: settings });
+    else attributeManager.add({ [id]: settings });
   }
 }
 

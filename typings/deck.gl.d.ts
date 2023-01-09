@@ -39,11 +39,13 @@ declare module "@deck.gl/core" {
   };
   export interface AttributeManager {
     addInstanced(attributes: Record<string, AccessorParameters>): void;
+    add(attributes: Record<string, AccessorParameters>): void;
   }
 
   export interface AccessorParameters {
     type: number;
     size: number;
+    noAlloc: boolean;
     accessor?: AccessorFn<any, any>;
     update?: (attribute: any, numInstances: any) => void;
     shaderAttributes?: Record<string, any>;
