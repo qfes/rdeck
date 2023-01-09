@@ -4,24 +4,35 @@
 #'
 #' @keywords internal
 #' @noRd
-as_json <- function(object) {
+as_json <- function(object, ...) {
   UseMethod("as_json")
 }
 
 # identity: a convenient hack for safely calling as_json on anything
-as_json.default <- function(object) object
+as_json.default <- function(object, ...) object
 
-as_json.layer <- function(object) {
-  compiled_layer <- select(compile(object), -where(is_cur_value))
+as_json.layer <- function(object, ...) {
+  cols <- get_used_colnames(object)
+  is_geojson <- inherits(object, "GeoJsonLayer")
+  sfc_dim <- nchar(object$position_format)
+
+  layer <- select(object, -where(is_cur_value))
+
+  # convert image blobs to png
+  layer <- purrr::map_at(
+    layer,
+    c("image", "icon_atlas"),
+    function(x) if (inherits(x, "array")) as_png(x) else x
+  )
 
   json_stringify(
-    lapply(compiled_layer, function(p) as_json(p)),
+    lapply(layer, function(x) as_json(x, is_geojson = is_geojson, cols = cols, sfc_dim = sfc_dim)),
     camel_case = TRUE,
     auto_unbox = TRUE
   )
 }
 
-as_json.deck_props <- function(object) {
+as_json.deck_props <- function(object, ...) {
   deck_props <- select(object, -where(is_cur_value))
 
   json_stringify(
@@ -31,7 +42,7 @@ as_json.deck_props <- function(object) {
   )
 }
 
-as_json.map_props <- function(object) {
+as_json.map_props <- function(object, ...) {
   json_stringify(
     select(object, -where(is_cur_value)),
     camel_case = TRUE,
@@ -41,7 +52,7 @@ as_json.map_props <- function(object) {
 
 #' @autoglobal
 #' @noRd
-as_json.rdeck_data <- function(object) {
+as_json.rdeck_data <- function(object, ...) {
   rdeck_data <- mutate(
     object,
     across(-tidyselect::any_of("layers"), as_json)
@@ -61,7 +72,7 @@ as_json.rdeck_data <- function(object) {
   )
 }
 
-as_json.view_state <- function(object) {
+as_json.view_state <- function(object, ...) {
   json_stringify(
     object,
     camel_case = TRUE,
@@ -70,13 +81,13 @@ as_json.view_state <- function(object) {
   )
 }
 
-as_json.bbox <- function(object) {
+as_json.bbox <- function(object, ...) {
   json_stringify(object, digits = 6)
 }
 
 #' @autoglobal
 #' @noRd
-as_json.editor_options <- function(object) {
+as_json.editor_options <- function(object, ...) {
   options <- mutate(select(object, -where(is_cur_value)))
 
   # features to geojson
@@ -85,7 +96,8 @@ as_json.editor_options <- function(object) {
       options,
       geojson = geojsonsf::sf_geojson(
         sf::st_sf(features %??% sf::st_sfc()),
-        simplify = FALSE
+        simplify = FALSE,
+        digits = 6L
       )
     )
 
@@ -100,7 +112,7 @@ as_json.editor_options <- function(object) {
   )
 }
 
-as_json.accessor <- function(object) {
+as_json.accessor <- function(object, ...) {
   json_stringify(
     mutate(object, type = "accessor"),
     camel_case = TRUE,
@@ -110,7 +122,7 @@ as_json.accessor <- function(object) {
 
 #' @autoglobal
 #' @noRd
-as_json.scale <- function(object) {
+as_json.scale <- function(object, ...) {
   compiled_scale <- mutate(
     compile(object),
     type = jsonlite::unbox("accessor"),
@@ -139,7 +151,7 @@ as_json.scale <- function(object) {
 
 #' @autoglobal
 #' @noRd
-as_json.tooltip <- function(object) {
+as_json.tooltip <- function(object, ...) {
   tooltip <- mutate(
     object,
     data_type = jsonlite::unbox(data_type),
@@ -150,7 +162,7 @@ as_json.tooltip <- function(object) {
   json_stringify(tooltip, camel_case = TRUE)
 }
 
-as_json.tile_json <- function(object) {
+as_json.tile_json <- function(object, ...) {
   tilejson <- select(
     object,
     -tidyselect::any_of(c(
@@ -165,30 +177,30 @@ as_json.tile_json <- function(object) {
   json_stringify(tilejson, auto_unbox = TRUE, digits = 6)
 }
 
-#' @autoglobal
-#' @noRd
-as_json.layer_table <- function(object) {
-  table <- mutate(
-    object,
-    length = jsonlite::unbox(length)
+as_json.data.frame <- function(object, cols = tidyselect::everything(), sfc_dim = 2L, ...) {
+  sf_columns <- names(tidyselect::eval_select(function(x) is_sfc(x), object))
+
+  data <- compile(select(as.data.frame(object), cols), sfc_dim)
+  data <- mutate(
+    data,
+    length = jsonlite::unbox(length),
+    # 6-digit precision for all sf columns
+    columns = purrr::map_at(columns, sf_columns, json_stringify, digits = 6L)
   )
 
-  sf_columns <- attr(object, "sf_columns")
-  if (!is.null(sf_columns)) {
-    table$columns <- purrr::map_at(table$columns, sf_columns, function(x) json_stringify(x, digits = 6))
-  }
-
-  json_stringify(
-    table,
-    camel_case = TRUE,
-    digits = 15,
-    use_signif = TRUE
-  )
+  json_stringify(data, digits = 15L, use_signif = TRUE)
 }
 
-as_json.sf <- function(object) geojsonsf::sf_geojson(object, digits = 6)
+#' @autoglobal
+#' @noRd
+as_json.sf <- function(object, is_geojson, cols = tidyselect::everything(), sfc_dim = 2L, ...) {
+  if (!is_geojson) return(NextMethod())
 
-as_json.png <- function(object) {
+  data <- select(object, attr(.env$object, "sf_column"), tidyselect::any_of(cols))
+  geojsonsf::sf_geojson(data, simplify = FALSE, digits = 6L)
+}
+
+as_json.png <- function(object, ...) {
   paste0(
     "data:image/png;base64,",
     base64enc::base64encode(object)

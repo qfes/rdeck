@@ -42,14 +42,7 @@ utils::globalVariables(c(
   "scale_type", # <as_json.scale>
   "data_type", # <as_json.tooltip>
   "cols", # <as_json.tooltip>
-  "geometry", # <as_json.layer_table>
-  ".env", # <as_json.layer_table>
-  "data", # <compile.BitmapLayer>
-  ".env", # <compile.BitmapLayer>
-  "image", # <compile.BitmapLayer>
-  "data", # <compile.IconLayer>
-  ".env", # <compile.IconLayer>
-  "icon_atlas", # <compile.IconLayer>
+  ".env", # <as_json.sf>
   "get_breaks", # <>
   "get_palette", # <>
   "get_range", # <>
