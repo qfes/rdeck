@@ -12,9 +12,9 @@ export function Tooltip({ info }: TooltipProps) {
   const { x, y } = info;
   const { name, tooltip } = info.layer.props;
 
-  const object = getPickedObject(info, tooltip.dataType)!;
+  const object = getPickedObject(info)!;
   delete object[FEATURE_ID];
-  const names = tooltip.cols === true ? Object.keys(object) : tooltip.cols;
+  const names: string[] = tooltip.cols === true ? Object.keys(object) : tooltip.cols;
 
   return (
     <div className={styles.tooltip} style={{ transform: `translate(${x}px, ${y}px)` }}>

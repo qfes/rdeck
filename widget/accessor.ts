@@ -2,113 +2,47 @@ import type { PickInfo, AccessorFn } from "@deck.gl/core";
 import type { Color } from "./types";
 import { parseColor } from "./color";
 
-type AccessorBase = {
+export type Accessor = {
   type: "accessor";
   col: string;
+  getData: AccessorFn<any, any>;
 };
-
-type AccessorTable = AccessorBase & {
-  dataType: "table";
-  getData: AccessorFn<DataFrame, any>;
-};
-
-type AccessorObject = AccessorBase & {
-  dataType: "object";
-  getData: AccessorFn<Record<string, any>, any>;
-};
-
-type AccessorGeoJson = AccessorBase & {
-  dataType: "geojson";
-  getData: AccessorFn<Feature, any>;
-};
-
-export type Accessor = AccessorTable | AccessorObject | AccessorGeoJson;
 
 export function isAccessor(obj: any): obj is Accessor {
   return obj !== null && typeof obj === "object" && obj.type === "accessor";
 }
 
-export function accessor(obj: Accessor, name: string): Accessor {
-  const getData = accessorFn(obj, name) as AccessorFn<any, any>;
+export function accessor(obj: Accessor, prop: string): Accessor {
   return {
     ...obj,
-    getData,
+    getData: getData(obj, prop),
   };
 }
 
-function accessorFn({ col, dataType }: Accessor, name: string): AccessorFn<any, any> {
-  if (name === "highlightColor") {
-    switch (dataType) {
-      case "table":
-        return tableHighlight(col);
-      case "object":
-        return objectHighlight(col);
-      case "geojson":
-        return geojsonHighlight(col);
-      default:
-        throw TypeError(`${dataType} not supported`);
-    }
-  }
-
-  if (name.endsWith("Color")) {
-    switch (dataType) {
-      case "table":
-        return tableColor(col);
-      case "object":
-        return objectColor(col);
-      case "geojson":
-        return geojsonColor(col);
-      default:
-        throw TypeError(`${dataType} not supported`);
-    }
-  }
-
-  switch (dataType) {
-    case "table":
-      return tableData(col);
-    case "object":
-      return objectData(col);
-    case "geojson":
-      return geojsonData(col);
-    default:
-      throw TypeError(`${dataType} not supported`);
-  }
+function getData({ col }: Accessor, prop: string): AccessorFn<any, any> {
+  if (!prop.endsWith("Color")) return getValue(col);
+  return prop !== "highlightColor" ? getColor(col) : getHighlightColor(col);
 }
 
-function tableData(col: string): AccessorFn<DataFrame, any> {
-  return (_, { index, data }) => data.frame[col][index];
-}
-
-function tableColor(col: string): AccessorFn<DataFrame, Color> {
-  return (_, { index, data, target }) => parseColor(data.frame[col][index], target);
-}
-
-function tableHighlight(col: string): AccessorFn<PickInfo<null>, Color> {
-  return ({ index, layer }) =>
+export function getValue<In = any, Out = any>(col: string): AccessorFn<In, Out> {
+  return (object, { data, index }) =>
     // @ts-ignore
-    parseColor(layer.props.data!.frame[col][index]);
+    object == null ? data.at(index, col) : object.properties?.[col] ?? object[col];
 }
 
-function objectData(col: string): AccessorFn<Record<string, any>, any> {
-  return (object) => object[col];
+export function getPickValue<In = any, Out = any>(col: string): (info: PickInfo<In>) => Out {
+  return ({ object, index, layer }) =>
+    // @ts-ignore
+    object == null ? layer.props.data?.at(index, col) : object.properties?.[col] ?? object[col];
 }
 
-function objectColor(col: string): AccessorFn<Record<string, any>, Color> {
-  return (object, { target }) => parseColor(object[col], target);
+function getColor(col: string): AccessorFn<any, Color> {
+  const fn = getValue(col);
+  return (object, { data, index, target }) =>
+    parseColor(fn(object, { data, index, target }), target);
 }
 
-function objectHighlight(col: string): AccessorFn<PickInfo<Record<string, any>>, Color> {
-  return ({ object }) => parseColor(object[col]);
-}
-
-function geojsonData(col: string): AccessorFn<Feature, any> {
-  return (object) => object.properties![col];
-}
-
-function geojsonColor(col: string): AccessorFn<Feature, Color> {
-  return (object, { target }) => parseColor(object.properties![col], target);
-}
-
-function geojsonHighlight(col: string): AccessorFn<PickInfo<Feature>, Color> {
-  return ({ object }) => parseColor(object.properties![col]);
+function getHighlightColor(col: string): (info: PickInfo<any>) => Color {
+  const fn = getPickValue(col);
+  return (info) => parseColor(fn(info));
 }

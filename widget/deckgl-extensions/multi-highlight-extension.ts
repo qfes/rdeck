@@ -65,7 +65,7 @@ const Layers = [
   SolidPolygonLayer,
 ];
 
-type BaseLayer = Layer<DataFrame, any>;
+type BaseLayer = Layer<any, any>;
 function isPrimitiveLayer(layer: BaseLayer | LayerExtension): layer is BaseLayer {
   return Layers.some((Layer) => layer instanceof Layer);
 }

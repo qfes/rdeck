@@ -34,7 +34,7 @@ declare module "@deck.gl/core" {
   export type AccessorFn<In, Out> = (object: In, info: ObjectInfo<In, Out>) => Out;
   export type ObjectInfo<In, Out> = {
     index: number;
-    data: In;
+    data: Iterable<In> | { length: number };
     target: Out;
   };
   export interface AttributeManager {
