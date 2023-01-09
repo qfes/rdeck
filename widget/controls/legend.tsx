@@ -10,6 +10,7 @@ import {
   isContinuousScale,
   isDiscreteScale,
 } from "../scale";
+import type { Color } from "../types";
 import type { LegendInfo } from "../layer";
 import { rgba } from "../color";
 import { words } from "../util";

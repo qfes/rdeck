@@ -17,8 +17,7 @@ import {
   ScaleIdentity,
 } from "d3-scale";
 import type { PickInfo, AccessorFn } from "@deck.gl/core";
-import type { Feature } from "geojson";
-import { Accessor, isAccessor } from "./accessor";
+import type { Color } from "./types";
 import { parseColor } from "./color";
 
 type ScaleFn = (data: any) => number | Color;

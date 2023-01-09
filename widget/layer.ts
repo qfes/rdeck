@@ -3,12 +3,11 @@ import type { Layer as DeckLayer, LayerProps as DeckLayerProps } from "@deck.gl/
 import type { BitmapLayerProps } from "@deck.gl/layers";
 import type { TileLayerProps } from "@deck.gl/geo-layers";
 import type { FeatureCollection } from "geojson";
+import type { TooltipInfo } from "./types";
 
-import { parseColor as _parseColor } from "./color";
-import { AccessorScale, accessorScale as _accessorScale, isAccessorScale } from "./scale";
-import { accessor as _accessor, Accessor, isAccessor } from "./accessor";
+import type { BlendingMode, Color, TooltipInfo } from "./types";
 import { blendingParameters } from "./blending";
-import { flattenGeometries as _flattenGeometries, isDataFrame } from "./data-frame";
+import { parseColor } from "./color";
 import { MultiHighlightExtension } from "./deckgl-extensions";
 import { memoize } from "./util";
 

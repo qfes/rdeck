@@ -1,5 +1,5 @@
 import type { PickInfo, AccessorFn } from "@deck.gl/core";
-import type { Feature } from "geojson";
+import type { Color } from "./types";
 import { parseColor } from "./color";
 
 type AccessorBase = {

@@ -1,5 +1,6 @@
 import type { Effect, InitialViewStateProps, PickInfo, ViewStateChangeParams } from "@deck.gl/core";
 import type { DeckProps } from "../deck";
+import type { BlendingMode, Bounds } from "../types";
 
 const GLOBE: InitialViewStateProps = {
   longitude: 0,
