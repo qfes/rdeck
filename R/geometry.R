@@ -136,7 +136,7 @@ get_coordinates.sfc_GEOMETRY <- function(sfc) {
   if (all(types %in% c("POINT", "MULTIPOINT"))) {
     get_coordinates.sfc_MULTIPOINT(sfc)
   } else if (all(types %in% c("LINESTRING", "MULTILINESTRING"))) {
-    get_coordinates.sfc_LINESTRING(rlang::flatten_if(sfc3, is.list))
+    get_coordinates.sfc_LINESTRING(rlang::flatten_if(sfc, is.list))
   } else if (all(types %in% c("POLYGON", "MULTIPOLYGON"))) {
     is_multipolygon <- function(x) class(x)[2] == "MULTIPOLYGON" && length(x) != 0L
     get_coordinates.sfc_POLYGON(rlang::flatten_if(sfc, is_multipolygon))
