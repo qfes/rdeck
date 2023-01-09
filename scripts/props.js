@@ -91,6 +91,9 @@ function getProps(Layer) {
     delete propTypes.tooltip;
   }
 
+    // positionFormat = "XY"
+    propTypes.positionFormat = "XY";
+
   // extruded = false
   if ("extruded" in propTypes) {
     propTypes.extruded.value = false;
