@@ -83,10 +83,7 @@ as_json.editor_options <- function(object) {
   if (rlang::has_name(options, "features")) {
     options <- mutate(
       options,
-      geojson = geojsonsf::sf_geojson(
-        sf::st_sf(features %??% sf::st_sfc()),
-        simplify = FALSE
-      )
+      geojson = as_json(sf::st_sf(features %??% sf::st_sfc()))
     )
 
     options <- select(options, -features)
@@ -189,7 +186,10 @@ as_json.layer_table <- function(object) {
   )
 }
 
-as_json.sf <- function(object) geojsonsf::sf_geojson(object, digits = 6)
+as_json.sf <- function(object) {
+  rlang::check_installed("geojsonsf")
+  geojsonsf::sf_geojson(object, digits = 6, simplify = FALSE)
+}
 
 as_json.png <- function(object) paste0("data:image/png;base64,", jsonlite::base64_enc(object))
 
