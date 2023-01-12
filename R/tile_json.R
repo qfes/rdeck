@@ -33,6 +33,8 @@
 #'
 #' @export
 tile_json <- function(tileset_id, tile_service = NULL) {
+  rlang::check_installed("urltools")
+
   tidyassert::assert(rlang::is_string(tileset_id))
   tidyassert::assert(is.null(tile_service) | rlang::is_string(tile_service))
 

@@ -92,6 +92,8 @@ as_json.editor_options <- function(object, ...) {
 
   # features to geojson
   if (rlang::has_name(options, "features")) {
+    rlang::check_installed("geojsonsf")
+
     options <- mutate(
       options,
       geojson = geojsonsf::sf_geojson(
@@ -107,8 +109,7 @@ as_json.editor_options <- function(object, ...) {
   json_stringify(
     options,
     camel_case = TRUE,
-    auto_unbox = TRUE,
-    digits = 6
+    auto_unbox = TRUE
   )
 }
 
@@ -197,15 +198,12 @@ as_json.sf <- function(object, is_geojson, cols = tidyselect::everything(), sfc_
   if (!is_geojson) return(NextMethod())
 
   data <- select(object, attr(.env$object, "sf_column"), tidyselect::any_of(cols))
+
+  rlang::check_installed("geojsonsf")
   geojsonsf::sf_geojson(data, simplify = FALSE, digits = 6L)
 }
 
-as_json.png <- function(object, ...) {
-  paste0(
-    "data:image/png;base64,",
-    base64enc::base64encode(object)
-  )
-}
+as_json.png <- function(object) paste0("data:image/png;base64,", jsonlite::base64_enc(object))
 
 # json serialise
 json_stringify <- function(object,
@@ -230,10 +228,4 @@ json_stringify <- function(object,
     json_verbatim = json_verbatim,
     ...
   )
-}
-
-to_camel_case <- function(string) {
-  # preserve _ prefix
-  prefix <- ifelse(startsWith(string, "_"), "_", "")
-  snakecase::to_lower_camel_case(string, prefix = prefix)
 }
