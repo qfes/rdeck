@@ -191,12 +191,7 @@ as_json.layer_table <- function(object) {
 
 as_json.sf <- function(object) geojsonsf::sf_geojson(object, digits = 6)
 
-as_json.png <- function(object) {
-  paste0(
-    "data:image/png;base64,",
-    base64enc::base64encode(object)
-  )
-}
+as_json.png <- function(object) paste0("data:image/png;base64,", jsonlite::base64_enc(object))
 
 # json serialise
 json_stringify <- function(object,
