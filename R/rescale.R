@@ -179,11 +179,13 @@ rescale_breaks <- function(scale, x) {
 }
 
 rescale_piecewise <- function(x, mid) {
-  dplyr::case_when(
-    x == mid ~ 0.5,
-    x < mid ~ scales::rescale(x, c(0, 0.5), c(0, mid)),
-    x > mid ~ scales::rescale(x, c(0.5, 1), c(mid, 1))
-  )
+  out <- x
+
+  out[x == mid] <- 0.5
+  out[x < mid] <- scales::rescale(x[x < mid], c(0, 0.5), c(0, mid))
+  out[x > mid] <- scales::rescale(x[x > mid], c(0.5, 1), c(mid, 1))
+
+  out
 }
 
 rescale_not_supported <- function(rescale_fn, scale_type) {
