@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   rdeck: rdeck.html
-last_built: 2023-01-12T03:51Z
+last_built: 2023-01-12T06:17Z
 urls:
   reference: https://qfes.github.io/rdeck/reference
   article: https://qfes.github.io/rdeck/articles
