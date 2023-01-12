@@ -222,9 +222,3 @@ json_stringify <- function(object,
     ...
   )
 }
-
-to_camel_case <- function(string) {
-  # preserve _ prefix
-  prefix <- ifelse(startsWith(string, "_"), "_", "")
-  snakecase::to_lower_camel_case(string, prefix = prefix)
-}

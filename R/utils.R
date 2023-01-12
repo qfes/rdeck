@@ -80,4 +80,7 @@ all_finite <- function(x) all(is.finite(x))
 as_png <- function(image) add_class(png::writePNG(image), "png")
 
 # nullish coalesce, where length-0 is treated as null
-`%??%` <- function(a, b) if(length(a) == 0) b else a
+`%??%` <- function(a, b) if (length(a) == 0) b else a
+
+# snake_case to camelCase, preserve prefix/suffix _
+to_camel_case <- function(x) gsub("(?<!^)_+(\\w)", "\\U\\1", x, perl = TRUE)

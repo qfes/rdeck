@@ -17,7 +17,6 @@ Imports:
     magrittr,
     sf (>= 0.9.3),
     shiny,
-    snakecase,
     png,
     stylebox (>= 0.2.0),
     rlang,
