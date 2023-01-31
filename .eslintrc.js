@@ -12,9 +12,6 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   plugins: ["@typescript-eslint"],
-  settings: {
-    polyfills: ["Object.fromEntries"],
-  },
   rules: {
     "prettier/prettier": "warn"
   }

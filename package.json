@@ -61,12 +61,6 @@
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0"
   },
-  "browserslist": [
-    "extends browserslist-config-google",
-    "Chrome >= 69",
-    "Firefox >= 68",
-    "Safari >= 12.1"
-  ],
   "prettier": {
     "printWidth": 100
   }

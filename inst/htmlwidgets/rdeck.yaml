@@ -9,12 +9,13 @@ dependencies:
       - vendor/deck.gl.js
       - vendor/loaders.gl.js
       - vendor/luma.gl.js
-      - vendor/turf.js
-      - vendor/core-js.js
       - vendor/mui.js
+      - vendor/d3-geo.js
       - vendor/math.gl.js
       - vendor/nebula.gl.js
+      - vendor/turf.js
       - vendor/react-map-gl.js
+      - vendor/d3-array.js
       - vendor/d3-format.js
       - vendor/probe.gl.js
       - vendor/d3-scale.js
@@ -23,7 +24,6 @@ dependencies:
       - vendor/emotion.js
       - vendor/gl-matrix.js
       - vendor/stylis.js
-      - vendor/d3-array.js
       - vendor/babel.js
       - vendor/mdi.js
       - vendor/react.js
