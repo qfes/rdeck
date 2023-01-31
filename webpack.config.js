@@ -87,7 +87,9 @@ module.exports = (env, { mode }) => {
             test: /[\\/]node_modules[\\/]/,
             name(module) {
               const resource = module.nameForCondition();
-              const packageName = resource.match(/[\\/]node_modules[\\/]([^\\/]+)/)[1];
+              let match;
+              for (match of resource.matchAll(/[\\/]node_modules[\\/]([^\\/]+)/g));
+              const packageName = match[1];
               return `vendor/${packageName.replace("@", "")}`;
             },
           },
