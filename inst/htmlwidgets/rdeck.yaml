@@ -1,6 +1,6 @@
 dependencies:
   - name: rdeck
-    version: 0.4.0
+    version: 0.5.0
     src: htmlwidgets
     stylesheet:
       - rdeck.css
@@ -12,8 +12,8 @@ dependencies:
       - vendor/turf.js
       - vendor/core-js.js
       - vendor/mui.js
-      - vendor/nebula.gl.js
       - vendor/math.gl.js
+      - vendor/nebula.gl.js
       - vendor/react-map-gl.js
       - vendor/d3-format.js
       - vendor/probe.gl.js
@@ -21,14 +21,13 @@ dependencies:
       - vendor/d3-interpolate.js
       - vendor/mjolnir.js.js
       - vendor/emotion.js
-      - vendor/stylis.js
       - vendor/gl-matrix.js
+      - vendor/stylis.js
       - vendor/d3-array.js
+      - vendor/babel.js
       - vendor/mdi.js
       - vendor/react.js
-      - vendor/babel.js
       - vendor/react-dom.js
-      - vendor/prop-types.js
       - vendor/mapbox-gl.js
       - vendor/d3-color.js
       - vendor/scheduler.js
