@@ -1,6 +1,6 @@
 import type { PickInfo } from "@deck.gl/core";
 import { FEATURE_ID, getPickedObject } from "./picking";
-import styles from "./tooltip.css";
+import styles from "./tooltip.module.css";
 
 export interface TooltipProps {
   info: PickInfo<any>;

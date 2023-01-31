@@ -6,7 +6,7 @@ import { Map, MapRef } from "./map";
 import { Layer, LayerProps, VisibilityInfo } from "./layer";
 import { LayerSelector, Legend, EditorToolbox, LegendRef } from "./controls";
 import type { EditorProps } from "./editor";
-import styles from "./rdeck.css";
+import styles from "./rdeck.module.css";
 import { classNames } from "./util";
 import { getSnapshot } from "./utils";
 

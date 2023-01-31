@@ -3,7 +3,7 @@ import { CheckBoxOutlineBlank, CheckBox, IndeterminateCheckBox, Layers } from "@
 
 import { VisibilityInfo } from "../layer";
 import { classNames, groupBy } from "../util";
-import styles from "./layer-selector.css";
+import styles from "./layer-selector.module.css";
 
 const NO_GROUP = Date.now();
 

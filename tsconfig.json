@@ -1,18 +1,16 @@
 {
   "include": ["widget", "typings"],
-  "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es2020",
     "module": "esnext",
     "lib": ["dom", "dom.iterable", "es2020"],
     "jsx": "react-jsx",
-    "sourceMap": true,
-    "strict": true,
+    "useDefineForClassFields": true,
     "moduleResolution": "node",
+    "isolatedModules": true,
     "esModuleInterop": true,
     "allowUmdGlobalAccess": true,
     "resolveJsonModule": true,
-    "useDefineForClassFields": true,
-    "forceConsistentCasingInFileNames": true
+    "strict": true
   }
 }
