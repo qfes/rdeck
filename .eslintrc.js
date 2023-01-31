@@ -1,18 +1,14 @@
 module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
-  parserOptions: {
-    project: "./tsconfig.json",
-  },
-  ignorePatterns: [".eslintrc.js"],
+  parserOptions: { project: ["./tsconfig.json"] },
   extends: [
-    "react-app",
-    "plugin:jsx-a11y/recommended",
-    "plugin:compat/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
   ],
-  plugins: ["@typescript-eslint"],
-  rules: {
-    "prettier/prettier": "warn"
-  }
+  plugins: ["react", "@typescript-eslint"],
+  rules: { "prettier/prettier": "warn" },
 };
