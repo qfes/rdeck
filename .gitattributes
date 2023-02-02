@@ -2,7 +2,7 @@
 
 inst/htmlwidgets/*.js -diff
 inst/htmlwidgets/*.css -diff
-package-lock.json -diff
+pnpm-lock.yaml -diff
 
 # generated
 inst/htmlwidgets/*.js linguist-generated

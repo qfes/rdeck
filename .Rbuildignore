@@ -7,10 +7,10 @@
 ^scripts$
 ^node_modules$
 ^package\.json$
-^package-lock\.json$
+^pnpm-lock\.yaml$
 ^tsconfig\.json$
 ^postcss\.config\.js$
-^webpack\.config\.js$
+^esbuild\.config\.mjs$
 
 # docs
 ^_pkgdown\.yml$

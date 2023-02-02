@@ -1,51 +1,9 @@
 dependencies:
   - name: rdeck
-    version: 0.4.0
+    version: 0.5.0
     src: htmlwidgets
     stylesheet:
-      - rdeck.css
-      - vendor/mapbox-gl.css
+      - rdeck.bundle.css
+      - fonts.bundle.css
     script:
-      - vendor/deck.gl.js
-      - vendor/loaders.gl.js
-      - vendor/luma.gl.js
-      - vendor/turf.js
-      - vendor/core-js.js
-      - vendor/mui.js
-      - vendor/nebula.gl.js
-      - vendor/math.gl.js
-      - vendor/react-map-gl.js
-      - vendor/d3-format.js
-      - vendor/probe.gl.js
-      - vendor/d3-scale.js
-      - vendor/d3-interpolate.js
-      - vendor/mjolnir.js.js
-      - vendor/emotion.js
-      - vendor/stylis.js
-      - vendor/gl-matrix.js
-      - vendor/d3-array.js
-      - vendor/mdi.js
-      - vendor/react.js
-      - vendor/babel.js
-      - vendor/react-dom.js
-      - vendor/prop-types.js
-      - vendor/mapbox-gl.js
-      - vendor/d3-color.js
-      - vendor/scheduler.js
-      - vendor/d3-hexbin.js
-      - vendor/internmap.js
-      - vendor/viewport-mercator-project.js
-      - vendor/turf-jsts.js
-      - vendor/rbush.js
-      - vendor/polygon-clipping.js
-      - vendor/pbf.js
-      - vendor/long.js
-      - vendor/lodash.throttle.js
-      - vendor/ktx-parse.js
-      - vendor/ieee754.js
-      - vendor/hammerjs.js
-      - vendor/h3-js.js
-      - vendor/geojson-rbush.js
-      - vendor/earcut.js
-      - vendor/clsx.js
-      - vendor/mapbox.js
+      - rdeck.bundle.js

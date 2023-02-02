@@ -18,7 +18,7 @@ import {
   Delete,
 } from "@mui/icons-material";
 
-import styles from "./editor-toolbox.css";
+import styles from "./editor-toolbox.module.css";
 import type { EditorMode } from "../types";
 import { classNames } from "../util";
 

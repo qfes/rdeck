@@ -14,7 +14,7 @@ import type { Color } from "../types";
 import type { LegendInfo } from "../layer";
 import { rgba } from "../color";
 import { words } from "../util";
-import styles from "./legend.css";
+import styles from "./legend.module.css";
 import { getElementImage } from "../utils";
 
 const TICK_HEIGHT = 16;
