@@ -23,7 +23,7 @@ const buildConfig = {
   },
   plugins: [
     !isDev ? sourcemapPlugin() : noopPlugin(),
-    svgrPlugin(),
+    svgrPlugin({ typescript: true }),
     stylePlugin({
       cssModulesOptions: {
         exportGlobals: true,
@@ -53,17 +53,22 @@ function noopPlugin() {
 
 // https://github.com/evanw/esbuild/issues/1227#issuecomment-829778830
 function sourcemapPlugin() {
+  const dataurl =
+    "sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIiJdLCJtYXBwaW5ncyI6IkEifQ==";
+
+  const omitJs = (contents) => contents + `\n//# ${dataurl}`;
+  const omitCss = (contents) => contents + `\n/*# ${dataurl} */`;
+  const omitSvg = (contents) => contents + `\n{/*# ${dataurl} */}`;
+
   /** @type {import("esbuild").Plugin} */
   return {
     name: "no-vendors-sourcemap",
     async setup(build) {
-      const dataurl =
-        "sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIiJdLCJtYXBwaW5ncyI6IkEifQ==";
 
-      build.onLoad({ filter: /node_modules.*\.js$/ }, async (args) => {
+      build.onLoad({ filter: /node_modules.*\.(js|ts)$/ }, async (args) => {
         const contents = await readFile(args.path, "utf-8");
         return {
-          contents: contents + "\n//# " + dataurl,
+          contents: omitJs(contents),
           loader: "default",
         };
       });
@@ -71,8 +76,16 @@ function sourcemapPlugin() {
       build.onLoad({ filter: /node_modules.*\.css$/ }, async (args) => {
         const contents = await readFile(args.path, "utf-8");
         return {
-          contents: contents + "\n/*# " + dataurl + " */",
+          contents: omitCss(contents),
           loader: "default",
+        };
+      });
+
+      build.onLoad({ filter: /node_modules.*\.svg$/ }, async (args) => {
+        const contents = await readFile(args.path, "utf-8");
+        return {
+          contents: omitSvg(contents),
+          loader: "tsx"
         };
       });
     },

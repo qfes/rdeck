@@ -4,5 +4,6 @@ dependencies:
     src: htmlwidgets
     stylesheet:
       - rdeck.bundle.css
+      - fonts.bundle.css
     script:
       - rdeck.bundle.js
