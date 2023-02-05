@@ -19,7 +19,11 @@ export class Deck extends _Deck {
 
   setProps(props: Partial<DeckProps>): void {
     const initialBounds = props.initialBounds;
-    if (initialBounds != null && !boundsEqual(initialBounds, this.props.initialBounds)) {
+    // props === this.props on initial render
+    if (
+      initialBounds != null &&
+      (!boundsEqual(initialBounds, this.props.initialBounds) || this.viewState == null)
+    ) {
       // constrain to web mercator limits
       // https://en.wikipedia.org/wiki/Web_Mercator_projection
       const [xmin, ymin, xmax, ymax] = initialBounds;
