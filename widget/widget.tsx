@@ -5,7 +5,7 @@ import type { FeatureCollection } from "geojson";
 
 import { RDeck, RDeckRef, SnapshotOptions } from "./rdeck";
 import type { LayerProps, VisibilityInfo } from "./layer";
-import { pick } from "./util";
+import { debounce, pick } from "./util";
 import { getViewState } from "./viewport";
 import { getPickedObject } from "./picking";
 import { Store } from "./state";
@@ -60,7 +60,7 @@ export class Widget {
     deckgl = {
       ...deckgl,
       onClick: this.#handleClick,
-      onViewStateChange: this.#handleViewStateChange,
+      onViewStateChange: debounce(this.#handleViewStateChange, 50),
     };
 
     let editor: EditorProps | null = null;
