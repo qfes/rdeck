@@ -131,13 +131,13 @@ validate_image.layer <- function(layer) {
 }
 
 validate_get_icon.GeoJsonLayer <- function(layer) {
-  if (grepl("icon", layer$point_type, fixed = TRUE)) {
+  if (grepl("icon", layer$point_type, fixed = TRUE) %??% TRUE) {
     NextMethod()
   }
 }
 
 validate_get_text.GeoJsonLayer <- function(layer) {
-  if (grepl("text", layer$point_type, fixed = TRUE)) {
+  if (grepl("text", layer$point_type, fixed = TRUE) %??% TRUE) {
     NextMethod()
   }
 }
