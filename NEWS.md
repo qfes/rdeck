@@ -1,4 +1,4 @@
-# rdeck (development version)
+# rdeck 0.5.1
 
 - Remove unnecessary dependencies
 - Bundler: Webpack -> esbuild
