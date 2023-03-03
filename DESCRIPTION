@@ -1,7 +1,7 @@
 Type: Package
 Package: rdeck
 Title: Deck.gl Widget
-Version: 0.5.1
+Version: 0.5.2
 Authors@R:
     person("Anthony", "North", , "anthony.jl.north@gmail.com", role = c("aut", "cre"))
 Description: Deck.gl widget for R.

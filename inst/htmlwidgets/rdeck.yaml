@@ -1,6 +1,6 @@
 dependencies:
   - name: rdeck
-    version: 0.5.0
+    version: 0.5.2
     src: htmlwidgets
     stylesheet:
       - rdeck.bundle.css
