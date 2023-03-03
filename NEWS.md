@@ -1,3 +1,7 @@
+# rdeck 0.5.2
+
+- Fix regression in editor toolbox (#93)
+
 # rdeck 0.5.1
 
 - Remove unnecessary dependencies
