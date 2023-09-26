@@ -42,13 +42,12 @@ utils::globalVariables(c(
   "scale_type", # <as_json.scale>
   "data_type", # <as_json.tooltip>
   "cols", # <as_json.tooltip>
-  ".env", # <as_json.sf>
-  "get_breaks", # <>
-  "get_palette", # <>
-  "get_range", # <>
-  "get_ticks", # <>
-  "tick_format", # <>
-  "col_label", # <>
+  "get_breaks", # <compile.scale>
+  "get_palette", # <compile.scale>
+  "get_range", # <compile.scale>
+  "get_ticks", # <compile.scale>
+  "tick_format", # <compile.scale>
+  "col_label", # <compile.scale>
   "limits", # <compile.scale_color>
   "domain", # <compile.scale_color>
   "limits", # <compile.scale_numeric>

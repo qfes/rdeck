@@ -1,7 +1,7 @@
 Type: Package
 Package: rdeck
 Title: Deck.gl Widget
-Version: 0.5.0
+Version: 0.5.2
 Authors@R:
     person("Anthony", "North", , "anthony.jl.north@gmail.com", role = c("aut", "cre"))
 Description: Deck.gl widget for R.
@@ -32,7 +32,7 @@ Suggests:
     png,
     RcppSimdJson,
     rmarkdown,
-    roxyglobals (>= 0.2.1),
+    roxyglobals,
     shiny,
     testthat (>= 3.0.0),
     urltools,
@@ -40,11 +40,12 @@ Suggests:
 VignetteBuilder:
     knitr
 Remotes:
-    anthonynorth/roxyglobals,
     anthonynorth/stylebox,
     qfes/tidyassert
 Config/testthat/edition: 3
 Encoding: UTF-8
-Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
+Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet"))
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
+Config/roxyglobals/filename: globals.R
+Config/roxyglobals/unique: FALSE

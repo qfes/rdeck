@@ -1,3 +1,16 @@
+# rdeck 0.5.2
+
+- Fix regression in editor toolbox (#93)
+
+# rdeck 0.5.1
+
+- Remove unnecessary dependencies
+- Bundler: Webpack -> esbuild
+- Package manager: NPM -> PNPM
+- Drop legacy browser support (#76)
+- Fix get_icon/get_text validation (#87)
+- Fix regression in viewstate change debounce (#88)
+
 # rdeck 0.5.0
 
 - Add centering, diverging scales (#82)

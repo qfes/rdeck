@@ -58,7 +58,6 @@ function sourcemapPlugin() {
 
   const omitJs = (contents) => contents + `\n//# ${dataurl}`;
   const omitCss = (contents) => contents + `\n/*# ${dataurl} */`;
-  const omitSvg = (contents) => contents + `\n{/*# ${dataurl} */}`;
 
   /** @type {import("esbuild").Plugin} */
   return {
@@ -78,14 +77,6 @@ function sourcemapPlugin() {
         return {
           contents: omitCss(contents),
           loader: "default",
-        };
-      });
-
-      build.onLoad({ filter: /node_modules.*\.svg$/ }, async (args) => {
-        const contents = await readFile(args.path, "utf-8");
-        return {
-          contents: omitSvg(contents),
-          loader: "tsx"
         };
       });
     },
