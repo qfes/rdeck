@@ -25,7 +25,8 @@ Imports:
     stylebox (>= 0.2.0),
     tidyassert (>= 0.3.0),
     tidyselect,
-    uuid
+    uuid,
+    wk
 Suggests:
     geojsonsf,
     knitr,
