@@ -43,19 +43,16 @@ utils::globalVariables(c(
   "data_type", # <as_json.tooltip>
   "cols", # <as_json.tooltip>
   "geometry", # <as_json.layer_table>
-  ".env", # <as_json.layer_table>
   "data", # <compile.BitmapLayer>
-  ".env", # <compile.BitmapLayer>
   "image", # <compile.BitmapLayer>
   "data", # <compile.IconLayer>
-  ".env", # <compile.IconLayer>
   "icon_atlas", # <compile.IconLayer>
-  "get_breaks", # <>
-  "get_palette", # <>
-  "get_range", # <>
-  "get_ticks", # <>
-  "tick_format", # <>
-  "col_label", # <>
+  "get_breaks", # <compile.scale>
+  "get_palette", # <compile.scale>
+  "get_range", # <compile.scale>
+  "get_ticks", # <compile.scale>
+  "tick_format", # <compile.scale>
+  "col_label", # <compile.scale>
   "limits", # <compile.scale_color>
   "domain", # <compile.scale_color>
   "limits", # <compile.scale_numeric>
