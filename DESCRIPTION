@@ -26,6 +26,7 @@ Imports:
     tidyassert (>= 0.3.0),
     tidyselect,
     uuid,
+    vctrs,
     wk
 Suggests:
     geojsonsf,
