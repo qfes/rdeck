@@ -1,11 +1,11 @@
 #' Deckgl table
 #'
 #' @description
-#' Builds a deck.gl columnar table with flattened geometries with interleaved
+#' Builds a deck.gl columnar table with flattened geometries and interleaved
 #' coordinates.
 #'
 #' @details
-#' If `object` contains only simple geometries, the output is simple object
+#' If `object` contains only simple geometries, the output is a simple object
 #' containing a length and a map of arrays holding `object` vectors.
 #'
 #' When `object` contains multi-geometries, the output is run-length encoded
@@ -34,7 +34,7 @@ deckgl_table <- function(object, dims = "xy", ...) {
   geom_cols <- purrr::keep(data, wk::is_handleable)
   other_cols <- purrr::discard(data, wk::is_handleable)
 
-  geom_coords <- lapply(geom_cols, function(x) xy_coords.default(x))
+  geom_coords <- lapply(geom_cols, function(x) xy_coords(x))
   # deckgl flattened coords
   flat_geoms <- lapply(geom_coords, function(x) deckgl_geom(x, dims))
 
