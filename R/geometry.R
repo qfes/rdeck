@@ -50,120 +50,93 @@ is_wgs84 <- function(object) {
 }
 
 
-# add or remove z dimension
-set_coordinate_dimensions <- function(coordinates, dim = 2) {
-  ncol <- ncol(coordinates)
-  if (dim > ncol) cbind(coordinates, 0L, deparse.level = 0L)
-  else if (dim < ncol) coordinates[, seq_len(dim)]
-  else coordinates
+# interleave xy[z] coordinates
+interleave_xy <- function(xy, dims = "xy") {
+  xy_dims <- unclass(xy)
+  # add / remove z
+  xy_dims$z <- if (dims == "xyz" || dims == "XYZ") xy_dims$z %??% 0
+
+  res <- rbind(xy_dims$x, xy_dims$y, xy_dims$z)
+  set_dim(res, NULL)
+}
+
+# stack xy[z] coordinates
+stack_xy <- function(xy, dims = "xy") {
+  xy_dims <- unclass(xy)
+  # add / remove z
+  xy_dims$z <- if (dims == "xyz" || dims == "XYZ") xy_dims$z %??% 0
+
+  cbind(xy_dims$x, xy_dims$y, xy_dims$z)
 }
 
 
-# get coordinates for deck.gl
-get_coordinates <- function(sfc, dim = 2L) UseMethod("get_coordinates")
-
-get_coordinates.sfc_POINT <- function(sfc, dim = 2L) {
-  coords <- matrix(unlist(sfc, FALSE, FALSE), length(sfc), byrow = TRUE)
-  set_coordinate_dimensions(coords, dim)
+# Extracts feature coordinates
+# This utility is an extension to wk_coords(), differences:
+# - orient polygons counter-clockwise
+# - coordinates stored in xy column
+xy_coords <- function(handleable) {
+  UseMethod("xy_coords")
 }
 
-get_coordinates.sfc_MULTIPOINT <- function(sfc, dim = 2L) {
-  coords <- do.call(rbind, sfc)
-  set_coordinate_dimensions(coords, dim)
+xy_coords.data.frame <- function(handleable) {
+  wk_col <- purrr::detect(handleable, wk::is_handleable)
+  if (is.null(wk_col)) stop("Can't find a handleable column")
+
+  xy_coords(wk_col)
 }
 
-get_coordinates.sfc_LINESTRING <- function(sfc, dim = 2L) {
-  class(sfc) <- NULL
+xy_coords.wk_xy <- function(handleable) {
+  feature_id <- seq_along(handleable)
 
-  # flat coords
-  coords <- do.call(rbind, sfc)
-  lengths <- lengths(sfc)
-
-  # adjust dim?
-  ncol <- ncol(coords)
-  if (dim != ncol) {
-    coords <- set_coordinate_dimensions(coords, dim)
-    lengths <- dim * (lengths %/% ncol)
+  # drop empty
+  if (vctrs::vec_any_missing(handleable)) {
+    feature_id <- feature_id[vctrs::vec_detect_complete(handleable)]
+    handleable <- handleable[feature_id]
   }
 
-  # split coords by line
-  ids <- rep(as.factor(seq_along(lengths)), lengths)
-  lines <- split(t(coords), ids)
+  details <- list(
+    feature_id = feature_id,
+    part_id = feature_id,
+    ring_id = rep.int(0L, length(feature_id))
+  )
 
-  unname(lines)
+  vctrs::new_data_frame(c(details, list(xy = handleable)))
 }
 
-get_coordinates.sfc_MULTILINESTRING <- function(sfc, dim = 2L) {
-  get_coordinates.sfc_LINESTRING(unlist(sfc, FALSE, FALSE), dim)
-}
+xy_coords.default <- function(handleable) {
+  vertex_filter <- wk::wk_vertex_filter(
+    wk::xy_writer(),
+    add_details = TRUE
+  )
 
-get_coordinates.sfc_POLYGON <- function(sfc, dim = 2L) {
-  class(sfc) <- NULL
+  # do we need to reorient any polygons?
+  vector_meta <- wk::wk_vector_meta(handleable)
+  needs_reorient <- !vector_meta$geometry_type %in%
+    wk::wk_geometry_type(c("point", "linestring", "multipoint", "multilinestring"))
 
-  # flat coords
-  coords <- do.call(rbind, unlist(sfc, FALSE, FALSE))
-  lengths <- viapply(sfc, function(x) sum(lengths(x)))
-
-  # adjust dim?
-  ncol <- ncol(coords)
-  if (dim != ncol) {
-    coords <- set_coordinate_dimensions(coords, dim)
-    lengths <- dim * (lengths %/% ncol)
-  }
-
-  # split coords by polygon
-  ids <- rep(as.factor(seq_along(lengths)), lengths)
-  polygons <- split(t(set_coordinate_dimensions(coords, dim)), ids)
-
-  # holes
-  has_holes <- lengths(sfc) > 1L
-  holes <- lapply(sfc[has_holes], function(x) cumsum(lengths(x)[-length(x)]))
-
-  complex_polygon <- function(p, h) list(positions = p, holeIndices = h)
-  polygons[has_holes] <- purrr::map2(polygons[has_holes], holes, complex_polygon)
-
-  unname(polygons)
-}
-
-get_coordinates.sfc_MULTIPOLYGON <- function(sfc, dim = 2L) {
-  get_coordinates.sfc_POLYGON(unlist(sfc, FALSE, FALSE), dim)
-}
-
-get_coordinates.sfc_GEOMETRY <- function(sfc) {
-  types <- unique(sf::st_geometry_type(sfc, TRUE))
-  class(sfc) <- NULL
-
-  if (all(types %in% c("POINT", "MULTIPOINT"))) {
-    get_coordinates.sfc_MULTIPOINT(sfc)
-  } else if (all(types %in% c("LINESTRING", "MULTILINESTRING"))) {
-    get_coordinates.sfc_LINESTRING(rlang::flatten_if(sfc, is.list))
-  } else if (all(types %in% c("POLYGON", "MULTIPOLYGON"))) {
-    is_multipolygon <- function(x) class(x)[2] == "MULTIPOLYGON" && length(x) != 0L
-    get_coordinates.sfc_POLYGON(rlang::flatten_if(sfc, is_multipolygon))
-  } else {
-    rlang::abort(paste0("Unsupported geometry types: <", paste0(types, collapse = "/"), ">"))
-  }
-}
-
-
-# how many features per sfg
-get_feature_lengths <- function(sfc) UseMethod("get_feature_lengths")
-
-get_feature_lengths.sfc_POINT <- function(sfc) 1L
-get_feature_lengths.sfc_LINESTRING <- get_feature_lengths.sfc_POINT
-get_feature_lengths.sfc_POLYGON <- get_feature_lengths.sfc_POINT
-get_feature_lengths.sfc_MULTIPOINT <- function(sfc) viapply(sfc, nrow)
-get_feature_lengths.sfc_MULTILINESTRING <- function(sfc) lengths(unclass(sfc))
-get_feature_lengths.sfc_MULTIPOLYGON <- get_feature_lengths.sfc_MULTILINESTRING
-
-get_feature_lengths.sfc_GEOMETRY <- function(sfc) {
-  viapply(sfc, function(x) {
-    switch(
-      class(x)[2],
-      MULTIPOINT = nrow(x),
-      MULTILINESTRING = length(x),
-      MULTIPOLYGON = length(x),
-      1L
+  # handleable may contain polygons, ensure they're all ccw
+  if (needs_reorient) {
+    vertex_filter <- wk::wk_orient_filter(
+      vertex_filter,
+      direction = wk::wk_counterclockwise()
     )
-  })
+  }
+
+  xy <- wk::wk_handle(handleable, vertex_filter)
+  details <- attr(xy, "wk_details", TRUE)
+
+  vctrs::new_data_frame(c(details, list(xy = xy)))
+}
+
+# Number of primitive geometries per feature
+wk_primitive_count <- function(coords) {
+  part_runs <- vec_runs(coords$part_id)
+  feature_runs <- vec_runs(coords$feature_id[part_runs$loc])
+  # feature location in coords
+  feature_loc <- part_runs$loc[feature_runs$loc]
+
+  vctrs::new_data_frame(list(
+    feature_id = coords$feature_id[feature_loc],
+    n_geom = feature_runs$size
+  ))
 }

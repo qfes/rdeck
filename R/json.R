@@ -14,9 +14,13 @@ as_json.default <- function(object, ...) object
 as_json.layer <- function(object, ...) {
   cols <- get_used_colnames(object)
   is_geojson <- inherits(object, "GeoJsonLayer")
-  sfc_dim <- nchar(object$position_format)
+  dims <- tolower(object$position_format)
 
-  layer <- select(object, -where(is_cur_value))
+  layer <- purrr::discard(object, is_cur_value)
+
+  if (is_dataframe(layer$data) && !is_geojson) {
+    layer$data <- add_class(layer$data, "layer_data")
+  }
 
   # convert image blobs to png
   layer <- purrr::map_at(
@@ -26,11 +30,30 @@ as_json.layer <- function(object, ...) {
   )
 
   json_stringify(
-    lapply(layer, function(x) as_json(x, is_geojson = is_geojson, cols = cols, sfc_dim = sfc_dim)),
+    lapply(layer, function(x) as_json(x, cols = cols, dims = dims)),
     camel_case = TRUE,
     auto_unbox = TRUE
   )
 }
+
+as_json.PathLayer <- function(object, ...) {
+  if (is_dataframe(object$data)) {
+    object$`_pathType` <- "open"
+  }
+
+  NextMethod()
+}
+
+as_json.SolidPolygonLayer <- function(object, ...) {
+  if (is_dataframe(object$data)) {
+    object$`_normalize` <- FALSE
+    object$`_windingOrder` <- "CCW"
+  }
+
+  NextMethod()
+}
+
+as_json.PolygonLayer <- as_json.SolidPolygonLayer
 
 as_json.deck_props <- function(object, ...) {
   deck_props <- select(object, -where(is_cur_value))
@@ -178,26 +201,35 @@ as_json.tile_json <- function(object, ...) {
   json_stringify(tilejson, auto_unbox = TRUE, digits = 6)
 }
 
-as_json.data.frame <- function(object, cols = tidyselect::everything(), sfc_dim = 2L, ...) {
-  sf_columns <- names(tidyselect::eval_select(function(x) is_sfc(x), object))
-
-  data <- compile(select(as.data.frame(object), cols), sfc_dim)
-  data <- mutate(
-    data,
-    length = jsonlite::unbox(length),
-    # 6-digit precision for all sf columns
-    columns = purrr::map_at(columns, sf_columns, json_stringify, digits = 6L)
+as_json.layer_data <- function(object, cols, dims, ...) {
+  # drop unused cols
+  data <- purrr::keep_at(
+    vctrs::new_data_frame(unclass(object)),
+    cols
   )
 
-  json_stringify(data, digits = 15L, use_signif = TRUE)
+  geom_cols <- names(purrr::keep(data, wk::is_handleable))
+
+  # reshape for deck.gl
+  compiled <- deckgl_table(data, dims)
+  compiled$length <- jsonlite::unbox(compiled$length)
+
+  # 6-digit precision for all sf cols
+  compiled$columns <- purrr::map_at(
+    compiled$columns,
+    geom_cols,
+    json_stringify,
+    digits = 6L
+  )
+
+  json_stringify(compiled, use_signif = TRUE)
 }
 
 #' @autoglobal
 #' @noRd
-as_json.sf <- function(object, is_geojson, cols = tidyselect::everything(), sfc_dim = 2L, ...) {
-  if (!is_geojson) return(NextMethod())
-
-  data <- select(object, attr(.env$object, "sf_column"), tidyselect::any_of(cols))
+as_json.sf <- function(object, cols = tidyselect::everything(), ...) {
+  cols <- c(cols, attr(object, "sf_column", TRUE))
+  data <- purrr::keep_at(object, cols)
 
   rlang::check_installed("geojsonsf")
   geojsonsf::sf_geojson(data, simplify = FALSE, digits = 6L)
