@@ -87,6 +87,18 @@ export class Layer {
       };
     }
 
+    // optimise path & polygon
+    if (isTable(_props.data) && !_props.wrapLongitude) {
+      if ("getPath" in _props) {
+        _props._pathType = "open";
+      }
+
+      if ("getPolygon" in _props) {
+        _props._normalize = false;
+        _props._windingOrder = "CCW";
+      }
+    }
+
     this.props = _props;
 
     this.scales = accessors

@@ -36,25 +36,6 @@ as_json.layer <- function(object, ...) {
   )
 }
 
-as_json.PathLayer <- function(object, ...) {
-  if (is_dataframe(object$data)) {
-    object$`_pathType` <- "open"
-  }
-
-  NextMethod()
-}
-
-as_json.SolidPolygonLayer <- function(object, ...) {
-  if (is_dataframe(object$data)) {
-    object$`_normalize` <- FALSE
-    object$`_windingOrder` <- "CCW"
-  }
-
-  NextMethod()
-}
-
-as_json.PolygonLayer <- as_json.SolidPolygonLayer
-
 as_json.deck_props <- function(object, ...) {
   deck_props <- select(object, -where(is_cur_value))
 
