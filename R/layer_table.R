@@ -50,7 +50,7 @@ deckgl_table <- function(object, dims = "xy", ...) {
     other_cols <- vctrs::vec_slice(other_cols, feature_sizes$feature_id)
   }
 
-  n_features <- max(sum(feature_sizes$n_geom, 0L), nrow(data))
+  n_features <- sum(feature_sizes$n_geom %??% nrow(data))
   list(
     # number of features
     length = jsonlite::unbox(n_features),
