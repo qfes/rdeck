@@ -166,7 +166,7 @@ get_used_colnames <- function(layer) {
       )
     )
 
-    return(tidyselect::everything())
+    return(TRUE)
   }
 
   # any accessors with cur_value() -> unsafe to subset layer
@@ -179,7 +179,7 @@ get_used_colnames <- function(layer) {
       )
     )
 
-    return(tidyselect::everything())
+    return(TRUE)
   }
 
   tooltip <- layer$tooltip
