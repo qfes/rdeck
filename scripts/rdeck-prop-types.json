@@ -38,6 +38,7 @@
   },
   {
     "name": "positionFormat",
+    "value": "XY",
     "values": ["XY", "XYZ"]
   },
   {

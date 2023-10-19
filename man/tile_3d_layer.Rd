@@ -24,7 +24,7 @@ add_tile_3d_layer(
   get_point_color = "#000000ff",
   point_size = 1,
   loader = list(id = "3d-tiles", name = "3D Tiles", module = "3d-tiles", version =
-    "3.2.4", extensions = c("cmpt", "pnts", "b3dm", "i3dm"), mimeTypes =
+    "3.2.13", extensions = c("cmpt", "pnts", "b3dm", "i3dm"), mimeTypes =
     c("application/octet-stream"), tests = c("cmpt", "pnts", "b3dm", "i3dm"), parse =
     NULL, options = list(`3d-tiles` = list(loadGLTF = TRUE, decodeQuantizedPositions =
     FALSE, isTileset = "auto", assetGltfUpAxis = NULL))),

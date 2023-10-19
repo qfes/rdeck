@@ -30,7 +30,7 @@ const excludeProps = [
   "gridAggregator",
   "hexagonAggregator",
   /* mask */
-  "operation",
+  "operation"
 ];
 
 function getProps(Layer) {
@@ -90,9 +90,6 @@ function getProps(Layer) {
   if (Object.values(aggregationLayers).includes(Layer)) {
     delete propTypes.tooltip;
   }
-
-    // positionFormat = "XY"
-    propTypes.positionFormat = "XY";
 
   // extruded = false
   if ("extruded" in propTypes) {

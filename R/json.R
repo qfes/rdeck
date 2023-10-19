@@ -157,13 +157,8 @@ as_json.scale <- function(object, ...) {
 #' @autoglobal
 #' @noRd
 as_json.tooltip <- function(object, ...) {
-  tooltip <- mutate(
-    object,
-    data_type = jsonlite::unbox(data_type),
-    # unbox cols only if logical
-    across(cols & where(is.logical), jsonlite::unbox)
-  )
-
+  # unbox cols if logical
+  tooltip <- purrr::map_if(object, is.logical, jsonlite::unbox)
   json_stringify(tooltip, camel_case = TRUE)
 }
 
