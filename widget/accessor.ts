@@ -31,9 +31,12 @@ export function getValue<In = any, Out = any>(col: string): AccessorFn<In, Out> 
 }
 
 export function getPickValue<In = any, Out = any>(col: string): (info: PickInfo<In>) => Out {
-  return ({ object, index, layer }) =>
+  const fn = getValue(col);
+  return function ({ object, index, layer }) {
+    if (index < 0) return null;
     // @ts-ignore
-    object == null ? layer.props.data?.at(index, col) : object.properties?.[col] ?? object[col];
+    return fn(object, { data: layer?.props.data, index });
+  };
 }
 
 function getColor(col: string): AccessorFn<any, Color> {
