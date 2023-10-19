@@ -27,7 +27,7 @@ function getData({ col }: Accessor, prop: string): AccessorFn<any, any> {
 export function getValue<In = any, Out = any>(col: string): AccessorFn<In, Out> {
   return (object, { data, index }) =>
     // @ts-ignore
-    object == null ? data.at(index, col) : object.properties?.[col] ?? object[col];
+    data.get?.(index, col) ?? object.properties?.[col] ?? object[col];
 }
 
 export function getPickValue<In = any, Out = any>(col: string): (info: PickInfo<In>) => Out {

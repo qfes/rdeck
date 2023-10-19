@@ -26,8 +26,8 @@ export class Table {
     }
   }
 
-  at(index: number, column: string): any {
-    return this.columns[column]?.at(index);
+  get(index: number, column: string): any {
+    return this.columns[column]?.[index];
   }
 }
 

@@ -23,7 +23,7 @@ function getData(object: any, { data, index }: Info): Record<string, any> {
   if (isTable(data)) {
     const object: Record<string, any> = {};
     for (const col in data.columns) {
-      object[col] = data.at(index, col);
+      object[col] = data.get(index, col);
     }
     return object;
   }
