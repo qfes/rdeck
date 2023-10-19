@@ -41,8 +41,7 @@ export function getPickValue<In = any, Out = any>(col: string): (info: PickInfo<
 
 function getColor(col: string): AccessorFn<any, Color> {
   const fn = getValue(col);
-  return (object, { data, index, target }) =>
-    parseColor(fn(object, { data, index, target }), target);
+  return (object, info) => parseColor(fn(object, info), info.target);
 }
 
 function getHighlightColor(col: string): (info: PickInfo<any>) => Color {

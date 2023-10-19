@@ -194,7 +194,7 @@ function scaleFn(accessor: AccessorScale<any>) {
 
 function accessorFn({ col }: Accessor, scaleData: ScaleFn): AccessorFn<any, any> {
   const fn = getValue(col);
-  return (object, { data, index, target }) => scaleData(fn(object, { data, index, target }));
+  return (object, info) => scaleData(fn(object, info));
 }
 
 function highlightFn({ col }: Accessor, scaleData: ScaleFn): (info: PickInfo) => Color {
