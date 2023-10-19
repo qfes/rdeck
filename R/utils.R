@@ -39,6 +39,9 @@ set_class <- `class<-`
 
 as_class <- function(x) structure(x, class = x)
 
+# set dim
+set_dim <- `dim<-`
+
 # replace value
 set_value <- function(x, i, value) `[[<-`(x, i, value = value)
 
@@ -50,6 +53,7 @@ set_mostattributes <- `mostattributes<-`
 # vapply shorthands
 vlapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, logical(1), ..., USE.NAMES = named)
 vcapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, character(1), ..., USE.NAMES = named)
+viapply <- function(x, fn, ..., named = TRUE) vapply(x, fn, integer(1), ..., USE.NAMES = named)
 
 # expects arg be embraced
 enstring <- function(arg) rlang::as_name(rlang::ensym(arg))
@@ -61,6 +65,13 @@ drop_ends <- function(x) x[-c(1, length(x))]
 n_unique <- function(x, na_rm = FALSE) {
   unique_x <- unique(x)
   if (na_rm) length(unique_x[!is.na(unique_x)]) else length(unique_x)
+}
+
+vec_runs <- function(x) {
+  size <- vctrs::vec_run_sizes(x)
+  len <- length(size)
+  loc <- cumsum(vctrs::vec_c(1L, size[seq_len(len - 1L)]))
+  vctrs::new_data_frame(list(loc = loc, size = size))
 }
 
 # from {scales} + treat integer as discrete

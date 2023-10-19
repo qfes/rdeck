@@ -30,7 +30,7 @@ const excludeProps = [
   "gridAggregator",
   "hexagonAggregator",
   /* mask */
-  "operation",
+  "operation"
 ];
 
 function getProps(Layer) {

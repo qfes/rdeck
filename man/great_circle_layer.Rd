@@ -17,7 +17,7 @@ add_great_circle_layer(
   pickable = FALSE,
   opacity = 1,
   wrap_longitude = FALSE,
-  position_format = "XYZ",
+  position_format = "XY",
   color_format = "RGBA",
   auto_highlight = FALSE,
   highlight_color = "#00008080",

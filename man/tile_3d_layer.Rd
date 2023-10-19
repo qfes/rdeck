@@ -17,14 +17,14 @@ add_tile_3d_layer(
   pickable = FALSE,
   opacity = 1,
   wrap_longitude = FALSE,
-  position_format = "XYZ",
+  position_format = "XY",
   color_format = "RGBA",
   auto_highlight = FALSE,
   highlight_color = "#00008080",
   get_point_color = "#000000ff",
   point_size = 1,
   loader = list(id = "3d-tiles", name = "3D Tiles", module = "3d-tiles", version =
-    "3.2.4", extensions = c("cmpt", "pnts", "b3dm", "i3dm"), mimeTypes =
+    "3.2.13", extensions = c("cmpt", "pnts", "b3dm", "i3dm"), mimeTypes =
     c("application/octet-stream"), tests = c("cmpt", "pnts", "b3dm", "i3dm"), parse =
     NULL, options = list(`3d-tiles` = list(loadGLTF = TRUE, decodeQuantizedPositions =
     FALSE, isTileset = "auto", assetGltfUpAxis = NULL))),

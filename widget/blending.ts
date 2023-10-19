@@ -1,4 +1,5 @@
 import { default as GL } from "@luma.gl/constants";
+import type { BlendingMode } from "./types";
 
 const BLENDING_MODES = Object.freeze({
   additive: {

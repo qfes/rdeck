@@ -34,16 +34,18 @@ declare module "@deck.gl/core" {
   export type AccessorFn<In, Out> = (object: In, info: ObjectInfo<In, Out>) => Out;
   export type ObjectInfo<In, Out> = {
     index: number;
-    data: In;
+    data: Iterable<In> | { length: number };
     target: Out;
   };
   export interface AttributeManager {
     addInstanced(attributes: Record<string, AccessorParameters>): void;
+    add(attributes: Record<string, AccessorParameters>): void;
   }
 
   export interface AccessorParameters {
     type: number;
     size: number;
+    noAlloc: boolean;
     accessor?: AccessorFn<any, any>;
     update?: (attribute: any, numInstances: any) => void;
     shaderAttributes?: Record<string, any>;

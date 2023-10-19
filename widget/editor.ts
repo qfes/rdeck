@@ -20,7 +20,7 @@ import { EditableGeoJsonLayer as _EditableGeoJsonLayer } from "@nebula.gl/layers
 import type { FeatureCollection, Feature } from "geojson";
 
 import type { EditorToolboxProps } from "./controls";
-import type { EditorMode } from "./types";
+import type { Color, EditorMode } from "./types";
 import { isSuperset, difference, union, coordsLength } from "./utils";
 import { memoize } from "./util";
 

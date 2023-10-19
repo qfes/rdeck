@@ -31,7 +31,7 @@ mutate <- function(lst, ...) {
     }
   }
 
-  purrr::reduce2(nms, quos, .init = lst, mutate_col) -> x
+  purrr::reduce2(nms, quos, .init = lst, mutate_col)
 }
 
 # dplyr-like across, accepts only a single function
@@ -54,7 +54,7 @@ across <- function(.cols, .fn = NULL, ...) {
     }
   }
 
-  purrr::reduce2(names(subset), subset, .init = subset, across_col) -> x
+  purrr::reduce2(names(subset), subset, .init = subset, across_col)
 }
 
 # is quo an across call

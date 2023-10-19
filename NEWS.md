@@ -1,3 +1,7 @@
+# rdeck (development version)
+
+- Layer data enhancements (#100)
+
 # rdeck 0.5.2
 
 - Fix regression in editor toolbox (#93)

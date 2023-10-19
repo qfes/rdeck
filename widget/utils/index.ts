@@ -1,3 +1,5 @@
+export * from "./assert";
+export * from "./array";
 export * from "./dom";
 export * from "./download";
 export * from "./equal";

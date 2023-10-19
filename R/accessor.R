@@ -3,35 +3,31 @@
 #' @name accessor
 #' @param expr an expression
 #' @param data anything. If data.frame, names evaluated from `quo` are validated against data
-#' @param data_type determine the structure of the serialised data. One of:
-#' - table
-#' - object
-#' - geojson
 #'
 #' @keywords internal
 #' @noRd
-accessor <- function(expr, data = NULL, data_type = NULL) {
+accessor <- function(expr, data = NULL) {
   UseMethod("accessor", expr)
 }
 
-accessor.default <- function(expr, data = NULL, data_type = NULL) {
+accessor.default <- function(expr, data = NULL) {
   rlang::eval_tidy(expr)
 }
 
-accessor.quosure <- function(expr, data = NULL, data_type = NULL) {
+accessor.quosure <- function(expr, data = NULL) {
   # dispatch off the quosure expression
   if (rlang::quo_is_symbol(expr)) {
-    return(accessor.name(rlang::get_expr(expr), data, data_type))
+    return(accessor.name(rlang::get_expr(expr), data))
   }
 
-  accessor(rlang::eval_tidy(expr), data, data_type)
+  accessor(rlang::eval_tidy(expr), data)
 }
 
-accessor.name <- function(expr, data = NULL, data_type = NULL) {
-  new_accessor(rlang::as_name(expr), data, data_type)
+accessor.name <- function(expr, data = NULL) {
+  new_accessor(rlang::as_name(expr))
 }
 
-accessor.sf_column <- function(expr, data = NULL, data_type = NULL) {
+accessor.sf_column <- function(expr, data = NULL) {
   # sf_column only applicable to sf objects
   tidyassert::assert(
     inherits(data, "sf"),
@@ -39,10 +35,10 @@ accessor.sf_column <- function(expr, data = NULL, data_type = NULL) {
     print_expr = substitute(inherits(data, "sf") || !inherits(expr, "sf_column"))
   )
 
-  accessor.name(attr(data, "sf_column"), data, data_type)
+  accessor.name(attr(data, "sf_column"), data)
 }
 
-accessor.scale <- function(expr, data = NULL, data_type = NULL) {
+accessor.scale <- function(expr, data = NULL) {
   scale <- expr
   scale_limits <- scale$limits %||% scale$levels %||% scale$data
 
@@ -60,12 +56,7 @@ accessor.scale <- function(expr, data = NULL, data_type = NULL) {
       scale_limits$train(data[[scale$col]])
     }
 
-    return(
-      mutate(
-        scale,
-        data_type = data_type %||% resolve_data_type(.env$data)
-      )
-    )
+    return(scale)
   }
 
   # mvt specific - assert field exists, populate limits from metadata
@@ -96,30 +87,15 @@ accessor.scale <- function(expr, data = NULL, data_type = NULL) {
       )
     }
 
-    return(
-      mutate(
-        scale,
-        data_type = "geojson"
-      )
-    )
+    return(scale)
   }
 
-  mutate(
-    scale,
-    data_type = data_type %||% resolve_data_type(.env$data)
-  )
+  scale
 }
 
-new_accessor <- function(col, data, data_type) {
-  if (!is.null(data_type)) {
-    tidyassert::assert(data_type %in% c("table", "object", "geojson"))
-  }
-
+new_accessor <- function(col) {
   structure(
-    list(
-      col = col,
-      data_type = data_type %||% resolve_data_type(data)
-    ),
+    list(col = col),
     class = "accessor"
   )
 }
@@ -130,8 +106,4 @@ is_accessor <- function(object) inherits(object, "accessor")
 # select helper: match names of possible accessor
 maybe_accessor <- function() {
   setdiff(tidyselect::starts_with("get_"), tidyselect::ends_with("_value"))
-}
-
-resolve_data_type <- function(data = NULL) {
-  ifelse(is.null(data) | inherits(data, "data.frame"), "table", "object")
 }

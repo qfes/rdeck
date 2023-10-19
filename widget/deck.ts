@@ -1,5 +1,6 @@
 import { Deck as _Deck, DeckProps as _DeckProps } from "@deck.gl/core";
 import { fitBounds } from "@math.gl/web-mercator";
+import type { Bounds, BlendingMode } from "./types";
 import { getElementSize } from "./util";
 
 export interface DeckProps extends Partial<_DeckProps> {

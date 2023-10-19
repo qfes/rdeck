@@ -1,3 +1,5 @@
+import type { Color } from "./types";
+
 const DEFAULT_COLOR: Color = [0, 0, 0, 255];
 
 export function isColorProp(name: string) {

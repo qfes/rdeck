@@ -40,13 +40,6 @@ utils::globalVariables(c(
   "position", # <add_scenegraph_layer>
   "features", # <as_json.editor_options>
   "scale_type", # <as_json.scale>
-  "data_type", # <as_json.tooltip>
-  "cols", # <as_json.tooltip>
-  "geometry", # <as_json.layer_table>
-  "data", # <compile.BitmapLayer>
-  "image", # <compile.BitmapLayer>
-  "data", # <compile.IconLayer>
-  "icon_atlas", # <compile.IconLayer>
   "get_breaks", # <compile.scale>
   "get_palette", # <compile.scale>
   "get_range", # <compile.scale>

@@ -83,13 +83,11 @@ function diffuseAccessors({ props }) {
     .join("\n");
 }
 
-function transformProps({ props, dataType }) {
-  const _dataType = dataType != null ? JSON.stringify(dataType) : "NULL";
-
+function transformProps({ props }) {
   return props
     .map((p) => {
-      if (p.type === "accessor") return `${p.name} = accessor(${p.name}, data, ${_dataType})`;
-      if (p.name === "tooltip") return `${p.name} = tooltip(${p.name}, data, ${_dataType})`;
+      if (p.type === "accessor") return `${p.name} = accessor(${p.name}, data)`;
+      if (p.name === "tooltip") return `${p.name} = tooltip(${p.name}, data)`;
 
       // default
       return `${p.name} = ${p.name}`;

@@ -4,15 +4,15 @@ import type { BitmapLayerProps } from "@deck.gl/layers";
 import type { TileLayerProps } from "@deck.gl/geo-layers";
 import type { FeatureCollection } from "geojson";
 
-import { parseColor as _parseColor } from "./color";
-import { AccessorScale, accessorScale as _accessorScale, isAccessorScale } from "./scale";
-import { accessor as _accessor, Accessor, isAccessor } from "./accessor";
+import type { BlendingMode, Color, TooltipInfo } from "./types";
+import { AccessorScale, accessorScale, isAccessorScale } from "./scale";
+import { accessor, Accessor, isAccessor } from "./accessor";
 import { blendingParameters } from "./blending";
-import { flattenGeometries as _flattenGeometries, isDataFrame } from "./data-frame";
-import { MultiHighlightExtension } from "./multi-highlight-extension";
-import { memoize } from "./util";
+import { parseColor } from "./color";
+import { MultiHighlightExtension } from "./deckgl-extensions";
+import { isTable, Table } from "./table";
 
-type LayerData = string | DataFrame | FeatureCollection;
+type LayerData = string | Iterable<any> | { length: number } | FeatureCollection;
 type Entry<T> = [string, T];
 
 export type LegendInfo = Pick<LayerProps, "id" | "name"> & {
@@ -39,12 +39,6 @@ interface TripsLayerProps extends LayerProps {
   animationSpeed: number;
 }
 
-// performance optimisation: avoid shallow prop changes
-const flattenGeometries = memoize(_flattenGeometries);
-const parseColor = memoize(_parseColor);
-const accessor = memoize(_accessor);
-const accessorScale = memoize(_accessorScale);
-
 export class Layer {
   type: string;
   props: LayerProps;
@@ -65,15 +59,13 @@ export class Layer {
       ...colors,
       ...accessors.map(([name, value]) => [name, value.getData]),
       ...getWeightProps(entries),
-      ["updateTriggers", getUpdateTriggers(accessors)],
-      ["parameters", getParameters(props.parameters, props.blendingMode)],
     ]);
 
+    _props.dataTransform = (data: any) => (isTable(data) ? new Table(data) : data);
+    _props.updateTriggers = getUpdateTriggers(accessors);
+    _props.parameters = getParameters(props.parameters, props.blendingMode);
     // multi-geometry highlight
-    if (isDataFrame(_props.data)) {
-      _props.data = flattenGeometries(_props.data);
-      _props.extensions = [new MultiHighlightExtension(), ...(_props.extensions ?? [])];
-    }
+    _props.extensions = [new MultiHighlightExtension(), ...(_props.extensions ?? [])];
 
     // tile-layer
     type TileProps = TileLayerProps<any> & BitmapLayerProps<any> & { tile: any };
@@ -93,6 +85,18 @@ export class Layer {
           bounds: [west, south, east, north],
         });
       };
+    }
+
+    // optimise path & polygon
+    if (isTable(_props.data) && !_props.wrapLongitude) {
+      if ("getPath" in _props) {
+        _props._pathType = "open";
+      }
+
+      if ("getPolygon" in _props) {
+        _props._normalize = false;
+        _props._windingOrder = "CCW";
+      }
     }
 
     this.props = _props;
@@ -135,7 +139,7 @@ export class Layer {
       id: this.props.id!,
       groupName: this.props.groupName,
       name: this.props.name,
-      visible: this.isVisible
+      visible: this.isVisible,
     };
   }
 }
