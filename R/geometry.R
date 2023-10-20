@@ -140,3 +140,56 @@ wk_primitive_count <- function(coords) {
     n_geom = feature_runs$size
   ))
 }
+
+
+#' Wk is
+#'
+#' Are all geometry types in `handleable` one of `geometry_types`?
+#' @noRd
+#' @keywords internal
+wk_is <- function(handleable, geometry_types, ignore_empty = TRUE) {
+  vector_meta <- wk::wk_vector_meta(handleable)
+
+  # try determine types from vector if supported
+  if (vector_meta$geometry_type %in% geometry_types) {
+    return(TRUE)
+  }
+
+  # unknown or mixed? test indiviual features
+  if (vector_meta$geometry_type == 0L) {
+    meta <- wk::wk_meta(handleable)
+    feature_types <- if (ignore_empty) meta$geometry_type[!meta$is_empty] else meta$geometry_type
+
+    # NOTE: all() with length-0 is TRUE
+    return(all(feature_types %in% geometry_types))
+  }
+
+  FALSE
+}
+
+#' Wk is point
+#'
+#' Are all geometry types either `point` or `multipoint`?
+#' @noRd
+#' @keywords internal
+wk_is_point <- function(handleable, ignore_empty = TRUE) {
+  wk_is(handleable, wk::wk_geometry_type(c("point", "multipoint")), ignore_empty)
+}
+
+#' Wk is linestring
+#'
+#' Are all geometry types either `linestring` or `multilinestring`?
+#' @noRd
+#' @keywords internal
+wk_is_linestring <- function(handleable, ignore_empty = TRUE) {
+  wk_is(handleable, wk::wk_geometry_type(c("linestring", "multilinestring")), ignore_empty)
+}
+
+#' Wk is polygon
+#'
+#' Are all geometry types either `polygon` or `multipolygon`?
+#' @noRd
+#' @keywords internal
+wk_is_polygon <- function(handleable, ignore_empty = TRUE) {
+  wk_is(handleable, wk::wk_geometry_type(c("polygon", "multipolygon")), ignore_empty)
+}
