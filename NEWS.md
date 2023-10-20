@@ -2,6 +2,7 @@
 
 - Layer data enhancements (#100)
 - Fix regression in set_layer_visibility (#101)
+- Rescalers no longer require `center` to be inside input domain (#103)
 
 # rdeck 0.5.2
 

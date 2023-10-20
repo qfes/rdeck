@@ -172,3 +172,59 @@ test_that("rescale_diverge works", {
     palette_ramp(c(0, 0.5, 2 / 3, 5 / 6, 1))
   )
 })
+
+test_that("rescale_center expands range", {
+  numeric_scale <- rescale_center(scale_linear(col, limits = 0:4), -1L)
+  expect_equal(
+    numeric_scale$get_range(0:4 / 4),
+    6:10 / 10
+  )
+
+  palette_ramp <- scales::colour_ramp(c("#ff0000", "#ffffff", "#0000ff"))
+  color_scale <- rescale_center(scale_color_linear(col, palette, limits = 0:4), -1L)
+  expect_equal(
+    color_scale$get_palette(0:4 / 4),
+    palette_ramp(6:10 / 10)
+  )
+})
+
+test_that("rescale_diverge expands range", {
+  # these are equivalent to rescale_center, since mid is outside range
+  numeric_scale <- rescale_diverge(scale_linear(col, limits = 0:4), -1L)
+  expect_equal(
+    numeric_scale$get_range(0:4 / 4),
+    6:10 / 10
+  )
+
+  palette_ramp <- scales::colour_ramp(c("#ff0000", "#ffffff", "#0000ff"))
+  color_scale <- rescale_diverge(scale_color_linear(col, palette, limits = 0:4), -1L)
+  expect_equal(
+    color_scale$get_palette(0:4 / 4),
+    palette_ramp(6:10 / 10)
+  )
+})
+
+test_that("rescale_breaks works", {
+  # from qfes/rdeck#103
+  expect_equal(
+    rdeck::scale_linear(foo, limits = 0:1) |>
+      rdeck::rescale_center(-1) |>
+      generics::compile() |>
+      purrr::keep_at(c("domain", "range")),
+    list(
+      domain = 0:1,
+      range = c(0.75, 1)
+    )
+  )
+
+  expect_equal(
+    rdeck::scale_linear(foo, limits = 0:1) |>
+      rdeck::rescale_diverge(-1) |>
+      generics::compile() |>
+      purrr::keep_at(c("domain", "range")),
+    list(
+      domain = 0:1,
+      range = c(0.75, 1)
+    )
+  )
+})
