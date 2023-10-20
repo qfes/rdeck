@@ -181,7 +181,7 @@ test_that("rescale_center expands range", {
   )
 
   palette_ramp <- scales::colour_ramp(c("#ff0000", "#ffffff", "#0000ff"))
-  color_scale <- rescale_center(scale_color_linear(col, palette, limits = 0:4), -1L)
+  color_scale <- rescale_center(scale_color_linear(col, palette_ramp, limits = 0:4), -1L)
   expect_equal(
     color_scale$get_palette(0:4 / 4),
     palette_ramp(6:10 / 10)
@@ -197,7 +197,7 @@ test_that("rescale_diverge expands range", {
   )
 
   palette_ramp <- scales::colour_ramp(c("#ff0000", "#ffffff", "#0000ff"))
-  color_scale <- rescale_diverge(scale_color_linear(col, palette, limits = 0:4), -1L)
+  color_scale <- rescale_diverge(scale_color_linear(col, palette_ramp, limits = 0:4), -1L)
   expect_equal(
     color_scale$get_palette(0:4 / 4),
     palette_ramp(6:10 / 10)
