@@ -164,14 +164,13 @@ rescale_diverge.scale_numeric_category <- rescale_diverge_not_supported
 
 rescale_breaks <- function(scale, x) {
   range <- (scale$limits %||% scale$data)$range
-  tidyassert::assert(x >= range[1] & x <= range[2])
 
   # use transform if available
   trans <- attr(scale$get_breaks, "trans")
   if (!is.null(trans)) {
     scales::rescale(trans$transform(x), from = trans$transform(range))
-  # approximate function from breaks
   } else {
+    # approximate function from breaks
     breaks <- scale$get_breaks(range)
     rescale <- stats::splinefun(breaks, seq.int(0, 1, length.out = length(breaks)))
     rescale(x)
