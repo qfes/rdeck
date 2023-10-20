@@ -205,8 +205,7 @@ update_layer.rdeck_proxy <- add_layer.rdeck_proxy
 #' @export
 set_layer_visibility <- function(rdeck, id, visible = cur_value(), visibility_toggle = cur_value()) {
   tidyassert::assert_inherits(rdeck, "rdeck_proxy")
-  layer <- new_layer(
-    NULL,
+  layer <- list(
     id = id,
     visible = visible,
     visibility_toggle = visibility_toggle
@@ -217,7 +216,7 @@ set_layer_visibility <- function(rdeck, id, visible = cur_value(), visibility_to
   validate_visibility_toggle(layer)
 
   json <- json_stringify(
-    select(layer, -where(is_cur_value)),
+    purrr::discard(layer, is_cur_value),
     camel_case = TRUE,
     auto_unbox = TRUE
   )
