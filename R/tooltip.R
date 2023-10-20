@@ -92,11 +92,13 @@ tooltip_tidyselect <- function(expr, data) {
     return(new_tooltip(names(fields)[pos]))
   }
 
-  pos <- tidyselect::eval_select(expr, data)
-  sfc_pos <- tidyselect::eval_select(rlang::expr(where(is_sfc)), data)
-  cols <- names(data)[setdiff(pos, sfc_pos)]
+  # always drop geometry cols
+  pos <- setdiff(
+    tidyselect::eval_select(expr, data),
+    tidyselect::eval_select(wk::is_handleable, data)
+  )
 
-  return(new_tooltip(cols))
+  new_tooltip(names(data)[pos])
 }
 
 new_tooltip <- function(cols) {
