@@ -120,8 +120,8 @@ vertical lines for each vertex of the polygon.}
 
 \item{elevation_scale}{<\code{number}> The elevation multiplier.}
 
-\item{get_polygon}{<\code{\link{accessor}}> The polygon geometry column, either a \code{sfc_POLYGON}
-or a \code{sfc_MULTIPOLYGON} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+\item{get_polygon}{<\code{\link{accessor}}> The polygon geometry column, a
+\verb{<polygon/multipolygon>} geometry column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_elevation}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The elevation to extrude each
@@ -154,7 +154,7 @@ dot density on light maps.
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
-\code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+\code{data} is a \code{data.frame}. Geometry columns are always removed.}
 }
 \description{
 Solid Polygon Layer

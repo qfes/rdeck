@@ -63,7 +63,7 @@ validate_data.MVTLayer <- function(layer) {
   }
 }
 
-validate_geometry_accessor <- function(layer, name, sfc_type) {
+validate_geometry_accessor <- function(layer, name, geom_type) {
   prop <- layer[[name]]
   if (is_cur_value(prop)) return()
 
@@ -75,49 +75,69 @@ validate_geometry_accessor <- function(layer, name, sfc_type) {
 
   data <- layer$data
   if (inherits(data, "data.frame") && nrow(data) != 0) {
-    accessor_data <- data[[tidyselect::eval_select(prop$col, data)]]
+    vec <- data[[tidyselect::eval_select(prop$col, data)]]
     tidyassert::assert(
-      inherits(accessor_data, sfc_type) && is_wgs84(accessor_data),
+      wk_is(vec, geom_type) && is_wgs84(vec),
       c(
         "x" = "Column {.col {col}} is invalid for accessor {.arg {name}}",
-        "x" = "A {.emph WGS84} {.cls {type}} vector is required"
+        "x" = "A {.emph WGS84} {.cls {type}} geometry vector expected"
       ),
       call = rlang::caller_call(),
       # prettier assertion expression
       print_expr = substitute(
-        inherits(data$col, sfc_type) && is_wgs84(data$col),
-        list(col = prop$col, sfc_type = sfc_type)
+        wk_is(data$col, geom_type) && is_wgs84(data$col),
+        list(col = prop$col, geom_type = geom_type)
       ),
       name = name,
       col = prop$col,
-      type = sfc_type
+      type = wk::wk_geometry_type_label(geom_type)
     )
   }
 }
 
 # validate get_path
 validate_get_path.layer <- function(layer) {
-  validate_geometry_accessor(layer, "get_path", c("sfc_LINESTRING", "sfc_MULTILINESTRING"))
+  validate_geometry_accessor(
+    layer,
+    "get_path",
+    wk::wk_geometry_type(c("linestring", "multilinestring"))
+  )
 }
 
 # validate get_polygon
 validate_get_polygon.layer <- function(layer) {
-  validate_geometry_accessor(layer, "get_polygon", c("sfc_POLYGON", "sfc_MULTIPOLYGON"))
+  validate_geometry_accessor(
+    layer,
+    "get_polygon",
+    wk::wk_geometry_type(c("polygon", "multipolygon"))
+  )
 }
 
 # validate get_position
 validate_get_position.layer <- function(layer) {
-  validate_geometry_accessor(layer, "get_position", c("sfc_POINT", "sfc_MULTIPOINT"))
+  validate_geometry_accessor(
+    layer,
+    "get_position",
+    wk::wk_geometry_type(c("point", "multipoint"))
+  )
 }
 
 # validate get_source_position
 validate_get_source_position.layer <- function(layer) {
-  validate_geometry_accessor(layer, "get_source_position", c("sfc_POINT", "sfc_MULTIPOINT"))
+  validate_geometry_accessor(
+    layer,
+    "get_source_position",
+    wk::wk_geometry_type(c("point", "multipoint"))
+  )
 }
 
 # validate get_target_position
 validate_get_target_position.layer <- function(layer) {
-  validate_geometry_accessor(layer, "get_target_position", c("sfc_POINT", "sfc_MULTIPOINT"))
+  validate_geometry_accessor(
+    layer,
+    "get_target_position",
+    wk::wk_geometry_type(c("point", "multipoint"))
+  )
 }
 
 # validate image

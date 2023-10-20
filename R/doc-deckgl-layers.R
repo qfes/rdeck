@@ -561,7 +561,7 @@ NULL
 #' @param tooltip <[`tooltip`]> Defines the columns (and their order) that will be displayed in
 #' the layer tooltip, if `pickable == TRUE`.
 #' Supports [tidy-select](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html) if a
-#' `data` is a `data.frame`. `sfc` columns are always removed.
+#' `data` is a `data.frame`. Geometry columns are always removed.
 #' @param data <`data.frame` | [`sf`][sf::sf] | `string`> The layer's data. Data frames and
 #' sf objects will contain all columns that are referenced by the layer's accessors. Strings
 #' will be interpreted as a URL and data will be retrieved dynamically in the browser.
@@ -582,11 +582,11 @@ NULL
 #' highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 #' or a [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
 #' @param wrap_longitude <`boolean`> Normalises geometry longitudes.
-#' @param get_source_position <[`accessor`]> The source position geometry column, either a
-#' `sfc_POINT` or a `sfc_MULTIPOINT` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_source_position <[`accessor`]> The source position geometry column, a
+#' `<point/multipoint>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
-#' @param get_target_position <[`accessor`]> The target position geometry column, either a
-#' `sfc_POINT` or a `sfc_MULTIPOINT` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_target_position <[`accessor`]> The target position geometry column, a
+#' `<point/multipoint>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param get_source_color <[`accessor`] | [`scale`] | [`color`]> The colour of the
 #' _source end_ of the arc.
@@ -624,8 +624,8 @@ NULL
 #' `get_size`.
 #' @param size_min_pixels <`number`> The minimum size in pixels.
 #' @param size_max_pixels <`number`> The maximum size in pixels.
-#' @param get_position <[`accessor`]> The position geometry column, either a `sfc_POINT` or
-#' a `sfc_MULTIPOINT` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_position <[`accessor`]> The position geometry column, a
+#' `<point/multipoint>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param get_color <[`accessor`] | [`scale`] | [`color`]> The colour of each object.
 #' Accepts a single colour value, a colour scale, or a
@@ -683,15 +683,15 @@ NULL
 #' joints.
 #' @param miter_limit <`number`> The maximum extent of a joint in ratio to the stroke width.
 #' Only applicable if `rounded == FALSE`.
-#' @param get_path <[`accessor`]> The path geometry column, either a `sfc_LINESTRING` or
-#' a `sfc_MULTILINESTRING` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_path <[`accessor`]> The path geometry column, a
+#' `<linestring/multilinestring>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param cap_rounded <`boolean`> If `TRUE`, draw round caps; else draw square caps.
 #' @param joint_rounded <`boolean`> If `TRUE`, draw round joints; else draw square joints.
 #' @param line_joint_rounded <`boolean`>
 #' @param line_miter_limit number
-#' @param get_polygon <[`accessor`]> The polygon geometry column, either a `sfc_POLYGON`
-#' or a `sfc_MULTIPOLYGON` column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_polygon <[`accessor`]> The polygon geometry column, a
+#' `<polygon/multipolygon>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param point_type <`"circle"`|`"icon"`|`"text"`|combination>
 #' Determines how to render point and multipoint features. May be one of:

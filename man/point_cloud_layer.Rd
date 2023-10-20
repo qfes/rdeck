@@ -109,8 +109,8 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{point_size}{<\code{number}> The radius of all points in units specified
 by \code{size_units}.}
 
-\item{get_position}{<\code{\link{accessor}}> The position geometry column, either a \code{sfc_POINT} or
-a \code{sfc_MULTIPOINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+\item{get_position}{<\code{\link{accessor}}> The position geometry column, a
+\verb{<point/multipoint>} geometry column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_normal}{<\code{\link{accessor}} | \code{numeric}> The normal of each object, in \code{c(nx, ny, nz)}.
@@ -138,7 +138,7 @@ dot density on light maps.
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
-\code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+\code{data} is a \code{data.frame}. Geometry columns are always removed.}
 }
 \description{
 Point Cloud Layer

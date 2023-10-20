@@ -43,10 +43,13 @@ is_sf <- function(object) inherits(object, "sf")
 
 # is crs = epsg:4326
 is_wgs84 <- function(object) {
-  crs <- sf::st_crs(object)
-  wgs84 <- sf::st_crs(4326)
+  obj_proj <- wk::wk_crs_proj_definition(wk::wk_crs(object))
+  wgs84_proj <- c(
+    wk::wk_crs_proj_definition("EPSG:4326"),
+    wk::wk_crs_proj_definition("OGC:CRS84")
+  )
 
-  crs == wgs84 || !is.na(crs$input) && crs$input == wgs84$input
+  !is.na(obj_proj) & obj_proj %in% wgs84_proj
 }
 
 
