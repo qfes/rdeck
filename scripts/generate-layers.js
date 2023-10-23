@@ -88,6 +88,7 @@ function transformProps({ props }) {
     .map((p) => {
       if (p.type === "accessor") return `${p.name} = accessor(${p.name}, data)`;
       if (p.name === "tooltip") return `${p.name} = tooltip(${p.name}, data)`;
+      if (p.name === "bounds") return `${p.name} = if (!is.null(bounds)) wk::wk_bbox(bounds)`;
 
       // default
       return `${p.name} = ${p.name}`;

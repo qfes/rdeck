@@ -196,3 +196,9 @@ wk_is_linestring <- function(handleable, ignore_empty = TRUE) {
 wk_is_polygon <- function(handleable, ignore_empty = TRUE) {
   wk_is(handleable, wk::wk_geometry_type(c("polygon", "multipolygon")), ignore_empty)
 }
+
+
+# should this live in the wk package?
+wk_bbox.bbox <- function(handleable) {
+  wk::as_rct(handleable)
+}

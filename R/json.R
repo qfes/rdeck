@@ -85,8 +85,11 @@ as_json.view_state <- function(object, ...) {
   )
 }
 
-as_json.bbox <- function(object, ...) {
-  json_stringify(object, digits = 6)
+as_json.wk_rct <- function(object, ...) {
+  json_stringify(
+    unname(unlist(object)),
+    digits = 6
+  )
 }
 
 #' @autoglobal

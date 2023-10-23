@@ -482,8 +482,10 @@ NULL
 #' @inherit layer_props
 #' @param elevation_data url
 #' @param mesh_max_error number
-#' @param bounds <`bbox`> A [`st_bbox`][sf::st_bbox] object with CRS
-#' [EPSG:4326](http://epsg.io/4326). Must be supplied when using non-tiled elevation data.
+#' @param bounds <[`rct`][wk::rct]/[`st_bbox`][sf::st_bbox]/[`wk-geometry`]>
+#' The bounds of the image to fit x,y coordinates into.
+#' Requires CRS [EPSG:4326](http://epsg.io/4326).
+#' Must be supplied when using non-tiled elevation data.
 #' @param color color
 #' @param elevation_decoder object
 #' @param worker_url string
@@ -616,9 +618,9 @@ NULL
 #' @param width_scale <`number`> The scaling multiplier for the width of each line.
 #' @param width_min_pixels <`number`> The minimum line width in pixels.
 #' @param width_max_pixels <`number`> The maximum line width in pixels.
-#' @param bounds  <`bbox`> A [`st_bbox`][sf::st_bbox] object with CRS
-#' [EPSG:4326](http://epsg.io/4326).
-
+#' @param bounds <[`rct`][wk::rct]/[`st_bbox`][sf::st_bbox]/[`wk-geometry`]>
+#' The bounds of the image to fit x,y coordinates into.
+#' Requires CRS [EPSG:4326](http://epsg.io/4326).
 #' @param size_scale <`number`> The size multiplier.
 #' @param size_units <`"pixels"` | `"common"` | `"meters"`> The units of the size specified by
 #' `get_size`.

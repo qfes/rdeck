@@ -32,8 +32,10 @@ See \url{https://docs.mapbox.com/api/maps/#mapbox-styles}}
 \item{theme}{<\code{"kepler"} | \code{"light"}> The widget theme which alters the style of the
 legend and tooltips.}
 
-\item{initial_bounds}{<\code{\link[sf:st_bbox]{st_bbox}} | \code{\link[sf:sf]{sf}} | \code{\link[sf:sfc]{sfc}}>
-The initial bounds of the map; overwrites \code{initial_view_state}.}
+\item{initial_bounds}{<\code{\link[wk:rct]{rct}}/\code{\link[sf:st_bbox]{st_bbox}}/\code{\link{wk-geometry}}>
+Sets the initial bounds of the map if not \code{NULL}. Takes priority over \code{initial_view_state}.
+Accepts a bounding box, or a geometry from which a bounding box can be computed. Requires
+CRS \href{http://epsg.io/4326}{EPSG:4326}.}
 
 \item{initial_view_state}{<\code{\link{view_state}}> Defines the map position, zoom, bearing and pitch.}
 
