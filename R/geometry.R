@@ -202,3 +202,8 @@ wk_is_polygon <- function(handleable, ignore_empty = TRUE) {
 wk_bbox.bbox <- function(handleable) {
   wk::as_rct(handleable)
 }
+
+# should this live in the wk package?
+wk_crs.bbox <- function(handleable) {
+  wk::wk_crs(wk::as_rct(handleable))
+}

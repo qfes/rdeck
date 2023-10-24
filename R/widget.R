@@ -66,11 +66,12 @@ rdeck <- function(map_style = mapbox_dark(),
     is_editor_options(editor) | rlang::is_scalar_logical(editor)
   )
 
+  initial_bounds <- if (!is.null(initial_bounds)) wk::wk_bbox(initial_bounds)
   tidyassert::assert(is.null(initial_bounds) || is_wgs84(initial_bounds))
 
   deckgl <- deck_props(
     ...,
-    initial_bounds = if (!is.null(initial_bounds)) wk::wk_bbox(initial_bounds),
+    initial_bounds = initial_bounds,
     initial_view_state = initial_view_state,
     controller = controller,
     picking_radius = picking_radius,
