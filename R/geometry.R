@@ -44,7 +44,13 @@ is_sf <- function(object) inherits(object, "sf")
 # create a new sf object
 new_sf <- function(x = list(), n = NULL, ...) {
   handleable <- purrr::keep(x, wk::is_handleable)
-  vctrs::new_data_frame(x, n, ..., sf_column = names(handleable[1]), class = "sf")
+  vctrs::new_data_frame(
+    x,
+    n %??% length(x[[1]]),
+    ...,
+    sf_column = names(handleable[1]),
+    class = "sf"
+  )
 }
 
 # is crs = epsg:4326
