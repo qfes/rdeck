@@ -52,7 +52,7 @@ examples of supported expressions:
 Like \code{\link[dplyr:select]{dplyr::select()}}, referencing non-existent columns results in an error. Use
 \code{\link[tidyselect:all_of]{tidyselect::any_of()}} to include columns that may not exist.
 
-All \code{sf} columns will be forcibly removed from the tooltip.
+All geometry columns will be forcibly removed from the tooltip.
 }
 
 \section{Data is a \code{string} or \code{NULL}}{

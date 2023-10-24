@@ -4,8 +4,11 @@
 \alias{scale}
 \title{Prop Type: Scale}
 \description{
-Scales transform input data into visual representations, predominantly colours:
-\code{fill}, \code{line}, \code{highlight} and sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}.
+Scales transform input data into visual representations, predominantly:
+\itemize{
+\item colours: \code{fill}, \code{line}, \code{highlight}
+\item sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}
+}
 
 Transformations are performed in client-side javascript, thus scales have very minimal
 file-size overhead; what you pay for is the source data being scaled & the scale descriptor

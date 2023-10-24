@@ -1,8 +1,10 @@
 #' Prop Type: Accessor
 #'
 #' @description
-#' Accessors map `data` columns to visual representations, primarily colours: `fill`, `line`,
-#' `highlight` and sizes: `radius`, `elevation`, `width`, `height`.
+#' Accessors map `data` columns to visual representations, primarily:
+#' - colours: `fill`, `line`, `highlight`
+#' - sizes: `radius`, `elevation`, `width`, `height`
+#' - geometries `point/multipoint`, `linestring/multilinestring`, `polygon/multipolygon`
 #'
 #' On the client, an accessor is translated to a javascript function that retrieves the specified
 #' column values for each rendered feature. An equivalent R function would look something like
@@ -58,8 +60,9 @@ NULL
 #' Prop Type: Scale
 #'
 #' @description
-#' Scales transform input data into visual representations, predominantly colours:
-#' `fill`, `line`, `highlight` and sizes: `radius`, `elevation`, `width`, `height`.
+#' Scales transform input data into visual representations, predominantly:
+#' - colours: `fill`, `line`, `highlight`
+#' - sizes: `radius`, `elevation`, `width`, `height`
 #'
 #' Transformations are performed in client-side javascript, thus scales have very minimal
 #' file-size overhead; what you pay for is the source data being scaled & the scale descriptor
@@ -158,7 +161,7 @@ NULL
 #' Like [dplyr::select()], referencing non-existent columns results in an error. Use
 #' [tidyselect::any_of()] to include columns that may not exist.
 #'
-#' All `sf` columns will be forcibly removed from the tooltip.
+#' All geometry columns will be forcibly removed from the tooltip.
 #'
 #' # Data is a `string` or `NULL`
 #' There is no column / field name validation when When layer `data` is a `string` (interpreted as a URL)

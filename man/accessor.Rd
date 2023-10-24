@@ -4,8 +4,12 @@
 \alias{accessor}
 \title{Prop Type: Accessor}
 \description{
-Accessors map \code{data} columns to visual representations, primarily colours: \code{fill}, \code{line},
-\code{highlight} and sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}.
+Accessors map \code{data} columns to visual representations, primarily:
+\itemize{
+\item colours: \code{fill}, \code{line}, \code{highlight}
+\item sizes: \code{radius}, \code{elevation}, \code{width}, \code{height}
+\item geometries \code{point/multipoint}, \code{linestring/multilinestring}, \code{polygon/multipolygon}
+}
 
 On the client, an accessor is translated to a javascript function that retrieves the specified
 column values for each rendered feature. An equivalent R function would look something like
