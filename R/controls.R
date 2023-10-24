@@ -11,7 +11,8 @@
 #' - `linestring`: draw linestrings by clicking each vertex
 #' - `polygon`: draw polygons by clicking each vertex
 #' - `lasso`: freehand polygon draw by click-dragging
-#' @param features <`sf` | `sfc`> Features with which to initialise the editor
+#' @param features <[`wk-geometry`]> Features with which to initialise the editor.
+#' Requires CRS [EPSG:4326](http://epsg.io/4326).
 #' @export
 editor_options <- function(mode = cur_value(), features = cur_value()) {
   tidyassert::assert(
@@ -22,11 +23,10 @@ editor_options <- function(mode = cur_value(), features = cur_value()) {
   )
 
   tidyassert::assert(
-    is.null(features) ||
-      is_cur_value(features) ||
-      (is_sf(features) || is_sfc(features)) && is_wgs84(features),
+    is.null(features) || is_cur_value(features) ||
+      (wk::is_handleable(features) && is_wgs84(features)),
     error_message = c(
-      "x" = "{.arg features} must be a {.emph WGS84} {.cls sf/sfc}"
+      "x" = "{.arg features} must be a {.emph WGS84} {.cls wk_geometry}"
     )
   )
 

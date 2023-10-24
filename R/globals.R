@@ -38,7 +38,6 @@ utils::globalVariables(c(
   "text", # <add_mvt_layer>
   "position", # <add_simple_mesh_layer>
   "position", # <add_scenegraph_layer>
-  "features", # <as_json.editor_options>
   "scale_type", # <as_json.scale>
   "get_breaks", # <compile.scale>
   "get_palette", # <compile.scale>

@@ -19,7 +19,8 @@ editor_options(mode = cur_value(), features = cur_value())
 \item \code{lasso}: freehand polygon draw by click-dragging
 }}
 
-\item{features}{<\code{sf} | \code{sfc}> Features with which to initialise the editor}
+\item{features}{<\code{\link{wk-geometry}}> Features with which to initialise the editor.
+Requires CRS \href{http://epsg.io/4326}{EPSG:4326}.}
 }
 \description{
 Options for the polygon editor

@@ -41,6 +41,12 @@ is_sfc <- function(object) inherits(object, "sfc")
 # is object a simple features column
 is_sf <- function(object) inherits(object, "sf")
 
+# create a new sf object
+new_sf <- function(x = list(), n = NULL, ...) {
+  handleable <- purrr::keep(x, wk::is_handleable)
+  vctrs::new_data_frame(x, n, ..., sf_column = names(handleable[1]), class = "sf")
+}
+
 # is crs = epsg:4326
 is_wgs84 <- function(object) {
   obj_proj <- wk::wk_crs_proj_definition(wk::wk_crs(object))
