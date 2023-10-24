@@ -4,6 +4,7 @@
 - Fix regression in set_layer_visibility (#101)
 - Rescalers no longer require `center` to be inside input domain (#103)
 - All layers now support geometry vectors which {wk} can read (#104)
+- Feature editor accepts geometry vectors which {wk} can read (#105)
 
 # rdeck 0.5.2
 

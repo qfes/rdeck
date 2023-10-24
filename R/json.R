@@ -95,22 +95,24 @@ as_json.wk_rct <- function(object, ...) {
 #' @autoglobal
 #' @noRd
 as_json.editor_options <- function(object, ...) {
-  options <- mutate(select(object, -where(is_cur_value)))
+  options <- purrr::discard(object, is_cur_value)
 
   # features to geojson
   if (rlang::has_name(options, "features")) {
     rlang::check_installed("geojsonsf")
 
-    options <- mutate(
-      options,
-      geojson = geojsonsf::sf_geojson(
-        sf::st_sf(features %??% sf::st_sfc()),
-        simplify = FALSE,
-        digits = 6L
-      )
+    features <- wk::wk_handle(
+      options$features %??% wk::xy(),
+      wk::sfc_writer()
     )
 
-    options <- select(options, -features)
+    options$geojson <- geojsonsf::sf_geojson(
+      new_sf(list(geometry = features)),
+      simplify = FALSE,
+      digits = 6L
+    )
+
+    options$features <- NULL
   }
 
   json_stringify(
