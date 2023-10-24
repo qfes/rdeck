@@ -24,11 +24,15 @@ editor_options <- function(mode = cur_value(), features = cur_value()) {
 
   tidyassert::assert(
     is.null(features) || is_cur_value(features) ||
-      (wk::is_handleable(features) && is_wgs84(features)),
+      wk::is_handleable(features) && is_wgs84(features),
     error_message = c(
-      "x" = "{.arg features} must be a {.emph WGS84} {.cls wk_geometry}"
+      "x" = "{.arg features} must be a {.emph WGS84} {.cls wk-geometry}"
     )
   )
+
+  if (inherits(features, "data.frame")) {
+    features <- purrr::detect(features, wk::is_handleable)
+  }
 
   structure(
     list(
