@@ -89,8 +89,10 @@ legend and tooltips.</p></dd>
 
 
 <dt>initial_bounds</dt>
-<dd><p>&lt;<code><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></code> | <code><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf</a></code> | <code><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">sfc</a></code>&gt;
-The initial bounds of the map; overwrites <code>initial_view_state</code>.</p></dd>
+<dd><p>&lt;<code><a href="https://paleolimbot.github.io/wk/reference/rct.html" class="external-link">rct</a></code>/<code><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></code>/<code><a href="wk-geometry.html">wk-geometry</a></code>&gt;
+Sets the initial bounds of the map if not <code>NULL</code>. Takes priority over <code>initial_view_state</code>.
+Accepts a bounding box, or a geometry from which a bounding box can be computed. Requires
+CRS <a href="http://epsg.io/4326" class="external-link">EPSG:4326</a>.</p></dd>
 
 
 <dt>initial_view_state</dt>
