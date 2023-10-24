@@ -9,8 +9,10 @@
 #' See <https://docs.mapbox.com/api/maps/#mapbox-styles>
 #' @param theme <`"kepler"` | `"light"`> The widget theme which alters the style of the
 #' legend and tooltips.
-#' @param initial_bounds <[`st_bbox`][sf::st_bbox] | [`sf`][sf::sf] | [`sfc`][sf::sfc]>
-#' The initial bounds of the map; overwrites `initial_view_state`.
+#' @param initial_bounds <[`rct`][wk::rct]/[`st_bbox`][sf::st_bbox]/[`wk-geometry`]>
+#' Sets the initial bounds of the map if not `NULL`. Takes priority over `initial_view_state`.
+#' Accepts a bounding box, or a geometry from which a bounding box can be computed. Requires
+#' CRS [EPSG:4326](http://epsg.io/4326).
 #' @param initial_view_state <[`view_state`]> Defines the map position, zoom, bearing and pitch.
 #' @param controller <`logical`> If `NULL` or `FALSE`, the map is not interactive.
 #' @param picking_radius <`number`> Extra pixels around the pointer to include while picking;
@@ -64,9 +66,12 @@ rdeck <- function(map_style = mapbox_dark(),
     is_editor_options(editor) | rlang::is_scalar_logical(editor)
   )
 
+  initial_bounds <- if (!is.null(initial_bounds)) wk::wk_bbox(initial_bounds)
+  tidyassert::assert(is.null(initial_bounds) || is_wgs84(initial_bounds))
+
   deckgl <- deck_props(
     ...,
-    initial_bounds = if (!is.null(initial_bounds)) map_bounds(initial_bounds),
+    initial_bounds = initial_bounds,
     initial_view_state = initial_view_state,
     controller = controller,
     picking_radius = picking_radius,
@@ -166,19 +171,6 @@ props <- function(rdeck) {
   rdeck$x$props
 }
 
-map_bounds <- function(initial_bounds) {
-  tidyassert::assert_inherits(initial_bounds, c("bbox", "sf", "sfc", "sfg"))
-
-  sfc <- if (inherits(initial_bounds, "bbox")) {
-    sf::st_as_sfc(initial_bounds)
-  } else {
-    sf::st_geometry(initial_bounds)
-  }
-
-  sfc %>%
-    sf::st_transform(4326) %>%
-    sf::st_bbox()
-}
 
 deck_props <- function(...,
                         initial_bounds = cur_value(),

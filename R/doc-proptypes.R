@@ -178,3 +178,31 @@ NULL
 #' @name color
 #' @keywords internal
 NULL
+
+
+#' Prop Type: WK Geometry
+#'
+#' @description
+#' Geometry vectors are parsed with [wk::wk_handle()]. All geometry formats
+#' that \{wk\} supports directly are available to use in {rdeck} layers. You may
+#' also use geometry formats which \{wk\} doesn't directly support, provided a
+#' _loaded_ package defines a \{wk\} _reader_ (i.e. [wk::wk_handle()] S3 method)
+#' for the geometry type.
+#'
+#' Geometry formats supported by \{wk\} (always supported):
+#' - [wk::wkb()]
+#' - [wk::wkt()]
+#' - [wk::xy()] (`m` dimension is always ignored)
+#' - [wk::crc()]
+#' - [wk::grd()]
+#' - [wk::rct()]
+#' - [sf::st_sfc()]
+#'
+#' Geometry formats supported by other packages (not dependencies of \{rdeck\}):
+#' - [s2::s2_geography()]
+#' - [geos::geos_geometry()]
+#' - Others?
+#'
+#' @name wk-geometry
+#' @keywords internal
+NULL

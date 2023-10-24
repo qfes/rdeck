@@ -43,10 +43,13 @@ is_sf <- function(object) inherits(object, "sf")
 
 # is crs = epsg:4326
 is_wgs84 <- function(object) {
-  crs <- sf::st_crs(object)
-  wgs84 <- sf::st_crs(4326)
+  obj_proj <- wk::wk_crs_proj_definition(wk::wk_crs(object))
+  wgs84_proj <- c(
+    wk::wk_crs_proj_definition("EPSG:4326"),
+    wk::wk_crs_proj_definition("OGC:CRS84")
+  )
 
-  crs == wgs84 || !is.na(crs$input) && crs$input == wgs84$input
+  !is.na(obj_proj) & obj_proj %in% wgs84_proj
 }
 
 
@@ -192,4 +195,15 @@ wk_is_linestring <- function(handleable, ignore_empty = TRUE) {
 #' @keywords internal
 wk_is_polygon <- function(handleable, ignore_empty = TRUE) {
   wk_is(handleable, wk::wk_geometry_type(c("polygon", "multipolygon")), ignore_empty)
+}
+
+
+# should this live in the wk package?
+wk_bbox.bbox <- function(handleable) {
+  wk::as_rct(handleable)
+}
+
+# should this live in the wk package?
+wk_crs.bbox <- function(handleable) {
+  wk::wk_crs(wk::as_rct(handleable))
 }

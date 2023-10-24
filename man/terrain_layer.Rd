@@ -165,8 +165,10 @@ supplied no throttling occurs (HTTP/2 only).}
 
 \item{mesh_max_error}{number}
 
-\item{bounds}{<\code{bbox}> A \code{\link[sf:st_bbox]{st_bbox}} object with CRS
-\href{http://epsg.io/4326}{EPSG:4326}. Must be supplied when using non-tiled elevation data.}
+\item{bounds}{<\code{\link[wk:rct]{rct}}/\code{\link[sf:st_bbox]{st_bbox}}/\code{\link{wk-geometry}}>
+The bounds of the image to fit x,y coordinates into.
+Requires CRS \href{http://epsg.io/4326}{EPSG:4326}.
+Must be supplied when using non-tiled elevation data.}
 
 \item{color}{color}
 
@@ -195,7 +197,7 @@ dot density on light maps.
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
-\code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+\code{data} is a \code{data.frame}. Geometry columns are always removed.}
 }
 \description{
 Terrain Layer

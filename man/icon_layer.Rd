@@ -143,8 +143,8 @@ faces up (z).}
 A discarded pixel would create a "hole" in the icon that is not considered part of
 the object.}
 
-\item{get_position}{<\code{\link{accessor}}> The position geometry column, either a \code{sfc_POINT} or
-a \code{sfc_MULTIPOINT} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+\item{get_position}{<\code{\link{accessor}}> The feature positions. A
+\verb{<point/multipoint>} \link{wk-geometry} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_icon}{<\code{\link{accessor}}> The name of the icon for each feature. Icon name must be
@@ -182,7 +182,7 @@ dot density on light maps.
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
-\code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+\code{data} is a \code{data.frame}. Geometry columns are always removed.}
 }
 \description{
 Icon Layer

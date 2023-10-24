@@ -36,6 +36,7 @@ reference:
       - scale
       - tooltip
       - color
+      - wk-geometry
 
   - title: Core layers
     desc: Deck.GL core layers

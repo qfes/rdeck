@@ -152,8 +152,8 @@ vertical lines for each vertex of the polygon.}
 
 \item{line_miter_limit}{number}
 
-\item{get_polygon}{<\code{\link{accessor}}> The polygon geometry column, either a \code{sfc_POLYGON}
-or a \code{sfc_MULTIPOLYGON} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+\item{get_polygon}{<\code{\link{accessor}}> The feature polygons. A
+\verb{<polygon/multipolygon>} \link{wk-geometry} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_fill_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The fill colour of each object.
@@ -193,7 +193,7 @@ dot density on light maps.
 \item{tooltip}{<\code{\link{tooltip}}> Defines the columns (and their order) that will be displayed in
 the layer tooltip, if \code{pickable == TRUE}.
 Supports \href{https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html}{tidy-select} if a
-\code{data} is a \code{data.frame}. \code{sfc} columns are always removed.}
+\code{data} is a \code{data.frame}. Geometry columns are always removed.}
 }
 \description{
 Quadkey Layer
