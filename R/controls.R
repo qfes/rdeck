@@ -55,6 +55,7 @@ editor_modes <- function() {
 is_editor_options <- function(object) inherits(object, "editor_options")
 
 as_editor_options <- function(object) UseMethod("as_editor_options")
-as_editor_options.default <- function(object) object
+as_editor_options.editor_options <- function(object) object
+as_editor_options.cur_value <- function(object) object
 as_editor_options.NULL <- function(object) NULL
 as_editor_options.logical <- function(object) if (isTRUE(object)) editor_options() else NULL

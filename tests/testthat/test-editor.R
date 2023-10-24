@@ -37,20 +37,46 @@ test_that("editor_options works", {
   )
 })
 
+test_that("as_editor_options works", {
+  expect_equal(
+    as_editor_options(NULL),
+    NULL
+  )
+
+  expect_equal(
+    as_editor_options(TRUE),
+    editor_options()
+  )
+
+  expect_equal(
+    as_editor_options(FALSE),
+    NULL
+  )
+
+  expect_equal(
+    as_editor_options(cur_value()),
+    cur_value()
+  )
+
+  expect_equal(
+    as_editor_options(editor_options("modify")),
+    editor_options("modify")
+  )
+})
 
 test_that("editor_options json works", {
   expect_equal(
-    as_json.editor_options(editor_options()),
+    as_json(editor_options()),
     structure("{}", class = "json")
   )
 
   expect_equal(
-    as_json.editor_options(editor_options(mode = "lasso")),
+    as_json(editor_options(mode = "lasso")),
     structure('{"mode":"lasso"}', class = "json")
   )
 
   expect_equal(
-    as_json.editor_options(editor_options(features = wk::wkt("LINESTRING (1 1)", "OGC:CRS84"))),
+    as_json(editor_options(features = wk::wkt("LINESTRING (1 1)", "OGC:CRS84"))),
     structure(
       '{"geojson":{"type":"FeatureCollection","features":[{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[1.0,1.0]]}}]}}', # nolint
       class = "json"
