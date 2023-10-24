@@ -109,8 +109,8 @@ or a \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval} col
 \item{point_size}{<\code{number}> The radius of all points in units specified
 by \code{size_units}.}
 
-\item{get_position}{<\code{\link{accessor}}> The position geometry column, a
-\verb{<point/multipoint>} geometry column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+\item{get_position}{<\code{\link{accessor}}> The feature positions. A
+\verb{<point/multipoint>} \link{wk-geometry} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_normal}{<\code{\link{accessor}} | \code{numeric}> The normal of each object, in \code{c(nx, ny, nz)}.

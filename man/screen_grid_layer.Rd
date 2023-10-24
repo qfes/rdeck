@@ -116,8 +116,8 @@ of aggregated weights in each bin.}
 \code{color_domain} is divided into \code{length(color_range)} equal segments, each mapped to
 one color in \code{color_range}.}
 
-\item{get_position}{<\code{\link{accessor}}> The position geometry column, a
-\verb{<point/multipoint>} geometry column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+\item{get_position}{<\code{\link{accessor}}> The feature positions. A
+\verb{<point/multipoint>} \link{wk-geometry} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_weight}{<\code{\link{accessor}} | \code{\link{scale}} | \code{number}> The weight of each object.

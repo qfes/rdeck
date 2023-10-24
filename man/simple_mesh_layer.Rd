@@ -125,8 +125,8 @@ vertical lines for each vertex of the polygon.}
 
 \item{material}{<\code{boolean}>}
 
-\item{get_position}{<\code{\link{accessor}}> The position geometry column, a
-\verb{<point/multipoint>} geometry column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+\item{get_position}{<\code{\link{accessor}}> The feature positions. A
+\verb{<point/multipoint>} \link{wk-geometry} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.

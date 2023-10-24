@@ -131,8 +131,8 @@ Only applicable if \code{rounded == FALSE}.}
 \item{billboard}{<\code{boolean}> If \code{TRUE}, extrude the path in screen space (width always faces)
 the camera; if \code{FALSE}, the width always faces up (z).}
 
-\item{get_path}{<\code{\link{accessor}}> The path geometry column, a
-\verb{<linestring/multilinestring>} geometry column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
+\item{get_path}{<\code{\link{accessor}}> The feature paths. A
+\verb{<linestring/multilinestring>} \link{wk-geometry} column with CRS \href{http://epsg.io/4326}{EPSG:4326}.
 Supports \href{https://dplyr.tidyverse.org/articles/programming.html}{tidy-eval}.}
 
 \item{get_color}{<\code{\link{accessor}} | \code{\link{scale}} | \code{\link{color}}> The colour of each object.

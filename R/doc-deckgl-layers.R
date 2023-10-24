@@ -584,11 +584,11 @@ NULL
 #' highlight all objects in the layer. Per-object highlighting is achieved with a colour scale,
 #' or a [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html) column of colours.
 #' @param wrap_longitude <`boolean`> Normalises geometry longitudes.
-#' @param get_source_position <[`accessor`]> The source position geometry column, a
-#' `<point/multipoint>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_source_position <[`accessor`]> The feature source positions. A
+#' `<point/multipoint>` [wk-geometry] column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
-#' @param get_target_position <[`accessor`]> The target position geometry column, a
-#' `<point/multipoint>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_target_position <[`accessor`]> The feature target positions. A
+#' `<point/multipoint>` [wk-geometry] column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param get_source_color <[`accessor`] | [`scale`] | [`color`]> The colour of the
 #' _source end_ of the arc.
@@ -626,8 +626,8 @@ NULL
 #' `get_size`.
 #' @param size_min_pixels <`number`> The minimum size in pixels.
 #' @param size_max_pixels <`number`> The maximum size in pixels.
-#' @param get_position <[`accessor`]> The position geometry column, a
-#' `<point/multipoint>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_position <[`accessor`]> The feature positions. A
+#' `<point/multipoint>` [wk-geometry] column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param get_color <[`accessor`] | [`scale`] | [`color`]> The colour of each object.
 #' Accepts a single colour value, a colour scale, or a
@@ -685,15 +685,15 @@ NULL
 #' joints.
 #' @param miter_limit <`number`> The maximum extent of a joint in ratio to the stroke width.
 #' Only applicable if `rounded == FALSE`.
-#' @param get_path <[`accessor`]> The path geometry column, a
-#' `<linestring/multilinestring>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_path <[`accessor`]> The feature paths. A
+#' `<linestring/multilinestring>` [wk-geometry] column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param cap_rounded <`boolean`> If `TRUE`, draw round caps; else draw square caps.
 #' @param joint_rounded <`boolean`> If `TRUE`, draw round joints; else draw square joints.
 #' @param line_joint_rounded <`boolean`>
 #' @param line_miter_limit number
-#' @param get_polygon <[`accessor`]> The polygon geometry column, a
-#' `<polygon/multipolygon>` geometry column with CRS [EPSG:4326](http://epsg.io/4326).
+#' @param get_polygon <[`accessor`]> The feature polygons. A
+#' `<polygon/multipolygon>` [wk-geometry] column with CRS [EPSG:4326](http://epsg.io/4326).
 #' Supports [tidy-eval](https://dplyr.tidyverse.org/articles/programming.html).
 #' @param point_type <`"circle"`|`"icon"`|`"text"`|combination>
 #' Determines how to render point and multipoint features. May be one of:
