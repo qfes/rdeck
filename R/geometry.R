@@ -1,28 +1,40 @@
-#' SFC Point
+#' Point vectors
 #'
-#' Create an sfc_point column from coordinate vectors
+#' @description
+#' Create point vectors
 #'
-#' @name sfc_point
-#' @param x x coordinate
-#' @param y y coordinate
-#' @param z z coordinate {optional}
-#' @param crs coordinate reference system
-#'
+#' @name xy
+#' @inheritParams wk::xyz
+#' @examples
+#' xy(1:5, 1:5)
+#' xyz(1:5, 1:5, 1:5)
+#' sfc_point(1:5, 1:5)
+#' sfc_point(1:5, 1:5, 1:5)
 #' @export
-sfc_point <- function(x, y, z = NULL, crs = 4326) {
-  stopifnot(is.numeric(x), is.numeric(y), length(x) == length(y))
-  if (!is.null(z)) {
-    stopifnot(is.numeric(z), length(z) == length(x))
-  }
+NULL
 
-  data <- data.frame(cbind(x, y, z))
-  sf::st_as_sf(
-    data,
-    coords = names(data),
-    crs = crs,
-    na.fail = FALSE
-  ) %>%
-    sf::st_geometry()
+#' @describeIn xy Efficient 2-dimensional point vector
+#' @export
+xy <- function(x = double(), y = double(), crs = wk::wk_crs_longlat()) {
+  wk::xy(x, y, crs)
+}
+
+
+#' @describeIn xy Efficient 3-dimensional point vector
+#' @export
+xyz <- function(x = double(), y = double(), z = double(), crs = wk::wk_crs_longlat()) {
+  wk::xyz(x, y, z, crs)
+}
+
+#' @describeIn xy Simple features point vector
+#' @export
+sfc_point <- function(x = double(), y = double(), z = NULL, crs = wk::wk_crs_longlat()) {
+  vec <- wk::wk_handle(
+    if (is.null(z)) wk::xy(x, y) else wk::xyz(x, y, z),
+    wk::sfc_writer(FALSE)
+  )
+
+  wk::wk_set_crs(vec, crs)
 }
 
 
