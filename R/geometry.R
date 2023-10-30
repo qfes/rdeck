@@ -4,7 +4,10 @@
 #' Create point vectors
 #'
 #' @name xy
-#' @inheritParams wk::xyz
+#' @inherit wk::xyz
+#' @param x <`double`> Coordinate x dimension
+#' @param y <`double`> Coordinate y dimension
+#' @param z <`double`> Coordinate z dimension
 #' @examples
 #' xy(1:5, 1:5)
 #' xyz(1:5, 1:5, 1:5)

@@ -13,7 +13,16 @@ xyz(x = double(), y = double(), z = double(), crs = wk::wk_crs_longlat())
 sfc_point(x = double(), y = double(), z = NULL, crs = wk::wk_crs_longlat())
 }
 \arguments{
+\item{x}{<\code{double}> Coordinate x dimension}
+
+\item{y}{<\code{double}> Coordinate y dimension}
+
 \item{crs}{A value to be propagated as the CRS for this vector.}
+
+\item{z}{<\code{double}> Coordinate z dimension}
+}
+\value{
+A vector of coordinate values.
 }
 \description{
 Create point vectors
