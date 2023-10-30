@@ -214,9 +214,6 @@
     <loc>https://qfes.github.io/rdeck/reference/sf_column.html</loc>
   </url>
   <url>
-    <loc>https://qfes.github.io/rdeck/reference/sfc_point.html</loc>
-  </url>
-  <url>
     <loc>https://qfes.github.io/rdeck/reference/shiny-events.html</loc>
   </url>
   <url>
@@ -254,5 +251,8 @@
   </url>
   <url>
     <loc>https://qfes.github.io/rdeck/reference/wk-geometry.html</loc>
+  </url>
+  <url>
+    <loc>https://qfes.github.io/rdeck/reference/xy.html</loc>
   </url>
 </urlset>
