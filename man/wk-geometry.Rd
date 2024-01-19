@@ -24,7 +24,7 @@ Geometry formats supported by \{wk\} (always supported):
 Geometry formats supported by other packages (not dependencies of \{rdeck\}):
 \itemize{
 \item \code{\link[s2:as_s2_geography]{s2::s2_geography()}}
-\item \code{\link[geos:as_geos_geometry]{geos::geos_geometry()}}
+\item \code{\link[geos:geos_geometry]{geos::geos_geometry()}}
 \item Others?
 }
 }

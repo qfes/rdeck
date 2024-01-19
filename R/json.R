@@ -195,14 +195,8 @@ as_json.layer_data <- function(object, cols, dims, ...) {
   compiled <- deckgl_table(data, dims)
   compiled$length <- jsonlite::unbox(compiled$length)
 
-  # 6-digit precision for all sf cols
-  compiled$columns <- purrr::map_at(
-    compiled$columns,
-    geom_cols,
-    json_stringify,
-    digits = 6L
-  )
-
+  # 6-digit precision for all cols
+  compiled$columns <- yyjsonr_stringify(compiled$columns, digits = 6)
   json_stringify(compiled, use_signif = TRUE)
 }
 
@@ -241,4 +235,18 @@ json_stringify <- function(object,
     json_verbatim = json_verbatim,
     ...
   )
+}
+
+# experimental yyjsonr serialise
+yyjsonr_stringify <- function(object, camel_case = FALSE, ...) {
+  if (camel_case) {
+    names(object) <- to_camel_case(names(object))
+  }
+
+  json <- yyjsonr::write_json_str(
+    object,
+    list(...)
+  )
+
+  structure(json, class = "json")
 }
