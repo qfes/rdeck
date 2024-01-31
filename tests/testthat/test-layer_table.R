@@ -419,13 +419,14 @@ test_that("deckgl_table works for empty data frames", {
     list(length = jsonlite::unbox(0L), lengths = NULL, columns = list(foo = integer()))
   )
 
-  expect_equal(
+  expect_identical(
     deckgl_table(vctrs::data_frame(point = wk::wkt("POINT EMPTY"))),
-    list(length = jsonlite::unbox(0L), lengths = NULL, columns = list(point = cbind(double(), double())))
+    list(length = jsonlite::unbox(0L), lengths = NULL, columns = list(point = matrix(double(), ncol = 2L))),
+    ignore_attr = "dimnames"
   )
 
   expect_identical(
     deckgl_table(vctrs::data_frame(point = wk::wkt("POINT EMPTY"), foo = integer())),
-    list(length = jsonlite::unbox(0L), lengths = NULL, columns = list(point = cbind(double(), double()), foo = integer()))
+    list(length = jsonlite::unbox(0L), lengths = NULL, columns = list(point = matrix(double(), ncol = 2L), foo = integer()))
   )
 })

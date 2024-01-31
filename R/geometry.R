@@ -92,14 +92,15 @@ interleave_xy <- function(xy, dims = "xy") {
 
 # stack xy[z] coordinates
 stack_xy <- function(xy, dims = "xy") {
+  use_z <- dims == "xyz" || dims == "XYZ"
+  if (vctrs::vec_is_empty(xy)) {
+    return(matrix(double(), ncol = 2L + use_z))
+  }
+
   xy_dims <- unclass(xy)
   # add / remove z
-  # NOTE: length-0 z isn't dropped when x and y are length-0
-  if (dims == "xyz" || dims == "XYZ") {
-    cbind(xy_dims$x, xy_dims$y, xy_dims$z %??% 0)
-  } else {
-    cbind(xy_dims$x, xy_dims$y)
-  }
+  xy_dims$z <- if (use_z) xy_dims$z %??% 0
+  cbind(xy_dims$x, xy_dims$y, xy_dims$z)
 }
 
 
