@@ -38,11 +38,11 @@ deckgl_table <- function(object, dims = "xy", ...) {
   # deckgl flattened coords
   flat_geoms <- lapply(geom_coords, function(x) deckgl_geom(x, dims))
 
-  # TODO: check all geometry vectors have equal number of primitive geometries per feature
-
   # how many primitive geoms per feature
   feature_sizes <- if (length(geom_cols) != 0) {
-    wk_primitive_count(geom_coords[[1]])
+    counts <- lapply(geom_coords, wk_primitive_count)
+    assert_equal_primitive_counts(counts)
+    counts[[1]]
   }
 
   # drop rows with empty geometries
@@ -189,4 +189,19 @@ get_used_colnames <- function(layer) {
   accessor_cols <- vcapply(accessors, purrr::pluck, "col")
 
   unique(c(accessor_cols, tooltip_cols))
+}
+
+
+# do all geometry columns have the same number of primitive geometries per feature?
+assert_equal_primitive_counts <- function(primitive_counts) {
+  if (vctrs::vec_size(primitive_counts) < 2L ||
+    all(vlapply(primitive_counts, identical, primitive_counts[[1]]))) {
+    return(invisible())
+  }
+
+  nms <- paste0("`", names(primitive_counts), "`", collapse = ", ")
+  rlang::abort(c(
+    "Geometry columns must have equal count of primitive geometries per feature",
+    `x` = sprintf("Columns %s have differing primitive geometries counts", nms)
+  ))
 }
