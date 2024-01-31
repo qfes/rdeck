@@ -407,3 +407,25 @@ test_that("deckgl_table works for multipolygons", {
     )
   )
 })
+
+test_that("deckgl_table works for empty data frames", {
+  expect_identical(
+    deckgl_table(vctrs::data_frame()),
+    list(length = jsonlite::unbox(0L), lengths = NULL, columns = list())
+  )
+
+  expect_identical(
+    deckgl_table(vctrs::data_frame(foo = integer())),
+    list(length = jsonlite::unbox(0L), lengths = NULL, columns = list(foo = integer()))
+  )
+
+  expect_equal(
+    deckgl_table(vctrs::data_frame(point = wk::wkt("POINT EMPTY"))),
+    list(length = jsonlite::unbox(0L), lengths = NULL, columns = list(point = cbind(double(), double())))
+  )
+
+  expect_identical(
+    deckgl_table(vctrs::data_frame(point = wk::wkt("POINT EMPTY"), foo = integer())),
+    list(length = jsonlite::unbox(0L), lengths = NULL, columns = list(point = cbind(double(), double()), foo = integer()))
+  )
+})

@@ -50,7 +50,7 @@ deckgl_table <- function(object, dims = "xy", ...) {
     other_cols <- vctrs::vec_slice(other_cols, feature_sizes$feature_id)
   }
 
-  n_features <- sum(feature_sizes$n_geom %??% nrow(data))
+  n_features <- sum(feature_sizes$n_geom %||% nrow(data))
   list(
     # number of features
     length = jsonlite::unbox(n_features),
@@ -106,7 +106,7 @@ deckgl_geom <- function(coords, dims = "xy", ...) {
   # optimised path for all length = 1 geometries
   # row-major matrix is equivalent to, but
   # simpler and faster to serialise than a list of coords
-  if (max(geom_runs$size) <= 1L) {
+  if (max(geom_runs$size, 0L) <= 1L) {
     return(stack_xy(coords$xy, dims))
   }
 

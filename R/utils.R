@@ -69,6 +69,10 @@ n_unique <- function(x, na_rm = FALSE) {
 
 vec_runs <- function(x) {
   size <- vctrs::vec_run_sizes(x)
+  if (vctrs::vec_is_empty(size)) {
+    return (vctrs::new_data_frame(list(loc = integer(), size = integer())))
+  }
+
   len <- length(size)
   loc <- cumsum(vctrs::vec_c(1L, size[seq_len(len - 1L)]))
   vctrs::new_data_frame(list(loc = loc, size = size))

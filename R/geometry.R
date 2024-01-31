@@ -94,9 +94,12 @@ interleave_xy <- function(xy, dims = "xy") {
 stack_xy <- function(xy, dims = "xy") {
   xy_dims <- unclass(xy)
   # add / remove z
-  xy_dims$z <- if (dims == "xyz" || dims == "XYZ") xy_dims$z %??% 0
-
-  cbind(xy_dims$x, xy_dims$y, xy_dims$z)
+  # NOTE: length-0 z isn't dropped when x and y are length-0
+  if (dims == "xyz" || dims == "XYZ") {
+    cbind(xy_dims$x, xy_dims$y, xy_dims$z %??% 0)
+  } else {
+    cbind(xy_dims$x, xy_dims$y)
+  }
 }
 
 
