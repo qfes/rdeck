@@ -6,6 +6,7 @@
 - All layers now support geometry vectors which {wk} can read (#104)
 - Feature editor accepts geometry vectors which {wk} can read (#105)
 - Use {yyjsonr} for faster serialisation (#110)
+- Fix quantile scales (#108)
 
 # rdeck 0.5.2
 

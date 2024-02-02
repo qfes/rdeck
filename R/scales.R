@@ -466,7 +466,6 @@ scale_quantile <- function(col, range = 0:1, na_value = 0,
     na_value = na_value,
     data = continuous_identity_range(data),
     get_breaks = quantile_breaks(probs),
-    col_label = col_label,
     col_label = as_labeller(col_label),
     legend = legend
   )
