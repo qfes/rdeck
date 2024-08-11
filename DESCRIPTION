@@ -27,7 +27,7 @@ Imports:
     tidyselect,
     uuid,
     vctrs (>= 0.6),
-    wk (>= 0.9),
+    wk (>= 0.9.2),
     yyjsonr
 Suggests:
     geojsonsf,
