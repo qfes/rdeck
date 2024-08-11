@@ -5,6 +5,7 @@
 validate_aggregation <- function(layer) {
   UseMethod("validate_aggregation")
 }
+#' @export
 validate_aggregation.default <- function(layer) {
   aggregation <- layer$aggregation
   if (is_cur_value(aggregation)) {
@@ -23,6 +24,7 @@ validate_aggregation.default <- function(layer) {
 validate_alpha_cutoff <- function(layer) {
   UseMethod("validate_alpha_cutoff")
 }
+#' @export
 validate_alpha_cutoff.default <- function(layer) {
   alpha_cutoff <- layer$alpha_cutoff
   if (is_cur_value(alpha_cutoff)) {
@@ -41,6 +43,7 @@ validate_alpha_cutoff.default <- function(layer) {
 validate_angle <- function(layer) {
   UseMethod("validate_angle")
 }
+#' @export
 validate_angle.default <- function(layer) {
   angle <- layer$angle
   if (is_cur_value(angle)) {
@@ -59,6 +62,7 @@ validate_angle.default <- function(layer) {
 validate_animation_speed <- function(layer) {
   UseMethod("validate_animation_speed")
 }
+#' @export
 validate_animation_speed.default <- function(layer) {
   animation_speed <- layer$animation_speed
   if (is_cur_value(animation_speed)) {
@@ -77,6 +81,7 @@ validate_animation_speed.default <- function(layer) {
 validate_antialiasing <- function(layer) {
   UseMethod("validate_antialiasing")
 }
+#' @export
 validate_antialiasing.default <- function(layer) {
   antialiasing <- layer$antialiasing
   if (is_cur_value(antialiasing)) {
@@ -95,6 +100,7 @@ validate_antialiasing.default <- function(layer) {
 validate_auto_highlight <- function(layer) {
   UseMethod("validate_auto_highlight")
 }
+#' @export
 validate_auto_highlight.default <- function(layer) {
   auto_highlight <- layer$auto_highlight
   if (is_cur_value(auto_highlight)) {
@@ -113,6 +119,7 @@ validate_auto_highlight.default <- function(layer) {
 validate_background <- function(layer) {
   UseMethod("validate_background")
 }
+#' @export
 validate_background.default <- function(layer) {
   background <- layer$background
   if (is_cur_value(background)) {
@@ -131,6 +138,7 @@ validate_background.default <- function(layer) {
 validate_background_padding <- function(layer) {
   UseMethod("validate_background_padding")
 }
+#' @export
 validate_background_padding.default <- function(layer) {
   background_padding <- layer$background_padding
   if (is_cur_value(background_padding)) {
@@ -149,6 +157,7 @@ validate_background_padding.default <- function(layer) {
 validate_billboard <- function(layer) {
   UseMethod("validate_billboard")
 }
+#' @export
 validate_billboard.default <- function(layer) {
   billboard <- layer$billboard
   if (is_cur_value(billboard)) {
@@ -167,6 +176,7 @@ validate_billboard.default <- function(layer) {
 validate_binary <- function(layer) {
   UseMethod("validate_binary")
 }
+#' @export
 validate_binary.default <- function(layer) {
   binary <- layer$binary
   if (is_cur_value(binary)) {
@@ -185,6 +195,7 @@ validate_binary.default <- function(layer) {
 validate_blending_mode <- function(layer) {
   UseMethod("validate_blending_mode")
 }
+#' @export
 validate_blending_mode.default <- function(layer) {
   blending_mode <- layer$blending_mode
   if (is_cur_value(blending_mode)) {
@@ -203,6 +214,7 @@ validate_blending_mode.default <- function(layer) {
 validate_bounds <- function(layer) {
   UseMethod("validate_bounds")
 }
+#' @export
 validate_bounds.default <- function(layer) {
   bounds <- layer$bounds
   if (is_cur_value(bounds)) {
@@ -218,6 +230,7 @@ validate_bounds.default <- function(layer) {
 validate_cap_rounded <- function(layer) {
   UseMethod("validate_cap_rounded")
 }
+#' @export
 validate_cap_rounded.default <- function(layer) {
   cap_rounded <- layer$cap_rounded
   if (is_cur_value(cap_rounded)) {
@@ -236,6 +249,7 @@ validate_cap_rounded.default <- function(layer) {
 validate_cell_margin_pixels <- function(layer) {
   UseMethod("validate_cell_margin_pixels")
 }
+#' @export
 validate_cell_margin_pixels.default <- function(layer) {
   cell_margin_pixels <- layer$cell_margin_pixels
   if (is_cur_value(cell_margin_pixels)) {
@@ -254,6 +268,7 @@ validate_cell_margin_pixels.default <- function(layer) {
 validate_cell_size <- function(layer) {
   UseMethod("validate_cell_size")
 }
+#' @export
 validate_cell_size.default <- function(layer) {
   cell_size <- layer$cell_size
   if (is_cur_value(cell_size)) {
@@ -272,6 +287,7 @@ validate_cell_size.default <- function(layer) {
 validate_cell_size_pixels <- function(layer) {
   UseMethod("validate_cell_size_pixels")
 }
+#' @export
 validate_cell_size_pixels.default <- function(layer) {
   cell_size_pixels <- layer$cell_size_pixels
   if (is_cur_value(cell_size_pixels)) {
@@ -290,6 +306,7 @@ validate_cell_size_pixels.default <- function(layer) {
 validate_center_hexagon <- function(layer) {
   UseMethod("validate_center_hexagon")
 }
+#' @export
 validate_center_hexagon.default <- function(layer) {
   center_hexagon <- layer$center_hexagon
   if (is_cur_value(center_hexagon)) {
@@ -305,6 +322,7 @@ validate_center_hexagon.default <- function(layer) {
 validate_color <- function(layer) {
   UseMethod("validate_color")
 }
+#' @export
 validate_color.default <- function(layer) {
   color <- layer$color
   if (is_cur_value(color)) {
@@ -323,6 +341,7 @@ validate_color.default <- function(layer) {
 validate_color_aggregation <- function(layer) {
   UseMethod("validate_color_aggregation")
 }
+#' @export
 validate_color_aggregation.default <- function(layer) {
   color_aggregation <- layer$color_aggregation
   if (is_cur_value(color_aggregation)) {
@@ -341,6 +360,7 @@ validate_color_aggregation.default <- function(layer) {
 validate_color_domain <- function(layer) {
   UseMethod("validate_color_domain")
 }
+#' @export
 validate_color_domain.default <- function(layer) {
   color_domain <- layer$color_domain
   if (is_cur_value(color_domain)) {
@@ -356,6 +376,7 @@ validate_color_domain.default <- function(layer) {
 validate_color_format <- function(layer) {
   UseMethod("validate_color_format")
 }
+#' @export
 validate_color_format.default <- function(layer) {
   color_format <- layer$color_format
   if (is_cur_value(color_format)) {
@@ -374,6 +395,7 @@ validate_color_format.default <- function(layer) {
 validate_color_range <- function(layer) {
   UseMethod("validate_color_range")
 }
+#' @export
 validate_color_range.default <- function(layer) {
   color_range <- layer$color_range
   if (is_cur_value(color_range)) {
@@ -392,6 +414,7 @@ validate_color_range.default <- function(layer) {
 validate_color_scale_type <- function(layer) {
   UseMethod("validate_color_scale_type")
 }
+#' @export
 validate_color_scale_type.default <- function(layer) {
   color_scale_type <- layer$color_scale_type
   if (is_cur_value(color_scale_type)) {
@@ -410,6 +433,7 @@ validate_color_scale_type.default <- function(layer) {
 validate_contours <- function(layer) {
   UseMethod("validate_contours")
 }
+#' @export
 validate_contours.default <- function(layer) {
   contours <- layer$contours
   if (is_cur_value(contours)) {
@@ -423,6 +447,7 @@ validate_contours.default <- function(layer) {
 validate_coverage <- function(layer) {
   UseMethod("validate_coverage")
 }
+#' @export
 validate_coverage.default <- function(layer) {
   coverage <- layer$coverage
   if (is_cur_value(coverage)) {
@@ -441,6 +466,7 @@ validate_coverage.default <- function(layer) {
 validate_data <- function(layer) {
   UseMethod("validate_data")
 }
+#' @export
 validate_data.default <- function(layer) {
   data <- layer$data
   if (is_cur_value(data)) {
@@ -456,6 +482,7 @@ validate_data.default <- function(layer) {
 validate_debounce_timeout <- function(layer) {
   UseMethod("validate_debounce_timeout")
 }
+#' @export
 validate_debounce_timeout.default <- function(layer) {
   debounce_timeout <- layer$debounce_timeout
   if (is_cur_value(debounce_timeout)) {
@@ -474,6 +501,7 @@ validate_debounce_timeout.default <- function(layer) {
 validate_desaturate <- function(layer) {
   UseMethod("validate_desaturate")
 }
+#' @export
 validate_desaturate.default <- function(layer) {
   desaturate <- layer$desaturate
   if (is_cur_value(desaturate)) {
@@ -492,6 +520,7 @@ validate_desaturate.default <- function(layer) {
 validate_disk_resolution <- function(layer) {
   UseMethod("validate_disk_resolution")
 }
+#' @export
 validate_disk_resolution.default <- function(layer) {
   disk_resolution <- layer$disk_resolution
   if (is_cur_value(disk_resolution)) {
@@ -510,6 +539,7 @@ validate_disk_resolution.default <- function(layer) {
 validate_elevation_aggregation <- function(layer) {
   UseMethod("validate_elevation_aggregation")
 }
+#' @export
 validate_elevation_aggregation.default <- function(layer) {
   elevation_aggregation <- layer$elevation_aggregation
   if (is_cur_value(elevation_aggregation)) {
@@ -528,6 +558,7 @@ validate_elevation_aggregation.default <- function(layer) {
 validate_elevation_data <- function(layer) {
   UseMethod("validate_elevation_data")
 }
+#' @export
 validate_elevation_data.default <- function(layer) {
   elevation_data <- layer$elevation_data
   if (is_cur_value(elevation_data)) {
@@ -543,6 +574,7 @@ validate_elevation_data.default <- function(layer) {
 validate_elevation_decoder <- function(layer) {
   UseMethod("validate_elevation_decoder")
 }
+#' @export
 validate_elevation_decoder.default <- function(layer) {
   elevation_decoder <- layer$elevation_decoder
   if (is_cur_value(elevation_decoder)) {
@@ -556,6 +588,7 @@ validate_elevation_decoder.default <- function(layer) {
 validate_elevation_domain <- function(layer) {
   UseMethod("validate_elevation_domain")
 }
+#' @export
 validate_elevation_domain.default <- function(layer) {
   elevation_domain <- layer$elevation_domain
   if (is_cur_value(elevation_domain)) {
@@ -571,6 +604,7 @@ validate_elevation_domain.default <- function(layer) {
 validate_elevation_lower_percentile <- function(layer) {
   UseMethod("validate_elevation_lower_percentile")
 }
+#' @export
 validate_elevation_lower_percentile.default <- function(layer) {
   elevation_lower_percentile <- layer$elevation_lower_percentile
   if (is_cur_value(elevation_lower_percentile)) {
@@ -589,6 +623,7 @@ validate_elevation_lower_percentile.default <- function(layer) {
 validate_elevation_range <- function(layer) {
   UseMethod("validate_elevation_range")
 }
+#' @export
 validate_elevation_range.default <- function(layer) {
   elevation_range <- layer$elevation_range
   if (is_cur_value(elevation_range)) {
@@ -607,6 +642,7 @@ validate_elevation_range.default <- function(layer) {
 validate_elevation_scale <- function(layer) {
   UseMethod("validate_elevation_scale")
 }
+#' @export
 validate_elevation_scale.default <- function(layer) {
   elevation_scale <- layer$elevation_scale
   if (is_cur_value(elevation_scale)) {
@@ -625,6 +661,7 @@ validate_elevation_scale.default <- function(layer) {
 validate_elevation_scale_type <- function(layer) {
   UseMethod("validate_elevation_scale_type")
 }
+#' @export
 validate_elevation_scale_type.default <- function(layer) {
   elevation_scale_type <- layer$elevation_scale_type
   if (is_cur_value(elevation_scale_type)) {
@@ -643,6 +680,7 @@ validate_elevation_scale_type.default <- function(layer) {
 validate_elevation_upper_percentile <- function(layer) {
   UseMethod("validate_elevation_upper_percentile")
 }
+#' @export
 validate_elevation_upper_percentile.default <- function(layer) {
   elevation_upper_percentile <- layer$elevation_upper_percentile
   if (is_cur_value(elevation_upper_percentile)) {
@@ -661,6 +699,7 @@ validate_elevation_upper_percentile.default <- function(layer) {
 validate_extent <- function(layer) {
   UseMethod("validate_extent")
 }
+#' @export
 validate_extent.default <- function(layer) {
   extent <- layer$extent
   if (is_cur_value(extent)) {
@@ -676,6 +715,7 @@ validate_extent.default <- function(layer) {
 validate_extruded <- function(layer) {
   UseMethod("validate_extruded")
 }
+#' @export
 validate_extruded.default <- function(layer) {
   extruded <- layer$extruded
   if (is_cur_value(extruded)) {
@@ -694,6 +734,7 @@ validate_extruded.default <- function(layer) {
 validate_fade_trail <- function(layer) {
   UseMethod("validate_fade_trail")
 }
+#' @export
 validate_fade_trail.default <- function(layer) {
   fade_trail <- layer$fade_trail
   if (is_cur_value(fade_trail)) {
@@ -712,6 +753,7 @@ validate_fade_trail.default <- function(layer) {
 validate_filled <- function(layer) {
   UseMethod("validate_filled")
 }
+#' @export
 validate_filled.default <- function(layer) {
   filled <- layer$filled
   if (is_cur_value(filled)) {
@@ -730,6 +772,7 @@ validate_filled.default <- function(layer) {
 validate_font_family <- function(layer) {
   UseMethod("validate_font_family")
 }
+#' @export
 validate_font_family.default <- function(layer) {
   font_family <- layer$font_family
   if (is_cur_value(font_family)) {
@@ -748,6 +791,7 @@ validate_font_family.default <- function(layer) {
 validate_font_settings <- function(layer) {
   UseMethod("validate_font_settings")
 }
+#' @export
 validate_font_settings.default <- function(layer) {
   font_settings <- layer$font_settings
   if (is_cur_value(font_settings)) {
@@ -761,6 +805,7 @@ validate_font_settings.default <- function(layer) {
 validate_font_weight <- function(layer) {
   UseMethod("validate_font_weight")
 }
+#' @export
 validate_font_weight.default <- function(layer) {
   font_weight <- layer$font_weight
   if (is_cur_value(font_weight)) {
@@ -779,6 +824,7 @@ validate_font_weight.default <- function(layer) {
 validate_get_alignment_baseline <- function(layer) {
   UseMethod("validate_get_alignment_baseline")
 }
+#' @export
 validate_get_alignment_baseline.default <- function(layer) {
   get_alignment_baseline <- layer$get_alignment_baseline
   if (is_cur_value(get_alignment_baseline)) {
@@ -807,6 +853,7 @@ validate_get_alignment_baseline.default <- function(layer) {
 validate_get_angle <- function(layer) {
   UseMethod("validate_get_angle")
 }
+#' @export
 validate_get_angle.default <- function(layer) {
   get_angle <- layer$get_angle
   if (is_cur_value(get_angle)) {
@@ -835,6 +882,7 @@ validate_get_angle.default <- function(layer) {
 validate_get_animator <- function(layer) {
   UseMethod("validate_get_animator")
 }
+#' @export
 validate_get_animator.default <- function(layer) {
   get_animator <- layer$get_animator
   if (is_cur_value(get_animator)) {
@@ -850,6 +898,7 @@ validate_get_animator.default <- function(layer) {
 validate_get_background_color <- function(layer) {
   UseMethod("validate_get_background_color")
 }
+#' @export
 validate_get_background_color.default <- function(layer) {
   get_background_color <- layer$get_background_color
   if (is_cur_value(get_background_color)) {
@@ -878,6 +927,7 @@ validate_get_background_color.default <- function(layer) {
 validate_get_border_color <- function(layer) {
   UseMethod("validate_get_border_color")
 }
+#' @export
 validate_get_border_color.default <- function(layer) {
   get_border_color <- layer$get_border_color
   if (is_cur_value(get_border_color)) {
@@ -906,6 +956,7 @@ validate_get_border_color.default <- function(layer) {
 validate_get_border_width <- function(layer) {
   UseMethod("validate_get_border_width")
 }
+#' @export
 validate_get_border_width.default <- function(layer) {
   get_border_width <- layer$get_border_width
   if (is_cur_value(get_border_width)) {
@@ -934,6 +985,7 @@ validate_get_border_width.default <- function(layer) {
 validate_get_color <- function(layer) {
   UseMethod("validate_get_color")
 }
+#' @export
 validate_get_color.default <- function(layer) {
   get_color <- layer$get_color
   if (is_cur_value(get_color)) {
@@ -962,6 +1014,7 @@ validate_get_color.default <- function(layer) {
 validate_get_color_value <- function(layer) {
   UseMethod("validate_get_color_value")
 }
+#' @export
 validate_get_color_value.default <- function(layer) {
   get_color_value <- layer$get_color_value
   if (is_cur_value(get_color_value)) {
@@ -977,6 +1030,7 @@ validate_get_color_value.default <- function(layer) {
 validate_get_color_weight <- function(layer) {
   UseMethod("validate_get_color_weight")
 }
+#' @export
 validate_get_color_weight.default <- function(layer) {
   get_color_weight <- layer$get_color_weight
   if (is_cur_value(get_color_weight)) {
@@ -1005,6 +1059,7 @@ validate_get_color_weight.default <- function(layer) {
 validate_get_elevation <- function(layer) {
   UseMethod("validate_get_elevation")
 }
+#' @export
 validate_get_elevation.default <- function(layer) {
   get_elevation <- layer$get_elevation
   if (is_cur_value(get_elevation)) {
@@ -1033,6 +1088,7 @@ validate_get_elevation.default <- function(layer) {
 validate_get_elevation_value <- function(layer) {
   UseMethod("validate_get_elevation_value")
 }
+#' @export
 validate_get_elevation_value.default <- function(layer) {
   get_elevation_value <- layer$get_elevation_value
   if (is_cur_value(get_elevation_value)) {
@@ -1048,6 +1104,7 @@ validate_get_elevation_value.default <- function(layer) {
 validate_get_elevation_weight <- function(layer) {
   UseMethod("validate_get_elevation_weight")
 }
+#' @export
 validate_get_elevation_weight.default <- function(layer) {
   get_elevation_weight <- layer$get_elevation_weight
   if (is_cur_value(get_elevation_weight)) {
@@ -1076,6 +1133,7 @@ validate_get_elevation_weight.default <- function(layer) {
 validate_get_fill_color <- function(layer) {
   UseMethod("validate_get_fill_color")
 }
+#' @export
 validate_get_fill_color.default <- function(layer) {
   get_fill_color <- layer$get_fill_color
   if (is_cur_value(get_fill_color)) {
@@ -1104,6 +1162,7 @@ validate_get_fill_color.default <- function(layer) {
 validate_get_height <- function(layer) {
   UseMethod("validate_get_height")
 }
+#' @export
 validate_get_height.default <- function(layer) {
   get_height <- layer$get_height
   if (is_cur_value(get_height)) {
@@ -1132,6 +1191,7 @@ validate_get_height.default <- function(layer) {
 validate_get_hexagon <- function(layer) {
   UseMethod("validate_get_hexagon")
 }
+#' @export
 validate_get_hexagon.default <- function(layer) {
   get_hexagon <- layer$get_hexagon
   if (is_cur_value(get_hexagon)) {
@@ -1154,6 +1214,7 @@ validate_get_hexagon.default <- function(layer) {
 validate_get_hexagons <- function(layer) {
   UseMethod("validate_get_hexagons")
 }
+#' @export
 validate_get_hexagons.default <- function(layer) {
   get_hexagons <- layer$get_hexagons
   if (is_cur_value(get_hexagons)) {
@@ -1176,6 +1237,7 @@ validate_get_hexagons.default <- function(layer) {
 validate_get_icon <- function(layer) {
   UseMethod("validate_get_icon")
 }
+#' @export
 validate_get_icon.default <- function(layer) {
   get_icon <- layer$get_icon
   if (is_cur_value(get_icon)) {
@@ -1198,6 +1260,7 @@ validate_get_icon.default <- function(layer) {
 validate_get_icon_angle <- function(layer) {
   UseMethod("validate_get_icon_angle")
 }
+#' @export
 validate_get_icon_angle.default <- function(layer) {
   get_icon_angle <- layer$get_icon_angle
   if (is_cur_value(get_icon_angle)) {
@@ -1226,6 +1289,7 @@ validate_get_icon_angle.default <- function(layer) {
 validate_get_icon_color <- function(layer) {
   UseMethod("validate_get_icon_color")
 }
+#' @export
 validate_get_icon_color.default <- function(layer) {
   get_icon_color <- layer$get_icon_color
   if (is_cur_value(get_icon_color)) {
@@ -1254,6 +1318,7 @@ validate_get_icon_color.default <- function(layer) {
 validate_get_icon_pixel_offset <- function(layer) {
   UseMethod("validate_get_icon_pixel_offset")
 }
+#' @export
 validate_get_icon_pixel_offset.default <- function(layer) {
   get_icon_pixel_offset <- layer$get_icon_pixel_offset
   if (is_cur_value(get_icon_pixel_offset)) {
@@ -1282,6 +1347,7 @@ validate_get_icon_pixel_offset.default <- function(layer) {
 validate_get_icon_size <- function(layer) {
   UseMethod("validate_get_icon_size")
 }
+#' @export
 validate_get_icon_size.default <- function(layer) {
   get_icon_size <- layer$get_icon_size
   if (is_cur_value(get_icon_size)) {
@@ -1310,6 +1376,7 @@ validate_get_icon_size.default <- function(layer) {
 validate_get_line_color <- function(layer) {
   UseMethod("validate_get_line_color")
 }
+#' @export
 validate_get_line_color.default <- function(layer) {
   get_line_color <- layer$get_line_color
   if (is_cur_value(get_line_color)) {
@@ -1338,6 +1405,7 @@ validate_get_line_color.default <- function(layer) {
 validate_get_line_width <- function(layer) {
   UseMethod("validate_get_line_width")
 }
+#' @export
 validate_get_line_width.default <- function(layer) {
   get_line_width <- layer$get_line_width
   if (is_cur_value(get_line_width)) {
@@ -1366,6 +1434,7 @@ validate_get_line_width.default <- function(layer) {
 validate_get_normal <- function(layer) {
   UseMethod("validate_get_normal")
 }
+#' @export
 validate_get_normal.default <- function(layer) {
   get_normal <- layer$get_normal
   if (is_cur_value(get_normal)) {
@@ -1394,6 +1463,7 @@ validate_get_normal.default <- function(layer) {
 validate_get_orientation <- function(layer) {
   UseMethod("validate_get_orientation")
 }
+#' @export
 validate_get_orientation.default <- function(layer) {
   get_orientation <- layer$get_orientation
   if (is_cur_value(get_orientation)) {
@@ -1422,6 +1492,7 @@ validate_get_orientation.default <- function(layer) {
 validate_get_path <- function(layer) {
   UseMethod("validate_get_path")
 }
+#' @export
 validate_get_path.default <- function(layer) {
   get_path <- layer$get_path
   if (is_cur_value(get_path)) {
@@ -1444,6 +1515,7 @@ validate_get_path.default <- function(layer) {
 validate_get_pixel_offset <- function(layer) {
   UseMethod("validate_get_pixel_offset")
 }
+#' @export
 validate_get_pixel_offset.default <- function(layer) {
   get_pixel_offset <- layer$get_pixel_offset
   if (is_cur_value(get_pixel_offset)) {
@@ -1472,6 +1544,7 @@ validate_get_pixel_offset.default <- function(layer) {
 validate_get_point_color <- function(layer) {
   UseMethod("validate_get_point_color")
 }
+#' @export
 validate_get_point_color.default <- function(layer) {
   get_point_color <- layer$get_point_color
   if (is_cur_value(get_point_color)) {
@@ -1500,6 +1573,7 @@ validate_get_point_color.default <- function(layer) {
 validate_get_point_radius <- function(layer) {
   UseMethod("validate_get_point_radius")
 }
+#' @export
 validate_get_point_radius.default <- function(layer) {
   get_point_radius <- layer$get_point_radius
   if (is_cur_value(get_point_radius)) {
@@ -1528,6 +1602,7 @@ validate_get_point_radius.default <- function(layer) {
 validate_get_polygon <- function(layer) {
   UseMethod("validate_get_polygon")
 }
+#' @export
 validate_get_polygon.default <- function(layer) {
   get_polygon <- layer$get_polygon
   if (is_cur_value(get_polygon)) {
@@ -1550,6 +1625,7 @@ validate_get_polygon.default <- function(layer) {
 validate_get_position <- function(layer) {
   UseMethod("validate_get_position")
 }
+#' @export
 validate_get_position.default <- function(layer) {
   get_position <- layer$get_position
   if (is_cur_value(get_position)) {
@@ -1572,6 +1648,7 @@ validate_get_position.default <- function(layer) {
 validate_get_quadkey <- function(layer) {
   UseMethod("validate_get_quadkey")
 }
+#' @export
 validate_get_quadkey.default <- function(layer) {
   get_quadkey <- layer$get_quadkey
   if (is_cur_value(get_quadkey)) {
@@ -1594,6 +1671,7 @@ validate_get_quadkey.default <- function(layer) {
 validate_get_radius <- function(layer) {
   UseMethod("validate_get_radius")
 }
+#' @export
 validate_get_radius.default <- function(layer) {
   get_radius <- layer$get_radius
   if (is_cur_value(get_radius)) {
@@ -1622,6 +1700,7 @@ validate_get_radius.default <- function(layer) {
 validate_get_s2_token <- function(layer) {
   UseMethod("validate_get_s2_token")
 }
+#' @export
 validate_get_s2_token.default <- function(layer) {
   get_s2_token <- layer$get_s2_token
   if (is_cur_value(get_s2_token)) {
@@ -1644,6 +1723,7 @@ validate_get_s2_token.default <- function(layer) {
 validate_get_scale <- function(layer) {
   UseMethod("validate_get_scale")
 }
+#' @export
 validate_get_scale.default <- function(layer) {
   get_scale <- layer$get_scale
   if (is_cur_value(get_scale)) {
@@ -1672,6 +1752,7 @@ validate_get_scale.default <- function(layer) {
 validate_get_scene <- function(layer) {
   UseMethod("validate_get_scene")
 }
+#' @export
 validate_get_scene.default <- function(layer) {
   get_scene <- layer$get_scene
   if (is_cur_value(get_scene)) {
@@ -1687,6 +1768,7 @@ validate_get_scene.default <- function(layer) {
 validate_get_size <- function(layer) {
   UseMethod("validate_get_size")
 }
+#' @export
 validate_get_size.default <- function(layer) {
   get_size <- layer$get_size
   if (is_cur_value(get_size)) {
@@ -1715,6 +1797,7 @@ validate_get_size.default <- function(layer) {
 validate_get_source_color <- function(layer) {
   UseMethod("validate_get_source_color")
 }
+#' @export
 validate_get_source_color.default <- function(layer) {
   get_source_color <- layer$get_source_color
   if (is_cur_value(get_source_color)) {
@@ -1743,6 +1826,7 @@ validate_get_source_color.default <- function(layer) {
 validate_get_source_position <- function(layer) {
   UseMethod("validate_get_source_position")
 }
+#' @export
 validate_get_source_position.default <- function(layer) {
   get_source_position <- layer$get_source_position
   if (is_cur_value(get_source_position)) {
@@ -1765,6 +1849,7 @@ validate_get_source_position.default <- function(layer) {
 validate_get_target_color <- function(layer) {
   UseMethod("validate_get_target_color")
 }
+#' @export
 validate_get_target_color.default <- function(layer) {
   get_target_color <- layer$get_target_color
   if (is_cur_value(get_target_color)) {
@@ -1793,6 +1878,7 @@ validate_get_target_color.default <- function(layer) {
 validate_get_target_position <- function(layer) {
   UseMethod("validate_get_target_position")
 }
+#' @export
 validate_get_target_position.default <- function(layer) {
   get_target_position <- layer$get_target_position
   if (is_cur_value(get_target_position)) {
@@ -1815,6 +1901,7 @@ validate_get_target_position.default <- function(layer) {
 validate_get_text <- function(layer) {
   UseMethod("validate_get_text")
 }
+#' @export
 validate_get_text.default <- function(layer) {
   get_text <- layer$get_text
   if (is_cur_value(get_text)) {
@@ -1837,6 +1924,7 @@ validate_get_text.default <- function(layer) {
 validate_get_text_alignment_baseline <- function(layer) {
   UseMethod("validate_get_text_alignment_baseline")
 }
+#' @export
 validate_get_text_alignment_baseline.default <- function(layer) {
   get_text_alignment_baseline <- layer$get_text_alignment_baseline
   if (is_cur_value(get_text_alignment_baseline)) {
@@ -1865,6 +1953,7 @@ validate_get_text_alignment_baseline.default <- function(layer) {
 validate_get_text_anchor <- function(layer) {
   UseMethod("validate_get_text_anchor")
 }
+#' @export
 validate_get_text_anchor.default <- function(layer) {
   get_text_anchor <- layer$get_text_anchor
   if (is_cur_value(get_text_anchor)) {
@@ -1893,6 +1982,7 @@ validate_get_text_anchor.default <- function(layer) {
 validate_get_text_angle <- function(layer) {
   UseMethod("validate_get_text_angle")
 }
+#' @export
 validate_get_text_angle.default <- function(layer) {
   get_text_angle <- layer$get_text_angle
   if (is_cur_value(get_text_angle)) {
@@ -1921,6 +2011,7 @@ validate_get_text_angle.default <- function(layer) {
 validate_get_text_background_color <- function(layer) {
   UseMethod("validate_get_text_background_color")
 }
+#' @export
 validate_get_text_background_color.default <- function(layer) {
   get_text_background_color <- layer$get_text_background_color
   if (is_cur_value(get_text_background_color)) {
@@ -1949,6 +2040,7 @@ validate_get_text_background_color.default <- function(layer) {
 validate_get_text_border_color <- function(layer) {
   UseMethod("validate_get_text_border_color")
 }
+#' @export
 validate_get_text_border_color.default <- function(layer) {
   get_text_border_color <- layer$get_text_border_color
   if (is_cur_value(get_text_border_color)) {
@@ -1977,6 +2069,7 @@ validate_get_text_border_color.default <- function(layer) {
 validate_get_text_border_width <- function(layer) {
   UseMethod("validate_get_text_border_width")
 }
+#' @export
 validate_get_text_border_width.default <- function(layer) {
   get_text_border_width <- layer$get_text_border_width
   if (is_cur_value(get_text_border_width)) {
@@ -2005,6 +2098,7 @@ validate_get_text_border_width.default <- function(layer) {
 validate_get_text_color <- function(layer) {
   UseMethod("validate_get_text_color")
 }
+#' @export
 validate_get_text_color.default <- function(layer) {
   get_text_color <- layer$get_text_color
   if (is_cur_value(get_text_color)) {
@@ -2033,6 +2127,7 @@ validate_get_text_color.default <- function(layer) {
 validate_get_text_pixel_offset <- function(layer) {
   UseMethod("validate_get_text_pixel_offset")
 }
+#' @export
 validate_get_text_pixel_offset.default <- function(layer) {
   get_text_pixel_offset <- layer$get_text_pixel_offset
   if (is_cur_value(get_text_pixel_offset)) {
@@ -2061,6 +2156,7 @@ validate_get_text_pixel_offset.default <- function(layer) {
 validate_get_text_size <- function(layer) {
   UseMethod("validate_get_text_size")
 }
+#' @export
 validate_get_text_size.default <- function(layer) {
   get_text_size <- layer$get_text_size
   if (is_cur_value(get_text_size)) {
@@ -2089,6 +2185,7 @@ validate_get_text_size.default <- function(layer) {
 validate_get_tile_data <- function(layer) {
   UseMethod("validate_get_tile_data")
 }
+#' @export
 validate_get_tile_data.default <- function(layer) {
   get_tile_data <- layer$get_tile_data
   if (is_cur_value(get_tile_data)) {
@@ -2104,6 +2201,7 @@ validate_get_tile_data.default <- function(layer) {
 validate_get_tilt <- function(layer) {
   UseMethod("validate_get_tilt")
 }
+#' @export
 validate_get_tilt.default <- function(layer) {
   get_tilt <- layer$get_tilt
   if (is_cur_value(get_tilt)) {
@@ -2132,6 +2230,7 @@ validate_get_tilt.default <- function(layer) {
 validate_get_timestamps <- function(layer) {
   UseMethod("validate_get_timestamps")
 }
+#' @export
 validate_get_timestamps.default <- function(layer) {
   get_timestamps <- layer$get_timestamps
   if (is_cur_value(get_timestamps)) {
@@ -2154,6 +2253,7 @@ validate_get_timestamps.default <- function(layer) {
 validate_get_transform_matrix <- function(layer) {
   UseMethod("validate_get_transform_matrix")
 }
+#' @export
 validate_get_transform_matrix.default <- function(layer) {
   get_transform_matrix <- layer$get_transform_matrix
   if (is_cur_value(get_transform_matrix)) {
@@ -2178,6 +2278,7 @@ validate_get_transform_matrix.default <- function(layer) {
 validate_get_translation <- function(layer) {
   UseMethod("validate_get_translation")
 }
+#' @export
 validate_get_translation.default <- function(layer) {
   get_translation <- layer$get_translation
   if (is_cur_value(get_translation)) {
@@ -2206,6 +2307,7 @@ validate_get_translation.default <- function(layer) {
 validate_get_weight <- function(layer) {
   UseMethod("validate_get_weight")
 }
+#' @export
 validate_get_weight.default <- function(layer) {
   get_weight <- layer$get_weight
   if (is_cur_value(get_weight)) {
@@ -2234,6 +2336,7 @@ validate_get_weight.default <- function(layer) {
 validate_get_width <- function(layer) {
   UseMethod("validate_get_width")
 }
+#' @export
 validate_get_width.default <- function(layer) {
   get_width <- layer$get_width
   if (is_cur_value(get_width)) {
@@ -2262,6 +2365,7 @@ validate_get_width.default <- function(layer) {
 validate_gpu_aggregation <- function(layer) {
   UseMethod("validate_gpu_aggregation")
 }
+#' @export
 validate_gpu_aggregation.default <- function(layer) {
   gpu_aggregation <- layer$gpu_aggregation
   if (is_cur_value(gpu_aggregation)) {
@@ -2280,6 +2384,7 @@ validate_gpu_aggregation.default <- function(layer) {
 validate_great_circle <- function(layer) {
   UseMethod("validate_great_circle")
 }
+#' @export
 validate_great_circle.default <- function(layer) {
   great_circle <- layer$great_circle
   if (is_cur_value(great_circle)) {
@@ -2298,6 +2403,7 @@ validate_great_circle.default <- function(layer) {
 validate_group_name <- function(layer) {
   UseMethod("validate_group_name")
 }
+#' @export
 validate_group_name.default <- function(layer) {
   group_name <- layer$group_name
   if (is_cur_value(group_name)) {
@@ -2318,6 +2424,7 @@ validate_group_name.default <- function(layer) {
 validate_high_precision <- function(layer) {
   UseMethod("validate_high_precision")
 }
+#' @export
 validate_high_precision.default <- function(layer) {
   high_precision <- layer$high_precision
   if (is_cur_value(high_precision)) {
@@ -2336,6 +2443,7 @@ validate_high_precision.default <- function(layer) {
 validate_highlight_color <- function(layer) {
   UseMethod("validate_highlight_color")
 }
+#' @export
 validate_highlight_color.default <- function(layer) {
   highlight_color <- layer$highlight_color
   if (is_cur_value(highlight_color)) {
@@ -2364,6 +2472,7 @@ validate_highlight_color.default <- function(layer) {
 validate_highlighted_feature_id <- function(layer) {
   UseMethod("validate_highlighted_feature_id")
 }
+#' @export
 validate_highlighted_feature_id.default <- function(layer) {
   highlighted_feature_id <- layer$highlighted_feature_id
   if (is_cur_value(highlighted_feature_id)) {
@@ -2379,6 +2488,7 @@ validate_highlighted_feature_id.default <- function(layer) {
 validate_icon_alpha_cutoff <- function(layer) {
   UseMethod("validate_icon_alpha_cutoff")
 }
+#' @export
 validate_icon_alpha_cutoff.default <- function(layer) {
   icon_alpha_cutoff <- layer$icon_alpha_cutoff
   if (is_cur_value(icon_alpha_cutoff)) {
@@ -2397,6 +2507,7 @@ validate_icon_alpha_cutoff.default <- function(layer) {
 validate_icon_atlas <- function(layer) {
   UseMethod("validate_icon_atlas")
 }
+#' @export
 validate_icon_atlas.default <- function(layer) {
   icon_atlas <- layer$icon_atlas
   if (is_cur_value(icon_atlas)) {
@@ -2412,6 +2523,7 @@ validate_icon_atlas.default <- function(layer) {
 validate_icon_billboard <- function(layer) {
   UseMethod("validate_icon_billboard")
 }
+#' @export
 validate_icon_billboard.default <- function(layer) {
   icon_billboard <- layer$icon_billboard
   if (is_cur_value(icon_billboard)) {
@@ -2430,6 +2542,7 @@ validate_icon_billboard.default <- function(layer) {
 validate_icon_mapping <- function(layer) {
   UseMethod("validate_icon_mapping")
 }
+#' @export
 validate_icon_mapping.default <- function(layer) {
   icon_mapping <- layer$icon_mapping
   if (is_cur_value(icon_mapping)) {
@@ -2443,6 +2556,7 @@ validate_icon_mapping.default <- function(layer) {
 validate_icon_size_max_pixels <- function(layer) {
   UseMethod("validate_icon_size_max_pixels")
 }
+#' @export
 validate_icon_size_max_pixels.default <- function(layer) {
   icon_size_max_pixels <- layer$icon_size_max_pixels
   if (is_cur_value(icon_size_max_pixels)) {
@@ -2461,6 +2575,7 @@ validate_icon_size_max_pixels.default <- function(layer) {
 validate_icon_size_min_pixels <- function(layer) {
   UseMethod("validate_icon_size_min_pixels")
 }
+#' @export
 validate_icon_size_min_pixels.default <- function(layer) {
   icon_size_min_pixels <- layer$icon_size_min_pixels
   if (is_cur_value(icon_size_min_pixels)) {
@@ -2479,6 +2594,7 @@ validate_icon_size_min_pixels.default <- function(layer) {
 validate_icon_size_scale <- function(layer) {
   UseMethod("validate_icon_size_scale")
 }
+#' @export
 validate_icon_size_scale.default <- function(layer) {
   icon_size_scale <- layer$icon_size_scale
   if (is_cur_value(icon_size_scale)) {
@@ -2497,6 +2613,7 @@ validate_icon_size_scale.default <- function(layer) {
 validate_icon_size_units <- function(layer) {
   UseMethod("validate_icon_size_units")
 }
+#' @export
 validate_icon_size_units.default <- function(layer) {
   icon_size_units <- layer$icon_size_units
   if (is_cur_value(icon_size_units)) {
@@ -2515,6 +2632,7 @@ validate_icon_size_units.default <- function(layer) {
 validate_id <- function(layer) {
   UseMethod("validate_id")
 }
+#' @export
 validate_id.default <- function(layer) {
   id <- layer$id
   if (is_cur_value(id)) {
@@ -2535,6 +2653,7 @@ validate_id.default <- function(layer) {
 validate_image <- function(layer) {
   UseMethod("validate_image")
 }
+#' @export
 validate_image.default <- function(layer) {
   image <- layer$image
   if (is_cur_value(image)) {
@@ -2550,6 +2669,7 @@ validate_image.default <- function(layer) {
 validate_intensity <- function(layer) {
   UseMethod("validate_intensity")
 }
+#' @export
 validate_intensity.default <- function(layer) {
   intensity <- layer$intensity
   if (is_cur_value(intensity)) {
@@ -2568,6 +2688,7 @@ validate_intensity.default <- function(layer) {
 validate_joint_rounded <- function(layer) {
   UseMethod("validate_joint_rounded")
 }
+#' @export
 validate_joint_rounded.default <- function(layer) {
   joint_rounded <- layer$joint_rounded
   if (is_cur_value(joint_rounded)) {
@@ -2586,6 +2707,7 @@ validate_joint_rounded.default <- function(layer) {
 validate_line_billboard <- function(layer) {
   UseMethod("validate_line_billboard")
 }
+#' @export
 validate_line_billboard.default <- function(layer) {
   line_billboard <- layer$line_billboard
   if (is_cur_value(line_billboard)) {
@@ -2604,6 +2726,7 @@ validate_line_billboard.default <- function(layer) {
 validate_line_cap_rounded <- function(layer) {
   UseMethod("validate_line_cap_rounded")
 }
+#' @export
 validate_line_cap_rounded.default <- function(layer) {
   line_cap_rounded <- layer$line_cap_rounded
   if (is_cur_value(line_cap_rounded)) {
@@ -2622,6 +2745,7 @@ validate_line_cap_rounded.default <- function(layer) {
 validate_line_height <- function(layer) {
   UseMethod("validate_line_height")
 }
+#' @export
 validate_line_height.default <- function(layer) {
   line_height <- layer$line_height
   if (is_cur_value(line_height)) {
@@ -2640,6 +2764,7 @@ validate_line_height.default <- function(layer) {
 validate_line_joint_rounded <- function(layer) {
   UseMethod("validate_line_joint_rounded")
 }
+#' @export
 validate_line_joint_rounded.default <- function(layer) {
   line_joint_rounded <- layer$line_joint_rounded
   if (is_cur_value(line_joint_rounded)) {
@@ -2658,6 +2783,7 @@ validate_line_joint_rounded.default <- function(layer) {
 validate_line_miter_limit <- function(layer) {
   UseMethod("validate_line_miter_limit")
 }
+#' @export
 validate_line_miter_limit.default <- function(layer) {
   line_miter_limit <- layer$line_miter_limit
   if (is_cur_value(line_miter_limit)) {
@@ -2676,6 +2802,7 @@ validate_line_miter_limit.default <- function(layer) {
 validate_line_width_max_pixels <- function(layer) {
   UseMethod("validate_line_width_max_pixels")
 }
+#' @export
 validate_line_width_max_pixels.default <- function(layer) {
   line_width_max_pixels <- layer$line_width_max_pixels
   if (is_cur_value(line_width_max_pixels)) {
@@ -2694,6 +2821,7 @@ validate_line_width_max_pixels.default <- function(layer) {
 validate_line_width_min_pixels <- function(layer) {
   UseMethod("validate_line_width_min_pixels")
 }
+#' @export
 validate_line_width_min_pixels.default <- function(layer) {
   line_width_min_pixels <- layer$line_width_min_pixels
   if (is_cur_value(line_width_min_pixels)) {
@@ -2712,6 +2840,7 @@ validate_line_width_min_pixels.default <- function(layer) {
 validate_line_width_scale <- function(layer) {
   UseMethod("validate_line_width_scale")
 }
+#' @export
 validate_line_width_scale.default <- function(layer) {
   line_width_scale <- layer$line_width_scale
   if (is_cur_value(line_width_scale)) {
@@ -2730,6 +2859,7 @@ validate_line_width_scale.default <- function(layer) {
 validate_line_width_units <- function(layer) {
   UseMethod("validate_line_width_units")
 }
+#' @export
 validate_line_width_units.default <- function(layer) {
   line_width_units <- layer$line_width_units
   if (is_cur_value(line_width_units)) {
@@ -2748,6 +2878,7 @@ validate_line_width_units.default <- function(layer) {
 validate_loader <- function(layer) {
   UseMethod("validate_loader")
 }
+#' @export
 validate_loader.default <- function(layer) {
   loader <- layer$loader
   if (is_cur_value(loader)) {
@@ -2761,6 +2892,7 @@ validate_loader.default <- function(layer) {
 validate_loop_length <- function(layer) {
   UseMethod("validate_loop_length")
 }
+#' @export
 validate_loop_length.default <- function(layer) {
   loop_length <- layer$loop_length
   if (is_cur_value(loop_length)) {
@@ -2779,6 +2911,7 @@ validate_loop_length.default <- function(layer) {
 validate_lower_percentile <- function(layer) {
   UseMethod("validate_lower_percentile")
 }
+#' @export
 validate_lower_percentile.default <- function(layer) {
   lower_percentile <- layer$lower_percentile
   if (is_cur_value(lower_percentile)) {
@@ -2797,6 +2930,7 @@ validate_lower_percentile.default <- function(layer) {
 validate_material <- function(layer) {
   UseMethod("validate_material")
 }
+#' @export
 validate_material.default <- function(layer) {
   material <- layer$material
   if (is_cur_value(material)) {
@@ -2815,6 +2949,7 @@ validate_material.default <- function(layer) {
 validate_max_cache_byte_size <- function(layer) {
   UseMethod("validate_max_cache_byte_size")
 }
+#' @export
 validate_max_cache_byte_size.default <- function(layer) {
   max_cache_byte_size <- layer$max_cache_byte_size
   if (is_cur_value(max_cache_byte_size)) {
@@ -2830,6 +2965,7 @@ validate_max_cache_byte_size.default <- function(layer) {
 validate_max_cache_size <- function(layer) {
   UseMethod("validate_max_cache_size")
 }
+#' @export
 validate_max_cache_size.default <- function(layer) {
   max_cache_size <- layer$max_cache_size
   if (is_cur_value(max_cache_size)) {
@@ -2845,6 +2981,7 @@ validate_max_cache_size.default <- function(layer) {
 validate_max_requests <- function(layer) {
   UseMethod("validate_max_requests")
 }
+#' @export
 validate_max_requests.default <- function(layer) {
   max_requests <- layer$max_requests
   if (is_cur_value(max_requests)) {
@@ -2863,6 +3000,7 @@ validate_max_requests.default <- function(layer) {
 validate_max_width <- function(layer) {
   UseMethod("validate_max_width")
 }
+#' @export
 validate_max_width.default <- function(layer) {
   max_width <- layer$max_width
   if (is_cur_value(max_width)) {
@@ -2881,6 +3019,7 @@ validate_max_width.default <- function(layer) {
 validate_max_zoom <- function(layer) {
   UseMethod("validate_max_zoom")
 }
+#' @export
 validate_max_zoom.default <- function(layer) {
   max_zoom <- layer$max_zoom
   if (is_cur_value(max_zoom)) {
@@ -2896,6 +3035,7 @@ validate_max_zoom.default <- function(layer) {
 validate_mesh <- function(layer) {
   UseMethod("validate_mesh")
 }
+#' @export
 validate_mesh.default <- function(layer) {
   mesh <- layer$mesh
   if (is_cur_value(mesh)) {
@@ -2911,6 +3051,7 @@ validate_mesh.default <- function(layer) {
 validate_mesh_max_error <- function(layer) {
   UseMethod("validate_mesh_max_error")
 }
+#' @export
 validate_mesh_max_error.default <- function(layer) {
   mesh_max_error <- layer$mesh_max_error
   if (is_cur_value(mesh_max_error)) {
@@ -2929,6 +3070,7 @@ validate_mesh_max_error.default <- function(layer) {
 validate_min_zoom <- function(layer) {
   UseMethod("validate_min_zoom")
 }
+#' @export
 validate_min_zoom.default <- function(layer) {
   min_zoom <- layer$min_zoom
   if (is_cur_value(min_zoom)) {
@@ -2947,6 +3089,7 @@ validate_min_zoom.default <- function(layer) {
 validate_miter_limit <- function(layer) {
   UseMethod("validate_miter_limit")
 }
+#' @export
 validate_miter_limit.default <- function(layer) {
   miter_limit <- layer$miter_limit
   if (is_cur_value(miter_limit)) {
@@ -2965,6 +3108,7 @@ validate_miter_limit.default <- function(layer) {
 validate_name <- function(layer) {
   UseMethod("validate_name")
 }
+#' @export
 validate_name.default <- function(layer) {
   name <- layer$name
   if (is_cur_value(name)) {
@@ -2985,6 +3129,7 @@ validate_name.default <- function(layer) {
 validate_offset <- function(layer) {
   UseMethod("validate_offset")
 }
+#' @export
 validate_offset.default <- function(layer) {
   offset <- layer$offset
   if (is_cur_value(offset)) {
@@ -3003,6 +3148,7 @@ validate_offset.default <- function(layer) {
 validate_opacity <- function(layer) {
   UseMethod("validate_opacity")
 }
+#' @export
 validate_opacity.default <- function(layer) {
   opacity <- layer$opacity
   if (is_cur_value(opacity)) {
@@ -3021,6 +3167,7 @@ validate_opacity.default <- function(layer) {
 validate_outline_color <- function(layer) {
   UseMethod("validate_outline_color")
 }
+#' @export
 validate_outline_color.default <- function(layer) {
   outline_color <- layer$outline_color
   if (is_cur_value(outline_color)) {
@@ -3039,6 +3186,7 @@ validate_outline_color.default <- function(layer) {
 validate_outline_width <- function(layer) {
   UseMethod("validate_outline_width")
 }
+#' @export
 validate_outline_width.default <- function(layer) {
   outline_width <- layer$outline_width
   if (is_cur_value(outline_width)) {
@@ -3057,6 +3205,7 @@ validate_outline_width.default <- function(layer) {
 validate_pickable <- function(layer) {
   UseMethod("validate_pickable")
 }
+#' @export
 validate_pickable.default <- function(layer) {
   pickable <- layer$pickable
   if (is_cur_value(pickable)) {
@@ -3075,6 +3224,7 @@ validate_pickable.default <- function(layer) {
 validate_point_antialiasing <- function(layer) {
   UseMethod("validate_point_antialiasing")
 }
+#' @export
 validate_point_antialiasing.default <- function(layer) {
   point_antialiasing <- layer$point_antialiasing
   if (is_cur_value(point_antialiasing)) {
@@ -3093,6 +3243,7 @@ validate_point_antialiasing.default <- function(layer) {
 validate_point_billboard <- function(layer) {
   UseMethod("validate_point_billboard")
 }
+#' @export
 validate_point_billboard.default <- function(layer) {
   point_billboard <- layer$point_billboard
   if (is_cur_value(point_billboard)) {
@@ -3111,6 +3262,7 @@ validate_point_billboard.default <- function(layer) {
 validate_point_radius_max_pixels <- function(layer) {
   UseMethod("validate_point_radius_max_pixels")
 }
+#' @export
 validate_point_radius_max_pixels.default <- function(layer) {
   point_radius_max_pixels <- layer$point_radius_max_pixels
   if (is_cur_value(point_radius_max_pixels)) {
@@ -3129,6 +3281,7 @@ validate_point_radius_max_pixels.default <- function(layer) {
 validate_point_radius_min_pixels <- function(layer) {
   UseMethod("validate_point_radius_min_pixels")
 }
+#' @export
 validate_point_radius_min_pixels.default <- function(layer) {
   point_radius_min_pixels <- layer$point_radius_min_pixels
   if (is_cur_value(point_radius_min_pixels)) {
@@ -3147,6 +3300,7 @@ validate_point_radius_min_pixels.default <- function(layer) {
 validate_point_radius_scale <- function(layer) {
   UseMethod("validate_point_radius_scale")
 }
+#' @export
 validate_point_radius_scale.default <- function(layer) {
   point_radius_scale <- layer$point_radius_scale
   if (is_cur_value(point_radius_scale)) {
@@ -3165,6 +3319,7 @@ validate_point_radius_scale.default <- function(layer) {
 validate_point_radius_units <- function(layer) {
   UseMethod("validate_point_radius_units")
 }
+#' @export
 validate_point_radius_units.default <- function(layer) {
   point_radius_units <- layer$point_radius_units
   if (is_cur_value(point_radius_units)) {
@@ -3183,6 +3338,7 @@ validate_point_radius_units.default <- function(layer) {
 validate_point_size <- function(layer) {
   UseMethod("validate_point_size")
 }
+#' @export
 validate_point_size.default <- function(layer) {
   point_size <- layer$point_size
   if (is_cur_value(point_size)) {
@@ -3201,6 +3357,7 @@ validate_point_size.default <- function(layer) {
 validate_point_type <- function(layer) {
   UseMethod("validate_point_type")
 }
+#' @export
 validate_point_type.default <- function(layer) {
   point_type <- layer$point_type
   if (is_cur_value(point_type)) {
@@ -3219,6 +3376,7 @@ validate_point_type.default <- function(layer) {
 validate_position_format <- function(layer) {
   UseMethod("validate_position_format")
 }
+#' @export
 validate_position_format.default <- function(layer) {
   position_format <- layer$position_format
   if (is_cur_value(position_format)) {
@@ -3237,6 +3395,7 @@ validate_position_format.default <- function(layer) {
 validate_radius <- function(layer) {
   UseMethod("validate_radius")
 }
+#' @export
 validate_radius.default <- function(layer) {
   radius <- layer$radius
   if (is_cur_value(radius)) {
@@ -3255,6 +3414,7 @@ validate_radius.default <- function(layer) {
 validate_radius_max_pixels <- function(layer) {
   UseMethod("validate_radius_max_pixels")
 }
+#' @export
 validate_radius_max_pixels.default <- function(layer) {
   radius_max_pixels <- layer$radius_max_pixels
   if (is_cur_value(radius_max_pixels)) {
@@ -3273,6 +3433,7 @@ validate_radius_max_pixels.default <- function(layer) {
 validate_radius_min_pixels <- function(layer) {
   UseMethod("validate_radius_min_pixels")
 }
+#' @export
 validate_radius_min_pixels.default <- function(layer) {
   radius_min_pixels <- layer$radius_min_pixels
   if (is_cur_value(radius_min_pixels)) {
@@ -3291,6 +3452,7 @@ validate_radius_min_pixels.default <- function(layer) {
 validate_radius_pixels <- function(layer) {
   UseMethod("validate_radius_pixels")
 }
+#' @export
 validate_radius_pixels.default <- function(layer) {
   radius_pixels <- layer$radius_pixels
   if (is_cur_value(radius_pixels)) {
@@ -3309,6 +3471,7 @@ validate_radius_pixels.default <- function(layer) {
 validate_radius_scale <- function(layer) {
   UseMethod("validate_radius_scale")
 }
+#' @export
 validate_radius_scale.default <- function(layer) {
   radius_scale <- layer$radius_scale
   if (is_cur_value(radius_scale)) {
@@ -3327,6 +3490,7 @@ validate_radius_scale.default <- function(layer) {
 validate_radius_units <- function(layer) {
   UseMethod("validate_radius_units")
 }
+#' @export
 validate_radius_units.default <- function(layer) {
   radius_units <- layer$radius_units
   if (is_cur_value(radius_units)) {
@@ -3345,6 +3509,7 @@ validate_radius_units.default <- function(layer) {
 validate_refinement_strategy <- function(layer) {
   UseMethod("validate_refinement_strategy")
 }
+#' @export
 validate_refinement_strategy.default <- function(layer) {
   refinement_strategy <- layer$refinement_strategy
   if (is_cur_value(refinement_strategy)) {
@@ -3363,6 +3528,7 @@ validate_refinement_strategy.default <- function(layer) {
 validate_scenegraph <- function(layer) {
   UseMethod("validate_scenegraph")
 }
+#' @export
 validate_scenegraph.default <- function(layer) {
   scenegraph <- layer$scenegraph
   if (is_cur_value(scenegraph)) {
@@ -3378,6 +3544,7 @@ validate_scenegraph.default <- function(layer) {
 validate_size_max_pixels <- function(layer) {
   UseMethod("validate_size_max_pixels")
 }
+#' @export
 validate_size_max_pixels.default <- function(layer) {
   size_max_pixels <- layer$size_max_pixels
   if (is_cur_value(size_max_pixels)) {
@@ -3396,6 +3563,7 @@ validate_size_max_pixels.default <- function(layer) {
 validate_size_min_pixels <- function(layer) {
   UseMethod("validate_size_min_pixels")
 }
+#' @export
 validate_size_min_pixels.default <- function(layer) {
   size_min_pixels <- layer$size_min_pixels
   if (is_cur_value(size_min_pixels)) {
@@ -3414,6 +3582,7 @@ validate_size_min_pixels.default <- function(layer) {
 validate_size_scale <- function(layer) {
   UseMethod("validate_size_scale")
 }
+#' @export
 validate_size_scale.default <- function(layer) {
   size_scale <- layer$size_scale
   if (is_cur_value(size_scale)) {
@@ -3432,6 +3601,7 @@ validate_size_scale.default <- function(layer) {
 validate_size_units <- function(layer) {
   UseMethod("validate_size_units")
 }
+#' @export
 validate_size_units.default <- function(layer) {
   size_units <- layer$size_units
   if (is_cur_value(size_units)) {
@@ -3450,6 +3620,7 @@ validate_size_units.default <- function(layer) {
 validate_stroked <- function(layer) {
   UseMethod("validate_stroked")
 }
+#' @export
 validate_stroked.default <- function(layer) {
   stroked <- layer$stroked
   if (is_cur_value(stroked)) {
@@ -3468,6 +3639,7 @@ validate_stroked.default <- function(layer) {
 validate_text_background <- function(layer) {
   UseMethod("validate_text_background")
 }
+#' @export
 validate_text_background.default <- function(layer) {
   text_background <- layer$text_background
   if (is_cur_value(text_background)) {
@@ -3486,6 +3658,7 @@ validate_text_background.default <- function(layer) {
 validate_text_background_padding <- function(layer) {
   UseMethod("validate_text_background_padding")
 }
+#' @export
 validate_text_background_padding.default <- function(layer) {
   text_background_padding <- layer$text_background_padding
   if (is_cur_value(text_background_padding)) {
@@ -3504,6 +3677,7 @@ validate_text_background_padding.default <- function(layer) {
 validate_text_billboard <- function(layer) {
   UseMethod("validate_text_billboard")
 }
+#' @export
 validate_text_billboard.default <- function(layer) {
   text_billboard <- layer$text_billboard
   if (is_cur_value(text_billboard)) {
@@ -3522,6 +3696,7 @@ validate_text_billboard.default <- function(layer) {
 validate_text_font_family <- function(layer) {
   UseMethod("validate_text_font_family")
 }
+#' @export
 validate_text_font_family.default <- function(layer) {
   text_font_family <- layer$text_font_family
   if (is_cur_value(text_font_family)) {
@@ -3540,6 +3715,7 @@ validate_text_font_family.default <- function(layer) {
 validate_text_font_settings <- function(layer) {
   UseMethod("validate_text_font_settings")
 }
+#' @export
 validate_text_font_settings.default <- function(layer) {
   text_font_settings <- layer$text_font_settings
   if (is_cur_value(text_font_settings)) {
@@ -3553,6 +3729,7 @@ validate_text_font_settings.default <- function(layer) {
 validate_text_font_weight <- function(layer) {
   UseMethod("validate_text_font_weight")
 }
+#' @export
 validate_text_font_weight.default <- function(layer) {
   text_font_weight <- layer$text_font_weight
   if (is_cur_value(text_font_weight)) {
@@ -3571,6 +3748,7 @@ validate_text_font_weight.default <- function(layer) {
 validate_text_line_height <- function(layer) {
   UseMethod("validate_text_line_height")
 }
+#' @export
 validate_text_line_height.default <- function(layer) {
   text_line_height <- layer$text_line_height
   if (is_cur_value(text_line_height)) {
@@ -3589,6 +3767,7 @@ validate_text_line_height.default <- function(layer) {
 validate_text_max_width <- function(layer) {
   UseMethod("validate_text_max_width")
 }
+#' @export
 validate_text_max_width.default <- function(layer) {
   text_max_width <- layer$text_max_width
   if (is_cur_value(text_max_width)) {
@@ -3607,6 +3786,7 @@ validate_text_max_width.default <- function(layer) {
 validate_text_outline_color <- function(layer) {
   UseMethod("validate_text_outline_color")
 }
+#' @export
 validate_text_outline_color.default <- function(layer) {
   text_outline_color <- layer$text_outline_color
   if (is_cur_value(text_outline_color)) {
@@ -3625,6 +3805,7 @@ validate_text_outline_color.default <- function(layer) {
 validate_text_outline_width <- function(layer) {
   UseMethod("validate_text_outline_width")
 }
+#' @export
 validate_text_outline_width.default <- function(layer) {
   text_outline_width <- layer$text_outline_width
   if (is_cur_value(text_outline_width)) {
@@ -3643,6 +3824,7 @@ validate_text_outline_width.default <- function(layer) {
 validate_text_size_max_pixels <- function(layer) {
   UseMethod("validate_text_size_max_pixels")
 }
+#' @export
 validate_text_size_max_pixels.default <- function(layer) {
   text_size_max_pixels <- layer$text_size_max_pixels
   if (is_cur_value(text_size_max_pixels)) {
@@ -3661,6 +3843,7 @@ validate_text_size_max_pixels.default <- function(layer) {
 validate_text_size_min_pixels <- function(layer) {
   UseMethod("validate_text_size_min_pixels")
 }
+#' @export
 validate_text_size_min_pixels.default <- function(layer) {
   text_size_min_pixels <- layer$text_size_min_pixels
   if (is_cur_value(text_size_min_pixels)) {
@@ -3679,6 +3862,7 @@ validate_text_size_min_pixels.default <- function(layer) {
 validate_text_size_scale <- function(layer) {
   UseMethod("validate_text_size_scale")
 }
+#' @export
 validate_text_size_scale.default <- function(layer) {
   text_size_scale <- layer$text_size_scale
   if (is_cur_value(text_size_scale)) {
@@ -3697,6 +3881,7 @@ validate_text_size_scale.default <- function(layer) {
 validate_text_size_units <- function(layer) {
   UseMethod("validate_text_size_units")
 }
+#' @export
 validate_text_size_units.default <- function(layer) {
   text_size_units <- layer$text_size_units
   if (is_cur_value(text_size_units)) {
@@ -3715,6 +3900,7 @@ validate_text_size_units.default <- function(layer) {
 validate_text_word_break <- function(layer) {
   UseMethod("validate_text_word_break")
 }
+#' @export
 validate_text_word_break.default <- function(layer) {
   text_word_break <- layer$text_word_break
   if (is_cur_value(text_word_break)) {
@@ -3733,6 +3919,7 @@ validate_text_word_break.default <- function(layer) {
 validate_texture <- function(layer) {
   UseMethod("validate_texture")
 }
+#' @export
 validate_texture.default <- function(layer) {
   texture <- layer$texture
   if (is_cur_value(texture)) {
@@ -3748,6 +3935,7 @@ validate_texture.default <- function(layer) {
 validate_threshold <- function(layer) {
   UseMethod("validate_threshold")
 }
+#' @export
 validate_threshold.default <- function(layer) {
   threshold <- layer$threshold
   if (is_cur_value(threshold)) {
@@ -3766,6 +3954,7 @@ validate_threshold.default <- function(layer) {
 validate_tile_size <- function(layer) {
   UseMethod("validate_tile_size")
 }
+#' @export
 validate_tile_size.default <- function(layer) {
   tile_size <- layer$tile_size
   if (is_cur_value(tile_size)) {
@@ -3784,6 +3973,7 @@ validate_tile_size.default <- function(layer) {
 validate_tint_color <- function(layer) {
   UseMethod("validate_tint_color")
 }
+#' @export
 validate_tint_color.default <- function(layer) {
   tint_color <- layer$tint_color
   if (is_cur_value(tint_color)) {
@@ -3802,6 +3992,7 @@ validate_tint_color.default <- function(layer) {
 validate_tooltip <- function(layer) {
   UseMethod("validate_tooltip")
 }
+#' @export
 validate_tooltip.default <- function(layer) {
   tooltip <- layer$tooltip
   if (is_cur_value(tooltip)) {
@@ -3817,6 +4008,7 @@ validate_tooltip.default <- function(layer) {
 validate_trail_length <- function(layer) {
   UseMethod("validate_trail_length")
 }
+#' @export
 validate_trail_length.default <- function(layer) {
   trail_length <- layer$trail_length
   if (is_cur_value(trail_length)) {
@@ -3835,6 +4027,7 @@ validate_trail_length.default <- function(layer) {
 validate_transparent_color <- function(layer) {
   UseMethod("validate_transparent_color")
 }
+#' @export
 validate_transparent_color.default <- function(layer) {
   transparent_color <- layer$transparent_color
   if (is_cur_value(transparent_color)) {
@@ -3853,6 +4046,7 @@ validate_transparent_color.default <- function(layer) {
 validate_unique_id_property <- function(layer) {
   UseMethod("validate_unique_id_property")
 }
+#' @export
 validate_unique_id_property.default <- function(layer) {
   unique_id_property <- layer$unique_id_property
   if (is_cur_value(unique_id_property)) {
@@ -3871,6 +4065,7 @@ validate_unique_id_property.default <- function(layer) {
 validate_upper_percentile <- function(layer) {
   UseMethod("validate_upper_percentile")
 }
+#' @export
 validate_upper_percentile.default <- function(layer) {
   upper_percentile <- layer$upper_percentile
   if (is_cur_value(upper_percentile)) {
@@ -3889,6 +4084,7 @@ validate_upper_percentile.default <- function(layer) {
 validate_vertices <- function(layer) {
   UseMethod("validate_vertices")
 }
+#' @export
 validate_vertices.default <- function(layer) {
   vertices <- layer$vertices
   if (is_cur_value(vertices)) {
@@ -3904,6 +4100,7 @@ validate_vertices.default <- function(layer) {
 validate_visibility_toggle <- function(layer) {
   UseMethod("validate_visibility_toggle")
 }
+#' @export
 validate_visibility_toggle.default <- function(layer) {
   visibility_toggle <- layer$visibility_toggle
   if (is_cur_value(visibility_toggle)) {
@@ -3922,6 +4119,7 @@ validate_visibility_toggle.default <- function(layer) {
 validate_visible <- function(layer) {
   UseMethod("validate_visible")
 }
+#' @export
 validate_visible.default <- function(layer) {
   visible <- layer$visible
   if (is_cur_value(visible)) {
@@ -3940,6 +4138,7 @@ validate_visible.default <- function(layer) {
 validate_weights_texture_size <- function(layer) {
   UseMethod("validate_weights_texture_size")
 }
+#' @export
 validate_weights_texture_size.default <- function(layer) {
   weights_texture_size <- layer$weights_texture_size
   if (is_cur_value(weights_texture_size)) {
@@ -3958,6 +4157,7 @@ validate_weights_texture_size.default <- function(layer) {
 validate_width_max_pixels <- function(layer) {
   UseMethod("validate_width_max_pixels")
 }
+#' @export
 validate_width_max_pixels.default <- function(layer) {
   width_max_pixels <- layer$width_max_pixels
   if (is_cur_value(width_max_pixels)) {
@@ -3976,6 +4176,7 @@ validate_width_max_pixels.default <- function(layer) {
 validate_width_min_pixels <- function(layer) {
   UseMethod("validate_width_min_pixels")
 }
+#' @export
 validate_width_min_pixels.default <- function(layer) {
   width_min_pixels <- layer$width_min_pixels
   if (is_cur_value(width_min_pixels)) {
@@ -3994,6 +4195,7 @@ validate_width_min_pixels.default <- function(layer) {
 validate_width_scale <- function(layer) {
   UseMethod("validate_width_scale")
 }
+#' @export
 validate_width_scale.default <- function(layer) {
   width_scale <- layer$width_scale
   if (is_cur_value(width_scale)) {
@@ -4012,6 +4214,7 @@ validate_width_scale.default <- function(layer) {
 validate_width_units <- function(layer) {
   UseMethod("validate_width_units")
 }
+#' @export
 validate_width_units.default <- function(layer) {
   width_units <- layer$width_units
   if (is_cur_value(width_units)) {
@@ -4030,6 +4233,7 @@ validate_width_units.default <- function(layer) {
 validate_wireframe <- function(layer) {
   UseMethod("validate_wireframe")
 }
+#' @export
 validate_wireframe.default <- function(layer) {
   wireframe <- layer$wireframe
   if (is_cur_value(wireframe)) {
@@ -4048,6 +4252,7 @@ validate_wireframe.default <- function(layer) {
 validate_word_break <- function(layer) {
   UseMethod("validate_word_break")
 }
+#' @export
 validate_word_break.default <- function(layer) {
   word_break <- layer$word_break
   if (is_cur_value(word_break)) {
@@ -4066,6 +4271,7 @@ validate_word_break.default <- function(layer) {
 validate_worker_url <- function(layer) {
   UseMethod("validate_worker_url")
 }
+#' @export
 validate_worker_url.default <- function(layer) {
   worker_url <- layer$worker_url
   if (is_cur_value(worker_url)) {
@@ -4086,6 +4292,7 @@ validate_worker_url.default <- function(layer) {
 validate_wrap_longitude <- function(layer) {
   UseMethod("validate_wrap_longitude")
 }
+#' @export
 validate_wrap_longitude.default <- function(layer) {
   wrap_longitude <- layer$wrap_longitude
   if (is_cur_value(wrap_longitude)) {
@@ -4104,6 +4311,7 @@ validate_wrap_longitude.default <- function(layer) {
 validate_z_offset <- function(layer) {
   UseMethod("validate_z_offset")
 }
+#' @export
 validate_z_offset.default <- function(layer) {
   z_offset <- layer$z_offset
   if (is_cur_value(z_offset)) {
@@ -4122,6 +4330,7 @@ validate_z_offset.default <- function(layer) {
 validate_z_range <- function(layer) {
   UseMethod("validate_z_range")
 }
+#' @export
 validate_z_range.default <- function(layer) {
   z_range <- layer$z_range
   if (is_cur_value(z_range)) {
@@ -4137,6 +4346,7 @@ validate_z_range.default <- function(layer) {
 validate_zoom_offset <- function(layer) {
   UseMethod("validate_zoom_offset")
 }
+#' @export
 validate_zoom_offset.default <- function(layer) {
   zoom_offset <- layer$zoom_offset
   if (is_cur_value(zoom_offset)) {
@@ -4151,6 +4361,7 @@ validate_zoom_offset.default <- function(layer) {
   )
 }
 
+#' @export
 validate_highlight_color.MVTLayer <- function(layer) {
   highlight_color <- layer$highlight_color
   NextMethod()
@@ -4164,6 +4375,7 @@ validate_highlight_color.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_fill_color.MVTLayer <- function(layer) {
   get_fill_color <- layer$get_fill_color
   NextMethod()
@@ -4177,6 +4389,7 @@ validate_get_fill_color.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_line_color.MVTLayer <- function(layer) {
   get_line_color <- layer$get_line_color
   NextMethod()
@@ -4190,6 +4403,7 @@ validate_get_line_color.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_line_width.MVTLayer <- function(layer) {
   get_line_width <- layer$get_line_width
   NextMethod()
@@ -4203,6 +4417,7 @@ validate_get_line_width.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_point_radius.MVTLayer <- function(layer) {
   get_point_radius <- layer$get_point_radius
   NextMethod()
@@ -4216,6 +4431,7 @@ validate_get_point_radius.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_icon.MVTLayer <- function(layer) {
   get_icon <- layer$get_icon
   if (!grepl("icon", layer$point_type, fixed = TRUE) %??% TRUE) {
@@ -4232,6 +4448,7 @@ validate_get_icon.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_icon_angle.MVTLayer <- function(layer) {
   get_icon_angle <- layer$get_icon_angle
   NextMethod()
@@ -4245,6 +4462,7 @@ validate_get_icon_angle.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_icon_color.MVTLayer <- function(layer) {
   get_icon_color <- layer$get_icon_color
   NextMethod()
@@ -4258,6 +4476,7 @@ validate_get_icon_color.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_icon_pixel_offset.MVTLayer <- function(layer) {
   get_icon_pixel_offset <- layer$get_icon_pixel_offset
   NextMethod()
@@ -4271,6 +4490,7 @@ validate_get_icon_pixel_offset.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_icon_size.MVTLayer <- function(layer) {
   get_icon_size <- layer$get_icon_size
   NextMethod()
@@ -4284,6 +4504,7 @@ validate_get_icon_size.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text.MVTLayer <- function(layer) {
   get_text <- layer$get_text
   if (!grepl("text", layer$point_type, fixed = TRUE) %??% TRUE) {
@@ -4300,6 +4521,7 @@ validate_get_text.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text_angle.MVTLayer <- function(layer) {
   get_text_angle <- layer$get_text_angle
   NextMethod()
@@ -4313,6 +4535,7 @@ validate_get_text_angle.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text_color.MVTLayer <- function(layer) {
   get_text_color <- layer$get_text_color
   NextMethod()
@@ -4326,6 +4549,7 @@ validate_get_text_color.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text_pixel_offset.MVTLayer <- function(layer) {
   get_text_pixel_offset <- layer$get_text_pixel_offset
   NextMethod()
@@ -4339,6 +4563,7 @@ validate_get_text_pixel_offset.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text_size.MVTLayer <- function(layer) {
   get_text_size <- layer$get_text_size
   NextMethod()
@@ -4352,6 +4577,7 @@ validate_get_text_size.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text_anchor.MVTLayer <- function(layer) {
   get_text_anchor <- layer$get_text_anchor
   NextMethod()
@@ -4365,6 +4591,7 @@ validate_get_text_anchor.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text_alignment_baseline.MVTLayer <- function(layer) {
   get_text_alignment_baseline <- layer$get_text_alignment_baseline
   NextMethod()
@@ -4378,6 +4605,7 @@ validate_get_text_alignment_baseline.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text_background_color.MVTLayer <- function(layer) {
   get_text_background_color <- layer$get_text_background_color
   NextMethod()
@@ -4391,6 +4619,7 @@ validate_get_text_background_color.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text_border_color.MVTLayer <- function(layer) {
   get_text_border_color <- layer$get_text_border_color
   NextMethod()
@@ -4404,6 +4633,7 @@ validate_get_text_border_color.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_text_border_width.MVTLayer <- function(layer) {
   get_text_border_width <- layer$get_text_border_width
   NextMethod()
@@ -4417,6 +4647,7 @@ validate_get_text_border_width.MVTLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_elevation.MVTLayer <- function(layer) {
   get_elevation <- layer$get_elevation
   NextMethod()

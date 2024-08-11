@@ -184,6 +184,7 @@ rdeck_proxy <- function(id,
   rdeck
 }
 
+#' @export
 add_layer.rdeck_proxy <- function(rdeck, layer) {
   tidyassert::assert_inherits(layer, "layer")
 
@@ -191,6 +192,7 @@ add_layer.rdeck_proxy <- function(rdeck, layer) {
   rdeck
 }
 
+#' @export
 update_layer.rdeck_proxy <- add_layer.rdeck_proxy
 
 #' Set layer visibility

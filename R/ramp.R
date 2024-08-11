@@ -3,11 +3,13 @@ color_gradient <- function(palette) {
   UseMethod("color_gradient")
 }
 
+#' @export
 color_gradient.character <- function(palette) {
   tidyassert::assert(is_rgba_color(palette))
   color_gradient(function(n) palette)
 }
 
+#' @export
 color_gradient.function <- function(palette) {
   # function is a ramp built with scales::colour_ramp
   if (isTRUE(attr(palette, "safe_palette_func"))) return(palette)
@@ -26,11 +28,13 @@ color_categories <- function(palette) {
   UseMethod("color_categories")
 }
 
+#' @export
 color_categories.character <- function(palette) {
   tidyassert::assert(is_rgba_color(palette))
   color_categories(scales::manual_pal(palette))
 }
 
+#' @export
 color_categories.function <- function(palette) {
   rescale <- function(x, levels) scales::rescale(match(x, levels))
 
@@ -58,17 +62,20 @@ number_gradient <- function(seq) {
   UseMethod("number_gradient")
 }
 
+#' @export
 number_gradient.numeric <- function(seq) {
   tidyassert::assert(all_finite(seq) && length(seq) >= 2)
   stats::approxfun(scales::rescale(seq_along(seq)), seq)
 }
 
+#' @export
 number_gradient.integer <- number_gradient.numeric
 
 
 # a linear numeric ramp for discrete input
 number_categories <- function(seq) UseMethod("number_categories")
 
+#' @export
 number_categories.numeric <- function(seq) {
   tidyassert::assert(all_finite(seq) && length(seq) >= 2)
   seq_pal <- scales::manual_pal(seq)
@@ -82,4 +89,5 @@ number_categories.numeric <- function(seq) {
   }
 }
 
+#' @export
 number_categories.integer <- number_categories.numeric

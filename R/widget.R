@@ -125,6 +125,7 @@ layers <- function(rdeck) {
   rdeck$x$layers
 }
 
+#' @export
 add_layer.rdeck <- function(rdeck, layer) {
   tidyassert::assert_inherits(layer, "layer")
 
@@ -132,6 +133,7 @@ add_layer.rdeck <- function(rdeck, layer) {
   rdeck
 }
 
+#' @export
 update_layer.rdeck <- function(rdeck, layer) {
   tidyassert::assert_inherits(layer, "layer")
 

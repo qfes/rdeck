@@ -36,6 +36,7 @@ check_dots_access_token <- function(...) {
 }
 
 # validate data
+#' @export
 validate_data.layer <- function(layer) {
   data <- layer$data
   if (is_cur_value(data)) return()
@@ -45,6 +46,7 @@ validate_data.layer <- function(layer) {
   }
 }
 
+#' @export
 validate_data.GeoJsonLayer <- function(layer) {
   data <- layer$data
   if (is_cur_value(data)) return()
@@ -54,6 +56,7 @@ validate_data.GeoJsonLayer <- function(layer) {
   }
 }
 
+#' @export
 validate_data.MVTLayer <- function(layer) {
   data <- layer$data
   if (is_cur_value(data)) return()
@@ -96,6 +99,7 @@ validate_geometry_accessor <- function(layer, name, geom_type) {
 }
 
 # validate get_path
+#' @export
 validate_get_path.layer <- function(layer) {
   validate_geometry_accessor(
     layer,
@@ -105,6 +109,7 @@ validate_get_path.layer <- function(layer) {
 }
 
 # validate get_polygon
+#' @export
 validate_get_polygon.layer <- function(layer) {
   validate_geometry_accessor(
     layer,
@@ -114,6 +119,7 @@ validate_get_polygon.layer <- function(layer) {
 }
 
 # validate get_position
+#' @export
 validate_get_position.layer <- function(layer) {
   validate_geometry_accessor(
     layer,
@@ -123,6 +129,7 @@ validate_get_position.layer <- function(layer) {
 }
 
 # validate get_source_position
+#' @export
 validate_get_source_position.layer <- function(layer) {
   validate_geometry_accessor(
     layer,
@@ -132,6 +139,7 @@ validate_get_source_position.layer <- function(layer) {
 }
 
 # validate get_target_position
+#' @export
 validate_get_target_position.layer <- function(layer) {
   validate_geometry_accessor(
     layer,
@@ -141,6 +149,7 @@ validate_get_target_position.layer <- function(layer) {
 }
 
 # validate image
+#' @export
 validate_image.layer <- function(layer) {
   image <- layer$image
   if (is_cur_value(image)) return()
@@ -150,12 +159,14 @@ validate_image.layer <- function(layer) {
   }
 }
 
+#' @export
 validate_get_icon.GeoJsonLayer <- function(layer) {
   if (grepl("icon", layer$point_type, fixed = TRUE) %??% TRUE) {
     NextMethod()
   }
 }
 
+#' @export
 validate_get_text.GeoJsonLayer <- function(layer) {
   if (grepl("text", layer$point_type, fixed = TRUE) %??% TRUE) {
     NextMethod()
@@ -165,6 +176,7 @@ validate_get_text.GeoJsonLayer <- function(layer) {
 #' validate point_type
 #' @autoglobal
 #' @noRd
+#' @export
 validate_point_type.layer <- function(layer) {
   point_type <- layer$point_type
   if (is_cur_value(point_type)) return()
@@ -187,6 +199,7 @@ validate_point_type.layer <- function(layer) {
 }
 
 # validate high_precision
+#' @export
 validate_high_precision.layer <- function(layer) {
   high_precision <- layer$high_precision
   if (is_cur_value(high_precision)) return()

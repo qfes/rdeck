@@ -5,7 +5,7 @@
 \title{Prop Type: WK Geometry}
 \description{
 Geometry vectors are parsed with \code{\link[wk:wk_handle]{wk::wk_handle()}}. All geometry formats
-that \{wk\} supports directly are available to use in {rdeck} layers. You may
+that \{wk\} supports directly are available to use in \{rdeck\} layers. You may
 also use geometry formats which \{wk\} doesn't directly support, provided a
 \emph{loaded} package defines a \{wk\} \emph{reader} (i.e. \code{\link[wk:wk_handle]{wk::wk_handle()}} S3 method)
 for the geometry type.
@@ -24,7 +24,7 @@ Geometry formats supported by \{wk\} (always supported):
 Geometry formats supported by other packages (not dependencies of \{rdeck\}):
 \itemize{
 \item \code{\link[s2:as_s2_geography]{s2::s2_geography()}}
-\item \code{\link[geos:geos_geometry]{geos::geos_geometry()}}
+\item \code{\link[geos:as_geos_geometry]{geos::geos_geometry()}}
 \item Others?
 }
 }

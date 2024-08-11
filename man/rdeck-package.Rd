@@ -3,7 +3,6 @@
 \docType{package}
 \name{rdeck-package}
 \alias{rdeck-package}
-\alias{_PACKAGE}
 \title{rdeck: Deck.gl Widget}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}

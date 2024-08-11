@@ -26,6 +26,7 @@
   UseMethod("<%- func -%>")
 }
 
+#' @export
 <%- func -%>.default <- function(layer) {
   <%- propType.name %> <- layer$<%- propType.name -%>
   <%# current value %>

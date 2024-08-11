@@ -9,8 +9,10 @@ as_json <- function(object, ...) {
 }
 
 # identity: a convenient hack for safely calling as_json on anything
+#' @export
 as_json.default <- function(object, ...) object
 
+#' @export
 as_json.layer <- function(object, ...) {
   cols <- get_used_colnames(object)
   is_geojson <- inherits(object, "GeoJsonLayer")
@@ -36,6 +38,7 @@ as_json.layer <- function(object, ...) {
   )
 }
 
+#' @export
 as_json.deck_props <- function(object, ...) {
   deck_props <- select(object, -where(is_cur_value))
 
@@ -46,6 +49,7 @@ as_json.deck_props <- function(object, ...) {
   )
 }
 
+#' @export
 as_json.map_props <- function(object, ...) {
   json_stringify(
     select(object, -where(is_cur_value)),
@@ -56,6 +60,7 @@ as_json.map_props <- function(object, ...) {
 
 #' @autoglobal
 #' @noRd
+#' @export
 as_json.rdeck_data <- function(object, ...) {
   rdeck_data <- mutate(
     object,
@@ -76,6 +81,7 @@ as_json.rdeck_data <- function(object, ...) {
   )
 }
 
+#' @export
 as_json.view_state <- function(object, ...) {
   json_stringify(
     object,
@@ -85,6 +91,7 @@ as_json.view_state <- function(object, ...) {
   )
 }
 
+#' @export
 as_json.wk_rct <- function(object, ...) {
   json_stringify(
     unname(unlist(object)),
@@ -94,6 +101,7 @@ as_json.wk_rct <- function(object, ...) {
 
 #' @autoglobal
 #' @noRd
+#' @export
 as_json.editor_options <- function(object, ...) {
   options <- purrr::discard(object, is_cur_value)
 
@@ -122,6 +130,7 @@ as_json.editor_options <- function(object, ...) {
   )
 }
 
+#' @export
 as_json.accessor <- function(object, ...) {
   json_stringify(
     mutate(object, type = "accessor"),
@@ -132,6 +141,7 @@ as_json.accessor <- function(object, ...) {
 
 #' @autoglobal
 #' @noRd
+#' @export
 as_json.scale <- function(object, ...) {
   compiled_scale <- mutate(
     compile(object),
@@ -161,12 +171,14 @@ as_json.scale <- function(object, ...) {
 
 #' @autoglobal
 #' @noRd
+#' @export
 as_json.tooltip <- function(object, ...) {
   # unbox cols if logical
   tooltip <- purrr::map_if(object, is.logical, jsonlite::unbox)
   json_stringify(tooltip, camel_case = TRUE)
 }
 
+#' @export
 as_json.tile_json <- function(object, ...) {
   tilejson <- select(
     object,
@@ -182,6 +194,7 @@ as_json.tile_json <- function(object, ...) {
   json_stringify(tilejson, auto_unbox = TRUE, digits = 6)
 }
 
+#' @export
 as_json.layer_data <- function(object, cols, dims, ...) {
   # drop unused cols
   data <- purrr::keep_at(
@@ -202,6 +215,7 @@ as_json.layer_data <- function(object, cols, dims, ...) {
 
 #' @autoglobal
 #' @noRd
+#' @export
 as_json.sf <- function(object, cols = tidyselect::everything(), ...) {
   cols <- c(cols, attr(object, "sf_column", TRUE))
   data <- purrr::keep_at(object, cols)
@@ -210,7 +224,8 @@ as_json.sf <- function(object, cols = tidyselect::everything(), ...) {
   geojsonsf::sf_geojson(data, simplify = FALSE, digits = 6L)
 }
 
-as_json.png <- function(object) paste0("data:image/png;base64,", jsonlite::base64_enc(object))
+#' @export
+as_json.png <- function(object, ...) paste0("data:image/png;base64,", jsonlite::base64_enc(object))
 
 # json serialise
 json_stringify <- function(object,

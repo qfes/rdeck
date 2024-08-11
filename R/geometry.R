@@ -112,6 +112,7 @@ xy_coords <- function(handleable) {
   UseMethod("xy_coords")
 }
 
+#' @export
 xy_coords.data.frame <- function(handleable) {
   wk_col <- purrr::detect(handleable, wk::is_handleable)
   if (is.null(wk_col)) stop("Can't find a handleable column")
@@ -119,6 +120,7 @@ xy_coords.data.frame <- function(handleable) {
   xy_coords(wk_col)
 }
 
+#' @export
 xy_coords.wk_xy <- function(handleable) {
   feature_id <- seq_along(handleable)
 
@@ -137,6 +139,7 @@ xy_coords.wk_xy <- function(handleable) {
   vctrs::new_data_frame(c(details, list(xy = handleable)))
 }
 
+#' @export
 xy_coords.default <- function(handleable) {
   vertex_filter <- wk::wk_vertex_filter(
     wk::xy_writer(),

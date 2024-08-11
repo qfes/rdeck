@@ -187,7 +187,7 @@ NULL
 #'
 #' @description
 #' Geometry vectors are parsed with [wk::wk_handle()]. All geometry formats
-#' that \{wk\} supports directly are available to use in {rdeck} layers. You may
+#' that \{wk\} supports directly are available to use in \{rdeck\} layers. You may
 #' also use geometry formats which \{wk\} doesn't directly support, provided a
 #' _loaded_ package defines a \{wk\} _reader_ (i.e. [wk::wk_handle()] S3 method)
 #' for the geometry type.

@@ -240,7 +240,11 @@ quantile_breaks <- function(probs) {
 
 # coerce breaks into a breaks function
 as_breaks <- function(breaks) UseMethod("as_breaks")
+#' @export
 as_breaks.NULL <- function(breaks) NULL
+#' @export
 as_breaks.function <- function(breaks) breaks
+#' @export
 as_breaks.integer <- function(breaks) breaks_manual(breaks)
+#' @export
 as_breaks.numeric <- function(breaks) breaks_manual(breaks)

@@ -10,10 +10,12 @@ accessor <- function(expr, data = NULL) {
   UseMethod("accessor", expr)
 }
 
+#' @export
 accessor.default <- function(expr, data = NULL) {
   rlang::eval_tidy(expr)
 }
 
+#' @export
 accessor.quosure <- function(expr, data = NULL) {
   # dispatch off the quosure expression
   if (rlang::quo_is_symbol(expr)) {
@@ -23,10 +25,12 @@ accessor.quosure <- function(expr, data = NULL) {
   accessor(rlang::eval_tidy(expr), data)
 }
 
+#' @export
 accessor.name <- function(expr, data = NULL) {
   new_accessor(rlang::as_name(expr))
 }
 
+#' @export
 accessor.sf_column <- function(expr, data = NULL) {
   # sf_column only applicable to sf objects
   tidyassert::assert(
@@ -38,6 +42,7 @@ accessor.sf_column <- function(expr, data = NULL) {
   accessor.name(attr(data, "sf_column"), data)
 }
 
+#' @export
 accessor.scale <- function(expr, data = NULL) {
   scale <- expr
   scale_limits <- scale$limits %||% scale$levels %||% scale$data

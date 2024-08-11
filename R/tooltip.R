@@ -23,14 +23,15 @@ tooltip <- function(expr, data = NULL) {
   UseMethod("tooltip")
 }
 
+#' @export
 tooltip.quosure <- function(expr, data) {
   tooltip(rlang::get_expr(expr), data)
 }
 
-tooltip.NULL <- function(expr, data) {
-  NULL
-}
+#' @export
+tooltip.NULL <- function(expr, data) NULL
 
+#' @export
 tooltip.logical <- function(expr, data) {
   tidyassert::assert(length(expr) == 1, "Tooltip boolean expression must be a scalar")
 
@@ -40,10 +41,12 @@ tooltip.logical <- function(expr, data) {
   tooltip_tidyselect(tidyselect::everything(), data)
 }
 
+#' @export
 tooltip.name <- function(expr, data) {
   tooltip.character(rlang::as_name(expr), data)
 }
 
+#' @export
 tooltip.character <- function(expr, data) {
   tidyassert::assert(!is.na(expr), "Tooltip columns must not contain missing values")
 
@@ -55,6 +58,7 @@ tooltip.character <- function(expr, data) {
   tooltip_tidyselect(expr, data)
 }
 
+#' @export
 tooltip.call <- function(expr, data) {
   if (!is_dataframe(data) && !is_tile_json(data)) {
     # emulate tidy-select of a quoted c() call
@@ -79,6 +83,7 @@ tooltip.call <- function(expr, data) {
   tooltip_tidyselect(expr, data)
 }
 
+#' @export
 tooltip.cur_value <- function(expr, data) expr
 
 tooltip_tidyselect <- function(expr, data) {
