@@ -60,7 +60,6 @@ utils::globalVariables(c(
   "limits", # <compile.scale_color_quantize>
   "domain", # <compile.scale_color_quantize>
   "limits", # <compile.scale_numeric_quantize>
-  "center", # <get_view_state>
   "values", # <get_tilejson_fields>
   "layer", # <get_tilejson_field>
   "where", # <select>

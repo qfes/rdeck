@@ -273,14 +273,10 @@ get_view_bounds <- function(rdeck, session = shiny::getDefaultReactiveDomain()) 
     get_event_data(rdeck, "viewstate", session)
   )
 
-  if (is.null(event_data$bounds)) return(NULL)
+  bounds <- unlist(event_data$bounds)
+  if (is.null(bounds)) return(NULL)
 
-  bounds <- rlang::set_names(
-    unlist(event_data$bounds),
-    c("xmin", "ymin", "xmax", "ymax")
-  )
-
-  sf::st_bbox(bounds, crs = 4326)
+  wk::as_rct(t(bounds), crs = "OGC:CRS84")
 }
 
 #' @describeIn shiny-events Get the map view state
@@ -294,12 +290,10 @@ get_view_state <- function(rdeck, session = shiny::getDefaultReactiveDomain()) {
 
   if (is.null(event_data$viewState)) return(NULL)
 
-  mutate(
+  purrr::modify_in(
     event_data$viewState,
-    center = sf::st_sfc(
-      sf::st_point(unlist(center)),
-      crs = 4326
-    )
+    "center",
+    \(x) wk::as_xy(t(unlist(x)), crs = "OGC:CRS84")
   )
 }
 
@@ -311,12 +305,10 @@ get_clicked_coordinates <- function(rdeck, session = shiny::getDefaultReactiveDo
     get_event_data(rdeck, "click", session)
   )
 
-  if (is.null(event_data$coordinate)) return(NULL)
+  coords <- event_data$coordinate
+  if (is.null(coords)) return(NULL)
 
-  sf::st_sfc(
-    sf::st_point(unlist(event_data$coordinate)),
-    crs = 4326
-  )
+  wk::as_xy(t(unlist(coords)), crs = "OGC:CRS84")
 }
 
 #' @describeIn shiny-events Get the last clicked layer (or NULL)
