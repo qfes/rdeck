@@ -24,6 +24,10 @@ as_json.layer <- function(object, ...) {
     layer$data <- add_class(layer$data, "layer_data")
   }
 
+  if (is_dataframe(layer$data) && !is_sf(layer$data) && is_geojson) {
+    layer$data <- new_sf(layer$data)
+  }
+
   # convert image blobs to png
   layer <- purrr::map_at(
     layer,
@@ -109,13 +113,8 @@ as_json.editor_options <- function(object, ...) {
   if (rlang::has_name(options, "features")) {
     rlang::check_installed("geojsonsf")
 
-    features <- wk::wk_handle(
-      options$features %??% wk::xy(),
-      wk::sfc_writer()
-    )
-
     options$geojson <- geojsonsf::sf_geojson(
-      new_sf(list(geometry = features)),
+      new_sf(list(geometry = options$features %??% wk::wkb())),
       simplify = FALSE,
       digits = 6L
     )
@@ -216,7 +215,7 @@ as_json.layer_data <- function(object, cols, dims, ...) {
 #' @autoglobal
 #' @noRd
 #' @export
-as_json.sf <- function(object, cols = tidyselect::everything(), ...) {
+as_json.sf <- function(object, cols, ...) {
   cols <- c(cols, attr(object, "sf_column", TRUE))
   data <- purrr::keep_at(object, cols)
 

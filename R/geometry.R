@@ -58,12 +58,22 @@ is_sf <- function(object) inherits(object, "sf")
 
 # create a new sf object
 new_sf <- function(x = list(), n = NULL, ...) {
-  handleable <- purrr::keep(x, wk::is_handleable)
+  handleable_cols <- tidyselect:::eval_select(
+    rlang::expr(c(attr(x, "sf_column", TRUE), wk::is_handleable)),
+    x
+  )
+
+  sf_col <- handleable_cols[1]
+
   vctrs::new_data_frame(
-    x,
-    n %??% length(x[[1]]),
+    purrr::map_at(
+      unclass(x),
+      handleable_cols,
+      function(x) wk::wk_handle(x, wk::sfc_writer())
+    ),
+    n %??% vctrs::vec_size(x[[sf_col]]),
     ...,
-    sf_column = names(handleable[1]),
+    sf_column = names(sf_col),
     class = "sf"
   )
 }

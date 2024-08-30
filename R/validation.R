@@ -52,7 +52,11 @@ validate_data.GeoJsonLayer <- function(layer) {
   if (is_cur_value(data)) return()
 
   if (!is.null(data)) {
-    tidyassert::assert_inherits(data, c("sf", "character"))
+    tidyassert::assert(
+      inherits(data, "data.frame") && wk::is_handleable(data)
+        || rlang::is_string(data, "character"),
+      "{.arg data} must be a {.cls dataframe} with a geometry column, an {.cls sf} object, or a {.cls string}",
+    )
   }
 }
 

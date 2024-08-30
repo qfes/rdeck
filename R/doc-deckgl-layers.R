@@ -140,10 +140,6 @@ NULL
 #' @inherit layer_props
 #' @inherit icon_layer
 #' @inherit text_layer
-#' @param data <[`sf`][sf::sf] | `string`> The layer's data. Data frames and
-#' sf objects will contain all columns that are referenced by the layer's accessors. Strings
-#' will be interpreted as a URL to geojson data that will be retrieved dynamically in the browser.
-#'
 #' @param line_billboard <`boolean`> If `TRUE`, extrude the path in screen space (width always faces)
 #' the camera; if `FALSE`, the width always faces up (z).
 #' @param line_cap_rounded <`boolean`> If `TRUE`, draw round caps; else draw square caps.

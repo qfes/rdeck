@@ -191,9 +191,9 @@ not need to be unique, but should be brief. Defaults to the deck.gl class name f
 \item{group_name}{<\code{string}> Defines the group that this layer belongs to. Currently only
 effective on the layer selector, if \code{visibility_toggle = TRUE}.}
 
-\item{data}{<\code{\link[sf:sf]{sf}} | \code{string}> The layer's data. Data frames and
+\item{data}{<\code{data.frame} | \code{\link[sf:sf]{sf}} | \code{string}> The layer's data. Data frames and
 sf objects will contain all columns that are referenced by the layer's accessors. Strings
-will be interpreted as a URL to geojson data that will be retrieved dynamically in the browser.}
+will be interpreted as a URL and data will be retrieved dynamically in the browser.}
 
 \item{visible}{<\code{boolean}> Determines whether the layer is visible or not; also determines
 whether any legend elements for the layer will be displayed.}
