@@ -58,7 +58,7 @@ is_sf <- function(object) inherits(object, "sf")
 
 # create a new sf object
 new_sf <- function(x = list(), n = NULL, ...) {
-  handleable_cols <- tidyselect:::eval_select(
+  handleable_cols <- tidyselect::eval_select(
     rlang::expr(c(attr(x, "sf_column", TRUE), wk::is_handleable)),
     x
   )
