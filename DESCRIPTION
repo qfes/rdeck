@@ -27,9 +27,8 @@ Imports:
     uuid,
     vctrs (>= 0.6),
     wk (>= 0.9.2),
-    yyjsonr
+    yyjsonr (>= 0.1.20)
 Suggests:
-    geojsonsf,
     knitr,
     png,
     RcppSimdJson,

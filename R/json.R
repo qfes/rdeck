@@ -21,11 +21,11 @@ as_json.layer <- function(object, ...) {
   layer <- purrr::discard(object, is_cur_value)
 
   if (is_dataframe(layer$data) && !is_geojson) {
-    layer$data <- add_class(layer$data, "layer_data")
+    layer$data <- as_json.layer_data(layer$data, cols = cols, dims = dims)
   }
 
   if (is_dataframe(layer$data) && !is_sf(layer$data) && is_geojson) {
-    layer$data <- new_sf(layer$data)
+    layer$data <- as_json.sf(new_sf(layer$data), cols = cols)
   }
 
   # convert image blobs to png
@@ -111,12 +111,9 @@ as_json.editor_options <- function(object, ...) {
 
   # features to geojson
   if (rlang::has_name(options, "features")) {
-    rlang::check_installed("geojsonsf")
-
-    options$geojson <- geojsonsf::sf_geojson(
+    options$geojson <- as_json(
       new_sf(list(geometry = options$features %??% wk::wkb())),
-      simplify = FALSE,
-      digits = 6L
+      cols = "geometry"
     )
 
     options$features <- NULL
@@ -216,11 +213,14 @@ as_json.layer_data <- function(object, cols, dims, ...) {
 #' @noRd
 #' @export
 as_json.sf <- function(object, cols, ...) {
-  cols <- c(cols, attr(object, "sf_column", TRUE))
-  data <- purrr::keep_at(object, cols)
+  geom_col <- attr(object, "sf_column", TRUE)
+  # subset without depending on sf
+  data <- purrr::keep_at(unclass(object), unique(c(geom_col, cols)))
+  attr(data, "sf_column") <- geom_col
+  class(data) <- class(object)
 
-  rlang::check_installed("geojsonsf")
-  geojsonsf::sf_geojson(data, simplify = FALSE, digits = 6L)
+  json <- yyjsonr::write_geojson_str(data, json_opts = yyjsonr::opts_write_json(digits = 6L))
+  set_class(json, unique(c("json", class(json))))
 }
 
 #' @export

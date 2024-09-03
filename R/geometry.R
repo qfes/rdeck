@@ -71,7 +71,7 @@ new_sf <- function(x = list(), n = NULL, ...) {
       handleable_cols,
       function(x) wk::wk_handle(x, wk::sfc_writer())
     ),
-    n %??% vctrs::vec_size(x[[sf_col]]),
+    n %??% length(x[[sf_col]]),
     ...,
     sf_column = names(sf_col),
     class = "sf"

@@ -341,6 +341,12 @@ get_edited_features <- function(rdeck, session = shiny::getDefaultReactiveDomain
     get_event_data(rdeck, "editorupload", session)
   )
 
-  rlang::check_installed("geojsonsf")
-  geojsonsf::geojson_sf(event_data$geojson %||% '{"type": "FeatureCollection","features": []}')
+  sf_obj <- yyjsonr::read_geojson_str(event_data$geojson %||% '{"type": "FeatureCollection","features": []}')
+  vctrs::new_data_frame(
+    purrr::map_if(
+      unclass(sf_obj),
+      wk::is_handleable,
+      function(x) wk::wk_set_crs(wk::wk_handle(x, wk::wkb_writer()), "OGC:CRS84")
+    )
+  )
 }
