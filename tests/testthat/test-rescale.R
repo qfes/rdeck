@@ -1,4 +1,4 @@
-  test_that("category unsupported", {
+test_that("category unsupported", {
   scale <- scale_color_category(col)
   expect_error(rescale_center(scale), class = "rdeck_error")
 

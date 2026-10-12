@@ -12,7 +12,7 @@ color_gradient.character <- function(palette) {
 #' @export
 color_gradient.function <- function(palette) {
   # function is a ramp built with scales::colour_ramp
-  if (isTRUE(attr(palette, "safe_palette_func"))) return(palette)
+  if (is_continuous_color_palette(palette) || is_safe_palette_func(palette)) return(palette)
 
   # assume palette takes a length param
   function(x) {
@@ -39,7 +39,7 @@ color_categories.function <- function(palette) {
   rescale <- function(x, levels) scales::rescale(match(x, levels))
 
   # function is a ramp built with scales::colour_ramp
-  if (isTRUE(attr(palette, "safe_palette_func"))) {
+  if (is_continuous_color_palette(palette) || is_safe_palette_func(palette)) {
     ramp <- function(x) {
       levels <- get_levels(x)
       palette(rescale(x, levels))
@@ -91,3 +91,7 @@ number_categories.numeric <- function(seq) {
 
 #' @export
 number_categories.integer <- number_categories.numeric
+
+
+is_continuous_color_palette <- function(x) scales::is_continuous_pal(x) && scales::is_colour_pal(x)
+is_safe_palette_func <- function(x) isTRUE(attr(x, "safe_palette_func"))

@@ -20,7 +20,7 @@ Imports:
     purrr (>= 1.0),
     R6,
     rlang (>= 1.0),
-    scales,
+    scales (>= 1.4),
     sf (>= 0.9.3),
     stylebox (>= 0.2.0),
     tidyassert (>= 0.3.0),
