@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/qfes/rdeck/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/qfes/rdeck/blob/v0.5.3/DESCRIPTION)
 
 North A (2026). *rdeck: Deck.gl Widget*. R package version 0.5.3,
 <https://qfes.github.io/rdeck>.
