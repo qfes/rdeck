@@ -1,4 +1,4 @@
-# rdeck (development version)
+# rdeck 0.5.3
 
 - Layer data enhancements (#100)
 - Fix regression in set_layer_visibility (#101)
